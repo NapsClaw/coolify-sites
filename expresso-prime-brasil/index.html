@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Expresso Prime Brasil | Transporte Executivo</title>
+  <meta name="description" content="Transporte executivo premium: transfer aeroporto, eventos, viagens corporativas e encomendas. Conforto e pontualidade garantidos.">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #C9A84C;
+      --gold-light: #E4C46E;
+      --gold-dark: #A07830;
+      --black: #0A0A0A;
+      --dark: #111111;
+      --dark2: #1A1A1A;
+      --dark3: #222222;
+      --white: #FFFFFF;
+      --gray: #888888;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--black);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(10,10,10,0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      color: var(--gold);
+      letter-spacing: 1px;
+      line-height: 1.2;
+    }
+
+    .nav-logo span {
+      display: block;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 9px;
+      font-weight: 300;
+      color: var(--gray);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    .nav-cta {
+      background: var(--gold);
+      color: var(--black);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 10px 18px;
+      border-radius: 4px;
+      text-decoration: none;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(160deg, #0A0A0A 0%, #1A1410 50%, #0A0A0A 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      padding: 8px 20px;
+      border-radius: 40px;
+      margin-bottom: 32px;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(36px, 8vw, 72px);
+      line-height: 1.1;
+      margin-bottom: 24px;
+      max-width: 800px;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .hero p {
+      font-size: 16px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.7;
+      max-width: 480px;
+      margin-bottom: 48px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+      max-width: 360px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+      color: var(--black);
+      font-size: 14px;
+      font-weight: 700;
+      padding: 18px 32px;
+      border-radius: 6px;
+      text-decoration: none;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--white);
+      font-size: 14px;
+      font-weight: 500;
+      padding: 17px 32px;
+      border-radius: 6px;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin-top: 64px;
+      padding-top: 48px;
+      border-top: 1px solid rgba(201,168,76,0.15);
+      width: 100%;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      color: var(--gold);
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--gray);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    /* ─── DIVIDER ─── */
+    .gold-line {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 0 24px;
+    }
+
+    /* ─── SERVICES ─── */
+    .section {
+      padding: 80px 24px;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .section-tag {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .section-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 6vw, 48px);
+      line-height: 1.2;
+    }
+
+    .section-header p {
+      font-size: 15px;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.7;
+      max-width: 480px;
+      margin: 16px auto 0;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .service-card {
+      background: var(--dark2);
+      border: 1px solid rgba(201,168,76,0.15);
+      border-radius: 12px;
+      padding: 28px 24px;
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      transition: border-color 0.3s;
+    }
+
+    .service-card:hover {
+      border-color: var(--gold);
+    }
+
+    .service-icon {
+      width: 48px;
+      height: 48px;
+      min-width: 48px;
+      background: linear-gradient(135deg, rgba(201,168,76,0.15), rgba(201,168,76,0.05));
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+
+    .service-info h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .service-info p {
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.6;
+    }
+
+    /* ─── WHY ─── */
+    .why-section {
+      background: var(--dark2);
+      padding: 80px 24px;
+    }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .why-item {
+      background: var(--dark3);
+      border-radius: 12px;
+      padding: 24px 20px;
+      border: 1px solid rgba(201,168,76,0.08);
+      text-align: center;
+    }
+
+    .why-icon {
+      font-size: 28px;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .why-item h3 {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .why-item p {
+      font-size: 12px;
+      color: var(--gray);
+      line-height: 1.6;
+    }
+
+    /* ─── CTA ─── */
+    .cta-section {
+      padding: 80px 24px;
+      text-align: center;
+      background: linear-gradient(180deg, var(--black) 0%, #1A1410 50%, var(--black) 100%);
+    }
+
+    .cta-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 6vw, 48px);
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+
+    .cta-section h2 span {
+      color: var(--gold);
+    }
+
+    .cta-section p {
+      font-size: 15px;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 40px;
+      line-height: 1.7;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .cta-box {
+      background: var(--dark2);
+      border: 1px solid rgba(201,168,76,0.25);
+      border-radius: 16px;
+      padding: 40px 24px;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .cta-box .btn-primary {
+      font-size: 16px;
+      padding: 20px 32px;
+      width: 100%;
+      border-radius: 8px;
+    }
+
+    .cta-note {
+      font-size: 12px;
+      color: var(--gray);
+      margin-top: 16px;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--dark);
+      border-top: 1px solid rgba(201,168,76,0.15);
+      padding: 40px 24px;
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+
+    .footer-sub {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 24px;
+    }
+
+    .footer-copy {
+      font-size: 12px;
+      color: rgba(255,255,255,0.25);
+    }
+
+    /* ─── WHATSAPP FLOAT ─── */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 999;
+      background: #25D366;
+      color: white;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+    }
+
+    /* ─── DESKTOP ─── */
+    @media (min-width: 768px) {
+      .hero-buttons {
+        flex-direction: row;
+        max-width: none;
+        justify-content: center;
+      }
+
+      .btn-primary, .btn-secondary {
+        min-width: 200px;
+      }
+
+      .services-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .why-grid {
+        grid-template-columns: repeat(4, 1fr);
+        max-width: 900px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    Expresso Prime
+    <span>Brasil · Transporte Executivo</span>
+  </div>
+  <a href="https://wa.me/5522992523429" class="nav-cta">Solicitar agora</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">✦ Transporte Executivo Premium</div>
+  <h1>Viaje com <em>conforto</em> e elegância</h1>
+  <p>Transporte executivo de alto padrão para quem valoriza pontualidade, segurança e sofisticação.</p>
+  <div class="hero-buttons">
+    <a href="https://wa.me/5522992523429" class="btn-primary">
+      💬 Falar no WhatsApp
+    </a>
+    <a href="#servicos" class="btn-secondary">
+      Ver serviços
+    </a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat">
+      <span class="stat-number">100%</span>
+      <span class="stat-label">Pontualidade</span>
+    </div>
+    <div class="stat">
+      <span class="stat-number">24h</span>
+      <span class="stat-label">Disponível</span>
+    </div>
+    <div class="stat">
+      <span class="stat-number">VIP</span>
+      <span class="stat-label">Atendimento</span>
+    </div>
+  </div>
+</section>
+
+<div class="gold-line"></div>
+
+<!-- SERVIÇOS -->
+<section class="section" id="servicos">
+  <div class="section-header">
+    <span class="section-tag">Nossos Serviços</span>
+    <h2>O que oferecemos</h2>
+    <p>Soluções completas de transporte executivo para todas as suas necessidades.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">✈️</div>
+      <div class="service-info">
+        <h3>Transfer Aeroporto</h3>
+        <p>Chegue ou embarque com tranquilidade. Monitoramos seu voo em tempo real.</p>
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🎭</div>
+      <div class="service-info">
+        <h3>Eventos</h3>
+        <p>Casamentos, formaturas, shows e eventos corporativos com toda a classe.</p>
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">💼</div>
+      <div class="service-info">
+        <h3>Viagens Corporativas</h3>
+        <p>Reuniões, viagens de negócios e contratos mensais para empresas.</p>
+      </div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📦</div>
+      <div class="service-info">
+        <h3>Encomendas</h3>
+        <p>Entrega rápida e segura de encomendas e documentos importantes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="gold-line"></div>
+
+<!-- POR QUE NÓS -->
+<section class="why-section">
+  <div class="section-header">
+    <span class="section-tag">Por que escolher</span>
+    <h2>A diferença Prime</h2>
+  </div>
+  <div class="why-grid">
+    <div class="why-item">
+      <span class="why-icon">⏱️</span>
+      <h3>Pontualidade</h3>
+      <p>Sempre no horário combinado, sem surpresas</p>
+    </div>
+    <div class="why-item">
+      <span class="why-icon">🛡️</span>
+      <h3>Segurança</h3>
+      <p>Motoristas experientes e veículos revisados</p>
+    </div>
+    <div class="why-item">
+      <span class="why-icon">👑</span>
+      <h3>Conforto</h3>
+      <p>Veículos premium para uma viagem impecável</p>
+    </div>
+    <div class="why-item">
+      <span class="why-icon">📱</span>
+      <h3>Atendimento</h3>
+      <p>Suporte rápido via WhatsApp, 24 horas</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2>Pronto para viajar <span>com classe?</span></h2>
+  <p>Entre em contato agora e faça sua reserva com facilidade pelo WhatsApp.</p>
+  <div class="cta-box">
+    <a href="https://wa.me/5522992523429" class="btn-primary">
+      💬 Solicitar transporte agora
+    </a>
+    <p class="cta-note">Resposta rápida · Atendimento 24h</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Expresso Prime Brasil</div>
+  <div class="footer-sub">Transporte Executivo Premium</div>
+  <div class="footer-copy">© 2025 Expresso Prime Brasil · Todos os direitos reservados</div>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/5522992523429" class="whatsapp-float" target="_blank" title="WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+</body>
+</html>
