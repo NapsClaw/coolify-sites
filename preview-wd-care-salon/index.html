@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WD Care Salon — Beleza em Moema</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0d0b;
+    --bg2: #141410;
+    --gold: #c9a96e;
+    --gold-light: #e8c98a;
+    --cream: #f5f0e8;
+    --text: #e8e4dc;
+    --muted: #9a9488;
+    --accent: #c9a96e;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    padding: 1.2rem 2rem;
+    display: flex; justify-content: space-between; align-items: center;
+    background: rgba(13,13,11,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201,169,110,0.15);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-weight: 600; letter-spacing: 0.05em;
+    color: var(--gold);
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.3s; }
+  .nav-links a:hover { color: var(--gold); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center;
+    padding: 6rem 2rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 30%, rgba(201,169,110,0.08) 0%, transparent 70%);
+  }
+  .hero-badge {
+    display: inline-block;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+    padding: 0.4rem 1.2rem;
+    margin-bottom: 2rem;
+    border-radius: 2px;
+  }
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 9vw, 7rem);
+    font-weight: 300;
+    line-height: 1.05;
+    color: var(--cream);
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+  .hero p {
+    font-size: 1.05rem;
+    color: var(--muted);
+    max-width: 480px;
+    margin: 0 auto 2.5rem;
+    font-weight: 300;
+    line-height: 1.8;
+  }
+  .hero-cta {
+    display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+  }
+  .btn-primary {
+    background: var(--gold);
+    color: #0d0d0b;
+    padding: 0.9rem 2.5rem;
+    font-size: 0.85rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+  .btn-outline {
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    padding: 0.9rem 2.5rem;
+    font-size: 0.85rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+  .btn-outline:hover { background: rgba(201,169,110,0.1); }
+
+  /* DIVIDER */
+  .gold-line {
+    width: 60px; height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    margin: 0 auto 1rem;
+  }
+
+  /* SECTION COMMON */
+  section { padding: 6rem 2rem; }
+  .section-label {
+    font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1.15;
+  }
+  .section-sub {
+    color: var(--muted); font-size: 0.95rem; font-weight: 300;
+    max-width: 520px; line-height: 1.8; margin-top: 1rem;
+  }
+
+  /* SERVICES */
+  .services {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1.3fr; gap: 5rem; align-items: start;
+  }
+  .services-left { position: sticky; top: 120px; }
+  .service-list { display: flex; flex-direction: column; gap: 1px; margin-top: 3rem; }
+  .service-item {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid rgba(201,169,110,0.15);
+    display: flex; justify-content: space-between; align-items: start;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .service-item:hover { padding-left: 0.5rem; }
+  .service-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem; color: var(--cream); font-weight: 400;
+  }
+  .service-price {
+    font-size: 0.85rem; color: var(--gold);
+    font-weight: 500; white-space: nowrap; margin-left: 1rem;
+  }
+  .service-desc { font-size: 0.85rem; color: var(--muted); margin-top: 0.25rem; font-weight: 300; }
+
+  /* STATS */
+  .stats-section {
+    background: var(--bg2);
+    border-top: 1px solid rgba(201,169,110,0.1);
+    border-bottom: 1px solid rgba(201,169,110,0.1);
+  }
+  .stats-grid {
+    max-width: 900px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 3rem;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.5rem; color: var(--gold); font-weight: 300;
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.75rem; color: var(--muted);
+    letter-spacing: 0.1em; text-transform: uppercase;
+    margin-top: 0.5rem;
+  }
+
+  /* TESTIMONIALS */
+  .testimonials { background: var(--bg); }
+  .testimonials-inner { max-width: 1000px; margin: 0 auto; }
+  .testimonials-header { text-align: center; margin-bottom: 4rem; }
+  .testimonials-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;
+  }
+  .testimonial-card {
+    background: var(--bg2);
+    border: 1px solid rgba(201,169,110,0.1);
+    padding: 2rem;
+    border-radius: 4px;
+    position: relative;
+  }
+  .testimonial-card::before {
+    content: '"'; font-family: 'Cormorant Garamond', serif;
+    font-size: 5rem; color: var(--gold); opacity: 0.3;
+    position: absolute; top: -0.5rem; left: 1rem; line-height: 1;
+  }
+  .testimonial-text { font-size: 0.9rem; color: var(--muted); font-weight: 300; line-height: 1.8; margin-bottom: 1.5rem; }
+  .testimonial-author { font-size: 0.8rem; color: var(--gold); letter-spacing: 0.05em; font-weight: 500; }
+  .stars { color: var(--gold); font-size: 0.7rem; letter-spacing: 0.2em; margin-bottom: 0.75rem; }
+
+  /* CTA */
+  .cta-section {
+    background: linear-gradient(135deg, rgba(201,169,110,0.08) 0%, transparent 60%), var(--bg2);
+    text-align: center;
+    border-top: 1px solid rgba(201,169,110,0.1);
+  }
+  .cta-inner { max-width: 600px; margin: 0 auto; }
+  .cta-section .section-title { font-size: clamp(2rem, 5vw, 3.5rem); margin: 1rem 0; }
+
+  /* FOOTER */
+  footer {
+    background: #080807;
+    padding: 3rem 2rem;
+    text-align: center;
+    border-top: 1px solid rgba(201,169,110,0.1);
+  }
+  footer .logo { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--gold); margin-bottom: 0.75rem; }
+  footer p { font-size: 0.8rem; color: var(--muted); font-weight: 300; }
+
+  /* MOBILE */
+  @media (max-width: 768px) {
+    nav { padding: 1rem; }
+    .nav-links { display: none; }
+    .services { grid-template-columns: 1fr; gap: 2rem; }
+    .services-left { position: static; }
+    .stats-grid { grid-template-columns: 1fr; gap: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">WD Care Salon</div>
+  <ul class="nav-links">
+    <li><a href="#servicos">Serviços</a></li>
+    <li><a href="#avaliacoes">Avaliações</a></li>
+    <li><a href="#contato">Agendar</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">✦ Salão Premium — Moema, São Paulo ✦</div>
+  <h1>Beleza que <em>transforma.</em></h1>
+  <p>Experiências exclusivas de beleza e bem-estar no coração de Moema. Mais de 200 avaliações 5 estrelas falam por nós.</p>
+  <div class="hero-cta">
+    <a href="https://wa.me/5511999042536?text=Olá! Gostaria de agendar um horário." class="btn-primary">Agendar pelo WhatsApp</a>
+    <a href="#servicos" class="btn-outline">Ver Serviços</a>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats-section">
+  <div class="stats-grid">
+    <div>
+      <div class="stat-num">4.8</div>
+      <div class="stat-label">Nota no Google</div>
+    </div>
+    <div>
+      <div class="stat-num">200+</div>
+      <div class="stat-label">Avaliações</div>
+    </div>
+    <div>
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Satisfação</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="servicos">
+  <div class="services">
+    <div class="services-left">
+      <p class="section-label">Nossos Serviços</p>
+      <h2 class="section-title">Arte & Cuidado em cada detalhe</h2>
+      <p class="section-sub">
+        Cada visita ao WD Care é uma experiência única de cuidado e beleza. Nossos profissionais são apaixonados pelo que fazem.
+      </p>
+    </div>
+    <div class="service-list">
+      <div class="service-item">
+        <div>
+          <div class="service-name">Corte & Styling</div>
+          <div class="service-desc">Corte personalizado para o seu rosto e estilo de vida</div>
+        </div>
+        <div class="service-price">A consultar</div>
+      </div>
+      <div class="service-item">
+        <div>
+          <div class="service-name">Coloração & Mechas</div>
+          <div class="service-desc">Técnicas modernas: balayage, ombré, babylights</div>
+        </div>
+        <div class="service-price">A consultar</div>
+      </div>
+      <div class="service-item">
+        <div>
+          <div class="service-name">Tratamentos Capilares</div>
+          <div class="service-desc">Hidratação profunda, botox capilar e reconstrução</div>
+        </div>
+        <div class="service-price">A consultar</div>
+      </div>
+      <div class="service-item">
+        <div>
+          <div class="service-name">Manicure & Pedicure</div>
+          <div class="service-desc">Cuidados completos para suas mãos e pés</div>
+        </div>
+        <div class="service-price">A consultar</div>
+      </div>
+      <div class="service-item">
+        <div>
+          <div class="service-name">Maquiagem</div>
+          <div class="service-desc">Make social, festa, noiva — qualquer ocasião especial</div>
+        </div>
+        <div class="service-price">A consultar</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="avaliacoes" class="testimonials">
+  <div class="testimonials-inner">
+    <div class="testimonials-header">
+      <p class="section-label">O que dizem</p>
+      <div class="gold-line"></div>
+      <h2 class="section-title">Clientes apaixonadas</h2>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">Melhor salão que já fui! Atendimento impecável e resultado perfeito. Meu cabelo nunca ficou tão lindo. Com certeza voltarei!</p>
+        <div class="testimonial-author">— Ana Paula M.</div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">Profissionalismo e qualidade em tudo! A equipe é super atenciosa, o ambiente é aconchegante e o resultado supera as expectativas.</p>
+        <div class="testimonial-author">— Fernanda R.</div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="testimonial-text">Fui para fazer mechas e saí completamente transformada! A colorista é um gênio. Amei demais o resultado. Super recomendo!</p>
+        <div class="testimonial-author">— Carolina S.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="contato" class="cta-section">
+  <div class="cta-inner">
+    <p class="section-label">Agende Agora</p>
+    <div class="gold-line"></div>
+    <h2 class="section-title">Pronta para se <em>transformar?</em></h2>
+    <p class="section-sub" style="margin: 1.5rem auto; text-align:center">
+      Fale com a gente pelo WhatsApp e garanta seu horário. Estamos em Moema, São Paulo, prontas para te atender com exclusividade.
+    </p>
+    <br>
+    <a href="https://wa.me/5511999042536?text=Olá! Gostaria de agendar um horário no WD Care Salon." class="btn-primary">
+      💬 Falar pelo WhatsApp
+    </a>
+    <p style="font-size:0.8rem; color:var(--muted); margin-top:1.5rem;">
+      📍 Alameda dos Arapanés, 839 — Moema, São Paulo
+    </p>
+  </div>
+</section>
+
+<footer>
+  <div class="logo">WD Care Salon</div>
+  <p>Moema • São Paulo — Beleza & Bem-estar</p>
+  <p style="margin-top:0.5rem;">Seg–Sáb: 9h às 20h</p>
+</footer>
+
+</body>
+</html>

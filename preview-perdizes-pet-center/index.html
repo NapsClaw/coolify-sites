@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perdizes Pet Center — Pet Shop Perdizes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #2d7d4e;
+    --green-light: #3a9c62;
+    --green-pale: #e8f5ed;
+    --yellow: #f5c842;
+    --cream: #fef9f0;
+    --bg: #fafffe;
+    --dark: #1a2e22;
+    --text: #2a3d30;
+    --muted: #6b8577;
+    --border: rgba(45,125,78,0.15);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'Nunito', sans-serif; overflow-x: hidden; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; width: 100%; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1rem 2rem;
+    background: rgba(250,255,254,0.93); backdrop-filter: blur(12px);
+    border-bottom: 2px solid var(--green-pale);
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-size: 1.2rem; font-weight: 800; color: var(--green);
+  }
+  .nav-logo-icon { font-size: 1.4rem; }
+  .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.85rem; font-weight: 600; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--green); }
+  .nav-cta {
+    background: var(--green); color: white;
+    padding: 0.55rem 1.3rem; font-size: 0.8rem; font-weight: 700;
+    text-decoration: none; border-radius: 50px; transition: all 0.2s;
+  }
+  .nav-cta:hover { background: var(--green-light); transform: translateY(-1px); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    padding: 7rem 2rem 4rem;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, var(--bg) 0%, var(--green-pale) 100%);
+    position: relative; overflow: hidden;
+  }
+  .hero::after {
+    content: '🐾';
+    position: absolute; font-size: 25vw; opacity: 0.04;
+    right: -2vw; bottom: -2vw; pointer-events: none;
+  }
+  .hero-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+  .hero-left {}
+  .hero-pill {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    background: var(--green-pale); border: 1.5px solid var(--green);
+    color: var(--green); font-size: 0.75rem; font-weight: 700;
+    padding: 0.4rem 1rem; border-radius: 50px; margin-bottom: 1.5rem;
+  }
+  .hero h1 {
+    font-size: clamp(2.2rem, 5vw, 3.5rem); font-weight: 800;
+    color: var(--dark); line-height: 1.15; margin-bottom: 1rem;
+  }
+  .hero h1 span { color: var(--green); }
+  .hero p { font-size: 1rem; color: var(--muted); line-height: 1.7; max-width: 420px; margin-bottom: 2rem; font-weight: 400; }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-green {
+    background: var(--green); color: white;
+    padding: 0.9rem 2rem; font-size: 0.85rem; font-weight: 700;
+    text-decoration: none; border-radius: 50px; transition: all 0.2s;
+  }
+  .btn-green:hover { background: var(--green-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(45,125,78,0.3); }
+  .btn-outline-green {
+    border: 2px solid var(--green); color: var(--green);
+    padding: 0.9rem 2rem; font-size: 0.85rem; font-weight: 700;
+    text-decoration: none; border-radius: 50px; transition: all 0.2s;
+  }
+  .btn-outline-green:hover { background: var(--green-pale); }
+
+  /* HERO RIGHT card */
+  .hero-right {
+    background: white; border-radius: 20px;
+    padding: 2.5rem 2rem;
+    box-shadow: 0 20px 60px rgba(45,125,78,0.1);
+    border: 1px solid var(--border);
+  }
+  .rating-display { text-align: center; margin-bottom: 2rem; }
+  .rating-num { font-size: 3.5rem; font-weight: 800; color: var(--green); line-height: 1; }
+  .rating-stars { font-size: 1.2rem; color: var(--yellow); margin: 0.25rem 0; letter-spacing: 0.1em; }
+  .rating-count { font-size: 0.8rem; color: var(--muted); font-weight: 600; }
+  .features-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .feature-chip {
+    background: var(--green-pale); border-radius: 12px;
+    padding: 0.75rem 1rem; text-align: center;
+    font-size: 0.78rem; font-weight: 700; color: var(--green);
+  }
+  .feature-chip-icon { font-size: 1.2rem; margin-bottom: 0.2rem; }
+
+  /* SERVICES */
+  #servicos { padding: 6rem 2rem; }
+  .services-inner { max-width: 1000px; margin: 0 auto; }
+  .section-header { text-align: center; margin-bottom: 3.5rem; }
+  .section-badge {
+    display: inline-block;
+    background: var(--green); color: white;
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+    padding: 0.35rem 0.9rem; border-radius: 50px; margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; color: var(--dark); line-height: 1.2;
+  }
+  .section-sub { font-size: 0.95rem; color: var(--muted); margin-top: 0.5rem; line-height: 1.7; }
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .service-card {
+    background: white; border-radius: 16px;
+    border: 1.5px solid var(--border);
+    padding: 2rem 1.5rem;
+    text-align: center;
+    transition: all 0.25s;
+  }
+  .service-card:hover { border-color: var(--green); transform: translateY(-4px); box-shadow: 0 16px 40px rgba(45,125,78,0.1); }
+  .service-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+  .service-name { font-size: 1rem; font-weight: 800; color: var(--dark); margin-bottom: 0.5rem; }
+  .service-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+
+  /* TESTIMONIALS */
+  #avaliacoes { background: var(--dark); padding: 6rem 2rem; }
+  .reviews-inner { max-width: 1000px; margin: 0 auto; }
+  .reviews-header { text-align: center; margin-bottom: 3.5rem; }
+  .reviews-header .section-title { color: white; }
+  .reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .review-card {
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px; padding: 2rem 1.5rem;
+  }
+  .review-emoji { font-size: 1.5rem; margin-bottom: 0.75rem; }
+  .review-stars { color: var(--yellow); font-size: 0.85rem; letter-spacing: 0.1em; margin-bottom: 0.75rem; }
+  .review-text { font-size: 0.88rem; color: rgba(255,255,255,0.65); line-height: 1.7; margin-bottom: 1rem; }
+  .review-author { font-size: 0.8rem; color: rgba(255,255,255,0.85); font-weight: 700; }
+
+  /* CTA */
+  #contato {
+    background: linear-gradient(135deg, var(--green) 0%, var(--green-light) 100%);
+    padding: 6rem 2rem; text-align: center;
+  }
+  .cta-emoji { font-size: 3.5rem; margin-bottom: 1rem; }
+  .cta-title { font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; color: white; margin-bottom: 1rem; line-height: 1.2; }
+  .cta-sub { color: rgba(255,255,255,0.85); font-size: 1rem; line-height: 1.6; margin-bottom: 2.5rem; max-width: 500px; margin-left: auto; margin-right: auto; }
+  .btn-white {
+    background: white; color: var(--green);
+    padding: 1.1rem 3rem; font-size: 0.9rem; font-weight: 800;
+    text-decoration: none; border-radius: 50px; transition: all 0.2s;
+    display: inline-block;
+  }
+  .btn-white:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,0,0,0.25); }
+
+  /* FOOTER */
+  footer { background: var(--dark); padding: 2.5rem; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); }
+  .footer-logo { font-size: 1.2rem; font-weight: 800; color: white; margin-bottom: 0.4rem; }
+  footer p { font-size: 0.8rem; color: rgba(255,255,255,0.35); }
+
+  @media (max-width: 768px) {
+    .hero-inner { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .services-grid { grid-template-columns: 1fr; }
+    .reviews-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">
+    <div class="nav-logo-icon">🐾</div>
+    Perdizes Pet Center
+  </div>
+  <ul class="nav-links">
+    <li><a href="#servicos">Serviços</a></li>
+    <li><a href="#avaliacoes">Avaliações</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ul>
+  <a href="https://wa.me/5511938641609?text=Oi! Quero saber mais sobre os serviços do Perdizes Pet Center." class="nav-cta">Falar conosco</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-pill">⭐ 4.8 • 114 avaliações • Perdizes, SP</div>
+      <h1>O melhor cuidado para quem você <span>ama</span></h1>
+      <p>No Perdizes Pet Center, seu bichinho recebe atenção, carinho e serviços de qualidade. Aqui, pets são da família!</p>
+      <div class="hero-btns">
+        <a href="https://wa.me/5511938641609?text=Oi! Quero agendar um serviço no Perdizes Pet Center." class="btn-green">🐾 Agendar Agora</a>
+        <a href="#servicos" class="btn-outline-green">Ver Serviços</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="rating-display">
+        <div class="rating-num">4.8</div>
+        <div class="rating-stars">★★★★★</div>
+        <div class="rating-count">114+ avaliações no Google</div>
+      </div>
+      <div class="features-grid">
+        <div class="feature-chip"><div class="feature-chip-icon">🛁</div>Banho & Tosa</div>
+        <div class="feature-chip"><div class="feature-chip-icon">🏥</div>Veterinário</div>
+        <div class="feature-chip"><div class="feature-chip-icon">🦷</div>Higiene Dental</div>
+        <div class="feature-chip"><div class="feature-chip-icon">🐕</div>Hotel Pet</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="servicos">
+  <div class="services-inner">
+    <div class="section-header">
+      <div class="section-badge">Nossos Serviços</div>
+      <h2 class="section-title">Tudo que seu pet precisa</h2>
+      <p class="section-sub">Do básico ao especial — seu animal de estimação merece o melhor.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">🛁</div>
+        <div class="service-name">Banho & Tosa</div>
+        <div class="service-desc">Banho completo com produtos premium, secagem e acabamento perfeito.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">✂️</div>
+        <div class="service-name">Tosa Criativa</div>
+        <div class="service-desc">Design personalizado para deixar seu pet lindo e com estilo próprio.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🏥</div>
+        <div class="service-name">Consulta Veterinária</div>
+        <div class="service-desc">Cuidados de saúde com médico veterinário experiente e atencioso.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">💉</div>
+        <div class="service-name">Vacinação</div>
+        <div class="service-desc">Protocolo completo de vacinação para cães e gatos. Agenda flexível.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🦷</div>
+        <div class="service-name">Higiene Dental</div>
+        <div class="service-desc">Limpeza dental profissional para a saúde bucal do seu pet.</div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🛒</div>
+        <div class="service-name">Pet Shop</div>
+        <div class="service-desc">Ração, brinquedos, acessórios e tudo mais que seu bichinho precisa.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="avaliacoes">
+  <div class="reviews-inner">
+    <div class="reviews-header">
+      <div class="section-badge">Avaliações</div>
+      <h2 class="section-title">Pets felizes, donos felizes!</h2>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-emoji">🐶</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">Levo minha dog aqui há 2 anos! Atendimento maravilhoso, tosa perfeita e a equipe ama os animais de verdade. Super recomendo!</p>
+        <div class="review-author">— Amanda Carvalho</div>
+      </div>
+      <div class="review-card">
+        <div class="review-emoji">😺</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">Ótimo pet shop! Meu gato foi pela primeira vez e voltou feliz. Equipe super cuidadosa e carinhosa. Lugar confiável!</p>
+        <div class="review-author">— Felipe Gomes</div>
+      </div>
+      <div class="review-card">
+        <div class="review-emoji">🐕</div>
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">Profissionais incríveis! Meu cachorro tem pavor de banho e aqui ele fica tranquilo. A paciência deles é impressionante!</p>
+        <div class="review-author">— Renata Melo</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contato">
+  <div class="cta-emoji">🐾</div>
+  <h2 class="cta-title">Seu pet merece o melhor!</h2>
+  <p class="cta-sub">Agende agora pelo WhatsApp. Estamos em Perdizes, prontos para cuidar do seu bichinho com todo o carinho que ele merece!</p>
+  <a href="https://wa.me/5511938641609?text=Oi! Quero agendar um serviço para meu pet no Perdizes Pet Center." class="btn-white">💬 Agendar pelo WhatsApp</a>
+  <p style="color:rgba(255,255,255,0.8); font-size:0.8rem; margin-top:1.5rem;">📍 Rua Cayowaá, 1032 — Perdizes, São Paulo</p>
+</section>
+
+<footer>
+  <div class="footer-logo">🐾 Perdizes Pet Center</div>
+  <p>Perdizes • São Paulo — Cuidado e carinho para seu pet</p>
+</footer>
+
+</body>
+</html>
