@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposta Comercial — PMC para Milena</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark: #1a1a1a;
+            --dark-mid: #2d2d2d;
+            --text: #1a1a1a;
+            --text-muted: #6b6b6b;
+            --bg: #faf9f7;
+            --card-bg: #f0eded;
+            --card-bg-alt: #f5f3f0;
+            --border: #e0ddd8;
+            --accent: #c8a97e;
+            --accent-dark: #a8875e;
+            --green: #2d6a4f;
+            --green-light: #d8f3dc;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--text);
+            background: var(--bg);
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+        }
+
+        .hero {
+            background: var(--dark);
+            color: white;
+            min-height: 460px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 80px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at 30% 50%, rgba(200,169,126,0.06) 0%, transparent 50%),
+                        radial-gradient(ellipse at 70% 50%, rgba(255,255,255,0.03) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            opacity: 0.4;
+        }
+
+        .hero > * { position: relative; z-index: 1; }
+
+        .hero-logo-text {
+            font-family: 'DM Serif Display', serif;
+            font-size: 48px;
+            font-weight: 400;
+            letter-spacing: 2px;
+            margin-bottom: 24px;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards;
+        }
+
+        .hero-title {
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            opacity: 0;
+            color: var(--accent);
+            margin-bottom: 12px;
+            animation: fadeUp 0.8s ease 0.15s forwards;
+        }
+
+        .hero-subtitle {
+            font-size: 17px;
+            font-weight: 300;
+            opacity: 0;
+            letter-spacing: 1px;
+            animation: fadeUp 0.8s ease 0.3s forwards;
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .section {
+            padding: 56px 0;
+        }
+
+        .section-divider {
+            border: none;
+            border-top: 1px solid var(--border);
+            margin: 0;
+        }
+
+        .section-number {
+            font-size: 22px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+            color: var(--dark);
+            margin-bottom: 6px;
+        }
+
+        .section-desc {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 36px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .service-card {
+            background: var(--card-bg);
+            border-radius: 14px;
+            padding: 28px 24px;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+        }
+
+        .service-card.monthly-card {
+            background: var(--bg);
+            border: 2px dashed var(--border);
+        }
+
+        .service-card.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .card-icon-circle {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: var(--dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+
+        .card-icon-circle svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .card-icon-circle.accent-icon {
+            background: var(--accent);
+        }
+
+        .service-card h3 {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: -0.2px;
+        }
+
+        .service-card p {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.65;
+            flex: 1;
+        }
+
+        .card-price-row {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(0,0,0,0.07);
+        }
+
+        .card-price-row .amount {
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--dark);
+        }
+
+        .card-price-row .period {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .service-card.monthly-card .card-price-row .amount {
+            color: #555;
+        }
+
+        .discount-section {
+            margin-top: 24px;
+            background: var(--dark);
+            border-radius: 16px;
+            padding: 32px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .discount-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(200,169,126,0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .discount-section > * { position: relative; z-index: 1; }
+
+        .discount-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+
+        .discount-tiers {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .discount-tier {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: background 0.2s ease;
+        }
+
+        .discount-tier:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .discount-tier.recommended {
+            background: rgba(200,169,126,0.15);
+            border-color: var(--accent);
+            position: relative;
+        }
+
+        .discount-tier.recommended::after {
+            content: 'Melhor valor';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: var(--dark);
+            font-size: 10px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 3px 12px;
+            border-radius: 20px;
+            white-space: nowrap;
+        }
+
+        .tier-qty {
+            font-size: 13px;
+            font-weight: 600;
+            opacity: 0.6;
+            margin-bottom: 8px;
+        }
+
+        .tier-price {
+            font-size: 26px;
+            font-weight: 900;
+            margin-bottom: 4px;
+        }
+
+        .tier-savings {
+            font-size: 12px;
+            color: #7ee8a8;
+            font-weight: 600;
+        }
+
+        .subtotals-bar {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .subtotal-chip {
+            background: var(--dark);
+            color: white;
+            border-radius: 12px;
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .subtotal-chip.monthly-chip {
+            background: #444;
+        }
+
+        .subtotal-chip .st-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            opacity: 0.6;
+            font-weight: 600;
+        }
+
+        .subtotal-chip .st-value {
+            font-size: 22px;
+            font-weight: 900;
+        }
+
+        .invest-total {
+            padding: 64px 0;
+        }
+
+        .invest-total h2 {
+            font-size: 22px;
+            font-weight: 900;
+            text-transform: uppercase;
+            text-align: center;
+            margin-bottom: 48px;
+            color: var(--dark);
+        }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            max-width: 640px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .stat-block .stat-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .stat-block .stat-value {
+            font-size: 48px;
+            font-weight: 900;
+            color: var(--dark);
+            line-height: 1;
+        }
+
+        .stat-block .stat-value span {
+            font-size: 20px;
+            font-weight: 600;
+            opacity: 0.5;
+        }
+
+        .invest-breakdown {
+            text-align: center;
+            margin-top: 32px;
+            padding: 20px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            max-width: 640px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .invest-breakdown p {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        .invest-breakdown strong {
+            color: var(--dark);
+        }
+
+        .timeline-section {
+            padding: 56px 0;
+        }
+
+        .timeline-h {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            position: relative;
+            padding-top: 24px;
+        }
+
+        .timeline-h::before {
+            content: '';
+            position: absolute;
+            top: 36px;
+            left: 24px;
+            right: 24px;
+            height: 2px;
+            background: var(--border);
+        }
+
+        .tl-node {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+            position: relative;
+            z-index: 1;
+        }
+
+        .tl-dot {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--dark);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+        .tl-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--dark);
+            text-align: center;
+            line-height: 1.3;
+            max-width: 110px;
+        }
+
+        .tl-days {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 4px;
+            text-align: center;
+        }
+
+        .conditions-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .cond-card {
+            background: var(--card-bg);
+            border-radius: 14px;
+            padding: 24px;
+            border-top: 3px solid var(--dark);
+        }
+
+        .cond-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 14px;
+        }
+
+        .cond-icon svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .cond-card h4 {
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 6px;
+            text-transform: uppercase;
+            letter-spacing: -0.2px;
+        }
+
+        .cond-card p {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.65;
+        }
+
+        .obs-title {
+            font-size: 13px;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--dark);
+            margin-bottom: 16px;
+            letter-spacing: 0.5px;
+        }
+
+        .obs-list {
+            list-style: none;
+        }
+
+        .obs-list li {
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.65;
+        }
+
+        .obs-list li:last-child { border-bottom: none; }
+
+        .obs-bullet {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--accent);
+            flex-shrink: 0;
+            margin-top: 8px;
+        }
+
+        .footer {
+            padding: 48px 40px;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-content {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .signature-area {
+            text-align: center;
+        }
+
+        .signature-line {
+            width: 240px;
+            border-top: 1px solid var(--border);
+            margin-bottom: 8px;
+            margin-top: 64px;
+        }
+
+        .signature-label {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .signature-label strong {
+            display: block;
+            color: var(--dark);
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .footer-validity {
+            text-align: center;
+            margin-top: 32px;
+            font-size: 11px;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        @media print {
+            body { background: white; }
+            .hero { padding: 60px 30px; min-height: auto; }
+            .hero::before, .hero::after { display: none; }
+            .container { padding: 0 30px; }
+            .section { padding: 36px 0; }
+            .invest-total { padding: 40px 0; }
+            .footer { padding: 36px 30px; }
+            .service-card:hover { transform: none; box-shadow: none; }
+            @page { margin: 10mm; size: A4; }
+        }
+
+        @media (max-width: 640px) {
+            .hero { padding: 48px 20px; min-height: auto; }
+            .container { padding: 0 20px; }
+            .services-grid { grid-template-columns: 1fr; }
+            .subtotals-bar { grid-template-columns: 1fr; }
+            .stats-row { grid-template-columns: 1fr; gap: 24px; }
+            .stat-block .stat-value { font-size: 36px; }
+            .timeline-h { flex-direction: column; gap: 20px; align-items: flex-start; }
+            .timeline-h::before { display: none; }
+            .conditions-grid { grid-template-columns: 1fr; }
+            .footer-content { flex-direction: column; gap: 40px; align-items: center; }
+            .discount-tiers { grid-template-columns: 1fr; }
+            .discount-section { padding: 24px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hero">
+        <div class="hero-logo-text">PMC</div>
+        <div class="hero-title">Proposta Comercial</div>
+        <div class="hero-subtitle">Milena · Março 2026</div>
+    </div>
+
+    <div class="container">
+        <div class="section">
+            <div class="section-number">1. Consultoria & Presença Digital</div>
+            <div class="section-desc">Social media nichada em estética + automações com IA</div>
+
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="card-icon-circle">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                    </div>
+                    <h3>Landing Page</h3>
+                    <p>Página nichada para clínicas de estética com prova social, depoimentos e CTA. Responsiva, otimizada para conversão. Possibilidade multilíngue (PT/EN) futura.</p>
+                    <div class="card-price-row">
+                        <div class="amount">R$ 490</div>
+                        <div class="period">pagamento único</div>
+                    </div>
+                </div>
+
+                <div class="service-card">
+                    <div class="card-icon-circle">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+                    </div>
+                    <h3>Agente SDR (IA)</h3>
+                    <p>Busca automática de clínicas de estética no Google Maps + abordagem via WhatsApp com oferta personalizada + fluxo de qualificação de leads.</p>
+                    <div class="card-price-row">
+                        <div class="amount">R$ 3.200</div>
+                        <div class="period">setup</div>
+                    </div>
+                </div>
+
+                <div class="service-card">
+                    <div class="card-icon-circle">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                    </div>
+                    <h3>Agente de Conteúdo (Copy + Imagem)</h3>
+                    <p>Agente copywriter para posts de redes sociais + gerador de imagens. Integrado ao fluxo de trabalho da Milena.</p>
+                    <div class="card-price-row">
+                        <div class="amount">R$ 3.200</div>
+                        <div class="period">setup</div>
+                    </div>
+                </div>
+
+                <div class="service-card">
+                    <div class="card-icon-circle">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+                    </div>
+                    <h3>Agente de Vídeo</h3>
+                    <p>Criação de vídeos curtos para anúncios e reels. Estilo similar aos já produzidos pela Cordex. Edição e formatação para redes sociais.</p>
+                    <div class="card-price-row">
+                        <div class="amount">R$ 3.200</div>
+                        <div class="period">setup</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="discount-section">
+                <div class="discount-label">Desconto Progressivo — Agentes IA</div>
+                <div class="discount-tiers">
+                    <div class="discount-tier">
+                        <div class="tier-qty">1 agente</div>
+                        <div class="tier-price">R$ 3.200</div>
+                        <div class="tier-savings">&nbsp;</div>
+                    </div>
+                    <div class="discount-tier">
+                        <div class="tier-qty">2 agentes</div>
+                        <div class="tier-price">R$ 5.800</div>
+                        <div class="tier-savings">Economia de R$ 600</div>
+                    </div>
+                    <div class="discount-tier recommended">
+                        <div class="tier-qty">3 agentes</div>
+                        <div class="tier-price">R$ 7.900</div>
+                        <div class="tier-savings">Economia de R$ 1.700</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="services-grid" style="margin-top:16px;">
+                <div class="service-card monthly-card full-width">
+                    <div class="card-icon-circle" style="background:#777;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    </div>
+                    <h3>Mensalidade — Hospedagem dos Agentes</h3>
+                    <p>Hospedagem e manutenção dos agentes IA. Suporte técnico. Custos de API não inclusos.</p>
+                    <div class="card-price-row">
+                        <div class="amount">R$ 149</div>
+                        <div class="period">por mês</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subtotals-bar">
+                <div class="subtotal-chip">
+                    <div class="st-label">Subtotal Setup</div>
+                    <div class="st-value">R$ 8.390</div>
+                </div>
+                <div class="subtotal-chip monthly-chip">
+                    <div class="st-label">Subtotal Mensal</div>
+                    <div class="st-value">R$ 149/mês</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container"><hr class="section-divider"></div>
+
+    <div class="container">
+        <div class="section" style="padding-top:40px;">
+            <div class="section-number">2. Correia Supermercados</div>
+            <div class="section-desc">Reformulação completa do site institucional</div>
+
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="card-icon-circle">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    </div>
+                    <h3>Redesign do Site</h3>
+                    <p>Atualização de fotos de fachada, remoção de lojas fechadas e adição de novas. Layout moderno estilo atacadão/oferta. Integração visual com e-commerce (Cresce Vendas). Responsivo mobile.</p>
+                    <div class="card-price-row">
+                        <div class="amount">R$ 18.000</div>
+                        <div class="period">3× R$ 6.000</div>
+                    </div>
+                </div>
+
+                <div class="service-card monthly-card">
+                    <div class="card-icon-circle" style="background:#777;">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    </div>
+                    <h3>Mensalidade — Site Supermercado</h3>
+                    <p>Hospedagem do site, manutenção, atualizações e suporte técnico.</p>
+                    <div class="card-price-row">
+                        <div class="amount">R$ 300</div>
+                        <div class="period">por mês</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subtotals-bar">
+                <div class="subtotal-chip">
+                    <div class="st-label">Subtotal Setup</div>
+                    <div class="st-value">R$ 18.000</div>
+                </div>
+                <div class="subtotal-chip monthly-chip">
+                    <div class="st-label">Subtotal Mensal</div>
+                    <div class="st-value">R$ 300/mês</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container"><hr class="section-divider"></div>
+
+    <div class="container">
+        <div class="invest-total">
+            <h2>3. Investimento Total</h2>
+            <div class="stats-row">
+                <div class="stat-block">
+                    <div class="stat-label">Total Setup (único)</div>
+                    <div class="stat-value">R$ 26.390</div>
+                </div>
+                <div class="stat-block">
+                    <div class="stat-label">Total Mensal</div>
+                    <div class="stat-value">R$ 449<span>/mês</span></div>
+                </div>
+            </div>
+            <div class="invest-breakdown">
+                <p>
+                    <strong>Setup:</strong> Landing Page R$ 490 + 3 Agentes IA R$ 7.900 + Site Correia R$ 18.000<br>
+                    <strong>Mensal:</strong> Hospedagem Agentes R$ 149 + Mensalidade Site R$ 300
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container"><hr class="section-divider"></div>
+
+    <div class="container">
+        <div class="section">
+            <div class="section-number">4. Cronograma</div>
+            <div class="section-desc">Estimativa de entrega após aprovação e início do projeto</div>
+
+            <div class="timeline-h">
+                <div class="tl-node">
+                    <div class="tl-dot">1</div>
+                    <div class="tl-label">Landing Page</div>
+                    <div class="tl-days">7–10 dias</div>
+                </div>
+                <div class="tl-node">
+                    <div class="tl-dot">2</div>
+                    <div class="tl-label">Agentes de Conteúdo</div>
+                    <div class="tl-days">10–15 dias</div>
+                </div>
+                <div class="tl-node">
+                    <div class="tl-dot">3</div>
+                    <div class="tl-label">Agente SDR (IA)</div>
+                    <div class="tl-days">15–20 dias</div>
+                </div>
+                <div class="tl-node">
+                    <div class="tl-dot">4</div>
+                    <div class="tl-label">Agente de Vídeo</div>
+                    <div class="tl-days">15–20 dias</div>
+                </div>
+                <div class="tl-node">
+                    <div class="tl-dot">5</div>
+                    <div class="tl-label">Site Correia</div>
+                    <div class="tl-days">20–30 dias</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container"><hr class="section-divider"></div>
+
+    <div class="container">
+        <div class="section">
+            <div class="section-number">5. Condições & Observações</div>
+            <div class="section-desc">Informações complementares sobre a proposta</div>
+
+            <div class="conditions-grid">
+                <div class="cond-card">
+                    <div class="cond-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+                    </div>
+                    <h4>Pagamento Setup</h4>
+                    <p>Parcelamento disponível. Condições a definir em reunião.</p>
+                </div>
+                <div class="cond-card">
+                    <div class="cond-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+                    </div>
+                    <h4>Mensalidades</h4>
+                    <p>Cobradas a partir da entrega de cada serviço correspondente.</p>
+                </div>
+                <div class="cond-card">
+                    <div class="cond-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+                    </div>
+                    <h4>Desconto Progressivo</h4>
+                    <p>Economia de até R$ 1.700 na contratação dos 3 agentes IA juntos.</p>
+                </div>
+                <div class="cond-card">
+                    <div class="cond-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
+                    <h4>Garantia</h4>
+                    <p>30 dias de suporte pós-entrega inclusos em cada serviço.</p>
+                </div>
+            </div>
+
+            <div class="obs-title">Observações</div>
+            <ul class="obs-list">
+                <li>
+                    <div class="obs-bullet"></div>
+                    <span>Materiais necessários da Milena: fotos profissionais, métricas de resultados e depoimentos de clientes.</span>
+                </li>
+                <li>
+                    <div class="obs-bullet"></div>
+                    <span>Agente de Vídeo executado em parceria com tecnologia Cordex.</span>
+                </li>
+                <li>
+                    <div class="obs-bullet"></div>
+                    <span>Custos de API não inclusos na mensalidade — cobrados conforme uso.</span>
+                </li>
+                <li>
+                    <div class="obs-bullet"></div>
+                    <span>Site Correia: integração visual com plataforma Cresce Vendas (e-commerce).</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="footer-content">
+            <div class="signature-area">
+                <div class="signature-line"></div>
+                <div class="signature-label">
+                    <strong>Fernando</strong>
+                    PMC — Tecnologia & Soluções Digitais
+                </div>
+            </div>
+            <div class="signature-area">
+                <div class="signature-line"></div>
+                <div class="signature-label">
+                    <strong>Milena</strong>
+                    Cliente
+                </div>
+            </div>
+        </div>
+        <div class="footer-validity">Proposta válida por 30 dias</div>
+    </div>
+
+</body>
+</html>
