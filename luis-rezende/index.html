@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Luis Rezende | Consultoria & Soluções Digitais</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --primary: #1a3a6b;
+      --secondary: #2563eb;
+      --accent: #f59e0b;
+      --light: #f0f4ff;
+      --text: #1e293b;
+      --muted: #64748b;
+      --white: #ffffff;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      background: var(--white);
+    }
+
+    /* HEADER */
+    header {
+      background: var(--primary);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+    }
+
+    .logo {
+      color: var(--white);
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .logo span {
+      color: var(--accent);
+    }
+
+    nav a {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      margin-left: 24px;
+      transition: color 0.2s;
+    }
+
+    nav a:hover { color: var(--accent); }
+
+    .nav-cta {
+      background: var(--accent);
+      color: var(--primary) !important;
+      padding: 8px 18px;
+      border-radius: 6px;
+      font-weight: 700 !important;
+    }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(135deg, var(--primary) 0%, #1e4fa0 60%, #2563eb 100%);
+      color: var(--white);
+      padding: 80px 24px 90px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 400px; height: 400px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 50%;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -100px; left: -60px;
+      width: 300px; height: 300px;
+      background: rgba(245,158,11,0.08);
+      border-radius: 50%;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(245,158,11,0.2);
+      border: 1px solid rgba(245,158,11,0.5);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 16px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      font-size: clamp(28px, 5vw, 48px);
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .hero h1 span { color: var(--accent); }
+
+    .hero p {
+      font-size: 17px;
+      color: rgba(255,255,255,0.82);
+      max-width: 520px;
+      margin: 0 auto 36px;
+      line-height: 1.7;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--primary);
+      padding: 14px 30px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 15px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 15px rgba(245,158,11,0.3);
+    }
+
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(245,158,11,0.4); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      border: 2px solid rgba(255,255,255,0.4);
+      padding: 14px 30px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 15px;
+      text-decoration: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,0.08); }
+
+    /* STATS */
+    .stats {
+      background: var(--white);
+      padding: 32px 24px;
+      display: flex;
+      justify-content: center;
+      gap: 48px;
+      flex-wrap: wrap;
+      border-bottom: 1px solid #e2e8f0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+
+    .stat-item { text-align: center; }
+    .stat-num {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--primary);
+    }
+    .stat-label {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    /* SECTION */
+    section { padding: 64px 24px; }
+    .container { max-width: 1000px; margin: 0 auto; }
+
+    .section-tag {
+      display: inline-block;
+      background: var(--light);
+      color: var(--secondary);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .section-title {
+      font-size: clamp(22px, 3.5vw, 32px);
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+
+    .section-subtitle {
+      font-size: 16px;
+      color: var(--muted);
+      margin-bottom: 48px;
+      max-width: 540px;
+      line-height: 1.6;
+    }
+
+    /* SERVIÇOS */
+    .services { background: var(--light); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .service-card {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 28px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      border: 1px solid #e2e8f0;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .service-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(26,58,107,0.12);
+    }
+
+    .service-icon {
+      width: 52px; height: 52px;
+      background: var(--light);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-bottom: 16px;
+    }
+
+    .service-card h3 {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+
+    .service-card p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* SOBRE */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .about-text h2 { margin-bottom: 16px; }
+
+    .about-text p {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+
+    .about-list { list-style: none; margin-top: 20px; }
+    .about-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 15px;
+      color: var(--text);
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+
+    .about-list li::before {
+      content: '✓';
+      background: var(--secondary);
+      color: white;
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .about-visual {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 16px;
+      padding: 40px;
+      color: white;
+      text-align: center;
+    }
+
+    .about-visual .av-icon { font-size: 64px; margin-bottom: 16px; }
+    .about-visual h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+    .about-visual p { font-size: 14px; opacity: 0.85; line-height: 1.6; }
+
+    /* DIFERENCIAIS */
+    .diff-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px;
+    }
+
+    .diff-card {
+      text-align: center;
+      padding: 28px 20px;
+      border-radius: 12px;
+      background: var(--white);
+      border: 1px solid #e2e8f0;
+    }
+
+    .diff-icon { font-size: 36px; margin-bottom: 12px; }
+    .diff-card h4 { font-size: 15px; font-weight: 700; color: var(--primary); margin-bottom: 6px; }
+    .diff-card p { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+    /* CONTATO */
+    .contact { background: var(--primary); color: var(--white); text-align: center; }
+
+    .contact .section-title { color: var(--white); }
+    .contact .section-subtitle { color: rgba(255,255,255,0.75); max-width: 480px; margin-left: auto; margin-right: auto; }
+
+    .contact-cards {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 40px;
+    }
+
+    .contact-card {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 12px;
+      padding: 24px 32px;
+      text-decoration: none;
+      color: var(--white);
+      transition: background 0.2s, transform 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 220px;
+    }
+
+    .contact-card:hover {
+      background: rgba(255,255,255,0.14);
+      transform: translateY(-2px);
+    }
+
+    .contact-card-icon { font-size: 28px; }
+    .contact-card-label { font-size: 12px; opacity: 0.7; margin-bottom: 3px; }
+    .contact-card-value { font-size: 16px; font-weight: 700; }
+
+    /* FOOTER */
+    footer {
+      background: #0f2447;
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      padding: 24px;
+      font-size: 13px;
+    }
+
+    footer strong { color: rgba(255,255,255,0.8); }
+
+    /* WHATSAPP FLOAT */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 24px; right: 24px;
+      background: #25D366;
+      color: white;
+      width: 58px; height: 58px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      text-decoration: none;
+      box-shadow: 0 4px 16px rgba(37,211,102,0.4);
+      z-index: 999;
+      transition: transform 0.2s;
+    }
+
+    .whatsapp-float:hover { transform: scale(1.1); }
+
+    /* MOBILE */
+    @media (max-width: 640px) {
+      nav { display: none; }
+      .about-grid { grid-template-columns: 1fr; }
+      .about-visual { display: none; }
+      .stats { gap: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo">Luis <span>Rezende</span></div>
+    <nav>
+      <a href="#servicos">Serviços</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#contato" class="nav-cta">Fale Comigo</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">Consultoria & Soluções Digitais</div>
+    <h1>Soluções completas para<br><span>você e sua empresa</span></h1>
+    <p>Certificado digital, seguros, consórcios, Gov.br e muito mais. Atendimento personalizado para pessoa física e jurídica.</p>
+    <div class="hero-btns">
+      <a href="https://wa.me/5511930639548" target="_blank" class="btn-primary">
+        💬 Falar pelo WhatsApp
+      </a>
+      <a href="#servicos" class="btn-outline">Ver Serviços</a>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat-item">
+      <div class="stat-num">+500</div>
+      <div class="stat-label">Clientes Atendidos</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">9+</div>
+      <div class="stat-label">Serviços Disponíveis</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Atendimento Online</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">Rápido</div>
+      <div class="stat-label">Resolução Eficiente</div>
+    </div>
+  </div>
+
+  <!-- SERVIÇOS -->
+  <section class="services" id="servicos">
+    <div class="container">
+      <div class="section-tag">O que ofereço</div>
+      <h2 class="section-title">Serviços para<br>facilitar sua vida</h2>
+      <p class="section-subtitle">Atendo pessoa física e jurídica com agilidade e segurança. Conheça tudo o que posso fazer por você.</p>
+
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">🔐</div>
+          <h3>Certificado Digital</h3>
+          <p>Emissão e renovação de certificado digital e-CPF e e-CNPJ para assinar documentos com validade jurídica.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🏛️</div>
+          <h3>Gov.br</h3>
+          <p>Auxílio na criação, validação e desbloqueio de conta Gov.br. Suporte completo para acesso a serviços do governo.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🛡️</div>
+          <h3>Seguros</h3>
+          <p>Seguros de vida, auto, residencial e empresarial. Encontro a melhor cobertura com o melhor custo-benefício para você.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🤝</div>
+          <h3>Consórcio</h3>
+          <p>Planejamento e aquisição de consórcios para imóveis, veículos e outros bens. Realize seus objetivos com segurança.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">📄</div>
+          <h3>Contratos</h3>
+          <p>Elaboração e análise de contratos para proteger seus negócios e garantir segurança jurídica nas suas transações.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">💼</div>
+          <h3>Consultoria</h3>
+          <p>Orientação personalizada para tomada de decisões em seguros, investimentos e planejamento financeiro.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">💳</div>
+          <h3>Renegociação de Dívidas</h3>
+          <p>Auxílio na renegociação de dívidas ativas, buscando as melhores condições para regularizar sua situação financeira.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🔎</div>
+          <h3>Consulta Serasa</h3>
+          <p>Consulta e análise do seu CPF/CNPJ no Serasa. Saiba sua situação de crédito e como melhorá-la.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🚗</div>
+          <h3>Recurso de Multas de Trânsito</h3>
+          <p>Orientação e elaboração de recursos para contestar multas de trânsito, aumentando suas chances de êxito.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOBRE -->
+  <section id="sobre">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-text">
+          <div class="section-tag">Sobre mim</div>
+          <h2 class="section-title">Comprometido com<br>o seu resultado</h2>
+          <p>Sou Luis Rezende, representante comercial especializado em soluções digitais e financeiras para pessoa física e jurídica.</p>
+          <p>Meu objetivo é simplificar processos burocráticos e oferecer soluções que realmente façam diferença na sua vida e no seu negócio.</p>
+          <ul class="about-list">
+            <li>Atendimento online rápido e eficiente</li>
+            <li>Soluções para pessoa física e jurídica</li>
+            <li>Suporte em todo o processo</li>
+            <li>Preços competitivos e transparentes</li>
+          </ul>
+        </div>
+        <div class="about-visual">
+          <div class="av-icon">🏆</div>
+          <h3>Excelência no Atendimento</h3>
+          <p>Cada cliente recebe atenção individualizada e soluções personalizadas para suas necessidades específicas.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIFERENCIAIS -->
+  <section style="background: var(--light); padding: 64px 24px;">
+    <div class="container">
+      <div style="text-align:center; margin-bottom: 40px;">
+        <div class="section-tag">Por que me escolher</div>
+        <h2 class="section-title">Meus diferenciais</h2>
+      </div>
+      <div class="diff-grid">
+        <div class="diff-card">
+          <div class="diff-icon">⚡</div>
+          <h4>Agilidade</h4>
+          <p>Resolvo sua demanda com rapidez e eficiência, sem enrolação.</p>
+        </div>
+        <div class="diff-card">
+          <div class="diff-icon">🔒</div>
+          <h4>Segurança</h4>
+          <p>Trabalho com empresas e órgãos homologados e de confiança.</p>
+        </div>
+        <div class="diff-card">
+          <div class="diff-icon">💬</div>
+          <h4>Atendimento Online</h4>
+          <p>Sem sair de casa — resolvemos tudo pelo WhatsApp ou videochamada.</p>
+        </div>
+        <div class="diff-card">
+          <div class="diff-icon">🎯</div>
+          <h4>Personalizado</h4>
+          <p>Cada caso é único. Ofereço a melhor solução para o seu perfil.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTATO -->
+  <section class="contact" id="contato">
+    <div class="container">
+      <div class="section-tag" style="background: rgba(255,255,255,0.15); color: var(--accent);">Entre em contato</div>
+      <h2 class="section-title">Pronto para te atender!</h2>
+      <p class="section-subtitle">Tire suas dúvidas ou solicite um serviço agora mesmo. Atendo pelo WhatsApp com rapidez.</p>
+
+      <div class="contact-cards">
+        <a href="https://wa.me/5511930639548" target="_blank" class="contact-card">
+          <div class="contact-card-icon">💬</div>
+          <div>
+            <div class="contact-card-label">WhatsApp</div>
+            <div class="contact-card-value">(11) 93063-9548</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 <strong>Luis Rezende</strong> — Consultoria & Soluções Digitais. Todos os direitos reservados.</p>
+  </footer>
+
+  <!-- WHATSAPP FLOAT -->
+  <a href="https://wa.me/5511930639548" target="_blank" class="whatsapp-float" title="Falar pelo WhatsApp">
+    💬
+  </a>
+
+</body>
+</html>
