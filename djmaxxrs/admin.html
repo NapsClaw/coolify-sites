@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — DJ Maxx RS</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:#06090f;color:#fff;font-family:'Plus Jakarta Sans',sans-serif;min-height:100vh;}
+
+  /* LOGIN */
+  #login-screen{position:fixed;inset:0;background:#06090f;display:flex;align-items:center;justify-content:center;z-index:100;}
+  .login-box{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);border-radius:20px;padding:48px 36px;text-align:center;max-width:360px;width:90%;}
+  .login-box h1{font-family:'Bebas Neue',sans-serif;font-size:40px;color:#f5a800;margin-bottom:6px;}
+  .login-box p{font-size:13px;color:#666;margin-bottom:28px;}
+  .login-box input{width:100%;padding:14px 16px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:10px;color:#fff;font-size:15px;margin-bottom:12px;outline:none;}
+  .login-box input:focus{border-color:rgba(245,168,0,0.4);}
+  .login-btn{width:100%;padding:14px;background:linear-gradient(135deg,#f5a800,#ff6600);border:none;border-radius:10px;color:#000;font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;cursor:pointer;}
+  .login-error{color:#ff4444;font-size:12px;margin-top:8px;display:none;}
+
+  /* ADMIN PANEL */
+  #admin-panel{display:none;max-width:700px;margin:0 auto;padding:40px 24px;}
+  .admin-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px;}
+  .admin-header h1{font-family:'Bebas Neue',sans-serif;font-size:32px;color:#f5a800;}
+  .logout-btn{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:#aaa;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:13px;}
+
+  /* STEPS */
+  .steps{display:flex;gap:8px;margin-bottom:32px;overflow-x:auto;padding-bottom:4px;}
+  .step{display:flex;align-items:center;gap:6px;padding:8px 16px;border-radius:100px;font-size:12px;font-weight:700;letter-spacing:1px;white-space:nowrap;cursor:pointer;transition:all 0.2s;}
+  .step.active{background:rgba(245,168,0,0.2);border:1px solid rgba(245,168,0,0.5);color:#f5a800;}
+  .step.done{background:rgba(80,200,80,0.1);border:1px solid rgba(80,200,80,0.3);color:#4caf50;}
+  .step.pending{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);color:#555;}
+  .step-num{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;background:currentColor;color:#000;flex-shrink:0;}
+
+  /* CARD */
+  .card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:28px;}
+  .card h2{font-family:'Bebas Neue',sans-serif;font-size:22px;color:#fff;margin-bottom:6px;letter-spacing:1px;}
+  .card p{font-size:13px;color:#666;margin-bottom:24px;}
+
+  /* FORM */
+  .form-group{margin-bottom:16px;}
+  .form-group label{display:block;font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#888;margin-bottom:6px;}
+  .form-group input,.form-group select,.form-group textarea{width:100%;padding:12px 14px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;color:#fff;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;outline:none;}
+  .form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:rgba(245,168,0,0.4);}
+  .form-group select option{background:#111;}
+  .form-group textarea{resize:vertical;min-height:80px;}
+
+  /* UPLOAD AREA */
+  .upload-area{border:2px dashed rgba(255,255,255,0.1);border-radius:12px;padding:40px 24px;text-align:center;cursor:pointer;transition:all 0.2s;position:relative;}
+  .upload-area:hover,.upload-area.drag{border-color:rgba(245,168,0,0.4);background:rgba(245,168,0,0.04);}
+  .upload-area input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+  .upload-icon{font-size:40px;margin-bottom:12px;}
+  .upload-area h3{font-size:15px;font-weight:700;margin-bottom:4px;}
+  .upload-area p{font-size:12px;color:#666;}
+  .upload-preview{margin-top:16px;}
+  .preview-capa{max-width:160px;border-radius:10px;margin:0 auto;display:block;}
+  .preview-mp3{background:rgba(245,168,0,0.08);border:1px solid rgba(245,168,0,0.2);border-radius:8px;padding:12px 16px;display:flex;align-items:center;gap:10px;font-size:13px;}
+  .preview-mp3 span{color:#f5a800;font-size:20px;}
+
+  /* BOTÕES */
+  .btn-next{width:100%;padding:16px;background:linear-gradient(135deg,#f5a800,#ff6600);border:none;border-radius:12px;color:#000;font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;cursor:pointer;margin-top:20px;transition:opacity 0.2s;}
+  .btn-next:hover{opacity:0.9;}
+  .btn-back{width:100%;padding:12px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:12px;color:#aaa;font-size:14px;cursor:pointer;margin-top:8px;}
+
+  /* REVIEW */
+  .review-row{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:20px;}
+  .review-capa{width:120px;border-radius:10px;flex-shrink:0;}
+  .review-info{flex:1;min-width:160px;}
+  .review-label{font-size:11px;color:#666;letter-spacing:1px;text-transform:uppercase;margin-bottom:2px;}
+  .review-val{font-size:14px;color:#fff;margin-bottom:12px;}
+  .review-val.title{font-family:'Bebas Neue',sans-serif;font-size:24px;}
+
+  /* SUCCESS */
+  #success-screen{display:none;text-align:center;padding:60px 24px;}
+  #success-screen .emoji{font-size:80px;margin-bottom:20px;}
+  #success-screen h1{font-family:'Bebas Neue',sans-serif;font-size:40px;color:#4caf50;margin-bottom:8px;}
+  #success-screen p{color:#888;font-size:15px;margin-bottom:24px;}
+  #success-screen a{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;background:rgba(245,168,0,0.1);border:1px solid rgba(245,168,0,0.3);border-radius:10px;color:#f5a800;text-decoration:none;font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px;}
+
+  .page{display:none;}
+  .page.active{display:block;}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-box">
+    <div style="font-size:48px;margin-bottom:8px;">🎧</div>
+    <h1>DJ MAXX RS</h1>
+    <p>Painel de Administração</p>
+    <input type="password" id="senha-input" placeholder="Digite sua senha" onkeydown="if(event.key==='Enter')entrar()">
+    <button class="login-btn" onclick="entrar()">ENTRAR</button>
+    <div class="login-error" id="login-error">Senha incorreta!</div>
+  </div>
+</div>
+
+<!-- ADMIN -->
+<div id="admin-panel">
+  <div class="admin-header">
+    <h1>🎧 PUBLICAR CD</h1>
+    <button class="logout-btn" onclick="sair()">Sair</button>
+  </div>
+
+  <!-- Steps -->
+  <div class="steps">
+    <div class="step active" id="step-1"><div class="step-num">1</div> Dados</div>
+    <div class="step pending" id="step-2"><div class="step-num">2</div> Capa</div>
+    <div class="step pending" id="step-3"><div class="step-num">3</div> MP3</div>
+    <div class="step pending" id="step-4"><div class="step-num">4</div> Publicar</div>
+  </div>
+
+  <!-- ETAPA 1: DADOS -->
+  <div class="page active" id="page-1">
+    <div class="card">
+      <h2>📋 DADOS DO CD</h2>
+      <p>Preencha as informações do seu lançamento</p>
+      <div class="form-group">
+        <label>Nome do CD *</label>
+        <input type="text" id="cd-nome" placeholder="Ex: Alerta Global Vol. 1">
+      </div>
+      <div class="form-group">
+        <label>Estilo Musical *</label>
+        <select id="cd-estilo">
+          <option value="">Selecione...</option>
+          <option>Arrocha</option><option>Axé</option><option>Bandinhas</option>
+          <option>Brega Funk</option><option>Dance</option><option>Deep House</option>
+          <option>Eletro Funk</option><option>Eletro House</option><option>Eletrônica</option>
+          <option>Flash Back</option><option>Forró</option><option>Funk</option>
+          <option>Funk Bass</option><option>Gaúcha</option><option>Gospel</option>
+          <option>Hip Hop</option><option>House</option><option>Jazz</option>
+          <option>Lofi Music</option><option>Mega Funk</option><option>Mega Mix</option>
+          <option>Modão</option><option>Music Classic</option><option>Pancadão</option>
+          <option>Pop</option><option>Psy</option><option>Reggae</option>
+          <option>Reggaeton</option><option>Rock</option><option>Sertanejo</option>
+          <option>Sertanejo Raiz</option><option>Sertanejo Remix</option>
+          <option>Trance</option><option>Trap</option><option>Trap Funk</option>
+          <option>Som Automotivo</option><option>Variado</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Descrição (opcional)</label>
+        <textarea id="cd-desc" placeholder="Fale um pouco sobre esse lançamento..."></textarea>
+      </div>
+      <div class="form-group">
+        <label>Permitir Download?</label>
+        <select id="cd-download">
+          <option value="sim">✅ Sim — liberar download gratuito</option>
+          <option value="nao">❌ Não — só ouvir no site</option>
+        </select>
+      </div>
+      <button class="btn-next" onclick="irPara(2)">PRÓXIMA ETAPA →</button>
+    </div>
+  </div>
+
+  <!-- ETAPA 2: CAPA -->
+  <div class="page" id="page-2">
+    <div class="card">
+      <h2>🖼️ CAPA DO CD</h2>
+      <p>Envie a imagem de capa (JPG ou PNG)</p>
+      <div class="upload-area" id="capa-area">
+        <input type="file" id="capa-input" accept="image/*" onchange="previewCapa(this)">
+        <div class="upload-icon">🖼️</div>
+        <h3>Toque para escolher a capa</h3>
+        <p>JPG ou PNG • Recomendado: 800x800px</p>
+      </div>
+      <div class="upload-preview" id="capa-preview"></div>
+      <button class="btn-next" onclick="irPara(3)">PRÓXIMA ETAPA →</button>
+      <button class="btn-back" onclick="irPara(1)">← Voltar</button>
+    </div>
+  </div>
+
+  <!-- ETAPA 3: MP3 -->
+  <div class="page" id="page-3">
+    <div class="card">
+      <h2>🎵 ARQUIVO MP3</h2>
+      <p>Envie o arquivo de áudio do CD</p>
+      <div class="upload-area" id="mp3-area">
+        <input type="file" id="mp3-input" accept="audio/mp3,audio/*" onchange="previewMp3(this)">
+        <div class="upload-icon">🎵</div>
+        <h3>Toque para escolher o MP3</h3>
+        <p>Formato MP3 • Qualidade recomendada: 320kbps</p>
+      </div>
+      <div class="upload-preview" id="mp3-preview"></div>
+      <button class="btn-next" onclick="irPara(4)">PRÓXIMA ETAPA →</button>
+      <button class="btn-back" onclick="irPara(2)">← Voltar</button>
+    </div>
+  </div>
+
+  <!-- ETAPA 4: REVISAR E PUBLICAR -->
+  <div class="page" id="page-4">
+    <div class="card">
+      <h2>✅ REVISAR E PUBLICAR</h2>
+      <p>Confira tudo antes de publicar</p>
+      <div class="review-row">
+        <img id="review-capa-img" src="" class="review-capa" style="display:none;">
+        <div class="review-info">
+          <div class="review-label">Nome do CD</div>
+          <div class="review-val title" id="review-nome">—</div>
+          <div class="review-label">Estilo</div>
+          <div class="review-val" id="review-estilo">—</div>
+          <div class="review-label">Download</div>
+          <div class="review-val" id="review-download">—</div>
+        </div>
+      </div>
+      <div id="review-mp3-info" style="display:none;" class="preview-mp3">
+        <span>🎵</span>
+        <div>
+          <div style="font-weight:700;font-size:13px;" id="review-mp3-nome">—</div>
+          <div style="font-size:11px;color:#888;" id="review-mp3-tam">—</div>
+        </div>
+      </div>
+      <div id="review-desc-wrap" style="margin-top:16px;display:none;">
+        <div class="review-label">Descrição</div>
+        <div class="review-val" id="review-desc" style="color:#aaa;font-size:13px;line-height:1.6;"></div>
+      </div>
+
+      <button class="btn-next" onclick="publicar()" id="publish-btn">🚀 PUBLICAR CD</button>
+      <button class="btn-back" onclick="irPara(3)">← Voltar</button>
+    </div>
+  </div>
+
+  <!-- SUCESSO -->
+  <div id="success-screen">
+    <div class="emoji">🎉</div>
+    <h1>CD PUBLICADO!</h1>
+    <p>Seu CD foi enviado com sucesso!<br>Em breve aparece no site.</p>
+    <a href="index.html">🎧 Ver meu site</a>
+    <br><br>
+    <button class="btn-back" onclick="novoCD()" style="max-width:300px;margin:0 auto;">+ Publicar outro CD</button>
+  </div>
+</div>
+
+<script>
+  var SENHA = 'maxxrs2026';
+  var dados = {};
+
+  function entrar(){
+    var s = document.getElementById('senha-input').value;
+    if(s === SENHA){
+      document.getElementById('login-screen').style.display='none';
+      document.getElementById('admin-panel').style.display='block';
+    } else {
+      document.getElementById('login-error').style.display='block';
+    }
+  }
+
+  function sair(){
+    document.getElementById('login-screen').style.display='flex';
+    document.getElementById('admin-panel').style.display='none';
+    document.getElementById('senha-input').value='';
+  }
+
+  function irPara(n){
+    // Validação etapa 1
+    if(n===2){
+      var nome = document.getElementById('cd-nome').value.trim();
+      var estilo = document.getElementById('cd-estilo').value;
+      if(!nome || !estilo){ alert('Preencha o nome e o estilo do CD!'); return; }
+      dados.nome = nome;
+      dados.estilo = estilo;
+      dados.desc = document.getElementById('cd-desc').value.trim();
+      dados.download = document.getElementById('cd-download').value;
+    }
+    if(n===4){ preencherReview(); }
+
+    // Esconder todas as páginas
+    document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+    document.getElementById('page-'+n).classList.add('active');
+
+    // Atualizar steps
+    for(var i=1;i<=4;i++){
+      var el = document.getElementById('step-'+i);
+      el.className = 'step ' + (i<n?'done':i===n?'active':'pending');
+    }
+
+    window.scrollTo(0,0);
+  }
+
+  function previewCapa(input){
+    var file = input.files[0];
+    if(!file) return;
+    dados.capaFile = file;
+    var url = URL.createObjectURL(file);
+    dados.capaUrl = url;
+    document.getElementById('capa-preview').innerHTML =
+      '<img src="'+url+'" class="preview-capa" style="margin-top:16px;">';
+  }
+
+  function previewMp3(input){
+    var file = input.files[0];
+    if(!file) return;
+    dados.mp3File = file;
+    dados.mp3Nome = file.name;
+    dados.mp3Tam = (file.size/1024/1024).toFixed(1)+' MB';
+    document.getElementById('mp3-preview').innerHTML =
+      '<div class="preview-mp3" style="margin-top:16px;"><span>🎵</span><div><div style="font-weight:700;font-size:13px;">'+file.name+'</div><div style="font-size:11px;color:#888;">'+dados.mp3Tam+'</div></div></div>';
+  }
+
+  function preencherReview(){
+    document.getElementById('review-nome').textContent = dados.nome || '—';
+    document.getElementById('review-estilo').textContent = dados.estilo || '—';
+    document.getElementById('review-download').textContent = dados.download==='sim'?'✅ Download liberado':'❌ Só ouvir no site';
+    if(dados.capaUrl){
+      var img = document.getElementById('review-capa-img');
+      img.src = dados.capaUrl; img.style.display='block';
+    }
+    if(dados.mp3Nome){
+      document.getElementById('review-mp3-info').style.display='flex';
+      document.getElementById('review-mp3-nome').textContent = dados.mp3Nome;
+      document.getElementById('review-mp3-tam').textContent = dados.mp3Tam;
+    }
+    if(dados.desc){
+      document.getElementById('review-desc-wrap').style.display='block';
+      document.getElementById('review-desc').textContent = dados.desc;
+    }
+  }
+
+  function publicar(){
+    var btn = document.getElementById('publish-btn');
+    btn.textContent = '⏳ Publicando...';
+    btn.disabled = true;
+
+    // Simula envio (aqui futuramente vai fazer upload real via API)
+    setTimeout(function(){
+      document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+      document.getElementById('success-screen').style.display='block';
+      window.scrollTo(0,0);
+    }, 2000);
+  }
+
+  function novoCD(){
+    dados = {};
+    document.getElementById('success-screen').style.display='none';
+    document.getElementById('cd-nome').value='';
+    document.getElementById('cd-estilo').value='';
+    document.getElementById('cd-desc').value='';
+    document.getElementById('capa-preview').innerHTML='';
+    document.getElementById('mp3-preview').innerHTML='';
+    irPara(1);
+  }
+</script>
+
+</body>
+</html>
