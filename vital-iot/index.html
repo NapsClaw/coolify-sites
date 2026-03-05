@@ -15,6 +15,9 @@
       --azul-claro: #48C9E6;
       --azul-marinho: #1B4F72;
       --azul-celeste: #85D8F7;
+      --vermelho: #e74c3c;
+      --verde: #27ae60;
+      --amarelo: #f39c12;
       --bg-light: #EFF3F6;
       --branco: #FFFFFF;
       --cinza: #5a6a7a;
@@ -22,640 +25,291 @@
     }
 
     html { scroll-behavior: smooth; }
+    body { font-family: 'Montserrat', sans-serif; color: #1a2a35; background: var(--branco); overflow-x: hidden; }
 
-    body {
-      font-family: 'Montserrat', sans-serif;
-      color: #1a2a35;
-      background: var(--branco);
-      overflow-x: hidden;
-    }
-
-    /* ===== HEADER / NAV ===== */
+    /* NAV */
     header {
-      position: fixed;
-      top: 0; left: 0; right: 0;
+      position: fixed; top: 0; left: 0; right: 0;
       background: rgba(255,255,255,0.97);
       backdrop-filter: blur(8px);
       z-index: 100;
       border-bottom: 1px solid rgba(11,110,122,0.1);
     }
-
     nav {
-      max-width: 1100px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 14px 20px;
+      max-width: 1100px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 20px;
     }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 0;
-      text-decoration: none;
-    }
-
-    .logo-img {
-      height: 52px;
-      width: auto;
-      display: block;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 28px;
-      list-style: none;
-    }
-
-    .nav-links a {
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--azul-marinho);
-      transition: color 0.2s;
-    }
-
+    .logo { display: flex; align-items: center; text-decoration: none; }
+    .logo-img { height: 50px; width: auto; display: block; }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a { text-decoration: none; font-size: 14px; font-weight: 600; color: var(--azul-marinho); transition: color 0.2s; }
     .nav-links a:hover { color: var(--azul-claro); }
-
     .nav-cta {
-      background: var(--azul-escuro);
-      color: var(--branco) !important;
-      padding: 10px 22px;
-      border-radius: 50px;
-      font-size: 14px !important;
-      font-weight: 700 !important;
-      text-decoration: none;
-      transition: background 0.2s, transform 0.2s;
+      background: var(--azul-escuro); color: var(--branco) !important;
+      padding: 10px 22px; border-radius: 50px; font-size: 14px !important; font-weight: 700 !important;
+      text-decoration: none; transition: background 0.2s, transform 0.2s;
     }
+    .nav-cta:hover { background: var(--azul-medio) !important; transform: translateY(-1px); color: var(--branco) !important; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+    .hamburger span { width: 25px; height: 2.5px; background: var(--azul-escuro); border-radius: 2px; }
 
-    .nav-cta:hover {
-      background: var(--azul-medio) !important;
-      transform: translateY(-1px);
-      color: var(--branco) !important;
-    }
-
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      cursor: pointer;
-      padding: 4px;
-    }
-
-    .hamburger span {
-      width: 25px;
-      height: 2.5px;
-      background: var(--azul-escuro);
-      border-radius: 2px;
-      transition: all 0.3s;
-    }
-
-    /* ===== HERO ===== */
+    /* HERO */
     .hero {
       min-height: 100vh;
-      background: linear-gradient(135deg, var(--azul-marinho) 0%, var(--azul-escuro) 50%, #0a8fa0 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 120px 20px 80px;
-      position: relative;
-      overflow: hidden;
+      background: linear-gradient(135deg, var(--azul-marinho) 0%, var(--azul-escuro) 55%, #0a8fa0 100%);
+      display: flex; align-items: center; justify-content: center;
+      padding: 110px 20px 80px; position: relative; overflow: hidden;
     }
-
     .hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2348C9E6' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-      opacity: 0.4;
+      content: ''; position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%2348C9E6' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/svg%3E");
     }
+    .waves { position: absolute; bottom: 0; left: 0; right: 0; height: 100px; overflow: hidden; }
+    .waves svg { width: 200%; animation: wave 8s linear infinite; }
+    @keyframes wave { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
 
-    /* Animated waves */
-    .waves {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 120px;
-      overflow: hidden;
+    .hero-inner {
+      position: relative; z-index: 2;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 48px; align-items: center; max-width: 1100px; width: 100%;
     }
-
-    .waves svg {
-      width: 200%;
-      animation: wave 8s linear infinite;
-    }
-
-    @keyframes wave {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      max-width: 700px;
-    }
-
-    .hero-logo-wrap {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 28px;
-    }
-
+    .hero-text { color: var(--branco); }
+    .hero-logo-wrap { margin-bottom: 24px; }
     .hero-logo-img {
-      height: 90px;
-      width: auto;
-      border-radius: 16px;
-      background: rgba(255,255,255,0.95);
-      padding: 10px 20px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+      height: 80px; width: auto; border-radius: 14px;
+      background: rgba(255,255,255,0.95); padding: 8px 18px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
     }
-
     .hero-badge {
       display: inline-block;
-      background: rgba(72,201,230,0.2);
-      border: 1px solid rgba(72,201,230,0.5);
-      color: var(--azul-celeste);
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      padding: 6px 18px;
-      border-radius: 50px;
-      margin-bottom: 24px;
+      background: rgba(72,201,230,0.2); border: 1px solid rgba(72,201,230,0.5);
+      color: var(--azul-celeste); font-size: 11px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      padding: 5px 16px; border-radius: 50px; margin-bottom: 20px;
     }
-
-    .hero h1 {
-      font-size: clamp(32px, 6vw, 58px);
-      font-weight: 800;
-      color: var(--branco);
-      line-height: 1.15;
-      margin-bottom: 20px;
-    }
-
-    .hero h1 span {
-      color: var(--azul-claro);
-    }
-
-    .hero p {
-      font-size: clamp(15px, 2.5vw, 18px);
-      color: rgba(255,255,255,0.82);
-      line-height: 1.7;
-      margin-bottom: 36px;
-      max-width: 560px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .hero-btns {
-      display: flex;
-      gap: 14px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
+    .hero h1 { font-size: clamp(28px, 4vw, 48px); font-weight: 800; line-height: 1.15; margin-bottom: 16px; }
+    .hero h1 span { color: var(--azul-claro); }
+    .hero-desc { font-size: 15px; color: rgba(255,255,255,0.82); line-height: 1.7; margin-bottom: 32px; }
+    .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
     .btn-primary {
-      background: var(--azul-claro);
-      color: var(--azul-marinho);
-      padding: 15px 32px;
-      border-radius: 50px;
-      font-weight: 800;
-      font-size: 15px;
-      text-decoration: none;
-      transition: all 0.2s;
-      display: inline-block;
+      background: var(--azul-claro); color: var(--azul-marinho);
+      padding: 14px 28px; border-radius: 50px; font-weight: 800; font-size: 14px;
+      text-decoration: none; transition: all 0.2s; display: inline-block;
     }
-
-    .btn-primary:hover {
-      background: var(--azul-celeste);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(72,201,230,0.4);
-    }
-
+    .btn-primary:hover { background: var(--azul-celeste); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(72,201,230,0.4); }
     .btn-outline {
-      border: 2px solid rgba(255,255,255,0.5);
-      color: var(--branco);
-      padding: 15px 32px;
-      border-radius: 50px;
-      font-weight: 700;
-      font-size: 15px;
-      text-decoration: none;
-      transition: all 0.2s;
-      display: inline-block;
+      border: 2px solid rgba(255,255,255,0.5); color: var(--branco);
+      padding: 14px 28px; border-radius: 50px; font-weight: 700; font-size: 14px;
+      text-decoration: none; transition: all 0.2s; display: inline-block;
     }
+    .btn-outline:hover { border-color: var(--branco); background: rgba(255,255,255,0.1); }
 
-    .btn-outline:hover {
-      border-color: var(--branco);
-      background: rgba(255,255,255,0.1);
+    /* TANQUES HERO */
+    .hero-visual { display: flex; gap: 20px; justify-content: center; align-items: flex-end; }
+    .tank-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+    .tank-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+      padding: 4px 12px; border-radius: 20px; color: white;
     }
+    .tank-label.danger { background: var(--vermelho); }
+    .tank-label.warning { background: var(--amarelo); }
+    .tank-label.ok { background: var(--verde); }
+    .tank-svg { filter: drop-shadow(0 8px 24px rgba(0,0,0,0.3)); }
+    .tank-pct {
+      font-size: 22px; font-weight: 800; color: white;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+    .tank-name { font-size: 12px; color: rgba(255,255,255,0.7); font-weight: 600; }
 
-    /* ===== STATS ===== */
+    /* STATS */
     .stats {
       background: var(--branco);
-      padding: 48px 20px;
+      padding: 40px 20px;
       box-shadow: 0 4px 24px rgba(11,110,122,0.08);
     }
-
     .stats-grid {
-      max-width: 900px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 32px;
-      text-align: center;
+      max-width: 900px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(160px,1fr));
+      gap: 28px; text-align: center;
     }
+    .stat-number { font-size: 36px; font-weight: 800; color: var(--azul-escuro); line-height: 1; display: block; }
+    .stat-label { font-size: 12px; color: var(--cinza); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; display: block; }
 
-    .stat-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
+    /* GENERIC SECTION */
+    section { padding: 80px 20px; }
+    .section-title { text-align: center; margin-bottom: 52px; }
+    .section-label { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--azul-claro); margin-bottom: 10px; }
+    .section-title h2 { font-size: clamp(24px, 4vw, 36px); font-weight: 800; color: var(--azul-marinho); line-height: 1.2; margin-bottom: 12px; }
+    .section-title p { font-size: 15px; color: var(--cinza); max-width: 540px; margin: 0 auto; line-height: 1.7; }
+
+    /* PROBLEMA / SOLUÇÃO */
+    #problema { background: var(--cinza-claro); }
+    .problema-grid {
+      max-width: 1000px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
     }
-
-    .stat-number {
-      font-size: 38px;
-      font-weight: 800;
-      color: var(--azul-escuro);
-      line-height: 1;
+    .problema-card {
+      border-radius: 20px; overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
     }
-
-    .stat-label {
-      font-size: 13px;
-      color: var(--cinza);
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
+    .problema-card-header {
+      padding: 18px 24px;
+      display: flex; align-items: center; gap: 10px;
     }
-
-    /* ===== SEÇÃO GENÉRICA ===== */
-    section {
-      padding: 80px 20px;
+    .problema-card-header.red { background: var(--vermelho); }
+    .problema-card-header.green { background: var(--verde); }
+    .problema-card-header h3 { color: white; font-size: 16px; font-weight: 800; }
+    .problema-card-body { background: white; padding: 24px; }
+    .tank-scene { display: flex; justify-content: center; margin-bottom: 20px; }
+    .problema-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .problema-list li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 14px; color: var(--cinza); line-height: 1.5;
     }
+    .problema-list li::before { content: ''; min-width: 8px; height: 8px; border-radius: 50%; margin-top: 5px; }
+    .problema-list.bad li::before { background: var(--vermelho); }
+    .problema-list.good li::before { background: var(--verde); }
 
-    .section-title {
-      text-align: center;
-      margin-bottom: 56px;
-    }
-
-    .section-label {
-      display: inline-block;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--azul-claro);
-      margin-bottom: 12px;
-    }
-
-    .section-title h2 {
-      font-size: clamp(26px, 4vw, 38px);
-      font-weight: 800;
-      color: var(--azul-marinho);
-      line-height: 1.2;
-      margin-bottom: 14px;
-    }
-
-    .section-title p {
-      font-size: 16px;
-      color: var(--cinza);
-      max-width: 560px;
-      margin: 0 auto;
-      line-height: 1.7;
-    }
-
-    /* ===== SERVIÇOS ===== */
-    #servicos {
-      background: var(--cinza-claro);
-    }
-
+    /* SERVIÇOS */
+    #servicos { background: var(--branco); }
     .services-grid {
-      max-width: 1100px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+      gap: 22px;
     }
-
     .service-card {
-      background: var(--branco);
-      border-radius: 16px;
-      padding: 32px 28px;
-      border: 1px solid rgba(11,110,122,0.08);
+      background: var(--cinza-claro); border-radius: 16px; padding: 28px 24px;
+      border: 1px solid rgba(11,110,122,0.07);
       transition: transform 0.2s, box-shadow 0.2s;
     }
-
-    .service-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 32px rgba(11,110,122,0.12);
-    }
-
+    .service-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(11,110,122,0.12); }
     .service-icon {
-      width: 56px;
-      height: 56px;
+      width: 52px; height: 52px;
       background: linear-gradient(135deg, var(--azul-escuro), var(--azul-claro));
-      border-radius: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 20px;
+      border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 18px;
     }
+    .service-icon svg { width: 26px; height: 26px; fill: none; stroke: white; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .service-card h3 { font-size: 17px; font-weight: 700; color: var(--azul-marinho); margin-bottom: 8px; }
+    .service-card p { font-size: 13px; color: var(--cinza); line-height: 1.7; }
 
-    .service-icon svg {
-      width: 28px;
-      height: 28px;
-      fill: none;
-      stroke: white;
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
+    /* KIT */
+    #kit { background: var(--cinza-claro); }
+    .kit-inner {
+      max-width: 1000px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;
     }
-
-    .service-card h3 {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--azul-marinho);
-      margin-bottom: 10px;
+    .kit-img-wrap { border-radius: 20px; overflow: hidden; box-shadow: 0 12px 40px rgba(0,0,0,0.12); }
+    .kit-img-wrap img { width: 100%; display: block; }
+    .kit-list { display: flex; flex-direction: column; gap: 20px; }
+    .kit-item { display: flex; gap: 16px; align-items: flex-start; }
+    .kit-num {
+      min-width: 40px; height: 40px; background: var(--azul-escuro);
+      border-radius: 10px; display: flex; align-items: center; justify-content: center;
+      font-size: 16px; font-weight: 800; color: white;
     }
+    .kit-item h4 { font-size: 15px; font-weight: 700; color: var(--azul-marinho); margin-bottom: 4px; }
+    .kit-item p { font-size: 13px; color: var(--cinza); line-height: 1.6; }
 
-    .service-card p {
-      font-size: 14px;
-      color: var(--cinza);
-      line-height: 1.7;
-    }
-
-    /* ===== SEGMENTOS ===== */
-    #segmentos {
-      background: var(--branco);
-    }
-
+    /* SEGMENTOS */
+    #segmentos { background: var(--branco); }
     .segments-grid {
-      max-width: 960px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 20px;
+      max-width: 960px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 20px;
     }
-
     .segment-card {
       background: linear-gradient(135deg, var(--azul-marinho), var(--azul-escuro));
-      border-radius: 16px;
-      padding: 32px 20px;
-      text-align: center;
-      color: var(--branco);
+      border-radius: 16px; padding: 28px 18px; text-align: center; color: var(--branco);
       transition: transform 0.2s, box-shadow 0.2s;
     }
+    .segment-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(27,79,114,0.3); }
+    .segment-emoji { font-size: 38px; margin-bottom: 12px; display: block; }
+    .segment-card h3 { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+    .segment-card p { font-size: 12px; opacity: 0.8; line-height: 1.5; }
 
-    .segment-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 32px rgba(27,79,114,0.3);
-    }
-
-    .segment-emoji {
-      font-size: 40px;
-      margin-bottom: 14px;
-      display: block;
-    }
-
-    .segment-card h3 {
-      font-size: 16px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .segment-card p {
-      font-size: 13px;
-      opacity: 0.8;
-      line-height: 1.5;
-    }
-
-    /* ===== COMO FUNCIONA ===== */
-    #como-funciona {
-      background: var(--cinza-claro);
-    }
-
-    .steps {
-      max-width: 900px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      gap: 32px;
-    }
-
-    .step {
-      display: flex;
-      gap: 24px;
-      align-items: flex-start;
-    }
-
+    /* COMO FUNCIONA */
+    #como-funciona { background: var(--cinza-claro); }
+    .steps { max-width: 860px; margin: 0 auto; display: flex; flex-direction: column; gap: 28px; }
+    .step { display: flex; gap: 22px; align-items: flex-start; }
     .step-number {
-      width: 52px;
-      height: 52px;
-      min-width: 52px;
+      width: 50px; height: 50px; min-width: 50px;
       background: linear-gradient(135deg, var(--azul-escuro), var(--azul-claro));
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      font-weight: 800;
-      color: var(--branco);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 18px; font-weight: 800; color: var(--branco);
     }
+    .step-content h3 { font-size: 17px; font-weight: 700; color: var(--azul-marinho); margin-bottom: 6px; }
+    .step-content p { font-size: 14px; color: var(--cinza); line-height: 1.7; }
 
-    .step-content h3 {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--azul-marinho);
-      margin-bottom: 8px;
-    }
-
-    .step-content p {
-      font-size: 15px;
-      color: var(--cinza);
-      line-height: 1.7;
-    }
-
-    /* ===== BENEFÍCIOS ===== */
+    /* BENEFÍCIOS */
     #beneficios {
       background: linear-gradient(135deg, var(--azul-marinho) 0%, var(--azul-escuro) 100%);
       color: var(--branco);
     }
-
-    #beneficios .section-title h2 {
-      color: var(--branco);
-    }
-
-    #beneficios .section-title p {
-      color: rgba(255,255,255,0.75);
-    }
-
+    #beneficios .section-title h2 { color: var(--branco); }
+    #beneficios .section-title p { color: rgba(255,255,255,0.75); }
     .benefits-grid {
-      max-width: 1000px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 24px;
+      max-width: 1000px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 20px;
     }
-
     .benefit-item {
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 14px;
-      padding: 28px 22px;
-      text-align: center;
-      transition: background 0.2s;
+      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 14px; padding: 26px 20px; text-align: center; transition: background 0.2s;
     }
+    .benefit-item:hover { background: rgba(255,255,255,0.14); }
+    .benefit-icon { font-size: 34px; margin-bottom: 12px; display: block; }
+    .benefit-item h3 { font-size: 15px; font-weight: 700; margin-bottom: 6px; color: var(--azul-claro); }
+    .benefit-item p { font-size: 12px; opacity: 0.8; line-height: 1.6; }
 
-    .benefit-item:hover {
-      background: rgba(255,255,255,0.14);
-    }
-
-    .benefit-icon {
-      font-size: 36px;
-      margin-bottom: 14px;
-      display: block;
-    }
-
-    .benefit-item h3 {
-      font-size: 16px;
-      font-weight: 700;
-      margin-bottom: 8px;
-      color: var(--azul-claro);
-    }
-
-    .benefit-item p {
-      font-size: 13px;
-      opacity: 0.8;
-      line-height: 1.6;
-    }
-
-    /* ===== CONTATO ===== */
-    #contato {
-      background: var(--branco);
-    }
-
-    .contact-wrapper {
-      max-width: 600px;
-      margin: 0 auto;
-      text-align: center;
-    }
-
-    .contact-options {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      margin-top: 32px;
-    }
-
+    /* CONTATO */
+    #contato { background: var(--branco); }
+    .contact-wrapper { max-width: 560px; margin: 0 auto; text-align: center; }
+    .contact-options { display: flex; flex-direction: column; gap: 12px; margin-top: 28px; }
     .contact-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      padding: 18px 28px;
-      border-radius: 14px;
-      font-size: 16px;
-      font-weight: 700;
-      text-decoration: none;
-      transition: all 0.2s;
+      display: flex; align-items: center; justify-content: center; gap: 12px;
+      padding: 16px 24px; border-radius: 14px; font-size: 15px; font-weight: 700;
+      text-decoration: none; transition: all 0.2s;
     }
+    .contact-btn-whatsapp { background: #25D366; color: var(--branco); }
+    .contact-btn-whatsapp:hover { background: #1da851; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,211,102,0.3); }
+    .contact-btn-email { background: var(--azul-escuro); color: var(--branco); }
+    .contact-btn-email:hover { background: var(--azul-medio); transform: translateY(-2px); }
+    .contact-btn svg { width: 22px; height: 22px; fill: currentColor; }
 
-    .contact-btn-whatsapp {
-      background: #25D366;
-      color: var(--branco);
-    }
+    /* FOOTER */
+    footer { background: var(--azul-marinho); color: rgba(255,255,255,0.7); text-align: center; padding: 24px 20px; font-size: 13px; }
+    footer strong { color: var(--branco); }
 
-    .contact-btn-whatsapp:hover {
-      background: #1da851;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(37,211,102,0.3);
-    }
-
-    .contact-btn-email {
-      background: var(--azul-escuro);
-      color: var(--branco);
-    }
-
-    .contact-btn-email:hover {
-      background: var(--azul-medio);
-      transform: translateY(-2px);
-    }
-
-    .contact-btn svg {
-      width: 22px;
-      height: 22px;
-      fill: currentColor;
-    }
-
-    /* ===== FOOTER ===== */
-    footer {
-      background: var(--azul-marinho);
-      color: rgba(255,255,255,0.7);
-      text-align: center;
-      padding: 28px 20px;
-      font-size: 13px;
-    }
-
-    footer strong {
-      color: var(--branco);
-    }
-
-    /* ===== WHATSAPP FLOAT ===== */
+    /* WHATSAPP FLOAT */
     .whatsapp-float {
-      position: fixed;
-      bottom: 24px;
-      right: 20px;
-      z-index: 999;
-      background: #25D366;
-      color: var(--branco);
-      width: 58px;
-      height: 58px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      position: fixed; bottom: 22px; right: 18px; z-index: 999;
+      background: #25D366; width: 56px; height: 56px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
       box-shadow: 0 6px 20px rgba(37,211,102,0.5);
-      transition: transform 0.2s, box-shadow 0.2s;
-      text-decoration: none;
+      transition: transform 0.2s; text-decoration: none;
     }
+    .whatsapp-float:hover { transform: scale(1.1); }
+    .whatsapp-float svg { width: 28px; height: 28px; fill: white; }
 
-    .whatsapp-float:hover {
-      transform: scale(1.1);
-      box-shadow: 0 10px 28px rgba(37,211,102,0.6);
-    }
-
-    .whatsapp-float svg {
-      width: 30px;
-      height: 30px;
-      fill: white;
-    }
-
-    /* ===== MOBILE NAV ===== */
+    /* MOBILE */
     @media (max-width: 768px) {
       .hamburger { display: flex; }
-
       .nav-links {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0; right: 0;
-        background: var(--branco);
-        flex-direction: column;
-        padding: 20px;
-        gap: 20px;
+        display: none; position: absolute; top: 100%; left: 0; right: 0;
+        background: var(--branco); flex-direction: column; padding: 20px; gap: 20px;
         border-bottom: 1px solid rgba(11,110,122,0.1);
         box-shadow: 0 8px 24px rgba(0,0,0,0.08);
       }
-
       .nav-links.open { display: flex; }
       .nav-links li:last-child { text-align: center; }
       .nav-cta { display: block; text-align: center; padding: 14px !important; }
 
-      .hero { padding: 110px 20px 100px; }
-      .hero-btns { flex-direction: column; align-items: center; }
-      .btn-primary, .btn-outline { width: 100%; max-width: 320px; text-align: center; }
+      .hero-inner { grid-template-columns: 1fr; text-align: center; gap: 32px; }
+      .hero-btns { justify-content: center; flex-direction: column; align-items: center; }
+      .btn-primary, .btn-outline { width: 100%; max-width: 300px; text-align: center; }
+      .hero-visual { justify-content: center; }
 
+      .problema-grid { grid-template-columns: 1fr; }
+      .kit-inner { grid-template-columns: 1fr; }
       .step { flex-direction: column; }
       .step-number { margin: 0 auto; }
       .step-content { text-align: center; }
@@ -670,38 +324,119 @@
     <a href="#" class="logo">
       <img src="logo.jpg" alt="Vital IoT" class="logo-img" />
     </a>
-
     <ul class="nav-links" id="navLinks">
+      <li><a href="#problema">O Problema</a></li>
       <li><a href="#servicos">Serviços</a></li>
+      <li><a href="#kit">Kit IoT</a></li>
       <li><a href="#segmentos">Segmentos</a></li>
-      <li><a href="#como-funciona">Como Funciona</a></li>
       <li><a href="#contato" class="nav-cta">Fale Conosco</a></li>
     </ul>
-
-    <div class="hamburger" id="hamburger" onclick="toggleMenu()">
-      <span></span><span></span><span></span>
-    </div>
+    <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
   </nav>
 </header>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-content">
-    <div class="hero-logo-wrap">
-      <img src="logo.jpg" alt="Vital IoT" class="hero-logo-img" />
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-logo-wrap">
+        <img src="logo.jpg" alt="Vital IoT" class="hero-logo-img" />
+      </div>
+      <div class="hero-badge">🌊 Tecnologia IoT em tempo real</div>
+      <h1>Monitoramento inteligente do <span>nível de água</span></h1>
+      <p class="hero-desc">Acompanhe reservatórios, caixas d'água e tanques de qualquer lugar — com alertas automáticos, dados precisos e total tranquilidade.</p>
+      <div class="hero-btns">
+        <a href="#contato" class="btn-primary">Solicitar Demonstração</a>
+        <a href="#servicos" class="btn-outline">Ver Soluções</a>
+      </div>
     </div>
-    <div class="hero-badge">🌊 Tecnologia IoT em tempo real</div>
-    <h1>Monitoramento inteligente do <span>nível de água</span></h1>
-    <p>Acompanhe reservatórios, caixas d'água e tanques de qualquer lugar, com alertas automáticos e dados precisos em tempo real.</p>
-    <div class="hero-btns">
-      <a href="#contato" class="btn-primary">Solicitar Demonstração</a>
-      <a href="#servicos" class="btn-outline">Ver Soluções</a>
+
+    <!-- TANQUES ANIMADOS -->
+    <div class="hero-visual">
+      <!-- Tanque nível baixo -->
+      <div class="tank-wrap">
+        <div class="tank-label danger">⚠ Nível Baixo</div>
+        <svg class="tank-svg" width="110" height="160" viewBox="0 0 110 160">
+          <!-- corpo tanque -->
+          <rect x="15" y="20" width="80" height="120" rx="8" fill="#1B4F72" stroke="#48C9E6" stroke-width="2"/>
+          <!-- tampa -->
+          <rect x="10" y="12" width="90" height="14" rx="6" fill="#2E86C1"/>
+          <!-- água nível baixo 15% -->
+          <rect x="17" y="118" width="76" height="20" rx="4" fill="#e74c3c" opacity="0.85"/>
+          <!-- ondinha -->
+          <path d="M17 118 Q29 113 41 118 Q53 123 65 118 Q77 113 93 118" fill="none" stroke="#ff6b6b" stroke-width="2"/>
+          <!-- escala direita -->
+          <line x1="97" y1="22" x2="97" y2="138" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+          <line x1="93" y1="62" x2="97" y2="62" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
+          <line x1="93" y1="82" x2="97" y2="82" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
+          <line x1="93" y1="102" x2="97" y2="102" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
+          <!-- % texto -->
+          <text x="55" y="92" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="28" font-weight="800" font-family="Montserrat,sans-serif">12%</text>
+          <!-- ícone alerta -->
+          <text x="55" y="135" text-anchor="middle" fill="#ff6b6b" font-size="11" font-weight="700" font-family="Montserrat,sans-serif">CRÍTICO</text>
+          <!-- sensor fio -->
+          <line x1="55" y1="26" x2="55" y2="115" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <circle cx="55" cy="118" r="4" fill="#48C9E6"/>
+        </svg>
+        <div class="tank-pct">12%</div>
+        <div class="tank-name">Reservatório A</div>
+      </div>
+
+      <!-- Tanque transbordando -->
+      <div class="tank-wrap">
+        <div class="tank-label warning">⚠ Transbordando</div>
+        <svg class="tank-svg" width="110" height="160" viewBox="0 0 110 160">
+          <!-- overflow water -->
+          <ellipse cx="55" cy="20" rx="45" ry="8" fill="#f39c12" opacity="0.5"/>
+          <!-- água caindo pelo lado -->
+          <path d="M15 24 Q8 40 10 60 Q8 75 12 90" fill="none" stroke="#f39c12" stroke-width="3" stroke-linecap="round" opacity="0.7"/>
+          <path d="M95 24 Q102 40 100 60 Q102 75 98 90" fill="none" stroke="#f39c12" stroke-width="3" stroke-linecap="round" opacity="0.7"/>
+          <!-- corpo tanque -->
+          <rect x="15" y="20" width="80" height="120" rx="8" fill="#1B4F72" stroke="#f39c12" stroke-width="2.5"/>
+          <!-- tampa -->
+          <rect x="10" y="12" width="90" height="14" rx="6" fill="#2E86C1"/>
+          <!-- água 98% -->
+          <rect x="17" y="24" width="76" height="114" rx="4" fill="#2E86C1" opacity="0.75"/>
+          <!-- ondinha topo -->
+          <path d="M17 28 Q29 23 41 28 Q53 33 65 28 Q77 23 93 28" fill="none" stroke="#f39c12" stroke-width="2.5"/>
+          <!-- escala -->
+          <line x1="97" y1="22" x2="97" y2="138" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+          <!-- % texto -->
+          <text x="55" y="92" text-anchor="middle" fill="rgba(255,255,255,0.55)" font-size="28" font-weight="800" font-family="Montserrat,sans-serif">98%</text>
+          <text x="55" y="135" text-anchor="middle" fill="#f39c12" font-size="11" font-weight="700" font-family="Montserrat,sans-serif">CHEIO</text>
+          <!-- sensor -->
+          <line x1="55" y1="26" x2="55" y2="25" stroke="rgba(255,255,255,0.3)" stroke-width="1.5"/>
+          <circle cx="55" cy="26" r="4" fill="#f39c12"/>
+        </svg>
+        <div class="tank-pct" style="color:#f39c12">98%</div>
+        <div class="tank-name">Reservatório B</div>
+      </div>
+
+      <!-- Tanque normal -->
+      <div class="tank-wrap">
+        <div class="tank-label ok">✓ Normal</div>
+        <svg class="tank-svg" width="110" height="160" viewBox="0 0 110 160">
+          <rect x="15" y="20" width="80" height="120" rx="8" fill="#1B4F72" stroke="#27ae60" stroke-width="2"/>
+          <rect x="10" y="12" width="90" height="14" rx="6" fill="#2E86C1"/>
+          <!-- água 62% -->
+          <rect x="17" y="72" width="76" height="66" rx="4" fill="#2E86C1" opacity="0.8"/>
+          <path d="M17 72 Q29 67 41 72 Q53 77 65 72 Q77 67 93 72" fill="none" stroke="#48C9E6" stroke-width="2"/>
+          <line x1="97" y1="22" x2="97" y2="138" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+          <text x="55" y="115" text-anchor="middle" fill="rgba(255,255,255,0.7)" font-size="26" font-weight="800" font-family="Montserrat,sans-serif">62%</text>
+          <text x="55" y="135" text-anchor="middle" fill="#27ae60" font-size="11" font-weight="700" font-family="Montserrat,sans-serif">NORMAL</text>
+          <line x1="55" y1="26" x2="55" y2="69" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <circle cx="55" cy="72" r="4" fill="#48C9E6"/>
+        </svg>
+        <div class="tank-pct" style="color:#27ae60">62%</div>
+        <div class="tank-name">Reservatório C</div>
+      </div>
     </div>
   </div>
+
   <div class="waves">
     <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
-      <path d="M0,60 C200,110 400,10 600,60 C800,110 1000,10 1200,60 L1200,120 L0,120 Z" fill="rgba(255,255,255,0.08)"/>
-      <path d="M0,80 C200,30 400,110 600,80 C800,30 1000,110 1200,80 L1200,120 L0,120 Z" fill="rgba(255,255,255,0.05)"/>
+      <path d="M0,60 C200,110 400,10 600,60 C800,110 1000,10 1200,60 L1200,120 L0,120 Z" fill="rgba(255,255,255,0.07)"/>
+      <path d="M0,80 C200,30 400,110 600,80 C800,30 1000,110 1200,80 L1200,120 L0,120 Z" fill="rgba(255,255,255,0.04)"/>
     </svg>
   </div>
 </section>
@@ -709,24 +444,99 @@
 <!-- STATS -->
 <div class="stats">
   <div class="stats-grid">
-    <div class="stat-item">
+    <div>
       <span class="stat-number">24/7</span>
       <span class="stat-label">Monitoramento contínuo</span>
     </div>
-    <div class="stat-item">
+    <div>
       <span class="stat-number">±1%</span>
       <span class="stat-label">Precisão de leitura</span>
     </div>
-    <div class="stat-item">
+    <div>
       <span class="stat-number">100%</span>
       <span class="stat-label">Online, sem cabos</span>
     </div>
-    <div class="stat-item">
+    <div>
       <span class="stat-number">&lt;5s</span>
       <span class="stat-label">Tempo de alerta</span>
     </div>
   </div>
 </div>
+
+<!-- PROBLEMA / SOLUÇÃO -->
+<section id="problema">
+  <div class="section-title">
+    <span class="section-label">O cenário atual</span>
+    <h2>Você conhece esses problemas?</h2>
+    <p>Sem monitoramento inteligente, qualquer negócio fica vulnerável a imprevistos hídricos.</p>
+  </div>
+  <div class="problema-grid">
+    <!-- SEM MONITORAMENTO -->
+    <div class="problema-card">
+      <div class="problema-card-header red">
+        <svg width="22" height="22" fill="white" viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13" stroke="white" stroke-width="2" stroke-linecap="round"/><line x1="12" y1="17" x2="12.01" y2="17" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+        <h3>❌ Sem monitoramento</h3>
+      </div>
+      <div class="problema-card-body">
+        <div class="tank-scene">
+          <svg width="90" height="130" viewBox="0 0 90 130">
+            <rect x="10" y="15" width="70" height="105" rx="7" fill="#fef3f2" stroke="#e74c3c" stroke-width="2"/>
+            <rect x="6" y="8" width="78" height="12" rx="5" fill="#e74c3c" opacity="0.4"/>
+            <!-- água apenas no fundo -->
+            <rect x="12" y="108" width="66" height="10" rx="3" fill="#e74c3c" opacity="0.6"/>
+            <!-- racha/problema -->
+            <path d="M35 50 L40 65 L35 80" fill="none" stroke="#e74c3c" stroke-width="2" stroke-linecap="round"/>
+            <!-- gotinha saindo -->
+            <ellipse cx="33" cy="82" rx="3" ry="4" fill="#e74c3c" opacity="0.6"/>
+            <text x="45" y="88" text-anchor="middle" fill="#e74c3c" font-size="22" font-weight="800" font-family="Montserrat,sans-serif">8%</text>
+            <text x="45" y="103" text-anchor="middle" fill="#e74c3c" font-size="9" font-weight="700" font-family="Montserrat,sans-serif">SEM ÁGUA!</text>
+          </svg>
+        </div>
+        <ul class="problema-list bad">
+          <li>Caixa d'água vazia sem aviso prévio</li>
+          <li>Checagem manual diária — tempo perdido</li>
+          <li>Transbordamentos geram desperdício e dano</li>
+          <li>Moradores insatisfeitos e reclamações</li>
+          <li>Impossível agir antes do problema</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- COM VITAL IOT -->
+    <div class="problema-card">
+      <div class="problema-card-header green">
+        <svg width="22" height="22" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        <h3>✅ Com a Vital IoT</h3>
+      </div>
+      <div class="problema-card-body">
+        <div class="tank-scene">
+          <svg width="90" height="130" viewBox="0 0 90 130">
+            <rect x="10" y="15" width="70" height="105" rx="7" fill="#f0fdf4" stroke="#27ae60" stroke-width="2"/>
+            <rect x="6" y="8" width="78" height="12" rx="5" fill="#2E86C1"/>
+            <!-- água 65% -->
+            <rect x="12" y="57" width="66" height="61" rx="3" fill="#2E86C1" opacity="0.7"/>
+            <path d="M12 57 Q22 52 32 57 Q42 62 52 57 Q62 52 78 57" fill="none" stroke="#48C9E6" stroke-width="2"/>
+            <!-- sensor -->
+            <line x1="45" y1="19" x2="45" y2="54" stroke="rgba(0,0,0,0.2)" stroke-width="1.5" stroke-dasharray="3,3"/>
+            <circle cx="45" cy="57" r="3.5" fill="#27ae60"/>
+            <!-- sinal wifi -->
+            <path d="M36 35 Q45 30 54 35" fill="none" stroke="#27ae60" stroke-width="2" stroke-linecap="round"/>
+            <path d="M32 30 Q45 23 58 30" fill="none" stroke="#27ae60" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+            <text x="45" y="90" text-anchor="middle" fill="rgba(255,255,255,0.9)" font-size="22" font-weight="800" font-family="Montserrat,sans-serif">65%</text>
+            <text x="45" y="105" text-anchor="middle" fill="#27ae60" font-size="9" font-weight="700" font-family="Montserrat,sans-serif">NORMAL</text>
+          </svg>
+        </div>
+        <ul class="problema-list good">
+          <li>Alertas automáticos no celular antes de faltar água</li>
+          <li>Fim da checagem manual — tudo online</li>
+          <li>Notificação quando nível ultrapassa limite</li>
+          <li>Relatórios para síndicos e gestores</li>
+          <li>Antecipe problemas antes que afetem operações</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- SERVIÇOS -->
 <section id="servicos">
@@ -738,14 +548,14 @@
   <div class="services-grid">
     <div class="service-card">
       <div class="service-icon">
-        <svg viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/><path d="M12 6v6l4 2"/></svg>
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
       </div>
       <h3>Monitoramento em Tempo Real</h3>
       <p>Sensores IoT instalados nos reservatórios transmitem dados continuamente para sua dashboard, acessível pelo celular ou computador.</p>
     </div>
     <div class="service-card">
       <div class="service-icon">
-        <svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
       </div>
       <h3>Alertas Automáticos</h3>
       <p>Receba notificações no WhatsApp ou e-mail quando o nível estiver baixo, alto ou em situação anormal. Nunca seja pego de surpresa.</p>
@@ -759,14 +569,14 @@
     </div>
     <div class="service-card">
       <div class="service-icon">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
       </div>
       <h3>Acesso Remoto</h3>
       <p>Visualize todos os seus reservatórios em um único painel, de qualquer lugar do mundo, pelo celular ou computador.</p>
     </div>
     <div class="service-card">
       <div class="service-icon">
-        <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
       </div>
       <h3>Instalação e Suporte</h3>
       <p>Nossa equipe realiza toda a instalação e configuração dos sensores. Suporte técnico disponível para garantir seu sistema sempre funcionando.</p>
@@ -777,6 +587,50 @@
       </div>
       <h3>Multi-reservatório</h3>
       <p>Monitore vários pontos simultaneamente — caixas d'água, cisternas, tanques industriais — em um único sistema integrado.</p>
+    </div>
+  </div>
+</section>
+
+<!-- KIT IoT -->
+<section id="kit">
+  <div class="section-title">
+    <span class="section-label">Tecnologia</span>
+    <h2>Kit de Monitoramento IoT</h2>
+    <p>Hardware profissional, instalação simples e dashboard intuitiva para gestão completa do nível de água.</p>
+  </div>
+  <div class="kit-inner">
+    <div class="kit-img-wrap">
+      <img src="kit.jpg" alt="Kit de Monitoramento Vital IoT — Central, Sonda e Dashboard" />
+    </div>
+    <div class="kit-list">
+      <div class="kit-item">
+        <div class="kit-num">01</div>
+        <div>
+          <h4>Central de Monitoramento</h4>
+          <p>Central PPA/METAM MULTICOM: processa os dados dos sensores e transmite em tempo real para a plataforma web e app.</p>
+        </div>
+      </div>
+      <div class="kit-item">
+        <div class="kit-num">02</div>
+        <div>
+          <h4>Sonda de Nível Hidrostática</h4>
+          <p>Sensor submerso de alta precisão que mede o nível da água em metros de coluna d'água (mca), com precisão de ±1%.</p>
+        </div>
+      </div>
+      <div class="kit-item">
+        <div class="kit-num">03</div>
+        <div>
+          <h4>Dashboard Web & App Mobile</h4>
+          <p>Acompanhe em tempo real o nível de cada reservatório, o status das bombas e receba alertas diretamente no seu celular.</p>
+        </div>
+      </div>
+      <div class="kit-item">
+        <div class="kit-num">04</div>
+        <div>
+          <h4>Alertas no WhatsApp</h4>
+          <p>Notificações automáticas quando o nível está baixo, alto ou em tendência de esvaziamento — sem precisar abrir o app.</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -797,17 +651,17 @@
     <div class="segment-card">
       <span class="segment-emoji">🏭</span>
       <h3>Indústrias</h3>
-      <p>Monitoramento de tanques de processo, controle de estoque hídrico e integração com sistemas de automação.</p>
+      <p>Monitoramento de tanques de processo, controle de estoque hídrico e integração com automação.</p>
     </div>
     <div class="segment-card">
       <span class="segment-emoji">🏨</span>
       <h3>Hotéis</h3>
-      <p>Nunca deixe hóspedes sem água. Alertas preventivos garantem o abastecimento contínuo e a qualidade do serviço.</p>
+      <p>Alertas preventivos garantem o abastecimento contínuo e a qualidade do serviço aos hóspedes.</p>
     </div>
     <div class="segment-card">
       <span class="segment-emoji">🌴</span>
       <h3>Pousadas</h3>
-      <p>Solução simples e eficaz para pousadas e resorts, com dashboard intuitivo e alertas no WhatsApp.</p>
+      <p>Solução simples e eficaz com dashboard intuitivo e alertas direto no WhatsApp do gestor.</p>
     </div>
   </div>
 </section>
@@ -927,12 +781,8 @@
   function toggleMenu() {
     document.getElementById('navLinks').classList.toggle('open');
   }
-
-  // Smooth close on link click
   document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', () => {
-      document.getElementById('navLinks').classList.remove('open');
-    });
+    link.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
   });
 </script>
 
