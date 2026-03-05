@@ -300,6 +300,30 @@ footer span{color:var(--red)}
 
 
 
+<!-- VINHETA AUTOPLAY -->
+<audio id="vinheta" preload="auto">
+  <source src="vinheta-elzo.mp3" type="audio/mpeg">
+</audio>
+<script>
+  // Toca vinheta aleatória ao primeiro clique/toque na página
+  (function(){
+    var played = false;
+    var vinhetas = ['vinheta-elzo.mp3','vinheta-cuca.mp3'];
+    function playVinheta(){
+      if(played) return;
+      played = true;
+      var a = document.getElementById('vinheta');
+      a.src = vinhetas[Math.floor(Math.random()*vinhetas.length)];
+      a.volume = 0.7;
+      a.play().catch(function(){});
+      document.removeEventListener('click', playVinheta);
+      document.removeEventListener('touchstart', playVinheta);
+    }
+    document.addEventListener('click', playVinheta);
+    document.addEventListener('touchstart', playVinheta);
+  })();
+</script>
+
 <nav>
   <a href="#" class="nav-logo">POWER <span>SOM</span></a>
   <a href="#cadastro" class="nav-cta">Quero Entrar</a>
