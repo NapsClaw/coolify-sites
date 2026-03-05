@@ -150,6 +150,48 @@
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--white);font-family:var(--font-b);overflow-x:hidden}
 
+/* MOVING LIGHTS BACKGROUND */
+#moving-lights{
+  position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
+}
+.ml-beam{
+  position:absolute;
+  bottom:0;
+  width:2px;
+  height:60vh;
+  transform-origin:bottom center;
+  opacity:0.18;
+  filter:blur(1px);
+}
+.ml-beam::after{
+  content:'';position:absolute;
+  top:0;left:-40px;right:-40px;bottom:0;
+  background:inherit;
+  filter:blur(30px);
+  opacity:0.3;
+}
+.ml-1{left:5%;background:linear-gradient(to top,#f5a800,transparent);animation:mlSwing1 4s ease-in-out infinite alternate;}
+.ml-2{left:15%;background:linear-gradient(to top,#1a7fd4,transparent);animation:mlSwing2 5s ease-in-out infinite alternate;}
+.ml-3{left:28%;background:linear-gradient(to top,rgba(255,255,255,0.8),transparent);animation:mlSwing3 3.5s ease-in-out infinite alternate;}
+.ml-4{left:42%;background:linear-gradient(to top,#f5a800,transparent);animation:mlSwing1 6s ease-in-out infinite alternate-reverse;}
+.ml-5{left:58%;background:linear-gradient(to top,#1a7fd4,transparent);animation:mlSwing2 4.5s ease-in-out infinite alternate-reverse;}
+.ml-6{left:72%;background:linear-gradient(to top,rgba(255,255,255,0.8),transparent);animation:mlSwing3 5.5s ease-in-out infinite alternate;}
+.ml-7{left:85%;background:linear-gradient(to top,#f5a800,transparent);animation:mlSwing1 3.8s ease-in-out infinite alternate-reverse;}
+.ml-8{left:95%;background:linear-gradient(to top,#1a7fd4,transparent);animation:mlSwing2 4.2s ease-in-out infinite alternate;}
+
+@keyframes mlSwing1{
+  0%{transform:rotate(-30deg);opacity:0.15;}
+  100%{transform:rotate(20deg);opacity:0.25;}
+}
+@keyframes mlSwing2{
+  0%{transform:rotate(20deg);opacity:0.2;}
+  100%{transform:rotate(-25deg);opacity:0.12;}
+}
+@keyframes mlSwing3{
+  0%{transform:rotate(-15deg);opacity:0.1;}
+  100%{transform:rotate(30deg);opacity:0.22;}
+}
+
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;background:rgba(4,6,10,0.95);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,34,0,0.2)}
 .nav-logo{font-family:var(--font-d);font-size:26px;color:var(--white);letter-spacing:2px;text-decoration:none}
@@ -237,6 +279,18 @@ footer span{color:var(--red)}
 </style>
 </head>
 <body>
+
+<!-- MOVING LIGHTS FUNDO -->
+<div id="moving-lights">
+  <div class="ml-beam ml-1"></div>
+  <div class="ml-beam ml-2"></div>
+  <div class="ml-beam ml-3"></div>
+  <div class="ml-beam ml-4"></div>
+  <div class="ml-beam ml-5"></div>
+  <div class="ml-beam ml-6"></div>
+  <div class="ml-beam ml-7"></div>
+  <div class="ml-beam ml-8"></div>
+</div>
 
 <!-- INTRO OVERLAY -->
 <div id="intro-overlay">
