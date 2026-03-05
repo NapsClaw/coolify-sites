@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alerta Global — DJ Maxx RS</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:#06090f;color:#fff;font-family:'Plus Jakarta Sans',sans-serif;min-height:100vh;}
+  .header{padding:20px 24px;display:flex;align-items:center;gap:16px;border-bottom:1px solid rgba(255,255,255,0.07);}
+  .header a{color:#aaa;text-decoration:none;font-size:13px;display:flex;align-items:center;gap:6px;}
+  .header a:hover{color:#fff;}
+  .container{max-width:700px;margin:0 auto;padding:40px 24px;}
+  .cd-hero{display:flex;gap:28px;align-items:flex-start;flex-wrap:wrap;}
+  .cd-capa{width:200px;min-width:160px;border-radius:12px;box-shadow:0 8px 40px rgba(0,0,0,0.6);flex-shrink:0;}
+  .cd-info{flex:1;min-width:200px;}
+  .cd-tag{font-size:11px;letter-spacing:3px;color:#f5a800;text-transform:uppercase;margin-bottom:8px;}
+  .cd-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(32px,8vw,52px);line-height:1;margin-bottom:6px;}
+  .cd-artist{font-size:16px;color:#aaa;margin-bottom:16px;}
+  .cd-meta{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px;}
+  .cd-badge{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:100px;padding:4px 14px;font-size:11px;color:#888;letter-spacing:1px;}
+
+  /* Player */
+  .player{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:20px;margin-top:16px;}
+  .player-title{font-size:13px;font-weight:700;color:#fff;margin-bottom:4px;}
+  .player-sub{font-size:11px;color:#666;margin-bottom:16px;}
+  .player-controls{display:flex;align-items:center;gap:12px;}
+  .play-btn{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#f5a800,#ff6600);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;transition:transform 0.15s;}
+  .play-btn:hover{transform:scale(1.08);}
+  .progress-wrap{flex:1;}
+  .progress-bar{width:100%;height:5px;background:rgba(255,255,255,0.1);border-radius:10px;cursor:pointer;position:relative;margin-bottom:8px;}
+  .progress-fill{height:100%;background:linear-gradient(90deg,#f5a800,#ff6600);border-radius:10px;width:0%;transition:width 0.3s;}
+  .time-row{display:flex;justify-content:space-between;font-size:11px;color:#666;}
+  .volume-row{display:flex;align-items:center;gap:8px;margin-top:12px;}
+  .volume-row span{font-size:14px;}
+  .vol-slider{-webkit-appearance:none;flex:1;height:4px;border-radius:10px;background:rgba(255,255,255,0.1);outline:none;}
+  .vol-slider::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;border-radius:50%;background:#f5a800;cursor:pointer;}
+
+  .download-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px;border-radius:10px;background:linear-gradient(135deg,rgba(245,168,0,0.15),rgba(255,102,0,0.1));border:1px solid rgba(245,168,0,0.3);color:#f5a800;font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px;text-decoration:none;margin-top:16px;transition:all 0.2s;}
+  .download-btn:hover{background:linear-gradient(135deg,rgba(245,168,0,0.25),rgba(255,102,0,0.2));}
+
+  .back-site{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:12px;border-radius:10px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);color:#aaa;font-size:13px;text-decoration:none;margin-top:10px;}
+  .back-site:hover{color:#fff;}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <a href="index.html">← Voltar ao site</a>
+</div>
+
+<div class="container">
+  <div class="cd-hero">
+    <img src="capa-alerta-global.jpg" alt="Alerta Global" class="cd-capa">
+    <div class="cd-info">
+      <div class="cd-tag">🎧 CD Lançamento</div>
+      <div class="cd-title">ALERTA GLOBAL</div>
+      <div class="cd-artist">DJ Maxx RS</div>
+      <div class="cd-meta">
+        <span class="cd-badge">🎵 Eletrônica</span>
+        <span class="cd-badge">📅 2026</span>
+        <span class="cd-badge">🔊 Som Automotivo</span>
+      </div>
+
+      <!-- Player -->
+      <div class="player">
+        <div class="player-title">Alerta Global — Tensão Militar Internacional</div>
+        <div class="player-sub">DJ Maxx RS</div>
+        <div class="player-controls">
+          <button class="play-btn" id="playBtn" onclick="togglePlay()">▶️</button>
+          <div class="progress-wrap">
+            <div class="progress-bar" id="progressBar" onclick="seek(event)">
+              <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="time-row">
+              <span id="currentTime">0:00</span>
+              <span id="totalTime">0:00</span>
+            </div>
+          </div>
+        </div>
+        <div class="volume-row">
+          <span>🔈</span>
+          <input type="range" class="vol-slider" id="volSlider" min="0" max="1" step="0.01" value="0.8" oninput="setVolume(this.value)">
+          <span>🔊</span>
+        </div>
+      </div>
+
+      <a href="alerta-global.mp3" download="Alerta Global - DJ Maxx RS.mp3" class="download-btn">⬇️ BAIXAR CD</a>
+      <a href="index.html" class="back-site">🎧 Ver site completo do DJ Maxx RS</a>
+    </div>
+  </div>
+</div>
+
+<audio id="audio" src="alerta-global.mp3" preload="metadata"></audio>
+
+<script>
+  var audio = document.getElementById('audio');
+  var playBtn = document.getElementById('playBtn');
+  var progressFill = document.getElementById('progressFill');
+  var currentTimeEl = document.getElementById('currentTime');
+  var totalTimeEl = document.getElementById('totalTime');
+  var playing = false;
+
+  function fmt(s){ var m=Math.floor(s/60); var sec=Math.floor(s%60); return m+':'+(sec<10?'0':'')+sec; }
+
+  audio.addEventListener('loadedmetadata', function(){ totalTimeEl.textContent = fmt(audio.duration); });
+  audio.addEventListener('timeupdate', function(){
+    currentTimeEl.textContent = fmt(audio.currentTime);
+    progressFill.style.width = (audio.currentTime/audio.duration*100)+'%';
+  });
+  audio.addEventListener('ended', function(){ playing=false; playBtn.textContent='▶️'; });
+
+  function togglePlay(){
+    if(!playing){ audio.play(); playing=true; playBtn.textContent='⏸️'; }
+    else { audio.pause(); playing=false; playBtn.textContent='▶️'; }
+  }
+  function seek(e){
+    var bar = document.getElementById('progressBar');
+    var ratio = e.offsetX / bar.offsetWidth;
+    audio.currentTime = ratio * audio.duration;
+  }
+  function setVolume(v){ audio.volume = v; }
+</script>
+
+</body>
+</html>
