@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Green Fly | THC em Gotas</title>
+  <meta name="description" content="Green Fly - Produtos de cannabis medicinal de alta qualidade. THC em gotas com licença regulatória." />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --green-dark: #0d3b1e;
+      --green-mid: #1a6b38;
+      --green-light: #2da05a;
+      --green-bright: #3cc76e;
+      --green-neon: #5dfc8d;
+      --gold: #c9a84c;
+      --white: #f5f9f6;
+      --gray: #8ca898;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background-color: var(--green-dark);
+      color: var(--white);
+      line-height: 1.6;
+    }
+
+    /* HEADER */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(13, 59, 30, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(93, 252, 141, 0.15);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+    }
+
+    .logo-text {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      color: var(--green-neon);
+      text-transform: uppercase;
+    }
+
+    .header-cta {
+      background: var(--green-light);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .header-cta:hover { background: var(--green-bright); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 100px 24px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 40%, rgba(45, 160, 90, 0.18) 0%, transparent 70%),
+                  radial-gradient(ellipse at 80% 80%, rgba(93, 252, 141, 0.08) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(93, 252, 141, 0.12);
+      border: 1px solid rgba(93, 252, 141, 0.3);
+      border-radius: 50px;
+      padding: 6px 16px;
+      font-size: 13px;
+      color: var(--green-neon);
+      margin-bottom: 28px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      font-size: clamp(38px, 9vw, 72px);
+      font-weight: 900;
+      line-height: 1.05;
+      margin-bottom: 20px;
+      letter-spacing: -1px;
+    }
+
+    .hero h1 span {
+      color: var(--green-neon);
+    }
+
+    .hero p {
+      font-size: clamp(16px, 3vw, 20px);
+      color: var(--gray);
+      max-width: 480px;
+      margin: 0 auto 40px;
+    }
+
+    .hero-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, var(--green-light), var(--green-bright));
+      color: white;
+      text-decoration: none;
+      padding: 18px 36px;
+      border-radius: 50px;
+      font-size: 17px;
+      font-weight: 800;
+      box-shadow: 0 8px 30px rgba(45, 160, 90, 0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .hero-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(45, 160, 90, 0.55);
+    }
+
+    .hero-img {
+      margin-top: 50px;
+      width: 100%;
+      max-width: 320px;
+      position: relative;
+    }
+
+    .drop-visual {
+      width: 180px;
+      height: 240px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .drop-bottle {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(160deg, rgba(93,252,141,0.15), rgba(13,59,30,0.8));
+      border: 2px solid rgba(93,252,141,0.35);
+      border-radius: 20px 20px 30px 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .drop-bottle::before {
+      content: '';
+      position: absolute;
+      top: -40px; left: 50%; transform: translateX(-50%);
+      width: 40px; height: 50px;
+      background: rgba(93,252,141,0.1);
+      border: 2px solid rgba(93,252,141,0.3);
+      border-radius: 8px 8px 0 0;
+    }
+
+    .drop-label {
+      text-align: center;
+      padding: 16px;
+    }
+
+    .drop-label .brand { font-size: 22px; font-weight: 900; color: var(--green-neon); letter-spacing: 3px; }
+    .drop-label .product { font-size: 13px; color: var(--gray); letter-spacing: 2px; text-transform: uppercase; }
+    .drop-label .leaf { font-size: 40px; margin: 8px 0; }
+
+    .glow-ring {
+      position: absolute;
+      width: 260px; height: 260px;
+      border-radius: 50%;
+      border: 1px solid rgba(93,252,141,0.12);
+      top: 50%; left: 50%; transform: translate(-50%, -50%);
+      animation: pulse 3s ease-in-out infinite;
+    }
+
+    .glow-ring:nth-child(2) {
+      width: 320px; height: 320px;
+      animation-delay: 1s;
+      border-color: rgba(93,252,141,0.07);
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.4; transform: translate(-50%, -50%) scale(1); }
+      50% { opacity: 1; transform: translate(-50%, -50%) scale(1.04); }
+    }
+
+    /* PRODUCT SECTION */
+    .section {
+      padding: 80px 24px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      text-align: center;
+      font-size: 13px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--green-neon);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: clamp(28px, 6vw, 44px);
+      font-weight: 900;
+      margin-bottom: 48px;
+      line-height: 1.1;
+    }
+
+    .product-card {
+      background: linear-gradient(145deg, rgba(26,107,56,0.25), rgba(13,59,30,0.6));
+      border: 1px solid rgba(93,252,141,0.2);
+      border-radius: 24px;
+      padding: 40px 32px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .product-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--green-neon), transparent);
+    }
+
+    .product-emoji { font-size: 64px; margin-bottom: 20px; display: block; }
+
+    .product-name {
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+
+    .product-desc {
+      font-size: 16px;
+      color: var(--gray);
+      max-width: 500px;
+      margin: 0 auto 28px;
+      line-height: 1.7;
+    }
+
+    .product-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 32px;
+    }
+
+    .tag {
+      background: rgba(93,252,141,0.1);
+      border: 1px solid rgba(93,252,141,0.25);
+      color: var(--green-neon);
+      padding: 6px 14px;
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .product-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, #25D366, #1aab52);
+      color: white;
+      text-decoration: none;
+      padding: 16px 32px;
+      border-radius: 50px;
+      font-size: 16px;
+      font-weight: 700;
+      box-shadow: 0 6px 24px rgba(37, 211, 102, 0.35);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .product-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 32px rgba(37, 211, 102, 0.5);
+    }
+
+    /* BENEFITS */
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 0;
+    }
+
+    @media (max-width: 480px) {
+      .benefits-grid { grid-template-columns: 1fr; }
+    }
+
+    .benefit-card {
+      background: rgba(26,107,56,0.15);
+      border: 1px solid rgba(93,252,141,0.12);
+      border-radius: 16px;
+      padding: 24px 20px;
+      text-align: center;
+    }
+
+    .benefit-icon { font-size: 36px; margin-bottom: 12px; display: block; }
+    .benefit-title { font-size: 16px; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+    .benefit-text { font-size: 14px; color: var(--gray); line-height: 1.5; }
+
+    /* LICENSE */
+    .license-banner {
+      background: linear-gradient(135deg, rgba(201,168,76,0.12), rgba(201,168,76,0.06));
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 20px;
+      padding: 32px 24px;
+      text-align: center;
+      margin: 0 24px;
+      max-width: 860px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .license-banner .icon { font-size: 40px; margin-bottom: 12px; display: block; }
+    .license-banner h3 { font-size: 20px; font-weight: 800; color: var(--gold); margin-bottom: 8px; }
+    .license-banner p { font-size: 15px; color: var(--gray); max-width: 480px; margin: 0 auto; }
+
+    /* FOOTER */
+    footer {
+      background: rgba(0,0,0,0.3);
+      border-top: 1px solid rgba(93,252,141,0.08);
+      padding: 40px 24px;
+      text-align: center;
+    }
+
+    .footer-logo { font-size: 24px; font-weight: 900; color: var(--green-neon); letter-spacing: 3px; margin-bottom: 8px; }
+    .footer-text { font-size: 13px; color: var(--gray); }
+    .footer-disclaimer { font-size: 12px; color: rgba(140, 168, 152, 0.5); margin-top: 16px; max-width: 500px; margin-left: auto; margin-right: auto; }
+
+    /* FLOATING WHATSAPP */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 999;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: #25D366;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 24px rgba(37,211,102,0.45);
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      animation: bounce 2.5s ease-in-out infinite;
+    }
+
+    .whatsapp-float:hover {
+      transform: scale(1.1);
+      box-shadow: 0 10px 32px rgba(37,211,102,0.6);
+      animation: none;
+    }
+
+    .whatsapp-float svg { width: 30px; height: 30px; fill: white; }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    /* DIVIDER */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(93,252,141,0.15), transparent);
+      margin: 0 24px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo">
+      <svg class="logo-icon" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M18 3C18 3 8 10 8 20C8 26 12.5 31 18 31C23.5 31 28 26 28 20C28 10 18 3 18 3Z" fill="rgba(93,252,141,0.2)" stroke="#5dfc8d" stroke-width="1.5"/>
+        <path d="M18 12V28M14 16C14 16 16 19 18 20C20 21 22 18 22 18" stroke="#5dfc8d" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <span class="logo-text">Green Fly</span>
+    </div>
+    <a href="https://wa.me/5541997207461?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20os%20produtos%20Green%20Fly." class="header-cta">Pedir Agora</a>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-badge">
+      <span>🌿</span> Produto Regulamentado
+    </div>
+    <h1>Qualidade<br><span>natural</span> que<br>você pode confiar</h1>
+    <p>THC em gotas com procedência garantida e licença regulatória. Direto pra você.</p>
+    <a href="https://wa.me/5541997207461?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20os%20produtos%20Green%20Fly." class="hero-btn">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Falar pelo WhatsApp
+    </a>
+
+    <div class="hero-img">
+      <div style="position:relative; display:flex; align-items:center; justify-content:center; height:280px;">
+        <div class="glow-ring"></div>
+        <div class="glow-ring"></div>
+        <div class="drop-visual">
+          <div class="drop-bottle">
+            <div class="drop-label">
+              <span class="leaf">🌿</span>
+              <div class="brand">GREEN FLY</div>
+              <div class="product">THC em Gotas</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- PRODUCT -->
+  <section class="section">
+    <p class="section-label">Nosso Produto</p>
+    <h2 class="section-title">THC em Gotas</h2>
+    <div class="product-card">
+      <span class="product-emoji">💧</span>
+      <div class="product-name">Extrato de THC — Uso Sublingual</div>
+      <p class="product-desc">
+        Formulação de alta pureza, desenvolvida para oferecer resultados consistentes e seguros. Cada frasco é produzido com rigoroso controle de qualidade.
+      </p>
+      <div class="product-tags">
+        <span class="tag">✓ Alta pureza</span>
+        <span class="tag">✓ Uso sublingual</span>
+        <span class="tag">✓ Produto regulamentado</span>
+        <span class="tag">✓ Entrega discreta</span>
+      </div>
+      <a href="https://wa.me/5541997207461?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20o%20THC%20em%20gotas%20Green%20Fly." class="product-cta">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Quero Comprar
+      </a>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- BENEFITS -->
+  <section class="section" style="padding-top: 60px;">
+    <p class="section-label">Por que Green Fly?</p>
+    <h2 class="section-title">Diferenciais que fazem a diferença</h2>
+    <div class="benefits-grid">
+      <div class="benefit-card">
+        <span class="benefit-icon">🔬</span>
+        <div class="benefit-title">Alta Pureza</div>
+        <p class="benefit-text">Produto desenvolvido com processos rigorosos de extração e controle de qualidade.</p>
+      </div>
+      <div class="benefit-card">
+        <span class="benefit-icon">📋</span>
+        <div class="benefit-title">Regulamentado</div>
+        <p class="benefit-text">Operamos com toda a documentação e licenças exigidas pela legislação vigente.</p>
+      </div>
+      <div class="benefit-card">
+        <span class="benefit-icon">🚚</span>
+        <div class="benefit-title">Entrega Discreta</div>
+        <p class="benefit-text">Embalagem neutra, sem identificação do conteúdo, para total privacidade.</p>
+      </div>
+      <div class="benefit-card">
+        <span class="benefit-icon">💬</span>
+        <div class="benefit-title">Atendimento Direto</div>
+        <p class="benefit-text">Fale com a gente pelo WhatsApp e tire todas suas dúvidas antes de comprar.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- LICENSE BANNER -->
+  <section style="padding: 60px 0;">
+    <div class="license-banner">
+      <span class="icon">🏛️</span>
+      <h3>Produto Regulamentado</h3>
+      <p>A Green Fly opera dentro da legalidade, com todas as licenças e autorizações necessárias para comercialização do produto.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">GREEN FLY</div>
+    <p class="footer-text">THC em Gotas • Qualidade e Confiança</p>
+    <p class="footer-disclaimer">Produto destinado exclusivamente a maiores de 18 anos. Consulte sempre um profissional de saúde antes do uso.</p>
+  </footer>
+
+  <!-- FLOATING WHATSAPP -->
+  <a href="https://wa.me/5541997207461?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20os%20produtos%20Green%20Fly." class="whatsapp-float" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+
+</body>
+</html>
