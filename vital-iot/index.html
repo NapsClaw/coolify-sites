@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vital IoT – Monitoramento de Nível de Água</title>
+  <meta name="description" content="Vital IoT: soluções inteligentes de monitoramento de nível de água para condomínios, indústrias, hotéis e pousadas." />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --azul-escuro: #0B6E7A;
+      --azul-medio: #2E86C1;
+      --azul-claro: #48C9E6;
+      --azul-marinho: #1B4F72;
+      --azul-celeste: #85D8F7;
+      --bg-light: #EFF3F6;
+      --branco: #FFFFFF;
+      --cinza: #5a6a7a;
+      --cinza-claro: #f5f8fa;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      color: #1a2a35;
+      background: var(--branco);
+      overflow-x: hidden;
+    }
+
+    /* ===== HEADER / NAV ===== */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(8px);
+      z-index: 100;
+      border-bottom: 1px solid rgba(11,110,122,0.1);
+    }
+
+    nav {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+    }
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+
+    .logo-name {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--azul-escuro);
+      letter-spacing: -0.3px;
+    }
+
+    .logo-sub {
+      font-size: 8px;
+      font-weight: 600;
+      color: var(--azul-medio);
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--azul-marinho);
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--azul-claro); }
+
+    .nav-cta {
+      background: var(--azul-escuro);
+      color: var(--branco) !important;
+      padding: 10px 22px;
+      border-radius: 50px;
+      font-size: 14px !important;
+      font-weight: 700 !important;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .nav-cta:hover {
+      background: var(--azul-medio) !important;
+      transform: translateY(-1px);
+      color: var(--branco) !important;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      width: 25px;
+      height: 2.5px;
+      background: var(--azul-escuro);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--azul-marinho) 0%, var(--azul-escuro) 50%, #0a8fa0 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 20px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2348C9E6' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      opacity: 0.4;
+    }
+
+    /* Animated waves */
+    .waves {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 120px;
+      overflow: hidden;
+    }
+
+    .waves svg {
+      width: 200%;
+      animation: wave 8s linear infinite;
+    }
+
+    @keyframes wave {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 700px;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(72,201,230,0.2);
+      border: 1px solid rgba(72,201,230,0.5);
+      color: var(--azul-celeste);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px 18px;
+      border-radius: 50px;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      font-size: clamp(32px, 6vw, 58px);
+      font-weight: 800;
+      color: var(--branco);
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 span {
+      color: var(--azul-claro);
+    }
+
+    .hero p {
+      font-size: clamp(15px, 2.5vw, 18px);
+      color: rgba(255,255,255,0.82);
+      line-height: 1.7;
+      margin-bottom: 36px;
+      max-width: 560px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--azul-claro);
+      color: var(--azul-marinho);
+      padding: 15px 32px;
+      border-radius: 50px;
+      font-weight: 800;
+      font-size: 15px;
+      text-decoration: none;
+      transition: all 0.2s;
+      display: inline-block;
+    }
+
+    .btn-primary:hover {
+      background: var(--azul-celeste);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(72,201,230,0.4);
+    }
+
+    .btn-outline {
+      border: 2px solid rgba(255,255,255,0.5);
+      color: var(--branco);
+      padding: 15px 32px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 15px;
+      text-decoration: none;
+      transition: all 0.2s;
+      display: inline-block;
+    }
+
+    .btn-outline:hover {
+      border-color: var(--branco);
+      background: rgba(255,255,255,0.1);
+    }
+
+    /* ===== STATS ===== */
+    .stats {
+      background: var(--branco);
+      padding: 48px 20px;
+      box-shadow: 0 4px 24px rgba(11,110,122,0.08);
+    }
+
+    .stats-grid {
+      max-width: 900px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 32px;
+      text-align: center;
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .stat-number {
+      font-size: 38px;
+      font-weight: 800;
+      color: var(--azul-escuro);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: var(--cinza);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* ===== SEÇÃO GENÉRICA ===== */
+    section {
+      padding: 80px 20px;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+
+    .section-label {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--azul-claro);
+      margin-bottom: 12px;
+    }
+
+    .section-title h2 {
+      font-size: clamp(26px, 4vw, 38px);
+      font-weight: 800;
+      color: var(--azul-marinho);
+      line-height: 1.2;
+      margin-bottom: 14px;
+    }
+
+    .section-title p {
+      font-size: 16px;
+      color: var(--cinza);
+      max-width: 560px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* ===== SERVIÇOS ===== */
+    #servicos {
+      background: var(--cinza-claro);
+    }
+
+    .services-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .service-card {
+      background: var(--branco);
+      border-radius: 16px;
+      padding: 32px 28px;
+      border: 1px solid rgba(11,110,122,0.08);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .service-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(11,110,122,0.12);
+    }
+
+    .service-icon {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, var(--azul-escuro), var(--azul-claro));
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .service-icon svg {
+      width: 28px;
+      height: 28px;
+      fill: none;
+      stroke: white;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .service-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--azul-marinho);
+      margin-bottom: 10px;
+    }
+
+    .service-card p {
+      font-size: 14px;
+      color: var(--cinza);
+      line-height: 1.7;
+    }
+
+    /* ===== SEGMENTOS ===== */
+    #segmentos {
+      background: var(--branco);
+    }
+
+    .segments-grid {
+      max-width: 960px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    .segment-card {
+      background: linear-gradient(135deg, var(--azul-marinho), var(--azul-escuro));
+      border-radius: 16px;
+      padding: 32px 20px;
+      text-align: center;
+      color: var(--branco);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .segment-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(27,79,114,0.3);
+    }
+
+    .segment-emoji {
+      font-size: 40px;
+      margin-bottom: 14px;
+      display: block;
+    }
+
+    .segment-card h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .segment-card p {
+      font-size: 13px;
+      opacity: 0.8;
+      line-height: 1.5;
+    }
+
+    /* ===== COMO FUNCIONA ===== */
+    #como-funciona {
+      background: var(--cinza-claro);
+    }
+
+    .steps {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .step {
+      display: flex;
+      gap: 24px;
+      align-items: flex-start;
+    }
+
+    .step-number {
+      width: 52px;
+      height: 52px;
+      min-width: 52px;
+      background: linear-gradient(135deg, var(--azul-escuro), var(--azul-claro));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--branco);
+    }
+
+    .step-content h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--azul-marinho);
+      margin-bottom: 8px;
+    }
+
+    .step-content p {
+      font-size: 15px;
+      color: var(--cinza);
+      line-height: 1.7;
+    }
+
+    /* ===== BENEFÍCIOS ===== */
+    #beneficios {
+      background: linear-gradient(135deg, var(--azul-marinho) 0%, var(--azul-escuro) 100%);
+      color: var(--branco);
+    }
+
+    #beneficios .section-title h2 {
+      color: var(--branco);
+    }
+
+    #beneficios .section-title p {
+      color: rgba(255,255,255,0.75);
+    }
+
+    .benefits-grid {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px;
+    }
+
+    .benefit-item {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 14px;
+      padding: 28px 22px;
+      text-align: center;
+      transition: background 0.2s;
+    }
+
+    .benefit-item:hover {
+      background: rgba(255,255,255,0.14);
+    }
+
+    .benefit-icon {
+      font-size: 36px;
+      margin-bottom: 14px;
+      display: block;
+    }
+
+    .benefit-item h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--azul-claro);
+    }
+
+    .benefit-item p {
+      font-size: 13px;
+      opacity: 0.8;
+      line-height: 1.6;
+    }
+
+    /* ===== CONTATO ===== */
+    #contato {
+      background: var(--branco);
+    }
+
+    .contact-wrapper {
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .contact-options {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 32px;
+    }
+
+    .contact-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 18px 28px;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .contact-btn-whatsapp {
+      background: #25D366;
+      color: var(--branco);
+    }
+
+    .contact-btn-whatsapp:hover {
+      background: #1da851;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(37,211,102,0.3);
+    }
+
+    .contact-btn-email {
+      background: var(--azul-escuro);
+      color: var(--branco);
+    }
+
+    .contact-btn-email:hover {
+      background: var(--azul-medio);
+      transform: translateY(-2px);
+    }
+
+    .contact-btn svg {
+      width: 22px;
+      height: 22px;
+      fill: currentColor;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--azul-marinho);
+      color: rgba(255,255,255,0.7);
+      text-align: center;
+      padding: 28px 20px;
+      font-size: 13px;
+    }
+
+    footer strong {
+      color: var(--branco);
+    }
+
+    /* ===== WHATSAPP FLOAT ===== */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 24px;
+      right: 20px;
+      z-index: 999;
+      background: #25D366;
+      color: var(--branco);
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 20px rgba(37,211,102,0.5);
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+    }
+
+    .whatsapp-float:hover {
+      transform: scale(1.1);
+      box-shadow: 0 10px 28px rgba(37,211,102,0.6);
+    }
+
+    .whatsapp-float svg {
+      width: 30px;
+      height: 30px;
+      fill: white;
+    }
+
+    /* ===== MOBILE NAV ===== */
+    @media (max-width: 768px) {
+      .hamburger { display: flex; }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0; right: 0;
+        background: var(--branco);
+        flex-direction: column;
+        padding: 20px;
+        gap: 20px;
+        border-bottom: 1px solid rgba(11,110,122,0.1);
+        box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+      }
+
+      .nav-links.open { display: flex; }
+      .nav-links li:last-child { text-align: center; }
+      .nav-cta { display: block; text-align: center; padding: 14px !important; }
+
+      .hero { padding: 110px 20px 100px; }
+      .hero-btns { flex-direction: column; align-items: center; }
+      .btn-primary, .btn-outline { width: 100%; max-width: 320px; text-align: center; }
+
+      .step { flex-direction: column; }
+      .step-number { margin: 0 auto; }
+      .step-content { text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<header>
+  <nav>
+    <a href="#" class="logo">
+      <svg class="logo-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Gota -->
+        <path d="M20 4 C20 4 8 16 8 24 C8 31.2 13.4 37 20 37 C26.6 37 32 31.2 32 24 C32 16 20 4 20 4Z" fill="url(#grad1)"/>
+        <!-- Ondas internas -->
+        <path d="M11 27 Q15.5 24 20 27 Q24.5 30 29 27" stroke="#fff" stroke-width="1.3" stroke-linecap="round" opacity="0.7"/>
+        <path d="M11 31 Q15.5 28 20 31 Q24.5 34 29 31" stroke="#fff" stroke-width="1.3" stroke-linecap="round" opacity="0.4"/>
+        <!-- Antena -->
+        <line x1="20" y1="22" x2="20" y2="14" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+        <!-- Wi-fi arcos -->
+        <path d="M16.5 18 Q20 15 23.5 18" stroke="white" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+        <path d="M14 16 Q20 12 26 16" stroke="white" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.7"/>
+        <defs>
+          <linearGradient id="grad1" x1="8" y1="4" x2="32" y2="37" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#48C9E6"/>
+            <stop offset="100%" stop-color="#0B6E7A"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <div class="logo-text">
+        <span class="logo-name">Vital IoT</span>
+        <span class="logo-sub">Monitoramento de Nível de Água</span>
+      </div>
+    </a>
+
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#servicos">Serviços</a></li>
+      <li><a href="#segmentos">Segmentos</a></li>
+      <li><a href="#como-funciona">Como Funciona</a></li>
+      <li><a href="#contato" class="nav-cta">Fale Conosco</a></li>
+    </ul>
+
+    <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">🌊 Tecnologia IoT em tempo real</div>
+    <h1>Monitoramento inteligente do <span>nível de água</span></h1>
+    <p>Acompanhe reservatórios, caixas d'água e tanques de qualquer lugar, com alertas automáticos e dados precisos em tempo real.</p>
+    <div class="hero-btns">
+      <a href="#contato" class="btn-primary">Solicitar Demonstração</a>
+      <a href="#servicos" class="btn-outline">Ver Soluções</a>
+    </div>
+  </div>
+  <div class="waves">
+    <svg viewBox="0 0 1200 120" preserveAspectRatio="none">
+      <path d="M0,60 C200,110 400,10 600,60 C800,110 1000,10 1200,60 L1200,120 L0,120 Z" fill="rgba(255,255,255,0.08)"/>
+      <path d="M0,80 C200,30 400,110 600,80 C800,30 1000,110 1200,80 L1200,120 L0,120 Z" fill="rgba(255,255,255,0.05)"/>
+    </svg>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stats-grid">
+    <div class="stat-item">
+      <span class="stat-number">24/7</span>
+      <span class="stat-label">Monitoramento contínuo</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">±1%</span>
+      <span class="stat-label">Precisão de leitura</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">100%</span>
+      <span class="stat-label">Online, sem cabos</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-number">&lt;5s</span>
+      <span class="stat-label">Tempo de alerta</span>
+    </div>
+  </div>
+</div>
+
+<!-- SERVIÇOS -->
+<section id="servicos">
+  <div class="section-title">
+    <span class="section-label">O que fazemos</span>
+    <h2>Soluções completas de monitoramento</h2>
+    <p>Da instalação ao acompanhamento, cuidamos de tudo para que você tenha controle total da sua água.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"/><path d="M12 6v6l4 2"/></svg>
+      </div>
+      <h3>Monitoramento em Tempo Real</h3>
+      <p>Sensores IoT instalados nos reservatórios transmitem dados continuamente para sua dashboard, acessível pelo celular ou computador.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+      </div>
+      <h3>Alertas Automáticos</h3>
+      <p>Receba notificações no WhatsApp ou e-mail quando o nível estiver baixo, alto ou em situação anormal. Nunca seja pego de surpresa.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      </div>
+      <h3>Histórico e Relatórios</h3>
+      <p>Acesse gráficos de consumo, identifique desperdícios e tome decisões baseadas em dados para reduzir custos.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      </div>
+      <h3>Acesso Remoto</h3>
+      <p>Visualize todos os seus reservatórios em um único painel, de qualquer lugar do mundo, pelo celular ou computador.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+      </div>
+      <h3>Instalação e Suporte</h3>
+      <p>Nossa equipe realiza toda a instalação e configuração dos sensores. Suporte técnico disponível para garantir seu sistema sempre funcionando.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+      </div>
+      <h3>Multi-reservatório</h3>
+      <p>Monitore vários pontos simultaneamente — caixas d'água, cisternas, tanques industriais — em um único sistema integrado.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SEGMENTOS -->
+<section id="segmentos">
+  <div class="section-title">
+    <span class="section-label">Quem atendemos</span>
+    <h2>Soluções para cada segmento</h2>
+    <p>Adaptamos a tecnologia às necessidades específicas de cada tipo de cliente.</p>
+  </div>
+  <div class="segments-grid">
+    <div class="segment-card">
+      <span class="segment-emoji">🏢</span>
+      <h3>Condomínios</h3>
+      <p>Controle total da caixa d'água, relatórios para síndicos e alertas de consumo por torre.</p>
+    </div>
+    <div class="segment-card">
+      <span class="segment-emoji">🏭</span>
+      <h3>Indústrias</h3>
+      <p>Monitoramento de tanques de processo, controle de estoque hídrico e integração com sistemas de automação.</p>
+    </div>
+    <div class="segment-card">
+      <span class="segment-emoji">🏨</span>
+      <h3>Hotéis</h3>
+      <p>Nunca deixe hóspedes sem água. Alertas preventivos garantem o abastecimento contínuo e a qualidade do serviço.</p>
+    </div>
+    <div class="segment-card">
+      <span class="segment-emoji">🌴</span>
+      <h3>Pousadas</h3>
+      <p>Solução simples e eficaz para pousadas e resorts, com dashboard intuitivo e alertas no WhatsApp.</p>
+    </div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section id="como-funciona">
+  <div class="section-title">
+    <span class="section-label">Processo</span>
+    <h2>Como funciona?</h2>
+    <p>Em poucos passos, seu sistema de monitoramento estará ativo e funcionando.</p>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-number">1</div>
+      <div class="step-content">
+        <h3>Avaliação e Proposta</h3>
+        <p>Nossa equipe analisa seus reservatórios e necessidades, e apresenta uma proposta personalizada com os sensores e configurações ideais.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-number">2</div>
+      <div class="step-content">
+        <h3>Instalação dos Sensores</h3>
+        <p>Técnicos especializados instalam os sensores IoT nos pontos de monitoramento, sem necessidade de obras ou interrupções.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-number">3</div>
+      <div class="step-content">
+        <h3>Configuração da Dashboard</h3>
+        <p>Seu painel personalizado é configurado com alertas, limites e notificações de acordo com as suas regras de operação.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-number">4</div>
+      <div class="step-content">
+        <h3>Monitoramento Contínuo</h3>
+        <p>A partir daí, você acompanha tudo em tempo real pelo celular ou computador, com suporte da nossa equipe sempre que precisar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFÍCIOS -->
+<section id="beneficios">
+  <div class="section-title">
+    <span class="section-label">Por que escolher a Vital IoT</span>
+    <h2>Vantagens que fazem a diferença</h2>
+    <p>Mais controle, menos desperdício, mais tranquilidade.</p>
+  </div>
+  <div class="benefits-grid">
+    <div class="benefit-item">
+      <span class="benefit-icon">💧</span>
+      <h3>Economia de Água</h3>
+      <p>Identifique vazamentos e desperdícios antes que virem prejuízo.</p>
+    </div>
+    <div class="benefit-item">
+      <span class="benefit-icon">🔔</span>
+      <h3>Alertas Preventivos</h3>
+      <p>Saiba antes que o problema aconteça e tome ação rápida.</p>
+    </div>
+    <div class="benefit-item">
+      <span class="benefit-icon">📱</span>
+      <h3>Gestão pelo Celular</h3>
+      <p>Acesse de qualquer lugar, a qualquer hora, com facilidade.</p>
+    </div>
+    <div class="benefit-item">
+      <span class="benefit-icon">🔒</span>
+      <h3>Dados Seguros</h3>
+      <p>Informações criptografadas e armazenadas com total segurança.</p>
+    </div>
+    <div class="benefit-item">
+      <span class="benefit-icon">⚡</span>
+      <h3>Instalação Rápida</h3>
+      <p>Sem obras. Instalação sem interrupção das suas operações.</p>
+    </div>
+    <div class="benefit-item">
+      <span class="benefit-icon">🤝</span>
+      <h3>Suporte Especializado</h3>
+      <p>Equipe técnica dedicada para garantir o melhor funcionamento.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section id="contato">
+  <div class="contact-wrapper">
+    <div class="section-title">
+      <span class="section-label">Entre em contato</span>
+      <h2>Vamos conversar sobre o seu projeto?</h2>
+      <p>Fale com nossa equipe e descubra como a Vital IoT pode transformar o controle hídrico do seu negócio.</p>
+    </div>
+    <div class="contact-options">
+      <a href="https://wa.me/5571981828747" class="contact-btn contact-btn-whatsapp" target="_blank">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Falar pelo WhatsApp
+      </a>
+      <a href="mailto:contato@vitaliot.com.br" class="contact-btn contact-btn-email">
+        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Enviar um E-mail
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>&copy; 2025 <strong>Vital IoT</strong> — Monitoramento de Nível de Água. Todos os direitos reservados.</p>
+</footer>
+
+<!-- WHATSAPP FLUTUANTE -->
+<a href="https://wa.me/5571981828747" class="whatsapp-float" target="_blank" title="Falar no WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+  function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+
+  // Smooth close on link click
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+      document.getElementById('navLinks').classList.remove('open');
+    });
+  });
+</script>
+
+</body>
+</html>
