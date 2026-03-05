@@ -300,28 +300,42 @@ footer span{color:var(--red)}
 
 
 
-<!-- VINHETA AUTOPLAY -->
-<audio id="vinheta" preload="auto">
-  <source src="vinheta-elzo.mp3" type="audio/mpeg">
-</audio>
+<!-- VINHETA -->
+<audio id="vinheta" preload="auto"></audio>
+
+<!-- Botão flutuante de música -->
+<div id="music-btn" onclick="toggleMusic()" style="position:fixed;bottom:90px;right:18px;z-index:9999;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#f5a800,#ff6600);box-shadow:0 4px 20px rgba(245,168,0,0.5);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:22px;transition:transform 0.2s;" title="Ativar som">🔇</div>
+
 <script>
-  // Toca vinheta aleatória ao primeiro clique/toque na página
-  (function(){
-    var played = false;
-    var vinhetas = ['vinheta-elzo.mp3','vinheta-cuca.mp3'];
-    function playVinheta(){
-      if(played) return;
-      played = true;
-      var a = document.getElementById('vinheta');
-      a.src = vinhetas[Math.floor(Math.random()*vinhetas.length)];
-      a.volume = 0.7;
-      a.play().catch(function(){});
-      document.removeEventListener('click', playVinheta);
-      document.removeEventListener('touchstart', playVinheta);
+  var vinhetas = ['vinheta-elzo.mp3','vinheta-cuca.mp3'];
+  var audio = document.getElementById('vinheta');
+  var btn = document.getElementById('music-btn');
+  var playing = false;
+
+  function toggleMusic(){
+    if(!playing){
+      audio.src = vinhetas[Math.floor(Math.random()*vinhetas.length)];
+      audio.volume = 0.75;
+      audio.play().then(function(){
+        playing = true;
+        btn.textContent = '🔊';
+        btn.style.boxShadow = '0 4px 25px rgba(245,168,0,0.9)';
+      }).catch(function(){});
+    } else {
+      audio.pause();
+      audio.currentTime = 0;
+      playing = false;
+      btn.textContent = '🔇';
+      btn.style.boxShadow = '0 4px 20px rgba(245,168,0,0.5)';
     }
-    document.addEventListener('click', playVinheta);
-    document.addEventListener('touchstart', playVinheta);
-  })();
+  }
+
+  // Reinicia botão quando música termina
+  audio.addEventListener('ended', function(){
+    playing = false;
+    btn.textContent = '🔇';
+    btn.style.boxShadow = '0 4px 20px rgba(245,168,0,0.5)';
+  });
 </script>
 
 <nav>
