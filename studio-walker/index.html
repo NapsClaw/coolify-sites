@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Studio Walker Construção & Reformas</title>
+  <meta name="description" content="Studio Walker - Construção & Reformas. Da fundação ao acabamento, com qualidade e profissionalismo. Curitiba e região.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --navy: #0d2240;
+      --navy-light: #1a3560;
+      --gold: #c9a84c;
+      --gold-light: #e8c96e;
+      --gray: #f5f6f8;
+      --text: #222;
+      --text-light: #666;
+      --white: #fff;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      background: var(--navy);
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 999;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+    }
+
+    .logo-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-header img {
+      height: 48px;
+      width: auto;
+    }
+
+    .logo-text {
+      display: none;
+    }
+
+    .header-cta {
+      background: var(--gold);
+      color: var(--navy);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      padding: 10px 18px;
+      border-radius: 6px;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      transition: background 0.2s;
+    }
+
+    .header-cta:hover { background: var(--gold-light); }
+
+    /* ===== HERO ===== */
+    .hero {
+      background: var(--navy);
+      color: white;
+      padding: 100px 20px 60px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60"><rect width="60" height="60" fill="none"/><path d="M0 60L60 0M-10 10L10-10M50 70L70 50" stroke="rgba(255,255,255,0.03)" stroke-width="1"/></svg>') repeat;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(201,168,76,0.2);
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 36px;
+      font-weight: 900;
+      line-height: 1.15;
+      margin-bottom: 16px;
+      position: relative;
+    }
+
+    .hero h1 span { color: var(--gold); }
+
+    .hero p {
+      font-size: 16px;
+      color: rgba(255,255,255,0.8);
+      max-width: 500px;
+      margin: 0 auto 32px;
+      line-height: 1.7;
+      position: relative;
+    }
+
+    .hero-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: center;
+      position: relative;
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--navy);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 15px;
+      padding: 16px 32px;
+      border-radius: 8px;
+      text-decoration: none;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      width: 100%;
+      max-width: 340px;
+      display: block;
+      transition: transform 0.2s, background 0.2s;
+    }
+
+    .btn-primary:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      color: white;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+      padding: 14px 32px;
+      border-radius: 8px;
+      text-decoration: none;
+      border: 2px solid rgba(255,255,255,0.3);
+      width: 100%;
+      max-width: 340px;
+      display: block;
+      transition: border-color 0.2s;
+    }
+
+    .btn-secondary:hover { border-color: white; }
+
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      margin-top: 48px;
+      position: relative;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-num {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--gold);
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: rgba(255,255,255,0.6);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 2px;
+    }
+
+    /* ===== SERVICES ===== */
+    .section {
+      padding: 60px 20px;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .section-tag {
+      display: inline-block;
+      background: rgba(13,34,64,0.08);
+      color: var(--navy);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+    }
+
+    .section-header h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--navy);
+      line-height: 1.2;
+    }
+
+    .section-header h2 span { color: var(--gold); }
+
+    .section-header p {
+      color: var(--text-light);
+      font-size: 15px;
+      margin-top: 12px;
+      line-height: 1.7;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .service-card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px 16px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+      border-left: 3px solid var(--gold);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .service-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+    }
+
+    .service-icon {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .service-card h3 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .service-card p {
+      font-size: 12px;
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+
+    /* ===== DESTAQUE ===== */
+    .destaque {
+      background: var(--navy);
+      color: white;
+      padding: 50px 20px;
+      text-align: center;
+    }
+
+    .destaque h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 26px;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .destaque h2 span { color: var(--gold); }
+
+    .destaque p {
+      color: rgba(255,255,255,0.75);
+      font-size: 15px;
+      line-height: 1.7;
+      margin-bottom: 28px;
+    }
+
+    .diferenciais {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 32px;
+      text-align: left;
+    }
+
+    .diferencial {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      background: rgba(255,255,255,0.06);
+      padding: 14px 16px;
+      border-radius: 10px;
+    }
+
+    .diferencial-icon {
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    .diferencial h4 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 2px;
+    }
+
+    .diferencial p {
+      font-size: 12px;
+      color: rgba(255,255,255,0.7);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    /* ===== GALLERY ===== */
+    .gallery-section {
+      background: var(--gray);
+      padding: 60px 20px;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .gallery-item {
+      border-radius: 10px;
+      overflow: hidden;
+      aspect-ratio: 1;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+    }
+
+    .gallery-item:first-child {
+      grid-column: 1 / -1;
+      aspect-ratio: 16/9;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s;
+      display: block;
+    }
+
+    .gallery-item:hover img { transform: scale(1.05); }
+
+    /* ===== DEPOIMENTOS ===== */
+    .testimonials {
+      padding: 60px 20px;
+      background: white;
+    }
+
+    .testimonial-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .testimonial {
+      background: var(--gray);
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .stars {
+      color: var(--gold);
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    .testimonial p {
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.7;
+      font-style: italic;
+      margin-bottom: 12px;
+    }
+
+    .testimonial-author {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    /* ===== CONTATO ===== */
+    .contact {
+      background: var(--navy);
+      color: white;
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    .contact h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 28px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .contact h2 span { color: var(--gold); }
+
+    .contact p {
+      color: rgba(255,255,255,0.75);
+      font-size: 15px;
+      margin-bottom: 32px;
+      line-height: 1.7;
+    }
+
+    .contact-options {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 40px;
+    }
+
+    .contact-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 16px 24px;
+      border-radius: 10px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      text-decoration: none;
+      transition: transform 0.2s;
+    }
+
+    .contact-btn:hover { transform: translateY(-2px); }
+
+    .contact-btn.whatsapp {
+      background: #25D366;
+      color: white;
+    }
+
+    .contact-btn.instagram {
+      background: linear-gradient(135deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
+      color: white;
+    }
+
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .info-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: rgba(255,255,255,0.8);
+      font-size: 14px;
+    }
+
+    .info-icon { font-size: 20px; }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: #071525;
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      padding: 24px 20px;
+      font-size: 12px;
+    }
+
+    footer strong { color: var(--gold); }
+
+    /* ===== WHATSAPP FLOAT ===== */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 24px;
+      right: 20px;
+      z-index: 1000;
+      background: #25D366;
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.5);
+      text-decoration: none;
+      transition: transform 0.2s;
+      animation: pulse 2s infinite;
+    }
+
+    .whatsapp-float:hover { transform: scale(1.1); }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 4px 20px rgba(37,211,102,0.5); }
+      50% { box-shadow: 0 4px 30px rgba(37,211,102,0.8); }
+    }
+
+    .whatsapp-float svg {
+      width: 30px;
+      height: 30px;
+      fill: white;
+    }
+
+    /* ===== DESKTOP ===== */
+    @media (min-width: 768px) {
+      .hero { padding: 120px 40px 80px; }
+      .hero h1 { font-size: 54px; }
+      .hero-buttons { flex-direction: row; justify-content: center; }
+      .btn-primary, .btn-secondary { width: auto; }
+
+      .section { padding: 80px 40px; }
+      .gallery-section { padding: 80px 40px; }
+
+      .services-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .gallery-item:first-child {
+        grid-column: span 2;
+      }
+
+      .contact-options {
+        flex-direction: row;
+        justify-content: center;
+        max-width: 500px;
+        margin: 0 auto 40px;
+      }
+
+      .contact-btn { flex: 1; }
+
+      .logo-text { display: block; }
+      .logo-text h1 {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 14px;
+        font-weight: 800;
+        color: white;
+        line-height: 1.1;
+      }
+      .logo-text span {
+        font-size: 10px;
+        color: var(--gold);
+        font-weight: 500;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        display: block;
+      }
+
+      .diferenciais {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+
+      .testimonial-cards {
+        flex-direction: row;
+      }
+
+      .testimonial { flex: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo-header">
+      <img src="logo.jpg" alt="Studio Walker">
+      <div class="logo-text">
+        <h1>Studio Walker</h1>
+        <span>Construção & Reformas</span>
+      </div>
+    </div>
+    <a href="https://wa.me/5541998217775?text=Ol%C3%A1%2C+gostaria+de+um+or%C3%A7amento!" class="header-cta">Orçamento Grátis</a>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">✦ Curitiba e Região ✦</div>
+    <h1>Da <span>Fundação</span> ao<br>Acabamento Perfeito</h1>
+    <p>Construção e reformas completas com qualidade, prazo garantido e mão de obra especializada. Transformamos seu projeto em realidade.</p>
+    <div class="hero-buttons">
+      <a href="https://wa.me/5541998217775?text=Ol%C3%A1%2C+gostaria+de+um+or%C3%A7amento!" class="btn-primary">📲 Pedir Orçamento Agora</a>
+      <a href="#servicos" class="btn-secondary">Ver Nossos Serviços</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Dedicação</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">+50</div>
+        <div class="stat-label">Obras Entregues</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">5★</div>
+        <div class="stat-label">Avaliação</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVIÇOS -->
+  <section class="section" id="servicos" style="background: var(--gray);">
+    <div class="section-header">
+      <div class="section-tag">O que fazemos</div>
+      <h2>Serviços <span>Completos</span></h2>
+      <p>Tudo que você precisa para construir ou reformar, em um só lugar.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">🏗️</div>
+        <h3>Construção Civil</h3>
+        <p>Obras do zero: fundação, estrutura, alvenaria e cobertura.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🔨</div>
+        <h3>Reformas Completas</h3>
+        <p>Renovação total ou parcial de residências e comercial.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🪨</div>
+        <h3>Fundação & Estrutura</h3>
+        <p>Radier, sapatas, vigas e pilares com armação técnica.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🏠</div>
+        <h3>Alvenaria</h3>
+        <p>Paredes, muros, divisórias e levantamento de blocos.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🪟</div>
+        <h3>Acabamentos</h3>
+        <p>Piso, revestimento, pintura e detalhes de alta qualidade.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📐</div>
+        <h3>Projetos sob Medida</h3>
+        <p>Execução conforme projeto arquitetônico ou sua necessidade.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DESTAQUE -->
+  <section class="destaque">
+    <div class="section-tag" style="background:rgba(201,168,76,0.15); color:var(--gold);">Por que nos escolher</div>
+    <h2 style="margin-top:12px">Qualidade que você<br><span>vê e sente</span></h2>
+    <p>Trabalhamos com responsabilidade, materiais de qualidade e equipe treinada para entregar o melhor resultado.</p>
+    <div class="diferenciais">
+      <div class="diferencial">
+        <span class="diferencial-icon">✅</span>
+        <div>
+          <h4>Obra do zero ao acabamento</h4>
+          <p>Não precisa contratar várias empresas. Fazemos tudo.</p>
+        </div>
+      </div>
+      <div class="diferencial">
+        <span class="diferencial-icon">⏱️</span>
+        <div>
+          <h4>Prazo cumprido</h4>
+          <p>Planejamento sério e equipe comprometida com cada etapa.</p>
+        </div>
+      </div>
+      <div class="diferencial">
+        <span class="diferencial-icon">💎</span>
+        <div>
+          <h4>Materiais de qualidade</h4>
+          <p>Só usamos o melhor para garantir durabilidade e beleza.</p>
+        </div>
+      </div>
+      <div class="diferencial">
+        <span class="diferencial-icon">🤝</span>
+        <div>
+          <h4>Transparência total</h4>
+          <p>Orçamento claro, sem surpresas. Você acompanha tudo.</p>
+        </div>
+      </div>
+    </div>
+    <a href="https://wa.me/5541998217775?text=Ol%C3%A1%2C+gostaria+de+um+or%C3%A7amento!" class="btn-primary" style="display:inline-block; max-width:320px;">Quero um Orçamento Gratuito</a>
+  </section>
+
+  <!-- GALERIA -->
+  <section class="gallery-section" id="galeria">
+    <div class="section-header">
+      <div class="section-tag">Nosso trabalho</div>
+      <h2>Obras <span>Realizadas</span></h2>
+      <p>Cada projeto entregue com atenção aos detalhes e perfeição técnica.</p>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <img src="obra4.jpg" alt="Estrutura de obra Studio Walker">
+      </div>
+      <div class="gallery-item">
+        <img src="obra1.jpg" alt="Assentamento de piso Studio Walker">
+      </div>
+      <div class="gallery-item">
+        <img src="obra2.jpg" alt="Nivelamento Studio Walker">
+      </div>
+      <div class="gallery-item">
+        <img src="obra3.jpg" alt="Armação estrutural Studio Walker">
+      </div>
+      <div class="gallery-item">
+        <img src="obra5.jpg" alt="Fundação Studio Walker">
+      </div>
+    </div>
+  </section>
+
+  <!-- DEPOIMENTOS -->
+  <section class="testimonials">
+    <div class="section-header">
+      <div class="section-tag">Clientes satisfeitos</div>
+      <h2>O que dizem <span>sobre nós</span></h2>
+    </div>
+    <div class="testimonial-cards">
+      <div class="testimonial">
+        <div class="stars">★★★★★</div>
+        <p>"Contratei a Studio Walker para reforma completa da minha casa. Trabalho impecável, prazo cumprido e acabamento de primeira!"</p>
+        <div class="testimonial-author">— Marcos R., Curitiba</div>
+      </div>
+      <div class="testimonial">
+        <div class="stars">★★★★★</div>
+        <p>"Fizeram toda a fundação e estrutura do meu galpão. Equipe séria, profissional e muito competente. Super recomendo!"</p>
+        <div class="testimonial-author">— Ana C., São José dos Pinhais</div>
+      </div>
+      <div class="testimonial">
+        <div class="stars">★★★★★</div>
+        <p>"Da fundação ao acabamento, tudo feito pela Studio Walker. Resultado final superou minhas expectativas!"</p>
+        <div class="testimonial-author">— Roberto L., Almirante Tamandaré</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTATO -->
+  <section class="contact" id="contato">
+    <h2>Solicite seu <span>Orçamento</span><br>Gratuito Agora</h2>
+    <p>Fale conosco pelo WhatsApp ou redes sociais. Atendemos Curitiba e região metropolitana.</p>
+    <div class="contact-options">
+      <a href="https://wa.me/5541998217775?text=Ol%C3%A1%2C+gostaria+de+um+or%C3%A7amento!" class="contact-btn whatsapp">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        WhatsApp
+      </a>
+      <a href="https://instagram.com/studio_walker36" target="_blank" class="contact-btn instagram">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        Instagram
+      </a>
+    </div>
+    <div class="contact-info">
+      <div class="info-item">
+        <span class="info-icon">📍</span>
+        <span>Curitiba e Região Metropolitana - PR</span>
+      </div>
+      <div class="info-item">
+        <span class="info-icon">📱</span>
+        <span>(41) 9 9821-7775</span>
+      </div>
+      <div class="info-item">
+        <span class="info-icon">🕐</span>
+        <span>Seg a Sáb: 7h às 18h</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2025 <strong>Studio Walker Construção & Reformas</strong> — Todos os direitos reservados.</p>
+    <p style="margin-top:6px">CNPJ e responsabilidade técnica disponíveis mediante solicitação.</p>
+  </footer>
+
+  <!-- WHATSAPP FLOAT -->
+  <a href="https://wa.me/5541998217775?text=Ol%C3%A1%2C+gostaria+de+um+or%C3%A7amento!" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+</body>
+</html>
