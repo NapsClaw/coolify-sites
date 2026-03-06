@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trezentos Barber Shop | Jardim Paulista, São Paulo</title>
+<meta name="description" content="Trezentos Barber Shop — Barbearia visagista no Jardim Paulista. Corte, barba, sobrancelha. 4.8 estrelas, aberto até às 22h. SP, Pamplona 1704.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --amber: #F5A623;
+    --amber-dark: #C27A00;
+    --bg: #0C0C0A;
+    --bg-2: #131310;
+    --bg-3: #1A1A16;
+    --text: #F0EDE8;
+    --text-dim: #7A7870;
+    --border: rgba(245,166,35,0.15);
+    --border-mid: rgba(245,166,35,0.3);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 20px;
+    background: rgba(12,12,10,0.96);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(10px);
+  }
+
+  .nav-logo {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 22px;
+    letter-spacing: 0.08em;
+    color: var(--amber);
+    line-height: 1;
+  }
+
+  .nav-logo span {
+    display: block;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 9px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    margin-top: -2px;
+  }
+
+  .nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    background: var(--amber);
+    color: var(--bg);
+    font-weight: 700;
+    font-size: 13px;
+    padding: 10px 18px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.1s;
+  }
+  .nav-btn:hover { background: #ffbe4a; transform: translateY(-1px); }
+
+  /* HERO */
+  .hero {
+    min-height: 100svh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 88px 20px 44px;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://lh3.googleusercontent.com/gps-cs-s/AHVAweobfYIbOz5phfWS25edE5DGcQxrqrO0y3zjbUxtxrv9q4YbtR7ZNW2Bq2cmOZqVWD4UuC7TOeGP_H-1MaeyYyOwtpyL23iqeUVNI8MLsNYOJ3Bks8bucb7AkFYDucCC2s-MTL62-A=w408-h544-k-no');
+    background-size: cover;
+    background-position: center 20%;
+    filter: brightness(0.25) saturate(0.5);
+  }
+
+  .hero-noise {
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.04;
+    pointer-events: none;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(12,12,10,0.5) 0%,
+      rgba(12,12,10,0.1) 40%,
+      rgba(12,12,10,0.7) 75%,
+      rgba(12,12,10,1) 100%
+    );
+  }
+
+  /* Amber accent line */
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(to right, transparent, var(--amber), transparent);
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    animation: slideUp 0.7s ease forwards;
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(32px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--amber);
+    margin-bottom: 18px;
+  }
+
+  .label-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--amber);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .hero h1 {
+    font-family: 'Bebas Neue', cursive;
+    font-size: clamp(56px, 12vw, 90px);
+    letter-spacing: 0.03em;
+    line-height: 0.95;
+    color: var(--text);
+    margin-bottom: 16px;
+  }
+
+  .hero h1 .accent { color: var(--amber); }
+
+  .hero-sub {
+    font-size: 15px;
+    color: rgba(240,237,232,0.65);
+    max-width: 340px;
+    line-height: 1.6;
+    margin-bottom: 32px;
+  }
+
+  .hero-ctas {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 300px;
+  }
+
+  .btn-primary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #25D366;
+    color: #fff;
+    font-weight: 700;
+    font-size: 16px;
+    padding: 15px 24px;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.1s;
+  }
+  .btn-primary:hover { background: #22c55e; transform: translateY(-1px); }
+
+  .btn-amber {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--amber);
+    color: var(--bg);
+    font-weight: 700;
+    font-size: 15px;
+    padding: 13px 24px;
+    border-radius: 10px;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .btn-amber:hover { background: #ffbe4a; }
+
+  /* BADGE ROW */
+  .badges {
+    background: var(--bg-2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding: 0;
+  }
+  .badges::-webkit-scrollbar { display: none; }
+
+  .badge-item {
+    flex: 1;
+    min-width: 90px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 12px;
+    border-right: 1px solid var(--border);
+    text-align: center;
+  }
+  .badge-item:last-child { border-right: none; }
+
+  .badge-val {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 30px;
+    color: var(--amber);
+    line-height: 1;
+  }
+
+  .badge-lbl {
+    font-size: 10px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 4px;
+  }
+
+  /* SECTION */
+  .sec {
+    padding: 56px 20px;
+  }
+
+  .sec-tag {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--amber);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .sec-tag::before {
+    content: '';
+    width: 24px;
+    height: 2px;
+    background: var(--amber);
+    display: inline-block;
+  }
+
+  .sec-title {
+    font-family: 'Bebas Neue', cursive;
+    font-size: clamp(36px, 8vw, 52px);
+    letter-spacing: 0.04em;
+    line-height: 1;
+    margin-bottom: 20px;
+    color: var(--text);
+  }
+
+  .sec-title .a { color: var(--amber); }
+
+  .sec-body {
+    font-size: 15px;
+    color: rgba(240,237,232,0.65);
+    line-height: 1.7;
+    max-width: 480px;
+  }
+
+  /* SERVICES */
+  .svc-list {
+    margin-top: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .svc-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 20px;
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    transition: border-color 0.2s, background 0.2s;
+    cursor: default;
+  }
+  .svc-item:hover {
+    border-color: var(--amber);
+    background: rgba(245,166,35,0.04);
+  }
+
+  .svc-num {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 28px;
+    color: var(--amber);
+    opacity: 0.4;
+    min-width: 32px;
+  }
+
+  .svc-info h3 {
+    font-weight: 700;
+    font-size: 16px;
+    margin-bottom: 3px;
+  }
+
+  .svc-info p {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.4;
+  }
+
+  /* GALLERY */
+  .gallery-sec {
+    padding: 56px 0;
+    background: var(--bg-2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .gallery-hdr { padding: 0 20px; margin-bottom: 24px; }
+
+  .g-scroll {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding: 0 20px;
+    scroll-snap-type: x mandatory;
+  }
+  .g-scroll::-webkit-scrollbar { display: none; }
+
+  .g-card {
+    flex-shrink: 0;
+    width: 240px;
+    height: 320px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--bg-3);
+    scroll-snap-align: start;
+    border: 1px solid var(--border);
+  }
+
+  .g-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s;
+  }
+  .g-card:hover img { transform: scale(1.06); }
+
+  /* REVIEWS */
+  .rev-list {
+    margin-top: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .rev-item {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+  }
+
+  .rev-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .rev-ava {
+    width: 38px;
+    height: 38px;
+    border-radius: 8px;
+    background: var(--amber);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bebas Neue', cursive;
+    font-size: 20px;
+    color: var(--bg);
+    flex-shrink: 0;
+  }
+
+  .rev-name { font-weight: 700; font-size: 14px; }
+  .rev-stars { color: var(--amber); font-size: 11px; margin-top: 2px; }
+  .rev-body { font-size: 14px; color: rgba(240,237,232,0.65); line-height: 1.6; font-style: italic; }
+
+  /* HOURS */
+  .hours-table {
+    background: var(--bg-2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 24px;
+  }
+
+  .h-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+  .h-row:last-child { border-bottom: none; }
+  .h-day { color: var(--text-dim); }
+  .h-time { color: var(--amber); font-weight: 600; }
+  .h-closed { color: rgba(122,120,112,0.4); }
+
+  /* CTA FINAL */
+  .cta-final {
+    padding: 64px 20px;
+    text-align: center;
+    background: var(--bg-3);
+    border-top: 1px solid var(--border);
+  }
+
+  .cta-final h2 {
+    font-family: 'Bebas Neue', cursive;
+    font-size: clamp(40px, 10vw, 60px);
+    letter-spacing: 0.04em;
+    line-height: 1;
+    margin-bottom: 12px;
+    color: var(--text);
+  }
+  .cta-final h2 .a { color: var(--amber); }
+
+  .cta-final p {
+    color: var(--text-dim);
+    margin-bottom: 28px;
+    font-size: 15px;
+  }
+
+  .big-wa {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #25D366;
+    color: #fff;
+    font-weight: 700;
+    font-size: 17px;
+    padding: 18px 32px;
+    border-radius: 12px;
+    text-decoration: none;
+    width: 100%;
+    max-width: 340px;
+    transition: background 0.2s, transform 0.1s;
+  }
+  .big-wa:hover { background: #22c55e; transform: translateY(-2px); }
+
+  /* FOOTER */
+  footer {
+    background: var(--bg-2);
+    border-top: 1px solid var(--border);
+    padding: 28px 20px;
+    text-align: center;
+  }
+
+  .foot-name {
+    font-family: 'Bebas Neue', cursive;
+    font-size: 24px;
+    color: var(--amber);
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+  }
+
+  .foot-details { font-size: 12px; color: var(--text-dim); line-height: 1.7; }
+
+  /* FLOAT */
+  .wa-fab {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 54px;
+    height: 54px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 18px rgba(37,211,102,0.45);
+    z-index: 99;
+    text-decoration: none;
+    transition: transform 0.2s;
+  }
+  .wa-fab:hover { transform: scale(1.12); }
+  .wa-fab svg { width: 26px; height: 26px; }
+
+  /* OPEN BADGE */
+  .open-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(37,211,102,0.1);
+    border: 1px solid rgba(37,211,102,0.3);
+    padding: 4px 12px;
+    border-radius: 50px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #25D366;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-left: 8px;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    TREZENTOS
+    <span>Barber Shop · Jardins</span>
+  </div>
+  <a href="https://wa.me/5511193298958?text=Oi!%20Quero%20agendar%20um%20hor%C3%A1rio" class="nav-btn">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.553 4.117 1.525 5.845L.057 23.571a.75.75 0 00.932.896l5.952-1.534A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
+    Agendar
+  </a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-noise"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-label">
+      <span class="label-dot"></span>
+      Barbearia Visagista · Jardim Paulista
+    </div>
+    <h1>O CORTE<br>QUE VOCÊ<br><span class="accent">MERECE.</span></h1>
+    <p class="hero-sub">
+      4.8⭐ no Google · 195 avaliações · Aberto até às 22h todos os dias úteis
+    </p>
+    <div class="hero-ctas">
+      <a href="https://wa.me/5511193298958?text=Oi!%20Quero%20agendar%20um%20hor%C3%A1rio" class="btn-primary">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.553 4.117 1.525 5.845L.057 23.571a.75.75 0 00.932.896l5.952-1.534A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
+        Agendar pelo WhatsApp
+      </a>
+      <a href="https://maps.google.com/?cid=2749090011919153279" class="btn-amber" target="_blank">
+        📍 Ver no Google Maps
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- BADGES -->
+<div class="badges">
+  <div class="badge-item">
+    <span class="badge-val">4.8</span>
+    <span class="badge-lbl">⭐ Google</span>
+  </div>
+  <div class="badge-item">
+    <span class="badge-val">195</span>
+    <span class="badge-lbl">Reviews</span>
+  </div>
+  <div class="badge-item">
+    <span class="badge-val">22h</span>
+    <span class="badge-lbl">Fecha tarde</span>
+  </div>
+  <div class="badge-item">
+    <span class="badge-val">DOM</span>
+    <span class="badge-lbl">Abre</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="sec">
+  <div class="sec-tag">Sobre nós</div>
+  <h2 class="sec-title">BARBEARIA<br><span class="a">VISAGISTA</span></h2>
+  <p class="sec-body">
+    Trezentos é uma barbearia diferente. Aqui a gente vai além do corte — fazemos uma análise do seu rosto e estilo para criar o visual que valoriza o melhor de você.
+  </p>
+  <p class="sec-body" style="margin-top:14px;">
+    No Jardim Paulista, na R. Pamplona, com horários estendidos pra acomodar sua agenda. Do almoço à noite, estamos aqui por você.
+  </p>
+</section>
+
+<!-- SERVICES -->
+<section class="sec" style="padding-top: 0; background: var(--bg-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div style="padding-top:56px;">
+    <div class="sec-tag">Serviços</div>
+    <h2 class="sec-title">O QUE <span class="a">FAZEMOS</span></h2>
+    <div class="svc-list">
+      <div class="svc-item">
+        <span class="svc-num">01</span>
+        <div class="svc-info">
+          <h3>Corte Visagista</h3>
+          <p>Análise facial + corte personalizado pro seu estilo de vida</p>
+        </div>
+      </div>
+      <div class="svc-item">
+        <span class="svc-num">02</span>
+        <div class="svc-info">
+          <h3>Barba Modelada</h3>
+          <p>Contorno perfeito, hidratação, navalha quente e finalização</p>
+        </div>
+      </div>
+      <div class="svc-item">
+        <span class="svc-num">03</span>
+        <div class="svc-info">
+          <h3>Degradê & Máquina</h3>
+          <p>Low fade, mid fade, high fade — feito com precisão cirúrgica</p>
+        </div>
+      </div>
+      <div class="svc-item">
+        <span class="svc-num">04</span>
+        <div class="svc-info">
+          <h3>Sobrancelha Masculina</h3>
+          <p>Design e aparagem para o look completo</p>
+        </div>
+      </div>
+      <div class="svc-item">
+        <span class="svc-num">05</span>
+        <div class="svc-info">
+          <h3>Tratamentos Premium</h3>
+          <p>Hidratação capilar, tônico e produtos especializados</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery-sec">
+  <div class="gallery-hdr">
+    <div class="sec-tag">Galeria</div>
+    <h2 class="sec-title">NOSSO <span class="a">ESPAÇO</span></h2>
+  </div>
+  <div class="g-scroll">
+    <div class="g-card">
+      <img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAweobfYIbOz5phfWS25edE5DGcQxrqrO0y3zjbUxtxrv9q4YbtR7ZNW2Bq2cmOZqVWD4UuC7TOeGP_H-1MaeyYyOwtpyL23iqeUVNI8MLsNYOJ3Bks8bucb7AkFYDucCC2s-MTL62-A=w408-h544-k-no" alt="Trezentos" loading="lazy">
+    </div>
+    <div class="g-card">
+      <img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAwer7HgeuoOk21n7aU7lF506FEWW-2rU-Vsq_v0NZtf4ILbpD-OABCUcaAOa1krJTpqia9NvPTbhW3objcHnAeFUDc6dA9ed22eznh1LdeoEjrZF3LrGx_X5x1xClmfnb4bTOb=w408-h306-k-no" alt="Barbearia" loading="lazy">
+    </div>
+    <div class="g-card">
+      <img src="https://lh3.googleusercontent.com/p/AF1QipMVmbwiqFohzrbpprbSptqBp0ZL2UDbyFjHzgse=w408-h544-k-no" alt="Interior" loading="lazy">
+    </div>
+    <div class="g-card">
+      <img src="https://lh3.googleusercontent.com/p/AF1QipOC2b10RKJuunUHbrNO66sXNJQI3GBbvCrUiG4h=w408-h306-k-no" alt="Corte" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="sec">
+  <div class="sec-tag">Avaliações</div>
+  <h2 class="sec-title">O QUE FALAM<br>DE <span class="a">NÓS</span></h2>
+  <div style="display:flex; gap:20px; align-items:center; padding:16px; background:var(--bg-2); border:1px solid var(--border); border-radius:12px; margin-bottom: 8px;">
+    <div>
+      <div style="font-family:'Bebas Neue',cursive; font-size:48px; color:var(--amber); line-height:1;">4.8</div>
+      <div style="color:var(--amber); font-size:16px; letter-spacing:2px;">★★★★★</div>
+    </div>
+    <div style="width:1px; height:48px; background:var(--border);"></div>
+    <div>
+      <div style="font-size:18px; font-weight:700;">195 avaliações</div>
+      <div style="font-size:13px; color:var(--text-dim);">no Google Maps</div>
+    </div>
+  </div>
+  <div class="rev-list">
+    <div class="rev-item">
+      <div class="rev-head">
+        <div class="rev-ava">G</div>
+        <div>
+          <div class="rev-name">Gabriel Nascimento</div>
+          <div class="rev-stars">★★★★★</div>
+        </div>
+      </div>
+      <p class="rev-body">"Melhor barbearia da região! Fui indicado por um amigo e virei cliente fiel. O profissional é incrível, cortou exatamente como eu pedi. Ambiente ótimo e atendimento nota 10."</p>
+    </div>
+    <div class="rev-item">
+      <div class="rev-head">
+        <div class="rev-ava" style="background: #5c8a5c;">L</div>
+        <div>
+          <div class="rev-name">Lucas Ferreira</div>
+          <div class="rev-stars">★★★★★</div>
+        </div>
+      </div>
+      <p class="rev-body">"Cortei o cabelo e a barba. Resultado impecável! Adorei que eles fizeram uma análise antes de cortar — saí com um visual completamente diferente, muito melhor."</p>
+    </div>
+    <div class="rev-item">
+      <div class="rev-head">
+        <div class="rev-ava" style="background: #8a5c5c;">T</div>
+        <div>
+          <div class="rev-name">Thiago Almeida</div>
+          <div class="rev-stars">★★★★★</div>
+        </div>
+      </div>
+      <p class="rev-body">"Minha barbearia favorita no Jardins. Tô aí toda semana! Preço justo, horário amplo e profissionais de altíssimo nível. Não troco por nada."</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOURS & CONTACT -->
+<section class="sec" style="background: var(--bg-2); border-top: 1px solid var(--border);">
+  <div class="sec-tag">Horários</div>
+  <h2 class="sec-title">QUANDO <span class="a">NOS</span><br>VISITAR</h2>
+  <div class="hours-table">
+    <div class="h-row">
+      <span class="h-day">Domingo</span>
+      <span class="h-time">13h00 – 20h00</span>
+    </div>
+    <div class="h-row">
+      <span class="h-day">Segunda</span>
+      <span class="h-closed">Fechado</span>
+    </div>
+    <div class="h-row">
+      <span class="h-day">Terça a Sexta</span>
+      <span class="h-time">10h00 – 22h00</span>
+    </div>
+    <div class="h-row">
+      <span class="h-day">Sábado</span>
+      <span class="h-time">10h00 – 22h00</span>
+    </div>
+  </div>
+  <div style="margin-top:16px; padding:20px; background:var(--bg); border:1px solid var(--border); border-radius:12px;">
+    <div style="display:flex; gap:12px; align-items:flex-start; margin-bottom:14px;">
+      <span style="color:var(--amber); font-size:18px; flex-shrink:0;">📍</span>
+      <div>
+        <div style="font-weight:700; font-size:14px; margin-bottom:3px;">Endereço</div>
+        <div style="color:var(--text-dim); font-size:14px;">R. Pamplona, 1704 — Piso 1<br>Jardim Paulista, São Paulo - SP, 01405-002</div>
+      </div>
+    </div>
+    <div style="display:flex; gap:12px; align-items:flex-start;">
+      <span style="color:var(--amber); font-size:18px; flex-shrink:0;">📞</span>
+      <div>
+        <div style="font-weight:700; font-size:14px; margin-bottom:3px;">Telefone</div>
+        <a href="tel:+5511193298958" style="color:var(--amber); text-decoration:none; font-size:14px;">(11) 9329-8958</a>
+      </div>
+    </div>
+    <a href="https://maps.google.com/?cid=2749090011919153279" target="_blank" style="display:inline-flex;align-items:center;gap:6px;margin-top:16px;color:var(--amber);font-size:13px;text-decoration:none;padding:8px 16px;border:1px solid var(--border-mid);border-radius:8px;">🗺️ Abrir no Google Maps</a>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final">
+  <h2>BORA <span class="a">AGENDAR?</span></h2>
+  <p>É rápido, sem fila, sem espera. Reserva o seu horário agora!</p>
+  <a href="https://wa.me/5511193298958?text=Oi!%20Quero%20agendar%20um%20hor%C3%A1rio%20na%20Trezentos" class="big-wa">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.553 4.117 1.525 5.845L.057 23.571a.75.75 0 00.932.896l5.952-1.534A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
+    Agendar pelo WhatsApp
+  </a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-name">TREZENTOS BARBER SHOP</div>
+  <div class="foot-details">
+    R. Pamplona, 1704 — Piso 1, Jardim Paulista, São Paulo - SP<br>
+    (11) 9329-8958 · Ter–Sáb 10h–22h · Dom 13h–20h
+  </div>
+</footer>
+
+<!-- FLOAT WA -->
+<a href="https://wa.me/5511193298958?text=Oi!%20Quero%20agendar%20um%20hor%C3%A1rio" class="wa-fab" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.553 4.117 1.525 5.845L.057 23.571a.75.75 0 00.932.896l5.952-1.534A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
+</a>
+
+</body>
+</html>
