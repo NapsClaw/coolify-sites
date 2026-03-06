@@ -789,7 +789,13 @@
 <style>
 /* ===== MOVING LIGHTS CSS PURO ===== */
 .ml-wrap {
-  display: none;
+  position: fixed;
+  top: -20px;
+  left: 0; right: 0;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
 }
 .ml-beam {
   position: absolute;
@@ -859,6 +865,57 @@
 </style>
 </head>
 <body>
+<!-- MOVING HEADS - luzes de baixo pra cima na página principal -->
+<canvas id="moving-canvas" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1;"></canvas>
+<script>
+(function(){
+  var cvs = document.getElementById('moving-canvas');
+  var ctx = cvs.getContext('2d');
+  var W, H;
+  function resize(){ W = cvs.width = window.innerWidth; H = cvs.height = window.innerHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+  var t = 0;
+  var cols = ['#ff0055','#00ccff','#ff00cc','#00ff88','#ffcc00','#8800ff','#00ffff','#ff4400'];
+  var heads = [];
+  for(var i=0;i<8;i++){
+    heads.push({ frac:0.03+i*(0.94/7), color:cols[i%cols.length], phase:i*Math.PI/4, speed:0.014+i*0.003 });
+  }
+  function loop(){
+    requestAnimationFrame(loop);
+    var overlay = document.getElementById('intro-overlay');
+    if(overlay && overlay.style.display !== 'none' && parseFloat(overlay.style.opacity||'1') > 0.05){
+      ctx.clearRect(0,0,W,H); return;
+    }
+    t++;
+    ctx.clearRect(0,0,W,H);
+    ctx.save();
+    ctx.globalCompositeOperation = 'screen';
+    heads.forEach(function(mv){
+      var bx = W*mv.frac;
+      var sweep = Math.sin(t*mv.speed+mv.phase);
+      var tx = W/2+sweep*W*0.45;
+      var ty = H*0.05+Math.abs(Math.cos(t*mv.speed*0.5+mv.phase))*H*0.15;
+      var grad = ctx.createLinearGradient(bx,H,tx,ty);
+      grad.addColorStop(0,mv.color); grad.addColorStop(0.5,mv.color); grad.addColorStop(1,'transparent');
+      var dx=tx-bx,dy=ty-H,len=Math.sqrt(dx*dx+dy*dy)||1;
+      var nx=-dy/len*18,ny=dx/len*18;
+      ctx.save();
+      ctx.globalAlpha=0.22;
+      ctx.beginPath();
+      ctx.moveTo(bx+nx,H); ctx.lineTo(tx+nx*0.03,ty); ctx.lineTo(tx-nx*0.03,ty); ctx.lineTo(bx-nx,H);
+      ctx.closePath(); ctx.fillStyle=grad; ctx.fill();
+      ctx.globalAlpha=0.12;
+      var sg=ctx.createRadialGradient(tx,ty,0,tx,ty,50);
+      sg.addColorStop(0,'#fff'); sg.addColorStop(0.3,mv.color); sg.addColorStop(1,'transparent');
+      ctx.beginPath(); ctx.arc(tx,ty,50,0,Math.PI*2); ctx.fillStyle=sg; ctx.fill();
+      ctx.restore();
+    });
+    ctx.restore();
+  }
+  requestAnimationFrame(loop);
+})();
+</script>
 
 
 
