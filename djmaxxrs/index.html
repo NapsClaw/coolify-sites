@@ -1124,79 +1124,40 @@
   var t = 0; // tempo global
   var showMovings = false; // movings aparecem após clicar em "entrar"
 
-  // ── GLOBO ESPELHADO ──────────────────────────────────────────────────────
-  var globe = { angle:0, r:0, maxR:0 }; // r cresce com animação
-  var reflections = []; // reflexos espalhados
-
-  function Reflection(ox, oy){
-    var a = Math.random()*Math.PI*2;
-    var spd = Math.random()*4+2;
-    this.x = ox; this.y = oy;
-    this.vx = Math.cos(a)*spd; this.vy = Math.sin(a)*spd;
-    this.life = 1; this.decay = Math.random()*0.008+0.004;
-    this.size = Math.random()*8+3;
-    var c = ['#00ffff','#ff00ff','#ffffff','#ffff44','#00ff88','#ff44aa','#44aaff'];
-    this.color = c[Math.floor(Math.random()*c.length)];
+  // ── NEVE CAINDO ──────────────────────────────────────────────────────────
+  var globe = { angle:0, r:0, maxR:0 }; // mantido por compatibilidade
+  var reflections = [];
+  var snowflakes = [];
+  var SNOW_COUNT = 80;
+  for(var s=0; s<SNOW_COUNT; s++){
+    snowflakes.push({
+      x: Math.random()*2000,
+      y: Math.random()*2000,
+      r: Math.random()*2.2+0.5,
+      speed: Math.random()*0.6+0.2,
+      drift: (Math.random()-0.5)*0.3,
+      opacity: Math.random()*0.35+0.08,
+      wobble: Math.random()*Math.PI*2,
+      wobbleSpeed: Math.random()*0.015+0.005
+    });
   }
-  Reflection.prototype.update = function(){
-    this.x+=this.vx; this.y+=this.vy; this.life-=this.decay; this.size*=0.97;
-  };
-  Reflection.prototype.draw = function(){
-    ctx.save();
-    ctx.globalAlpha = this.life*0.8;
-    var g = ctx.createRadialGradient(this.x,this.y,0,this.x,this.y,this.size*2);
-    g.addColorStop(0,this.color); g.addColorStop(1,'transparent');
-    ctx.beginPath(); ctx.arc(this.x,this.y,this.size*2,0,Math.PI*2);
-    ctx.fillStyle=g; ctx.fill();
-    ctx.beginPath(); ctx.arc(this.x,this.y,this.size*0.35,0,Math.PI*2);
-    ctx.fillStyle='#fff'; ctx.fill();
-    ctx.restore();
-  };
 
   function drawGlobe(){
-    var r = globe.r;
-    if(r < 2) return;
-    var gx = W/2, gy = r + 18;
-
-    // Fio de suspensão
+    // Neve no lugar do globo
     ctx.save();
-    ctx.strokeStyle='rgba(180,180,200,0.4)'; ctx.lineWidth=1.5;
-    ctx.beginPath(); ctx.moveTo(gx,0); ctx.lineTo(gx,gy-r); ctx.stroke();
+    snowflakes.forEach(function(sf){
+      sf.wobble += sf.wobbleSpeed;
+      sf.x += sf.drift + Math.sin(sf.wobble)*0.4;
+      sf.y += sf.speed;
+      if(sf.y > H + 10) { sf.y = -10; sf.x = Math.random()*W; }
+      if(sf.x > W + 10) sf.x = -10;
+      if(sf.x < -10) sf.x = W + 10;
+      ctx.beginPath();
+      ctx.arc(sf.x, sf.y, sf.r, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(255,255,255,'+sf.opacity+')';
+      ctx.fill();
+    });
     ctx.restore();
-
-    var rows=16, tileCols=20;
-    for(var row=0; row<rows; row++){
-      var phi = (row/rows)*Math.PI;
-      var ry = gy - r*Math.cos(phi);
-      var rr = r*Math.sin(phi);
-      if(rr<2) continue;
-      var n = Math.max(4, Math.round(tileCols*Math.sin(phi)));
-      for(var col=0; col<n; col++){
-        var theta = (col/n)*Math.PI*2 + globe.angle*(1+row*0.04);
-        var tx = gx + rr*Math.cos(theta);
-        var facing = Math.cos(theta);
-        var bright = Math.max(0, facing);
-        var tw = (rr*Math.PI*2/n)*0.7, th = (r*Math.PI/rows)*0.7;
-        var hue = ((theta+globe.angle*3)*180/Math.PI)%360;
-        ctx.save();
-        ctx.translate(tx,ry); ctx.rotate(theta+globe.angle);
-        var hw=tw/2,hh=th/2,rad=2;
-        ctx.beginPath();
-        ctx.moveTo(-hw+rad,-hh); ctx.lineTo(hw-rad,-hh);
-        ctx.quadraticCurveTo(hw,-hh,hw,-hh+rad);
-        ctx.lineTo(hw,hh-rad); ctx.quadraticCurveTo(hw,hh,hw-rad,hh);
-        ctx.lineTo(-hw+rad,hh); ctx.quadraticCurveTo(-hw,hh,-hw,hh-rad);
-        ctx.lineTo(-hw,-hh+rad); ctx.quadraticCurveTo(-hw,-hh,-hw+rad,-hh);
-        ctx.closePath();
-        ctx.fillStyle='hsl('+hue+','+(60+bright*40)+'%,'+(15+bright*65)+'%)';
-        ctx.fill();
-        if(bright>0.6){ ctx.fillStyle='rgba(255,255,255,'+((bright-0.6)*1.6)+')'; ctx.fill(); }
-        ctx.restore();
-        // emitir reflexo
-        if(bright>0.78 && Math.random()<0.018 && reflections.length<40)
-          reflections.push(new Reflection(tx,ry));
-      }
-    }
   }
 
   // ── LASERS DE BAIXO ───────────────────────────────────────────────────────
@@ -1318,15 +1279,7 @@
     ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
 
     // Globo tamanho responsivo — ocupa ~18% da largura, mín 70px
-    globe.maxR = Math.max(70, Math.min(W * 0.12, 110));
-    if(globe.r < globe.maxR) globe.r = Math.min(globe.maxR, globe.r + 1.8);
-    globe.angle += 0.014;
-
-    // Reflexos
-    for(var i=reflections.length-1;i>=0;i--){
-      reflections[i].update(); reflections[i].draw();
-      if(reflections[i].life<=0) reflections.splice(i,1);
-    }
+    // (globo removido — neve no drawGlobe)
 
     drawLasers();
     drawGlobe();
