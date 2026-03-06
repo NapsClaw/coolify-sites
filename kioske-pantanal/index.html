@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kioske Pantanal – Lanches, Pratos e Porções em São Miguel do Oeste</title>
+  <meta name="description" content="Kioske Pantanal Delivery – Lanches artesanais, pratos e porções desde 2009. Entregamos em São Miguel do Oeste e cidades vizinhas. Peça pelo WhatsApp!" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --verde: #1a6b2f;
+      --verde-escuro: #0f4a1f;
+      --verde-claro: #2d8a44;
+      --branco: #ffffff;
+      --creme: #f9f5ee;
+      --cinza: #555;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background: var(--creme);
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      background: var(--verde-escuro);
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+
+    .logo-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-header .brand {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--branco);
+      line-height: 1.1;
+    }
+
+    .logo-header .brand span {
+      display: block;
+      font-size: 0.65rem;
+      font-weight: 400;
+      letter-spacing: 2px;
+      color: #a8d8a8;
+      text-transform: uppercase;
+    }
+
+    .header-cta {
+      background: #25d366;
+      color: #fff;
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 8px 14px;
+      border-radius: 6px;
+      text-decoration: none;
+      letter-spacing: 0.5px;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      background: linear-gradient(160deg, var(--verde-escuro) 0%, var(--verde) 60%, var(--verde-claro) 100%);
+      padding: 50px 20px 60px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 220px; height: 220px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 50%;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      color: #c8f0c8;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 18px;
+    }
+
+    .hero h1 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 2.6rem;
+      font-weight: 700;
+      color: var(--branco);
+      line-height: 1.1;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+
+    .hero h1 span {
+      color: #7ddc7d;
+    }
+
+    .hero p {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.85);
+      max-width: 320px;
+      margin: 0 auto 30px;
+      line-height: 1.6;
+    }
+
+    .hero-btns {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-width: 300px;
+      margin: 0 auto;
+    }
+
+    .btn-primary {
+      background: #25d366;
+      color: #fff;
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      padding: 16px 28px;
+      border-radius: 10px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 16px rgba(37,211,102,0.4);
+      letter-spacing: 0.5px;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: #fff;
+      font-family: 'Oswald', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      padding: 14px 28px;
+      border-radius: 10px;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: 2px solid rgba(255,255,255,0.5);
+      letter-spacing: 0.5px;
+    }
+
+    .hero-since {
+      margin-top: 28px;
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    /* ===== DIFERENCIAIS ===== */
+    .diferenciais {
+      background: var(--verde-escuro);
+      padding: 18px 20px;
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      overflow-x: auto;
+    }
+
+    .diff-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 0 18px;
+      border-right: 1px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.9);
+      font-size: 0.78rem;
+      white-space: nowrap;
+    }
+
+    .diff-item:last-child { border-right: none; }
+    .diff-item .icon { font-size: 1rem; }
+
+    /* ===== SECTION TITLE ===== */
+    .section-title {
+      text-align: center;
+      padding: 50px 20px 30px;
+    }
+
+    .section-title .eyebrow {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--verde);
+      margin-bottom: 8px;
+    }
+
+    .section-title h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--verde-escuro);
+      text-transform: uppercase;
+      line-height: 1.1;
+    }
+
+    .section-title p {
+      font-size: 0.95rem;
+      color: var(--cinza);
+      margin-top: 10px;
+      max-width: 320px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+
+    /* ===== CARDÁPIO ===== */
+    .cardapio {
+      padding: 0 20px 50px;
+    }
+
+    .category {
+      margin-bottom: 36px;
+    }
+
+    .category-title {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--branco);
+      background: var(--verde);
+      padding: 10px 18px;
+      border-radius: 8px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      letter-spacing: 0.5px;
+    }
+
+    .items-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .item-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 16px 14px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+      border-left: 4px solid var(--verde);
+    }
+
+    .item-card .item-name {
+      font-family: 'Oswald', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--verde-escuro);
+      margin-bottom: 4px;
+    }
+
+    .item-card .item-desc {
+      font-size: 0.75rem;
+      color: #888;
+      line-height: 1.4;
+    }
+
+    /* ===== GALERIA ===== */
+    .galeria {
+      padding: 0 20px 50px;
+    }
+
+    .photos-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .photos-grid .foto {
+      border-radius: 12px;
+      overflow: hidden;
+      aspect-ratio: 1;
+      background: #ddd;
+    }
+
+    .photos-grid .foto img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .photos-grid .foto-wide {
+      grid-column: span 2;
+      aspect-ratio: 16/8;
+    }
+
+    /* ===== SOBRE ===== */
+    .sobre {
+      background: var(--verde-escuro);
+      padding: 50px 20px;
+      text-align: center;
+      color: #fff;
+    }
+
+    .sobre .eyebrow {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: #7ddc7d;
+      margin-bottom: 8px;
+    }
+
+    .sobre h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      line-height: 1.1;
+    }
+
+    .sobre p {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.7;
+      max-width: 340px;
+      margin: 0 auto 30px;
+    }
+
+    .stats-row {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      margin-top: 10px;
+    }
+
+    .stat {
+      padding: 0 24px;
+      border-right: 1px solid rgba(255,255,255,0.15);
+    }
+
+    .stat:last-child { border-right: none; }
+
+    .stat .num {
+      font-family: 'Oswald', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #7ddc7d;
+    }
+
+    .stat .label {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.6);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* ===== DELIVERY ===== */
+    .delivery {
+      padding: 50px 20px;
+      text-align: center;
+      background: #fff;
+    }
+
+    .delivery-card {
+      background: var(--creme);
+      border-radius: 16px;
+      padding: 28px 20px;
+      max-width: 360px;
+      margin: 0 auto;
+      border: 2px solid #e0e0d0;
+    }
+
+    .delivery-card .icon-big {
+      font-size: 3rem;
+      margin-bottom: 12px;
+    }
+
+    .delivery-card h3 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--verde-escuro);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .delivery-card p {
+      font-size: 0.9rem;
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .delivery-card .horarios {
+      background: #fff;
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 20px;
+    }
+
+    .delivery-card .horarios .title {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--verde);
+      margin-bottom: 8px;
+    }
+
+    .delivery-card .horarios .row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      padding: 4px 0;
+      border-bottom: 1px solid #f0f0f0;
+      color: #444;
+    }
+
+    .delivery-card .horarios .row:last-child { border-bottom: none; }
+
+    /* ===== CONTATO / CTA ===== */
+    .cta-section {
+      background: linear-gradient(135deg, var(--verde) 0%, var(--verde-escuro) 100%);
+      padding: 50px 20px;
+      text-align: center;
+      color: #fff;
+    }
+
+    .cta-section h2 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      line-height: 1.1;
+    }
+
+    .cta-section p {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 28px;
+      line-height: 1.6;
+    }
+
+    .cta-wpp {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #25d366;
+      color: #fff;
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      padding: 18px 32px;
+      border-radius: 12px;
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      letter-spacing: 0.5px;
+      margin-bottom: 24px;
+    }
+
+    .info-line {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.65);
+      margin-top: 8px;
+    }
+
+    .info-line a {
+      color: #7ddc7d;
+      text-decoration: none;
+    }
+
+    /* ===== MAPA ===== */
+    .mapa-section {
+      padding: 0 20px 50px;
+      background: #fff;
+    }
+
+    .mapa-section .map-wrap {
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    }
+
+    .mapa-section iframe {
+      width: 100%;
+      height: 220px;
+      border: none;
+      display: block;
+    }
+
+    .mapa-section .address-box {
+      background: var(--verde-escuro);
+      color: #fff;
+      padding: 16px 18px;
+      border-radius: 0 0 14px 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.88rem;
+    }
+
+    .mapa-section .address-box .icon { font-size: 1.2rem; }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: #0a2e12;
+      padding: 28px 20px;
+      text-align: center;
+      color: rgba(255,255,255,0.45);
+      font-size: 0.78rem;
+    }
+
+    footer .footer-logo {
+      font-family: 'Oswald', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #7ddc7d;
+      margin-bottom: 6px;
+    }
+
+    footer .social {
+      margin: 10px 0;
+    }
+
+    footer .social a {
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      margin: 0 8px;
+      font-size: 0.82rem;
+    }
+
+    /* ===== FLOAT WPP BUTTON ===== */
+    .float-wpp {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #25d366;
+      color: #fff;
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      box-shadow: 0 4px 16px rgba(37,211,102,0.5);
+      text-decoration: none;
+      z-index: 999;
+      animation: pulse 2.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 4px 16px rgba(37,211,102,0.5); }
+      50% { box-shadow: 0 4px 28px rgba(37,211,102,0.8); }
+    }
+
+    /* ===== DESKTOP ===== */
+    @media (min-width: 640px) {
+      .hero h1 { font-size: 3.2rem; }
+      .hero-btns { flex-direction: row; max-width: 500px; }
+      .items-grid { grid-template-columns: 1fr 1fr 1fr; }
+      .photos-grid { grid-template-columns: 1fr 1fr 1fr; }
+      .photos-grid .foto-wide { grid-column: span 3; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo-header">
+    <div class="brand">
+      Kioske Pantanal
+      <span>Since 2009 · Delivery</span>
+    </div>
+  </div>
+  <a href="https://wa.me/5549991606999?text=Olá!%20Quero%20fazer%20um%20pedido!" class="header-cta">📱 Pedir Agora</a>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">⭐ Delivery em São Miguel do Oeste e região</div>
+  <h1>Lanches<br><span>Artesanais</span><br>de Verdade</h1>
+  <p>Desde 2009 levando sabor, qualidade e tradição até a sua mesa. Pediu, chegou!</p>
+  <div class="hero-btns">
+    <a href="https://wa.me/5549991606999?text=Olá!%20Quero%20fazer%20um%20pedido!" class="btn-primary">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Fazer Pedido
+    </a>
+    <a href="#cardapio" class="btn-secondary">📋 Ver Cardápio</a>
+  </div>
+  <p class="hero-since">· SINCE 2009 · TRADIÇÃO EM SABOR ·</p>
+</section>
+
+<!-- DIFERENCIAIS -->
+<div class="diferenciais">
+  <div class="diff-item"><span class="icon">🥩</span> Carne artesanal</div>
+  <div class="diff-item"><span class="icon">🚀</span> Delivery rápido</div>
+  <div class="diff-item"><span class="icon">📍</span> São Miguel e região</div>
+</div>
+
+<!-- CARDÁPIO -->
+<section id="cardapio">
+  <div class="section-title">
+    <p class="eyebrow">O que temos pra você</p>
+    <h2>Nosso Cardápio</h2>
+    <p>Preparado com ingredientes frescos e muito carinho desde 2009</p>
+  </div>
+
+  <div class="cardapio">
+    <div class="category">
+      <div class="category-title">🍔 Lanches Especiais</div>
+      <div class="items-grid">
+        <div class="item-card">
+          <div class="item-name">X-Mexicano Smash</div>
+          <div class="item-desc">Smash burger com guacamole, nachos e pico de gallo</div>
+        </div>
+        <div class="item-card">
+          <div class="item-name">X-Pantanal</div>
+          <div class="item-desc">Nosso clássico com blend artesanal e molho especial</div>
+        </div>
+        <div class="item-card">
+          <div class="item-name">X-Tudo</div>
+          <div class="item-desc">Completo com todos os ingredientes da casa</div>
+        </div>
+        <div class="item-card">
+          <div class="item-name">X-Bacon</div>
+          <div class="item-desc">Blend artesanal com bacon crocante e cheddar</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="category">
+      <div class="category-title">🍽️ Pratos</div>
+      <div class="items-grid">
+        <div class="item-card">
+          <div class="item-name">Bife à Parmegiana</div>
+          <div class="item-desc">Com fritas, arroz e salada</div>
+        </div>
+        <div class="item-card">
+          <div class="item-name">Frango Grelhado</div>
+          <div class="item-desc">Com fritas, arroz e salada</div>
+        </div>
+        <div class="item-card">
+          <div class="item-name">Prato do Dia</div>
+          <div class="item-desc">Consulte o cardápio do dia no WhatsApp</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="category">
+      <div class="category-title">🍟 Porções</div>
+      <div class="items-grid">
+        <div class="item-card">
+          <div class="item-name">Porção de Fritas</div>
+          <div class="item-desc">Batata frita crocante com molho especial</div>
+        </div>
+        <div class="item-card">
+          <div class="item-name">Porção de Frango</div>
+          <div class="item-desc">Frango empanado crocante com molho verde</div>
+        </div>
+        <div class="item-card">
+          <div class="item-name">Combo Família</div>
+          <div class="item-desc">Frango + mandioca + molhos da casa</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALERIA -->
+<section>
+  <div class="section-title">
+    <p class="eyebrow">Veja de perto</p>
+    <h2>Nossos Pratos</h2>
+  </div>
+  <div class="galeria">
+    <div class="photos-grid">
+      <div class="foto foto-wide">
+        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&q=80" alt="Hambúrguer artesanal Kioske Pantanal" loading="lazy" />
+      </div>
+      <div class="foto">
+        <img src="https://images.unsplash.com/photo-1639024471283-03518883512d?w=400&q=80" alt="Prato especial Kioske Pantanal" loading="lazy" />
+      </div>
+      <div class="foto">
+        <img src="https://images.unsplash.com/photo-1601924994987-69e26d50dc26?w=400&q=80" alt="Porção Kioske Pantanal" loading="lazy" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section class="sobre">
+  <p class="eyebrow">Nossa história</p>
+  <h2>Tradição desde 2009</h2>
+  <p>O Kioske Pantanal nasceu em São Miguel do Oeste com uma missão: entregar comida de verdade, com sabor caseiro e ingredientes frescos. São mais de 16 anos alimentando famílias com qualidade e carinho.</p>
+  <div class="stats-row">
+    <div class="stat">
+      <div class="num">16+</div>
+      <div class="label">Anos</div>
+    </div>
+    <div class="stat">
+      <div class="num">100%</div>
+      <div class="label">Artesanal</div>
+    </div>
+    <div class="stat">
+      <div class="num">⚡</div>
+      <div class="label">Delivery</div>
+    </div>
+  </div>
+</section>
+
+<!-- DELIVERY INFO -->
+<section class="delivery">
+  <div class="section-title">
+    <p class="eyebrow">Entregamos na sua porta</p>
+    <h2>Horários de Funcionamento</h2>
+  </div>
+  <div class="delivery-card">
+    <div class="icon-big">🛵</div>
+    <h3>Delivery em São Miguel e Região</h3>
+    <p>Entregamos em São Miguel do Oeste e cidades vizinhas. Rápido, quentinho e direto na sua porta!</p>
+    <div class="horarios">
+      <div class="title">📅 Funcionamento</div>
+      <div class="row">
+        <span>Terça a Domingo</span>
+        <span>A partir das 18h</span>
+      </div>
+      <div class="row">
+        <span>Segunda-feira</span>
+        <span style="color:#e74c3c">Fechado</span>
+      </div>
+    </div>
+    <a href="https://wa.me/5549991606999?text=Olá!%20Quero%20fazer%20um%20pedido!" class="btn-primary" style="width:100%; justify-content:center;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Pedir Agora pelo WhatsApp
+    </a>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <h2>Tá com<br>fome? 🤤</h2>
+  <p>Manda um Whats e a gente cuida do resto.<br>Pediu, chegou!</p>
+  <a href="https://wa.me/5549991606999?text=Olá!%20Kioske%20Pantanal!%20Quero%20fazer%20um%20pedido!" class="cta-wpp">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    (49) 99160-6999
+  </a>
+  <p class="info-line">📍 Rua La Salle, 1931 — Centro, São Miguel do Oeste – SC</p>
+  <p class="info-line" style="margin-top:6px">Instagram: <a href="https://instagram.com/kioskepantanalsmo" target="_blank">@kioskepantanalsmo</a></p>
+</section>
+
+<!-- MAPA -->
+<section class="mapa-section">
+  <div style="padding: 40px 0 20px; text-align:center;">
+    <p class="eyebrow" style="font-size:0.72rem;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--verde);margin-bottom:8px;">Onde estamos</p>
+    <h2 style="font-family:'Oswald',sans-serif;font-size:1.8rem;font-weight:700;color:var(--verde-escuro);text-transform:uppercase;">Como Chegar</h2>
+  </div>
+  <div class="map-wrap">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3567.1!2d-53.5145!3d-26.7245!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sRua+La+Salle+1931+S%C3%A3o+Miguel+do+Oeste!5e0!3m2!1spt!2sbr!4v1"
+      allowfullscreen=""
+      loading="lazy">
+    </iframe>
+    <div class="address-box">
+      <span class="icon">📍</span>
+      <div>
+        <strong>Rua La Salle, 1931 — Centro</strong><br>
+        São Miguel do Oeste – SC
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">🦢 KIOSKE PANTANAL</div>
+  <p>Delivery com tradição em sabor, qualidade e atendimento</p>
+  <div class="social">
+    <a href="https://instagram.com/kioskepantanalsmo" target="_blank">📸 @kioskepantanalsmo</a>
+  </div>
+  <p style="margin-top:8px">© 2025 Kioske Pantanal · Since 2009 · São Miguel do Oeste – SC</p>
+</footer>
+
+<!-- BOTÃO FLUTUANTE WHATSAPP -->
+<a href="https://wa.me/5549991606999?text=Olá!%20Quero%20fazer%20um%20pedido!" class="float-wpp" aria-label="Pedir pelo WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+</body>
+</html>
