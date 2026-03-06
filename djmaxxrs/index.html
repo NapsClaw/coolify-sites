@@ -2121,7 +2121,47 @@ function fecharIntro() {
 </section>
 
 <!-- RIFA -->
-<section style="background:linear-gradient(135deg,#0d0d0d 0%,#0a1a00 40%,#1a0d00 70%,#0d0d0d 100%); padding:70px 24px; border-top:3px solid #ff6600; border-bottom:3px solid #ff6600;">
+<!-- Overlay contagem regressiva da rifa -->
+<div id="rifa-intro-overlay" style="display:none; position:fixed; inset:0; background:#000; z-index:9999; flex-direction:column; align-items:center; justify-content:center;">
+  <div style="font-family:'Bebas Neue',sans-serif; font-size:14px; color:#ff6600; letter-spacing:4px; text-transform:uppercase; margin-bottom:20px;">🎟️ RIFA DJ MAXX RS</div>
+  <div id="rifa-intro-num" style="font-family:'Bebas Neue',sans-serif; font-size:clamp(100px,30vw,200px); color:#ff6600; line-height:1; text-shadow:0 0 60px rgba(255,102,0,0.8), 0 0 120px rgba(255,102,0,0.4); transition:all 0.2s ease;">5</div>
+  <div style="font-family:'Bebas Neue',sans-serif; font-size:16px; color:#aaa; letter-spacing:3px; margin-top:20px;">GANHE UMA MESA DE DJ!</div>
+</div>
+<script>
+(function(){
+  var el = document.getElementById('rifa-intro-overlay');
+  var numEl = document.getElementById('rifa-intro-num');
+  var count = 5;
+  var shown = false;
+  function runRifaCountdown(){
+    if(shown) return;
+    shown = true;
+    el.style.display = 'flex';
+    var interval = setInterval(function(){
+      count--;
+      if(count <= 0){
+        numEl.textContent = '0';
+        numEl.style.color = '#fff';
+        numEl.style.textShadow = '0 0 60px rgba(255,255,255,0.9)';
+        clearInterval(interval);
+        setTimeout(function(){ el.style.display='none'; }, 600);
+      } else {
+        numEl.textContent = count;
+      }
+    }, 700);
+  }
+  // Dispara quando a seção da rifa entra na viewport
+  var rifaSection = document.getElementById('rifa-section-trigger');
+  if(rifaSection && window.IntersectionObserver){
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ runRifaCountdown(); obs.disconnect(); } });
+    }, {threshold:0.4});
+    obs.observe(rifaSection);
+  }
+})();
+</script>
+
+<section id="rifa-section-trigger" style="background:linear-gradient(135deg,#0d0d0d 0%,#0a1a00 40%,#1a0d00 70%,#0d0d0d 100%); padding:70px 24px; border-top:3px solid #ff6600; border-bottom:3px solid #ff6600;">
   <div class="container">
     <div class="reveal" style="text-align:center; margin-bottom:40px;">
       <span style="display:inline-block; background:rgba(255,102,0,0.2); border:1px solid rgba(255,102,0,0.8); color:#ff6600; font-size:13px; font-weight:800; letter-spacing:3px; text-transform:uppercase; padding:8px 22px; border-radius:20px; margin-bottom:18px; animation:pulse 2s infinite;">🎟️ RIFA EXCLUSIVA</span>
