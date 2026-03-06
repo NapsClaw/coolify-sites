@@ -486,6 +486,17 @@
     </div>
   </section>
 
+  <!-- AVISOS DINÂMICOS -->
+  <section id="avisos" style="background:#f8f5ef; padding: 0 0 8px;">
+    <div class="section-title">
+      <span>Transparência</span>
+      <h3>Avisos e Comunicados</h3>
+    </div>
+    <div id="avisos-lista" style="padding: 0 16px 32px;">
+      <div style="text-align:center; color:#9ca3af; font-size:14px; padding:20px 0;">Carregando avisos...</div>
+    </div>
+  </section>
+
   <!-- ORIENTAÇÕES -->
   <section class="orientacoes">
     <div class="section-title">
@@ -686,6 +697,51 @@
       const item = el.parentElement;
       item.classList.toggle('open');
     }
+
+    // Carregar avisos da API
+    const CATEGORIAS_LABEL = {
+      comunicado: '📢 Comunicado',
+      arrecadacao: '💰 Arrecadação',
+      repasse: '🏛️ Repasse',
+      aviso: '⚠️ Aviso',
+      geral: '📋 Geral'
+    };
+    const CATEGORIAS_COR = {
+      comunicado: '#1a2744',
+      arrecadacao: '#166534',
+      repasse: '#7c3aed',
+      aviso: '#b45309',
+      geral: '#374151'
+    };
+
+    async function carregarAvisos() {
+      const lista = document.getElementById('avisos-lista');
+      try {
+        const resp = await fetch('https://cartorio-comodoro-painel-a2k1jasu0-pmc-holdings-projects.vercel.app/api/avisos');
+        const data = await resp.json();
+        const avisos = data.avisos || [];
+        if (avisos.length === 0) {
+          lista.innerHTML = '<div style="text-align:center;color:#9ca3af;font-size:14px;padding:20px 0;">Nenhum comunicado no momento.</div>';
+          return;
+        }
+        lista.innerHTML = avisos.map(av => {
+          const cat = av.categoria || 'geral';
+          const cor = CATEGORIAS_COR[cat] || '#374151';
+          const label = CATEGORIAS_LABEL[cat] || cat;
+          const data = new Date(av.created_at).toLocaleDateString('pt-BR', {day:'2-digit',month:'long',year:'numeric'});
+          return `
+            <div style="background:#fff;border-radius:12px;padding:18px 16px;margin-bottom:12px;border-left:4px solid ${cor};box-shadow:0 1px 4px rgba(0,0,0,0.06);">
+              <span style="font-size:11px;background:${cor};color:#fff;padding:2px 10px;border-radius:50px;font-weight:600;">${label}</span>
+              <h4 style="font-size:15px;font-weight:700;color:#1a2744;margin:10px 0 6px;">${av.titulo}</h4>
+              <p style="font-size:13px;color:#6b7280;line-height:1.7;white-space:pre-wrap;">${av.conteudo}</p>
+              <p style="font-size:11px;color:#9ca3af;margin-top:8px;">${data}</p>
+            </div>`;
+        }).join('');
+      } catch(e) {
+        lista.innerHTML = '<div style="text-align:center;color:#9ca3af;font-size:13px;padding:20px 0;">Não foi possível carregar os avisos.</div>';
+      }
+    }
+    carregarAvisos();
   </script>
 </body>
 </html>
