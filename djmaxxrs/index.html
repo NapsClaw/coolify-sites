@@ -1222,15 +1222,15 @@
       var tx2 = gx + sweep*W*0.3;
 
       ctx.save();
-      ctx.globalAlpha = 0.85 + Math.sin(t*l.speed*2+l.phase)*0.15;
+      ctx.globalAlpha = 0.28 + Math.sin(t*l.speed*2+l.phase)*0.07;
 
       var grad = ctx.createLinearGradient(bx, H, tx2, gy);
       grad.addColorStop(0, l.color);
       grad.addColorStop(0.5, l.color);
-      grad.addColorStop(1, 'rgba(255,255,255,0.1)');
+      grad.addColorStop(1, 'rgba(255,255,255,0.03)');
 
       var dx=tx2-bx, dy=gy-H, len=Math.sqrt(dx*dx+dy*dy)||1;
-      var nx=-dy/len*5, ny=dx/len*5; // feixe mais largo (5px cada lado)
+      var nx=-dy/len*4, ny=dx/len*4; // feixe levemente mais fino
       ctx.beginPath();
       ctx.moveTo(bx+nx,H);
       ctx.lineTo(tx2+nx*0.05,gy);
@@ -1240,8 +1240,8 @@
       ctx.fillStyle=grad; ctx.fill();
 
       // Brilho na base do laser
-      ctx.globalAlpha=0.6;
-      var sg=ctx.createRadialGradient(bx,H,0,bx,H,40);
+      ctx.globalAlpha=0.18;
+      var sg=ctx.createRadialGradient(bx,H,0,bx,H,30);
       sg.addColorStop(0,l.color); sg.addColorStop(1,'transparent');
       ctx.beginPath(); ctx.arc(bx,H,40,0,Math.PI*2);
       ctx.fillStyle=sg; ctx.fill();
@@ -1275,7 +1275,7 @@
       var targetY = H*0.3 + Math.cos(t*mv.speed*0.7+mv.phase)*H*0.2;
 
       ctx.save();
-      ctx.globalAlpha = 0.6;
+      ctx.globalAlpha = 0.2;
       var grad = ctx.createLinearGradient(mv.x, H, targetX, targetY);
       grad.addColorStop(0, mv.color);
       grad.addColorStop(0.5, mv.color);
@@ -1290,7 +1290,7 @@
       ctx.closePath();
       ctx.fillStyle=grad; ctx.fill();
       // Spot no destino
-      ctx.globalAlpha=0.45;
+      ctx.globalAlpha=0.15;
       var sg=ctx.createRadialGradient(targetX,targetY,0,targetX,targetY,mv.width*2);
       sg.addColorStop(0,mv.color); sg.addColorStop(1,'transparent');
       ctx.beginPath(); ctx.arc(targetX,targetY,mv.width*2,0,Math.PI*2);
