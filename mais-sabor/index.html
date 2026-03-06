@@ -8,286 +8,336 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --roxo-escuro: #3a0060;
+      --roxo-escuro: #1a0035;
       --roxo: #5c0090;
       --roxo-medio: #7b00b8;
-      --verde-escuro: #1b5e20;
       --verde: #2e7d32;
-      --verde-claro: #43a047;
-      --laranja: #e65100;
-      --laranja-claro: #ff8f00;
+      --verde-claro: #66bb6a;
       --amarelo: #fdd835;
+      --laranja: #ff8f00;
       --branco: #fff;
     }
 
     body {
       font-family: 'Segoe UI', Arial, sans-serif;
-      background: #1a0030;
+      background: var(--roxo-escuro);
       color: #fff;
       min-height: 100vh;
     }
 
-    /* ===== HERO ===== */
+    /* ===== HERO / TOPO ===== */
     .hero {
+      background:
+        radial-gradient(ellipse at 80% 20%, rgba(124,0,184,0.7) 0%, transparent 60%),
+        radial-gradient(ellipse at 20% 80%, rgba(46,125,50,0.5) 0%, transparent 55%),
+        #1a0035;
+      padding: 28px 20px 32px;
       position: relative;
-      background: linear-gradient(160deg, #1b5e20 0%, #2e3a00 30%, #3a0060 60%, #1a0030 100%);
       overflow: hidden;
-      padding: 0 0 32px;
-      min-height: 520px;
-    }
-
-    /* Folhas decorativas via CSS */
-    .hero::before {
-      content: '🌿🌴🍃';
-      position: absolute;
-      top: -10px; left: -20px;
-      font-size: 5rem;
-      opacity: 0.25;
-      transform: rotate(-20deg);
-      pointer-events: none;
-    }
-    .hero::after {
-      content: '🌿🍃🌴';
-      position: absolute;
-      bottom: 0; right: -20px;
-      font-size: 5rem;
-      opacity: 0.2;
-      transform: rotate(15deg) scaleX(-1);
-      pointer-events: none;
-    }
-
-    /* Faixa topo */
-    .faixa-topo {
-      background: linear-gradient(90deg, var(--verde-escuro), var(--verde-claro), var(--verde-escuro));
-      text-align: center;
-      padding: 10px 16px;
-      font-size: 1rem;
-      font-weight: 900;
-      letter-spacing: 1px;
-      color: #fff;
-      text-transform: uppercase;
       border-bottom: 3px solid var(--amarelo);
     }
 
-    /* Logo / título hero */
-    .hero-content {
-      text-align: center;
-      padding: 28px 20px 0;
-      position: relative;
-      z-index: 2;
-    }
-    .hero-content .titulo {
-      font-size: 2.8rem;
-      font-weight: 900;
-      line-height: 1;
-      text-shadow: 0 3px 12px rgba(0,0,0,0.6);
-      letter-spacing: -1px;
-    }
-    .hero-content .titulo span { color: var(--amarelo); }
-    .hero-content .sub {
-      font-size: 1rem;
-      opacity: 0.9;
-      margin-top: 6px;
-      font-weight: 500;
+    /* Brilhos decorativos */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 30px; right: -30px;
+      width: 180px; height: 180px;
+      background: radial-gradient(circle, rgba(253,216,53,0.15) 0%, transparent 70%);
+      border-radius: 50%;
     }
 
-    /* Caixas decorativas */
-    .hero-boxes {
+    /* Telefone topo */
+    .tel-topo {
       display: flex;
+      align-items: center;
       justify-content: center;
-      gap: 12px;
-      margin: 20px auto 0;
-      max-width: 340px;
-      position: relative;
-      z-index: 2;
-    }
-    .hero-box {
-      background: linear-gradient(140deg, var(--roxo-medio), var(--roxo-escuro));
-      border: 3px solid var(--amarelo);
-      border-radius: 12px;
-      padding: 10px 14px;
-      text-align: center;
-      font-size: 0.75rem;
-      font-weight: 700;
+      gap: 8px;
+      font-size: 1.5rem;
+      font-weight: 900;
       color: var(--amarelo);
-      min-width: 80px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+      text-shadow: 0 0 20px rgba(253,216,53,0.6), 2px 2px 0 #000;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
     }
-    .hero-box .vol { font-size: 1.4rem; font-weight: 900; }
+    .tel-topo .zap { font-size: 1.3rem; }
 
-    /* ===== TABELA PREÇOS ===== */
-    .precos-section {
+    /* Logo / Título */
+    .brand {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .brand .mais {
+      font-size: 1.2rem;
+      font-weight: 900;
+      color: var(--branco);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      opacity: 0.9;
+    }
+    .brand .acai-txt {
+      font-size: 3.5rem;
+      font-weight: 900;
+      color: var(--amarelo);
+      text-shadow: 0 0 30px rgba(253,216,53,0.5), 3px 3px 0 rgba(0,0,0,0.6);
+      line-height: 1;
+      letter-spacing: -2px;
+    }
+    .brand .acai-txt span { color: #fff; }
+    .brand .eita {
+      display: inline-block;
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: #fff;
+      font-style: italic;
+      background: rgba(255,255,255,0.1);
+      border: 2px solid rgba(255,255,255,0.3);
+      padding: 2px 14px;
+      border-radius: 8px;
+      margin-top: 4px;
+    }
+
+    /* Layout principal: garrafinhas + adicionais lado a lado */
+    .hero-main {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      align-items: start;
+    }
+
+    /* Garrafinhas */
+    .garrafas-hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+    .garrafa-img-wrapper {
       position: relative;
-      z-index: 2;
-      margin: 28px 16px 0;
+      text-align: center;
+    }
+    .garrafa-grande {
+      font-size: 7rem;
+      line-height: 1;
+      filter: drop-shadow(0 8px 20px rgba(124,0,184,0.8));
+      display: block;
+    }
+    .garrafa-pequena {
+      font-size: 4rem;
+      line-height: 1;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.6));
+      display: block;
+      margin-top: -16px;
+      margin-left: -40px;
+    }
+    .splash {
+      position: absolute;
+      font-size: 2rem;
+      opacity: 0.5;
+      top: 10px; right: -5px;
+    }
+    .label-garrafa {
+      background: linear-gradient(135deg, var(--amarelo), var(--laranja));
+      color: #1a0035;
+      font-weight: 900;
+      font-size: 0.72rem;
+      padding: 4px 12px;
+      border-radius: 50px;
+      margin-top: 6px;
+      display: inline-block;
+      letter-spacing: 0.5px;
+    }
+
+    /* Adicionais */
+    .adicionais-col {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .adicionais-titulo {
+      font-size: 1rem;
+      font-weight: 900;
+      color: var(--amarelo);
+      text-shadow: 1px 1px 0 #000;
+      margin-bottom: 10px;
+    }
+    .adicional-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      font-size: 0.95rem;
+      font-weight: 700;
+    }
+    .adicional-item:last-child { border-bottom: none; }
+    .adicional-item .bullet {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .bullet-amarelo { background: var(--amarelo); box-shadow: 0 0 6px var(--amarelo); }
+    .bullet-roxo { background: #ce93d8; box-shadow: 0 0 6px #ce93d8; }
+    .bullet-laranja { background: var(--laranja); box-shadow: 0 0 6px var(--laranja); }
+    .bullet-verde { background: var(--verde-claro); box-shadow: 0 0 6px var(--verde-claro); }
+
+    .experimente {
+      margin-top: 14px;
+      text-align: center;
+      font-size: 0.82rem;
+      font-weight: 900;
+      color: #fff;
+      background: rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 8px 10px;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+    .experimente span { color: var(--amarelo); }
+
+    /* Em breve sorbets */
+    .sorbet-banner {
+      margin: 16px 20px 0;
+      background: linear-gradient(135deg, rgba(46,125,50,0.4), rgba(26,0,53,0.6));
+      border: 1.5px dashed var(--verde-claro);
+      border-radius: 14px;
+      padding: 14px 18px;
+      text-align: center;
+    }
+    .sorbet-banner .tag {
+      display: inline-block;
+      background: var(--verde-claro);
+      color: #fff;
+      font-weight: 900;
+      font-size: 0.7rem;
+      padding: 3px 12px;
+      border-radius: 50px;
+      margin-bottom: 8px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .sorbet-banner p {
+      font-size: 0.9rem;
+      color: #c8e6c9;
+      font-weight: 600;
+    }
+
+    /* ===== SEÇÃO PREÇOS + CIDADES ===== */
+    .grid-precos-cidades {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 14px;
+      margin: 24px 16px 0;
     }
 
+    /* Card Preços */
     .preco-card {
+      background: linear-gradient(160deg, rgba(92,0,144,0.9), rgba(26,0,53,0.95));
+      border: 2px solid var(--amarelo);
       border-radius: 18px;
       overflow: hidden;
-      box-shadow: 0 8px 28px rgba(0,0,0,0.5);
+      box-shadow: 0 8px 28px rgba(0,0,0,0.5), 0 0 20px rgba(253,216,53,0.15);
     }
-
     .preco-card-header {
-      padding: 12px 16px 10px;
+      background: linear-gradient(90deg, var(--roxo-medio), var(--roxo));
+      padding: 12px 16px;
       text-align: center;
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       font-weight: 900;
+      color: var(--amarelo);
       letter-spacing: 1px;
       text-transform: uppercase;
+      border-bottom: 2px solid var(--amarelo);
     }
-    .preco-card.acai .preco-card-header {
-      background: linear-gradient(135deg, var(--roxo-escuro), var(--roxo-medio));
-      border-bottom: 3px solid var(--amarelo);
-      color: var(--amarelo);
-    }
-    .preco-card.cupuacu .preco-card-header {
-      background: linear-gradient(135deg, #bf360c, var(--laranja-claro));
-      border-bottom: 3px solid #fff;
-      color: #fff;
-    }
-
-    .preco-card-body {
-      background: rgba(0,0,0,0.75);
-      padding: 12px 14px;
-    }
+    .preco-card-body { padding: 14px 14px; }
     .preco-item {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 7px 0;
+      padding: 8px 0;
       border-bottom: 1px solid rgba(255,255,255,0.1);
       font-size: 0.9rem;
     }
     .preco-item:last-child { border-bottom: none; }
-    .preco-item .vol { font-weight: 600; color: #ddd; }
-    .preco-item .val {
-      font-weight: 900;
-      font-size: 1rem;
+    .preco-item .vol { color: #ccc; font-weight: 600; }
+    .preco-item .val { font-weight: 900; color: var(--amarelo); font-size: 0.95rem; }
+    .min-tag {
+      display: block;
+      text-align: center;
+      font-size: 0.72rem;
+      color: #aaa;
+      margin-top: 10px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(255,255,255,0.1);
     }
-    .preco-card.acai .val { color: var(--amarelo); }
-    .preco-card.cupuacu .val { color: #ffcc80; }
+    .min-tag strong { color: var(--verde-claro); }
 
-    /* ===== ATACADO ===== */
-    .section {
-      margin: 28px 16px 0;
-    }
-    .section-title {
-      font-size: 1.3rem;
-      font-weight: 900;
-      color: var(--amarelo);
-      margin-bottom: 14px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.5);
-    }
-
-    .atacado-box {
-      background: linear-gradient(135deg, rgba(27,94,32,0.85), rgba(58,0,96,0.85));
+    /* Card Cidades */
+    .cidades-card {
+      background: linear-gradient(160deg, rgba(27,94,32,0.7), rgba(26,0,53,0.95));
       border: 2px solid var(--verde-claro);
       border-radius: 18px;
-      padding: 20px 18px;
-      backdrop-filter: blur(4px);
+      overflow: hidden;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.5);
     }
-    .atacado-item {
+    .cidades-card-header {
+      background: linear-gradient(90deg, var(--verde), var(--verde-claro));
+      padding: 12px 16px;
+      text-align: center;
+      font-size: 1.05rem;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      border-bottom: 2px solid var(--verde-claro);
+    }
+    .cidades-card-body { padding: 12px 14px; }
+    .cidade-item {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.12);
-      font-size: 0.95rem;
-    }
-    .atacado-item:last-of-type { border-bottom: none; }
-    .atacado-item .vol { font-weight: 600; color: #ccc; }
-    .atacado-item .val { font-weight: 900; font-size: 1.05rem; color: #a5d6a7; }
-    .min-tag {
-      display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: var(--amarelo);
-      color: #1a0030;
-      font-weight: 800;
+      padding: 5px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
       font-size: 0.82rem;
-      padding: 8px 16px;
-      border-radius: 50px;
-      margin-top: 14px;
+      color: #c8e6c9;
+      font-weight: 600;
     }
+    .cidade-item:last-child { border-bottom: none; }
+    .cidade-dot { color: var(--verde-claro); font-size: 0.6rem; }
 
-    /* ===== GARRAFINHAS ===== */
-    .garrafas-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-    .garrafa-card {
-      background: rgba(255,255,255,0.07);
-      border: 1.5px solid rgba(255,255,255,0.15);
-      border-radius: 16px;
-      padding: 16px 10px;
+    /* ===== BADGE GOSTOSO ===== */
+    .badge-section {
       text-align: center;
-      backdrop-filter: blur(4px);
-    }
-    .garrafa-card .emoji { font-size: 2.2rem; }
-    .garrafa-card .sabor {
-      font-size: 0.82rem;
-      font-weight: 700;
-      color: #e0e0e0;
-      margin-top: 6px;
-      line-height: 1.2;
-    }
-    .garrafa-card .preco {
-      font-size: 1.15rem;
-      font-weight: 900;
-      color: var(--amarelo);
-      margin-top: 6px;
-    }
-    .garrafa-plus {
-      grid-column: 1 / -1;
-      background: rgba(255,255,255,0.05);
-      border: 1.5px dashed rgba(255,255,255,0.2);
-      border-radius: 12px;
-      padding: 12px 16px;
-      font-size: 0.85rem;
-      color: #bbb;
-      text-align: center;
-    }
-
-    /* ===== CIDADES ===== */
-    .cidades-box {
-      background: rgba(0,0,0,0.4);
-      border: 1.5px solid var(--verde-claro);
-      border-radius: 18px;
-      padding: 20px 18px;
-    }
-    .cidades-grid {
+      margin: 20px 16px 0;
       display: flex;
+      justify-content: center;
+      gap: 12px;
       flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 6px;
     }
-    .cidade-tag {
-      background: rgba(67,160,71,0.2);
-      border: 1.5px solid var(--verde-claro);
-      color: #a5d6a7;
-      font-weight: 700;
-      font-size: 0.8rem;
-      padding: 5px 14px;
-      border-radius: 50px;
+    .badge {
+      background: linear-gradient(135deg, #e65100, #ff8f00);
+      color: #fff;
+      font-weight: 900;
+      font-size: 0.9rem;
+      padding: 10px 20px;
+      border-radius: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      box-shadow: 0 4px 16px rgba(230,81,0,0.4);
+    }
+    .badge-2 {
+      background: linear-gradient(135deg, var(--roxo-medio), var(--roxo));
+      box-shadow: 0 4px 16px rgba(92,0,144,0.4);
     }
 
     /* ===== CTA ===== */
     .cta-section {
       text-align: center;
-      padding: 32px 20px 90px;
+      padding: 28px 20px 90px;
     }
     .cta-section p {
       font-size: 1rem;
-      color: #ccc;
-      margin-bottom: 18px;
+      color: #bbb;
+      margin-bottom: 16px;
     }
     .btn-whats {
       display: inline-flex;
@@ -304,7 +354,6 @@
       width: 100%;
       max-width: 380px;
       box-shadow: 0 6px 24px rgba(37,211,102,0.4);
-      letter-spacing: 0.5px;
     }
 
     /* ===== FLOAT ===== */
@@ -325,8 +374,8 @@
     footer {
       text-align: center;
       padding: 20px;
-      font-size: 0.75rem;
-      color: rgba(255,255,255,0.3);
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.25);
       border-top: 1px solid rgba(255,255,255,0.08);
     }
   </style>
@@ -335,119 +384,106 @@
 
   <!-- HERO -->
   <div class="hero">
-    <div class="faixa-topo">🚚 Entregamos na sua cidade! 🚚</div>
 
-    <div class="hero-content">
-      <div class="titulo">Mais <span>Sabor</span></div>
-      <div class="sub">🍇 Açaí & Cupuaçu fresquinho na sua porta</div>
+    <!-- Telefone -->
+    <div class="tel-topo">
+      <span class="zap">📱</span>
+      35-9888-45147
     </div>
 
-    <div class="hero-boxes">
-      <div class="hero-box">
-        <div class="vol">10L</div>
-        <div>Açaí</div>
-      </div>
-      <div class="hero-box">
-        <div class="vol">5L</div>
-        <div>Açaí</div>
-      </div>
+    <!-- Brand -->
+    <div class="brand">
+      <div class="mais">Mais Sabor</div>
+      <div class="acai-txt"><span>Açaí</span> com:</div>
     </div>
 
-    <!-- TABELA PREÇOS NO HERO -->
-    <div class="precos-section">
-      <!-- AÇAÍ -->
-      <div class="preco-card acai">
-        <div class="preco-card-header">🍇 Açaí</div>
-        <div class="preco-card-body">
-          <div class="preco-item"><span class="vol">1 Litro</span><span class="val">R$18</span></div>
-          <div class="preco-item"><span class="vol">2 Litros</span><span class="val">R$36</span></div>
-          <div class="preco-item"><span class="vol">5 Litros</span><span class="val">R$55</span></div>
-          <div class="preco-item"><span class="vol">10 Litros</span><span class="val">R$99</span></div>
+    <!-- Garrafinhas + Adicionais -->
+    <div class="hero-main">
+
+      <!-- Garrafinhas -->
+      <div class="garrafas-hero">
+        <div class="garrafa-img-wrapper">
+          <span class="garrafa-grande">🍶</span>
+          <span class="splash">✨</span>
+        </div>
+        <span class="garrafa-pequena">🧴</span>
+        <span class="label-garrafa">🍇 Mais Sabor Açaí</span>
+        <span class="label-garrafa" style="margin-top:5px; background: linear-gradient(135deg,#66bb6a,#2e7d32); color:#fff;">300ml — R$10</span>
+      </div>
+
+      <!-- Adicionais -->
+      <div class="adicionais-col">
+        <div class="adicionais-titulo">Açaí com:</div>
+        <div class="adicional-item"><div class="bullet bullet-amarelo"></div>Leite condensado</div>
+        <div class="adicional-item"><div class="bullet bullet-roxo"></div>Leite em pó</div>
+        <div class="adicional-item"><div class="bullet bullet-laranja"></div>Mousse</div>
+        <div class="adicional-item"><div class="bullet bullet-verde"></div>Paçoca</div>
+        <div class="adicional-item"><div class="bullet bullet-amarelo"></div>E muito mais!</div>
+
+        <div class="experimente">
+          Escolha os adicionais e <span>EXPERIMENTE!</span>
         </div>
       </div>
-      <!-- CUPUAÇU -->
-      <div class="preco-card cupuacu">
-        <div class="preco-card-header">🍈 Cupuaçu</div>
-        <div class="preco-card-body">
-          <div class="preco-item"><span class="vol">1 Litro</span><span class="val">R$30</span></div>
-          <div class="preco-item"><span class="vol">2 Litros</span><span class="val">R$45</span></div>
-          <div class="preco-item"><span class="vol">5 Litros</span><span class="val">R$85</span></div>
-        </div>
-      </div>
+
     </div>
   </div>
 
-  <!-- ATACADO -->
-  <div class="section">
-    <div class="section-title">📦 Venda no Atacado — Açaí</div>
-    <div class="atacado-box">
-      <div class="atacado-item"><span class="vol">1 Litro</span><span class="val">R$ 18,00</span></div>
-      <div class="atacado-item"><span class="vol">2 Litros</span><span class="val">R$ 36,00</span></div>
-      <div class="atacado-item"><span class="vol">5 Litros</span><span class="val">R$ 55,00</span></div>
-      <div class="atacado-item"><span class="vol">10 Litros</span><span class="val">R$ 99,00</span></div>
-      <span class="min-tag">⚡ Pedido mínimo R$150 · Entrega até 50 km</span>
-    </div>
+  <!-- EM BREVE SORBETS -->
+  <div class="sorbet-banner">
+    <span class="tag">🍧 Em breve</span>
+    <p>Sorbets de Frutas — Goiaba, Manga, Maracujá e muito mais!</p>
   </div>
 
-  <!-- GARRAFINHAS -->
-  <div class="section">
-    <div class="section-title">🧃 Garrafinhas 300ml — R$10</div>
-    <div class="garrafas-grid">
-      <div class="garrafa-card">
-        <div class="emoji">🥛</div>
-        <div class="sabor">Leite Condensado</div>
-        <div class="preco">R$10</div>
-      </div>
-      <div class="garrafa-card">
-        <div class="emoji">🍼</div>
-        <div class="sabor">Leite em Pó</div>
-        <div class="preco">R$10</div>
-      </div>
-      <div class="garrafa-card">
-        <div class="emoji">🍫</div>
-        <div class="sabor">Mousse de Chocolate</div>
-        <div class="preco">R$10</div>
-      </div>
-      <div class="garrafa-card">
-        <div class="emoji">🥜</div>
-        <div class="sabor">Paçoca</div>
-        <div class="preco">R$10</div>
-      </div>
-      <div class="garrafa-plus">
-        🌟 Mais sabores disponíveis! Pergunte pelo WhatsApp.
+  <!-- PREÇOS + CIDADES -->
+  <div class="grid-precos-cidades">
+
+    <!-- Preços -->
+    <div class="preco-card">
+      <div class="preco-card-header">🍇 Preços</div>
+      <div class="preco-card-body">
+        <div class="preco-item"><span class="vol">1 Litro</span><span class="val">R$18</span></div>
+        <div class="preco-item"><span class="vol">2 Litros</span><span class="val">R$36</span></div>
+        <div class="preco-item"><span class="vol">5 Litros</span><span class="val">R$55</span></div>
+        <div class="preco-item"><span class="vol">10 Litros</span><span class="val">R$99</span></div>
+        <span class="min-tag">📦 Compra mínima: <strong>consulte</strong></span>
       </div>
     </div>
+
+    <!-- Cidades -->
+    <div class="cidades-card">
+      <div class="cidades-card-header">📍 Entrega</div>
+      <div class="cidades-card-body">
+        <div class="cidade-item"><span class="cidade-dot">●</span>Caxambu</div>
+        <div class="cidade-item"><span class="cidade-dot">●</span>Baependi</div>
+        <div class="cidade-item"><span class="cidade-dot">●</span>Cruzília</div>
+        <div class="cidade-item"><span class="cidade-dot">●</span>Itamonte</div>
+        <div class="cidade-item"><span class="cidade-dot">●</span>Itanhandu</div>
+        <div class="cidade-item"><span class="cidade-dot">●</span>Passa Quatro</div>
+        <div class="cidade-item"><span class="cidade-dot">●</span>Soledade</div>
+        <div class="cidade-item"><span class="cidade-dot">●</span>S. Lourenço</div>
+        <div class="cidade-item"><span class="cidade-dot">●</span>Carmo de Minas</div>
+        <div class="cidade-item"><span class="cidade-dot">●</span>Lambari</div>
+      </div>
+    </div>
+
   </div>
 
-  <!-- CIDADES -->
-  <div class="section" style="margin-bottom:0;">
-    <div class="section-title">📍 Cidades Atendidas</div>
-    <div class="cidades-box">
-      <div class="cidades-grid">
-        <span class="cidade-tag">Caxambu</span>
-        <span class="cidade-tag">Baependi</span>
-        <span class="cidade-tag">Cruzília</span>
-        <span class="cidade-tag">Itamonte</span>
-        <span class="cidade-tag">Itanhandu</span>
-        <span class="cidade-tag">Passa Quatro</span>
-        <span class="cidade-tag">Soledade</span>
-        <span class="cidade-tag">São Lourenço</span>
-        <span class="cidade-tag">Carmo de Minas</span>
-        <span class="cidade-tag">Lambari</span>
-      </div>
-    </div>
+  <!-- BADGES -->
+  <div class="badge-section">
+    <div class="badge">🔥 Gostoso Demais!</div>
+    <div class="badge badge-2">⚡ Entrega Rápida</div>
   </div>
 
   <!-- CTA -->
   <div class="cta-section">
     <p>Faça seu pedido agora! 😊</p>
-    <a class="btn-whats" href="https://wa.me/5535988845147?text=Olá!%20Quero%20fazer%20um%20pedido%20Mais%20Sabor%20🍇" target="_blank">
+    <a class="btn-whats" href="https://wa.me/5535988845147?text=Olá!%20Quero%20fazer%20um%20pedido%20de%20açaí%20Mais%20Sabor%20🍇" target="_blank">
       💬 Pedir pelo WhatsApp
     </a>
   </div>
 
   <!-- FLOAT -->
-  <a class="float-whats" href="https://wa.me/5535988845147?text=Olá!%20Quero%20fazer%20um%20pedido%20Mais%20Sabor%20🍇" target="_blank">💬</a>
+  <a class="float-whats" href="https://wa.me/5535988845147?text=Olá!%20Quero%20fazer%20um%20pedido%20de%20açaí%20Mais%20Sabor%20🍇" target="_blank">💬</a>
 
   <footer>© 2025 Mais Sabor – Açaí & Cupuaçu · Feito com 💜</footer>
 
