@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Gersepa Solutions</title>
+  <meta name="description" content="Encontre diaristas de confiança em Santa Catarina. Rápido, seguro e fácil." />
+  <meta name="theme-color" content="#1a56db" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="apple-touch-icon" href="icon-192.png" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --blue-dark: #0d3b8c;
+      --blue-mid: #1a56db;
+      --blue-light: #60a5fa;
+      --blue-pale: #dbeafe;
+      --grad: linear-gradient(135deg, #0d3b8c 0%, #1a56db 50%, #60a5fa 100%);
+      --grad-btn: linear-gradient(90deg, #1a56db, #60a5fa);
+      --white: #ffffff;
+      --gray-50: #f8fafc;
+      --gray-100: #f1f5f9;
+      --gray-400: #94a3b8;
+      --gray-600: #475569;
+      --gray-800: #1e293b;
+      --radius: 16px;
+      --shadow: 0 4px 24px rgba(26,86,219,0.15);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--white);
+      color: var(--gray-800);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--blue-pale);
+      padding: 0 20px;
+    }
+    .header-inner {
+      max-width: 480px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+    }
+    .logo-icon {
+      width: 36px; height: 36px;
+      background: var(--grad);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+    }
+    .logo-text { font-size: 16px; font-weight: 800; color: var(--blue-dark); }
+    .logo-text span { color: var(--blue-mid); }
+    .header-btn {
+      background: var(--grad-btn);
+      color: var(--white);
+      border: none;
+      padding: 8px 18px;
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--grad);
+      padding: 48px 20px 56px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 300px; height: 300px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 50%;
+      top: -80px; right: -80px;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      width: 200px; height: 200px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 50%;
+      bottom: -60px; left: -60px;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      color: var(--white);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 14px;
+      border-radius: 50px;
+      margin-bottom: 20px;
+      letter-spacing: 0.5px;
+    }
+    .hero h1 {
+      font-size: 32px;
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .hero h1 span { color: #bfdbfe; }
+    .hero p {
+      font-size: 15px;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.6;
+      margin-bottom: 32px;
+      max-width: 320px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero-btns { display: flex; flex-direction: column; gap: 12px; max-width: 300px; margin: 0 auto; }
+    .btn-primary {
+      background: var(--white);
+      color: var(--blue-dark);
+      font-size: 15px;
+      font-weight: 700;
+      padding: 16px 24px;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      display: block;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      font-size: 15px;
+      font-weight: 600;
+      padding: 15px 24px;
+      border-radius: 50px;
+      border: 2px solid rgba(255,255,255,0.5);
+      cursor: pointer;
+      text-decoration: none;
+      display: block;
+    }
+
+    /* ── STATS ── */
+    .stats {
+      background: var(--white);
+      padding: 28px 20px;
+      border-bottom: 1px solid var(--gray-100);
+    }
+    .stats-inner {
+      max-width: 480px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      text-align: center;
+    }
+    .stat-item { padding: 12px 8px; }
+    .stat-num {
+      font-size: 24px;
+      font-weight: 900;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .stat-label { font-size: 11px; color: var(--gray-400); font-weight: 500; margin-top: 2px; }
+
+    /* ── SECTION TITLES ── */
+    .section { padding: 40px 20px; max-width: 480px; margin: 0 auto; }
+    .section-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--gray-800);
+      margin-bottom: 6px;
+    }
+    .section-title span { color: var(--blue-mid); }
+    .section-sub { font-size: 14px; color: var(--gray-400); margin-bottom: 28px; }
+
+    /* ── HOW IT WORKS ── */
+    .how-bg { background: var(--gray-50); }
+    .steps { display: flex; flex-direction: column; gap: 16px; }
+    .step {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 20px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      box-shadow: 0 2px 12px rgba(26,86,219,0.07);
+    }
+    .step-num {
+      min-width: 40px; height: 40px;
+      background: var(--grad);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; font-weight: 800; color: var(--white);
+    }
+    .step-content h3 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+    .step-content p { font-size: 13px; color: var(--gray-600); line-height: 1.5; }
+
+    /* ── CARDS ── */
+    .cards-grid { display: flex; flex-direction: column; gap: 14px; }
+    .card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 20px;
+      border: 1px solid var(--blue-pale);
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .card-icon {
+      width: 46px; height: 46px;
+      background: var(--blue-pale);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .card-title { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+    .card-desc { font-size: 13px; color: var(--gray-600); line-height: 1.5; }
+
+    /* ── DIARISTA SECTION ── */
+    .diarista-box {
+      background: var(--grad);
+      border-radius: 20px;
+      padding: 28px 20px;
+      color: var(--white);
+    }
+    .diarista-box h3 { font-size: 20px; font-weight: 800; margin-bottom: 8px; }
+    .diarista-box p { font-size: 14px; opacity: 0.85; margin-bottom: 20px; line-height: 1.6; }
+    .diarista-items { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+    .diarista-item {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 14px; font-weight: 500;
+    }
+    .diarista-item::before {
+      content: '✓';
+      width: 22px; height: 22px;
+      background: rgba(255,255,255,0.25);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 800;
+      flex-shrink: 0;
+    }
+    .btn-white {
+      background: var(--white);
+      color: var(--blue-dark);
+      font-size: 15px;
+      font-weight: 700;
+      padding: 16px 24px;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      text-align: center;
+      display: block;
+      text-decoration: none;
+    }
+
+    /* ── CREDITS ── */
+    .credits-card {
+      background: var(--grad);
+      border-radius: var(--radius);
+      padding: 24px;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+    .credits-title { font-size: 18px; font-weight: 800; margin-bottom: 4px; }
+    .credits-sub { font-size: 13px; opacity: 0.8; margin-bottom: 20px; }
+    .credits-example {
+      background: rgba(255,255,255,0.15);
+      border-radius: 12px;
+      padding: 16px;
+    }
+    .credits-row {
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 13px; padding: 4px 0;
+    }
+    .credits-row.total {
+      border-top: 1px solid rgba(255,255,255,0.3);
+      margin-top: 8px;
+      padding-top: 12px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials { display: flex; flex-direction: column; gap: 14px; }
+    .testimonial {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 20px;
+      border: 1px solid var(--gray-100);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    }
+    .stars { color: #f59e0b; font-size: 14px; margin-bottom: 8px; }
+    .testimonial-text { font-size: 14px; color: var(--gray-600); line-height: 1.6; margin-bottom: 12px; font-style: italic; }
+    .testimonial-author { display: flex; align-items: center; gap: 10px; }
+    .author-avatar {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: var(--grad);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700; color: var(--white);
+    }
+    .author-name { font-size: 13px; font-weight: 600; }
+    .author-city { font-size: 11px; color: var(--gray-400); }
+
+    /* ── CTA FINAL ── */
+    .cta-final {
+      background: var(--grad);
+      padding: 48px 20px;
+      text-align: center;
+    }
+    .cta-final h2 { font-size: 26px; font-weight: 900; color: var(--white); margin-bottom: 12px; }
+    .cta-final p { font-size: 15px; color: rgba(255,255,255,0.85); margin-bottom: 28px; max-width: 300px; margin-left: auto; margin-right: auto; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--gray-800);
+      padding: 28px 20px;
+      text-align: center;
+      color: var(--gray-400);
+      font-size: 13px;
+    }
+    footer strong { color: var(--blue-light); }
+
+    /* ── MODALS ── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 200;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal {
+      background: var(--white);
+      border-radius: 24px 24px 0 0;
+      padding: 28px 20px 40px;
+      width: 100%;
+      max-width: 480px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .modal-handle {
+      width: 40px; height: 4px;
+      background: var(--gray-100);
+      border-radius: 2px;
+      margin: 0 auto 20px;
+    }
+    .modal h2 { font-size: 20px; font-weight: 800; margin-bottom: 6px; }
+    .modal p { font-size: 14px; color: var(--gray-600); margin-bottom: 20px; }
+    .form-group { margin-bottom: 16px; }
+    .form-label { font-size: 13px; font-weight: 600; color: var(--gray-800); margin-bottom: 6px; display: block; }
+    .form-input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1.5px solid var(--gray-100);
+      border-radius: 12px;
+      font-size: 15px;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-input:focus { border-color: var(--blue-mid); }
+    .form-select {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1.5px solid var(--gray-100);
+      border-radius: 12px;
+      font-size: 15px;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+      appearance: none;
+      background: var(--white);
+    }
+    .btn-submit {
+      width: 100%;
+      background: var(--grad-btn);
+      color: var(--white);
+      font-size: 16px;
+      font-weight: 700;
+      padding: 18px;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+    .close-btn {
+      display: block;
+      text-align: center;
+      color: var(--gray-400);
+      font-size: 14px;
+      margin-top: 14px;
+      cursor: pointer;
+    }
+
+    /* ── TOAST ── */
+    .toast {
+      display: none;
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--gray-800);
+      color: var(--white);
+      padding: 14px 24px;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 500;
+      z-index: 300;
+      white-space: nowrap;
+    }
+    .toast.show { display: block; }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <a href="#" class="logo">
+      <div class="logo-icon">🏠</div>
+      <span class="logo-text">Gersepa <span>Solutions</span></span>
+    </a>
+    <a href="#" class="header-btn" onclick="openModal('client')">Contratar</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">🌟 Disponível em Santa Catarina</div>
+  <h1>Diaristas de <span>confiança</span> na palma da mão</h1>
+  <p>Encontre, agende e pague com segurança. Rápido, simples e sem complicação.</p>
+  <div class="hero-btns">
+    <a href="#" class="btn-primary" onclick="openModal('client')">Quero contratar uma diarista</a>
+    <a href="#" class="btn-outline" onclick="openModal('worker')">Sou diarista, quero me cadastrar</a>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <div class="stat-num">500+</div>
+      <div class="stat-label">Diaristas cadastradas</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">4.9★</div>
+      <div class="stat-label">Avaliação média</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">2k+</div>
+      <div class="stat-label">Serviços realizados</div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS - CLIENT -->
+<div class="how-bg">
+  <div class="section">
+    <div class="section-title">Como <span>funciona</span></div>
+    <div class="section-sub">Para quem quer contratar — simples assim</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h3>Crie sua conta grátis</h3>
+          <p>Cadastro rápido em menos de 2 minutos. Sem burocracia.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h3>Escolha uma diarista</h3>
+          <p>Veja perfis, avaliações e disponibilidade em tempo real na sua região.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h3>Agende e pague com segurança</h3>
+          <p>Pagamento seguro dentro da plataforma. Sua casa limpa sem preocupação.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<div class="section">
+  <div class="section-title">Por que <span>Gersepa?</span></div>
+  <div class="section-sub">Tudo que você precisa em um só lugar</div>
+  <div class="cards-grid">
+    <div class="card">
+      <div class="card-icon">🔒</div>
+      <div>
+        <div class="card-title">Profissionais verificadas</div>
+        <div class="card-desc">Todas as diaristas passam por verificação de perfil e identidade antes de atender.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-icon">⭐</div>
+      <div>
+        <div class="card-title">Avaliações reais</div>
+        <div class="card-desc">Veja as notas e comentários de outros clientes antes de escolher.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-icon">💳</div>
+      <div>
+        <div class="card-title">Pagamento seguro</div>
+        <div class="card-desc">Pague pelo app com cartão, Pix ou boleto. Sem dinheiro na mão, sem complicação.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-icon">📱</div>
+      <div>
+        <div class="card-title">Funciona como app</div>
+        <div class="card-desc">Instale direto no celular e tenha acesso rápido, como um aplicativo nativo.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DIARISTA SECTION -->
+<div class="section" style="padding-top: 0;">
+  <div class="diarista-box">
+    <h3>Você é diarista? 🧹</h3>
+    <p>Cadastre-se na plataforma e ganhe acesso a clientes verificados. Você no controle do seu trabalho!</p>
+    <div class="diarista-items">
+      <div class="diarista-item">Aceite ou recuse serviços quando quiser</div>
+      <div class="diarista-item">Defina sua própria agenda</div>
+      <div class="diarista-item">Receba avaliações e construa reputação</div>
+      <div class="diarista-item">Receba pagamentos com segurança</div>
+    </div>
+    <a href="#" class="btn-white" onclick="openModal('worker')">Quero me cadastrar agora</a>
+  </div>
+</div>
+
+<!-- CREDITS -->
+<div class="how-bg">
+  <div class="section">
+    <div class="section-title">Sistema de <span>Créditos</span></div>
+    <div class="section-sub">Transparente e justo para as diaristas</div>
+    <div class="credits-card">
+      <div class="credits-title">Como funciona?</div>
+      <div class="credits-sub">Você compra créditos e usa para pegar serviços na plataforma</div>
+      <div class="credits-example">
+        <div class="credits-row"><span>Serviço aceito</span><span>R$ 300,00</span></div>
+        <div class="credits-row"><span>Taxa da plataforma (20%)</span><span>- R$ 60,00</span></div>
+        <div class="credits-row total"><span>Você recebe líquido</span><span>R$ 240,00 💚</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-icon">💰</div>
+      <div>
+        <div class="card-title">Pacote de créditos</div>
+        <div class="card-desc">Adquira créditos a partir de R$50 e use para ter visibilidade e aceitar novos serviços na plataforma.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<div class="section">
+  <div class="section-title">O que dizem <span>sobre nós</span></div>
+  <div class="section-sub">Clientes e diaristas satisfeitos em SC</div>
+  <div class="testimonials">
+    <div class="testimonial">
+      <div class="stars">★★★★★</div>
+      <div class="testimonial-text">"Super fácil de usar! Encontrei uma diarista incrível em menos de 10 minutos. Voltei a usar várias vezes."</div>
+      <div class="testimonial-author">
+        <div class="author-avatar">AC</div>
+        <div>
+          <div class="author-name">Ana C.</div>
+          <div class="author-city">Florianópolis, SC</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial">
+      <div class="stars">★★★★★</div>
+      <div class="testimonial-text">"Me cadastrei e já consegui meus primeiros clientes na semana seguinte. A plataforma é simples e funciona de verdade!"</div>
+      <div class="testimonial-author">
+        <div class="author-avatar">MR</div>
+        <div>
+          <div class="author-name">Maria R. — Diarista</div>
+          <div class="author-city">Joinville, SC</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial">
+      <div class="stars">★★★★★</div>
+      <div class="testimonial-text">"Pagamento seguro e sem stress. A diarista chegou no horário e o resultado foi excelente!"</div>
+      <div class="testimonial-author">
+        <div class="author-avatar">RL</div>
+        <div>
+          <div class="author-name">Ricardo L.</div>
+          <div class="author-city">Blumenau, SC</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA FINAL -->
+<section class="cta-final">
+  <h2>Comece agora mesmo! 🚀</h2>
+  <p>Sua casa mais limpa ou sua renda maior a um clique de distância.</p>
+  <div style="display: flex; flex-direction: column; gap: 12px; max-width: 300px; margin: 0 auto;">
+    <a href="#" class="btn-primary" style="border-radius: 50px; padding: 16px; font-size: 15px; font-weight: 700; background: white; color: #0d3b8c; text-decoration: none; display: block; text-align: center;" onclick="openModal('client')">Quero contratar uma diarista</a>
+    <a href="#" class="btn-outline" onclick="openModal('worker')">Sou diarista, quero me cadastrar</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 <strong>Gersepa Solutions</strong> — Todos os direitos reservados</p>
+  <p style="margin-top: 6px;">🌎 Santa Catarina, Brasil</p>
+</footer>
+
+<!-- MODAL CLIENTE -->
+<div class="modal-overlay" id="modal-client">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <h2>Quero contratar 🏠</h2>
+    <p>Crie sua conta e encontre sua diarista ideal</p>
+    <div class="form-group">
+      <label class="form-label">Seu nome completo</label>
+      <input type="text" class="form-input" placeholder="Ex: Maria Silva" />
+    </div>
+    <div class="form-group">
+      <label class="form-label">WhatsApp</label>
+      <input type="tel" class="form-input" placeholder="(47) 99999-9999" />
+    </div>
+    <div class="form-group">
+      <label class="form-label">Sua cidade</label>
+      <select class="form-select">
+        <option value="">Selecione sua cidade</option>
+        <option>Florianópolis</option>
+        <option>Joinville</option>
+        <option>Blumenau</option>
+        <option>Chapecó</option>
+        <option>Itajaí</option>
+        <option>Criciúma</option>
+        <option>Outra cidade</option>
+      </select>
+    </div>
+    <button class="btn-submit" onclick="submitForm('client')">Criar minha conta grátis ✅</button>
+    <span class="close-btn" onclick="closeModal('client')">Fechar</span>
+  </div>
+</div>
+
+<!-- MODAL DIARISTA -->
+<div class="modal-overlay" id="modal-worker">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <h2>Quero ser diarista 🧹</h2>
+    <p>Cadastre-se e comece a receber pedidos de serviço</p>
+    <div class="form-group">
+      <label class="form-label">Seu nome completo</label>
+      <input type="text" class="form-input" placeholder="Ex: Ana Pereira" />
+    </div>
+    <div class="form-group">
+      <label class="form-label">WhatsApp</label>
+      <input type="tel" class="form-input" placeholder="(47) 99999-9999" />
+    </div>
+    <div class="form-group">
+      <label class="form-label">Sua cidade</label>
+      <select class="form-select">
+        <option value="">Selecione sua cidade</option>
+        <option>Florianópolis</option>
+        <option>Joinville</option>
+        <option>Blumenau</option>
+        <option>Chapecó</option>
+        <option>Itajaí</option>
+        <option>Criciúma</option>
+        <option>Outra cidade</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Quantos anos de experiência?</label>
+      <select class="form-select">
+        <option value="">Selecione</option>
+        <option>Menos de 1 ano</option>
+        <option>1 a 2 anos</option>
+        <option>3 a 5 anos</option>
+        <option>Mais de 5 anos</option>
+      </select>
+    </div>
+    <button class="btn-submit" onclick="submitForm('worker')">Quero me cadastrar 🚀</button>
+    <span class="close-btn" onclick="closeModal('worker')">Fechar</span>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">✅ Cadastro enviado! Entraremos em contato.</div>
+
+<script>
+  // Modal
+  function openModal(type) {
+    event.preventDefault();
+    document.getElementById('modal-' + type).classList.add('active');
+  }
+  function closeModal(type) {
+    document.getElementById('modal-' + type).classList.remove('active');
+  }
+  document.querySelectorAll('.modal-overlay').forEach(el => {
+    el.addEventListener('click', function(e) {
+      if (e.target === this) this.classList.remove('active');
+    });
+  });
+
+  // Form submit
+  function submitForm(type) {
+    closeModal(type);
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3500);
+  }
+
+  // PWA Install
+  let deferredPrompt;
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+  });
+
+  // Service Worker
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js').catch(() => {});
+    });
+  }
+</script>
+</body>
+</html>
