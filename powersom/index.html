@@ -300,42 +300,109 @@ footer span{color:var(--red)}
 
 
 
-<!-- VINHETA -->
-<audio id="vinheta" preload="auto"></audio>
 
-<!-- Botão flutuante de música -->
-<div id="music-btn" onclick="toggleMusic()" style="position:fixed;bottom:90px;right:18px;z-index:9999;width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#f5a800,#ff6600);box-shadow:0 4px 20px rgba(245,168,0,0.5);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:22px;transition:transform 0.2s;" title="Ativar som">🔇</div>
+<!-- PLAYER FIXO YOUTUBE -->
+<div id="yt-player-bar" style="position:fixed;bottom:0;left:0;right:0;z-index:9998;background:rgba(4,6,10,0.97);border-top:1px solid rgba(245,168,0,0.3);padding:10px 16px;display:flex;align-items:center;gap:12px;backdrop-filter:blur(10px);">
+
+  <!-- Iframe oculto -->
+  <div id="yt-iframe-wrap" style="width:0;height:0;overflow:hidden;position:absolute;">
+    <iframe id="yt-iframe" width="1" height="1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+  </div>
+
+  <!-- Capa do CD -->
+  <div id="yt-thumb" style="width:44px;height:44px;border-radius:8px;background:#111;overflow:hidden;flex-shrink:0;">
+    <img id="yt-thumb-img" src="" style="width:100%;height:100%;object-fit:cover;" alt="">
+  </div>
+
+  <!-- Info -->
+  <div style="flex:1;min-width:0;">
+    <div id="yt-title" style="font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:1px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">POWER SOM</div>
+    <div id="yt-sub" style="font-size:11px;color:#f5a800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Clique play para ouvir 🎧</div>
+  </div>
+
+  <!-- Controles -->
+  <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
+    <button onclick="ytPrev()" style="background:rgba(255,255,255,0.08);border:none;color:#fff;width:36px;height:36px;border-radius:50%;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;">⏮</button>
+    <button id="yt-play-btn" onclick="ytToggle()" style="background:linear-gradient(135deg,#f5a800,#ff6600);border:none;color:#fff;width:44px;height:44px;border-radius:50%;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(245,168,0,0.5);">▶</button>
+    <button onclick="ytNext()" style="background:rgba(255,255,255,0.08);border:none;color:#fff;width:36px;height:36px;border-radius:50%;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;">⏭</button>
+  </div>
+
+  <!-- Índice -->
+  <div id="yt-index" style="font-family:'Bebas Neue',sans-serif;font-size:13px;color:#555;flex-shrink:0;min-width:32px;text-align:right;">1/3</div>
+</div>
+
+<!-- Espaço para o player não cobrir conteúdo -->
+<div style="height:70px;"></div>
 
 <script>
-  var vinhetas = ['vinheta-elzo.mp3','vinheta-cuca.mp3'];
-  var audio = document.getElementById('vinheta');
-  var btn = document.getElementById('music-btn');
-  var playing = false;
+var ytPlaylist = [
+  { id: 'qO0LASIU2sA', title: 'Power Som Vol. 2', sub: '🎧 DJ Cuca' },
+  { id: 'd8sUrvxMglk', title: 'Power Som Vol. 3', sub: '🎧 DJ Elzo É Potência' },
+  { id: '7Y0wGzn3d_w', title: 'Power Som Vol. 4', sub: '🎧 DJ Maxx RS' }
+];
+var ytCurrent = 0;
+var ytPlaying = false;
+var ytReady = false;
+var ytPlayer = null;
 
-  function toggleMusic(){
-    if(!playing){
-      audio.src = vinhetas[Math.floor(Math.random()*vinhetas.length)];
-      audio.volume = 0.75;
-      audio.play().then(function(){
-        playing = true;
-        btn.textContent = '🔊';
-        btn.style.boxShadow = '0 4px 25px rgba(245,168,0,0.9)';
-      }).catch(function(){});
-    } else {
-      audio.pause();
-      audio.currentTime = 0;
-      playing = false;
-      btn.textContent = '🔇';
-      btn.style.boxShadow = '0 4px 20px rgba(245,168,0,0.5)';
+function ytLoadAPI(){
+  if(window.YT) { ytInit(); return; }
+  var tag = document.createElement('script');
+  tag.src = 'https://www.youtube.com/iframe_api';
+  document.head.appendChild(tag);
+}
+
+window.onYouTubeIframeAPIReady = function(){
+  ytInit();
+};
+
+function ytInit(){
+  ytPlayer = new YT.Player('yt-iframe', {
+    height:'1', width:'1',
+    playerVars:{ autoplay:0, controls:0, rel:0, playsinline:1 },
+    events:{
+      onReady: function(){ ytReady = true; ytLoadTrack(ytCurrent, false); },
+      onStateChange: function(e){
+        if(e.data === YT.PlayerState.ENDED){ ytNext(); }
+        if(e.data === YT.PlayerState.PLAYING){ ytPlaying=true; document.getElementById('yt-play-btn').textContent='⏸'; }
+        if(e.data === YT.PlayerState.PAUSED || e.data === YT.PlayerState.BUFFERING){ }
+      }
     }
-  }
-
-  // Reinicia botão quando música termina
-  audio.addEventListener('ended', function(){
-    playing = false;
-    btn.textContent = '🔇';
-    btn.style.boxShadow = '0 4px 20px rgba(245,168,0,0.5)';
   });
+}
+
+function ytLoadTrack(idx, autoplay){
+  var t = ytPlaylist[idx];
+  document.getElementById('yt-title').textContent = t.title;
+  document.getElementById('yt-sub').textContent = t.sub;
+  document.getElementById('yt-thumb-img').src = 'https://img.youtube.com/vi/'+t.id+'/mqdefault.jpg';
+  document.getElementById('yt-index').textContent = (idx+1)+'/'+ytPlaylist.length;
+  if(ytReady && ytPlayer){
+    ytPlayer.loadVideoById(t.id);
+    if(!autoplay){ ytPlayer.pauseVideo(); ytPlaying=false; document.getElementById('yt-play-btn').textContent='▶'; }
+  }
+}
+
+function ytToggle(){
+  if(!ytReady){ ytLoadAPI(); return; }
+  if(ytPlaying){ ytPlayer.pauseVideo(); ytPlaying=false; document.getElementById('yt-play-btn').textContent='▶'; }
+  else { ytPlayer.playVideo(); ytPlaying=true; document.getElementById('yt-play-btn').textContent='⏸'; }
+}
+
+function ytNext(){
+  ytCurrent = (ytCurrent+1) % ytPlaylist.length;
+  ytLoadTrack(ytCurrent, true);
+  if(ytPlaying && ytReady){ setTimeout(function(){ ytPlayer.playVideo(); }, 800); }
+}
+
+function ytPrev(){
+  ytCurrent = (ytCurrent-1+ytPlaylist.length) % ytPlaylist.length;
+  ytLoadTrack(ytCurrent, true);
+  if(ytPlaying && ytReady){ setTimeout(function(){ ytPlayer.playVideo(); }, 800); }
+}
+
+// Inicializa ao carregar
+window.addEventListener('load', function(){ ytLoadAPI(); });
 </script>
 
 <nav>
