@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UMAKE Makeup School</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --pink: #FF0066;
+      --gold: #C9A84C;
+      --gold-light: #F0D080;
+      --black: #0a0a0a;
+      --dark: #111111;
+      --dark2: #1a1a1a;
+      --white: #ffffff;
+      --gray: #888888;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--black);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ===== NAVBAR ===== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(10,10,10,0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-size: 18px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      color: var(--white);
+    }
+
+    .nav-logo span { color: var(--pink); }
+
+    .nav-cta {
+      background: var(--pink);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 4px;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 1px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100vh;
+      background: var(--black);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 100px 24px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -200px; left: 50%;
+      transform: translateX(-50%);
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(255,0,102,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      padding: 6px 18px;
+      border-radius: 2px;
+      margin-bottom: 28px;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      font-size: clamp(42px, 10vw, 80px);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -1px;
+      margin-bottom: 8px;
+    }
+
+    .hero h1 .pink { color: var(--pink); }
+    .hero h1 .gold { color: var(--gold); }
+
+    .hero-sub {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 4px;
+      color: var(--gray);
+      text-transform: uppercase;
+      margin-bottom: 32px;
+    }
+
+    .hero p {
+      font-size: 16px;
+      color: #aaa;
+      max-width: 480px;
+      line-height: 1.7;
+      margin-bottom: 40px;
+    }
+
+    .hero-btns {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+      max-width: 320px;
+    }
+
+    .btn-primary {
+      background: var(--pink);
+      color: white;
+      padding: 16px 32px;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 15px;
+      text-decoration: none;
+      letter-spacing: 1px;
+      text-align: center;
+      display: block;
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--gold);
+      padding: 16px 32px;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 15px;
+      text-decoration: none;
+      letter-spacing: 1px;
+      text-align: center;
+      display: block;
+      border: 1.5px solid var(--gold);
+    }
+
+    /* ===== GALLERY STRIP ===== */
+    .gallery-strip {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 3px;
+      overflow: hidden;
+    }
+
+    .gallery-strip .strip-item {
+      aspect-ratio: 3/4;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .gallery-strip .strip-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.8) saturate(1.1);
+      transition: transform 0.4s ease;
+    }
+
+    .gallery-strip .strip-item:hover img {
+      transform: scale(1.08);
+    }
+
+    .gallery-strip .strip-item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.6) 100%);
+    }
+
+    /* ===== SECTION COMMON ===== */
+    section { padding: 72px 24px; }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .section-title {
+      font-size: clamp(28px, 6vw, 48px);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+
+    .section-desc {
+      color: #aaa;
+      font-size: 15px;
+      line-height: 1.7;
+      max-width: 560px;
+    }
+
+    /* ===== CURSOS ===== */
+    #cursos { background: var(--dark); }
+
+    #cursos .header { margin-bottom: 40px; }
+
+    .cursos-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .curso-card {
+      background: var(--dark2);
+      border: 1px solid rgba(201,168,76,0.15);
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .curso-card .card-img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      overflow: hidden;
+    }
+
+    .curso-card .card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.85) saturate(1.1);
+    }
+
+    .curso-card .card-body {
+      padding: 20px;
+    }
+
+    .curso-card .card-tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      color: var(--pink);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .curso-card h3 {
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+      color: var(--white);
+    }
+
+    .curso-card .gold-accent {
+      color: var(--gold);
+    }
+
+    .curso-card p {
+      font-size: 13px;
+      color: #999;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .curso-card .card-btn {
+      display: inline-block;
+      background: var(--pink);
+      color: white;
+      padding: 11px 22px;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 13px;
+      text-decoration: none;
+      letter-spacing: 1px;
+    }
+
+    /* ===== SOBRE ===== */
+    #sobre { background: var(--black); }
+
+    .sobre-content {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .sobre-visual {
+      width: 100%;
+      aspect-ratio: 1;
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+      background: var(--dark2);
+    }
+
+    .sobre-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .sobre-visual .badge-over {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      background: rgba(10,10,10,0.9);
+      border: 1px solid var(--gold);
+      padding: 12px 20px;
+      border-radius: 4px;
+    }
+
+    .sobre-visual .badge-over strong {
+      display: block;
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--gold);
+    }
+
+    .sobre-visual .badge-over span {
+      font-size: 11px;
+      color: #aaa;
+      letter-spacing: 1px;
+    }
+
+    .sobre-text h2 { margin-bottom: 20px; }
+
+    .sobre-text p {
+      font-size: 15px;
+      color: #aaa;
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 32px;
+    }
+
+    .stat-box {
+      text-align: center;
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 6px;
+      padding: 16px 8px;
+    }
+
+    .stat-box strong {
+      display: block;
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--pink);
+    }
+
+    .stat-box span {
+      font-size: 11px;
+      color: var(--gray);
+      letter-spacing: 1px;
+    }
+
+    /* ===== DEPOIMENTOS ===== */
+    #depoimentos { background: var(--dark); }
+
+    .dep-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 40px;
+    }
+
+    .dep-card {
+      background: var(--dark2);
+      border-left: 3px solid var(--pink);
+      border-radius: 0 8px 8px 0;
+      padding: 20px;
+    }
+
+    .dep-card .stars {
+      color: var(--gold);
+      font-size: 14px;
+      margin-bottom: 10px;
+      letter-spacing: 2px;
+    }
+
+    .dep-card p {
+      font-size: 14px;
+      color: #ccc;
+      line-height: 1.6;
+      font-style: italic;
+      margin-bottom: 14px;
+    }
+
+    .dep-card .author {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .dep-card .author span {
+      color: var(--gray);
+      font-weight: 400;
+    }
+
+    /* ===== CTA FINAL ===== */
+    #cta {
+      background: var(--black);
+      text-align: center;
+      padding: 80px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #cta::before {
+      content: '';
+      position: absolute;
+      bottom: -200px; left: 50%;
+      transform: translateX(-50%);
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(255,0,102,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    #cta .section-title { margin-bottom: 16px; }
+    #cta p {
+      color: #aaa;
+      font-size: 15px;
+      max-width: 440px;
+      margin: 0 auto 36px;
+      line-height: 1.7;
+    }
+
+    #cta .cta-btns {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-width: 320px;
+      margin: 0 auto;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--dark);
+      border-top: 1px solid rgba(201,168,76,0.15);
+      text-align: center;
+      padding: 32px 24px;
+    }
+
+    footer .footer-logo {
+      font-size: 20px;
+      font-weight: 900;
+      letter-spacing: 3px;
+      margin-bottom: 8px;
+    }
+
+    footer .footer-logo span { color: var(--pink); }
+
+    footer p {
+      font-size: 12px;
+      color: var(--gray);
+    }
+
+    /* ===== WHATSAPP FLOAT ===== */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 999;
+      background: #25D366;
+      border-radius: 50%;
+      width: 56px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+      text-decoration: none;
+    }
+
+    .whatsapp-float svg {
+      width: 28px;
+      height: 28px;
+      fill: white;
+    }
+
+    /* ===== DESKTOP ===== */
+    @media (min-width: 768px) {
+      .hero-btns { flex-direction: row; max-width: 420px; }
+
+      .gallery-strip { height: 320px; }
+      .gallery-strip .strip-item { aspect-ratio: unset; height: 100%; }
+
+      .cursos-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .sobre-content {
+        flex-direction: row;
+        align-items: center;
+        gap: 60px;
+      }
+
+      .sobre-visual { width: 380px; flex-shrink: 0; aspect-ratio: 3/4; }
+
+      .dep-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      #cta .cta-btns { flex-direction: row; max-width: 480px; }
+    }
+
+    @media (min-width: 1024px) {
+      nav { padding: 16px 60px; }
+      section { padding: 96px 60px; }
+      .hero { padding: 120px 60px 80px; }
+
+      .cursos-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .dep-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="nav-logo">U<span>!</span>MAKE</div>
+    <a href="#cursos" class="nav-cta">VER CURSOS</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">✦ escola de maquiagem artística ✦</div>
+    <h1><span class="pink">U</span>MAKE<br><span class="gold">MAKEUP</span><br>SCHOOL</h1>
+    <p class="hero-sub">Transforme sua arte em carreira</p>
+    <p>Cursos online especializados em maquiagem artística, FX e body paint. Do iniciante ao nível profissional.</p>
+    <div class="hero-btns">
+      <a href="#cursos" class="btn-primary">QUERO ME INSCREVER</a>
+      <a href="#sobre" class="btn-outline">CONHEÇA A ESCOLA</a>
+    </div>
+  </section>
+
+  <!-- GALLERY STRIP -->
+  <div class="gallery-strip">
+    <div class="strip-item">
+      <img src="fx-criaturas.jpg" alt="FX Criaturas" />
+    </div>
+    <div class="strip-item">
+      <img src="artist-makeup.jpg" alt="Artist Makeup" />
+    </div>
+    <div class="strip-item">
+      <img src="fx-pro.jpg" alt="FX Pro" />
+    </div>
+    <div class="strip-item">
+      <img src="artist-makeup2.jpg" alt="Artist Makeup" />
+    </div>
+    <div class="strip-item">
+      <img src="plus-artistic.jpg" alt="Plus Artistic" />
+    </div>
+  </div>
+
+  <!-- CURSOS -->
+  <section id="cursos">
+    <div class="header">
+      <span class="section-label">✦ nossos cursos</span>
+      <h2 class="section-title">Escolha seu<br><span style="color:var(--pink)">próximo nível</span></h2>
+      <p class="section-desc">Cursos 100% online, aprenda no seu ritmo com aulas práticas e suporte dedicado.</p>
+    </div>
+    <div class="cursos-grid">
+
+      <div class="curso-card">
+        <div class="card-img">
+          <img src="fx-criaturas.jpg" alt="FX Criaturas" />
+        </div>
+        <div class="card-body">
+          <span class="card-tag">FX Artístico</span>
+          <h3>FX <span class="gold-accent">CRIATURAS</span></h3>
+          <p>Aprenda a criar maquiagens de criaturas fantásticas com técnicas profissionais de caracterização.</p>
+          <a href="https://hotmart.com" target="_blank" class="card-btn">QUERO ESSE CURSO</a>
+        </div>
+      </div>
+
+      <div class="curso-card">
+        <div class="card-img">
+          <img src="fx-pro.jpg" alt="FX Pro" />
+        </div>
+        <div class="card-body">
+          <span class="card-tag">FX Profissional</span>
+          <h3>FX <span class="gold-accent">PRO</span></h3>
+          <p>O curso definitivo para quem quer atuar em produções audiovisuais, teatro e cinema com maquiagem FX.</p>
+          <a href="https://hotmart.com" target="_blank" class="card-btn">QUERO ESSE CURSO</a>
+        </div>
+      </div>
+
+      <div class="curso-card">
+        <div class="card-img">
+          <img src="fx-dentes.jpg" alt="FX Dentes" />
+        </div>
+        <div class="card-body">
+          <span class="card-tag">FX Especial</span>
+          <h3>FX <span class="gold-accent">DENTES</span></h3>
+          <p>Domine a técnica de próteses dentárias artísticas para criar vampiros, zumbis e personagens icônicos.</p>
+          <a href="https://hotmart.com" target="_blank" class="card-btn">QUERO ESSE CURSO</a>
+        </div>
+      </div>
+
+      <div class="curso-card">
+        <div class="card-img">
+          <img src="artist-makeup.jpg" alt="Artist Makeup" />
+        </div>
+        <div class="card-body">
+          <span class="card-tag">Maquiagem</span>
+          <h3><span class="gold-accent">ARTIST</span> MAKEUP</h3>
+          <p>Do básico ao avançado: técnicas completas de maquiagem artística para shows, eventos e produções.</p>
+          <a href="https://hotmart.com" target="_blank" class="card-btn">QUERO ESSE CURSO</a>
+        </div>
+      </div>
+
+      <div class="curso-card">
+        <div class="card-img">
+          <img src="plus-artistic.jpg" alt="Plus Artistic" />
+        </div>
+        <div class="card-body">
+          <span class="card-tag">Body Paint</span>
+          <h3>PLUS <span class="gold-accent">ARTISTIC</span></h3>
+          <p>A experiência completa: body paint, escultura, texturas e técnicas avançadas de arte corporal.</p>
+          <a href="https://hotmart.com" target="_blank" class="card-btn">QUERO ESSE CURSO</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SOBRE -->
+  <section id="sobre">
+    <div class="sobre-content">
+      <div class="sobre-visual">
+        <img src="plus-artistic.jpg" alt="UMAKE" />
+        <div class="badge-over">
+          <strong>+500</strong>
+          <span>alunos formados</span>
+        </div>
+      </div>
+      <div class="sobre-text">
+        <span class="section-label">✦ sobre a escola</span>
+        <h2 class="section-title">Arte que <span style="color:var(--pink)">transforma</span><br>vidas</h2>
+        <p>A UMAKE Makeup School nasceu da paixão pela maquiagem artística e do desejo de compartilhar técnicas profissionais com quem quer se destacar no mercado.</p>
+        <p>Aqui você aprende do zero ou aperfeiçoa suas habilidades com cursos focados em resultados reais — FX, body paint, caracterização e muito mais.</p>
+        <div class="stats-row">
+          <div class="stat-box">
+            <strong>5</strong>
+            <span>CURSOS</span>
+          </div>
+          <div class="stat-box">
+            <strong>100%</strong>
+            <span>ONLINE</span>
+          </div>
+          <div class="stat-box">
+            <strong>∞</strong>
+            <span>ACESSO</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALERIA -->
+  <section id="galeria" style="background:var(--dark2); padding-top:72px; padding-bottom:72px;">
+    <div style="padding: 0 24px;">
+      <span class="section-label">✦ portfólio</span>
+      <h2 class="section-title" style="margin-bottom:32px;">Nossos <span style="color:var(--pink)">trabalhos</span></h2>
+    </div>
+    <div style="display:grid; grid-template-columns: repeat(2,1fr); gap:4px;">
+      <div style="aspect-ratio:1; overflow:hidden;">
+        <img src="fx-criaturas.jpg" alt="FX Criaturas" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.85) saturate(1.1);" />
+      </div>
+      <div style="aspect-ratio:1; overflow:hidden;">
+        <img src="artist-makeup.jpg" alt="Artist Makeup" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.9);" />
+      </div>
+      <div style="aspect-ratio:1; overflow:hidden;">
+        <img src="artist-makeup2.jpg" alt="Drag Makeup" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.9);" />
+      </div>
+      <div style="aspect-ratio:1; overflow:hidden;">
+        <img src="fx-pro.jpg" alt="FX Pro" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.85) saturate(1.1);" />
+      </div>
+      <div style="aspect-ratio:1; overflow:hidden;">
+        <img src="plus-artistic.jpg" alt="Plus Artistic" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.85);" />
+      </div>
+      <div style="aspect-ratio:1; overflow:hidden;">
+        <img src="artist-makeup3.jpg" alt="Clown Makeup" style="width:100%;height:100%;object-fit:cover;filter:brightness(0.9);" />
+      </div>
+      <div style="aspect-ratio:1; overflow:hidden; grid-column: span 2;">
+        <img src="fx-dentes2.jpg" alt="FX Dentes" style="width:100%;height:100%;object-fit:cover;object-position:top;filter:brightness(0.85) saturate(1.1);" />
+      </div>
+    </div>
+  </section>
+
+  <!-- DEPOIMENTOS -->
+  <section id="depoimentos">
+    <span class="section-label">✦ o que dizem nossas alunas</span>
+    <h2 class="section-title">Resultados <span style="color:var(--pink)">reais</span></h2>
+    <div class="dep-grid">
+      <div class="dep-card">
+        <div class="stars">★★★★★</div>
+        <p>"Aprendi mais em 2 semanas do que em 1 ano tentando sozinha. As técnicas de FX mudaram completamente o meu nível!"</p>
+        <div class="author">Camila R. <span>— FX Criaturas</span></div>
+      </div>
+      <div class="dep-card">
+        <div class="stars">★★★★★</div>
+        <p>"O curso de FX Pro me abriu portas incríveis. Já trabalhei em 3 produções desde que terminei. Vale cada centavo!"</p>
+        <div class="author">Fernanda L. <span>— FX Pro</span></div>
+      </div>
+      <div class="dep-card">
+        <div class="stars">★★★★★</div>
+        <p>"Nunca imaginei que faria body paint tão profissional. A didática é excelente e o suporte é incrível!"</p>
+        <div class="author">Juliana M. <span>— Plus Artistic</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section id="cta">
+    <span class="section-label">✦ comece agora</span>
+    <h2 class="section-title">Sua arte<br>começa <span style="color:var(--pink)">aqui</span></h2>
+    <p>Não espere o momento perfeito. Dê o próximo passo na sua carreira de maquiagem artística agora mesmo.</p>
+    <div class="cta-btns">
+      <a href="#cursos" class="btn-primary">VER TODOS OS CURSOS</a>
+      <a href="https://wa.me/5511973651877" target="_blank" class="btn-outline">FALAR COM A ESCOLA</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">U<span>!</span>MAKE MAKEUP SCHOOL</div>
+    <p>© 2025 UMAKE Makeup School · Todos os direitos reservados</p>
+  </footer>
+
+  <!-- WHATSAPP FLOAT -->
+  <a href="https://wa.me/5511973651877" target="_blank" class="whatsapp-float" title="Fale conosco">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+
+</body>
+</html>
