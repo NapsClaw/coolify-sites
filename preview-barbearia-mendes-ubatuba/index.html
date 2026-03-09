@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Barbearia Mendes – Ubatuba, SP</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--black:#0a0a0a;--dark:#141414;--card:#1c1c1c;--gold:#c9a227;--goldl:#f0c84a;--white:#f4f4f0;--gray:#888}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--black);color:var(--white);overflow-x:hidden;padding-top:44px}
+
+.banner{position:fixed;top:0;left:0;right:0;z-index:200;background:#1a1a1a;border-bottom:2px solid var(--gold);padding:.6rem 4%;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem}
+.banner p{color:#ccc;font-size:.78rem}.banner strong{color:var(--gold)}
+.banner a{background:var(--gold);color:var(--black);padding:.35rem 1rem;border-radius:3px;font-size:.78rem;font-weight:700;text-decoration:none;font-family:'Oswald',sans-serif;letter-spacing:1px;white-space:nowrap}
+
+nav{position:fixed;top:44px;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1rem 5%;background:rgba(10,10,10,.96);backdrop-filter:blur(10px);border-bottom:1px solid rgba(201,162,39,.15)}
+.logo{font-family:'Oswald',sans-serif;font-size:1.5rem;font-weight:700;letter-spacing:2px;color:var(--gold)}
+.logo span{color:var(--white)}
+nav ul{list-style:none;display:flex;gap:2rem}
+nav a{color:var(--gray);text-decoration:none;font-size:.82rem;letter-spacing:1px;text-transform:uppercase;transition:color .2s}
+nav a:hover{color:var(--gold)}
+.nav-cta{background:var(--gold)!important;color:var(--black)!important;padding:.45rem 1.1rem;border-radius:3px;font-weight:700}
+.nav-cta:hover{background:var(--goldl)!important}
+
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden;padding-top:60px}
+.hero-bg{position:absolute;inset:0;background-image:url('https://lh3.googleusercontent.com/gps-cs-s/AHVAwerArT1IIOT59UaByF00gHh-Ruhcg5MAuSu9aTBdGIOAi1XzjvnUGg2hJNSbawxHVjAQaV1HlHgDrlxWqPcAevWhzkNYKVf99iphgrzkx7BEyovNCcz7vigqYOSGwriUKNVqZsxiDUS7XXHE=w1600-h1066-k-no');background-size:cover;background-position:center 30%;filter:brightness(.28)}
+.hero-ov{position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,10,10,.93) 45%,transparent 100%)}
+.hero-c{position:relative;z-index:2;padding:0 5%;max-width:640px}
+.badge{display:inline-flex;align-items:center;gap:.4rem;background:rgba(201,162,39,.12);border:1px solid var(--gold);color:var(--gold);padding:.3rem .9rem;border-radius:20px;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:1.4rem}
+.h1{font-family:'Oswald',sans-serif;font-size:clamp(2.8rem,7vw,5rem);font-weight:700;line-height:1.05;text-transform:uppercase;margin-bottom:1.1rem}
+.h1 em{color:var(--gold);font-style:normal}
+.stars-row{display:flex;align-items:center;gap:.6rem;margin-bottom:1.8rem}
+.stars{color:var(--gold);font-size:1.2rem}
+.stars-txt{font-size:.88rem;color:#bbb}
+.hero-p{font-size:1.05rem;line-height:1.75;color:#ccc;margin-bottom:2.2rem;max-width:480px}
+.btns{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-g{background:var(--gold);color:var(--black);padding:.85rem 2rem;border-radius:3px;font-weight:700;text-decoration:none;font-family:'Oswald',sans-serif;font-size:.95rem;letter-spacing:1px;text-transform:uppercase;transition:background .2s,transform .15s;display:inline-block}
+.btn-g:hover{background:var(--goldl);transform:translateY(-2px)}
+.btn-o{border:2px solid var(--gold);color:var(--gold);padding:.85rem 2rem;border-radius:3px;font-weight:700;text-decoration:none;font-family:'Oswald',sans-serif;font-size:.95rem;letter-spacing:1px;text-transform:uppercase;transition:all .2s;display:inline-block}
+.btn-o:hover{background:var(--gold);color:var(--black);transform:translateY(-2px)}
+
+.lbl{font-size:.72rem;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:.7rem}
+.stitle{font-family:'Oswald',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;text-transform:uppercase;line-height:1.1;margin-bottom:1.4rem}
+.stitle em{color:var(--gold);font-style:normal}
+
+.about{padding:6rem 5%;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+.about-txt p{color:#aaa;line-height:1.8;margin-bottom:1.2rem}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-top:2rem}
+.stat{background:var(--card);padding:1.4rem;border-top:3px solid var(--gold);border-radius:2px}
+.stat-n{font-family:'Oswald',sans-serif;font-size:2.4rem;font-weight:700;color:var(--gold);line-height:1}
+.stat-d{font-size:.82rem;color:#777;margin-top:.3rem}
+.about-img{position:relative;border-radius:4px;overflow:hidden}
+.about-img img{width:100%;height:460px;object-fit:cover}
+.about-img::after{content:'';position:absolute;inset:0;border:2px solid var(--gold);top:14px;left:14px;border-radius:4px;pointer-events:none}
+
+.services{background:var(--dark);padding:6rem 5%}
+.shdr{text-align:center;margin-bottom:3.5rem}
+.srv-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.4rem}
+.srv-card{background:var(--card);padding:2.2rem 1.8rem;border-radius:4px;border-bottom:3px solid transparent;transition:all .3s;position:relative;overflow:hidden}
+.srv-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gold);transform:scaleX(0);transition:transform .3s}
+.srv-card:hover::before{transform:scaleX(1)}
+.srv-card:hover{border-bottom-color:var(--gold);transform:translateY(-4px)}
+.srv-icon{font-size:2.2rem;margin-bottom:1rem}
+.srv-card h3{font-family:'Oswald',sans-serif;font-size:1.2rem;font-weight:600;text-transform:uppercase;margin-bottom:.6rem}
+.srv-card p{color:#888;font-size:.88rem;line-height:1.6}
+.srv-price{margin-top:1rem;font-family:'Oswald',sans-serif;color:var(--gold);font-size:1.05rem}
+
+.reviews{background:var(--dark);padding:6rem 5%}
+.rhdr{text-align:center;margin-bottom:3.5rem}
+.rsummary{display:flex;align-items:center;justify-content:center;gap:2rem;margin-bottom:3rem;flex-wrap:wrap}
+.bigr{font-family:'Oswald',sans-serif;font-size:5rem;font-weight:700;color:var(--gold);line-height:1}
+.rinfo .stars{font-size:1.4rem}
+.rinfo small{color:#888;font-size:.82rem}
+.rgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:1.4rem}
+.rcard{background:var(--card);padding:1.8rem;border-radius:4px;border-left:3px solid var(--gold)}
+.rtop{display:flex;align-items:flex-start;gap:.9rem;margin-bottom:1rem}
+.av{width:42px;height:42px;border-radius:50%;background:var(--gold);color:var(--black);display:flex;align-items:center;justify-content:center;font-family:'Oswald',sans-serif;font-size:1rem;font-weight:700;flex-shrink:0}
+.rname{font-weight:600;font-size:.9rem}
+.rstars{color:var(--gold);font-size:.8rem}
+.rdate{color:var(--gray);font-size:.78rem}
+.rtext{color:#bbb;font-size:.88rem;line-height:1.7;font-style:italic}
+
+.hours{padding:6rem 5%}
+.hours-inner{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
+table.ht{width:100%;border-collapse:collapse}
+.ht tr{border-bottom:1px solid rgba(255,255,255,.06)}
+.ht td{padding:.85rem 0;font-size:.9rem}
+.ht td:last-child{text-align:right;color:var(--gold)}
+.ht .today{background:rgba(201,162,39,.08)}
+.ht .today td:first-child{color:var(--gold);font-weight:600}
+.map-wrap{background:var(--card);border-radius:8px;overflow:hidden;height:300px}
+.map-wrap iframe{width:100%;height:100%;border:none}
+
+.cta-band{background:var(--gold);padding:4rem 5%;text-align:center}
+.cta-band h2{font-family:'Oswald',sans-serif;font-size:clamp(1.8rem,4vw,2.6rem);font-weight:700;color:var(--black);text-transform:uppercase;margin-bottom:.7rem}
+.cta-band p{color:rgba(10,10,10,.7);margin-bottom:2rem}
+.btn-dark{background:var(--black);color:var(--gold);padding:.9rem 2.2rem;border-radius:3px;font-weight:700;text-decoration:none;font-family:'Oswald',sans-serif;font-size:1rem;letter-spacing:1px;text-transform:uppercase;display:inline-block;transition:opacity .2s}
+.btn-dark:hover{opacity:.85}
+
+footer{background:#090909;padding:4rem 5% 2rem}
+.ftg{display:grid;grid-template-columns:2fr 1fr 1fr;gap:3rem;margin-bottom:3rem}
+.ftb p{color:#555;font-size:.88rem;line-height:1.7;margin-top:.8rem}
+.ftc h4{font-family:'Oswald',sans-serif;font-size:.95rem;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:1rem}
+.ftc ul{list-style:none}
+.ftc li{margin-bottom:.55rem}
+.ftc a{color:#555;text-decoration:none;font-size:.88rem;transition:color .2s}
+.ftc a:hover{color:var(--gold)}
+.ftbot{border-top:1px solid rgba(255,255,255,.07);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center;color:#444;font-size:.78rem;flex-wrap:wrap;gap:1rem}
+
+.wafab{position:fixed;bottom:1.8rem;right:1.8rem;z-index:999;width:56px;height:56px;background:#25d366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.4);text-decoration:none;animation:pulse 2.5s infinite}
+.wafab svg{width:28px;height:28px;fill:white}
+@keyframes pulse{0%,100%{box-shadow:0 4px 20px rgba(37,211,102,.4)}50%{box-shadow:0 4px 30px rgba(37,211,102,.65)}}
+
+@media(max-width:768px){
+  nav ul{display:none}
+  .about{grid-template-columns:1fr;gap:2.5rem}
+  .about-img{order:-1}
+  .hours-inner{grid-template-columns:1fr}
+  .ftg{grid-template-columns:1fr}
+  .ftbot{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<div class="banner">
+  <p>✨ <strong>Preview gratuito</strong> criado especialmente para a Barbearia Mendes — sem compromisso!</p>
+  <a href="https://wa.me/5519983355492?text=Oi!%20Vi%20o%20preview%20do%20site%20da%20Barbearia%20Mendes%20e%20quero%20saber%20mais!">Quero este site!</a>
+</div>
+
+<nav>
+  <div class="logo">MENDES<span>.</span></div>
+  <ul>
+    <li><a href="#about">Sobre</a></li>
+    <li><a href="#services">Serviços</a></li>
+    <li><a href="#reviews">Avaliações</a></li>
+    <li><a href="#hours">Horários</a></li>
+    <li><a href="https://wa.me/5519983355492?text=Oi!%20Quero%20agendar%20um%20hor%C3%A1rio" class="nav-cta">Agendar</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-ov"></div>
+  <div class="hero-c">
+    <div class="badge">&#128205; Ubatuba · Barbearia Referência</div>
+    <h1 class="h1">Arte &amp;<br><em>Estilo</em><br>em Cada Corte</h1>
+    <div class="stars-row">
+      <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+      <span class="stars-txt">4.9 · mais de 950 avaliações no Google</span>
+    </div>
+    <p class="hero-p">Tradicional em Ubatuba, a Barbearia Mendes une técnica refinada com atendimento personalizado para um resultado que fala por si só.</p>
+    <div class="btns">
+      <a href="https://wa.me/5519983355492?text=Oi!%20Quero%20agendar%20um%20hor%C3%A1rio" class="btn-g">Agendar via WhatsApp</a>
+      <a href="#services" class="btn-o">Ver Serviços</a>
+    </div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <div class="about-txt">
+    <div class="lbl">Quem Somos</div>
+    <h2 class="stitle">Tradição &amp;<br><em>Excelência</em></h2>
+    <p>A Barbearia Mendes é referência em Ubatuba quando o assunto é cuidado masculino. Cada detalhe importa — do ambiente ao acabamento final de cada serviço.</p>
+    <p>Nossa equipe é formada por profissionais apaixonados, sempre atualizados com as tendências e técnicas mais modernas do mercado.</p>
+    <div class="stats">
+      <div class="stat"><div class="stat-n">950+</div><div class="stat-d">Avaliações no Google</div></div>
+      <div class="stat"><div class="stat-n">4.9</div><div class="stat-d">Nota média</div></div>
+      <div class="stat"><div class="stat-n">100%</div><div class="stat-d">Satisfação garantida</div></div>
+      <div class="stat"><div class="stat-n">6x</div><div class="stat-d">Dias por semana</div></div>
+    </div>
+  </div>
+  <div class="about-img">
+    <img src="https://lh3.googleusercontent.com/gps-cs-s/AHVAwerArT1IIOT59UaByF00gHh-Ruhcg5MAuSu9aTBdGIOAi1XzjvnUGg2hJNSbawxHVjAQaV1HlHgDrlxWqPcAevWhzkNYKVf99iphgrzkx7BEyovNCcz7vigqYOSGwriUKNVqZsxiDUS7XXHE=w800-h1066-k-no" alt="Interior da Barbearia Mendes" loading="lazy"/>
+  </div>
+</section>
+
+<section class="services" id="services">
+  <div class="shdr">
+    <div class="lbl">O Que Fazemos</div>
+    <h2 class="stitle">Nossos <em>Serviços</em></h2>
+  </div>
+  <div class="srv-grid">
+    <div class="srv-card">
+      <div class="srv-icon">&#9986;&#65039;</div>
+      <h3>Corte Masculino</h3>
+      <p>Degradê, social, clássico ou moderno — executado com precisão para o resultado perfeito.</p>
+      <div class="srv-price">A partir de R$ 35</div>
+    </div>
+    <div class="srv-card">
+      <div class="srv-icon">&#129298;</div>
+      <h3>Barba</h3>
+      <p>Navalha, hidratação e modelagem. Ritual completo para uma barba impecável.</p>
+      <div class="srv-price">A partir de R$ 30</div>
+    </div>
+    <div class="srv-card">
+      <div class="srv-icon">&#128134;</div>
+      <h3>Combo Completo</h3>
+      <p>Corte + barba + finalização. O preferido de quem quer sair impecável do início ao fim.</p>
+      <div class="srv-price">A partir de R$ 60</div>
+    </div>
+    <div class="srv-card">
+      <div class="srv-icon">&#129532;</div>
+      <h3>Tratamento Capilar</h3>
+      <p>Hidratação e cauterização para manter o cabelo sempre saudável e bem cuidado.</p>
+      <div class="srv-price">A consultar</div>
+    </div>
+    <div class="srv-card">
+      <div class="srv-icon">&#128102;</div>
+      <h3>Corte Infantil</h3>
+      <p>Ambiente acolhedor para os pequenos. Resultado aprovado pelos pais!</p>
+      <div class="srv-price">A partir de R$ 25</div>
+    </div>
+    <div class="srv-card">
+      <div class="srv-icon">&#127942;</div>
+      <h3>Sobrancelha</h3>
+      <p>Design e alinhamento de sobrancelha masculina para um visual ainda mais definido.</p>
+      <div class="srv-price">A partir de R$ 15</div>
+    </div>
+  </div>
+</section>
+
+<section class="reviews" id="reviews">
+  <div class="rhdr">
+    <div class="lbl">O Que Dizem</div>
+    <h2 class="stitle">Avaliações <em>Reais</em></h2>
+  </div>
+  <div class="rsummary">
+    <div class="bigr">4.9</div>
+    <div class="rinfo">
+      <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <div>Baseado em <strong>950+ avaliações</strong></div>
+      <small>no Google Maps</small>
+    </div>
+  </div>
+  <div class="rgrid">
+    <div class="rcard">
+      <div class="rtop">
+        <div class="av">R</div>
+        <div><div class="rname">Ricardo Alves</div><div class="rstars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><div class="rdate">Há 2 semanas</div></div>
+      </div>
+      <p class="rtext">"Melhor barbearia de Ubatuba sem dúvida! Atendimento excelente, ambiente agradável e o resultado sempre supera as expectativas. Já indiquei para todos os amigos."</p>
+    </div>
+    <div class="rcard">
+      <div class="rtop">
+        <div class="av">F</div>
+        <div><div class="rname">Felipe Monteiro</div><div class="rstars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><div class="rdate">Há 1 mês</div></div>
+      </div>
+      <p class="rtext">"Vim de Santos passar o fim de semana e precisei cortar o cabelo. Que sorte ter encontrado a Barbearia Mendes! Atendimento top, preço justo e resultado perfeito."</p>
+    </div>
+    <div class="rcard">
+      <div class="rtop">
+        <div class="av">M</div>
+        <div><div class="rname">Marcelo Costa</div><div class="rstars">&#9733;&#9733;&#9733;&#9733;&#9733;</div><div class="rdate">Há 3 semanas</div></div>
+      </div>
+      <p class="rtext">"Cliente fiel há anos! A barba ficou impecável como sempre. Profissionais dedicados que realmente se importam com a satisfação. Nota 10!"</p>
+    </div>
+  </div>
+</section>
+
+<section class="hours" id="hours">
+  <div class="hours-inner">
+    <div>
+      <div class="lbl">Quando Nos Encontrar</div>
+      <h2 class="stitle">Horário de <em>Funcionamento</em></h2>
+      <table class="ht">
+        <tr><td>Segunda-feira</td><td>08:30 – 19:00</td></tr>
+        <tr class="today"><td>Terça-feira</td><td>08:30 – 19:00</td></tr>
+        <tr><td>Quarta-feira</td><td>08:30 – 19:00</td></tr>
+        <tr><td>Quinta-feira</td><td>08:30 – 19:00</td></tr>
+        <tr><td>Sexta-feira</td><td>08:30 – 19:00</td></tr>
+        <tr><td>Sábado</td><td>08:00 – 17:00</td></tr>
+        <tr><td>Domingo</td><td>Fechado</td></tr>
+      </table>
+      <br/>
+      <p style="color:#888;font-size:.9rem;line-height:1.8">&#128205; Ubatuba – SP<br/>&#128222; <a href="tel:+5519983355492" style="color:var(--gold);text-decoration:none">(19) 98335-5492</a></p>
+    </div>
+    <div class="map-wrap">
+      <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3654.5!2d-45.07!3d-23.43!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94cdff!2sBarbearia%20Mendes%20Ubatuba!5e0!3m2!1spt-BR!2sbr!4v1" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </div>
+</section>
+
+<div class="cta-band">
+  <h2>Pronto para um Novo Visual?</h2>
+  <p>Agende pelo WhatsApp agora mesmo — rápido e sem complicação</p>
+  <a href="https://wa.me/5519983355492?text=Oi!%20Quero%20agendar%20um%20hor%C3%A1rio" class="btn-dark">Agendar Agora</a>
+</div>
+
+<footer>
+  <div class="ftg">
+    <div class="ftb">
+      <div class="logo">MENDES<span>.</span></div>
+      <p>Barbearia de referência em Ubatuba. Tradição, técnica e atendimento de qualidade para quem valoriza o cuidado masculino.</p>
+    </div>
+    <div class="ftc">
+      <h4>Serviços</h4>
+      <ul>
+        <li><a href="#services">Corte Masculino</a></li>
+        <li><a href="#services">Barba</a></li>
+        <li><a href="#services">Combo Completo</a></li>
+        <li><a href="#services">Tratamento Capilar</a></li>
+      </ul>
+    </div>
+    <div class="ftc">
+      <h4>Contato</h4>
+      <ul>
+        <li><a href="https://wa.me/5519983355492">WhatsApp</a></li>
+        <li><a href="tel:+5519983355492">(19) 98335-5492</a></li>
+        <li><a href="#hours">Horários</a></li>
+        <li><a href="#hours">Localização</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="ftbot">
+    <span>&#169; 2026 Barbearia Mendes · Ubatuba, SP</span>
+    <span style="color:#333">Site criado pela <strong style="color:#555">Sparkz</strong></span>
+  </div>
+</footer>
+
+<a href="https://wa.me/5519983355492?text=Oi!%20Quero%20agendar%20um%20hor%C3%A1rio" class="wafab" title="Falar no WhatsApp">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+    <path d="M12 0C5.373 0 0 5.373 0 12c0 2.114.554 4.096 1.524 5.812L0 24l6.335-1.498A11.946 11.946 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.807 9.807 0 01-5.001-1.368l-.36-.214-4.617-1.298-9.818 2.003-9.818 9.818 0 7.814 6.36 9.818 9.818 9.818z" fill-opacity=".5"/>
+  </svg>
+</a>
+
+</body>
+</html>
