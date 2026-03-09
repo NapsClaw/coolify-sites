@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cartório de Registro Civil e Tabelionato – Rondolândia/MT</title>
+  <meta name="description" content="Cartório de Registro Civil e Tabelionato de Rondolândia/MT. Serviços de Registro Civil e Tabelionato — reconhecimento de firma, autenticação, escrituras e certidões." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #1a2744;
+      --gold: #b8974a;
+      --gold-light: #d4b06a;
+      --cream: #f8f5ef;
+      --white: #ffffff;
+      --gray: #6b7280;
+      --light-gray: #f3f4f6;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      color: #1f2937;
+      background: var(--white);
+      line-height: 1.6;
+    }
+
+    /* ── HEADER ── */
+    header {
+      background: var(--navy);
+      padding: 16px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .header-seal {
+      width: 48px;
+      height: 48px;
+      background: var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    .header-text h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 14px;
+      color: var(--white);
+      line-height: 1.2;
+    }
+
+    .header-text p {
+      font-size: 11px;
+      color: var(--gold-light);
+      font-weight: 300;
+      margin-top: 2px;
+    }
+
+    .header-phone a {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--gold);
+      color: var(--navy);
+      font-weight: 600;
+      font-size: 13px;
+      padding: 8px 14px;
+      border-radius: 50px;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(160deg, var(--navy) 0%, #243158 100%);
+      color: var(--white);
+      padding: 60px 20px 50px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 220px; height: 220px;
+      border-radius: 50%;
+      border: 2px solid rgba(184,151,74,0.2);
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -80px; left: -80px;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      border: 2px solid rgba(184,151,74,0.1);
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(184,151,74,0.2);
+      border: 1px solid var(--gold);
+      color: var(--gold-light);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 5px 14px;
+      border-radius: 50px;
+      margin-bottom: 20px;
+      letter-spacing: 0.5px;
+    }
+
+    .hero h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      line-height: 1.25;
+      margin-bottom: 12px;
+    }
+
+    .hero h2 span { color: var(--gold-light); }
+
+    .hero p {
+      font-size: 15px;
+      color: rgba(255,255,255,0.75);
+      max-width: 340px;
+      margin: 0 auto 30px;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--gold);
+      color: var(--navy);
+      font-weight: 700;
+      font-size: 15px;
+      padding: 14px 28px;
+      border-radius: 50px;
+      text-decoration: none;
+    }
+
+    /* ── SECTION TITLE ── */
+    .section-title {
+      text-align: center;
+      padding: 48px 20px 32px;
+    }
+
+    .section-title span {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+
+    .section-title h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px;
+      color: var(--navy);
+      line-height: 1.3;
+    }
+
+    /* ── SERVICES ── */
+    .services {
+      background: var(--cream);
+      padding-bottom: 48px;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      padding: 0 16px;
+    }
+
+    .service-card {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 20px 16px;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      border-bottom: 3px solid var(--gold);
+    }
+
+    .service-card.full-width {
+      grid-column: 1 / -1;
+    }
+
+    .service-icon {
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
+
+    .service-card h4 {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--navy);
+      line-height: 1.3;
+      margin-bottom: 6px;
+    }
+
+    .service-card p {
+      font-size: 12px;
+      color: var(--gray);
+      line-height: 1.5;
+    }
+
+    /* ── EQUIPE ── */
+    .equipe {
+      background: var(--white);
+      padding: 0 16px 48px;
+    }
+
+    .equipe-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .equipe-card {
+      background: var(--navy);
+      border-radius: 12px;
+      padding: 20px 16px;
+      text-align: center;
+    }
+
+    .equipe-card .cargo {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--gold-light);
+      margin-bottom: 8px;
+    }
+
+    .equipe-card .nome {
+      font-family: 'Playfair Display', serif;
+      font-size: 13px;
+      color: var(--white);
+      line-height: 1.3;
+    }
+
+    /* ── INFO BAND ── */
+    .info-band {
+      background: var(--navy);
+      color: var(--white);
+      padding: 36px 20px;
+    }
+
+    .info-band .section-title h3 { color: var(--white); }
+    .info-band .section-title { padding-top: 0; }
+
+    .info-items {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: rgba(255,255,255,0.07);
+      border-radius: 10px;
+      padding: 16px;
+    }
+
+    .info-item-icon {
+      font-size: 22px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .info-item h5 {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--gold-light);
+      margin-bottom: 4px;
+    }
+
+    .info-item p {
+      font-size: 14px;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.5;
+    }
+
+    .info-item a {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+    }
+
+    /* ── ORIENTAÇÕES ── */
+    .orientacoes {
+      padding: 0 0 48px;
+      background: var(--light-gray);
+    }
+
+    .orientacao-item {
+      background: var(--white);
+      border-radius: 12px;
+      margin: 0 16px 12px;
+      overflow: hidden;
+    }
+
+    .orientacao-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 16px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .orientacao-header span:first-child {
+      font-size: 22px;
+    }
+
+    .orientacao-header h4 {
+      flex: 1;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    .orientacao-arrow {
+      font-size: 12px;
+      color: var(--gold);
+      transition: transform 0.3s;
+    }
+
+    .orientacao-body {
+      display: none;
+      padding: 0 16px 16px;
+      font-size: 13px;
+      color: var(--gray);
+      line-height: 1.7;
+      border-top: 1px solid var(--light-gray);
+      padding-top: 12px;
+    }
+
+    .orientacao-body ul {
+      padding-left: 16px;
+    }
+
+    .orientacao-body ul li {
+      margin-bottom: 6px;
+    }
+
+    .orientacao-item.open .orientacao-arrow { transform: rotate(180deg); }
+    .orientacao-item.open .orientacao-body { display: block; }
+
+    /* ── CTA ── */
+    .cta-section {
+      background: linear-gradient(135deg, var(--gold) 0%, #8a6b2a 100%);
+      padding: 48px 20px;
+      text-align: center;
+    }
+
+    .cta-section h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      color: var(--white);
+      margin-bottom: 10px;
+    }
+
+    .cta-section p {
+      font-size: 14px;
+      color: rgba(255,255,255,0.85);
+      margin-bottom: 24px;
+    }
+
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--white);
+      color: var(--navy);
+      font-weight: 700;
+      font-size: 15px;
+      padding: 14px 28px;
+      border-radius: 50px;
+      text-decoration: none;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #0f1829;
+      color: rgba(255,255,255,0.6);
+      text-align: center;
+      padding: 24px 20px;
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    footer strong { color: var(--gold-light); }
+
+    /* ── WHATSAPP FLOAT ── */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 999;
+      background: #25d366;
+      color: white;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      text-decoration: none;
+      box-shadow: 0 4px 16px rgba(37,211,102,0.4);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-brand">
+      <div class="header-seal">⚖️</div>
+      <div class="header-text">
+        <h1>Cartório de Registro Civil<br>e Tabelionato</h1>
+        <p>Rondolândia – MT</p>
+      </div>
+    </div>
+    <div class="header-phone">
+      <a href="https://wa.me/556692382051">
+        💬 WhatsApp
+      </a>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">📍 Rondolândia – Mato Grosso</div>
+    <h2>Serviços cartorários com <span>segurança e agilidade</span></h2>
+    <p>Registro Civil e Tabelionato — atendimento presencial e orientação online.</p>
+    <a href="https://wa.me/556692382051" class="hero-cta">
+      📲 Fale conosco
+    </a>
+  </section>
+
+  <!-- SERVIÇOS -->
+  <section class="services">
+    <div class="section-title">
+      <span>O que fazemos</span>
+      <h3>Nossos Serviços</h3>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">📋</div>
+        <h4>Registro Civil</h4>
+        <p>Nascimento, casamento, óbito e averbações.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">✍️</div>
+        <h4>Reconhecimento de Firma</h4>
+        <p>Autêntica e por semelhança com validade jurídica.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📜</div>
+        <h4>Autenticação</h4>
+        <p>Autenticação de documentos e cópias reprográficas.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🏛️</div>
+        <h4>Escrituras e Atos</h4>
+        <p>Escrituras públicas, procurações e declarações.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- EQUIPE -->
+  <section style="background: var(--cream); padding-bottom: 48px;">
+    <div class="section-title">
+      <span>Nossa equipe</span>
+      <h3>Responsáveis pelo Cartório</h3>
+    </div>
+    <div class="equipe-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:12px; padding: 0 16px; max-width:520px; margin: 0 auto;">
+      <div class="equipe-card" style="background:var(--navy); border-radius:12px; padding:20px 16px; text-align:center;">
+        <div style="font-size:11px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:var(--gold-light); margin-bottom:8px;">Tabelião Interino</div>
+        <div style="font-family:'Playfair Display',serif; font-size:13px; color:var(--white); line-height:1.4;">Valdeir dos Santos Vieira</div>
+      </div>
+      <div class="equipe-card" style="background:var(--navy); border-radius:12px; padding:20px 16px; text-align:center;">
+        <div style="font-size:11px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:var(--gold-light); margin-bottom:8px;">Tabeliã Substituta</div>
+        <div style="font-family:'Playfair Display',serif; font-size:13px; color:var(--white); line-height:1.4;">Joyce Luara de Oliveira Nascimento</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INFORMAÇÕES -->
+  <section class="info-band">
+    <div class="section-title">
+      <span>Onde nos encontrar</span>
+      <h3>Informações de Contato</h3>
+    </div>
+    <div class="info-items">
+      <div class="info-item">
+        <div class="info-item-icon">📍</div>
+        <div>
+          <h5>Endereço</h5>
+          <p>Avenida André Maggi, S/N<br>Centro — Rondolândia – MT</p>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-item-icon">📞</div>
+        <div>
+          <h5>Telefone / WhatsApp</h5>
+          <p><a href="tel:+5566992382051">(66) 99238-2051</a></p>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-item-icon">🏛️</div>
+        <div>
+          <h5>CNPJ</h5>
+          <p>51.043.245/0001-37</p>
+        </div>
+      </div>
+      <div class="info-item">
+        <div class="info-item-icon">🕐</div>
+        <div>
+          <h5>Horário de Atendimento</h5>
+          <p>Segunda a Sexta<br>09h às 17h</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AVISOS DINÂMICOS -->
+  <section id="avisos" style="background:#f8f5ef; padding: 0 0 8px;">
+    <div class="section-title">
+      <span>Transparência</span>
+      <h3>Avisos e Comunicados</h3>
+    </div>
+    <div id="avisos-lista" style="padding: 0 16px 32px;">
+      <div style="text-align:center; color:#9ca3af; font-size:14px; padding:20px 0;">Carregando avisos...</div>
+    </div>
+  </section>
+
+  <!-- ORIENTAÇÕES -->
+  <section class="orientacoes">
+    <div class="section-title">
+      <span>Saiba mais</span>
+      <h3>Como Realizar Cada Serviço</h3>
+    </div>
+
+    <div class="orientacao-item">
+      <div class="orientacao-header" onclick="toggle(this)">
+        <span>📋</span>
+        <h4>Registro de Nascimento</h4>
+        <span class="orientacao-arrow">▼</span>
+      </div>
+      <div class="orientacao-body">
+        <ul>
+          <li>Declaração de nascimento (fornecida pelo hospital)</li>
+          <li>RG e CPF dos pais</li>
+          <li>Certidão de casamento dos pais (se casados)</li>
+          <li>Prazo: até 15 dias após o nascimento (gratuito)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="orientacao-item">
+      <div class="orientacao-header" onclick="toggle(this)">
+        <span>💍</span>
+        <h4>Habilitação para Casamento</h4>
+        <span class="orientacao-arrow">▼</span>
+      </div>
+      <div class="orientacao-body">
+        <ul>
+          <li>RG, CPF e certidão de nascimento dos noivos</li>
+          <li>Comprovante de residência</li>
+          <li>2 testemunhas com documento de identidade</li>
+          <li>Processo de habilitação: aproximadamente 30 dias</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="orientacao-item">
+      <div class="orientacao-header" onclick="toggle(this)">
+        <span>✍️</span>
+        <h4>Reconhecimento de Firma</h4>
+        <span class="orientacao-arrow">▼</span>
+      </div>
+      <div class="orientacao-body">
+        <ul>
+          <li>Compareça pessoalmente com documento de identidade original</li>
+          <li>Traga o documento a ser reconhecido sem assinar</li>
+          <li>Assine na presença do tabelião (firma autêntica)</li>
+          <li>Para firma por semelhança: já assine o documento antes</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="orientacao-item">
+      <div class="orientacao-header" onclick="toggle(this)">
+        <span>📜</span>
+        <h4>Autenticação de Documentos</h4>
+        <span class="orientacao-arrow">▼</span>
+      </div>
+      <div class="orientacao-body">
+        <ul>
+          <li>Apresente o documento original para cotejo</li>
+          <li>Traga as cópias que deseja autenticar</li>
+          <li>Documentos rasurados ou danificados podem não ser autenticados</li>
+          <li>Entre em contato para verificar casos específicos</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="orientacao-item">
+      <div class="orientacao-header" onclick="toggle(this)">
+        <span>🏛️</span>
+        <h4>Escritura Pública e Procuração</h4>
+        <span class="orientacao-arrow">▼</span>
+      </div>
+      <div class="orientacao-body">
+        <ul>
+          <li>RG e CPF de todos os envolvidos</li>
+          <li>Comprovante de residência atualizado</li>
+          <li>Documentos do bem ou objeto da escritura (se aplicável)</li>
+          <li>Agende previamente para orientações específicas ao seu caso</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="orientacao-item">
+      <div class="orientacao-header" onclick="toggle(this)">
+        <span>⚰️</span>
+        <h4>Registro de Óbito</h4>
+        <span class="orientacao-arrow">▼</span>
+      </div>
+      <div class="orientacao-body">
+        <ul>
+          <li>Declaração de óbito (DO) fornecida pelo médico ou hospital</li>
+          <li>Documentos do falecido: RG, CPF e certidão de nascimento/casamento</li>
+          <li>Prazo: 15 dias do falecimento (prazo pode ser ampliado em alguns casos)</li>
+          <li>Gratuito para óbitos registrados no prazo legal</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTAIS OFICIAIS -->
+  <section style="background:#fff; padding: 36px 20px 40px; border-top: 1px solid #e5e7eb;">
+    <div style="text-align:center; margin-bottom:24px;">
+      <span style="font-size:11px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; color:#b8974a;">Acesso Rápido</span>
+      <h3 style="font-family:'Playfair Display',serif; font-size:24px; color:#1a2744; margin-top:6px;">Portais Oficiais</h3>
+    </div>
+    <div style="display:flex; flex-direction:column; gap:14px; max-width:400px; margin:0 auto;">
+
+      <a href="https://www.e-notariado.org.br/notary" target="_blank" rel="noopener"
+         style="display:flex; align-items:center; gap:14px; background:#1a2744; border-radius:14px; padding:18px 16px; text-decoration:none;">
+        <div style="font-size:30px; flex-shrink:0;">🖥️</div>
+        <div>
+          <div style="font-weight:700; color:#d4b06a; font-size:14px; margin-bottom:3px;">e-Notariado</div>
+          <div style="color:rgba(255,255,255,0.7); font-size:12px; line-height:1.4;">Serviços cartorários digitais com validade jurídica</div>
+        </div>
+        <div style="margin-left:auto; color:#b8974a; font-size:18px;">›</div>
+      </a>
+
+      <a href="https://www.registrocivil.org.br/about" target="_blank" rel="noopener"
+         style="display:flex; align-items:center; gap:14px; background:#1a2744; border-radius:14px; padding:18px 16px; text-decoration:none;">
+        <div style="font-size:30px; flex-shrink:0;">📋</div>
+        <div>
+          <div style="font-weight:700; color:#d4b06a; font-size:14px; margin-bottom:3px;">Registro Civil – Portal Oficial</div>
+          <div style="color:rgba(255,255,255,0.7); font-size:12px; line-height:1.4;">Certidões de nascimento, casamento e óbito online</div>
+        </div>
+        <div style="margin-left:auto; color:#b8974a; font-size:18px;">›</div>
+      </a>
+
+      <a href="https://gif.tjmt.jus.br/selo/Consulta/ConSeloFisicoCMB.aspx" target="_blank" rel="noopener"
+         style="display:flex; align-items:center; gap:14px; background:#1a2744; border-radius:14px; padding:18px 16px; text-decoration:none;">
+        <div style="font-size:30px; flex-shrink:0;">🔏</div>
+        <div>
+          <div style="font-weight:700; color:#d4b06a; font-size:14px; margin-bottom:3px;">Consulta de Selo Físico – TJMT</div>
+          <div style="color:rgba(255,255,255,0.7); font-size:12px; line-height:1.4;">Verifique a autenticidade de selos notariais do Estado de MT</div>
+        </div>
+        <div style="margin-left:auto; color:#b8974a; font-size:18px;">›</div>
+      </a>
+
+      <a href="https://corregedoria.tjmt.jus.br/" target="_blank" rel="noopener"
+         style="display:flex; align-items:center; gap:14px; background:#1a2744; border-radius:14px; padding:18px 16px; text-decoration:none;">
+        <div style="font-size:30px; flex-shrink:0;">⚖️</div>
+        <div>
+          <div style="font-weight:700; color:#d4b06a; font-size:14px; margin-bottom:3px;">Corregedoria – TJMT</div>
+          <div style="color:rgba(255,255,255,0.7); font-size:12px; line-height:1.4;">Corregedoria Geral de Justiça de Mato Grosso</div>
+        </div>
+        <div style="margin-left:auto; color:#b8974a; font-size:18px;">›</div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <h3>Dúvidas ou precisa de orientação?</h3>
+    <p>Nossa equipe está pronta para te ajudar pelo WhatsApp!</p>
+    <a href="https://wa.me/556692382051" class="cta-btn">
+      💬 Chamar no WhatsApp
+    </a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <strong>Cartório de Registro Civil e Tabelionato — Rondolândia/MT</strong><br>
+    Tabelião Interino: Valdeir dos Santos Vieira · Tabeliã Substituta: Joyce Luara de Oliveira Nascimento<br>
+    Avenida André Maggi, S/N | Centro | Rondolândia – MT | (66) 99238-2051
+  </footer>
+
+  <!-- LGPD -->
+  <section id="lgpd" style="background:#fff; padding: 36px 20px 40px; border-top: 3px solid #b8974a;">
+    <div style="text-align:center; margin-bottom:24px;">
+      <span style="font-size:11px; font-weight:600; letter-spacing:1.5px; text-transform:uppercase; color:#b8974a;">Transparência e Privacidade</span>
+      <h3 style="font-family:'Playfair Display',serif; font-size:24px; color:#1a2744; margin-top:6px;">Lei Geral de Proteção de Dados</h3>
+      <p style="font-size:13px; color:#6b7280; margin-top:8px; line-height:1.6;">Lei nº 13.709/2018 — LGPD</p>
+    </div>
+
+    <div style="max-width:600px; margin:0 auto; display:flex; flex-direction:column; gap:14px;">
+
+      <div style="background:#f8f5ef; border-radius:12px; padding:18px 16px; border-left:4px solid #1a2744;">
+        <h4 style="font-size:14px; font-weight:700; color:#1a2744; margin-bottom:6px;">🎯 O que é a LGPD?</h4>
+        <p style="font-size:13px; color:#374151; line-height:1.7;">A Lei Geral de Proteção de Dados regula o tratamento de dados pessoais no Brasil, tanto no meio físico quanto digital. Seu objetivo é proteger a liberdade, privacidade e personalidade, dando ao cidadão controle sobre suas informações.</p>
+      </div>
+
+      <div style="background:#f8f5ef; border-radius:12px; padding:18px 16px; border-left:4px solid #b8974a;">
+        <h4 style="font-size:14px; font-weight:700; color:#1a2744; margin-bottom:10px;">📋 Que dados coletamos?</h4>
+        <ul style="font-size:13px; color:#374151; line-height:1.8; padding-left:16px;">
+          <li>Nome completo e dados de identificação (RG, CPF)</li>
+          <li>Dados de estado civil e filiação</li>
+          <li>Endereço e dados de contato</li>
+          <li>Informações necessárias para realização dos serviços cartorários</li>
+        </ul>
+      </div>
+
+      <div style="background:#f8f5ef; border-radius:12px; padding:18px 16px; border-left:4px solid #166534;">
+        <h4 style="font-size:14px; font-weight:700; color:#1a2744; margin-bottom:10px;">✅ Como usamos seus dados?</h4>
+        <ul style="font-size:13px; color:#374151; line-height:1.8; padding-left:16px;">
+          <li>Exclusivamente para a prestação dos serviços cartorários</li>
+          <li>Cumprimento de obrigações legais e regulatórias</li>
+          <li>Arquivamento em interesse público (registros e documentos oficiais)</li>
+          <li>Não compartilhamos seus dados com terceiros sem finalidade legal</li>
+        </ul>
+      </div>
+
+      <div style="background:#f8f5ef; border-radius:12px; padding:18px 16px; border-left:4px solid #7c3aed;">
+        <h4 style="font-size:14px; font-weight:700; color:#1a2744; margin-bottom:10px;">🔐 Seus direitos como titular</h4>
+        <ul style="font-size:13px; color:#374151; line-height:1.8; padding-left:16px;">
+          <li>Confirmar se tratamos seus dados</li>
+          <li>Solicitar acesso ou cópia dos seus dados</li>
+          <li>Corrigir dados incompletos ou desatualizados</li>
+          <li>Solicitar anonimização ou eliminação (quando legalmente possível)</li>
+          <li>Revogar consentimento a qualquer momento</li>
+        </ul>
+      </div>
+
+      <div style="background:#1a2744; border-radius:12px; padding:18px 16px; text-align:center;">
+        <p style="font-size:13px; color:rgba(255,255,255,0.8); line-height:1.6; margin-bottom:14px;">Dúvidas sobre o uso dos seus dados pessoais? Entre em contato com nosso Encarregado de Dados (DPO):</p>
+        <a href="https://wa.me/556692382051" style="display:inline-flex; align-items:center; gap:8px; background:#b8974a; color:#fff; font-weight:700; font-size:13px; padding:11px 22px; border-radius:50px; text-decoration:none;">
+          💬 Falar sobre meus dados
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- WHATSAPP FLOAT -->
+  <a class="whatsapp-float" href="https://wa.me/556692382051" title="WhatsApp">💬</a>
+
+  <script>
+    function toggle(el) {
+      const item = el.parentElement;
+      item.classList.toggle('open');
+    }
+
+    // Carregar avisos da API
+    const CATEGORIAS_LABEL = {
+      comunicado: '📢 Comunicado',
+      arrecadacao: '💰 Arrecadação',
+      repasse: '🏛️ Repasse',
+      aviso: '⚠️ Aviso',
+      geral: '📋 Geral'
+    };
+    const CATEGORIAS_COR = {
+      comunicado: '#1a2744',
+      arrecadacao: '#166534',
+      repasse: '#7c3aed',
+      aviso: '#b45309',
+      geral: '#374151'
+    };
+
+    async function carregarAvisos() {
+      const lista = document.getElementById('avisos-lista');
+      try {
+        const resp = await fetch('https://cartorio-rondolandia-painel.vercel.app/api/avisos');
+        const data = await resp.json();
+        const avisos = data.avisos || [];
+        if (avisos.length === 0) {
+          lista.innerHTML = '<div style="text-align:center;color:#9ca3af;font-size:14px;padding:20px 0;">Nenhum comunicado no momento.</div>';
+          return;
+        }
+        lista.innerHTML = avisos.map(av => {
+          const cat = av.categoria || 'geral';
+          const cor = CATEGORIAS_COR[cat] || '#374151';
+          const label = CATEGORIAS_LABEL[cat] || cat;
+          const data = new Date(av.created_at).toLocaleDateString('pt-BR', {day:'2-digit',month:'long',year:'numeric'});
+          return `
+            <div style="background:#fff;border-radius:12px;padding:18px 16px;margin-bottom:12px;border-left:4px solid ${cor};box-shadow:0 1px 4px rgba(0,0,0,0.06);">
+              <span style="font-size:11px;background:${cor};color:#fff;padding:2px 10px;border-radius:50px;font-weight:600;">${label}</span>
+              <h4 style="font-size:15px;font-weight:700;color:#1a2744;margin:10px 0 6px;">${av.titulo}</h4>
+              <p style="font-size:13px;color:#6b7280;line-height:1.7;white-space:pre-wrap;">${av.conteudo}</p>
+              <p style="font-size:11px;color:#9ca3af;margin-top:8px;">${data}</p>
+            </div>`;
+        }).join('');
+      } catch(e) {
+        lista.innerHTML = '<div style="text-align:center;color:#9ca3af;font-size:13px;padding:20px 0;">Nenhum comunicado no momento.</div>';
+      }
+    }
+    carregarAvisos();
+  </script>
+</body>
+</html>
