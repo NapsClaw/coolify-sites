@@ -301,64 +301,6 @@ footer span{color:var(--red)}
 
 
 
-<!-- PLAYER FIXO - ABRE YOUTUBE -->
-<div id="yt-player-bar" style="position:fixed;bottom:0;left:0;right:0;z-index:9998;background:rgba(4,6,10,0.97);border-top:1px solid rgba(245,168,0,0.3);padding:10px 16px;display:flex;align-items:center;gap:12px;backdrop-filter:blur(10px);">
-
-  <!-- Capa do CD -->
-  <div style="width:44px;height:44px;border-radius:8px;overflow:hidden;flex-shrink:0;cursor:pointer;" onclick="ytOpen()">
-    <img id="yt-thumb-img" src="https://img.youtube.com/vi/qO0LASIU2sA/mqdefault.jpg" style="width:100%;height:100%;object-fit:cover;" alt="">
-  </div>
-
-  <!-- Info -->
-  <div style="flex:1;min-width:0;cursor:pointer;" onclick="ytOpen()">
-    <div id="yt-title" style="font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:1px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Power Som Vol. 2 — DJ Cuca</div>
-    <div style="font-size:11px;color:#f5a800;">🎧 Toque para ouvir no YouTube</div>
-  </div>
-
-  <!-- Controles -->
-  <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
-    <button onclick="ytPrev()" style="background:rgba(255,255,255,0.08);border:none;color:#fff;width:36px;height:36px;border-radius:50%;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;">⏮</button>
-    <button onclick="ytOpen()" style="background:linear-gradient(135deg,#f5a800,#ff6600);border:none;color:#fff;width:44px;height:44px;border-radius:50%;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 12px rgba(245,168,0,0.5);">▶</button>
-    <button onclick="ytNext()" style="background:rgba(255,255,255,0.08);border:none;color:#fff;width:36px;height:36px;border-radius:50%;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;">⏭</button>
-  </div>
-
-  <!-- Índice -->
-  <div id="yt-index" style="font-family:'Bebas Neue',sans-serif;font-size:13px;color:#555;flex-shrink:0;min-width:32px;text-align:right;">1/3</div>
-</div>
-
-<!-- Espaço para o player não cobrir conteúdo -->
-<div style="height:70px;"></div>
-
-<script>
-var ytPlaylist = [
-  { id: 'qO0LASIU2sA', title: 'Power Som Vol. 2 — DJ Cuca', url: 'https://youtu.be/qO0LASIU2sA' },
-  { id: 'd8sUrvxMglk', title: 'Power Som Vol. 3 — DJ Elzo', url: 'https://youtube.com/shorts/d8sUrvxMglk' },
-  { id: '7Y0wGzn3d_w', title: 'Power Som Vol. 4 — DJ Maxx RS', url: 'https://youtube.com/shorts/7Y0wGzn3d_w' }
-];
-var ytCurrent = 0;
-
-function ytUpdate(){
-  var t = ytPlaylist[ytCurrent];
-  document.getElementById('yt-title').textContent = t.title;
-  document.getElementById('yt-thumb-img').src = 'https://img.youtube.com/vi/'+t.id+'/mqdefault.jpg';
-  document.getElementById('yt-index').textContent = (ytCurrent+1)+'/'+ytPlaylist.length;
-}
-
-function ytOpen(){
-  window.open(ytPlaylist[ytCurrent].url, '_blank');
-}
-
-function ytNext(){
-  ytCurrent = (ytCurrent+1) % ytPlaylist.length;
-  ytUpdate();
-}
-
-function ytPrev(){
-  ytCurrent = (ytCurrent-1+ytPlaylist.length) % ytPlaylist.length;
-  ytUpdate();
-}
-</script>
-
 <nav>
   <a href="#" class="nav-logo">POWER <span>SOM</span></a>
   <a href="#cadastro" class="nav-cta">Quero Entrar</a>
@@ -652,24 +594,7 @@ function ytPrev(){
     <div class="divider" style="margin:20px auto 0"></div>
     <p style="color:#999;font-size:15px;max-width:480px;margin:0 auto 16px;">Plataforma em desenvolvimento. Faça seu pré-cadastro agora e seja um dos primeiros DJs a entrar!</p>
 
-    <!-- Oferta limitada -->
-    <div style="max-width:480px;margin:0 auto 24px;background:linear-gradient(135deg,rgba(245,168,0,0.12),rgba(0,0,0,0));border:2px solid #f5a800;border-radius:12px;padding:20px 24px;text-align:center;position:relative;animation:ps-pulse 2s ease-in-out infinite;">
-      <div style="position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:#f5a800;color:#000;font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:2px;padding:4px 18px;border-radius:100px;white-space:nowrap;">🎁 OFERTA ESPECIAL — VAGAS LIMITADAS</div>
-      <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,6vw,42px);color:#fff;letter-spacing:2px;margin-top:8px;line-height:1;">OS 10 PRIMEIROS DJs</div>
-      <div style="font-size:14px;color:#ccc;margin:10px 0 14px;line-height:1.6;">que se inscreverem no <strong style="color:#f5a800;">maior portal do som automotivo</strong> vão receber:</div>
-      <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:10px 0;">
-        <div style="text-align:center;">
-          <img src="merchandise.jpg" alt="Camiseta Power Som" style="width:120px;border-radius:8px;">
-          <div style="font-size:11px;color:#f5a800;margin-top:4px;">👕 Camiseta Oficial</div>
-        </div>
-        <div style="text-align:center;">
-          <img src="merchandise2.jpg" alt="Camiseta Power Som" style="width:120px;border-radius:8px;">
-          <div style="font-size:11px;color:#f5a800;margin-top:4px;">👕 + Copo Oficial</div>
-        </div>
-      </div>
-      <div style="margin-top:8px;font-size:12px;color:#f5a800;font-weight:700;">🔥 Garanta já sua vaga — vagas se esgotando!</div>
-      <div style="margin-top:4px;font-size:11px;color:#666;">🚚 Brinde enviado após confirmação do cadastro</div>
-    </div>
+
 
     <div class="form-wrap">
       <form id="precadastro-form" onsubmit="submitForm(event)">
@@ -754,7 +679,7 @@ function ytPrev(){
         <div style="font-size:12px;color:#555;margin-bottom:20px;letter-spacing:1px;text-transform:uppercase;">Plano gratuito</div>
         <div style="width:100%;height:1px;background:rgba(255,255,255,0.07);margin-bottom:20px;"></div>
         <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;">
-          <li style="display:flex;gap:10px;font-size:13px;color:#777;"><span>💿</span>2 CDs por mês</li>
+          <li style="display:flex;gap:10px;font-size:13px;color:#777;"><span>💿</span>2 CDs por semana</li>
           <li style="display:flex;gap:10px;font-size:13px;color:#555;"><span>❌</span>Playlist não ativada</li>
         </ul>
         <a href="https://wa.me/5551989321741?text=Quero+saber+mais+sobre+o+Plano+SC+Grátis!" target="_blank" style="display:flex;align-items:center;justify-content:center;width:100%;margin-top:24px;padding:13px;border-radius:10px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);color:#aaa;font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:2px;text-decoration:none;transition:all 0.2s;">Saiba mais</a>
@@ -774,7 +699,12 @@ function ytPrev(){
           <li style="display:flex;gap:10px;font-size:13px;color:#ccc;"><span>▶️</span>Playlist ativa automaticamente</li>
           <li style="display:flex;gap:10px;font-size:13px;color:#ccc;"><span>🎁</span>1 mês grátis no plano anual</li>
         </ul>
-        <a href="https://wa.me/5551989321741?text=Quero+saber+mais+sobre+o+Plano+SC+Recomendado!" target="_blank" class="btn-primary" style="width:100%;justify-content:center;display:flex;margin-top:24px;text-decoration:none;">Saiba mais</a>
+        <div style="display:flex;gap:8px;margin-top:16px;flex-wrap:wrap;">
+          <span style="font-size:11px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);color:#aaa;padding:4px 10px;border-radius:20px;">💳 Cartão</span>
+          <span style="font-size:11px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);color:#aaa;padding:4px 10px;border-radius:20px;">🏦 Débito</span>
+          <span style="font-size:11px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);color:#aaa;padding:4px 10px;border-radius:20px;">⚡ PIX</span>
+        </div>
+        <a href="https://wa.me/5551989321741?text=Quero+saber+mais+sobre+o+Plano+SC+Recomendado!" target="_blank" class="btn-primary" style="width:100%;justify-content:center;display:flex;margin-top:16px;text-decoration:none;">Saiba mais</a>
       </div>
 
       <!-- Plano Super Power Som -->
@@ -789,8 +719,14 @@ function ytPrev(){
           <li style="display:flex;gap:10px;font-size:13px;color:#ccc;"><span>💿</span>CDs ilimitados por mês</li>
           <li style="display:flex;gap:10px;font-size:13px;color:#ccc;"><span>▶️</span>Playlist ativa automaticamente</li>
           <li style="display:flex;gap:10px;font-size:13px;color:#ccc;"><span>♾️</span>Sem limite de uploads</li>
+          <li style="display:flex;gap:10px;font-size:13px;color:#ff6400;font-weight:700;"><span>👕</span>Camiseta oficial Power Som grátis!</li>
         </ul>
-        <a href="https://wa.me/5551989321741?text=Quero+saber+mais+sobre+o+Plano+SC+Super+Power+Som!" target="_blank" style="display:flex;align-items:center;justify-content:center;width:100%;margin-top:24px;padding:13px;border-radius:10px;background:rgba(255,100,0,0.12);border:1px solid rgba(255,100,0,0.4);color:#ff6400;font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:2px;text-decoration:none;transition:all 0.2s;">Saiba mais</a>
+        <div style="display:flex;gap:8px;margin-top:16px;flex-wrap:wrap;">
+          <span style="font-size:11px;background:rgba(255,100,0,0.1);border:1px solid rgba(255,100,0,0.3);color:#ff6400;padding:4px 10px;border-radius:20px;">💳 Cartão</span>
+          <span style="font-size:11px;background:rgba(255,100,0,0.1);border:1px solid rgba(255,100,0,0.3);color:#ff6400;padding:4px 10px;border-radius:20px;">🏦 Débito</span>
+          <span style="font-size:11px;background:rgba(255,100,0,0.1);border:1px solid rgba(255,100,0,0.3);color:#ff6400;padding:4px 10px;border-radius:20px;">⚡ PIX</span>
+        </div>
+        <a href="https://wa.me/5551989321741?text=Quero+saber+mais+sobre+o+Plano+SC+Super+Power+Som!" target="_blank" style="display:flex;align-items:center;justify-content:center;width:100%;margin-top:16px;padding:13px;border-radius:10px;background:rgba(255,100,0,0.12);border:1px solid rgba(255,100,0,0.4);color:#ff6400;font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:2px;text-decoration:none;transition:all 0.2s;">Saiba mais</a>
       </div>
 
       <!-- Plano Mega Power Som -->
@@ -807,8 +743,14 @@ function ytPrev(){
           <li style="display:flex;gap:10px;font-size:13px;color:#ccc;"><span>▶️</span>Playlist ativa automaticamente</li>
           <li style="display:flex;gap:10px;font-size:13px;color:#ccc;"><span>♾️</span>Sem limite de uploads</li>
           <li style="display:flex;gap:10px;font-size:13px;color:#ccc;"><span>⭐</span>Acesso completo a todos os recursos</li>
+          <li style="display:flex;gap:10px;font-size:13px;color:var(--red);font-weight:700;"><span>👕</span>Camiseta oficial Power Som grátis!</li>
         </ul>
-        <a href="https://wa.me/5551989321741?text=Quero+saber+mais+sobre+o+Plano+SC+Mega+Power+Som!" target="_blank" style="display:flex;align-items:center;justify-content:center;width:100%;margin-top:24px;padding:13px;border-radius:10px;background:rgba(255,34,0,0.15);border:1px solid rgba(255,34,0,0.5);color:var(--red);font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:2px;text-decoration:none;transition:all 0.2s;">Saiba mais</a>
+        <div style="display:flex;gap:8px;margin-top:16px;flex-wrap:wrap;">
+          <span style="font-size:11px;background:rgba(255,34,0,0.1);border:1px solid rgba(255,34,0,0.3);color:var(--red);padding:4px 10px;border-radius:20px;">💳 Cartão</span>
+          <span style="font-size:11px;background:rgba(255,34,0,0.1);border:1px solid rgba(255,34,0,0.3);color:var(--red);padding:4px 10px;border-radius:20px;">🏦 Débito</span>
+          <span style="font-size:11px;background:rgba(255,34,0,0.1);border:1px solid rgba(255,34,0,0.3);color:var(--red);padding:4px 10px;border-radius:20px;">⚡ PIX</span>
+        </div>
+        <a href="https://wa.me/5551989321741?text=Quero+saber+mais+sobre+o+Plano+SC+Mega+Power+Som!" target="_blank" style="display:flex;align-items:center;justify-content:center;width:100%;margin-top:16px;padding:13px;border-radius:10px;background:rgba(255,34,0,0.15);border:1px solid rgba(255,34,0,0.5);color:var(--red);font-family:'Bebas Neue',sans-serif;font-size:15px;letter-spacing:2px;text-decoration:none;transition:all 0.2s;">Saiba mais</a>
       </div>
 
     </div>
