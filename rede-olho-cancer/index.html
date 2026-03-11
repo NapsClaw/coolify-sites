@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rede de Olho no Câncer — Um toque que pode mudar sua vida</title>
+  <meta name="description" content="A Rede de Olho no Câncer une mulheres em uma rede de apoio emocional e prevenção. Embaixadoras da Autoestima, Banco de Perucas, Banco de Mamografia e muito mais. Lagoa Santa, MG." />
+  <meta property="og:title" content="Rede de Olho no Câncer" />
+  <meta property="og:description" content="Um toque que pode mudar sua vida. Rede de apoio emocional e prevenção ao câncer." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --verde: #00A896;
+      --verde-dark: #007A6E;
+      --rosa: #E91E8C;
+      --rosa-light: #FFB3D9;
+      --rosa-pale: #FFF0F7;
+      --bg: #FAFAFA;
+      --dark: #1a1a2e;
+      --text: #2d2d2d;
+      --text-light: #666;
+      --white: #ffffff;
+      --radius: 16px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(10px);
+      padding: 14px 20px;
+      display: flex; align-items: center; justify-content: space-between;
+      box-shadow: 0 1px 20px rgba(0,0,0,0.08);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; }
+    .nav-logo-icon {
+      width: 40px; height: 40px; background: var(--rosa);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    }
+    .nav-logo-icon svg { width: 22px; height: 22px; fill: white; }
+    .nav-brand { font-family: 'Playfair Display', serif; font-size: 15px; color: var(--dark); line-height: 1.2; }
+    .nav-brand span { display: block; font-size: 11px; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 500; color: var(--verde); letter-spacing: 0.05em; }
+    .nav-cta {
+      background: var(--rosa); color: white;
+      padding: 10px 18px; border-radius: 50px;
+      font-weight: 700; font-size: 13px; text-decoration: none;
+      white-space: nowrap;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--dark) 0%, #2d1b4e 50%, #1a2e1a 100%);
+      position: relative; overflow: hidden;
+      display: flex; align-items: center;
+      padding: 100px 20px 60px;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(circle at 20% 50%, rgba(233,30,140,0.25) 0%, transparent 60%),
+        radial-gradient(circle at 80% 30%, rgba(0,168,150,0.2) 0%, transparent 50%);
+    }
+    .hero-content {
+      position: relative; z-index: 1;
+      max-width: 500px; margin: 0 auto;
+      text-align: center;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(233,30,140,0.2);
+      border: 1px solid rgba(233,30,140,0.4);
+      color: var(--rosa-light);
+      padding: 8px 16px; border-radius: 50px;
+      font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .hero-badge::before { content: '💗'; }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 42px; line-height: 1.1;
+      color: white;
+      margin-bottom: 8px;
+    }
+    .hero h1 em { color: var(--rosa-light); font-style: normal; }
+    .hero-tagline {
+      font-size: 17px; color: rgba(255,255,255,0.75);
+      margin-bottom: 32px; line-height: 1.6;
+      font-style: italic;
+    }
+    .hero-btns {
+      display: flex; flex-direction: column; gap: 12px;
+      max-width: 320px; margin: 0 auto 40px;
+    }
+    .btn-primary {
+      background: var(--rosa); color: white;
+      padding: 16px 32px; border-radius: 50px;
+      font-weight: 700; font-size: 16px; text-decoration: none;
+      display: block; text-align: center;
+      box-shadow: 0 8px 30px rgba(233,30,140,0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(233,30,140,0.5); }
+    .btn-secondary {
+      background: rgba(255,255,255,0.1);
+      border: 2px solid rgba(255,255,255,0.3);
+      color: white; padding: 14px 32px; border-radius: 50px;
+      font-weight: 600; font-size: 15px; text-decoration: none;
+      display: block; text-align: center;
+      transition: background 0.2s;
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.2); }
+    .hero-stats {
+      display: flex; justify-content: center; gap: 32px;
+      flex-wrap: wrap;
+    }
+    .hero-stat { text-align: center; }
+    .hero-stat strong { display: block; font-size: 28px; font-weight: 900; color: white; }
+    .hero-stat span { font-size: 12px; color: rgba(255,255,255,0.6); }
+
+    /* ── RIBBON ── */
+    .ribbon {
+      background: var(--rosa);
+      padding: 14px 20px;
+      text-align: center;
+      color: white; font-weight: 600; font-size: 14px;
+      letter-spacing: 0.03em;
+    }
+
+    /* ── SECTION BASE ── */
+    section { padding: 64px 20px; }
+    .container { max-width: 600px; margin: 0 auto; }
+    .section-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--rosa);
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px; line-height: 1.2; color: var(--dark);
+      margin-bottom: 16px;
+    }
+    .section-text {
+      font-size: 16px; line-height: 1.75; color: var(--text-light);
+    }
+
+    /* ── SOBRE ── */
+    .sobre { background: white; }
+    .sobre-card {
+      background: linear-gradient(135deg, var(--rosa-pale), white);
+      border-radius: var(--radius);
+      padding: 32px 24px;
+      border-left: 4px solid var(--rosa);
+      margin-top: 24px;
+    }
+    .sobre-card p { font-size: 16px; line-height: 1.8; color: var(--text); }
+    .sobre-card strong { color: var(--rosa); }
+
+    /* ── PROGRAMAS ── */
+    .programas { background: var(--bg); }
+    .programas-grid {
+      display: flex; flex-direction: column; gap: 16px;
+      margin-top: 32px;
+    }
+    .programa-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 24px;
+      display: flex; gap: 16px; align-items: flex-start;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .programa-card:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(0,0,0,0.1); }
+    .programa-icon {
+      width: 52px; height: 52px; flex-shrink: 0;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px;
+    }
+    .programa-icon.rosa { background: var(--rosa-pale); }
+    .programa-icon.verde { background: rgba(0,168,150,0.1); }
+    .programa-body h3 {
+      font-size: 17px; font-weight: 700; color: var(--dark);
+      margin-bottom: 6px;
+    }
+    .programa-body p { font-size: 14px; line-height: 1.6; color: var(--text-light); }
+    .programa-tag {
+      display: inline-block;
+      background: rgba(0,168,150,0.1); color: var(--verde-dark);
+      font-size: 11px; font-weight: 600; padding: 3px 10px;
+      border-radius: 50px; margin-top: 8px;
+    }
+
+    /* ── EMBAIXADORAS ── */
+    .embaixadoras { background: white; }
+    .embaixadoras .section-title { margin-bottom: 8px; }
+    .embaixadoras-sub {
+      font-size: 15px; color: var(--text-light); margin-bottom: 32px; line-height: 1.6;
+    }
+    .embaixadoras-grid {
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .embaixadora-card {
+      background: linear-gradient(135deg, var(--rosa-pale), white);
+      border-radius: var(--radius);
+      padding: 20px;
+      display: flex; gap: 16px; align-items: center;
+      border: 1px solid rgba(233,30,140,0.1);
+    }
+    .embaixadora-avatar {
+      width: 60px; height: 60px; flex-shrink: 0;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--rosa), var(--verde));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; color: white; font-weight: 700;
+    }
+    .embaixadora-info h4 { font-size: 16px; font-weight: 700; color: var(--dark); }
+    .embaixadora-info span { font-size: 13px; color: var(--text-light); }
+    .embaixadora-info .badge {
+      display: inline-block;
+      background: var(--rosa); color: white;
+      font-size: 11px; font-weight: 600; padding: 2px 10px;
+      border-radius: 50px; margin-top: 4px;
+    }
+
+    /* ── VOLUNTÁRIO ── */
+    .voluntario {
+      background: linear-gradient(135deg, var(--dark), #2d1b4e);
+      color: white;
+    }
+    .voluntario .section-label { color: var(--rosa-light); }
+    .voluntario .section-title { color: white; }
+    .voluntario-benefits {
+      display: flex; flex-direction: column; gap: 12px;
+      margin: 24px 0 32px;
+    }
+    .benefit-item {
+      display: flex; gap: 12px; align-items: center;
+      background: rgba(255,255,255,0.08);
+      border-radius: 12px; padding: 14px 16px;
+    }
+    .benefit-item span { font-size: 22px; }
+    .benefit-item p { font-size: 14px; color: rgba(255,255,255,0.85); line-height: 1.4; }
+    .benefit-item p strong { color: white; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label {
+      display: block; font-size: 13px; font-weight: 600;
+      color: rgba(255,255,255,0.8); margin-bottom: 6px;
+    }
+    .form-group input {
+      width: 100%; padding: 14px 16px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 12px;
+      color: white; font-size: 15px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .form-group input::placeholder { color: rgba(255,255,255,0.4); }
+    .form-group input:focus { border-color: var(--rosa); }
+    .btn-form {
+      width: 100%; padding: 16px;
+      background: var(--rosa); color: white;
+      border: none; border-radius: 50px;
+      font-size: 16px; font-weight: 700;
+      cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: opacity 0.2s;
+    }
+    .btn-form:hover { opacity: 0.9; }
+
+    /* ── APOIAR ── */
+    .apoiar { background: var(--bg); }
+    .apoiar-grid {
+      display: flex; flex-direction: column; gap: 16px;
+      margin-top: 32px;
+    }
+    .apoiar-card {
+      background: white; border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+      border-top: 4px solid var(--rosa);
+    }
+    .apoiar-card.verde-border { border-top-color: var(--verde); }
+    .apoiar-card .icon { font-size: 32px; margin-bottom: 12px; }
+    .apoiar-card h3 { font-size: 18px; font-weight: 700; color: var(--dark); margin-bottom: 8px; }
+    .apoiar-card p { font-size: 14px; color: var(--text-light); line-height: 1.6; margin-bottom: 16px; }
+    .apoiar-card .valor {
+      font-size: 28px; font-weight: 900;
+      color: var(--rosa); margin-bottom: 4px;
+    }
+    .apoiar-card .valor.verde { color: var(--verde); }
+    .apoiar-card small { font-size: 12px; color: var(--text-light); display: block; margin-bottom: 16px; }
+    .btn-apoiar {
+      display: block; width: 100%;
+      padding: 14px; border-radius: 50px;
+      font-weight: 700; font-size: 15px;
+      text-align: center; text-decoration: none;
+      background: var(--rosa); color: white;
+    }
+    .btn-apoiar.verde { background: var(--verde); }
+
+    /* ── CARTILHA ── */
+    .cartilha {
+      background: linear-gradient(135deg, rgba(0,168,150,0.1), rgba(233,30,140,0.05));
+      border-radius: var(--radius);
+      padding: 28px 24px; margin-top: 24px;
+      text-align: center;
+      border: 1px solid rgba(0,168,150,0.2);
+    }
+    .cartilha h3 {
+      font-size: 18px; font-weight: 700; color: var(--dark);
+      margin-bottom: 8px;
+    }
+    .cartilha p { font-size: 14px; color: var(--text-light); line-height: 1.6; }
+    .cartilha .local {
+      background: var(--verde); color: white;
+      display: inline-block;
+      padding: 8px 20px; border-radius: 50px;
+      font-size: 13px; font-weight: 600;
+      margin-top: 16px;
+    }
+
+    /* ── PARCEIROS ── */
+    .parceiros { background: white; }
+    .parceiro-card {
+      background: var(--bg);
+      border-radius: var(--radius);
+      padding: 28px 24px; margin-top: 24px;
+      display: flex; gap: 16px; align-items: flex-start;
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+    .parceiro-icon {
+      width: 56px; height: 56px; flex-shrink: 0;
+      background: rgba(0,168,150,0.1);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px;
+    }
+    .parceiro-info h3 { font-size: 18px; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
+    .parceiro-info p { font-size: 14px; color: var(--text-light); line-height: 1.6; }
+    .parceiro-percent {
+      display: inline-block;
+      background: var(--verde); color: white;
+      font-size: 13px; font-weight: 700;
+      padding: 4px 14px; border-radius: 50px; margin-top: 10px;
+    }
+
+    /* ── APP ── */
+    .app-section {
+      background: linear-gradient(135deg, var(--verde-dark), var(--verde));
+      color: white; text-align: center;
+    }
+    .app-section .section-label { color: rgba(255,255,255,0.7); }
+    .app-section .section-title { color: white; }
+    .app-section .section-text { color: rgba(255,255,255,0.8); margin-bottom: 28px; }
+    .app-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: white; color: var(--verde-dark);
+      padding: 14px 28px; border-radius: 50px;
+      font-weight: 700; font-size: 15px; text-decoration: none;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+    }
+    .app-icon { font-size: 22px; }
+
+    /* ── PIX ── */
+    .pix-section { background: var(--bg); text-align: center; }
+    .pix-box {
+      background: white; border-radius: var(--radius);
+      padding: 28px 24px; margin-top: 24px;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+    }
+    .pix-icon { font-size: 48px; margin-bottom: 12px; }
+    .pix-box h3 { font-size: 20px; font-weight: 700; color: var(--dark); margin-bottom: 8px; }
+    .pix-box p { font-size: 15px; color: var(--text-light); margin-bottom: 16px; }
+    .pix-key {
+      background: var(--rosa-pale);
+      border: 2px dashed var(--rosa);
+      border-radius: 12px; padding: 16px;
+      font-size: 16px; font-weight: 700; color: var(--dark);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── CONTATO ── */
+    .contato { background: var(--dark); color: white; text-align: center; }
+    .contato .section-label { color: var(--rosa-light); }
+    .contato .section-title { color: white; }
+    .contato-grid {
+      display: flex; flex-direction: column; gap: 16px;
+      margin: 28px 0;
+    }
+    .contato-item {
+      background: rgba(255,255,255,0.08);
+      border-radius: 12px; padding: 16px;
+      display: flex; gap: 12px; align-items: center;
+    }
+    .contato-item .ci-icon { font-size: 24px; }
+    .contato-item p { font-size: 14px; color: rgba(255,255,255,0.75); text-align: left; line-height: 1.5; }
+    .contato-item p strong { color: white; display: block; }
+    .btn-whatsapp {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      background: #25D366; color: white;
+      padding: 16px 28px; border-radius: 50px;
+      font-weight: 700; font-size: 16px; text-decoration: none;
+      box-shadow: 0 8px 30px rgba(37,211,102,0.4);
+      width: 100%;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #0d0d1a;
+      padding: 32px 20px;
+      text-align: center;
+      color: rgba(255,255,255,0.4);
+      font-size: 13px;
+    }
+    footer strong { color: rgba(255,255,255,0.7); }
+
+    /* ── FLOATING WA ── */
+    .float-wa {
+      position: fixed; bottom: 24px; right: 20px; z-index: 999;
+      background: #25D366; color: white;
+      width: 60px; height: 60px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.5);
+      text-decoration: none;
+      transition: transform 0.2s;
+    }
+    .float-wa:hover { transform: scale(1.1); }
+    .float-wa svg { width: 30px; height: 30px; fill: white; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up { animation: fadeUp 0.7s ease forwards; }
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="nav-logo-icon">
+      <svg viewBox="0 0 24 24"><path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402C1 3.591 4.068 1 7.5 1c1.977 0 3.854.918 5 2.284C13.646 1.918 15.523 1 17.5 1 20.932 1 24 3.591 24 7.191c0 4.105-5.37 8.863-12 14.402z"/></svg>
+    </div>
+    <div class="nav-brand">
+      Rede de Olho no Câncer
+      <span>Lagoa Santa, MG</span>
+    </div>
+  </div>
+  <a href="#voluntario" class="nav-cta">Seja Embaixadora</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge fade-up">Prevenção que salva vidas</div>
+    <h1 class="fade-up delay-1">
+      <em>Um toque</em> que pode mudar sua vida
+    </h1>
+    <p class="hero-tagline fade-up delay-2">
+      Rede de apoio emocional e prevenção ao câncer.<br/>
+      Juntas somos mais fortes. 💗
+    </p>
+    <div class="hero-btns fade-up delay-3">
+      <a href="#voluntario" class="btn-primary">Seja Embaixadora(o)</a>
+      <a href="#apoiar" class="btn-secondary">Como Apoiar a Rede</a>
+    </div>
+    <div class="hero-stats fade-up">
+      <div class="hero-stat">
+        <strong>🎀</strong>
+        <span>Câncer de Mama</span>
+      </div>
+      <div class="hero-stat">
+        <strong>🇧🇷</strong>
+        <span>Todo o Brasil</span>
+      </div>
+      <div class="hero-stat">
+        <strong>💝</strong>
+        <span>Gratuito</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RIBBON -->
+<div class="ribbon">
+  💗 Outubro Rosa — Prevenção Salva Vidas &nbsp;|&nbsp; Detecção precoce aumenta as chances de cura em até 95%
+</div>
+
+<!-- SOBRE -->
+<section class="sobre" id="sobre">
+  <div class="container">
+    <p class="section-label">Quem somos</p>
+    <h2 class="section-title">Uma rede que abraça, acolhe e transforma</h2>
+    <p class="section-text">
+      A Rede de Olho no Câncer nasceu em Lagoa Santa, MG, com uma missão simples e poderosa: unir pessoas em torno da prevenção e do apoio emocional no enfrentamento do câncer.
+    </p>
+    <div class="sobre-card">
+      <p>
+        Acreditamos que <strong>informação é prevenção</strong> e que ninguém precisa enfrentar essa jornada sozinho. Através de nossas embaixadoras, programas de reabilitação e distribuição gratuita de recursos, chegamos onde as pessoas mais precisam.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAMAS -->
+<section class="programas" id="programas">
+  <div class="container">
+    <p class="section-label">Nossos programas</p>
+    <h2 class="section-title">Ações que fazem a diferença</h2>
+    <p class="section-text">Cada programa foi criado para apoiar mulheres e famílias em diferentes momentos da jornada contra o câncer.</p>
+    <div class="programas-grid">
+
+      <div class="programa-card">
+        <div class="programa-icon rosa">💪</div>
+        <div class="programa-body">
+          <h3>Embaixadoras da Autoestima</h3>
+          <p>Voluntárias e voluntários que espalham a mensagem de prevenção e apoio emocional pelo Brasil. Cadastre-se gratuitamente e faça parte!</p>
+          <span class="programa-tag">✓ Gratuito · Todo o Brasil</span>
+        </div>
+      </div>
+
+      <div class="programa-card">
+        <div class="programa-icon rosa">🌸</div>
+        <div class="programa-body">
+          <h3>Espaço Rosa</h3>
+          <p>Centro de reabilitação dedicado às mulheres em tratamento do câncer. Um espaço de acolhimento, cuidado e reconstrução da autoestima.</p>
+          <span class="programa-tag">✓ Lagoa Santa, MG</span>
+        </div>
+      </div>
+
+      <div class="programa-card">
+        <div class="programa-icon verde">📋</div>
+        <div class="programa-body">
+          <h3>Campanha "De Olho na Mama"</h3>
+          <p>Livretos educativos de prevenção ao câncer de mama. Distribuição gratuita para quem quiser buscar na sede provisória em Lagoa Santa.</p>
+          <span class="programa-tag">✓ Distribuição Gratuita</span>
+        </div>
+      </div>
+
+      <div class="programa-card">
+        <div class="programa-icon rosa">💇</div>
+        <div class="programa-body">
+          <h3>Banco de Perucas Orgânicas</h3>
+          <p>Perucas orgânicas de qualidade distribuídas gratuitamente para mulheres em tratamento quimioterápico em todo o Brasil.</p>
+          <span class="programa-tag">✓ Gratuito · Todo o Brasil</span>
+        </div>
+      </div>
+
+      <div class="programa-card">
+        <div class="programa-icon verde">🩺</div>
+        <div class="programa-body">
+          <h3>Banco de Mamografia</h3>
+          <p>Exames de mamografia gratuitos para mulheres de Lagoa Santa, MG. Porque toda mulher tem direito à saúde preventiva.</p>
+          <span class="programa-tag">✓ Gratuito · Lagoa Santa, MG</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Cartilha -->
+    <div class="cartilha">
+      <h3>📚 Cartilha Educativa Gratuita</h3>
+      <p>Retire gratuitamente nossa cartilha de prevenção ao câncer de mama.</p>
+      <div class="local">📍 Sede provisória — Clínica Fisiot, Lagoa Santa, MG</div>
+    </div>
+  </div>
+</section>
+
+<!-- EMBAIXADORAS -->
+<section class="embaixadoras" id="embaixadoras">
+  <div class="container">
+    <p class="section-label">Nossa rede</p>
+    <h2 class="section-title">Embaixadoras da Autoestima</h2>
+    <p class="embaixadoras-sub">
+      Mulheres incríveis espalhadas pelo Brasil que carregam a mensagem de prevenção e esperança com amor e determinação. 💗
+    </p>
+    <div class="embaixadoras-grid">
+      <div class="embaixadora-card">
+        <div class="embaixadora-avatar">L</div>
+        <div class="embaixadora-info">
+          <h4>Lorena Siqueira</h4>
+          <span>Modelo Fotográfico · Belo Horizonte, MG</span>
+          <div class="badge">Embaixadora da Autoestima</div>
+        </div>
+      </div>
+      <div class="embaixadora-card">
+        <div class="embaixadora-avatar">T</div>
+        <div class="embaixadora-info">
+          <h4>Tamires</h4>
+          <span>Rio de Janeiro, RJ</span>
+          <div class="badge">Embaixadora da Autoestima</div>
+        </div>
+      </div>
+      <div class="embaixadora-card" style="background: linear-gradient(135deg, rgba(0,168,150,0.1), white); border-color: rgba(0,168,150,0.2);">
+        <div class="embaixadora-avatar" style="background: linear-gradient(135deg, var(--verde), var(--verde-dark));">?</div>
+        <div class="embaixadora-info">
+          <h4>Seja a próxima!</h4>
+          <span>Cadastre-se gratuitamente e faça parte da rede</span>
+          <div class="badge" style="background: var(--verde);">Quero ser Embaixadora(o)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VOLUNTÁRIO -->
+<section class="voluntario" id="voluntario">
+  <div class="container">
+    <p class="section-label">Faça parte</p>
+    <h2 class="section-title">Seja Embaixadora(o) da Autoestima</h2>
+    <p class="section-text" style="color: rgba(255,255,255,0.75);">
+      Cadastre-se gratuitamente e receba seu certificado e post exclusivo!
+    </p>
+    <div class="voluntario-benefits">
+      <div class="benefit-item">
+        <span>🎖️</span>
+        <p><strong>Certificado Oficial</strong> de Embaixador(a) da Autoestima</p>
+      </div>
+      <div class="benefit-item">
+        <span>📸</span>
+        <p><strong>Post Exclusivo</strong> personalizado com seu nome e foto</p>
+      </div>
+      <div class="benefit-item">
+        <span>💗</span>
+        <p><strong>Gratuito</strong> — nenhum custo para se cadastrar</p>
+      </div>
+    </div>
+    <form onsubmit="enviarCadastro(event)">
+      <div class="form-group">
+        <label>Seu nome completo</label>
+        <input type="text" id="nome" placeholder="Digite seu nome" required />
+      </div>
+      <div class="form-group">
+        <label>WhatsApp (com DDD)</label>
+        <input type="tel" id="whatsapp" placeholder="(31) 99999-9999" required />
+      </div>
+      <div class="form-group">
+        <label>Cidade e Estado</label>
+        <input type="text" id="cidade" placeholder="Ex: Belo Horizonte, MG" required />
+      </div>
+      <button type="submit" class="btn-form">💗 Quero ser Embaixadora(o)!</button>
+    </form>
+  </div>
+</section>
+
+<!-- APOIAR -->
+<section class="apoiar" id="apoiar">
+  <div class="container">
+    <p class="section-label">Como apoiar</p>
+    <h2 class="section-title">Cada gesto salva uma vida</h2>
+    <p class="section-text">Escolha a forma de apoiar que faz mais sentido para você. Toda ajuda é bem-vinda e vai direto para nossas ações!</p>
+    <div class="apoiar-grid">
+
+      <div class="apoiar-card">
+        <div class="icon">🧴</div>
+        <h3>Bellamama Cosméticos & Vc</h3>
+        <p>Doe R$25 e ganhe um produto da linha de cosméticos naturais <strong>gratuitamente</strong>! 70% do valor vai para a Rede.</p>
+        <div class="valor">R$25</div>
+        <small>Retire na sede em Lagoa Santa ou consulte taxa de entrega</small>
+        <a href="https://wa.me/5531992594953?text=Olá! Quero fazer uma doação de R$25 e receber meu produto Bellamama!" class="btn-apoiar" target="_blank">Doe e ganhe um produto 💝</a>
+      </div>
+
+      <div class="apoiar-card verde-border">
+        <div class="icon">💚</div>
+        <h3>Doação via PIX</h3>
+        <p>Faça uma doação direta via PIX. 100% do valor é utilizado nos programas da Rede.</p>
+        <div class="pix-key">36.407.338/0001-00</div>
+        <p style="font-size:12px;margin-top:8px;color:var(--text-light);">CNPJ — Rede de Olho no Câncer</p>
+        <a href="https://wa.me/5531992594953?text=Olá! Realizei uma doação via PIX para a Rede de Olho no Câncer." class="btn-apoiar verde" target="_blank" style="margin-top:16px;display:block;">Confirmar doação no WhatsApp</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PARCEIROS -->
+<section class="parceiros" id="parceiros">
+  <div class="container">
+    <p class="section-label">Parceiros</p>
+    <h2 class="section-title">Juntos fazemos mais</h2>
+    <div class="parceiro-card">
+      <div class="parceiro-icon">🏥</div>
+      <div class="parceiro-info">
+        <h3>Clínica Fisiot</h3>
+        <p>Nossa parceira oficial em Lagoa Santa, MG. Sede provisória da Rede e parceira comprometida com a saúde da comunidade.</p>
+        <p style="margin-top:8px; font-size:13px;">10% sobre cada paciente novo que chegar através do site ou dos programas da Rede são revertidos para nossas ações.</p>
+        <span class="parceiro-percent">10% revertido para a Rede</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- APP -->
+<section class="app-section" id="app">
+  <div class="container">
+    <p class="section-label">Aplicativo</p>
+    <h2 class="section-title">Baixe nosso app</h2>
+    <p class="section-text">Acesse a rede de apoio, encontre embaixadoras perto de você e fique por dentro de todas as campanhas e novidades.</p>
+    <a href="https://wa.me/5531992594953?text=Olá! Quero o link do app da Rede de Olho no Câncer!" class="app-btn" target="_blank">
+      <span class="app-icon">📱</span>
+      Baixar na Play Store
+    </a>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section class="contato" id="contato">
+  <div class="container">
+    <p class="section-label">Fale conosco</p>
+    <h2 class="section-title">Estamos aqui para você</h2>
+    <div class="contato-grid">
+      <div class="contato-item">
+        <span class="ci-icon">📍</span>
+        <p><strong>Sede Provisória</strong>Clínica Fisiot · Lagoa Santa, MG</p>
+      </div>
+      <div class="contato-item">
+        <span class="ci-icon">📧</span>
+        <p><strong>E-mail</strong>rededeolhonocancer@gmail.com</p>
+      </div>
+      <div class="contato-item">
+        <span class="ci-icon">📱</span>
+        <p><strong>WhatsApp</strong>(31) 99259-4953</p>
+      </div>
+    </div>
+    <a href="https://wa.me/5531992594953?text=Olá! Vim pelo site da Rede de Olho no Câncer e gostaria de mais informações." class="btn-whatsapp" target="_blank">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+      Falar no WhatsApp
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p><strong>Rede de Olho no Câncer</strong></p>
+  <p style="margin-top:6px;">CNPJ: 36.407.338/0001-00 · Lagoa Santa, MG</p>
+  <p style="margin-top:6px;">💗 Um toque que pode mudar sua vida</p>
+</footer>
+
+<!-- FLOATING WhatsApp -->
+<a href="https://wa.me/5531992594953?text=Olá! Vim pelo site da Rede de Olho no Câncer!" class="float-wa" target="_blank" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+</a>
+
+<script>
+function enviarCadastro(e) {
+  e.preventDefault();
+  const nome = document.getElementById('nome').value;
+  const whatsapp = document.getElementById('whatsapp').value;
+  const cidade = document.getElementById('cidade').value;
+  const msg = encodeURIComponent(`Olá! Quero me cadastrar como Embaixador(a) da Autoestima!\n\nNome: ${nome}\nWhatsApp: ${whatsapp}\nCidade: ${cidade}`);
+  window.open(`https://wa.me/5531992594953?text=${msg}`, '_blank');
+}
+
+// Scroll animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(el => {
+    if (el.isIntersecting) {
+      el.target.style.opacity = '1';
+      el.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.programa-card, .embaixadora-card, .apoiar-card, .parceiro-card, .contato-item').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(20px)';
+  el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>
