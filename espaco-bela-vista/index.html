@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Espaço Bela Vista – Salão de Beleza em Belo Horizonte</title>
+  <meta name="description" content="Espaço Bela Vista: salão de beleza completo em BH. Corte, coloração, tratamentos capilares e manicure. Agende seu horário!">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #fdf8f5;
+      --bg2: #fff5f0;
+      --text: #1c1010;
+      --text2: #6b4f4f;
+      --rose: #c2547a;
+      --rose2: #e07a9e;
+      --blush: #f5d6e0;
+      --gold: #c9922a;
+      --nude: #e8cfc0;
+      --border: #eed8d0;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(253, 248, 245, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--rose);
+      text-decoration: none;
+      letter-spacing: 0.5px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--text2);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .nav-cta {
+      background: var(--rose);
+      color: #fff !important;
+      padding: 8px 18px;
+      border-radius: 24px;
+      font-weight: 600 !important;
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100svh;
+      padding-top: 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(160deg, #1a0510 0%, #3d1025 50%, #6b2040 100%);
+      padding-left: 24px;
+      padding-right: 24px;
+      padding-bottom: 60px;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('https://images.unsplash.com/photo-1560066984-138dadb4c035?w=1200&q=80') center/cover no-repeat;
+      opacity: 0.22;
+    }
+    .hero-badge {
+      position: relative;
+      background: var(--rose);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      padding: 6px 20px;
+      border-radius: 24px;
+      margin-bottom: 24px;
+      display: inline-block;
+    }
+    .hero h1 {
+      position: relative;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(44px, 11vw, 82px);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.05;
+      letter-spacing: -0.5px;
+      margin-bottom: 20px;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--rose2);
+    }
+    .hero-sub {
+      position: relative;
+      font-size: 17px;
+      color: rgba(255,255,255,0.72);
+      max-width: 400px;
+      margin: 0 auto 36px;
+      font-weight: 400;
+    }
+    .hero-btns {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+      max-width: 320px;
+      margin: 0 auto;
+    }
+    .btn-primary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: #25D366;
+      color: #fff;
+      font-weight: 700;
+      font-size: 16px;
+      padding: 16px 24px;
+      border-radius: 12px;
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+    }
+    .btn-secondary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.1);
+      border: 1.5px solid rgba(255,255,255,0.25);
+      color: #fff;
+      font-weight: 600;
+      font-size: 15px;
+      padding: 14px 24px;
+      border-radius: 12px;
+      text-decoration: none;
+      backdrop-filter: blur(6px);
+    }
+    .hero-scroll {
+      position: absolute;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .scroll-dot {
+      width: 20px; height: 30px;
+      border: 1.5px solid rgba(255,255,255,0.3);
+      border-radius: 10px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding-top: 4px;
+    }
+    .scroll-dot::after {
+      content: '';
+      width: 4px; height: 8px;
+      background: rgba(255,255,255,0.5);
+      border-radius: 2px;
+      animation: scrolldown 1.6s ease-in-out infinite;
+    }
+    @keyframes scrolldown {
+      0%, 100% { transform: translateY(0); opacity: 1; }
+      60% { transform: translateY(8px); opacity: 0; }
+    }
+
+    /* STRIP */
+    .strip {
+      background: var(--rose);
+      padding: 20px 24px;
+    }
+    .strip-inner {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .strip-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #fff;
+    }
+    .strip-icon { font-size: 26px; flex-shrink: 0; }
+    .strip-item strong { display: block; font-size: 14px; font-weight: 700; }
+    .strip-item span { font-size: 12px; opacity: 0.85; }
+    @media (min-width: 600px) {
+      .strip-inner { flex-direction: row; justify-content: center; flex-wrap: wrap; }
+      .strip-item { width: calc(50% - 14px); }
+    }
+    @media (min-width: 900px) {
+      .strip-item { width: auto; flex: 1; }
+    }
+
+    /* SOBRE */
+    .sobre {
+      padding: 80px 24px;
+      max-width: 680px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .ornament {
+      display: flex; align-items: center; gap: 12px; justify-content: center; margin-bottom: 18px;
+    }
+    .ornament-line { height: 1px; width: 36px; background: var(--rose); }
+    .ornament-dot { width: 7px; height: 7px; background: var(--rose); border-radius: 50%; }
+    .section-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--rose); margin-bottom: 14px;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(28px, 7vw, 44px);
+      font-weight: 700; line-height: 1.15;
+      color: var(--text); margin-bottom: 18px;
+    }
+    .section-text {
+      color: var(--text2); font-size: 16px;
+      line-height: 1.75; margin-bottom: 28px;
+    }
+    .sobre-img {
+      width: 100%; height: 260px;
+      object-fit: cover; border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+    }
+
+    /* SERVIÇOS */
+    .servicos {
+      background: var(--bg2);
+      padding: 80px 24px;
+    }
+    .servicos-inner { max-width: 800px; margin: 0 auto; }
+    .servicos-header { text-align: center; margin-bottom: 44px; }
+    .servicos-grid {
+      display: flex; flex-direction: column; gap: 18px;
+    }
+    .servico-card {
+      background: #fff;
+      border-radius: 18px;
+      padding: 24px 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 18px;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 16px rgba(0,0,0,0.05);
+    }
+    .servico-icon {
+      width: 52px; height: 52px;
+      background: var(--blush);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+    .servico-nome {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px; font-weight: 700;
+      color: var(--text); margin-bottom: 6px;
+    }
+    .servico-desc {
+      font-size: 14px; color: var(--text2); line-height: 1.55;
+    }
+
+    /* GALERIA */
+    .galeria { padding: 80px 24px; }
+    .galeria-inner { max-width: 800px; margin: 0 auto; }
+    .galeria-header { text-align: center; margin-bottom: 32px; }
+    .galeria-scroll {
+      display: flex; gap: 14px;
+      overflow-x: auto; padding-bottom: 12px;
+      scrollbar-width: none;
+    }
+    .galeria-scroll::-webkit-scrollbar { display: none; }
+    .galeria-item {
+      flex-shrink: 0; width: 220px; height: 200px;
+      border-radius: 16px; overflow: hidden;
+    }
+    .galeria-item img {
+      width: 100%; height: 100%;
+      object-fit: cover; transition: transform 0.3s;
+    }
+    .galeria-item:hover img { transform: scale(1.06); }
+
+    /* DEPOIMENTOS */
+    .depoimentos {
+      background: var(--bg2);
+      padding: 80px 24px;
+    }
+    .depoimentos-inner { max-width: 700px; margin: 0 auto; }
+    .depoimentos-header { text-align: center; margin-bottom: 40px; }
+    .dep-list { display: flex; flex-direction: column; gap: 18px; }
+    .dep-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 22px 20px;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    }
+    .dep-stars { color: #f59e0b; font-size: 15px; margin-bottom: 10px; }
+    .dep-text { font-size: 14px; color: var(--text2); line-height: 1.65; font-style: italic; margin-bottom: 14px; }
+    .dep-autor { display: flex; align-items: center; gap: 10px; }
+    .dep-avatar {
+      width: 36px; height: 36px;
+      background: var(--blush);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px;
+    }
+    .dep-nome { font-size: 13px; font-weight: 700; color: var(--text); }
+
+    /* CONTATO */
+    .contato {
+      background: linear-gradient(150deg, #1a0510 0%, #3d1025 60%, #6b2040 100%);
+      padding: 80px 24px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .contato::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url('https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=1200&q=60') center/cover no-repeat;
+      opacity: 0.07;
+    }
+    .contato-inner { position: relative; max-width: 560px; margin: 0 auto; }
+    .contato .section-label { color: var(--rose2); }
+    .contato .section-title { color: #fff; }
+    .contato-info { display: flex; flex-direction: column; gap: 16px; margin: 36px 0; }
+    .info-card {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 14px;
+      padding: 18px 20px;
+      display: flex; align-items: center; gap: 14px; text-align: left;
+    }
+    .info-icon { font-size: 26px; flex-shrink: 0; }
+    .info-label {
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      color: rgba(255,255,255,0.45); margin-bottom: 2px;
+    }
+    .info-value { font-size: 15px; color: #fff; font-weight: 500; }
+    .btn-wa-big {
+      display: flex; align-items: center; justify-content: center;
+      gap: 12px; background: #25D366; color: #fff;
+      font-weight: 700; font-size: 17px;
+      padding: 18px 32px; border-radius: 14px;
+      text-decoration: none; width: 100%; max-width: 340px;
+      margin: 0 auto;
+      box-shadow: 0 6px 30px rgba(37,211,102,0.4);
+    }
+
+    /* MAPA */
+    .mapa-section iframe {
+      width: 100%; height: 250px; border: none; display: block;
+    }
+
+    /* FOOTER */
+    footer {
+      background: #1a0510;
+      color: rgba(255,255,255,0.55);
+      text-align: center;
+      padding: 28px 24px;
+      font-size: 13px;
+    }
+    footer strong { color: rgba(255,255,255,0.9); }
+
+    /* WA FLOAT */
+    .wa-float {
+      position: fixed; bottom: 24px; right: 20px; z-index: 999;
+      background: #25D366; border-radius: 50%;
+      width: 58px; height: 58px;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.5);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .wa-float:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(37,211,102,0.6); }
+    .wa-float svg { width: 30px; height: 30px; fill: #fff; }
+
+    /* ANIMATIONS */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero-badge { animation: fadeInUp 0.6s ease both; }
+    .hero h1 { animation: fadeInUp 0.6s 0.15s ease both; }
+    .hero-sub { animation: fadeInUp 0.6s 0.25s ease both; }
+    .hero-btns { animation: fadeInUp 0.6s 0.35s ease both; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">Espaço Bela Vista</a>
+    <ul class="nav-links">
+      <li><a href="#servicos">Serviços</a></li>
+      <li><a href="#sobre">Sobre</a></li>
+      <li><a href="#contato">Contato</a></li>
+      <li><a href="https://wa.me/5531988776655?text=Olá!%20Gostaria%20de%20agendar%20um%20horário." target="_blank" class="nav-cta">Agendar</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">💅 Salão de Beleza · Belo Horizonte</div>
+    <h1>Seu cabelo,<br><em>sua melhor</em><br>versão</h1>
+    <p class="hero-sub">Corte, coloração, tratamentos e manicure com técnica e cuidado em BH. Agende seu horário agora!</p>
+    <div class="hero-btns">
+      <a href="https://wa.me/5531988776655?text=Olá!%20Gostaria%20de%20agendar%20um%20horário." target="_blank" class="btn-primary">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Agendar pelo WhatsApp
+      </a>
+      <a href="#servicos" class="btn-secondary">Ver nossos serviços</a>
+    </div>
+    <div class="hero-scroll"><div class="scroll-dot"></div></div>
+  </section>
+
+  <!-- STRIP -->
+  <div class="strip">
+    <div class="strip-inner">
+      <div class="strip-item">
+        <span class="strip-icon">✂️</span>
+        <div><strong>Corte & Coloração</strong><span>Técnicas modernas</span></div>
+      </div>
+      <div class="strip-item">
+        <span class="strip-icon">💆‍♀️</span>
+        <div><strong>Tratamentos Capilares</strong><span>Nutrição e brilho</span></div>
+      </div>
+      <div class="strip-item">
+        <span class="strip-icon">💅</span>
+        <div><strong>Manicure</strong><span>Mãos impecáveis</span></div>
+      </div>
+      <div class="strip-item">
+        <span class="strip-icon">📍</span>
+        <div><strong>Belo Horizonte – MG</strong><span>Agende seu horário</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOBRE -->
+  <section class="sobre" id="sobre">
+    <div class="ornament">
+      <div class="ornament-line"></div>
+      <div class="ornament-dot"></div>
+      <div class="ornament-line"></div>
+    </div>
+    <p class="section-label">Quem Somos</p>
+    <h2 class="section-title">Um espaço pensado<br>para você se sentir<br>linda</h2>
+    <p class="section-text">
+      No Espaço Bela Vista, cada detalhe foi pensado para proporcionar uma experiência completa de beleza e bem-estar. Nossos profissionais são especializados em cortes modernos, colorações personalizadas e tratamentos que devolvem a saúde e o brilho do seu cabelo.
+    </p>
+    <p class="section-text">
+      Acreditamos que beleza é autocuidado. Venha nos visitar em Belo Horizonte e descubra por que nossas clientes voltam sempre! 💕
+    </p>
+    <img
+      src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=800&q=80"
+      alt="Interior do Espaço Bela Vista – salão de beleza em BH"
+      class="sobre-img"
+      loading="lazy"
+    >
+  </section>
+
+  <!-- SERVIÇOS -->
+  <section class="servicos" id="servicos">
+    <div class="servicos-inner">
+      <div class="servicos-header">
+        <div class="ornament">
+          <div class="ornament-line"></div>
+          <div class="ornament-dot"></div>
+          <div class="ornament-line"></div>
+        </div>
+        <p class="section-label">O Que Oferecemos</p>
+        <h2 class="section-title">Nossos Serviços</h2>
+        <p class="section-text" style="margin-bottom:0">Tudo que você precisa para se sentir incrível, em um só lugar.</p>
+      </div>
+      <div class="servicos-grid">
+        <div class="servico-card">
+          <div class="servico-icon">✂️</div>
+          <div>
+            <p class="servico-nome">Corte de Cabelo</p>
+            <p class="servico-desc">Cortes femininos e masculinos com técnica e precisão. Do clássico ao contemporâneo, do jeito que você imaginou.</p>
+          </div>
+        </div>
+        <div class="servico-card">
+          <div class="servico-icon">🎨</div>
+          <div>
+            <p class="servico-nome">Coloração</p>
+            <p class="servico-desc">Coloração profissional, mechas, balayage e ombré. Cores vibrantes e duradouras com produtos de alta qualidade.</p>
+          </div>
+        </div>
+        <div class="servico-card">
+          <div class="servico-icon">💆‍♀️</div>
+          <div>
+            <p class="servico-nome">Tratamentos Capilares</p>
+            <p class="servico-desc">Hidratação, reconstrução, cauterização e cronograma capilar. Devolvemos a saúde, brilho e maciez ao seu cabelo.</p>
+          </div>
+        </div>
+        <div class="servico-card">
+          <div class="servico-icon">💅</div>
+          <div>
+            <p class="servico-nome">Manicure</p>
+            <p class="servico-desc">Unhas sempre impecáveis! Esmaltação simples, gel, fibra, nail art e muito mais para deixar suas mãos lindas.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALERIA -->
+  <section class="galeria">
+    <div class="galeria-inner">
+      <div class="galeria-header">
+        <p class="section-label">Galeria</p>
+        <h2 class="section-title">Nosso espaço</h2>
+      </div>
+      <div class="galeria-scroll">
+        <div class="galeria-item">
+          <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=500&q=80" alt="Salão de beleza" loading="lazy">
+        </div>
+        <div class="galeria-item">
+          <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=500&q=80" alt="Corte de cabelo" loading="lazy">
+        </div>
+        <div class="galeria-item">
+          <img src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=500&q=80" alt="Coloração" loading="lazy">
+        </div>
+        <div class="galeria-item">
+          <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=500&q=80" alt="Manicure" loading="lazy">
+        </div>
+        <div class="galeria-item">
+          <img src="https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?w=500&q=80" alt="Tratamento capilar" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEPOIMENTOS -->
+  <section class="depoimentos">
+    <div class="depoimentos-inner">
+      <div class="depoimentos-header">
+        <div class="ornament">
+          <div class="ornament-line"></div>
+          <div class="ornament-dot"></div>
+          <div class="ornament-line"></div>
+        </div>
+        <p class="section-label">Clientes</p>
+        <h2 class="section-title">O que dizem<br>sobre nós</h2>
+      </div>
+      <div class="dep-list">
+        <div class="dep-card">
+          <div class="dep-stars">★★★★★</div>
+          <p class="dep-text">"Amei o resultado do meu cabelo! A profissional entendeu exatamente o que eu queria. Já saí marcando o próximo horário!"</p>
+          <div class="dep-autor">
+            <div class="dep-avatar">👩</div>
+            <span class="dep-nome">Mariana S. · BH</span>
+          </div>
+        </div>
+        <div class="dep-card">
+          <div class="dep-stars">★★★★★</div>
+          <p class="dep-text">"Lugar super aconchegante, atendimento impecável e meu cabelo ficou maravilhoso com a hidratação. Super recomendo!"</p>
+          <div class="dep-autor">
+            <div class="dep-avatar">👩</div>
+            <span class="dep-nome">Carla R. · BH</span>
+          </div>
+        </div>
+        <div class="dep-card">
+          <div class="dep-stars">★★★★★</div>
+          <p class="dep-text">"Fiz a manicure e saí com as unhas perfeitas! Ambiente lindo, profissionais super atenciosas. Virei cliente fiel!"</p>
+          <div class="dep-autor">
+            <div class="dep-avatar">🌸</div>
+            <span class="dep-nome">Fernanda L. · BH</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTATO -->
+  <section class="contato" id="contato">
+    <div class="contato-inner">
+      <div class="ornament">
+        <div class="ornament-line" style="background:rgba(255,255,255,0.25)"></div>
+        <div class="ornament-dot" style="background:var(--rose2)"></div>
+        <div class="ornament-line" style="background:rgba(255,255,255,0.25)"></div>
+      </div>
+      <p class="section-label">Fale Conosco</p>
+      <h2 class="section-title">Agende seu<br>horário agora</h2>
+      <div class="contato-info">
+        <div class="info-card">
+          <span class="info-icon">📍</span>
+          <div>
+            <p class="info-label">Endereço</p>
+            <p class="info-value">Belo Horizonte – MG</p>
+          </div>
+        </div>
+        <div class="info-card">
+          <span class="info-icon">🕐</span>
+          <div>
+            <p class="info-label">Horário</p>
+            <p class="info-value">Seg–Sex: 9h às 19h | Sáb: 9h às 17h</p>
+          </div>
+        </div>
+        <div class="info-card">
+          <span class="info-icon">📱</span>
+          <div>
+            <p class="info-label">WhatsApp</p>
+            <p class="info-value">(31) 98877-6655</p>
+          </div>
+        </div>
+      </div>
+      <a href="https://wa.me/5531988776655?text=Olá!%20Gostaria%20de%20agendar%20um%20horário." target="_blank" class="btn-wa-big">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Agendar pelo WhatsApp
+      </a>
+    </div>
+  </section>
+
+  <!-- MAPA -->
+  <div class="mapa-section">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d235697.5!2d-43.9345!3d-19.9167!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xa699...!2sBelo+Horizonte!5e0!3m2!1spt-BR!2sbr!4v1000000000000!5m2!1spt-BR!2sbr"
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+      title="Espaço Bela Vista – Belo Horizonte, MG">
+    </iframe>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p><strong>Espaço Bela Vista</strong> · Salão de Beleza · Belo Horizonte – MG</p>
+    <p style="margin-top:8px">© 2025 Espaço Bela Vista. Todos os direitos reservados.</p>
+  </footer>
+
+  <!-- WA FLOAT -->
+  <a href="https://wa.me/5531988776655?text=Olá!%20Gostaria%20de%20agendar%20um%20horário." target="_blank" class="wa-float" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+</body>
+</html>
