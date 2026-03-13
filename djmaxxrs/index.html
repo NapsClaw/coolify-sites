@@ -1045,6 +1045,10 @@
   <!-- Player de áudio -->
   <audio id="intro-audio" preload="none">
     <source src="intro-alerta-global.mp3" type="audio/mpeg">
+  <!-- YouTube audio via iframe -->
+  <iframe id="yt-audio" width="1" height="1" style="position:absolute;opacity:0;pointer-events:none;"
+    src="https://www.youtube.com/embed/oiIC6WA6S3s?autoplay=0&controls=0&start=0&enablejsapi=1"
+    allow="autoplay" frameborder="0"></iframe>
   </audio>
 </div>
 
@@ -1261,7 +1265,7 @@ setTimeout(function() {
 
 // Barra de progresso automática (20 segundos)
 var audio = document.getElementById('intro-audio');
-var duration = 5000;
+var duration = 30000;
 var start = Date.now();
 var barInterval = setInterval(function() {
   var elapsed = Date.now() - start;
@@ -1272,7 +1276,7 @@ var barInterval = setInterval(function() {
 
 // Contagem regressiva
 var countEl = document.getElementById('intro-countdown');
-var countTotal = 5;
+var countTotal = 30;
 var countVal = countTotal;
 var countInterval = setInterval(function() {
   countVal--;
@@ -1290,10 +1294,15 @@ var countInterval = setInterval(function() {
 function iniciarIntroComAudio() {
   var btn = document.getElementById('intro-play-btn');
   if (btn) btn.style.display = 'none';
-  if (audio) {
-    audio.volume = 0.8;
-    audio.play().catch(function(e) { console.log('Audio:', e); });
+  // Toca YouTube Shorts via iframe autoplay
+  var ytFrame = document.getElementById('yt-audio');
+  if (ytFrame) {
+    ytFrame.src = 'https://www.youtube.com/embed/oiIC6WA6S3s?autoplay=1&controls=0&start=0&mute=0';
   }
+  // Para após 30 segundos
+  setTimeout(function() {
+    if (ytFrame) ytFrame.src = '';
+  }, 30000);
   fecharIntro();
 }
 
