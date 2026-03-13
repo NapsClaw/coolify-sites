@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dom Fratello Barbearia | Moema São Paulo</title>
+<meta name="description" content="Barbearia premium em Moema SP. Corte, barba e tratamentos masculinos de alto padrão. 5★ com 468 avaliações no Google. Mais de 3 anos no mercado.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Instrument+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0c0a08;
+    --bg2: #141210;
+    --bg3: #1e1a16;
+    --amber: #d4882a;
+    --amber2: #f0a843;
+    --cream: #f2ece4;
+    --text: #ede5db;
+    --muted: #7a6e64;
+    --border: rgba(212,136,42,0.2);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Instrument Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 16px 24px;
+    background: rgba(12,10,8,0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .nav-brand {
+    display: flex; flex-direction: column;
+  }
+  .nav-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px; letter-spacing: 0.1em; color: var(--amber2); line-height: 1;
+  }
+  .nav-sub { font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+  .nav-cta {
+    background: var(--amber);
+    color: var(--bg);
+    padding: 10px 18px; border-radius: 2px;
+    font-size: 12px; font-weight: 600; letter-spacing: 0.06em;
+    text-decoration: none; text-transform: uppercase;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: var(--amber2); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 0 24px 60px; position: relative; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(to bottom, rgba(12,10,8,0.4) 0%, rgba(12,10,8,0.5) 50%, rgba(12,10,8,0.93) 100%),
+      url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=1200&q=80') center/cover no-repeat;
+  }
+  .hero-content { position: relative; z-index: 2; }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(212,136,42,0.12); border: 1px solid var(--border);
+    padding: 6px 14px; border-radius: 2px;
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber2);
+    margin-bottom: 20px;
+  }
+  .hero-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 72px; letter-spacing: 0.06em; line-height: 0.9;
+    color: var(--cream); margin-bottom: 18px;
+  }
+  .hero-name .dom { display: block; }
+  .hero-name .fratello { display: block; color: var(--amber2); }
+  .hero-desc {
+    font-size: 14px; font-weight: 300; line-height: 1.7;
+    color: rgba(237,229,219,0.75); margin-bottom: 32px; max-width: 340px;
+  }
+  .cta-group { display: flex; flex-direction: column; gap: 12px; }
+  .btn-gold {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    background: var(--amber); color: var(--bg);
+    padding: 16px 28px; border-radius: 2px;
+    font-size: 14px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+    text-decoration: none; transition: all 0.2s;
+  }
+  .btn-gold:hover { background: var(--amber2); transform: translateY(-1px); }
+  .hero-rating {
+    display: flex; align-items: center; gap: 14px;
+    margin-top: 32px; padding-top: 28px; border-top: 1px solid var(--border);
+  }
+  .rating-badge {
+    background: var(--amber); color: var(--bg);
+    padding: 8px 14px; border-radius: 2px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px; letter-spacing: 0.04em; line-height: 1;
+  }
+  .rating-detail { }
+  .rating-stars-row { color: var(--amber2); font-size: 13px; letter-spacing: 2px; }
+  .rating-info { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+  /* SECTION */
+  .section { padding: 80px 24px; }
+  .s-label {
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--amber); margin-bottom: 12px;
+  }
+  .s-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 42px; letter-spacing: 0.05em; line-height: 1;
+    color: var(--cream); margin-bottom: 32px;
+  }
+  .s-title .accent { color: var(--amber2); }
+
+  /* SERVICES */
+  .services-list { display: flex; flex-direction: column; gap: 1px; }
+  .service-item {
+    background: var(--bg2);
+    padding: 22px 20px;
+    display: flex; align-items: center; gap: 16px;
+    border-left: 2px solid transparent; transition: all 0.2s;
+  }
+  .service-item:hover { background: var(--bg3); border-left-color: var(--amber); }
+  .service-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px; color: rgba(212,136,42,0.25); line-height: 1;
+    min-width: 40px;
+  }
+  .service-info { }
+  .service-name-s { font-size: 15px; font-weight: 600; color: var(--cream); margin-bottom: 3px; }
+  .service-desc-s { font-size: 12px; color: var(--muted); line-height: 1.5; }
+  .service-price {
+    margin-left: auto; flex-shrink: 0;
+    font-family: 'Bebas Neue', sans-serif; font-size: 20px;
+    color: var(--amber2); letter-spacing: 0.04em;
+  }
+
+  /* REVIEWS */
+  .reviews-section { background: var(--bg2); padding: 80px 24px; }
+  .reviews-list { display: flex; flex-direction: column; gap: 14px; margin-top: 32px; }
+  .review-item {
+    border: 1px solid var(--border);
+    padding: 22px 20px; border-radius: 2px;
+  }
+  .review-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .r-author { font-size: 13px; font-weight: 600; color: var(--cream); }
+  .r-stars { color: var(--amber2); font-size: 12px; letter-spacing: 2px; }
+  .r-text { font-size: 14px; color: var(--muted); line-height: 1.65; font-style: italic; }
+
+  /* GALLERY */
+  .gallery-section { padding: 80px 24px; }
+  .gallery-scroll {
+    display: flex; gap: 12px; overflow-x: auto;
+    padding-bottom: 8px; margin-top: 28px;
+    scrollbar-width: thin; scrollbar-color: var(--amber) var(--bg2);
+  }
+  .gallery-scroll::-webkit-scrollbar { height: 4px; }
+  .gallery-scroll::-webkit-scrollbar-track { background: var(--bg2); }
+  .gallery-scroll::-webkit-scrollbar-thumb { background: var(--amber); border-radius: 2px; }
+  .gallery-img {
+    width: 200px; height: 240px; object-fit: cover;
+    border-radius: 2px; flex-shrink: 0;
+  }
+
+  /* CONTACT */
+  .contact-section { background: var(--bg3); padding: 80px 24px; }
+  .info-row {
+    display: flex; gap: 12px; align-items: flex-start;
+    padding: 18px 0; border-bottom: 1px solid var(--border);
+  }
+  .info-icon { font-size: 18px; flex-shrink: 0; }
+  .info-label { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--amber); margin-bottom: 3px; }
+  .info-val { font-size: 14px; color: var(--text); }
+  .wa-cta {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    background: #25D366; color: white;
+    padding: 18px; border-radius: 2px;
+    font-size: 15px; font-weight: 600;
+    text-decoration: none; margin-top: 28px; transition: all 0.2s;
+  }
+  .wa-cta:hover { background: #20ba5a; }
+
+  /* FOOTER */
+  footer {
+    background: var(--bg); border-top: 1px solid var(--border);
+    padding: 28px 24px; text-align: center;
+  }
+  .f-brand {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px; letter-spacing: 0.1em; color: var(--amber2);
+  }
+  .f-sub { font-size: 11px; color: var(--muted); letter-spacing: 0.08em; margin-top: 4px; }
+
+  /* FLOAT WA */
+  .float-wa {
+    position: fixed; bottom: 24px; right: 24px; z-index: 999;
+    background: #25D366; color: white;
+    width: 60px; height: 60px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.38);
+    text-decoration: none; transition: all 0.2s;
+  }
+  .float-wa:hover { transform: scale(1.08); }
+
+  /* ANIMATIONS */
+  @keyframes heroIn {
+    from { opacity: 0; transform: translateY(28px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero-tag { animation: heroIn 0.5s ease both; }
+  .hero-name { animation: heroIn 0.5s 0.1s ease both; }
+  .hero-desc { animation: heroIn 0.5s 0.2s ease both; }
+  .cta-group { animation: heroIn 0.5s 0.3s ease both; }
+  .hero-rating { animation: heroIn 0.5s 0.4s ease both; }
+</style>
+</head>
+<body>
+
+<a href="https://wa.me/5511970233060" class="float-wa" target="_blank" rel="noopener" aria-label="WhatsApp">💬</a>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">
+    <div class="nav-name">Dom Fratello</div>
+    <div class="nav-sub">Barbearia · Moema</div>
+  </div>
+  <a href="https://wa.me/5511970233060" class="nav-cta">Agendar</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-tag">⭐ 5,0 · 468 avaliações · Mais de 3 anos</div>
+    <h1 class="hero-name">
+      <span class="dom">Dom</span>
+      <span class="fratello">Fratello</span>
+    </h1>
+    <p class="hero-desc">
+      A barbearia referência em Moema. Corte preciso, barba impecável, ambiente inigualável. Aqui o seu visual é tratado com arte.
+    </p>
+    <div class="cta-group">
+      <a href="https://wa.me/5511970233060?text=Ol%C3%A1!%20Quero%20agendar%20um%20horário." class="btn-gold">
+        ✂️ Agendar horário
+      </a>
+    </div>
+    <div class="hero-rating">
+      <div class="rating-badge">5,0</div>
+      <div class="rating-detail">
+        <div class="rating-stars-row">★★★★★</div>
+        <div class="rating-info">468 avaliações · Google Maps</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section">
+  <div class="s-label">O que oferecemos</div>
+  <h2 class="s-title">NOSSOS <span class="accent">SERVIÇOS</span></h2>
+  <div class="services-list">
+    <div class="service-item">
+      <div class="service-num">01</div>
+      <div class="service-info">
+        <div class="service-name-s">Corte Masculino</div>
+        <div class="service-desc-s">Clássico, degradê, navalha — o corte que combina com você</div>
+      </div>
+    </div>
+    <div class="service-item">
+      <div class="service-num">02</div>
+      <div class="service-info">
+        <div class="service-name-s">Barba Completa</div>
+        <div class="service-desc-s">Modelagem, hot towel e navalha para um acabamento perfeito</div>
+      </div>
+    </div>
+    <div class="service-item">
+      <div class="service-num">03</div>
+      <div class="service-info">
+        <div class="service-name-s">Corte + Barba</div>
+        <div class="service-desc-s">O combo completo para sair impecável do Dom Fratello</div>
+      </div>
+    </div>
+    <div class="service-item">
+      <div class="service-num">04</div>
+      <div class="service-info">
+        <div class="service-name-s">Pigmentação de Barba</div>
+        <div class="service-desc-s">Cobertura de fios brancos com acabamento natural e duradouro</div>
+      </div>
+    </div>
+    <div class="service-item">
+      <div class="service-num">05</div>
+      <div class="service-info">
+        <div class="service-name-s">Hidratação & Tratamento</div>
+        <div class="service-desc-s">Cuidados premium para cabelo e barba com produtos especiais</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews-section">
+  <div class="s-label">O que falam de nós</div>
+  <h2 class="s-title">468 <span class="accent">AVALIAÇÕES</span><br>5 ESTRELAS</h2>
+  <div class="reviews-list">
+    <div class="review-item">
+      <div class="review-top">
+        <div class="r-author">Lucas M.</div>
+        <div class="r-stars">★★★★★</div>
+      </div>
+      <div class="r-text">"Melhor barbearia de Moema sem dúvidas! Já frequento há 2 anos e nunca me decepcionei. Equipe top, ambiente incrível e resultado sempre perfeito."</div>
+    </div>
+    <div class="review-item">
+      <div class="review-top">
+        <div class="r-author">Bruno S.</div>
+        <div class="r-stars">★★★★★</div>
+      </div>
+      <div class="r-text">"Fui a primeira vez por indicação e virei cliente fiel. O Dom Fratello tem algo especial — da recepção ao corte, tudo com muita classe e atenção ao detalhe."</div>
+    </div>
+    <div class="review-item">
+      <div class="review-top">
+        <div class="r-author">Gabriel P.</div>
+        <div class="r-stars">★★★★★</div>
+      </div>
+      <div class="r-text">"Profissionais excelentes e atenciosos. Meu cabelo nunca ficou tão bem cuidado. Lugar impecável, atendimento top e preço justo para o nível de qualidade."</div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery-section">
+  <div class="s-label">Nosso espaço</div>
+  <h2 class="s-title">O <span class="accent">AMBIENTE</span></h2>
+  <div class="gallery-scroll">
+    <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=400&q=80" alt="Barbearia" class="gallery-img">
+    <img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=400&q=80" alt="Corte" class="gallery-img">
+    <img src="https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=400&q=80" alt="Barba" class="gallery-img">
+    <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=400&q=80" alt="Atendimento" class="gallery-img">
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section">
+  <div class="s-label">Nos encontre</div>
+  <h2 class="s-title">ONDE <span class="accent">ESTAMOS</span></h2>
+  <div class="info-row">
+    <div class="info-icon">📍</div>
+    <div>
+      <div class="info-label">Endereço</div>
+      <div class="info-val">Alameda Jauaperi, 213 · Indianópolis<br>Moema · São Paulo - SP</div>
+    </div>
+  </div>
+  <div class="info-row">
+    <div class="info-icon">📱</div>
+    <div>
+      <div class="info-label">Telefone / WhatsApp</div>
+      <div class="info-val">(11) 97023-3060</div>
+    </div>
+  </div>
+  <div class="info-row">
+    <div class="info-icon">🕐</div>
+    <div>
+      <div class="info-label">Horário</div>
+      <div class="info-val">Seg–Sáb: 9h às 20h</div>
+    </div>
+  </div>
+  <a href="https://wa.me/5511970233060?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20agendar%20um%20hor%C3%A1rio." class="wa-cta" target="_blank" rel="noopener">
+    💬 Agendar pelo WhatsApp
+  </a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="f-brand">DOM FRATELLO</div>
+  <p class="f-sub">Barbearia · Moema · São Paulo</p>
+</footer>
+
+</body>
+</html>
