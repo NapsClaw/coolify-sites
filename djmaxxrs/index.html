@@ -1174,35 +1174,48 @@
     if(!showMovings) return;
     ctx.save();
     ctx.globalCompositeOperation = 'screen';
+    // 12 feixes cobrindo toda a largura
+    var totalBeams = 12;
     movings.forEach(function(mv, idx){
-      // Origem no TOPO, feixes caindo de cima para baixo
-      var originX = W*(0.08 + idx*0.168);
-      var sweep = Math.sin(t*mv.speed + mv.phase);
-      var targetX = originX + sweep * W*0.15;
-      var targetY = H*0.75 + Math.cos(t*mv.speed*0.7+mv.phase)*H*0.15;
+      for(var b=0; b<2; b++){
+        var beamIdx = idx*2 + b;
+        var originX = W * (beamIdx / (totalBeams - 1));
+        var sweep = Math.sin(t*mv.speed + mv.phase + b*1.3);
+        var targetX = originX + sweep * W*0.25;
+        var targetY = H * (0.6 + Math.cos(t*mv.speed*0.6+mv.phase+b)*0.38);
 
-      ctx.save();
-      ctx.globalAlpha = 0.28;
-      var grad = ctx.createLinearGradient(originX, 0, targetX, targetY);
-      grad.addColorStop(0, mv.color);
-      grad.addColorStop(0.6, mv.color);
-      grad.addColorStop(1, 'transparent');
+        ctx.save();
+        ctx.globalAlpha = 0.72;
+        var grad = ctx.createLinearGradient(originX, 0, targetX, targetY);
+        grad.addColorStop(0, mv.color);
+        grad.addColorStop(0.5, mv.color);
+        grad.addColorStop(1, 'transparent');
 
-      var dx=targetX-originX, dy=targetY-0;
-      var len=Math.sqrt(dx*dx+dy*dy)||1;
-      var nx=-dy/len*(mv.width/2), ny=dx/len*(mv.width/2);
-      ctx.beginPath();
-      ctx.moveTo(originX+nx, 0); ctx.lineTo(targetX+nx*0.05, targetY);
-      ctx.lineTo(targetX-nx*0.05, targetY); ctx.lineTo(originX-nx, 0);
-      ctx.closePath();
-      ctx.fillStyle=grad; ctx.fill();
-      // Spot brilhante na origem (topo)
-      ctx.globalAlpha=0.25;
-      var sg=ctx.createRadialGradient(originX,0,0,originX,0,mv.width*3);
-      sg.addColorStop(0,mv.color); sg.addColorStop(1,'transparent');
-      ctx.beginPath(); ctx.arc(originX,0,mv.width*3,0,Math.PI*2);
-      ctx.fillStyle=sg; ctx.fill();
-      ctx.restore();
+        var beamW = 38 + b*10;
+        var dx=targetX-originX, dy=targetY;
+        var len=Math.sqrt(dx*dx+dy*dy)||1;
+        var nx=-dy/len*(beamW/2), ny=dx/len*(beamW/2);
+        ctx.beginPath();
+        ctx.moveTo(originX+nx, 0); ctx.lineTo(targetX+nx*0.04, targetY);
+        ctx.lineTo(targetX-nx*0.04, targetY); ctx.lineTo(originX-nx, 0);
+        ctx.closePath();
+        ctx.fillStyle=grad; ctx.fill();
+
+        // Spot brilhante no topo
+        ctx.globalAlpha=0.6;
+        var sg=ctx.createRadialGradient(originX,0,0,originX,8,beamW*2.5);
+        sg.addColorStop(0,'#fff'); sg.addColorStop(0.2,mv.color); sg.addColorStop(1,'transparent');
+        ctx.beginPath(); ctx.arc(originX,0,beamW*2.5,0,Math.PI*2);
+        ctx.fillStyle=sg; ctx.fill();
+
+        // Spot no destino
+        ctx.globalAlpha=0.35;
+        var dg=ctx.createRadialGradient(targetX,targetY,0,targetX,targetY,beamW*2);
+        dg.addColorStop(0,mv.color); dg.addColorStop(1,'transparent');
+        ctx.beginPath(); ctx.arc(targetX,targetY,beamW*2,0,Math.PI*2);
+        ctx.fillStyle=dg; ctx.fill();
+        ctx.restore();
+      }
     });
     ctx.restore();
   }
