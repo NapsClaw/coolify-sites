@@ -1847,6 +1847,233 @@ function fecharIntro() {
 
 
 <!-- CDs & SETS -->
+
+<!-- PLAYER GOL DO OITÃO -->
+<section id="player-gol-oitao" style="background:linear-gradient(180deg,#0a0a0a 0%,#0d0a00 100%);padding:60px 24px;">
+  <div style="max-width:800px;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:32px;">
+      <span style="display:inline-block;background:rgba(255,140,0,0.15);border:1px solid rgba(255,140,0,0.5);color:#ff8c00;font-size:12px;font-weight:700;letter-spacing:3px;padding:6px 20px;border-radius:30px;margin-bottom:16px;">💿 CD COMPLETO</span>
+      <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,6vw,52px);color:#fff;letter-spacing:3px;margin:0;">GOL DO OITÃO <span style="color:#ff8c00;">244</span></h2>
+      <p style="color:#888;font-size:14px;margin-top:8px;">Especial do Samuel — DJ Maxx RS · 18 faixas</p>
+    </div>
+
+    <!-- Player principal -->
+    <div style="background:#111;border:2px solid rgba(255,140,0,0.4);border-radius:20px;padding:24px;margin-bottom:24px;box-shadow:0 0 40px rgba(255,140,0,0.15);">
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;">
+        <img src="cd-gol-oitao.jpg" style="width:80px;height:80px;border-radius:12px;object-fit:cover;border:2px solid #ff8c00;">
+        <div style="flex:1;">
+          <div id="gol-current-name" style="font-family:'Bebas Neue',sans-serif;font-size:22px;color:#fff;letter-spacing:2px;">BRITO 00</div>
+          <div style="font-size:12px;color:#888;margin-top:4px;">DJ Maxx RS · Gol do Oitão 244</div>
+        </div>
+      </div>
+      <!-- Barra de progresso -->
+      <div id="gol-progress-bar" style="background:#222;border-radius:4px;height:6px;cursor:pointer;margin-bottom:12px;" onclick="golSeek(event)">
+        <div id="gol-progress" style="height:100%;width:0%;background:linear-gradient(90deg,#ff8c00,#ffcc00);border-radius:4px;transition:width 0.3s;"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:#666;margin-bottom:16px;">
+        <span id="gol-time-cur">0:00</span>
+        <span id="gol-time-tot">0:00</span>
+      </div>
+      <!-- Controles -->
+      <div style="display:flex;align-items:center;justify-content:center;gap:20px;">
+        <button onclick="golPrev()" style="background:rgba(255,140,0,0.15);border:1px solid rgba(255,140,0,0.4);color:#ff8c00;width:44px;height:44px;border-radius:50%;font-size:18px;cursor:pointer;">⏮</button>
+        <button id="gol-btn-play" onclick="golToggle()" style="background:linear-gradient(135deg,#ff8c00,#ff6600);border:none;color:#fff;width:60px;height:60px;border-radius:50%;font-size:24px;cursor:pointer;box-shadow:0 0 20px rgba(255,140,0,0.5);">▶</button>
+        <button onclick="golNext()" style="background:rgba(255,140,0,0.15);border:1px solid rgba(255,140,0,0.4);color:#ff8c00;width:44px;height:44px;border-radius:50%;font-size:18px;cursor:pointer;">⏭</button>
+      </div>
+    </div>
+
+    <!-- Lista de faixas -->
+    <div style="background:#0d0d0d;border:1px solid rgba(255,140,0,0.2);border-radius:16px;overflow:hidden;">
+      <style>
+        .gol-track{display:flex;align-items:center;padding:12px 20px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,0.05);transition:background 0.2s;gap:12px;}
+        .gol-track:hover{background:rgba(255,140,0,0.08);}
+        .gol-track.active{background:rgba(255,140,0,0.15);border-left:3px solid #ff8c00;}
+        .gol-num{font-family:'Bebas Neue',sans-serif;color:#666;font-size:14px;min-width:28px;}
+        .gol-name{flex:1;color:#ccc;font-size:14px;font-weight:600;letter-spacing:1px;}
+        .gol-play-icon{color:#ff8c00;font-size:12px;opacity:0;transition:opacity 0.2s;}
+        .gol-track:hover .gol-play-icon{opacity:1;}
+        .gol-track.active .gol-play-icon{opacity:1;content:"■";}
+      </style>
+        <div class="gol-track" data-idx="0" onclick="golPlay(0)">
+          <span class="gol-num">00</span>
+          <span class="gol-name">BRITO 00</span>
+          <span class="gol-play-icon">▶</span>
+        </div>
+        <div class="gol-track" data-idx="1" onclick="golPlay(1)">
+          <span class="gol-num">01</span>
+          <span class="gol-name">BRITO 01</span>
+          <span class="gol-play-icon">▶</span>
+        </div>
+        <div class="gol-track" data-idx="2" onclick="golPlay(2)">
+          <span class="gol-num">02</span>
+          <span class="gol-name">BRITO 02</span>
+          <span class="gol-play-icon">▶</span>
+        </div>
+        <div class="gol-track" data-idx="3" onclick="golPlay(3)">
+          <span class="gol-num">03</span>
+          <span class="gol-name">BRITO 03</span>
+          <span class="gol-play-icon">▶</span>
+        </div>
+        <div class="gol-track" data-idx="4" onclick="golPlay(4)">
+          <span class="gol-num">04</span>
+          <span class="gol-name">BRITO 04</span>
+          <span class="gol-play-icon">▶</span>
+        </div>
+        <div class="gol-track" data-idx="5" onclick="golPlay(5)">
+          <span class="gol-num">05</span>
+          <span class="gol-name">BRITO 05</span>
+          <span class="gol-play-icon">▶</span>
+        </div>
+        <div class="gol-track" data-idx="6" onclick="golPlay(6)">
+          <span class="gol-num">06</span>
+          <span class="gol-name">BRITO 06</span>
+          <span class="gol-play-icon">▶</span>
+        </div>
+        <div class="gol-track" data-idx="7" onclick="golPlay(7)">
+          <span class="gol-num">07</span>
+          <span class="gol-name">BRITO 07</span>
+          <span class="gol-play-icon">▶</span>
+        </div>
+        <div class="gol-track" data-idx="8" onclick="golPlay(8)">
+          <span class="gol-num">08</span>
+          <span class="gol-name">BRITO 08</span>
+          <span class="gol-play-icon">▶</span>
+        </div>
+        <div class="gol-track" data-idx="9" onclick="golPlay(9)">
+          <span class="gol-num">09</span>
+          <span class="gol-name">BRITO 09</span>
+          <span class="gol-play-icon">▶</span>
+        </div>
+        <div class="gol-track" data-idx="10" onclick="golPlay(10)">
+          <span class="gol-num">10</span>
+          <span class="gol-name">BRITO 10</span>
+          <span class="gol-play-icon">▶</span>
+        </div>
+        <div class="gol-track" data-idx="11" onclick="golPlay(11)">
+          <span class="gol-num">11</span>
+          <span class="gol-name">BRITO 11</span>
+          <span class="gol-play-icon">▶</span>
+        </div>
+        <div class="gol-track" data-idx="12" onclick="golPlay(12)">
+          <span class="gol-num">12</span>
+          <span class="gol-name">BRITO 12</span>
+          <span class="gol-play-icon">▶</span>
+        </div>
+        <div class="gol-track" data-idx="13" onclick="golPlay(13)">
+          <span class="gol-num">13</span>
+          <span class="gol-name">BRITO 13</span>
+          <span class="gol-play-icon">▶</span>
+        </div>
+        <div class="gol-track" data-idx="14" onclick="golPlay(14)">
+          <span class="gol-num">14</span>
+          <span class="gol-name">BRITO 14</span>
+          <span class="gol-play-icon">▶</span>
+        </div>
+        <div class="gol-track" data-idx="15" onclick="golPlay(15)">
+          <span class="gol-num">15</span>
+          <span class="gol-name">BRITO 15</span>
+          <span class="gol-play-icon">▶</span>
+        </div>
+        <div class="gol-track" data-idx="16" onclick="golPlay(16)">
+          <span class="gol-num">16</span>
+          <span class="gol-name">BRITO 16</span>
+          <span class="gol-play-icon">▶</span>
+        </div>
+        <div class="gol-track" data-idx="17" onclick="golPlay(17)">
+          <span class="gol-num">17</span>
+          <span class="gol-name">BRITO 17</span>
+          <span class="gol-play-icon">▶</span>
+        </div>
+    </div>
+
+    <audio id="gol-audio" preload="none"></audio>
+
+    <script>
+    var golTracks = [
+    {id:"1RbOIZm117gBsH6l1aBahI-DvJEla1WHC",name:"BRITO 00",url:"https://docs.google.com/uc?export=open&id=1RbOIZm117gBsH6l1aBahI-DvJEla1WHC"},
+    {id:"1-CMffb0AeYh3BFlXjfzbydjp-JzI33Gz",name:"BRITO 01",url:"https://docs.google.com/uc?export=open&id=1-CMffb0AeYh3BFlXjfzbydjp-JzI33Gz"},
+    {id:"1VItL7ioFqWH2fNx5gU_hkrquE8X3-oK3",name:"BRITO 02",url:"https://docs.google.com/uc?export=open&id=1VItL7ioFqWH2fNx5gU_hkrquE8X3-oK3"},
+    {id:"1Ug3yo5tTc3pX7IOkSwFkUNDdtWUf7iBl",name:"BRITO 03",url:"https://docs.google.com/uc?export=open&id=1Ug3yo5tTc3pX7IOkSwFkUNDdtWUf7iBl"},
+    {id:"17aYL5EUx5pTd4O-HCGL06fGTxFzO59fr",name:"BRITO 04",url:"https://docs.google.com/uc?export=open&id=17aYL5EUx5pTd4O-HCGL06fGTxFzO59fr"},
+    {id:"11tc5HKzNKNFMh8JJFZU11fi0dkQjE103",name:"BRITO 05",url:"https://docs.google.com/uc?export=open&id=11tc5HKzNKNFMh8JJFZU11fi0dkQjE103"},
+    {id:"1BDxDq399zs8FGOVyIaaZvFgGVvh2F_gj",name:"BRITO 06",url:"https://docs.google.com/uc?export=open&id=1BDxDq399zs8FGOVyIaaZvFgGVvh2F_gj"},
+    {id:"1AurZk6zplra_CIoMEDwxBePSZTCpE5j0",name:"BRITO 07",url:"https://docs.google.com/uc?export=open&id=1AurZk6zplra_CIoMEDwxBePSZTCpE5j0"},
+    {id:"1byHWvHGk7_U3Wx_0HvtnNQtUXZwAIJo5",name:"BRITO 08",url:"https://docs.google.com/uc?export=open&id=1byHWvHGk7_U3Wx_0HvtnNQtUXZwAIJo5"},
+    {id:"13QgQcsLit3EZ--b7LCbFeM8Pjn-KHVlo",name:"BRITO 09",url:"https://docs.google.com/uc?export=open&id=13QgQcsLit3EZ--b7LCbFeM8Pjn-KHVlo"},
+    {id:"161RN0QR8D_W3bEnmgweZLrfTyrY9i0wQ",name:"BRITO 10",url:"https://docs.google.com/uc?export=open&id=161RN0QR8D_W3bEnmgweZLrfTyrY9i0wQ"},
+    {id:"1_x0rkDZlx6PPuKy1ZMLoLanarKPXJMr6",name:"BRITO 11",url:"https://docs.google.com/uc?export=open&id=1_x0rkDZlx6PPuKy1ZMLoLanarKPXJMr6"},
+    {id:"15IrwtWxdM-IoyvJc2KsX_nDNKlYMib5m",name:"BRITO 12",url:"https://docs.google.com/uc?export=open&id=15IrwtWxdM-IoyvJc2KsX_nDNKlYMib5m"},
+    {id:"1Hqi0rNu-ZNPCRh0G16eDTLQQquLRT0F3",name:"BRITO 13",url:"https://docs.google.com/uc?export=open&id=1Hqi0rNu-ZNPCRh0G16eDTLQQquLRT0F3"},
+    {id:"1xqLdxi-XRhJk0Uq7jFkvJQ3e2Kv_jYGd",name:"BRITO 14",url:"https://docs.google.com/uc?export=open&id=1xqLdxi-XRhJk0Uq7jFkvJQ3e2Kv_jYGd"},
+    {id:"1wL4SnXwPIkZbTFC7JSgNo01AnziyiYtX",name:"BRITO 15",url:"https://docs.google.com/uc?export=open&id=1wL4SnXwPIkZbTFC7JSgNo01AnziyiYtX"},
+    {id:"13ryReZW3Vq1gEtRgWNL9ZsJCGrnSX7YY",name:"BRITO 16",url:"https://docs.google.com/uc?export=open&id=13ryReZW3Vq1gEtRgWNL9ZsJCGrnSX7YY"},
+    {id:"10_fjVq1dw-cFh_spIkEji6C8muyZWHJ-",name:"BRITO 17",url:"https://docs.google.com/uc?export=open&id=10_fjVq1dw-cFh_spIkEji6C8muyZWHJ-"}
+  ];
+    var golIdx = 0;
+    var golAudio = document.getElementById('gol-audio');
+    var golPlaying = false;
+
+    function golFmt(s){
+      var m=Math.floor(s/60), sec=Math.floor(s%60);
+      return m+':'+(sec<10?'0':'')+sec;
+    }
+
+    golAudio.addEventListener('timeupdate', function(){
+      if(!golAudio.duration) return;
+      var pct = (golAudio.currentTime/golAudio.duration)*100;
+      document.getElementById('gol-progress').style.width = pct+'%';
+      document.getElementById('gol-time-cur').textContent = golFmt(golAudio.currentTime);
+      document.getElementById('gol-time-tot').textContent = golFmt(golAudio.duration);
+    });
+
+    golAudio.addEventListener('ended', function(){ golNext(); });
+
+    function golSetTrack(idx){
+      golIdx = idx;
+      var t = golTracks[idx];
+      document.getElementById('gol-current-name').textContent = t.name;
+      golAudio.src = t.url;
+      document.querySelectorAll('.gol-track').forEach(function(el,i){
+        el.classList.toggle('active', i===idx);
+      });
+      document.getElementById('gol-progress').style.width='0%';
+      document.getElementById('gol-time-cur').textContent='0:00';
+      document.getElementById('gol-time-tot').textContent='0:00';
+    }
+
+    function golPlay(idx){
+      golSetTrack(idx);
+      golAudio.play();
+      golPlaying=true;
+      document.getElementById('gol-btn-play').textContent='⏸';
+    }
+
+    function golToggle(){
+      if(golPlaying){ golAudio.pause(); golPlaying=false; document.getElementById('gol-btn-play').textContent='▶'; }
+      else{ golAudio.play(); golPlaying=true; document.getElementById('gol-btn-play').textContent='⏸'; }
+    }
+
+    function golNext(){
+      var next=(golIdx+1)%golTracks.length;
+      golPlay(next);
+    }
+
+    function golPrev(){
+      var prev=(golIdx-1+golTracks.length)%golTracks.length;
+      golPlay(prev);
+    }
+
+    function golSeek(e){
+      var bar=document.getElementById('gol-progress-bar');
+      var pct=(e.offsetX/bar.offsetWidth);
+      if(golAudio.duration) golAudio.currentTime=pct*golAudio.duration;
+    }
+
+    golSetTrack(0);
+    </script>
+  </div>
+</section>
+
 <section class="cds" id="cds">
   <div class="container">
     <div class="reveal">
