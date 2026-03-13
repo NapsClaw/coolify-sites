@@ -1926,6 +1926,343 @@ function fecharIntro() {
   </div>
 </section>
 
+<!-- PLAYER PRISMA DO ALADIO -->
+<section id="player-prisma" style="background:linear-gradient(180deg,#000a1a 0%,#00060f 100%);padding:60px 24px;">
+  <div style="max-width:800px;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:32px;">
+      <span style="display:inline-block;background:rgba(0,150,255,0.15);border:1px solid rgba(0,150,255,0.5);color:#00aaff;font-size:12px;font-weight:700;letter-spacing:3px;padding:6px 20px;border-radius:30px;margin-bottom:16px;">⚡ SOM AUTOMOTIVO</span>
+      <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,6vw,52px);color:#fff;letter-spacing:3px;margin:0;">PRISMA DO <span style="color:#00aaff;">ALADIO</span></h2>
+      <p style="color:#888;font-size:14px;margin-top:8px;">Gravataí/RS — DJ Maxx RS · 46 faixas</p>
+    </div>
+    <div style="background:#0a1020;border:2px solid rgba(0,150,255,0.4);border-radius:20px;padding:24px;margin-bottom:24px;box-shadow:0 0 40px rgba(0,150,255,0.15);">
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;">
+        <div style="width:80px;height:80px;border-radius:12px;background:linear-gradient(135deg,#001a40,#00aaff);display:flex;align-items:center;justify-content:center;font-size:36px;border:2px solid #00aaff;flex-shrink:0;">⚡</div>
+        <div style="flex:1;">
+          <div id="prisma-current-name" style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:#fff;letter-spacing:2px;">PRISMA DO ALADIO 00</div>
+          <div style="font-size:12px;color:#888;margin-top:4px;">DJ Maxx RS · Prisma do Aladio</div>
+        </div>
+      </div>
+      <div id="prisma-progress-bar" style="background:#1a2030;border-radius:4px;height:6px;cursor:pointer;margin-bottom:12px;" onclick="prismaSeek(event)">
+        <div id="prisma-progress" style="height:100%;width:0%;background:linear-gradient(90deg,#00aaff,#00eeff);border-radius:4px;transition:width 0.3s;"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:#666;margin-bottom:16px;">
+        <span id="prisma-time-cur">0:00</span>
+        <span id="prisma-time-tot">0:00</span>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:center;gap:20px;">
+        <button onclick="prismaPrev()" style="background:rgba(0,150,255,0.15);border:1px solid rgba(0,150,255,0.4);color:#00aaff;width:44px;height:44px;border-radius:50%;font-size:18px;cursor:pointer;">⏮</button>
+        <button id="prisma-btn-play" onclick="prismaToggle()" style="background:linear-gradient(135deg,#0055aa,#00aaff);border:none;color:#fff;width:60px;height:60px;border-radius:50%;font-size:24px;cursor:pointer;box-shadow:0 0 20px rgba(0,150,255,0.5);">▶</button>
+        <button onclick="prismaNext()" style="background:rgba(0,150,255,0.15);border:1px solid rgba(0,150,255,0.4);color:#00aaff;width:44px;height:44px;border-radius:50%;font-size:18px;cursor:pointer;">⏭</button>
+      </div>
+    </div>
+    <div style="background:#050d1a;border:1px solid rgba(0,150,255,0.2);border-radius:16px;overflow:hidden;max-height:400px;overflow-y:auto;">
+      <style>
+        .prisma-track{display:flex;align-items:center;padding:10px 20px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,0.04);transition:background 0.2s;gap:12px;}
+        .prisma-track:hover{background:rgba(0,150,255,0.08);}
+        .prisma-track.active{background:rgba(0,150,255,0.15);border-left:3px solid #00aaff;}
+        .prisma-num{font-family:'Bebas Neue',sans-serif;color:#666;font-size:13px;min-width:28px;}
+        .prisma-name{flex:1;color:#ccc;font-size:13px;font-weight:600;letter-spacing:1px;}
+        .prisma-play-icon{color:#00aaff;font-size:11px;opacity:0;transition:opacity 0.2s;}
+        .prisma-track:hover .prisma-play-icon,.prisma-track.active .prisma-play-icon{opacity:1;}
+      </style>
+        <div class="prisma-track" data-idx="0" onclick="prismaPlay(0)">
+          <span class="prisma-num">00</span>
+          <span class="prisma-name">PRISMA DO ALADIO 00</span>
+          <span class="prisma-play-icon">▶</span>
+        </div>
+        <div class="prisma-track" data-idx="1" onclick="prismaPlay(1)">
+          <span class="prisma-num">01</span>
+          <span class="prisma-name">PRISMA DO ALADIO 01</span>
+          <span class="prisma-play-icon">▶</span>
+        </div>
+        <div class="prisma-track" data-idx="2" onclick="prismaPlay(2)">
+          <span class="prisma-num">02</span>
+          <span class="prisma-name">PRISMA DO ALADIO 02</span>
+          <span class="prisma-play-icon">▶</span>
+        </div>
+        <div class="prisma-track" data-idx="3" onclick="prismaPlay(3)">
+          <span class="prisma-num">03</span>
+          <span class="prisma-name">PRISMA DO ALADIO 03</span>
+          <span class="prisma-play-icon">▶</span>
+        </div>
+        <div class="prisma-track" data-idx="4" onclick="prismaPlay(4)">
+          <span class="prisma-num">04</span>
+          <span class="prisma-name">PRISMA DO ALADIO 04</span>
+          <span class="prisma-play-icon">▶</span>
+        </div>
+        <div class="prisma-track" data-idx="5" onclick="prismaPlay(5)">
+          <span class="prisma-num">05</span>
+          <span class="prisma-name">PRISMA DO ALADIO 05</span>
+          <span class="prisma-play-icon">▶</span>
+        </div>
+        <div class="prisma-track" data-idx="6" onclick="prismaPlay(6)">
+          <span class="prisma-num">06</span>
+          <span class="prisma-name">PRISMA DO ALADIO 06</span>
+          <span class="prisma-play-icon">▶</span>
+        </div>
+        <div class="prisma-track" data-idx="7" onclick="prismaPlay(7)">
+          <span class="prisma-num">07</span>
+          <span class="prisma-name">PRISMA DO ALADIO 07</span>
+          <span class="prisma-play-icon">▶</span>
+        </div>
+        <div class="prisma-track" data-idx="8" onclick="prismaPlay(8)">
+          <span class="prisma-num">08</span>
+          <span class="prisma-name">PRISMA DO ALADIO 08</span>
+          <span class="prisma-play-icon">▶</span>
+        </div>
+        <div class="prisma-track" data-idx="9" onclick="prismaPlay(9)">
+          <span class="prisma-num">09</span>
+          <span class="prisma-name">PRISMA DO ALADIO 09</span>
+          <span class="prisma-play-icon">▶</span>
+        </div>
+        <div class="prisma-track" data-idx="10" onclick="prismaPlay(10)">
+          <span class="prisma-num">10</span>
+          <span class="prisma-name">PRISMA DO ALADIO 10</span>
+          <span class="prisma-play-icon">▶</span>
+        </div>
+        <div class="prisma-track" data-idx="11" onclick="prismaPlay(11)">
+          <span class="prisma-num">11</span>
+          <span class="prisma-name">PRISMA DO ALADIO 11</span>
+          <span class="prisma-play-icon">▶</span>
+        </div>
+        <div class="prisma-track" data-idx="12" onclick="prismaPlay(12)">
+          <span class="prisma-num">12</span>
+          <span class="prisma-name">PRISMA DO ALADIO 12</span>
+          <span class="prisma-play-icon">▶</span>
+        </div>
+        <div class="prisma-track" data-idx="13" onclick="prismaPlay(13)">
+          <span class="prisma-num">13</span>
+          <span class="prisma-name">PRISMA DO ALADIO 13</span>
+          <span class="prisma-play-icon">▶</span>
+        </div>
+        <div class="prisma-track" data-idx="14" onclick="prismaPlay(14)">
+          <span class="prisma-num">14</span>
+          <span class="prisma-name">PRISMA DO ALADIO 14</span>
+          <span class="prisma-play-icon">▶</span>
+        </div>
+        <div class="prisma-track" data-idx="15" onclick="prismaPlay(15)">
+          <span class="prisma-num">15</span>
+          <span class="prisma-name">PRISMA DO ALADIO 15</span>
+          <span class="prisma-play-icon">▶</span>
+        </div>
+        <div class="prisma-track" data-idx="16" onclick="prismaPlay(16)">
+          <span class="prisma-num">16</span>
+          <span class="prisma-name">PRISMA DO ALADIO 16</span>
+          <span class="prisma-play-icon">▶</span>
+        </div>
+        <div class="prisma-track" data-idx="17" onclick="prismaPlay(17)">
+          <span class="prisma-num">17</span>
+          <span class="prisma-name">PRISMA DO ALADIO 17</span>
+          <span class="prisma-play-icon">▶</span>
+        </div>
+        <div class="prisma-track" data-idx="18" onclick="prismaPlay(18)">
+          <span class="prisma-num">18</span>
+          <span class="prisma-name">PRISMA DO ALADIO 18</span>
+          <span class="prisma-play-icon">▶</span>
+        </div>
+        <div class="prisma-track" data-idx="19" onclick="prismaPlay(19)">
+          <span class="prisma-num">19</span>
+          <span class="prisma-name">PRISMA DO ALADIO 19</span>
+          <span class="prisma-play-icon">▶</span>
+        </div>
+        <div class="prisma-track" data-idx="20" onclick="prismaPlay(20)">
+          <span class="prisma-num">20</span>
+          <span class="prisma-name">PRISMA DO ALADIO 20</span>
+          <span class="prisma-play-icon">▶</span>
+        </div>
+        <div class="prisma-track" data-idx="21" onclick="prismaPlay(21)">
+          <span class="prisma-num">21</span>
+          <span class="prisma-name">PRISMA DO ALADIO 21</span>
+          <span class="prisma-play-icon">▶</span>
+        </div>
+        <div class="prisma-track" data-idx="22" onclick="prismaPlay(22)">
+          <span class="prisma-num">22</span>
+          <span class="prisma-name">PRISMA DO ALADIO 22</span>
+          <span class="prisma-play-icon">▶</span>
+        </div>
+        <div class="prisma-track" data-idx="23" onclick="prismaPlay(23)">
+          <span class="prisma-num">23</span>
+          <span class="prisma-name">PRISMA DO ALADIO 23</span>
+          <span class="prisma-play-icon">▶</span>
+        </div>
+        <div class="prisma-track" data-idx="24" onclick="prismaPlay(24)">
+          <span class="prisma-num">24</span>
+          <span class="prisma-name">PRISMA DO ALADIO 24</span>
+          <span class="prisma-play-icon">▶</span>
+        </div>
+        <div class="prisma-track" data-idx="25" onclick="prismaPlay(25)">
+          <span class="prisma-num">25</span>
+          <span class="prisma-name">PRISMA DO ALADIO 25</span>
+          <span class="prisma-play-icon">▶</span>
+        </div>
+        <div class="prisma-track" data-idx="26" onclick="prismaPlay(26)">
+          <span class="prisma-num">26</span>
+          <span class="prisma-name">PRISMA DO ALADIO 26</span>
+          <span class="prisma-play-icon">▶</span>
+        </div>
+        <div class="prisma-track" data-idx="27" onclick="prismaPlay(27)">
+          <span class="prisma-num">27</span>
+          <span class="prisma-name">PRISMA DO ALADIO 27</span>
+          <span class="prisma-play-icon">▶</span>
+        </div>
+        <div class="prisma-track" data-idx="28" onclick="prismaPlay(28)">
+          <span class="prisma-num">28</span>
+          <span class="prisma-name">PRISMA DO ALADIO 28</span>
+          <span class="prisma-play-icon">▶</span>
+        </div>
+        <div class="prisma-track" data-idx="29" onclick="prismaPlay(29)">
+          <span class="prisma-num">29</span>
+          <span class="prisma-name">PRISMA DO ALADIO 29</span>
+          <span class="prisma-play-icon">▶</span>
+        </div>
+        <div class="prisma-track" data-idx="30" onclick="prismaPlay(30)">
+          <span class="prisma-num">30</span>
+          <span class="prisma-name">PRISMA DO ALADIO 30</span>
+          <span class="prisma-play-icon">▶</span>
+        </div>
+        <div class="prisma-track" data-idx="31" onclick="prismaPlay(31)">
+          <span class="prisma-num">31</span>
+          <span class="prisma-name">PRISMA DO ALADIO 31</span>
+          <span class="prisma-play-icon">▶</span>
+        </div>
+        <div class="prisma-track" data-idx="32" onclick="prismaPlay(32)">
+          <span class="prisma-num">32</span>
+          <span class="prisma-name">PRISMA DO ALADIO 32</span>
+          <span class="prisma-play-icon">▶</span>
+        </div>
+        <div class="prisma-track" data-idx="33" onclick="prismaPlay(33)">
+          <span class="prisma-num">33</span>
+          <span class="prisma-name">PRISMA DO ALADIO 33</span>
+          <span class="prisma-play-icon">▶</span>
+        </div>
+        <div class="prisma-track" data-idx="34" onclick="prismaPlay(34)">
+          <span class="prisma-num">34</span>
+          <span class="prisma-name">PRISMA DO ALADIO 34</span>
+          <span class="prisma-play-icon">▶</span>
+        </div>
+        <div class="prisma-track" data-idx="35" onclick="prismaPlay(35)">
+          <span class="prisma-num">35</span>
+          <span class="prisma-name">PRISMA DO ALADIO 35</span>
+          <span class="prisma-play-icon">▶</span>
+        </div>
+        <div class="prisma-track" data-idx="36" onclick="prismaPlay(36)">
+          <span class="prisma-num">36</span>
+          <span class="prisma-name">PRISMA DO ALADIO 36</span>
+          <span class="prisma-play-icon">▶</span>
+        </div>
+        <div class="prisma-track" data-idx="37" onclick="prismaPlay(37)">
+          <span class="prisma-num">37</span>
+          <span class="prisma-name">PRISMA DO ALADIO 37</span>
+          <span class="prisma-play-icon">▶</span>
+        </div>
+        <div class="prisma-track" data-idx="38" onclick="prismaPlay(38)">
+          <span class="prisma-num">38</span>
+          <span class="prisma-name">PRISMA DO ALADIO 38</span>
+          <span class="prisma-play-icon">▶</span>
+        </div>
+        <div class="prisma-track" data-idx="39" onclick="prismaPlay(39)">
+          <span class="prisma-num">39</span>
+          <span class="prisma-name">PRISMA DO ALADIO 39</span>
+          <span class="prisma-play-icon">▶</span>
+        </div>
+        <div class="prisma-track" data-idx="40" onclick="prismaPlay(40)">
+          <span class="prisma-num">40</span>
+          <span class="prisma-name">PRISMA DO ALADIO 40</span>
+          <span class="prisma-play-icon">▶</span>
+        </div>
+        <div class="prisma-track" data-idx="41" onclick="prismaPlay(41)">
+          <span class="prisma-num">41</span>
+          <span class="prisma-name">PRISMA DO ALADIO 41</span>
+          <span class="prisma-play-icon">▶</span>
+        </div>
+        <div class="prisma-track" data-idx="42" onclick="prismaPlay(42)">
+          <span class="prisma-num">42</span>
+          <span class="prisma-name">PRISMA DO ALADIO 42</span>
+          <span class="prisma-play-icon">▶</span>
+        </div>
+        <div class="prisma-track" data-idx="43" onclick="prismaPlay(43)">
+          <span class="prisma-num">43</span>
+          <span class="prisma-name">PRISMA DO ALADIO 43</span>
+          <span class="prisma-play-icon">▶</span>
+        </div>
+        <div class="prisma-track" data-idx="44" onclick="prismaPlay(44)">
+          <span class="prisma-num">44</span>
+          <span class="prisma-name">PRISMA DO ALADIO 44</span>
+          <span class="prisma-play-icon">▶</span>
+        </div>
+        <div class="prisma-track" data-idx="45" onclick="prismaPlay(45)">
+          <span class="prisma-num">45</span>
+          <span class="prisma-name">PRISMA DO ALADIO 45</span>
+          <span class="prisma-play-icon">▶</span>
+        </div>
+    </div>
+    <audio id="prisma-audio" preload="none"></audio>
+    <script>
+    var prismaTracks = [
+    {id:"1EPcV4tWvyFOhBzjCXLzwbSvuYiA4PYH9",name:"PRISMA DO ALADIO 00",url:"https://docs.google.com/uc?export=open&id=1EPcV4tWvyFOhBzjCXLzwbSvuYiA4PYH9"},
+    {id:"1T4BcAUFilpD2yo8D3dt1dnapxBSG97IU",name:"PRISMA DO ALADIO 01",url:"https://docs.google.com/uc?export=open&id=1T4BcAUFilpD2yo8D3dt1dnapxBSG97IU"},
+    {id:"1qeBWVH99gaAL66CrszmVX22zPbPLRZ5x",name:"PRISMA DO ALADIO 02",url:"https://docs.google.com/uc?export=open&id=1qeBWVH99gaAL66CrszmVX22zPbPLRZ5x"},
+    {id:"1V2F1PLeHIn8VmVrGwZ5ljkd9LR6XkssQ",name:"PRISMA DO ALADIO 03",url:"https://docs.google.com/uc?export=open&id=1V2F1PLeHIn8VmVrGwZ5ljkd9LR6XkssQ"},
+    {id:"1Ef4pIpjq3jcSPmJ3ikJ9fdmvHqAFhLsn",name:"PRISMA DO ALADIO 04",url:"https://docs.google.com/uc?export=open&id=1Ef4pIpjq3jcSPmJ3ikJ9fdmvHqAFhLsn"},
+    {id:"1gl7h0C9fM0CmnYz2Plp-WZFHH3dA9Fpn",name:"PRISMA DO ALADIO 05",url:"https://docs.google.com/uc?export=open&id=1gl7h0C9fM0CmnYz2Plp-WZFHH3dA9Fpn"},
+    {id:"1A6pB_oYuOckTXiLIlIku8t04JxVNvdNK",name:"PRISMA DO ALADIO 06",url:"https://docs.google.com/uc?export=open&id=1A6pB_oYuOckTXiLIlIku8t04JxVNvdNK"},
+    {id:"1p26Z1a4yV9spkK-R6Tg-rTeI2_qbKDby",name:"PRISMA DO ALADIO 07",url:"https://docs.google.com/uc?export=open&id=1p26Z1a4yV9spkK-R6Tg-rTeI2_qbKDby"},
+    {id:"1ADps9byKUVFDp-D_WomrrBjjXuhCsu7d",name:"PRISMA DO ALADIO 08",url:"https://docs.google.com/uc?export=open&id=1ADps9byKUVFDp-D_WomrrBjjXuhCsu7d"},
+    {id:"1mtt-t49teYA3Cu5gcBaGfGHXNXg69X5V",name:"PRISMA DO ALADIO 09",url:"https://docs.google.com/uc?export=open&id=1mtt-t49teYA3Cu5gcBaGfGHXNXg69X5V"},
+    {id:"1QpuQU4CGpQ8rDaIoX-OAcRbCVDAtFF81",name:"PRISMA DO ALADIO 10",url:"https://docs.google.com/uc?export=open&id=1QpuQU4CGpQ8rDaIoX-OAcRbCVDAtFF81"},
+    {id:"1lXy7YJMtuLYvHeVlq8F96PpGISvBMiGk",name:"PRISMA DO ALADIO 11",url:"https://docs.google.com/uc?export=open&id=1lXy7YJMtuLYvHeVlq8F96PpGISvBMiGk"},
+    {id:"1YL8S1HlehMO6UQ8ApdEAHyIi3k7coWNg",name:"PRISMA DO ALADIO 12",url:"https://docs.google.com/uc?export=open&id=1YL8S1HlehMO6UQ8ApdEAHyIi3k7coWNg"},
+    {id:"1AMiCsDa08mU-_Xe9qh0R3qb5ktucRJnm",name:"PRISMA DO ALADIO 13",url:"https://docs.google.com/uc?export=open&id=1AMiCsDa08mU-_Xe9qh0R3qb5ktucRJnm"},
+    {id:"1Zs0PLk79zLOTS8SnVpUJJHlJ6dTyJFB0",name:"PRISMA DO ALADIO 14",url:"https://docs.google.com/uc?export=open&id=1Zs0PLk79zLOTS8SnVpUJJHlJ6dTyJFB0"},
+    {id:"1_bRLZzNqx1eWVNxd7dzMvA9woL1ddJSs",name:"PRISMA DO ALADIO 15",url:"https://docs.google.com/uc?export=open&id=1_bRLZzNqx1eWVNxd7dzMvA9woL1ddJSs"},
+    {id:"1SxPxwfAcJCcNmztLOY0G34Cfi99AUvEN",name:"PRISMA DO ALADIO 16",url:"https://docs.google.com/uc?export=open&id=1SxPxwfAcJCcNmztLOY0G34Cfi99AUvEN"},
+    {id:"18pe22yW-EauJ91sW7-jMUzSqOsYFnkJP",name:"PRISMA DO ALADIO 17",url:"https://docs.google.com/uc?export=open&id=18pe22yW-EauJ91sW7-jMUzSqOsYFnkJP"},
+    {id:"1r3C2UaezSJM67sqPTlylaqqq2DQ-YxJ3",name:"PRISMA DO ALADIO 18",url:"https://docs.google.com/uc?export=open&id=1r3C2UaezSJM67sqPTlylaqqq2DQ-YxJ3"},
+    {id:"1dcVg4x_jMQrMXLzxyJUoBv5j6xZ0g972",name:"PRISMA DO ALADIO 19",url:"https://docs.google.com/uc?export=open&id=1dcVg4x_jMQrMXLzxyJUoBv5j6xZ0g972"},
+    {id:"1ruajfVS4aD_8aBoTk8YUS9lcPxBhUpq_",name:"PRISMA DO ALADIO 20",url:"https://docs.google.com/uc?export=open&id=1ruajfVS4aD_8aBoTk8YUS9lcPxBhUpq_"},
+    {id:"17w3vLhJ7eWjep2QLG-1p9_qkG1unJ-LM",name:"PRISMA DO ALADIO 21",url:"https://docs.google.com/uc?export=open&id=17w3vLhJ7eWjep2QLG-1p9_qkG1unJ-LM"},
+    {id:"18sFUfI65dWzMTHWDMLttbDAzShmiBsz7",name:"PRISMA DO ALADIO 22",url:"https://docs.google.com/uc?export=open&id=18sFUfI65dWzMTHWDMLttbDAzShmiBsz7"},
+    {id:"156Qbg5Q6thu8WAs3K4eNFA7ZR8XN12Y3",name:"PRISMA DO ALADIO 23",url:"https://docs.google.com/uc?export=open&id=156Qbg5Q6thu8WAs3K4eNFA7ZR8XN12Y3"},
+    {id:"1TtCY6XOdsDg3tJkZjFWONQ_AC92CQxUg",name:"PRISMA DO ALADIO 24",url:"https://docs.google.com/uc?export=open&id=1TtCY6XOdsDg3tJkZjFWONQ_AC92CQxUg"},
+    {id:"1co_Z25N_9-mDiZKnZy1QSw4IS6RUC3Ma",name:"PRISMA DO ALADIO 25",url:"https://docs.google.com/uc?export=open&id=1co_Z25N_9-mDiZKnZy1QSw4IS6RUC3Ma"},
+    {id:"1sa6yZ0-FRZFJv5nLDkL1G9HvAAmGNRMe",name:"PRISMA DO ALADIO 26",url:"https://docs.google.com/uc?export=open&id=1sa6yZ0-FRZFJv5nLDkL1G9HvAAmGNRMe"},
+    {id:"1F_jdO64NOy4nPoi_UbFrbmMA-cHZtzzY",name:"PRISMA DO ALADIO 27",url:"https://docs.google.com/uc?export=open&id=1F_jdO64NOy4nPoi_UbFrbmMA-cHZtzzY"},
+    {id:"142EhhtpV9-AOdE_obBJyUD9CtNdr6b_V",name:"PRISMA DO ALADIO 28",url:"https://docs.google.com/uc?export=open&id=142EhhtpV9-AOdE_obBJyUD9CtNdr6b_V"},
+    {id:"1FdzSuN7NdR8Sqe0hNJvIS40Lnw8URuyg",name:"PRISMA DO ALADIO 29",url:"https://docs.google.com/uc?export=open&id=1FdzSuN7NdR8Sqe0hNJvIS40Lnw8URuyg"},
+    {id:"1broJvTVH7j67u0pEyMafdL-S1cR1WfH6",name:"PRISMA DO ALADIO 30",url:"https://docs.google.com/uc?export=open&id=1broJvTVH7j67u0pEyMafdL-S1cR1WfH6"},
+    {id:"1lrNpuz395ICtbIZ40TIS3KKgTzJLObRf",name:"PRISMA DO ALADIO 31",url:"https://docs.google.com/uc?export=open&id=1lrNpuz395ICtbIZ40TIS3KKgTzJLObRf"},
+    {id:"1pQtlssLm5ohSTZ0VQIh6Xm2n5dFccKeG",name:"PRISMA DO ALADIO 32",url:"https://docs.google.com/uc?export=open&id=1pQtlssLm5ohSTZ0VQIh6Xm2n5dFccKeG"},
+    {id:"1c0e5Fh7COS2nQXcyc9KmYxqrhiPtcl_e",name:"PRISMA DO ALADIO 33",url:"https://docs.google.com/uc?export=open&id=1c0e5Fh7COS2nQXcyc9KmYxqrhiPtcl_e"},
+    {id:"1iJC7tZojcfguDKMfSO5zFv-79i483jhw",name:"PRISMA DO ALADIO 34",url:"https://docs.google.com/uc?export=open&id=1iJC7tZojcfguDKMfSO5zFv-79i483jhw"},
+    {id:"1Tq-6_e2-8sQf0ks2KI0ePZSRRKHufL6D",name:"PRISMA DO ALADIO 35",url:"https://docs.google.com/uc?export=open&id=1Tq-6_e2-8sQf0ks2KI0ePZSRRKHufL6D"},
+    {id:"1uJHBAJd0_dhxRD819JCR6yR9NkU5mgsM",name:"PRISMA DO ALADIO 36",url:"https://docs.google.com/uc?export=open&id=1uJHBAJd0_dhxRD819JCR6yR9NkU5mgsM"},
+    {id:"1Ox-W2F1ieu87nnxTcLAn2Y-EezWTEe3c",name:"PRISMA DO ALADIO 37",url:"https://docs.google.com/uc?export=open&id=1Ox-W2F1ieu87nnxTcLAn2Y-EezWTEe3c"},
+    {id:"1ykBZlfu4k6F9kxLjz3Xvf0mDG-3CrwRo",name:"PRISMA DO ALADIO 38",url:"https://docs.google.com/uc?export=open&id=1ykBZlfu4k6F9kxLjz3Xvf0mDG-3CrwRo"},
+    {id:"163TQJ-6twf3qIXB2FFw3mCHIKNZUbNH-",name:"PRISMA DO ALADIO 39",url:"https://docs.google.com/uc?export=open&id=163TQJ-6twf3qIXB2FFw3mCHIKNZUbNH-"},
+    {id:"12dmtzfq0vAq8eFnygfowC1EV3LJ5ZDU8",name:"PRISMA DO ALADIO 40",url:"https://docs.google.com/uc?export=open&id=12dmtzfq0vAq8eFnygfowC1EV3LJ5ZDU8"},
+    {id:"1qxta0pkqUTdcIKa0G-6mPgbaQyPlcBm8",name:"PRISMA DO ALADIO 41",url:"https://docs.google.com/uc?export=open&id=1qxta0pkqUTdcIKa0G-6mPgbaQyPlcBm8"},
+    {id:"1Y9ccKbTThtIEpXYI2v3ilrKlm5grJ4S5",name:"PRISMA DO ALADIO 42",url:"https://docs.google.com/uc?export=open&id=1Y9ccKbTThtIEpXYI2v3ilrKlm5grJ4S5"},
+    {id:"1Q9x7qet8p7_BZQHMCxQczwybn_Mxn9ob",name:"PRISMA DO ALADIO 43",url:"https://docs.google.com/uc?export=open&id=1Q9x7qet8p7_BZQHMCxQczwybn_Mxn9ob"},
+    {id:"10kcNrA8fXvZS-Y_e8kqWUgAAWenfWR00",name:"PRISMA DO ALADIO 44",url:"https://docs.google.com/uc?export=open&id=10kcNrA8fXvZS-Y_e8kqWUgAAWenfWR00"},
+    {id:"1IpGwqW9CSMRPurYOXpXVzV_eP1m5s2wN",name:"PRISMA DO ALADIO 45",url:"https://docs.google.com/uc?export=open&id=1IpGwqW9CSMRPurYOXpXVzV_eP1m5s2wN"}
+  ];
+    var prismaIdx = 0;
+    var prismaAudio = document.getElementById('prisma-audio');
+    var prismaPlaying = false;
+    function prismaFmt(s){var m=Math.floor(s/60),sec=Math.floor(s%60);return m+':'+(sec<10?'0':'')+sec;}
+    prismaAudio.addEventListener('timeupdate',function(){if(!prismaAudio.duration)return;var pct=(prismaAudio.currentTime/prismaAudio.duration)*100;document.getElementById('prisma-progress').style.width=pct+'%';document.getElementById('prisma-time-cur').textContent=prismaFmt(prismaAudio.currentTime);document.getElementById('prisma-time-tot').textContent=prismaFmt(prismaAudio.duration);});
+    prismaAudio.addEventListener('ended',function(){prismaNext();});
+    function prismaSetTrack(idx){prismaIdx=idx;var t=prismaTracks[idx];document.getElementById('prisma-current-name').textContent=t.name;prismaAudio.src=t.url;document.querySelectorAll('.prisma-track').forEach(function(el,i){el.classList.toggle('active',i===idx);});document.getElementById('prisma-progress').style.width='0%';document.getElementById('prisma-time-cur').textContent='0:00';document.getElementById('prisma-time-tot').textContent='0:00';}
+    function prismaPlay(idx){prismaSetTrack(idx);prismaAudio.play();prismaPlaying=true;document.getElementById('prisma-btn-play').textContent='⏸';}
+    function prismaToggle(){if(prismaPlaying){prismaAudio.pause();prismaPlaying=false;document.getElementById('prisma-btn-play').textContent='▶';}else{prismaAudio.play();prismaPlaying=true;document.getElementById('prisma-btn-play').textContent='⏸';}}
+    function prismaNext(){prismaPlay((prismaIdx+1)%prismaTracks.length);}
+    function prismaPrev(){prismaPlay((prismaIdx-1+prismaTracks.length)%prismaTracks.length);}
+    function prismaSeek(e){var bar=document.getElementById('prisma-progress-bar');var pct=e.offsetX/bar.offsetWidth;if(prismaAudio.duration)prismaAudio.currentTime=pct*prismaAudio.duration;}
+    prismaSetTrack(0);
+    </script>
+  </div>
+</section>
+
 <!-- PLAYER GOL DO OITÃO -->
 <section id="player-gol-oitao" style="background:linear-gradient(180deg,#0a0a0a 0%,#0d0a00 100%);padding:60px 24px;">
   <div style="max-width:800px;margin:0 auto;">
