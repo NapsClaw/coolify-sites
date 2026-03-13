@@ -1068,10 +1068,7 @@
   <!-- Player de áudio -->
   <audio id="intro-audio" preload="none">
     <source src="intro-alerta-global.mp3" type="audio/mpeg">
-  <!-- YouTube audio via iframe -->
-  <iframe id="yt-audio" width="1" height="1" style="position:absolute;opacity:0;pointer-events:none;"
-    src="https://www.youtube.com/embed/ridV4iJFFOI?autoplay=0&controls=0&start=0&enablejsapi=1"
-    allow="autoplay" frameborder="0"></iframe>
+
   </audio>
 </div>
 
@@ -1311,14 +1308,8 @@ function iniciarIntroComAudio() {
   var btn = document.getElementById('intro-play-btn');
   if (btn) btn.style.display = 'none';
 
-  // Toca YouTube Shorts via iframe autoplay
-  var ytFrame = document.getElementById('yt-audio');
-  if (ytFrame) {
-    ytFrame.src = 'https://www.youtube.com/embed/ridV4iJFFOI?autoplay=1&controls=0&start=0&mute=0&loop=1&playlist=ridV4iJFFOI';
-  }
-
-  // Inicia barra de progresso de 30 segundos
-  var duration = 30000;
+  // Sem música — só 5 segundos de contagem
+  var duration = 5000;
   var start = Date.now();
   barInterval = setInterval(function() {
     var elapsed = Date.now() - start;
@@ -1327,10 +1318,10 @@ function iniciarIntroComAudio() {
     if (pct >= 100) { clearInterval(barInterval); fecharIntro(); }
   }, 50);
 
-  // Contagem regressiva de 30 para 0
+  // Contagem regressiva de 5 para 0
   var countEl = document.getElementById('intro-countdown');
-  var countVal = 30;
-  if (countEl) countEl.textContent = '30';
+  var countVal = 5;
+  if (countEl) countEl.textContent = '5';
   countInterval = setInterval(function() {
     countVal--;
     if (countEl) {
