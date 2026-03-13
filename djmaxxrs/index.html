@@ -1786,6 +1786,146 @@ function fecharIntro() {
 
 <!-- CDs & SETS -->
 
+<!-- PLAYER O PODER DO LOUVOR -->
+<section id="player-louvor" style="background:linear-gradient(180deg,#06000f 0%,#0a0015 100%);padding:60px 24px;">
+  <div style="max-width:800px;margin:0 auto;">
+    <div style="text-align:center;margin-bottom:32px;">
+      <span style="display:inline-block;background:rgba(180,0,255,0.15);border:1px solid rgba(180,0,255,0.5);color:#cc44ff;font-size:12px;font-weight:700;letter-spacing:3px;padding:6px 20px;border-radius:30px;margin-bottom:16px;">🙏 CD GOSPEL</span>
+      <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,6vw,52px);color:#fff;letter-spacing:3px;margin:0;">O PODER DO <span style="color:#cc44ff;">LOUVOR</span></h2>
+      <p style="color:#888;font-size:14px;margin-top:8px;">Cura e Liberta — DJ Maxx RS · 9 faixas</p>
+    </div>
+
+    <!-- Player principal -->
+    <div style="background:#111;border:2px solid rgba(180,0,255,0.4);border-radius:20px;padding:24px;margin-bottom:24px;box-shadow:0 0 40px rgba(180,0,255,0.15);">
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;">
+        <div style="width:80px;height:80px;border-radius:12px;background:linear-gradient(135deg,#4400aa,#cc44ff);display:flex;align-items:center;justify-content:center;font-size:36px;border:2px solid #cc44ff;flex-shrink:0;">🙏</div>
+        <div style="flex:1;">
+          <div id="louvor-current-name" style="font-family:'Bebas Neue',sans-serif;font-size:20px;color:#fff;letter-spacing:2px;">Deus de Milagres</div>
+          <div style="font-size:12px;color:#888;margin-top:4px;">DJ Maxx RS · O Poder do Louvor</div>
+        </div>
+      </div>
+      <div id="louvor-progress-bar" style="background:#222;border-radius:4px;height:6px;cursor:pointer;margin-bottom:12px;" onclick="louvorSeek(event)">
+        <div id="louvor-progress" style="height:100%;width:0%;background:linear-gradient(90deg,#cc44ff,#ff88ff);border-radius:4px;transition:width 0.3s;"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:#666;margin-bottom:16px;">
+        <span id="louvor-time-cur">0:00</span>
+        <span id="louvor-time-tot">0:00</span>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:center;gap:20px;">
+        <button onclick="louvorPrev()" style="background:rgba(180,0,255,0.15);border:1px solid rgba(180,0,255,0.4);color:#cc44ff;width:44px;height:44px;border-radius:50%;font-size:18px;cursor:pointer;">⏮</button>
+        <button id="louvor-btn-play" onclick="louvorToggle()" style="background:linear-gradient(135deg,#8800ff,#cc44ff);border:none;color:#fff;width:60px;height:60px;border-radius:50%;font-size:24px;cursor:pointer;box-shadow:0 0 20px rgba(180,0,255,0.5);">▶</button>
+        <button onclick="louvorNext()" style="background:rgba(180,0,255,0.15);border:1px solid rgba(180,0,255,0.4);color:#cc44ff;width:44px;height:44px;border-radius:50%;font-size:18px;cursor:pointer;">⏭</button>
+      </div>
+    </div>
+
+    <!-- Lista de faixas -->
+    <div style="background:#0d0d0d;border:1px solid rgba(180,0,255,0.2);border-radius:16px;overflow:hidden;">
+      <style>
+        .louvor-track{display:flex;align-items:center;padding:12px 20px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,0.05);transition:background 0.2s;gap:12px;}
+        .louvor-track:hover{background:rgba(180,0,255,0.08);}
+        .louvor-track.active{background:rgba(180,0,255,0.15);border-left:3px solid #cc44ff;}
+        .louvor-num{font-family:'Bebas Neue',sans-serif;color:#666;font-size:14px;min-width:28px;}
+        .louvor-name{flex:1;color:#ccc;font-size:14px;font-weight:600;}
+        .louvor-play-icon{color:#cc44ff;font-size:12px;opacity:0;transition:opacity 0.2s;}
+        .louvor-track:hover .louvor-play-icon{opacity:1;}
+        .louvor-track.active .louvor-play-icon{opacity:1;}
+      </style>
+        <div class="louvor-track" data-idx="0" onclick="louvorPlay(0)">
+          <span class="louvor-num">01</span>
+          <span class="louvor-name">Deus de Milagres</span>
+          <span class="louvor-play-icon">▶</span>
+        </div>
+        <div class="louvor-track" data-idx="1" onclick="louvorPlay(1)">
+          <span class="louvor-num">02</span>
+          <span class="louvor-name">EU, EU, EU QUERO É DEUS</span>
+          <span class="louvor-play-icon">▶</span>
+        </div>
+        <div class="louvor-track" data-idx="2" onclick="louvorPlay(2)">
+          <span class="louvor-num">03</span>
+          <span class="louvor-name">JESUS CRISTO É REI NA PISTA</span>
+          <span class="louvor-play-icon">▶</span>
+        </div>
+        <div class="louvor-track" data-idx="3" onclick="louvorPlay(3)">
+          <span class="louvor-num">04</span>
+          <span class="louvor-name">Leva-me Mais Profundo</span>
+          <span class="louvor-play-icon">▶</span>
+        </div>
+        <div class="louvor-track" data-idx="4" onclick="louvorPlay(4)">
+          <span class="louvor-num">05</span>
+          <span class="louvor-name">Milagre No Altar</span>
+          <span class="louvor-play-icon">▶</span>
+        </div>
+        <div class="louvor-track" data-idx="5" onclick="louvorPlay(5)">
+          <span class="louvor-num">06</span>
+          <span class="louvor-name">Nascido Pra Te Adorar</span>
+          <span class="louvor-play-icon">▶</span>
+        </div>
+        <div class="louvor-track" data-idx="6" onclick="louvorPlay(6)">
+          <span class="louvor-num">07</span>
+          <span class="louvor-name">Pernas Tortas, Coração Reto</span>
+          <span class="louvor-play-icon">▶</span>
+        </div>
+        <div class="louvor-track" data-idx="7" onclick="louvorPlay(7)">
+          <span class="louvor-num">08</span>
+          <span class="louvor-name">Ritmo de Fé</span>
+          <span class="louvor-play-icon">▶</span>
+        </div>
+        <div class="louvor-track" data-idx="8" onclick="louvorPlay(8)">
+          <span class="louvor-num">09</span>
+          <span class="louvor-name">Teu Altar em Mim</span>
+          <span class="louvor-play-icon">▶</span>
+        </div>
+    </div>
+
+    <audio id="louvor-audio" preload="none"></audio>
+
+    <script>
+    var louvorTracks = [
+    {id:"1QQt8K_VF_k8Q8lrrgtkDbQBRj5cs0lgs",name:"Deus de Milagres",url:"https://docs.google.com/uc?export=open&id=1QQt8K_VF_k8Q8lrrgtkDbQBRj5cs0lgs"},
+    {id:"1MFpWPqcH_VBchjh7WaeEP9C2OSrQW3mx",name:"EU, EU, EU QUERO É DEUS",url:"https://docs.google.com/uc?export=open&id=1MFpWPqcH_VBchjh7WaeEP9C2OSrQW3mx"},
+    {id:"1_R_V_hIffrxqfzNor2BoS77Ls9zgmHk0",name:"JESUS CRISTO É REI NA PISTA",url:"https://docs.google.com/uc?export=open&id=1_R_V_hIffrxqfzNor2BoS77Ls9zgmHk0"},
+    {id:"1qSeRF2soyq0tOSDdYxzzxEr42BvkITdh",name:"Leva-me Mais Profundo",url:"https://docs.google.com/uc?export=open&id=1qSeRF2soyq0tOSDdYxzzxEr42BvkITdh"},
+    {id:"1ElOUwvFNAxoUKWP2qlLWV3uW4-ocT9mD",name:"Milagre No Altar",url:"https://docs.google.com/uc?export=open&id=1ElOUwvFNAxoUKWP2qlLWV3uW4-ocT9mD"},
+    {id:"1-CMV0FjsOY8rc-yI6QhiLgueNdwpOLK5",name:"Nascido Pra Te Adorar",url:"https://docs.google.com/uc?export=open&id=1-CMV0FjsOY8rc-yI6QhiLgueNdwpOLK5"},
+    {id:"1KCJzX5q9xvyPeFkAjkltKK042MfngvMr",name:"Pernas Tortas, Coração Reto",url:"https://docs.google.com/uc?export=open&id=1KCJzX5q9xvyPeFkAjkltKK042MfngvMr"},
+    {id:"1zmPd7Bs2yuQL2sqbDKD9yO6vih61Cq6O",name:"Ritmo de Fé",url:"https://docs.google.com/uc?export=open&id=1zmPd7Bs2yuQL2sqbDKD9yO6vih61Cq6O"},
+    {id:"1Vh5iDkmbNgnCv_hyABDwP2-LQu2dPNIM",name:"Teu Altar em Mim",url:"https://docs.google.com/uc?export=open&id=1Vh5iDkmbNgnCv_hyABDwP2-LQu2dPNIM"}
+  ];
+    var louvorIdx = 0;
+    var louvorAudio = document.getElementById('louvor-audio');
+    var louvorPlaying = false;
+
+    function louvorFmt(s){var m=Math.floor(s/60),sec=Math.floor(s%60);return m+':'+(sec<10?'0':'')+sec;}
+
+    louvorAudio.addEventListener('timeupdate', function(){
+      if(!louvorAudio.duration) return;
+      var pct=(louvorAudio.currentTime/louvorAudio.duration)*100;
+      document.getElementById('louvor-progress').style.width=pct+'%';
+      document.getElementById('louvor-time-cur').textContent=louvorFmt(louvorAudio.currentTime);
+      document.getElementById('louvor-time-tot').textContent=louvorFmt(louvorAudio.duration);
+    });
+    louvorAudio.addEventListener('ended', function(){louvorNext();});
+
+    function louvorSetTrack(idx){
+      louvorIdx=idx;
+      var t=louvorTracks[idx];
+      document.getElementById('louvor-current-name').textContent=t.name;
+      louvorAudio.src=t.url;
+      document.querySelectorAll('.louvor-track').forEach(function(el,i){el.classList.toggle('active',i===idx);});
+      document.getElementById('louvor-progress').style.width='0%';
+      document.getElementById('louvor-time-cur').textContent='0:00';
+      document.getElementById('louvor-time-tot').textContent='0:00';
+    }
+    function louvorPlay(idx){louvorSetTrack(idx);louvorAudio.play();louvorPlaying=true;document.getElementById('louvor-btn-play').textContent='⏸';}
+    function louvorToggle(){if(louvorPlaying){louvorAudio.pause();louvorPlaying=false;document.getElementById('louvor-btn-play').textContent='▶';}else{louvorAudio.play();louvorPlaying=true;document.getElementById('louvor-btn-play').textContent='⏸';}}
+    function louvorNext(){louvorPlay((louvorIdx+1)%louvorTracks.length);}
+    function louvorPrev(){louvorPlay((louvorIdx-1+louvorTracks.length)%louvorTracks.length);}
+    function louvorSeek(e){var bar=document.getElementById('louvor-progress-bar');var pct=e.offsetX/bar.offsetWidth;if(louvorAudio.duration)louvorAudio.currentTime=pct*louvorAudio.duration;}
+    louvorSetTrack(0);
+    </script>
+  </div>
+</section>
+
 <!-- PLAYER GOL DO OITÃO -->
 <section id="player-gol-oitao" style="background:linear-gradient(180deg,#0a0a0a 0%,#0d0a00 100%);padding:60px 24px;">
   <div style="max-width:800px;margin:0 auto;">
