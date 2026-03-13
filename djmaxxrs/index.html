@@ -995,7 +995,7 @@
 <!-- INTRO ANIMADA - SHOW COMPLETO -->
 <div id="intro-overlay" style="position:fixed; inset:0; z-index:9999; background:#060810; overflow:hidden;">
   <!-- Canvas da intro (desativado) -->
-  <canvas id="intro-canvas" style="position:absolute;inset:0;width:100%;height:100%;z-index:1;display:none;"></canvas>
+  <canvas id="intro-canvas" style="position:absolute;inset:0;width:100%;height:100%;z-index:1;"></canvas>
 
   <!-- Conteúdo central -->
   <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:3;text-align:center;padding:24px;pointer-events:none;">
@@ -1067,7 +1067,7 @@
   window.addEventListener('resize', resize);
 
   var t = 0; // tempo global
-  var showMovings = false; // movings aparecem após clicar em "entrar"
+  var showMovings = true; // movings ativos desde o início na intro
 
   // ── NEVE CAINDO ──────────────────────────────────────────────────────────
   var globe = { angle:0, r:0, maxR:0 }; // mantido por compatibilidade
@@ -1174,32 +1174,33 @@
     if(!showMovings) return;
     ctx.save();
     ctx.globalCompositeOperation = 'screen';
-    movings.forEach(function(mv){
-      mv.x = W*(0.08 + movings.indexOf(mv)*0.168); // atualiza pra resize
+    movings.forEach(function(mv, idx){
+      // Origem no TOPO, feixes caindo de cima para baixo
+      var originX = W*(0.08 + idx*0.168);
       var sweep = Math.sin(t*mv.speed + mv.phase);
-      var targetX = W/2 + sweep * W*0.4;
-      var targetY = H*0.3 + Math.cos(t*mv.speed*0.7+mv.phase)*H*0.2;
+      var targetX = originX + sweep * W*0.15;
+      var targetY = H*0.75 + Math.cos(t*mv.speed*0.7+mv.phase)*H*0.15;
 
       ctx.save();
-      ctx.globalAlpha = 0.2;
-      var grad = ctx.createLinearGradient(mv.x, H, targetX, targetY);
+      ctx.globalAlpha = 0.28;
+      var grad = ctx.createLinearGradient(originX, 0, targetX, targetY);
       grad.addColorStop(0, mv.color);
-      grad.addColorStop(0.5, mv.color);
+      grad.addColorStop(0.6, mv.color);
       grad.addColorStop(1, 'transparent');
 
-      var dx=targetX-mv.x, dy=targetY-H;
+      var dx=targetX-originX, dy=targetY-0;
       var len=Math.sqrt(dx*dx+dy*dy)||1;
       var nx=-dy/len*(mv.width/2), ny=dx/len*(mv.width/2);
       ctx.beginPath();
-      ctx.moveTo(mv.x+nx,H); ctx.lineTo(targetX+nx*0.05,targetY);
-      ctx.lineTo(targetX-nx*0.05,targetY); ctx.lineTo(mv.x-nx,H);
+      ctx.moveTo(originX+nx, 0); ctx.lineTo(targetX+nx*0.05, targetY);
+      ctx.lineTo(targetX-nx*0.05, targetY); ctx.lineTo(originX-nx, 0);
       ctx.closePath();
       ctx.fillStyle=grad; ctx.fill();
-      // Spot no destino
-      ctx.globalAlpha=0.15;
-      var sg=ctx.createRadialGradient(targetX,targetY,0,targetX,targetY,mv.width*2);
+      // Spot brilhante na origem (topo)
+      ctx.globalAlpha=0.25;
+      var sg=ctx.createRadialGradient(originX,0,0,originX,0,mv.width*3);
       sg.addColorStop(0,mv.color); sg.addColorStop(1,'transparent');
-      ctx.beginPath(); ctx.arc(targetX,targetY,mv.width*2,0,Math.PI*2);
+      ctx.beginPath(); ctx.arc(originX,0,mv.width*3,0,Math.PI*2);
       ctx.fillStyle=sg; ctx.fill();
       ctx.restore();
     });
@@ -1223,8 +1224,9 @@
     bg.addColorStop(0,'#0a0014'); bg.addColorStop(1,'#000');
     ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
 
-    // Só neve na intro (lasers e movings removidos)
+    // Neve + movings de cima pra baixo na intro
     drawGlobe();
+    drawMovings();
   }
 
   requestAnimationFrame(loop);
