@@ -1263,47 +1263,47 @@ setTimeout(function() {
   document.getElementById('intro-skip').style.opacity = '1';
 }, 5000);
 
-// Barra de progresso automática (20 segundos)
+// Barra e contador NÃO rodam automaticamente — apenas ao clicar
 var audio = document.getElementById('intro-audio');
-var duration = 30000;
-var start = Date.now();
-var barInterval = setInterval(function() {
-  var elapsed = Date.now() - start;
-  var pct = Math.min((elapsed / duration) * 100, 100);
-  document.getElementById('intro-bar').style.width = pct + '%';
-  if (pct >= 100) { clearInterval(barInterval); fecharIntro(); }
-}, 50);
-
-// Contagem regressiva
-var countEl = document.getElementById('intro-countdown');
-var countTotal = 30;
-var countVal = countTotal;
-var countInterval = setInterval(function() {
-  countVal--;
-  if (countEl) {
-    countEl.textContent = countVal <= 0 ? '0' : countVal;
-    if (countVal <= 3) {
-      countEl.style.color = '#00d4ff';
-      countEl.style.textShadow = '0 0 40px rgba(0,212,255,1), 0 0 80px rgba(0,212,255,0.5)';
-    }
-  }
-  if (countVal <= 0) clearInterval(countInterval);
-}, 1000);
+var barInterval = null;
+var countInterval = null;
 
 // Áudio toca ao clicar em "ENTRAR NO SITE"
 function iniciarIntroComAudio() {
   var btn = document.getElementById('intro-play-btn');
   if (btn) btn.style.display = 'none';
+
   // Toca YouTube Shorts via iframe autoplay
   var ytFrame = document.getElementById('yt-audio');
   if (ytFrame) {
     ytFrame.src = 'https://www.youtube.com/embed/oiIC6WA6S3s?autoplay=1&controls=0&start=0&mute=0';
   }
-  // Para após 30 segundos
-  setTimeout(function() {
-    if (ytFrame) ytFrame.src = '';
-  }, 30000);
-  fecharIntro();
+
+  // Inicia barra de progresso de 30 segundos
+  var duration = 30000;
+  var start = Date.now();
+  barInterval = setInterval(function() {
+    var elapsed = Date.now() - start;
+    var pct = Math.min((elapsed / duration) * 100, 100);
+    document.getElementById('intro-bar').style.width = pct + '%';
+    if (pct >= 100) { clearInterval(barInterval); fecharIntro(); }
+  }, 50);
+
+  // Contagem regressiva de 30 para 0
+  var countEl = document.getElementById('intro-countdown');
+  var countVal = 30;
+  if (countEl) countEl.textContent = '30';
+  countInterval = setInterval(function() {
+    countVal--;
+    if (countEl) {
+      countEl.textContent = countVal <= 0 ? '0' : countVal;
+      if (countVal <= 3) {
+        countEl.style.color = '#00d4ff';
+        countEl.style.textShadow = '0 0 40px rgba(0,212,255,1), 0 0 80px rgba(0,212,255,0.5)';
+      }
+    }
+    if (countVal <= 0) clearInterval(countInterval);
+  }, 1000);
 }
 
 function fecharIntro() {
