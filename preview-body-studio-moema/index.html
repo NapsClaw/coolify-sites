@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Body Studio Moema | EMS · Eletrofitness · Personal Trainer</title>
+  <meta name="description" content="Body Studio Moema — Eletrofitness EMS, eletroestimulação muscular e personal trainer em Moema, SP. Resultados em 20 minutos por semana. 5★ · 69 avaliações.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #060608;
+      --bg2: #0d0e12;
+      --bg3: #141620;
+      --electric: #3b82f6;
+      --electric2: #60a5fa;
+      --neon: #22d3ee;
+      --white: #f0f2ff;
+      --text: #c8cce8;
+      --muted: #5a5e7a;
+      --border: rgba(59,130,246,0.2);
+      --glow: rgba(59,130,246,0.15);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* GRID BG */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(59,130,246,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(59,130,246,0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(6,6,8,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 0.02em;
+    }
+
+    .nav-sub {
+      font-size: 10px;
+      color: var(--electric2);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    .nav-cta {
+      background: var(--electric);
+      color: white;
+      padding: 10px 18px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 700;
+      text-decoration: none;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: all 0.2s;
+      box-shadow: 0 0 16px rgba(59,130,246,0.3);
+    }
+
+    .nav-cta:hover {
+      background: var(--electric2);
+      box-shadow: 0 0 24px rgba(59,130,246,0.5);
+    }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 100px 20px 60px;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .hero-glow {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(59,130,246,0.2) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-glow2 {
+      position: absolute;
+      bottom: 100px;
+      right: -50px;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(34,211,238,0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* EMS visualization */
+    .ems-visual {
+      position: absolute;
+      top: 80px;
+      right: 20px;
+      width: 140px;
+      height: 140px;
+      pointer-events: none;
+      opacity: 0.2;
+    }
+
+    .ems-ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 1px solid var(--electric);
+      animation: expandRing 3s infinite;
+    }
+
+    .ems-ring:nth-child(1) { inset: 20%; animation-delay: 0s; }
+    .ems-ring:nth-child(2) { inset: 10%; animation-delay: 0.6s; }
+    .ems-ring:nth-child(3) { inset: 0%; animation-delay: 1.2s; }
+
+    @keyframes expandRing {
+      0% { opacity: 0; transform: scale(0.8); }
+      50% { opacity: 1; }
+      100% { opacity: 0; transform: scale(1.1); }
+    }
+
+    .hero-content { position: relative; z-index: 2; }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(59,130,246,0.12);
+      border: 1px solid rgba(59,130,246,0.35);
+      border-radius: 4px;
+      padding: 6px 14px;
+      margin-bottom: 24px;
+    }
+
+    .hero-tag-dot {
+      width: 7px; height: 7px;
+      background: var(--neon);
+      border-radius: 50%;
+      animation: blink 2s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .hero-tag-text {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--electric2);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .hero-stars {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 20px;
+    }
+
+    .stars-icons { color: #f5c842; font-size: 14px; letter-spacing: 1px; }
+
+    .stars-text {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .hero-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(38px, 10vw, 62px);
+      font-weight: 800;
+      line-height: 1.0;
+      color: var(--white);
+      margin-bottom: 20px;
+      letter-spacing: -0.01em;
+    }
+
+    .hero-title .highlight {
+      background: linear-gradient(90deg, var(--electric), var(--neon));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-desc {
+      font-size: 15px;
+      line-height: 1.7;
+      color: rgba(200,204,232,0.65);
+      margin-bottom: 32px;
+      max-width: 440px;
+    }
+
+    .hero-claim {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(59,130,246,0.08);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 14px 16px;
+      margin-bottom: 28px;
+    }
+
+    .hero-claim-icon { font-size: 24px; flex-shrink: 0; }
+
+    .hero-claim-text {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--white);
+      line-height: 1.4;
+    }
+
+    .hero-claim-sub {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .btn-electric {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: var(--electric);
+      color: white;
+      padding: 16px 24px;
+      border-radius: 4px;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      transition: all 0.2s;
+      box-shadow: 0 4px 20px rgba(59,130,246,0.35);
+    }
+
+    .btn-electric:hover {
+      background: var(--electric2);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 28px rgba(59,130,246,0.5);
+    }
+
+    .btn-ghost {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: transparent;
+      color: var(--text);
+      padding: 15px 24px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .btn-ghost:hover { border-color: var(--electric); color: var(--electric2); }
+
+    /* SECTION BASE */
+    section { padding: 64px 20px; position: relative; z-index: 1; }
+
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--electric2);
+      margin-bottom: 12px;
+    }
+
+    .stitle {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(28px, 8vw, 40px);
+      font-weight: 700;
+      line-height: 1.15;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+
+    .stitle .hl {
+      background: linear-gradient(90deg, var(--electric), var(--neon));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .stext {
+      font-size: 15px;
+      line-height: 1.75;
+      color: rgba(200,204,232,0.6);
+      margin-bottom: 36px;
+    }
+
+    /* WHAT IS EMS */
+    .what-section { background: var(--bg2); }
+
+    .ems-explainer {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 24px 20px;
+      margin-bottom: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ems-explainer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--electric), var(--neon));
+    }
+
+    .ems-explainer-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+
+    .ems-explainer-text {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--text);
+    }
+
+    .ems-metrics {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .ems-metric {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 18px 16px;
+      text-align: center;
+    }
+
+    .ems-metric-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 32px;
+      font-weight: 800;
+      background: linear-gradient(90deg, var(--electric), var(--neon));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .ems-metric-label {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    /* SERVICES */
+    .services-section { background: var(--bg); }
+
+    .service-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .service-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .service-card:hover {
+      border-color: rgba(59,130,246,0.5);
+      background: rgba(59,130,246,0.05);
+    }
+
+    .sc-icon {
+      width: 46px;
+      height: 46px;
+      background: rgba(59,130,246,0.12);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    .sc-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 5px;
+    }
+
+    .sc-desc {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .sc-badge {
+      display: inline-block;
+      background: rgba(34,211,238,0.12);
+      border: 1px solid rgba(34,211,238,0.3);
+      color: var(--neon);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 3px;
+      margin-top: 8px;
+    }
+
+    /* STATS */
+    .stats-section {
+      background: var(--bg2);
+      padding: 48px 20px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+    }
+
+    .stat-item {
+      text-align: center;
+      padding: 24px 12px;
+      position: relative;
+    }
+
+    .stat-item:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 20%;
+      height: 60%;
+      width: 1px;
+      background: var(--border);
+    }
+
+    .stat-number {
+      font-family: 'Syne', sans-serif;
+      font-size: 36px;
+      font-weight: 800;
+      background: linear-gradient(90deg, var(--electric), var(--neon));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      font-weight: 500;
+    }
+
+    /* REVIEWS */
+    .reviews-section { background: var(--bg3); }
+
+    .review-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .review-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 22px 18px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .review-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: linear-gradient(180deg, var(--electric), var(--neon));
+    }
+
+    .review-stars { color: #f5c842; font-size: 14px; letter-spacing: 2px; margin-bottom: 12px; }
+
+    .review-text {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--text);
+      font-style: italic;
+      margin-bottom: 14px;
+    }
+
+    .review-author {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .review-avatar {
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg, var(--electric) 0%, var(--neon) 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: 700;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .review-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--white);
+    }
+
+    .review-src { font-size: 11px; color: var(--muted); }
+
+    /* CONTACT */
+    .contact-section { background: var(--bg2); }
+
+    .contact-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .contact-header {
+      background: linear-gradient(135deg, rgba(59,130,246,0.15) 0%, rgba(34,211,238,0.08) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 20px;
+    }
+
+    .contact-header-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 3px;
+    }
+
+    .contact-header-sub {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .contact-body { padding: 20px; }
+
+    .contact-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(59,130,246,0.1);
+    }
+
+    .contact-row:last-child { border-bottom: none; }
+
+    .contact-icon {
+      width: 36px; height: 36px;
+      background: rgba(59,130,246,0.1);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .ci-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 3px; }
+    .ci-value { font-size: 14px; color: var(--text); line-height: 1.5; }
+
+    /* FOOTER */
+    footer {
+      background: var(--bg);
+      padding: 40px 20px;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+
+    .footer-logo .hl {
+      background: linear-gradient(90deg, var(--electric), var(--neon));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .footer-addr { font-size: 12px; color: var(--muted); line-height: 1.7; margin-top: 8px; }
+
+    /* FLOATING WA */
+    .wa-float {
+      position: fixed;
+      bottom: 24px;
+      right: 20px;
+      z-index: 200;
+      width: 56px;
+      height: 56px;
+      background: #25d366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+      text-decoration: none;
+      transition: transform 0.2s;
+    }
+
+    .wa-float:hover { transform: scale(1.1); }
+    .wa-float svg { width: 28px; height: 28px; }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-content > * { animation: fadeUp 0.5s ease forwards; opacity: 0; }
+    .hero-content > *:nth-child(1) { animation-delay: 0.1s; }
+    .hero-content > *:nth-child(2) { animation-delay: 0.2s; }
+    .hero-content > *:nth-child(3) { animation-delay: 0.3s; }
+    .hero-content > *:nth-child(4) { animation-delay: 0.4s; }
+    .hero-content > *:nth-child(5) { animation-delay: 0.5s; }
+    .hero-content > *:nth-child(6) { animation-delay: 0.6s; }
+    .hero-content > *:nth-child(7) { animation-delay: 0.7s; }
+
+    @media (max-width: 480px) {
+      .ems-metrics { grid-template-columns: 1fr; }
+      .stats-section { grid-template-columns: 1fr; }
+      .stat-item:not(:last-child)::after { display: none; }
+      .stat-item:not(:last-child) { border-bottom: 1px solid var(--border); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-brand">
+      <div class="nav-logo">Body Studio</div>
+      <div class="nav-sub">EMS · Moema</div>
+    </div>
+    <a href="https://wa.me/5511993105996?text=Olá!%20Vi%20o%20site%20e%20quero%20saber%20mais%20sobre%20o%20EMS!" class="nav-cta">Agendar</a>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-glow2"></div>
+
+    <div class="ems-visual">
+      <div class="ems-ring"></div>
+      <div class="ems-ring"></div>
+      <div class="ems-ring"></div>
+    </div>
+
+    <div class="hero-content">
+      <div class="hero-tag">
+        <div class="hero-tag-dot"></div>
+        <span class="hero-tag-text">Eletrofitness EMS · Moema · SP</span>
+      </div>
+
+      <div class="hero-stars">
+        <span class="stars-icons">★★★★★</span>
+        <span class="stars-text">5,0 · 69 avaliações no Google</span>
+      </div>
+
+      <h1 class="hero-title">
+        Resultados<br>
+        <span class="highlight">em 20 min</span><br>
+        por semana
+      </h1>
+
+      <p class="hero-desc">
+        Eletroestimulação muscular (EMS) + personal trainer — tecnologia que ativa
+        90% dos músculos simultaneamente. Mais eficiente que 2h de musculação tradicional.
+      </p>
+
+      <div class="hero-claim">
+        <span class="hero-claim-icon">⚡</span>
+        <div>
+          <div class="hero-claim-text">1 sessão de 20 min = 2h de treino convencional</div>
+          <div class="hero-claim-sub">Comprovado cientificamente. Mais de 7 anos em Moema.</div>
+        </div>
+      </div>
+
+      <div class="hero-actions">
+        <a href="https://wa.me/5511993105996?text=Olá!%20Quero%20agendar%20uma%20aula%20experimental%20de%20EMS!" class="btn-electric">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Aula Experimental Gratuita
+        </a>
+        <a href="#como-funciona" class="btn-ghost">Como funciona o EMS ↓</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-section">
+    <div class="stat-item">
+      <div class="stat-number">5,0</div>
+      <div class="stat-label">Nota Google</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">7+</div>
+      <div class="stat-label">Anos em Moema</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number">20'</div>
+      <div class="stat-label">Por semana</div>
+    </div>
+  </div>
+
+  <!-- WHAT IS EMS -->
+  <section id="como-funciona" class="what-section">
+    <p class="eyebrow">Tecnologia</p>
+    <h2 class="stitle">O que é<br><span class="hl">EMS?</span></h2>
+    <p class="stext">Eletroestimulação muscular — a tecnologia mais avançada em fitness.</p>
+
+    <div class="ems-explainer">
+      <div class="ems-explainer-title">⚡ EMS — Eletroestimulação Muscular</div>
+      <div class="ems-explainer-text">
+        O EMS usa impulsos elétricos de baixa frequência para estimular até 90% dos músculos
+        ao mesmo tempo. Cada sessão de 20 minutos equivale a mais de 2 horas de treino
+        convencional — com carga personalizada e supervisão de personal trainer.
+      </div>
+    </div>
+
+    <div class="ems-metrics">
+      <div class="ems-metric">
+        <div class="ems-metric-num">90%</div>
+        <div class="ems-metric-label">Músculos ativados</div>
+      </div>
+      <div class="ems-metric">
+        <div class="ems-metric-num">20'</div>
+        <div class="ems-metric-label">Sessão completa</div>
+      </div>
+      <div class="ems-metric">
+        <div class="ems-metric-num">2x</div>
+        <div class="ems-metric-label">Mais eficiente</div>
+      </div>
+      <div class="ems-metric">
+        <div class="ems-metric-num">+</div>
+        <div class="ems-metric-label">Personal trainer</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services-section">
+    <p class="eyebrow">O que oferecemos</p>
+    <h2 class="stitle">Nossos<br><span class="hl">serviços</span></h2>
+
+    <div class="service-cards">
+      <div class="service-card">
+        <div class="sc-icon">⚡</div>
+        <div>
+          <div class="sc-title">EMS Eletrofitness</div>
+          <div class="sc-desc">Treino com colete de eletroestimulação muscular completo, individual e supervisionado</div>
+          <span class="sc-badge">Carro-chefe</span>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="sc-icon">💪</div>
+        <div>
+          <div class="sc-title">Musculação Personalizada</div>
+          <div class="sc-desc">Treino funcional e musculação com equipamentos premium e personal trainer exclusivo</div>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="sc-icon">🧘</div>
+        <div>
+          <div class="sc-title">Pilates + Funcional</div>
+          <div class="sc-desc">Aulas combinadas de pilates e treinamento funcional para mobilidade e força</div>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="sc-icon">📊</div>
+        <div>
+          <div class="sc-title">Avaliação Física Completa</div>
+          <div class="sc-desc">Avaliação detalhada e plano de treino 100% personalizado para seus objetivos</div>
+          <span class="sc-badge">Grátis na 1ª visita</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="reviews-section">
+    <p class="eyebrow">Resultados reais</p>
+    <h2 class="stitle">O que dizem<br>nossos <span class="hl">alunos</span></h2>
+    <p class="stext" style="margin-bottom:32px;">Avaliações reais do Google — 5,0 ★ com 69 avaliações.</p>
+
+    <div class="review-list">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Melhor treino que já realizei. O EMS é incrível — em 20 minutos sinto que trabalhei muito mais do que em 1h30 de musculação. A equipe é super profissional!"</p>
+        <div class="review-author">
+          <div class="review-avatar">T</div>
+          <div>
+            <div class="review-name">Tiago M.</div>
+            <div class="review-src">Google · Aluno verificado</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Resultado surpreendente! Tenho pouco tempo e o EMS foi a solução perfeita. Em 3 meses vi mudanças que nunca consegui com treino convencional. Equipamentos de primeira linha!"</p>
+        <div class="review-author">
+          <div class="review-avatar">C</div>
+          <div>
+            <div class="review-name">Camila R.</div>
+            <div class="review-src">Google · Aluna verificada</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Sala com ar condicionado, aparelhos de última geração e personal trainer do começo ao fim. Segurança e eficiência em cada treino. Recomendo muito!"</p>
+        <div class="review-author">
+          <div class="review-avatar">G</div>
+          <div>
+            <div class="review-name">Gustavo L.</div>
+            <div class="review-src">Google · Aluno verificado</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact-section">
+    <p class="eyebrow">Contato</p>
+    <h2 class="stitle">Agende sua<br><span class="hl">aula experimental</span></h2>
+    <p class="stext" style="margin-bottom:28px;">Primeira aula grátis — sem compromisso.</p>
+
+    <div class="contact-card">
+      <div class="contact-header">
+        <div class="contact-header-title">Body Studio Moema</div>
+        <div class="contact-header-sub">Eletrofitness EMS · Personal Trainer · Musculação</div>
+      </div>
+      <div class="contact-body">
+        <div class="contact-row">
+          <div class="contact-icon">📍</div>
+          <div>
+            <div class="ci-label">Endereço</div>
+            <div class="ci-value">Alameda dos Tupiniquins, 230<br>Moema, São Paulo - SP, 04077-001</div>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-icon">📞</div>
+          <div>
+            <div class="ci-label">Telefone / WhatsApp</div>
+            <div class="ci-value">(11) 9 9310-5996</div>
+          </div>
+        </div>
+        <div class="contact-row">
+          <div class="contact-icon">🕐</div>
+          <div>
+            <div class="ci-label">Horário</div>
+            <div class="ci-value">Segunda a Sexta · 6h às 21h<br>Sábado · 8h às 14h</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <a href="https://wa.me/5511993105996?text=Olá!%20Quero%20agendar%20minha%20aula%20experimental%20de%20EMS!" class="btn-electric" style="text-decoration:none;display:flex;align-items:center;justify-content:center;gap:10px;padding:16px 24px;border-radius:4px;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;box-shadow:0 4px 20px rgba(59,130,246,0.35);">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Quero minha aula grátis!
+    </a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Body <span class="hl">Studio</span> Moema</div>
+    <div class="footer-addr">
+      Alameda dos Tupiniquins, 230 · Moema, São Paulo - SP<br>
+      (11) 9 9310-5996
+    </div>
+  </footer>
+
+  <!-- FLOATING WA -->
+  <a href="https://wa.me/5511993105996?text=Olá!%20Quero%20saber%20mais%20sobre%20o%20EMS!" class="wa-float" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+</body>
+</html>
