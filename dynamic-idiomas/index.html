@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Dynamic Idiomas - Escola de idiomas presencial e online. Inglês, Espanhol, Francês, Italiano e Alemão. Comece hoje!">
+  <title>Dynamic Idiomas | Inglês, Espanhol, Francês, Italiano e Alemão</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --blue-deep: #0d2b5e;
+      --blue-mid: #1a4a9b;
+      --blue-light: #2563eb;
+      --gold: #f59e0b;
+      --gold-light: #fbbf24;
+      --text-dark: #0f172a;
+      --text-mid: #334155;
+      --text-light: #64748b;
+      --bg-white: #ffffff;
+      --bg-soft: #f8faff;
+      --radius: 16px;
+      --radius-sm: 10px;
+      --shadow: 0 4px 24px rgba(13,43,94,0.10);
+      --shadow-hover: 0 8px 40px rgba(13,43,94,0.18);
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; color: var(--text-dark); background: var(--bg-white); overflow-x: hidden; }
+
+    header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(13,43,94,0.97); backdrop-filter: blur(12px);
+      padding: 16px 24px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 900; color: #fff; }
+    .logo span { color: var(--gold); }
+    nav { display: none; }
+    @media (min-width: 768px) {
+      nav { display: flex; gap: 28px; align-items: center; }
+      nav a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: 15px; font-weight: 500; transition: color 0.2s; }
+      nav a:hover { color: var(--gold); }
+      .mobile-cta { display: none; }
+    }
+    .header-cta {
+      background: var(--gold); color: var(--blue-deep) !important; padding: 10px 22px;
+      border-radius: 50px; font-weight: 700 !important; font-size: 14px !important;
+      text-decoration: none; transition: all 0.2s; display: inline-block;
+    }
+    .header-cta:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+    .hero {
+      min-height: 100vh; background: linear-gradient(135deg, var(--blue-deep) 0%, var(--blue-mid) 60%, #1e3a8a 100%);
+      position: relative; display: flex; align-items: center; justify-content: center;
+      padding: 120px 24px 80px; overflow: hidden; text-align: center;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at top right, rgba(245,158,11,0.15) 0%, transparent 60%),
+                  radial-gradient(ellipse at bottom left, rgba(96,165,250,0.10) 0%, transparent 60%);
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 700px; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(245,158,11,0.2); border: 1px solid rgba(245,158,11,0.4);
+      color: var(--gold-light); font-size: 13px; font-weight: 600;
+      padding: 8px 18px; border-radius: 50px; margin-bottom: 28px; letter-spacing: 0.5px;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif; font-size: clamp(38px, 7vw, 68px);
+      font-weight: 900; color: #fff; line-height: 1.1; margin-bottom: 24px;
+    }
+    .hero h1 span { color: var(--gold); }
+    .hero-subtitle {
+      font-size: clamp(16px, 2.5vw, 19px); color: rgba(255,255,255,0.80);
+      line-height: 1.7; margin-bottom: 36px; max-width: 540px; margin-left: auto; margin-right: auto;
+    }
+    .hero-flags { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-bottom: 40px; }
+    .flag-pill {
+      background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25);
+      color: #fff; font-size: 14px; font-weight: 600; padding: 8px 18px; border-radius: 50px;
+    }
+    .hero-cta { display: flex; flex-direction: column; gap: 12px; align-items: center; }
+    @media (min-width: 480px) { .hero-cta { flex-direction: row; justify-content: center; } }
+    .btn-primary {
+      background: var(--gold); color: var(--blue-deep); font-weight: 700; font-size: 16px;
+      padding: 16px 32px; border-radius: 50px; text-decoration: none; border: none; cursor: pointer;
+      transition: all 0.25s; display: inline-flex; align-items: center; gap: 8px; min-height: 52px;
+    }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(245,158,11,0.35); }
+    .btn-secondary {
+      background: transparent; color: #fff; font-weight: 600; font-size: 16px;
+      padding: 16px 32px; border-radius: 50px; text-decoration: none;
+      border: 2px solid rgba(255,255,255,0.35); cursor: pointer; transition: all 0.25s;
+      display: inline-flex; align-items: center; gap: 8px; min-height: 52px;
+    }
+    .btn-secondary:hover { border-color: #fff; background: rgba(255,255,255,0.08); }
+
+    .stats-bar { background: var(--blue-deep); padding: 32px 24px; }
+    .stats-inner {
+      max-width: 960px; margin: 0 auto; display: grid;
+      grid-template-columns: repeat(2, 1fr); gap: 24px; text-align: center;
+    }
+    @media (min-width: 640px) { .stats-inner { grid-template-columns: repeat(4, 1fr); } }
+    .stat-number { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 900; color: var(--gold); }
+    .stat-label { font-size: 13px; color: rgba(255,255,255,0.70); font-weight: 500; margin-top: 4px; }
+
+    section { padding: 80px 24px; }
+    .section-tag {
+      display: inline-block; background: rgba(37,99,235,0.10); color: var(--blue-light);
+      font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+      padding: 6px 16px; border-radius: 50px; margin-bottom: 16px;
+    }
+    .section-title { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 42px); font-weight: 900; color: var(--blue-deep); line-height: 1.15; margin-bottom: 16px; }
+    .section-desc { font-size: 17px; color: var(--text-mid); line-height: 1.75; max-width: 580px; }
+    .section-header { margin-bottom: 56px; }
+    .section-header.center { text-align: center; }
+    .section-header.center .section-desc { margin: 0 auto; }
+    .container { max-width: 1080px; margin: 0 auto; }
+
+    .sobre { background: var(--bg-soft); }
+    .sobre-grid { display: grid; gap: 48px; align-items: center; }
+    @media (min-width: 768px) { .sobre-grid { grid-template-columns: 1fr 1fr; } }
+    .sobre-img-wrap {
+      border-radius: var(--radius); overflow: hidden; position: relative;
+      background: linear-gradient(135deg, var(--blue-deep), var(--blue-mid));
+      height: 340px; display: flex; align-items: center; justify-content: center;
+    }
+    .sobre-img-icon { font-size: 96px; opacity: 0.6; }
+    .sobre-badge-img {
+      position: absolute; bottom: 20px; right: 20px;
+      background: var(--gold); color: var(--blue-deep); padding: 14px 18px;
+      border-radius: var(--radius-sm); font-weight: 700; font-size: 14px;
+      text-align: center; line-height: 1.4; box-shadow: var(--shadow);
+    }
+    .sobre-list { list-style: none; margin-top: 28px; display: flex; flex-direction: column; gap: 14px; }
+    .sobre-list li { display: flex; align-items: flex-start; gap: 12px; font-size: 16px; color: var(--text-mid); line-height: 1.6; }
+    .check-icon {
+      flex-shrink: 0; width: 22px; height: 22px; background: var(--blue-light);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-top: 2px;
+    }
+
+    .cursos { background: var(--bg-white); }
+    .cursos-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+    @media (min-width: 640px) { .cursos-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 960px) { .cursos-grid { grid-template-columns: repeat(3, 1fr); } }
+    .curso-card {
+      background: #fff; border: 1.5px solid #e2e8f0; border-radius: var(--radius);
+      padding: 32px 28px; transition: all 0.3s; position: relative; overflow: hidden;
+    }
+    .curso-card:hover { border-color: var(--blue-light); box-shadow: var(--shadow-hover); transform: translateY(-4px); }
+    .curso-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+      background: linear-gradient(90deg, var(--blue-light), var(--gold)); opacity: 0; transition: opacity 0.3s;
+    }
+    .curso-card:hover::before { opacity: 1; }
+    .curso-flag { font-size: 48px; margin-bottom: 16px; display: block; }
+    .curso-name { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; color: var(--blue-deep); margin-bottom: 10px; }
+    .curso-desc { font-size: 15px; color: var(--text-mid); line-height: 1.65; margin-bottom: 20px; }
+    .curso-modes { display: flex; gap: 8px; flex-wrap: wrap; }
+    .mode-tag { font-size: 12px; font-weight: 600; padding: 5px 12px; border-radius: 50px; }
+    .mode-presencial { background: rgba(37,99,235,0.10); color: var(--blue-light); }
+    .mode-online { background: rgba(245,158,11,0.12); color: #b45309; }
+
+    .diferenciais { background: var(--blue-deep); }
+    .diferenciais .section-tag { background: rgba(245,158,11,0.2); color: var(--gold-light); }
+    .diferenciais .section-title { color: #fff; }
+    .diferenciais .section-desc { color: rgba(255,255,255,0.75); }
+    .diff-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+    @media (min-width: 640px) { .diff-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 960px) { .diff-grid { grid-template-columns: repeat(4, 1fr); } }
+    .diff-card {
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
+      border-radius: var(--radius); padding: 28px 24px; transition: background 0.3s;
+    }
+    .diff-card:hover { background: rgba(255,255,255,0.12); }
+    .diff-icon { font-size: 36px; margin-bottom: 16px; display: block; }
+    .diff-title { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 10px; }
+    .diff-desc { font-size: 14px; color: rgba(255,255,255,0.65); line-height: 1.65; }
+
+    .depoimentos { background: var(--bg-soft); }
+    .dep-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+    @media (min-width: 768px) { .dep-grid { grid-template-columns: repeat(3, 1fr); } }
+    .dep-card { background: #fff; border: 1.5px solid #e2e8f0; border-radius: var(--radius); padding: 28px 24px; transition: box-shadow 0.3s; }
+    .dep-card:hover { box-shadow: var(--shadow-hover); }
+    .dep-stars { color: var(--gold); font-size: 18px; margin-bottom: 14px; }
+    .dep-text { font-size: 15px; color: var(--text-mid); line-height: 1.75; margin-bottom: 20px; font-style: italic; }
+    .dep-author { display: flex; align-items: center; gap: 12px; }
+    .dep-avatar {
+      width: 42px; height: 42px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue-light), var(--blue-deep));
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700; font-size: 16px; color: #fff; flex-shrink: 0;
+    }
+    .dep-name { font-weight: 700; font-size: 15px; color: var(--blue-deep); }
+    .dep-info { font-size: 13px; color: var(--text-light); }
+
+    .contato { background: var(--bg-white); }
+    .contato-grid { display: grid; gap: 48px; }
+    @media (min-width: 768px) { .contato-grid { grid-template-columns: 1fr 1fr; align-items: start; } }
+    .contato-info-item { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 20px; }
+    .contato-icon {
+      width: 44px; height: 44px; border-radius: var(--radius-sm);
+      background: rgba(37,99,235,0.10); display: flex; align-items: center;
+      justify-content: center; font-size: 20px; flex-shrink: 0;
+    }
+    .contato-info-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text-light); margin-bottom: 4px; }
+    .contato-info-value { font-size: 16px; color: var(--text-dark); font-weight: 600; }
+    .contato-form { background: var(--bg-soft); border-radius: var(--radius); padding: 36px 28px; }
+    .form-title { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--blue-deep); margin-bottom: 24px; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 13px; font-weight: 600; color: var(--text-mid); margin-bottom: 6px; }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%; padding: 13px 16px; border: 1.5px solid #e2e8f0;
+      border-radius: var(--radius-sm); font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 15px; color: var(--text-dark); background: #fff; outline: none; transition: border-color 0.2s;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      border-color: var(--blue-light); box-shadow: 0 0 0 3px rgba(37,99,235,0.10);
+    }
+    .form-group textarea { resize: vertical; min-height: 100px; }
+    .form-submit {
+      width: 100%; padding: 16px; background: var(--blue-deep); color: #fff;
+      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 700;
+      border: none; border-radius: 50px; cursor: pointer; transition: all 0.25s; margin-top: 8px;
+    }
+    .form-submit:hover { background: var(--blue-mid); transform: translateY(-2px); }
+
+    .cta-final {
+      background: linear-gradient(135deg, var(--blue-deep), var(--blue-mid));
+      padding: 80px 24px; text-align: center;
+    }
+    .cta-final-content { max-width: 600px; margin: 0 auto; }
+    .cta-final h2 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 5vw, 44px); font-weight: 900; color: #fff; margin-bottom: 16px; }
+    .cta-final p { font-size: 18px; color: rgba(255,255,255,0.80); margin-bottom: 36px; line-height: 1.65; }
+
+    footer { background: #06182e; padding: 40px 24px; text-align: center; }
+    .footer-logo { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 900; color: #fff; margin-bottom: 12px; }
+    .footer-logo span { color: var(--gold); }
+    footer p { font-size: 14px; color: rgba(255,255,255,0.45); line-height: 1.6; }
+
+    .wa-float {
+      position: fixed; bottom: 24px; right: 24px; z-index: 999;
+      width: 60px; height: 60px; background: #25D366; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.4); text-decoration: none; transition: transform 0.25s;
+    }
+    .wa-float:hover { transform: scale(1.10); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-content > * { animation: fadeUp 0.7s ease forwards; opacity: 0; }
+    .hero-badge { animation-delay: 0.1s; }
+    .hero h1 { animation-delay: 0.25s; }
+    .hero-subtitle { animation-delay: 0.4s; }
+    .hero-flags { animation-delay: 0.5s; }
+    .hero-cta { animation-delay: 0.6s; }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">Dynamic<span>Idiomas</span></div>
+  <nav>
+    <a href="#cursos">Cursos</a>
+    <a href="#sobre">Sobre</a>
+    <a href="#depoimentos">Depoimentos</a>
+    <a href="#contato">Contato</a>
+    <a href="https://wa.me/555186356096?text=Ol%C3%A1%21+Tenho+interesse+em+um+curso+de+idiomas%21" target="_blank" class="header-cta">Matricule-se</a>
+  </nav>
+  <a href="https://wa.me/555186356096?text=Ol%C3%A1%21+Tenho+interesse+em+um+curso+de+idiomas%21" target="_blank" class="header-cta mobile-cta">Matricule-se</a>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="hero-content">
+    <div class="hero-badge">🌍 Presencial &amp; Online</div>
+    <h1>Domine um novo<br><span>idioma</span> com confiança</h1>
+    <p class="hero-subtitle">Na Dynamic Idiomas, você aprende da forma que funciona — professores qualificados, método moderno e aulas que cabem na sua rotina.</p>
+    <div class="hero-flags">
+      <span class="flag-pill">🇺🇸 Inglês</span>
+      <span class="flag-pill">🇪🇸 Espanhol</span>
+      <span class="flag-pill">🇫🇷 Francês</span>
+      <span class="flag-pill">🇮🇹 Italiano</span>
+      <span class="flag-pill">🇩🇪 Alemão</span>
+    </div>
+    <div class="hero-cta">
+      <a href="https://wa.me/555186356096?text=Ol%C3%A1%21+Tenho+interesse+em+fazer+uma+matr%C3%ADcula%21" target="_blank" class="btn-primary">
+        💬 Quero me matricular
+      </a>
+      <a href="#cursos" class="btn-secondary">Ver cursos ↓</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div>
+      <div class="stat-number">5</div>
+      <div class="stat-label">Idiomas disponíveis</div>
+    </div>
+    <div>
+      <div class="stat-number">100%</div>
+      <div class="stat-label">Presencial e Online</div>
+    </div>
+    <div>
+      <div class="stat-number">+500</div>
+      <div class="stat-label">Alunos formados</div>
+    </div>
+    <div>
+      <div class="stat-number">10+</div>
+      <div class="stat-label">Anos de experiência</div>
+    </div>
+  </div>
+</div>
+
+<!-- SOBRE -->
+<section class="sobre" id="sobre">
+  <div class="container">
+    <div class="sobre-grid">
+      <div class="sobre-img-wrap">
+        <span class="sobre-img-icon">🎓</span>
+        <div class="sobre-badge-img">Método<br>comprovado</div>
+      </div>
+      <div>
+        <span class="section-tag">Sobre nós</span>
+        <h2 class="section-title">Sua jornada rumo à fluência começa aqui</h2>
+        <p class="section-desc">A Dynamic Idiomas é uma escola que acredita que aprender um novo idioma deve ser uma experiência transformadora — não apenas mais uma aula.</p>
+        <ul class="sobre-list">
+          <li>
+            <span class="check-icon">
+              <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2 6L5 9L10 3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            Professores nativos e especializados em cada idioma
+          </li>
+          <li>
+            <span class="check-icon">
+              <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2 6L5 9L10 3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            Turmas reduzidas para atenção personalizada
+          </li>
+          <li>
+            <span class="check-icon">
+              <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2 6L5 9L10 3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            Aulas presenciais e 100% online — você escolhe
+          </li>
+          <li>
+            <span class="check-icon">
+              <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2 6L5 9L10 3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            Certificado reconhecido ao concluir cada nível
+          </li>
+          <li>
+            <span class="check-icon">
+              <svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2 6L5 9L10 3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            Suporte via WhatsApp durante toda a jornada
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CURSOS -->
+<section class="cursos" id="cursos">
+  <div class="container">
+    <div class="section-header center">
+      <span class="section-tag">Nossos Cursos</span>
+      <h2 class="section-title">Escolha o seu próximo idioma</h2>
+      <p class="section-desc">Todos os cursos disponíveis presencialmente e online, para você estudar de onde e quando quiser.</p>
+    </div>
+    <div class="cursos-grid">
+      <div class="curso-card">
+        <span class="curso-flag">🇺🇸</span>
+        <div class="curso-name">Inglês</div>
+        <p class="curso-desc">O idioma mais falado no mundo dos negócios. Do básico ao avançado, prepare-se para trabalho, viagens e certificações internacionais.</p>
+        <div class="curso-modes">
+          <span class="mode-tag mode-presencial">📍 Presencial</span>
+          <span class="mode-tag mode-online">💻 Online</span>
+        </div>
+      </div>
+      <div class="curso-card">
+        <span class="curso-flag">🇪🇸</span>
+        <div class="curso-name">Espanhol</div>
+        <p class="curso-desc">Falado por mais de 500 milhões de pessoas. Amplie horizontes profissionais e pessoais com o idioma da América Latina e Espanha.</p>
+        <div class="curso-modes">
+          <span class="mode-tag mode-presencial">📍 Presencial</span>
+          <span class="mode-tag mode-online">💻 Online</span>
+        </div>
+      </div>
+      <div class="curso-card">
+        <span class="curso-flag">🇫🇷</span>
+        <div class="curso-name">Francês</div>
+        <p class="curso-desc">A língua da diplomacia, da moda e da gastronomia. Abra portas para a França, Canadá e 29 outros países francófonos.</p>
+        <div class="curso-modes">
+          <span class="mode-tag mode-presencial">📍 Presencial</span>
+          <span class="mode-tag mode-online">💻 Online</span>
+        </div>
+      </div>
+      <div class="curso-card">
+        <span class="curso-flag">🇮🇹</span>
+        <div class="curso-name">Italiano</div>
+        <p class="curso-desc">A língua da arte, da música e da culinária. Conecte-se com suas raízes ou explore a Itália de forma autêntica.</p>
+        <div class="curso-modes">
+          <span class="mode-tag mode-presencial">📍 Presencial</span>
+          <span class="mode-tag mode-online">💻 Online</span>
+        </div>
+      </div>
+      <div class="curso-card">
+        <span class="curso-flag">🇩🇪</span>
+        <div class="curso-name">Alemão</div>
+        <p class="curso-desc">O idioma da engenharia, ciência e tecnologia. Ideal para quem busca oportunidades na Europa ou em multinacionais alemãs.</p>
+        <div class="curso-modes">
+          <span class="mode-tag mode-presencial">📍 Presencial</span>
+          <span class="mode-tag mode-online">💻 Online</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIFERENCIAIS -->
+<section class="diferenciais">
+  <div class="container">
+    <div class="section-header center">
+      <span class="section-tag">Por que a Dynamic?</span>
+      <h2 class="section-title">Muito mais que uma escola de idiomas</h2>
+      <p class="section-desc" style="color:rgba(255,255,255,0.75);">Somos parceiros na sua jornada rumo à fluência.</p>
+    </div>
+    <div class="diff-grid">
+      <div class="diff-card">
+        <span class="diff-icon">👨‍🏫</span>
+        <div class="diff-title">Professores especialistas</div>
+        <p class="diff-desc">Profissionais nativos ou certificados internacionalmente, apaixonados por ensinar.</p>
+      </div>
+      <div class="diff-card">
+        <span class="diff-icon">📱</span>
+        <div class="diff-title">Aulas flexíveis</div>
+        <p class="diff-desc">Estude presencialmente ou online, no horário que melhor se encaixa na sua agenda.</p>
+      </div>
+      <div class="diff-card">
+        <span class="diff-icon">🎯</span>
+        <div class="diff-title">Método eficaz</div>
+        <p class="diff-desc">Metodologia focada em conversação desde a primeira aula, com progresso acelerado.</p>
+      </div>
+      <div class="diff-card">
+        <span class="diff-icon">🏆</span>
+        <div class="diff-title">Certificação</div>
+        <p class="diff-desc">Certificado reconhecido ao concluir cada nível, valorizando seu currículo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section class="depoimentos" id="depoimentos">
+  <div class="container">
+    <div class="section-header center">
+      <span class="section-tag">Depoimentos</span>
+      <h2 class="section-title">O que nossos alunos dizem</h2>
+      <p class="section-desc">Histórias reais de quem transformou sua vida aprendendo um novo idioma.</p>
+    </div>
+    <div class="dep-grid">
+      <div class="dep-card">
+        <div class="dep-stars">★★★★★</div>
+        <p class="dep-text">"Em 8 meses eu estava me comunicando em inglês no trabalho. A metodologia da Dynamic é incrível — aprendi de verdade, não só decorei gramática."</p>
+        <div class="dep-author">
+          <div class="dep-avatar">C</div>
+          <div>
+            <div class="dep-name">Carlos Mendes</div>
+            <div class="dep-info">Aluno de Inglês</div>
+          </div>
+        </div>
+      </div>
+      <div class="dep-card">
+        <div class="dep-stars">★★★★★</div>
+        <p class="dep-text">"Fiz o curso de espanhol online e foi perfeito para minha rotina. Consegui minha promoção porque a empresa precisava de alguém bilíngue!"</p>
+        <div class="dep-author">
+          <div class="dep-avatar">A</div>
+          <div>
+            <div class="dep-name">Ana Paula Costa</div>
+            <div class="dep-info">Aluna de Espanhol</div>
+          </div>
+        </div>
+      </div>
+      <div class="dep-card">
+        <div class="dep-stars">★★★★★</div>
+        <p class="dep-text">"Os professores são excepcionais. Meu filho de 12 anos adorou as aulas de francês — ficava ansioso para a próxima aula toda semana!"</p>
+        <div class="dep-author">
+          <div class="dep-avatar">M</div>
+          <div>
+            <div class="dep-name">Marcos Ferreira</div>
+            <div class="dep-info">Pai de aluno</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section class="contato" id="contato">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Contato</span>
+      <h2 class="section-title">Comece sua jornada hoje</h2>
+      <p class="section-desc">Fale conosco pelo WhatsApp ou preencha o formulário — retornamos rapidinho!</p>
+    </div>
+    <div class="contato-grid">
+      <div>
+        <div class="contato-info-item">
+          <div class="contato-icon">💬</div>
+          <div>
+            <div class="contato-info-label">WhatsApp</div>
+            <div class="contato-info-value">(51) 8635-6096</div>
+          </div>
+        </div>
+        <div class="contato-info-item">
+          <div class="contato-icon">🌐</div>
+          <div>
+            <div class="contato-info-label">Modalidades</div>
+            <div class="contato-info-value">Presencial e Online</div>
+          </div>
+        </div>
+        <div class="contato-info-item">
+          <div class="contato-icon">📚</div>
+          <div>
+            <div class="contato-info-label">Idiomas</div>
+            <div class="contato-info-value">Inglês · Espanhol · Francês · Italiano · Alemão</div>
+          </div>
+        </div>
+        <br>
+        <a href="https://wa.me/555186356096?text=Ol%C3%A1%21+Tenho+interesse+em+um+curso+de+idiomas%21" target="_blank" class="btn-primary" style="display:inline-flex;width:100%;justify-content:center;">
+          💬 Falar pelo WhatsApp agora
+        </a>
+      </div>
+      <div class="contato-form">
+        <div class="form-title">Quero saber mais</div>
+        <div class="form-group">
+          <label>Seu nome</label>
+          <input type="text" placeholder="Como podemos te chamar?">
+        </div>
+        <div class="form-group">
+          <label>WhatsApp</label>
+          <input type="tel" placeholder="(00) 00000-0000">
+        </div>
+        <div class="form-group">
+          <label>Qual idioma te interessa?</label>
+          <select>
+            <option value="">Selecione...</option>
+            <option>Inglês</option>
+            <option>Espanhol</option>
+            <option>Francês</option>
+            <option>Italiano</option>
+            <option>Alemão</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Modalidade preferida</label>
+          <select>
+            <option value="">Selecione...</option>
+            <option>Presencial</option>
+            <option>Online</option>
+            <option>Tanto faz</option>
+          </select>
+        </div>
+        <button class="form-submit" onclick="submitForm()">Quero me matricular 🚀</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final">
+  <div class="cta-final-content">
+    <h2>Pronto para dar o próximo passo?</h2>
+    <p>Não deixe o idioma que você sempre quis aprender para depois. Comece agora — sua primeira aula pode mudar tudo.</p>
+    <a href="https://wa.me/555186356096?text=Ol%C3%A1%21+Quero+me+matricular+na+Dynamic+Idiomas%21" target="_blank" class="btn-primary" style="font-size:18px;padding:18px 40px;">
+      💬 Matricule-se agora
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Dynamic<span>Idiomas</span></div>
+  <p>Inglês · Espanhol · Francês · Italiano · Alemão</p>
+  <p style="margin-top:8px;">Presencial e Online · © 2025 Dynamic Idiomas</p>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/555186356096?text=Ol%C3%A1%21+Tenho+interesse+em+um+curso+de+idiomas%21" target="_blank" class="wa-float" aria-label="WhatsApp">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="32" height="32">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+
+<script>
+function submitForm() {
+  const name = document.querySelector('input[type="text"]').value;
+  const phone = document.querySelector('input[type="tel"]').value;
+  const idioma = document.querySelectorAll('select')[0].value;
+  const modalidade = document.querySelectorAll('select')[1].value;
+  if (!name || !phone) { alert('Por favor, preencha seu nome e WhatsApp.'); return; }
+  const msg = encodeURIComponent(`Olá! Me chamo ${name} e tenho interesse em fazer um curso de ${idioma || 'idiomas'} (${modalidade || 'presencial/online'}) na Dynamic Idiomas!`);
+  window.open('https://wa.me/555186356096?text=' + msg, '_blank');
+}
+</script>
+
+</body>
+</html>
