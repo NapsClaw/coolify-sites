@@ -800,12 +800,18 @@
       Preciso de Ti, vem me restaurar
       <span>— Diante do Trono</span>
     </div>
-    <button class="splash-btn" onclick="closeSplash()">✨ Entrar no Site</button>
-    <iframe id="yt-audio" 
-      src="https://www.youtube.com/embed/npkfNnmlVAE?autoplay=1&loop=1&playlist=npkfNnmlVAE&controls=0&mute=0&enablejsapi=1"
-      style="display:none; width:1px; height:1px; position:absolute; opacity:0;" 
-      allow="autoplay"
-      title="hino"></iframe>
+    <div style="display:flex; flex-direction:column; gap:14px; align-items:center;">
+      <button class="splash-btn" onclick="playHino()" id="play-btn">🎵 Ouvir o Hino</button>
+      <button class="splash-btn" style="background:rgba(255,255,255,0.08); border-color:rgba(255,255,255,0.3); font-size:13px;" onclick="closeSplash()">✨ Entrar no Site</button>
+    </div>
+    <div id="yt-container" style="display:none; margin-top:16px; border-radius:12px; overflow:hidden; width:100%; max-width:320px;">
+      <iframe id="yt-audio" 
+        src=""
+        data-src="https://www.youtube.com/embed/npkfNnmlVAE?autoplay=1&rel=0&modestbranding=1"
+        style="width:100%; height:60px; border:none;" 
+        allow="autoplay"
+        title="hino"></iframe>
+    </div>
   </div>
 
   <!-- NAV -->
@@ -1161,6 +1167,14 @@
 
   <script>
     // Splash
+    function playHino() {
+      var container = document.getElementById('yt-container');
+      var iframe = document.getElementById('yt-audio');
+      container.style.display = 'block';
+      iframe.src = iframe.getAttribute('data-src');
+      document.getElementById('play-btn').textContent = '🎵 Tocando...';
+      document.getElementById('play-btn').disabled = true;
+    }
     function closeSplash() {
       document.getElementById('splash').classList.add('hidden');
       document.body.style.overflow = '';
