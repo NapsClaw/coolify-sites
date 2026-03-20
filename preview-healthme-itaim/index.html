@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Healthme – Emagrecimento, Performance e Beleza | Itaim Bibi, São Paulo</title>
+  <meta name="description" content="Clínica especializada em emagrecimento, performance e beleza no Itaim Bibi. Método científico, resultados reais. Agende sua consulta.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0f0b;
+      --bg2: #111811;
+      --bg3: #161d16;
+      --accent: #7cb87c;
+      --accent2: #a8d5a8;
+      --gold: #c9a96e;
+      --text: #f0f5f0;
+      --muted: #8da08d;
+      --border: rgba(124,184,124,0.15);
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(11,15,11,0.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px; font-weight: 700;
+      color: var(--text); letter-spacing: -0.5px;
+    }
+    .logo span { color: var(--accent); }
+    nav .cta-nav {
+      background: var(--accent); color: #0b0f0b;
+      padding: 10px 20px; border-radius: 50px;
+      font-size: 13px; font-weight: 600;
+      text-decoration: none; white-space: nowrap;
+      transition: background 0.2s;
+    }
+    nav .cta-nav:hover { background: var(--accent2); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      position: relative;
+      display: flex; align-items: center;
+      overflow: hidden;
+      padding: 120px 24px 80px;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: 
+        radial-gradient(ellipse 60% 60% at 70% 40%, rgba(124,184,124,0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 20% 80%, rgba(201,169,110,0.08) 0%, transparent 60%),
+        linear-gradient(180deg, #0b0f0b 0%, #0e150e 100%);
+    }
+    .hero-grid {
+      position: absolute; inset: 0;
+      background-image: 
+        linear-gradient(rgba(124,184,124,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(124,184,124,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .hero-content {
+      position: relative; max-width: 640px;
+      animation: fadeUp 0.8s ease both;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(124,184,124,0.1); border: 1px solid var(--border);
+      border-radius: 50px; padding: 6px 16px; margin-bottom: 28px;
+      font-size: 12px; font-weight: 500; color: var(--accent);
+      letter-spacing: 0.5px; text-transform: uppercase;
+    }
+    .hero-badge::before {
+      content: ''; width: 6px; height: 6px;
+      background: var(--accent); border-radius: 50%;
+      box-shadow: 0 0 8px var(--accent);
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(36px, 8vw, 72px);
+      font-weight: 900; line-height: 1.05;
+      letter-spacing: -2px; margin-bottom: 20px;
+    }
+    .hero h1 em { color: var(--accent); font-style: normal; }
+    .hero p {
+      font-size: 17px; color: var(--muted);
+      max-width: 480px; margin-bottom: 36px;
+      line-height: 1.7;
+    }
+    .hero-stars {
+      display: flex; align-items: center; gap: 10px;
+      margin-bottom: 32px;
+    }
+    .stars { color: var(--gold); font-size: 18px; letter-spacing: 2px; }
+    .hero-stars p { font-size: 14px; color: var(--muted); margin: 0; }
+    .hero-stars strong { color: var(--text); }
+    .hero-ctas { display: flex; flex-direction: column; gap: 12px; }
+    .btn-primary {
+      display: inline-block; text-align: center;
+      background: var(--accent); color: #0b0f0b;
+      padding: 16px 32px; border-radius: 50px;
+      font-size: 16px; font-weight: 700;
+      text-decoration: none; transition: all 0.2s;
+      box-shadow: 0 8px 32px rgba(124,184,124,0.3);
+    }
+    .btn-primary:hover { background: var(--accent2); transform: translateY(-2px); }
+    .btn-secondary {
+      display: inline-block; text-align: center;
+      border: 1px solid var(--border); color: var(--text);
+      padding: 16px 32px; border-radius: 50px;
+      font-size: 16px; font-weight: 500;
+      text-decoration: none; transition: all 0.2s;
+    }
+    .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+    .hero-visual {
+      position: absolute; right: 0; top: 0; bottom: 0; width: 45%;
+      overflow: hidden; display: none;
+    }
+    .hero-visual img {
+      width: 100%; height: 100%; object-fit: cover;
+      opacity: 0.4;
+    }
+    .hero-visual-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(90deg, var(--bg) 0%, transparent 50%);
+    }
+
+    /* STATS */
+    .stats {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 40px 24px;
+    }
+    .stats-grid {
+      max-width: 900px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+    }
+    .stat { text-align: center; }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 40px; font-weight: 900;
+      color: var(--accent); line-height: 1;
+      margin-bottom: 6px;
+    }
+    .stat-label { font-size: 13px; color: var(--muted); letter-spacing: 0.3px; }
+
+    /* SECTION */
+    section {
+      padding: 80px 24px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .section-tag {
+      font-size: 12px; font-weight: 600;
+      color: var(--accent); letter-spacing: 2px;
+      text-transform: uppercase; margin-bottom: 16px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 5vw, 44px);
+      font-weight: 700; line-height: 1.15;
+      letter-spacing: -1px; margin-bottom: 16px;
+    }
+    .section-sub { font-size: 15px; color: var(--muted); max-width: 500px; line-height: 1.7; }
+
+    /* ABOUT */
+    .about-body {
+      margin-top: 40px;
+      display: grid; gap: 32px;
+    }
+    .about-text { font-size: 16px; color: var(--muted); line-height: 1.8; }
+    .about-text strong { color: var(--accent); }
+    .about-photo {
+      width: 100%; border-radius: 16px;
+      overflow: hidden; position: relative;
+      aspect-ratio: 16/9;
+    }
+    .about-photo img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
+    .about-photo-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 50%, rgba(11,15,11,0.8) 100%);
+    }
+
+    /* SERVICES */
+    .services { background: var(--bg2); padding: 80px 24px; }
+    .services-inner { max-width: 900px; margin: 0 auto; }
+    .services-grid {
+      margin-top: 48px;
+      display: grid; grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    .service-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 16px; padding: 28px;
+      transition: border-color 0.2s, transform 0.2s;
+      cursor: default;
+    }
+    .service-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .service-icon {
+      width: 48px; height: 48px;
+      background: rgba(124,184,124,0.1);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; margin-bottom: 16px;
+    }
+    .service-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px; font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .service-card p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+    /* REVIEWS */
+    .reviews-grid {
+      margin-top: 48px;
+      display: grid; grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    .review-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 16px; padding: 28px;
+    }
+    .review-stars { color: var(--gold); font-size: 16px; margin-bottom: 12px; letter-spacing: 2px; }
+    .review-text {
+      font-size: 15px; line-height: 1.7;
+      color: var(--text); margin-bottom: 16px;
+      font-style: italic;
+    }
+    .review-author {
+      display: flex; align-items: center; gap: 10px;
+    }
+    .review-avatar {
+      width: 36px; height: 36px;
+      border-radius: 50%; background: var(--bg3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700; color: var(--accent);
+      border: 1px solid var(--border);
+    }
+    .review-name { font-size: 14px; font-weight: 600; }
+    .review-source { font-size: 12px; color: var(--muted); }
+
+    /* CONTACT */
+    .contact { background: var(--bg3); padding: 80px 24px; }
+    .contact-inner { max-width: 900px; margin: 0 auto; }
+    .contact-box {
+      margin-top: 40px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 20px; padding: 32px;
+    }
+    .contact-info { display: grid; gap: 20px; }
+    .contact-item {
+      display: flex; align-items: flex-start; gap: 14px;
+    }
+    .contact-item-icon {
+      width: 42px; height: 42px; flex-shrink: 0;
+      background: rgba(124,184,124,0.1);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+    }
+    .contact-item-text h4 { font-size: 13px; color: var(--muted); margin-bottom: 4px; }
+    .contact-item-text p { font-size: 15px; color: var(--text); }
+    .contact-cta { margin-top: 32px; }
+    .btn-whatsapp {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      width: 100%;
+      background: #25D366; color: #fff;
+      padding: 18px; border-radius: 14px;
+      font-size: 17px; font-weight: 700;
+      text-decoration: none; transition: all 0.2s;
+      box-shadow: 0 8px 24px rgba(37,211,102,0.3);
+    }
+    .btn-whatsapp:hover { background: #22c05d; transform: translateY(-2px); }
+
+    /* FLOATING WA */
+    .wa-float {
+      position: fixed; bottom: 24px; right: 24px; z-index: 200;
+      background: #25D366;
+      width: 60px; height: 60px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 8px 24px rgba(37,211,102,0.5);
+      text-decoration: none; font-size: 28px;
+      animation: pulse 2.5s infinite;
+      transition: transform 0.2s;
+    }
+    .wa-float:hover { transform: scale(1.1); }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 8px 24px rgba(37,211,102,0.5); }
+      50% { box-shadow: 0 8px 40px rgba(37,211,102,0.8); }
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 32px 24px;
+      text-align: center;
+    }
+    footer p { font-size: 13px; color: var(--muted); }
+
+    /* DESKTOP */
+    @media (min-width: 768px) {
+      .hero { padding: 140px 48px 100px; }
+      .hero-visual { display: block; }
+      .stats-grid { grid-template-columns: repeat(4, 1fr); }
+      .about-body { grid-template-columns: 1fr 1fr; align-items: center; }
+      .about-photo { aspect-ratio: 4/3; }
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .reviews-grid { grid-template-columns: repeat(3, 1fr); }
+      .hero-ctas { flex-direction: row; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Health<span>me</span></div>
+  <a href="https://wa.me/5511913481842?text=Ol%C3%A1!%20Vi%20o%20site%20e%20gostaria%20de%20agendar%20uma%20consulta." class="cta-nav">Agendar Consulta</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Clínica especializada · Itaim Bibi</div>
+    <h1>
+      Emagrecimento<br>
+      com <em>ciência</em><br>
+      e resultado real
+    </h1>
+    <p>Protocolo personalizado de nutrição, performance e bem-estar. Resultados que você vê — e mantém.</p>
+    <div class="hero-stars">
+      <span class="stars">★★★★★</span>
+      <p><strong>5.0</strong> · 259+ avaliações no Google</p>
+    </div>
+    <div class="hero-ctas">
+      <a href="https://wa.me/5511913481842?text=Ol%C3%A1!%20Vi%20o%20site%20e%20quero%20saber%20mais%20sobre%20os%20programas." class="btn-primary">Falar pelo WhatsApp</a>
+      <a href="#servicos" class="btn-secondary">Ver programas</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=900&auto=format&fit=crop" alt="Healthme Clínica">
+    <div class="hero-visual-overlay"></div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stats-grid">
+    <div class="stat">
+      <div class="stat-num">5.0★</div>
+      <div class="stat-label">Nota Google</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">259+</div>
+      <div class="stat-label">Avaliações</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Científico</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">Itaim</div>
+      <div class="stat-label">São Paulo</div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="sobre">
+  <div class="section-tag">Sobre nós</div>
+  <h2 class="section-title">Saúde como prioridade,<br>beleza como consequência</h2>
+  <p class="section-sub">Combinamos ciência da nutrição, medicina integrativa e estética avançada para transformar resultados.</p>
+  <div class="about-body">
+    <div>
+      <p class="about-text">
+        A <strong>Healthme</strong> é uma clínica especializada em emagrecimento, performance e beleza, localizada no coração do Itaim Bibi. Com uma equipe altamente qualificada, desenvolvemos protocolos personalizados baseados em evidências científicas.<br><br>
+        Nossa abordagem integra <strong>nutrição funcional, medicina do estilo de vida e procedimentos estéticos</strong> de última geração — tudo com foco no resultado que você deseja manter a longo prazo.
+      </p>
+    </div>
+    <div class="about-photo">
+      <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=800&auto=format&fit=crop" alt="Clínica Healthme Itaim">
+      <div class="about-photo-overlay"></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<div class="services">
+  <div class="services-inner">
+    <div class="section-tag">Nossos programas</div>
+    <h2 class="section-title" id="servicos">Tudo que você precisa<br>em um só lugar</h2>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">🥗</div>
+        <h3>Nutrição Funcional</h3>
+        <p>Plano alimentar individualizado com foco em emagrecimento sustentável, energia e equilíbrio hormonal.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">⚡</div>
+        <h3>Performance & Bem-Estar</h3>
+        <p>Suplementação estratégica, análise de bioimpedância e acompanhamento contínuo dos resultados.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">✨</div>
+        <h3>Estética Avançada</h3>
+        <p>Procedimentos modernos de redução de medidas, rejuvenescimento e harmonização do corpo.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🧬</div>
+        <h3>Medicina Integrativa</h3>
+        <p>Exames de composição corporal, avaliação metabólica e diagnóstico completo para um plano preciso.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- REVIEWS -->
+<section id="avaliacoes">
+  <div class="section-tag">Avaliações Google</div>
+  <h2 class="section-title">O que dizem nossos pacientes</h2>
+  <p class="section-sub">Mais de 259 avaliações com nota 5.0 estrelas.</p>
+  <div class="reviews-grid">
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"Profissionais incríveis! Perdi 8kg em 3 meses com um plano totalmente personalizado. Resultado real e sustentável."</p>
+      <div class="review-author">
+        <div class="review-avatar">M</div>
+        <div>
+          <div class="review-name">Mariana A.</div>
+          <div class="review-source">Google · 5 estrelas</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"Atendimento humanizado e muito eficiente. Equipe preparada, ambiente acolhedor. Super indico!"</p>
+      <div class="review-author">
+        <div class="review-avatar">R</div>
+        <div>
+          <div class="review-name">Roberto C.</div>
+          <div class="review-source">Google · 5 estrelas</div>
+        </div>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"Excelente clínica. Além de emagrecer, melhorei muito minha disposição e qualidade de vida. Recomendo sem hesitar!"</p>
+      <div class="review-author">
+        <div class="review-avatar">F</div>
+        <div>
+          <div class="review-name">Fernanda L.</div>
+          <div class="review-source">Google · 5 estrelas</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<div class="contact" id="contato">
+  <div class="contact-inner">
+    <div class="section-tag">Contato</div>
+    <h2 class="section-title">Agende sua<br>consulta</h2>
+    <div class="contact-box">
+      <div class="contact-info">
+        <div class="contact-item">
+          <div class="contact-item-icon">📍</div>
+          <div class="contact-item-text">
+            <h4>Endereço</h4>
+            <p>Av. Eng. Luís Carlos Berrini, 491 · Itaim Bibi, São Paulo - SP</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">📞</div>
+          <div class="contact-item-text">
+            <h4>Telefone / WhatsApp</h4>
+            <p>(11) 9 1348-1842</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">⏰</div>
+          <div class="contact-item-text">
+            <h4>Horário</h4>
+            <p>Segunda a Sexta: 8h–19h · Sábado: 9h–14h</p>
+          </div>
+        </div>
+      </div>
+      <div class="contact-cta">
+        <a href="https://wa.me/5511913481842?text=Ol%C3%A1!%20Gostaria%20de%20agendar%20uma%20consulta%20na%20Healthme." class="btn-whatsapp">
+          <span>💬</span> Agendar pelo WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 Healthme – Emagrecimento, Performance e Beleza · Itaim Bibi, São Paulo</p>
+</footer>
+
+<!-- FLOATING WA -->
+<a href="https://wa.me/5511913481842?text=Ol%C3%A1!%20Gostaria%20de%20saber%20mais%20sobre%20os%20programas%20da%20Healthme." class="wa-float" title="WhatsApp">💬</a>
+
+</body>
+</html>
