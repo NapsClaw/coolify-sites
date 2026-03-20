@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Liturgia Agostiniana — Santos do Dia, Leituras e Reflexões na tradição de Santo Agostinho de Hipona.">
+  <title>Liturgia Agostiniana</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=Cinzel:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --cream: #f5f0e8;
+      --cream-dark: #ede5d5;
+      --parchment: #d4c4a0;
+      --gold: #b8953a;
+      --gold-light: #d4ab4e;
+      --gold-pale: #f0e0b0;
+      --brown-dark: #2a1f0e;
+      --brown-mid: #4a3520;
+      --brown-light: #6b4f35;
+      --black: #1a1209;
+      --text-body: #2a1f0e;
+      --text-secondary: #5a4530;
+      --shadow: rgba(42, 31, 14, 0.15);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'EB Garamond', Georgia, serif;
+      background-color: var(--cream);
+      color: var(--text-body);
+      font-size: 18px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ===== ORNAMENT DIVIDER ===== */
+    .ornament {
+      text-align: center;
+      color: var(--gold);
+      font-size: 22px;
+      letter-spacing: 12px;
+      margin: 0 auto;
+      opacity: 0.7;
+    }
+
+    /* ===== HEADER / HERO ===== */
+    .hero {
+      background-color: var(--brown-dark);
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60'%3E%3Cpath d='M30 0 L60 30 L30 60 L0 30 Z' fill='none' stroke='%23b8953a' stroke-width='0.3' opacity='0.15'/%3E%3C/svg%3E"),
+        linear-gradient(160deg, #1a1209 0%, #2a1f0e 50%, #1a1209 100%);
+      color: var(--cream);
+      text-align: center;
+      padding: 60px 24px 50px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(184,149,58,0.12) 0%, transparent 65%);
+    }
+
+    .hero-cross {
+      font-size: 36px;
+      color: var(--gold);
+      margin-bottom: 20px;
+      display: block;
+      opacity: 0.9;
+      animation: fadeInDown 1s ease;
+    }
+
+    .hero-title {
+      font-family: 'Cinzel', serif;
+      font-size: 28px;
+      font-weight: 600;
+      letter-spacing: 4px;
+      color: var(--gold-pale);
+      text-transform: uppercase;
+      line-height: 1.3;
+      animation: fadeInUp 1s ease 0.2s both;
+    }
+
+    .hero-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--parchment);
+      margin-top: 12px;
+      opacity: 0.85;
+      animation: fadeInUp 1s ease 0.4s both;
+    }
+
+    .hero-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      font-style: italic;
+      color: var(--gold-light);
+      margin-top: 28px;
+      max-width: 360px;
+      margin-left: auto;
+      margin-right: auto;
+      opacity: 0.8;
+      border-top: 1px solid rgba(184,149,58,0.3);
+      padding-top: 20px;
+      animation: fadeInUp 1s ease 0.6s both;
+    }
+
+    /* ===== NAV ===== */
+    .nav {
+      background-color: var(--brown-mid);
+      border-bottom: 2px solid var(--gold);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .nav::-webkit-scrollbar { display: none; }
+
+    .nav a {
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--parchment);
+      text-decoration: none;
+      padding: 14px 16px;
+      white-space: nowrap;
+      transition: color 0.2s, background 0.2s;
+      border-bottom: 3px solid transparent;
+    }
+
+    .nav a:hover {
+      color: var(--gold-pale);
+      background: rgba(184,149,58,0.1);
+      border-bottom-color: var(--gold);
+    }
+
+    /* ===== DATE BANNER ===== */
+    .date-banner {
+      background: linear-gradient(135deg, var(--brown-dark), var(--brown-mid));
+      color: var(--cream);
+      text-align: center;
+      padding: 24px 20px;
+      border-bottom: 1px solid rgba(184,149,58,0.3);
+    }
+
+    .date-banner .day-name {
+      font-family: 'Cinzel', serif;
+      font-size: 13px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+
+    .date-banner .date-full {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-style: italic;
+      color: var(--cream);
+    }
+
+    .date-banner .liturgical-time {
+      font-family: 'EB Garamond', serif;
+      font-size: 14px;
+      color: var(--parchment);
+      margin-top: 6px;
+      opacity: 0.85;
+    }
+
+    /* ===== SECTIONS ===== */
+    section {
+      padding: 40px 20px;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-family: 'Cinzel', serif;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-align: center;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .section-title::before,
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+    }
+
+    /* ===== SANTO DO DIA ===== */
+    #santo {
+      background: white;
+      border-radius: 4px;
+      box-shadow: 0 2px 20px var(--shadow);
+      padding: 36px 28px;
+      border-top: 4px solid var(--gold);
+      max-width: 680px;
+      margin: 0 auto 2px;
+    }
+
+    .santo-card {
+      text-align: center;
+    }
+
+    .santo-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, var(--brown-dark), var(--brown-mid));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 36px;
+      border: 3px solid var(--gold);
+      box-shadow: 0 4px 16px rgba(42,31,14,0.3);
+    }
+
+    .santo-nome {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--brown-dark);
+      margin-bottom: 6px;
+    }
+
+    .santo-data {
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .santo-bio {
+      font-size: 17px;
+      color: var(--text-secondary);
+      line-height: 1.8;
+      text-align: left;
+    }
+
+    .tag-agostiniano {
+      display: inline-block;
+      background: var(--brown-dark);
+      color: var(--gold-pale);
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+    }
+
+    /* ===== LEITURAS ===== */
+    #leituras {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    .leitura-card {
+      background: white;
+      border-radius: 4px;
+      box-shadow: 0 2px 12px var(--shadow);
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    .leitura-header {
+      background: var(--brown-dark);
+      padding: 14px 22px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .leitura-numero {
+      background: var(--gold);
+      color: var(--brown-dark);
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .leitura-ref {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      font-style: italic;
+      color: var(--cream);
+      flex: 1;
+    }
+
+    .leitura-toggle {
+      color: var(--gold);
+      font-size: 20px;
+      transition: transform 0.3s;
+    }
+
+    .leitura-toggle.open {
+      transform: rotate(180deg);
+    }
+
+    .leitura-body {
+      padding: 22px;
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .leitura-body.open {
+      display: block;
+    }
+
+    .leitura-texto {
+      font-size: 17px;
+      line-height: 1.9;
+      color: var(--text-body);
+      font-style: italic;
+    }
+
+    .leitura-versiculos {
+      margin-top: 12px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      font-family: 'Cinzel', serif;
+      letter-spacing: 1px;
+    }
+
+    /* ===== EVANGELHO ===== */
+    .evangelho-card {
+      background: linear-gradient(135deg, var(--brown-dark) 0%, #3d2a14 100%);
+      border-radius: 4px;
+      padding: 32px 24px;
+      box-shadow: 0 4px 24px rgba(42,31,14,0.4);
+      color: var(--cream);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .evangelho-card::before {
+      content: '✦';
+      position: absolute;
+      top: -10px;
+      right: 20px;
+      font-size: 80px;
+      color: rgba(184,149,58,0.08);
+    }
+
+    .evangelho-label {
+      font-family: 'Cinzel', serif;
+      font-size: 10px;
+      letter-spacing: 4px;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .evangelho-ref {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--gold-pale);
+      margin-bottom: 20px;
+    }
+
+    .evangelho-texto {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 19px;
+      font-style: italic;
+      line-height: 1.9;
+      color: var(--cream);
+    }
+
+    /* ===== REFLEXÃO ===== */
+    #reflexao {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    .reflexao-card {
+      background: var(--cream-dark);
+      border-left: 4px solid var(--gold);
+      border-radius: 0 4px 4px 0;
+      padding: 32px 28px;
+      position: relative;
+    }
+
+    .reflexao-abertura {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 42px;
+      color: var(--gold);
+      opacity: 0.4;
+      line-height: 1;
+      margin-bottom: 8px;
+      font-style: italic;
+    }
+
+    .reflexao-texto {
+      font-size: 18px;
+      line-height: 1.9;
+      color: var(--text-body);
+    }
+
+    .reflexao-assinatura {
+      margin-top: 24px;
+      padding-top: 16px;
+      border-top: 1px solid var(--parchment);
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 15px;
+      color: var(--text-secondary);
+    }
+
+    /* ===== CITAÇÃO AGOSTINHO ===== */
+    .citacao-agostinho {
+      background: var(--brown-dark);
+      color: var(--cream);
+      text-align: center;
+      padding: 48px 24px;
+    }
+
+    .citacao-texto {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-style: italic;
+      line-height: 1.7;
+      color: var(--gold-pale);
+      max-width: 480px;
+      margin: 0 auto 16px;
+    }
+
+    .citacao-fonte {
+      font-family: 'Cinzel', serif;
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: var(--gold);
+      text-transform: uppercase;
+    }
+
+    /* ===== SOBRE ===== */
+    #sobre {
+      background: white;
+      max-width: 100%;
+      padding: 52px 24px;
+    }
+
+    .sobre-inner {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .sobre-texto {
+      font-size: 18px;
+      line-height: 1.9;
+      color: var(--text-body);
+      text-align: center;
+    }
+
+    .sobre-emblema {
+      width: 70px;
+      height: 70px;
+      background: var(--brown-dark);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      margin: 0 auto 24px;
+      border: 2px solid var(--gold);
+    }
+
+    /* ===== NOTIFICAÇÕES ===== */
+    .notificacao-box {
+      background: white;
+      border: 1px solid var(--parchment);
+      border-radius: 4px;
+      padding: 28px 24px;
+      text-align: center;
+      margin: 0 auto 32px;
+      max-width: 680px;
+      box-shadow: 0 2px 12px var(--shadow);
+    }
+
+    .notificacao-box h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 13px;
+      letter-spacing: 3px;
+      color: var(--brown-dark);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .notificacao-box p {
+      font-size: 16px;
+      color: var(--text-secondary);
+      margin-bottom: 18px;
+    }
+
+    .btn-notificacao {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--brown-dark);
+      color: var(--gold-pale);
+      font-family: 'Cinzel', serif;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 14px 28px;
+      border-radius: 3px;
+      text-decoration: none;
+      border: 1px solid var(--gold);
+      transition: all 0.25s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-notificacao:hover {
+      background: var(--brown-mid);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(42,31,14,0.3);
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--black);
+      color: var(--parchment);
+      text-align: center;
+      padding: 48px 24px 32px;
+    }
+
+    .footer-cross {
+      font-size: 28px;
+      color: var(--gold);
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .footer-title {
+      font-family: 'Cinzel', serif;
+      font-size: 15px;
+      letter-spacing: 4px;
+      color: var(--cream);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .footer-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 15px;
+      font-style: italic;
+      color: var(--parchment);
+      opacity: 0.75;
+      margin-bottom: 28px;
+    }
+
+    .footer-oracao {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px;
+      font-style: italic;
+      color: var(--gold-light);
+      max-width: 420px;
+      margin: 0 auto 24px;
+      line-height: 1.8;
+      opacity: 0.8;
+    }
+
+    .footer-copy {
+      font-size: 13px;
+      color: var(--parchment);
+      opacity: 0.4;
+      margin-top: 24px;
+      border-top: 1px solid rgba(184,149,58,0.15);
+      padding-top: 20px;
+    }
+
+    /* ===== DIVIDER ===== */
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--parchment), transparent);
+      margin: 0 40px;
+    }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== SCROLL ANIMATIONS ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 480px) {
+      .hero-title { font-size: 22px; }
+      .hero-subtitle { font-size: 16px; }
+      .santo-nome { font-size: 24px; }
+      .evangelho-texto { font-size: 17px; }
+      .citacao-texto { font-size: 19px; }
+      section { padding: 32px 16px; }
+      #santo, .notificacao-box { padding: 28px 18px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <header class="hero">
+    <span class="hero-cross">✝</span>
+    <h1 class="hero-title">Liturgia Agostiniana</h1>
+    <p class="hero-subtitle">Santos, Leituras e Reflexões na tradição de Hipona</p>
+    <p class="hero-quote">"Nos fizeste para Ti, Senhor, e nosso coração fica inquieto<br>enquanto não repousa em Vós."</p>
+  </header>
+
+  <!-- NAVEGAÇÃO -->
+  <nav class="nav">
+    <a href="#santo">Santo do Dia</a>
+    <a href="#leituras">Leituras</a>
+    <a href="#reflexao">Reflexão</a>
+    <a href="#sobre">Sobre</a>
+  </nav>
+
+  <!-- DATA LITÚRGICA -->
+  <div class="date-banner" id="date-banner">
+    <div class="day-name" id="day-name">Quinta-feira</div>
+    <div class="date-full" id="date-full">20 de Março de 2025</div>
+    <div class="liturgical-time">IV Semana da Quaresma · Feria V</div>
+  </div>
+
+  <!-- SANTO DO DIA -->
+  <section id="santo" class="reveal">
+    <div class="section-title">Santo do Dia</div>
+    <div class="santo-card">
+      <div class="santo-icon">✦</div>
+      <span class="tag-agostiniano">Ordem de Santo Agostinho</span>
+      <h2 class="santo-nome">Santo Agostinho de Hipona</h2>
+      <div class="santo-data">Bispo, Doutor da Igreja · Memória: 28 de Agosto</div>
+      <p class="santo-bio">
+        Agostinho nasceu em Tagaste, na África do Norte, em 354. Após uma juventude marcada pela busca inquieta da verdade, converteu-se ao Cristianismo em Milão, em 387, profundamente influenciado pela pregação de Santo Ambrósio e pelas <em>Confissões</em> de sua própria alma. Tornou-se Bispo de Hipona, onde viveu até sua morte em 430. Seus escritos — entre eles as <em>Confissões</em> e <em>A Cidade de Deus</em> — são pilares da espiritualidade e teologia cristã.
+      </p>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- LEITURAS -->
+  <section id="leituras" class="reveal">
+    <div class="section-title">Leituras do Dia</div>
+
+    <div class="leitura-card">
+      <div class="leitura-header" onclick="toggleLeitura(this)">
+        <div class="leitura-numero">I</div>
+        <div class="leitura-ref">Ezequiel 47, 1-9.12</div>
+        <div class="leitura-toggle">▾</div>
+      </div>
+      <div class="leitura-body">
+        <p class="leitura-texto">
+          "Naqueles dias, o homem saiu em direção ao oriente com um cordel na mão; mediu mil côvados e me fez atravessar as águas: a água ia até os tornozelos. Mediu outros mil e me fez atravessar: a água ia até os joelhos. Mediu outros mil e me fez atravessar: a água ia até os rins. Mediu outros mil: era um rio que eu não podia atravessar, pois as águas tinham crescido tanto que se tornaram profundas demais para nadar: era um rio que não se podia atravessar a vau."
+        </p>
+        <div class="leitura-versiculos">Ez 47, 1-9.12</div>
+      </div>
+    </div>
+
+    <div class="leitura-card">
+      <div class="leitura-header" onclick="toggleLeitura(this)">
+        <div class="leitura-numero">II</div>
+        <div class="leitura-ref">Salmo 45 (46) — Responsorial</div>
+        <div class="leitura-toggle">▾</div>
+      </div>
+      <div class="leitura-body">
+        <p class="leitura-texto">
+          "Há um rio cujos braços alegram a cidade de Deus, o santuário das moradas do Altíssimo. Deus está no meio dela, ela não vacilará; Deus a socorrerá ao raiar da manhã."
+          <br><br>
+          <em>Refrão: O Senhor dos exércitos está conosco; nosso refúgio é o Deus de Jacó.</em>
+        </p>
+        <div class="leitura-versiculos">Sl 45 (46), 5.6.8.11</div>
+      </div>
+    </div>
+
+    <div class="leitura-card evangelho-card">
+      <div class="evangelho-label">✦ Evangelho do Dia ✦</div>
+      <div class="evangelho-ref">João 5, 1-16 — Cura do paralítico</div>
+      <p class="evangelho-texto">
+        "Havia em Jerusalém, junto à Porta das Ovelhas, uma piscina, chamada em hebraico Betesda, que tinha cinco pórticos. Neles se deitava uma multidão de doentes, cegos, coxos, paralíticos. Havia ali um homem enfermo desde havia trinta e oito anos. Jesus, vendo-o deitado e sabendo que já havia muito tempo naquele estado, perguntou-lhe: 'Queres ficar curado?' Respondeu-lhe o enfermo: 'Senhor, não tenho ninguém que me coloque na piscina quando a água é agitada; enquanto eu vou, outro desce antes de mim.' Jesus disse-lhe: 'Levanta-te, pega a tua maca e anda.' Imediatamente o homem ficou curado, pegou a sua maca e andou."
+      </p>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- REFLEXÃO -->
+  <section id="reflexao" class="reveal">
+    <div class="section-title">Reflexão Agostiniana</div>
+    <div class="reflexao-card">
+      <div class="reflexao-abertura">"</div>
+      <p class="reflexao-texto">
+        No encontro de Jesus com o paralítico de Betesda, vemos o coração da espiritualidade agostiniana: a busca pelo ser humano enfermo, incapaz de chegar sozinho à fonte de cura. Agostinho nos ensina que a graça precede todo esforço humano. Não somos nós que vamos até Deus — é Ele que vem ao nosso encontro, pergunta-nos com ternura: <em>"Queres ficar curado?"</em>
+        <br><br>
+        A resposta do paralítico revela nossa condição: não temos ninguém que nos ajude. E é exatamente aí que Cristo age. Ele não espera nossa perfeição, não exige que tenhamos chegado até Ele. Ele nos encontra onde estamos — deitados, há trinta e oito anos, na margem da espera.
+        <br><br>
+        Que esta Quaresma seja para nós esse momento: deixar que o Senhor nos pergunte, responder com honestidade, e levantar pela força que não vem de nós, mas d'Ele.
+      </p>
+      <div class="reflexao-assinatura">
+        — Meditação na tradição de Santo Agostinho
+      </div>
+    </div>
+  </section>
+
+  <!-- CITAÇÃO -->
+  <div class="citacao-agostinho reveal">
+    <p class="citacao-texto">"Tarde te amei, ó Beleza tão antiga e tão nova, tarde te amei!"</p>
+    <div class="citacao-fonte">Santo Agostinho · Confissões, X, 27</div>
+  </div>
+
+  <!-- NOTIFICAÇÕES -->
+  <div style="padding: 40px 20px 0; max-width: 680px; margin: 0 auto;">
+    <div class="notificacao-box reveal">
+      <h3>Receba a Liturgia do Dia</h3>
+      <p>Ative as notificações e receba os Santos, Leituras e Reflexões Agostinianas todas as manhãs.</p>
+      <button class="btn-notificacao" onclick="ativarNotificacoes()">
+        🔔 Ativar Notificações
+      </button>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- SOBRE -->
+  <section id="sobre" style="background: white; max-width: 100%; padding: 52px 24px;">
+    <div style="max-width: 680px; margin: 0 auto;" class="reveal">
+      <div class="section-title">Sobre a Liturgia Agostiniana</div>
+      <div class="sobre-emblema">✦</div>
+      <p class="sobre-texto">
+        Este espaço é dedicado à vivência litúrgica na espiritualidade da Ordem de Santo Agostinho. Aqui você encontra diariamente os Santos Agostinianos, as Leituras da Missa e uma Reflexão fundamentada no pensamento de Agostinho de Hipona.
+        <br><br>
+        A espiritualidade agostiniana é marcada pela busca incansável de Deus, pela vida em comunidade e pelo amor à Sagrada Escritura. Que esta página seja, para você, uma pequena fonte de água viva no cotidiano.
+      </p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span class="footer-cross">✝</span>
+    <div class="footer-title">Liturgia Agostiniana</div>
+    <div class="footer-subtitle">Na tradição de Santo Agostinho de Hipona</div>
+    <p class="footer-oracao">
+      "Senhor, para que eu Te conheça,<br>para que eu me conheça."<br>
+      <em>— Santo Agostinho, Solilóquios</em>
+    </p>
+    <div class="footer-copy">© 2025 Liturgia Agostiniana · Todos os direitos reservados</div>
+  </footer>
+
+  <script>
+    // === DATA DINÂMICA ===
+    (function() {
+      const days = ['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
+      const months = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+      const now = new Date();
+      document.getElementById('day-name').textContent = days[now.getDay()];
+      document.getElementById('date-full').textContent = `${now.getDate()} de ${months[now.getMonth()]} de ${now.getFullYear()}`;
+    })();
+
+    // === ACCORDION LEITURAS ===
+    function toggleLeitura(header) {
+      const body = header.nextElementSibling;
+      const toggle = header.querySelector('.leitura-toggle');
+      body.classList.toggle('open');
+      toggle.classList.toggle('open');
+    }
+
+    // === NOTIFICAÇÕES ===
+    function ativarNotificacoes() {
+      if ('Notification' in window) {
+        Notification.requestPermission().then(function(permission) {
+          if (permission === 'granted') {
+            new Notification('Liturgia Agostiniana ✝', {
+              body: 'Você receberá a liturgia do dia todas as manhãs!',
+              icon: '/favicon.ico'
+            });
+          }
+        });
+      } else {
+        alert('Notificações serão ativadas em breve. Obrigado!');
+      }
+    }
+
+    // === SCROLL REVEAL ===
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
