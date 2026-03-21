@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DJ Maxx RS — Cartão Digital</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;600;700&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #0a0a0a;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Lato', sans-serif;
+      padding: 20px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 420px;
+      background: #111;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+      position: relative;
+    }
+
+    /* HEADER COM FOTO DE FUNDO */
+    .card-header {
+      position: relative;
+      min-height: 240px;
+      background: url('cartao-bg.jpg') center/cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 24px 20px;
+    }
+    .card-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(180,0,0,0.4) 0%, rgba(0,0,0,0.92) 100%);
+    }
+    .card-header-content { position: relative; z-index: 1; text-align: center; width: 100%; }
+    .card-badge {
+      background: #cc0000;
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 4px 14px;
+      border-radius: 50px;
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+    .card-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 48px;
+      color: #fff;
+      letter-spacing: 3px;
+      line-height: 1;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+    }
+    .card-name span { color: #cc0000; }
+    .card-title {
+      font-size: 12px;
+      color: rgba(255,255,255,0.7);
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    /* SERVIÇOS */
+    .card-services {
+      background: #cc0000;
+      padding: 12px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      justify-content: center;
+    }
+    .service-tag {
+      background: rgba(0,0,0,0.25);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 50px;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    /* BODY */
+    .card-body { padding: 24px 20px; }
+
+    /* REDES SOCIAIS */
+    .social-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .social-btn {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      padding: 12px 14px;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    .social-btn:hover { transform: translateY(-2px); border-color: #cc0000; }
+    .social-icon { font-size: 22px; flex-shrink: 0; }
+    .social-info {}
+    .social-label { font-size: 10px; color: #666; text-transform: uppercase; letter-spacing: 1px; }
+    .social-handle { font-size: 13px; font-weight: 700; color: #fff; }
+
+    /* BOTÕES WHATSAPP */
+    .whatsapp-section { margin-bottom: 20px; }
+    .whatsapp-section h3 {
+      font-size: 10px;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+    }
+    .wa-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #128C7E;
+      color: #fff;
+      text-decoration: none;
+      padding: 14px 18px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 15px;
+      margin-bottom: 8px;
+      transition: all 0.3s;
+    }
+    .wa-btn:hover { background: #25D366; transform: translateY(-2px); }
+    .wa-btn span { font-size: 22px; }
+    .wa-btn .wa-label { font-size: 10px; color: rgba(255,255,255,0.7); display: block; font-weight: 400; }
+
+    /* SITE */
+    .site-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: linear-gradient(135deg, #cc0000, #880000);
+      color: #fff;
+      text-decoration: none;
+      padding: 16px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      transition: all 0.3s;
+    }
+    .site-btn:hover { opacity: 0.9; transform: translateY(-2px); }
+
+    /* FOOTER */
+    .card-footer {
+      background: #0a0a0a;
+      padding: 14px 20px;
+      text-align: center;
+      border-top: 1px solid #1a1a1a;
+    }
+    .card-footer p { font-size: 11px; color: #444; letter-spacing: 1px; }
+    .card-footer span { color: #cc0000; }
+  </style>
+</head>
+<body>
+  <div class="card">
+
+    <!-- HEADER -->
+    <div class="card-header">
+      <div class="card-header-content">
+        <div class="card-badge">🎵 CDs Personalizados Gospel</div>
+        <div class="card-name">DJ <span>MAXX</span> RS</div>
+        <div class="card-title">Personalização • Camisetas • Hinos Gospel</div>
+      </div>
+    </div>
+
+    <!-- SERVIÇOS -->
+    <div class="card-services">
+      <span class="service-tag">🚗 Carro</span>
+      <span class="service-tag">👥 Equipe</span>
+      <span class="service-tag">🏪 Loja</span>
+      <span class="service-tag">🚛 Carretinha</span>
+      <span class="service-tag">🔊 Reboque</span>
+      <span class="service-tag">📦 Paredão</span>
+      <span class="service-tag">🎉 Comitiva</span>
+      <span class="service-tag">👕 Camisetas</span>
+      <span class="service-tag">✝️ Gospel</span>
+    </div>
+
+    <!-- BODY -->
+    <div class="card-body">
+
+      <!-- REDES SOCIAIS -->
+      <div class="social-grid">
+        <a href="https://www.instagram.com/maxxoficialrs" target="_blank" class="social-btn">
+          <span class="social-icon">📸</span>
+          <div class="social-info">
+            <div class="social-label">Instagram</div>
+            <div class="social-handle">@maxxoficialrs</div>
+          </div>
+        </a>
+        <a href="https://www.tiktok.com/@portalpowersom" target="_blank" class="social-btn">
+          <span class="social-icon">🎵</span>
+          <div class="social-info">
+            <div class="social-label">TikTok</div>
+            <div class="social-handle">@portalpowersom</div>
+          </div>
+        </a>
+      </div>
+
+      <!-- WHATSAPP -->
+      <div class="whatsapp-section">
+        <h3>📲 Fale Comigo</h3>
+        <a href="https://wa.me/5551989321741?text=Oi%20DJ%20Maxx!%20Vi%20seu%20cart%C3%A3o%20digital%20e%20quero%20saber%20mais!" target="_blank" class="wa-btn">
+          <span>💬</span>
+          <div>
+            <span class="wa-label">WhatsApp</span>
+            (51) 98932-1741
+          </div>
+        </a>
+        <a href="https://wa.me/5551998407195?text=Oi%20DJ%20Maxx!%20Vi%20seu%20cart%C3%A3o%20digital%20e%20quero%20saber%20mais!" target="_blank" class="wa-btn">
+          <span>💬</span>
+          <div>
+            <span class="wa-label">WhatsApp 2</span>
+            (51) 99840-7195
+          </div>
+        </a>
+      </div>
+
+      <!-- SITE -->
+      <a href="https://www.djmaxxxrs.com.br" target="_blank" class="site-btn">
+        🌐 Acesse o Site Completo
+      </a>
+
+    </div>
+
+    <!-- FOOTER -->
+    <div class="card-footer">
+      <p>DJ Maxx RS • Novo Hamburgo/RS • <span>✝️ Gospel</span></p>
+    </div>
+
+  </div>
+</body>
+</html>
