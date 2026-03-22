@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bologne Pizzaria | Pizza Artesanal na Zona Sul de SP</title>
+  <meta name="description" content="Bologne Pizzaria — pizzas artesanais irresistíveis na Zona Sul de São Paulo. Delivery e ambiente para jantar. Peça pelo WhatsApp!">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0906;
+      --bg2: #160e09;
+      --bg3: #1e1208;
+      --red: #c0392b;
+      --red-dark: #a02d22;
+      --gold: #d4a843;
+      --gold-light: #e8c46a;
+      --text: #f5ede0;
+      --text-muted: #c4a882;
+      --border: rgba(212, 168, 67, 0.2);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(to bottom, rgba(13,9,6,0.95), transparent);
+      backdrop-filter: blur(8px);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--gold);
+      letter-spacing: 1px;
+      text-decoration: none;
+    }
+
+    .nav-cta {
+      background: var(--red);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 50px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--red-dark); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 100px 24px 60px;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: url('https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=1200&q=80') center/cover no-repeat;
+      filter: brightness(0.3) saturate(0.8);
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at bottom, rgba(192,57,43,0.15) 0%, transparent 60%),
+                  linear-gradient(to top, var(--bg) 0%, transparent 50%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 600px;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 50px;
+      margin-bottom: 24px;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 58px;
+      font-weight: 900;
+      line-height: 1.05;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+
+    .hero-title span { color: var(--gold); }
+
+    .hero-subtitle {
+      font-size: 17px;
+      color: var(--text-muted);
+      margin-bottom: 36px;
+      max-width: 420px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--red);
+      color: white;
+      padding: 16px 32px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 16px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+      width: 100%;
+      justify-content: center;
+      max-width: 320px;
+    }
+    .btn-primary:hover { background: var(--red-dark); transform: translateY(-1px); }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--gold);
+      border: 1px solid var(--border);
+      padding: 14px 28px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 15px;
+      text-decoration: none;
+      transition: border-color 0.2s;
+      width: 100%;
+      justify-content: center;
+      max-width: 320px;
+    }
+    .btn-secondary:hover { border-color: var(--gold); }
+
+    /* ── SECTION BASE ── */
+    section { padding: 70px 24px; }
+
+    .section-label {
+      display: inline-block;
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      font-weight: 900;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .section-subtitle {
+      font-size: 16px;
+      color: var(--text-muted);
+      max-width: 480px;
+    }
+
+    /* ── SOBRE ── */
+    .sobre {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sobre-inner {
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .sobre-text {
+      font-size: 17px;
+      line-height: 1.75;
+      color: var(--text-muted);
+      margin-top: 20px;
+    }
+
+    .sobre-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 40px;
+    }
+
+    .stat-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px 16px;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 40px;
+      font-weight: 900;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    /* ── CARDÁPIO ── */
+    .cardapio { background: var(--bg); }
+
+    .cardapio-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .pizzas-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .pizza-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      gap: 0;
+      transition: border-color 0.2s;
+    }
+    .pizza-card:hover { border-color: var(--gold); }
+
+    .pizza-img {
+      width: 110px;
+      height: 110px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .pizza-info {
+      padding: 16px;
+      flex: 1;
+    }
+
+    .pizza-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 19px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .pizza-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .pizza-tag {
+      display: inline-block;
+      background: rgba(192,57,43,0.15);
+      color: #e87b72;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 50px;
+      margin-top: 8px;
+    }
+
+    /* ── GALERIA ── */
+    .galeria { background: var(--bg2); }
+
+    .galeria-header { text-align: center; margin-bottom: 32px; }
+
+    .galeria-scroll {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .galeria-scroll::-webkit-scrollbar { display: none; }
+
+    .galeria-item {
+      flex-shrink: 0;
+      width: 260px;
+      height: 180px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .galeria-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s;
+    }
+    .galeria-item:hover img { transform: scale(1.05); }
+
+    /* ── DIFERENCIAIS ── */
+    .diferenciais { background: var(--bg); }
+
+    .diferenciais-header { text-align: center; margin-bottom: 40px; }
+
+    .dif-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .dif-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .dif-icon {
+      font-size: 28px;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .dif-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .dif-text {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ── DEPOIMENTOS ── */
+    .depoimentos {
+      background: var(--bg3);
+      border-top: 1px solid var(--border);
+    }
+
+    .depoimentos-header { text-align: center; margin-bottom: 36px; }
+
+    .reviews-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .review-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+    }
+
+    .review-stars {
+      color: var(--gold);
+      font-size: 16px;
+      margin-bottom: 12px;
+    }
+
+    .review-text {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.65;
+      font-style: italic;
+      margin-bottom: 16px;
+    }
+
+    .review-author {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    /* ── CONTATO ── */
+    .contato {
+      background: var(--bg);
+      text-align: center;
+    }
+
+    .contato-inner {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .contato-cards {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin: 36px 0;
+      text-align: left;
+    }
+
+    .contato-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .contato-icon { font-size: 24px; }
+
+    .contato-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .contato-value {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+      margin-top: 2px;
+    }
+
+    .btn-whatsapp-big {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: #25D366;
+      color: white;
+      padding: 18px 32px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 17px;
+      text-decoration: none;
+      width: 100%;
+      max-width: 380px;
+      margin: 0 auto;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-whatsapp-big:hover { background: #1ebe5a; transform: translateY(-2px); }
+
+    /* ── MAPA ── */
+    .mapa-wrapper {
+      width: 100%;
+      max-width: 600px;
+      margin: 32px auto 0;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      height: 220px;
+      background: var(--bg2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mapa-placeholder {
+      text-align: center;
+      color: var(--text-muted);
+    }
+    .mapa-placeholder span { font-size: 36px; display: block; margin-bottom: 8px; }
+    .mapa-placeholder p { font-size: 14px; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 36px 24px;
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+
+    .footer-tagline {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      justify-content: center;
+      margin-bottom: 28px;
+    }
+
+    .footer-links a {
+      color: var(--text-muted);
+      font-size: 14px;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--gold); }
+
+    .footer-copy {
+      font-size: 12px;
+      color: rgba(196,168,130,0.5);
+    }
+
+    /* ── WHATSAPP FLOAT ── */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 24px;
+      right: 20px;
+      z-index: 999;
+      background: #25D366;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .whatsapp-float:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 28px rgba(37,211,102,0.5);
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-content > * {
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards;
+    }
+    .hero-badge { animation-delay: 0.1s; }
+    .hero-title { animation-delay: 0.25s; }
+    .hero-subtitle { animation-delay: 0.4s; }
+    .hero-buttons { animation-delay: 0.55s; }
+
+    /* ── DESKTOP ── */
+    @media (min-width: 768px) {
+      .hero-title { font-size: 80px; }
+      .hero-buttons { flex-direction: row; }
+      .btn-primary, .btn-secondary { width: auto; }
+      .dif-grid { grid-template-columns: 1fr 1fr; }
+      .contato-cards { grid-template-columns: 1fr 1fr; }
+      .sobre-stats { grid-template-columns: repeat(4, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">Bologne</a>
+    <a href="https://wa.me/5511965759670?text=Oi!%20Quero%20fazer%20um%20pedido%20🍕" target="_blank" class="nav-cta">Pedir Agora</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="inicio">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <span class="hero-badge">Zona Sul · São Paulo</span>
+      <h1 class="hero-title">Pizza de<br><span>verdade.</span></h1>
+      <p class="hero-subtitle">Sabor artesanal, ingredientes selecionados e aquele ambiente perfeito pra uma noite inesquecível.</p>
+      <div class="hero-buttons">
+        <a href="https://wa.me/5511965759670?text=Oi!%20Quero%20fazer%20um%20pedido%20🍕" target="_blank" class="btn-primary">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.558 4.122 1.532 5.854L.078 23.245a.5.5 0 0 0 .636.636l5.39-1.454A11.953 11.953 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75a9.727 9.727 0 0 1-4.953-1.355l-.355-.211-3.682.993.993-3.682-.212-.356A9.727 9.727 0 0 1 2.25 12C2.25 6.617 6.617 2.25 12 2.25S21.75 6.617 21.75 12 17.383 21.75 12 21.75z"/></svg>
+          Pedir pelo WhatsApp
+        </a>
+        <a href="#cardapio" class="btn-secondary">
+          Ver Cardápio ↓
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOBRE -->
+  <section class="sobre" id="sobre">
+    <div class="sobre-inner">
+      <span class="section-label">Nossa história</span>
+      <h2 class="section-title">Feita com paixão,<br>servida com amor</h2>
+      <p class="sobre-text">
+        Na Bologne Pizzaria, cada pizza é preparada com massa artesanal, molho caseiro e ingredientes frescos selecionados com cuidado. Aqui na Zona Sul de SP, reunimos o melhor da tradição italiana com o calor do acolhimento paulistano — seja no delivery ou no nosso ambiente para jantar.
+      </p>
+      <div class="sobre-stats">
+        <div class="stat-card">
+          <div class="stat-number">+50</div>
+          <div class="stat-label">Sabores no cardápio</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">⭐ 5</div>
+          <div class="stat-label">Avaliação no Google</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">🚀</div>
+          <div class="stat-label">Delivery rápido</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">❤️</div>
+          <div class="stat-label">Ambiente acolhedor</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CARDÁPIO -->
+  <section class="cardapio" id="cardapio">
+    <div class="cardapio-header">
+      <span class="section-label">O que preparamos pra você</span>
+      <h2 class="section-title">Nosso Cardápio</h2>
+      <p class="section-subtitle" style="margin: 0 auto;">Pizzas tradicionais, especiais e doces. Tem pra todo gosto.</p>
+    </div>
+    <div class="pizzas-grid">
+      <div class="pizza-card">
+        <img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=220&q=80" alt="Pizza Margherita" class="pizza-img" loading="lazy">
+        <div class="pizza-info">
+          <div class="pizza-name">Margherita</div>
+          <div class="pizza-desc">Molho de tomate, mussarela, manjericão fresco e azeite</div>
+          <span class="pizza-tag">Clássica</span>
+        </div>
+      </div>
+      <div class="pizza-card">
+        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=220&q=80" alt="Pizza Calabresa" class="pizza-img" loading="lazy">
+        <div class="pizza-info">
+          <div class="pizza-name">Calabresa</div>
+          <div class="pizza-desc">Calabresa fatiada, cebola roxa, mussarela e orégano</div>
+          <span class="pizza-tag">Favorita</span>
+        </div>
+      </div>
+      <div class="pizza-card">
+        <img src="https://images.unsplash.com/photo-1594007654729-407eedc4be65?w=220&q=80" alt="Pizza Frango com Catupiry" class="pizza-img" loading="lazy">
+        <div class="pizza-info">
+          <div class="pizza-name">Frango com Catupiry</div>
+          <div class="pizza-desc">Frango desfiado, catupiry cremoso e milho verde</div>
+          <span class="pizza-tag">Especial</span>
+        </div>
+      </div>
+      <div class="pizza-card">
+        <img src="https://images.unsplash.com/photo-1542044896530-3a4cef4c4c99?w=220&q=80" alt="Pizza Portuguesa" class="pizza-img" loading="lazy">
+        <div class="pizza-info">
+          <div class="pizza-name">Portuguesa</div>
+          <div class="pizza-desc">Presunto, ovo, cebola, pimentão e azeitona</div>
+          <span class="pizza-tag">Clássica</span>
+        </div>
+      </div>
+      <div class="pizza-card">
+        <img src="https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?w=220&q=80" alt="Pizza Chocolate" class="pizza-img" loading="lazy">
+        <div class="pizza-info">
+          <div class="pizza-name">Chocolate com Morango</div>
+          <div class="pizza-desc">Chocolate ao leite, morangos frescos e açúcar de confeiteiro</div>
+          <span class="pizza-tag">Sobremesa</span>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top: 36px;">
+      <a href="https://wa.me/5511965759670?text=Oi!%20Quero%20ver%20o%20cardápio%20completo%20🍕" target="_blank" class="btn-primary" style="display:inline-flex; max-width:300px;">
+        Ver cardápio completo
+      </a>
+    </div>
+  </section>
+
+  <!-- GALERIA -->
+  <section class="galeria" id="galeria">
+    <div class="galeria-header">
+      <span class="section-label">Nossa pizzaria</span>
+      <h2 class="section-title">Ambiente & Sabor</h2>
+    </div>
+    <div class="galeria-scroll">
+      <div class="galeria-item">
+        <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=520&q=80" alt="Ambiente da pizzaria" loading="lazy">
+      </div>
+      <div class="galeria-item">
+        <img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=520&q=80" alt="Pizza saindo do forno" loading="lazy">
+      </div>
+      <div class="galeria-item">
+        <img src="https://images.unsplash.com/photo-1604382355076-af4b0eb60143?w=520&q=80" alt="Pizza artesanal" loading="lazy">
+      </div>
+      <div class="galeria-item">
+        <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=520&q=80" alt="Pizzas variadas" loading="lazy">
+      </div>
+      <div class="galeria-item">
+        <img src="https://images.unsplash.com/photo-1590947132387-155cc02f3212?w=520&q=80" alt="Mesa posta para jantar" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- DIFERENCIAIS -->
+  <section class="diferenciais" id="diferenciais">
+    <div class="diferenciais-header">
+      <span class="section-label">Por que escolher a Bologne</span>
+      <h2 class="section-title">O que nos torna especiais</h2>
+    </div>
+    <div class="dif-grid">
+      <div class="dif-card">
+        <div class="dif-icon">🍕</div>
+        <div>
+          <div class="dif-title">Massa Artesanal</div>
+          <div class="dif-text">Massa feita na hora, fermentada lentamente para uma textura perfeita e sabor incomparável.</div>
+        </div>
+      </div>
+      <div class="dif-card">
+        <div class="dif-icon">🚴</div>
+        <div>
+          <div class="dif-title">Delivery Rápido</div>
+          <div class="dif-text">Pizza quentinha na sua porta. Atendemos toda a Zona Sul com agilidade e cuidado.</div>
+        </div>
+      </div>
+      <div class="dif-card">
+        <div class="dif-icon">🌿</div>
+        <div>
+          <div class="dif-title">Ingredientes Frescos</div>
+          <div class="dif-text">Selecionamos cada ingrediente com cuidado para garantir qualidade e sabor em cada fatia.</div>
+        </div>
+      </div>
+      <div class="dif-card">
+        <div class="dif-icon">🪑</div>
+        <div>
+          <div class="dif-title">Ambiente para Jantar</div>
+          <div class="dif-text">Um espaço aconchegante para reunir família e amigos. Venha nos visitar e aproveitar!</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEPOIMENTOS -->
+  <section class="depoimentos" id="depoimentos">
+    <div class="depoimentos-header">
+      <span class="section-label">O que dizem os clientes</span>
+      <h2 class="section-title">Avaliações</h2>
+    </div>
+    <div class="reviews-list">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Melhor pizza da zona sul! A massa é incrível, fininha do jeito certo e os ingredientes são super frescos. Delivery chegou rápido e quentinho. Já virei cliente fiel!"</p>
+        <div class="review-author">Ana Paula M.</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Fui jantar com a família no sábado e ficamos apaixonados. O ambiente é lindo, muito aconchegante. A pizza de frango com catupiry foi um espetáculo. Voltaremos com certeza!"</p>
+        <div class="review-author">Carlos S.</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Pedi pelo WhatsApp, foi super fácil! Pizza chegou em 35 minutos, embalada direitinho e deliciosa. A Margherita é simples mas divina. Recomendo demais!"</p>
+        <div class="review-author">Fernanda L.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTATO -->
+  <section class="contato" id="contato">
+    <div class="contato-inner">
+      <span class="section-label">Fale conosco</span>
+      <h2 class="section-title">Venha nos visitar<br>ou peça delivery</h2>
+      <div class="contato-cards">
+        <div class="contato-card">
+          <div class="contato-icon">📍</div>
+          <div>
+            <div class="contato-label">Localização</div>
+            <div class="contato-value">Zona Sul — São Paulo, SP</div>
+          </div>
+        </div>
+        <div class="contato-card">
+          <div class="contato-icon">🕐</div>
+          <div>
+            <div class="contato-label">Horário</div>
+            <div class="contato-value">Ter–Dom: 18h às 23h</div>
+          </div>
+        </div>
+        <div class="contato-card">
+          <div class="contato-icon">📞</div>
+          <div>
+            <div class="contato-label">WhatsApp</div>
+            <div class="contato-value">(11) 96575-9670</div>
+          </div>
+        </div>
+        <div class="contato-card">
+          <div class="contato-icon">🍕</div>
+          <div>
+            <div class="contato-label">Delivery & Salão</div>
+            <div class="contato-value">Delivery e jantar no local</div>
+          </div>
+        </div>
+      </div>
+      <a href="https://wa.me/5511965759670?text=Oi!%20Quero%20fazer%20um%20pedido%20🍕" target="_blank" class="btn-whatsapp-big">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.558 4.122 1.532 5.854L.078 23.245a.5.5 0 0 0 .636.636l5.39-1.454A11.953 11.953 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75a9.727 9.727 0 0 1-4.953-1.355l-.355-.211-3.682.993.993-3.682-.212-.356A9.727 9.727 0 0 1 2.25 12C2.25 6.617 6.617 2.25 12 2.25S21.75 6.617 21.75 12 17.383 21.75 12 21.75z"/></svg>
+        Fazer Pedido pelo WhatsApp
+      </a>
+      <div class="mapa-wrapper">
+        <div class="mapa-placeholder">
+          <span>📍</span>
+          <p>Bologne Pizzaria<br>Zona Sul — São Paulo, SP</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Bologne</div>
+    <p class="footer-tagline">Pizza artesanal na Zona Sul de SP</p>
+    <div class="footer-links">
+      <a href="#sobre">Sobre</a>
+      <a href="#cardapio">Cardápio</a>
+      <a href="#galeria">Galeria</a>
+      <a href="#contato">Contato</a>
+      <a href="https://wa.me/5511965759670" target="_blank">WhatsApp</a>
+    </div>
+    <p class="footer-copy">© 2025 Bologne Pizzaria · Todos os direitos reservados</p>
+  </footer>
+
+  <!-- WHATSAPP FLOAT -->
+  <a href="https://wa.me/5511965759670?text=Oi!%20Quero%20fazer%20um%20pedido%20🍕" target="_blank" class="whatsapp-float" aria-label="WhatsApp">
+    <svg width="30" height="30" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.126.558 4.122 1.532 5.854L.078 23.245a.5.5 0 0 0 .636.636l5.39-1.454A11.953 11.953 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75a9.727 9.727 0 0 1-4.953-1.355l-.355-.211-3.682.993.993-3.682-.212-.356A9.727 9.727 0 0 1 2.25 12C2.25 6.617 6.617 2.25 12 2.25S21.75 6.617 21.75 12 17.383 21.75 12 21.75z"/></svg>
+  </a>
+
+</body>
+</html>
