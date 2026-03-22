@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Rakuen Lava Rapido e Higienizacoes em Maringa PR. Lava Jato Completo, Higienizacao Interna, Polimento e Cristalizacao. Deixe seu carro limpo e brilhando!">
+  <title>Rakuen Lava Rapido | Maringa PR</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#0a0c10;--bg2:#111520;--bg3:#161b26;
+      --gold:#f5c432;--gold-dark:#c99d1a;
+      --green:#25D366;
+      --text:#f0f0f0;--muted:#8a9ab0;
+      --border:rgba(245,196,50,0.15);
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+
+    /* HEADER */
+    header{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;background:rgba(10,12,16,0.93);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+    .logo{display:flex;align-items:center;gap:10px}
+    .logo-icon{width:42px;height:42px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .logo-icon svg{width:22px;height:22px;fill:#0a0c10}
+    .logo-text{display:flex;flex-direction:column;line-height:1.1}
+    .logo-name{font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--gold);letter-spacing:2px}
+    .logo-sub{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+    .header-cta{background:var(--gold);color:#0a0c10;font-weight:700;font-size:13px;padding:10px 18px;border-radius:50px;text-decoration:none;display:flex;align-items:center;gap:6px;transition:all .2s}
+    .header-cta:hover{background:#ffda5c;transform:scale(1.03)}
+
+    /* HERO */
+    .hero{min-height:100vh;background:linear-gradient(180deg,rgba(10,12,16,.72) 0%,rgba(10,12,16,.88) 60%,var(--bg) 100%),url('https://images.unsplash.com/photo-1520340356584-f9917d1eea6f?w=1200&q=80') center/cover no-repeat;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 24px 80px}
+    .hero-badge{display:inline-flex;align-items:center;gap:8px;background:rgba(245,196,50,.12);border:1px solid var(--border);color:var(--gold);font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:8px 18px;border-radius:50px;margin-bottom:28px;animation:fadeUp .6s ease both}
+    .hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,14vw,100px);line-height:.95;letter-spacing:3px;color:#fff;animation:fadeUp .7s .1s ease both}
+    .hero-title span{color:var(--gold);display:block}
+    .hero-sub{font-size:16px;color:var(--muted);max-width:420px;margin:20px auto 36px;line-height:1.6;animation:fadeUp .7s .2s ease both}
+    .hero-buttons{display:flex;flex-direction:column;gap:12px;width:100%;max-width:300px;margin:0 auto;animation:fadeUp .7s .3s ease both}
+    .btn-primary{background:var(--gold);color:#0a0c10;font-weight:700;font-size:15px;padding:16px 28px;border-radius:50px;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .2s}
+    .btn-primary:hover{background:#ffda5c;transform:translateY(-2px)}
+    .btn-secondary{background:rgba(255,255,255,.08);color:#fff;font-weight:600;font-size:14px;padding:14px 28px;border-radius:50px;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:8px;border:1px solid rgba(255,255,255,.15);transition:all .2s}
+    .btn-secondary:hover{background:rgba(255,255,255,.14)}
+
+    /* STATS */
+    .stats{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:36px 24px}
+    .stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:800px;margin:0 auto}
+    .stat-item{text-align:center}
+    .stat-number{font-family:'Bebas Neue',sans-serif;font-size:42px;color:var(--gold);letter-spacing:2px;display:block}
+    .stat-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-top:2px}
+
+    /* SECTION */
+    section{padding:72px 24px}
+    .section-label{display:inline-block;color:var(--gold);font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+    .section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,8vw,56px);letter-spacing:2px;line-height:1;color:#fff;margin-bottom:16px}
+    .section-desc{font-size:15px;color:var(--muted);max-width:480px;line-height:1.7}
+
+    /* SERVICES */
+    .services{background:var(--bg)}
+    .services-header{margin-bottom:48px}
+    .services-grid{display:grid;grid-template-columns:1fr;gap:16px;max-width:900px;margin:0 auto}
+    .service-card{background:var(--bg2);border:1px solid var(--border);border-radius:16px;padding:28px 24px;display:flex;align-items:flex-start;gap:18px;transition:all .25s;position:relative;overflow:hidden}
+    .service-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(245,196,50,.04) 0%,transparent 60%);opacity:0;transition:opacity .3s}
+    .service-card:hover{border-color:rgba(245,196,50,.4);transform:translateY(-3px)}
+    .service-card:hover::before{opacity:1}
+    .service-icon{width:52px;height:52px;background:rgba(245,196,50,.1);border:1px solid rgba(245,196,50,.2);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:24px}
+    .service-info h3{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:1.5px;color:#fff;margin-bottom:6px}
+    .service-info p{font-size:14px;color:var(--muted);line-height:1.6}
+
+    /* GALLERY */
+    .gallery{background:var(--bg3)}
+    .gallery-header{margin-bottom:36px}
+    .gallery-scroll{display:flex;gap:14px;overflow-x:auto;padding-bottom:12px;scrollbar-width:thin;scrollbar-color:var(--gold-dark) transparent;max-width:900px;margin:0 auto}
+    .gallery-scroll::-webkit-scrollbar{height:4px}
+    .gallery-scroll::-webkit-scrollbar-thumb{background:var(--gold-dark);border-radius:4px}
+    .gallery-item{flex-shrink:0;width:260px;height:180px;border-radius:12px;overflow:hidden;position:relative}
+    .gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+    .gallery-item:hover img{transform:scale(1.06)}
+
+    /* HOW IT WORKS */
+    .how{background:var(--bg)}
+    .steps{display:flex;flex-direction:column;max-width:600px;margin:48px auto 0;position:relative}
+    .step{display:flex;gap:20px;padding-bottom:36px;position:relative}
+    .step:last-child{padding-bottom:0}
+    .step-line{position:absolute;left:19px;top:40px;bottom:0;width:2px;background:var(--border)}
+    .step:last-child .step-line{display:none}
+    .step-num{width:40px;height:40px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:18px;color:#0a0c10;flex-shrink:0;position:relative;z-index:1}
+    .step-content h3{font-size:17px;font-weight:700;color:#fff;margin-bottom:6px;padding-top:8px}
+    .step-content p{font-size:14px;color:var(--muted);line-height:1.6}
+
+    /* TESTIMONIALS */
+    .testimonials{background:var(--bg2)}
+    .reviews-grid{display:flex;flex-direction:column;gap:16px;max-width:700px;margin:40px auto 0}
+    .review-card{background:var(--bg3);border:1px solid var(--border);border-radius:16px;padding:24px}
+    .review-stars{color:var(--gold);font-size:16px;margin-bottom:12px;letter-spacing:2px}
+    .review-text{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:16px;font-style:italic}
+    .review-author{font-size:13px;font-weight:700;color:#fff}
+    .review-author span{font-weight:400;color:var(--muted)}
+
+    /* CONTACT */
+    .contact{background:var(--bg3)}
+    .contact-inner{max-width:600px;margin:0 auto}
+    .contact-cards{display:grid;grid-template-columns:1fr;gap:14px;margin:40px 0 32px}
+    .contact-card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:20px;display:flex;align-items:center;gap:16px}
+    .contact-icon{width:44px;height:44px;background:rgba(245,196,50,.1);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+    .contact-info-text h4{font-size:13px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+    .contact-info-text p{font-size:15px;font-weight:600;color:#fff}
+    .whatsapp-btn-large{display:flex;align-items:center;justify-content:center;gap:12px;background:var(--green);color:#fff;font-weight:700;font-size:16px;padding:18px 28px;border-radius:50px;text-decoration:none;transition:all .2s;width:100%;margin-bottom:12px}
+    .whatsapp-btn-large:hover{background:#20ba5a;transform:translateY(-2px)}
+    .whatsapp-btn-large2{display:flex;align-items:center;justify-content:center;gap:12px;background:rgba(37,211,102,.12);color:var(--green);font-weight:700;font-size:15px;padding:16px 28px;border-radius:50px;text-decoration:none;transition:all .2s;width:100%;border:1px solid rgba(37,211,102,.25)}
+    .whatsapp-btn-large2:hover{background:rgba(37,211,102,.2)}
+    .map-wrap{border-radius:16px;overflow:hidden;margin-top:32px;border:1px solid var(--border)}
+    .map-wrap iframe{display:block;width:100%;height:200px}
+
+    /* FOOTER */
+    footer{background:#06080c;padding:40px 24px 28px;text-align:center;border-top:1px solid var(--border)}
+    .footer-logo{font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--gold);letter-spacing:3px;margin-bottom:8px}
+    .footer-tagline{font-size:13px;color:var(--muted);margin-bottom:24px}
+    .footer-copy{font-size:12px;color:rgba(138,154,176,.5)}
+
+    /* FLOATING WA */
+    .wa-float{position:fixed;bottom:20px;right:20px;z-index:999;background:var(--green);border-radius:50%;width:60px;height:60px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.4);text-decoration:none;animation:pulse 2.5s ease-in-out infinite;transition:transform .2s}
+    .wa-float:hover{transform:scale(1.1)}
+    .wa-float svg{width:30px;height:30px;fill:#fff}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes pulse{0%,100%{box-shadow:0 4px 20px rgba(37,211,102,.4)}50%{box-shadow:0 4px 32px rgba(37,211,102,.7)}}
+    .fade-in{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+    .fade-in.visible{opacity:1;transform:translateY(0)}
+
+    @media(min-width:768px){
+      .hero-buttons{flex-direction:row;max-width:440px}
+      .stats-grid{grid-template-columns:repeat(4,1fr)}
+      .services-grid{grid-template-columns:1fr 1fr}
+      .contact-cards{grid-template-columns:1fr 1fr}
+      .gallery-item{width:300px;height:200px}
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">
+      <svg viewBox="0 0 24 24"><path d="M5 12c0-3.87 3.13-7 7-7s7 3.13 7 7H5zm0 0c0 3.87 3.13 7 7 7s7-3.13 7-7"/></svg>
+    </div>
+    <div class="logo-text">
+      <span class="logo-name">RAKUEN</span>
+      <span class="logo-sub">Lava Rapido</span>
+    </div>
+  </div>
+  <a href="https://wa.me/5544998474238" target="_blank" class="header-cta">
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+    Agendar
+  </a>
+</header>
+
+<section class="hero" id="inicio">
+  <div class="hero-badge">✦ Maringa, PR</div>
+  <h1 class="hero-title">Seu carro<span>limpo e</span>brilhando</h1>
+  <p class="hero-sub">Lava Rapido e Higienizacoes profissionais. Do basico ao detalhado — seu carro sai impecavel.</p>
+  <div class="hero-buttons">
+    <a href="https://wa.me/5544998474238" target="_blank" class="btn-primary">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+      Agendar agora
+    </a>
+    <a href="#servicos" class="btn-secondary">Ver servicos</a>
+  </div>
+</section>
+
+<div class="stats">
+  <div class="stats-grid fade-in">
+    <div class="stat-item"><span class="stat-number">4+</span><span class="stat-label">Servicos</span></div>
+    <div class="stat-item"><span class="stat-number">100%</span><span class="stat-label">Satisfacao</span></div>
+    <div class="stat-item"><span class="stat-number">&#9733; 5</span><span class="stat-label">Avaliacao</span></div>
+    <div class="stat-item"><span class="stat-number">Ja!</span><span class="stat-label">Atendimento</span></div>
+  </div>
+</div>
+
+<section class="services" id="servicos">
+  <div class="services-header fade-in">
+    <span class="section-label">O que fazemos</span>
+    <h2 class="section-title">Nossos Servicos</h2>
+    <p class="section-desc">Do lava jato simples ao detalhamento completo — cuidado profissional com cada veiculo.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card fade-in">
+      <div class="service-icon">&#128703;</div>
+      <div class="service-info">
+        <h3>Lava Jato Completo</h3>
+        <p>Lavagem exterior completa com espuma ativa, enxague de alta pressao e secagem. Seu carro sai brilhando!</p>
+      </div>
+    </div>
+    <div class="service-card fade-in">
+      <div class="service-icon">&#128264;</div>
+      <div class="service-info">
+        <h3>Higienizacao Interna</h3>
+        <p>Limpeza profunda de bancos, tapetes, painel e teto. Elimina bacterias, odores e alergenicos.</p>
+      </div>
+    </div>
+    <div class="service-card fade-in">
+      <div class="service-icon">&#10024;</div>
+      <div class="service-info">
+        <h3>Polimento e Cristalizacao</h3>
+        <p>Remove riscos e imperfeicoes da pintura, entrega brilho de espelho com protecao de longa duracao.</p>
+      </div>
+    </div>
+    <div class="service-card fade-in">
+      <div class="service-icon">&#128302;</div>
+      <div class="service-info">
+        <h3>Lavagem Detalhada</h3>
+        <p>Atencao a cada detalhe — rodas, frestas, soleiras, vidros. Resultado impecavel de dentro pra fora.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="gallery" id="galeria">
+  <div class="gallery-header fade-in">
+    <span class="section-label">Nosso trabalho</span>
+    <h2 class="section-title">Resultados reais</h2>
+  </div>
+  <div class="gallery-scroll">
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1520340356584-f9917d1eea6f?w=600&q=80" alt="Carro limpo" loading="lazy">
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80" alt="Lavagem" loading="lazy">
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1601362840469-51e4d8d58785?w=600&q=80" alt="Detalhamento" loading="lazy">
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Polimento" loading="lazy">
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=600&q=80" alt="Carro brilhando" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<section class="how" id="como-funciona">
+  <div class="fade-in">
+    <span class="section-label">Como funciona</span>
+    <h2 class="section-title">Simples assim</h2>
+    <p class="section-desc">Agendar e facil, rapido e sem complicacao.</p>
+  </div>
+  <div class="steps">
+    <div class="step fade-in">
+      <div class="step-num">1</div>
+      <div class="step-line"></div>
+      <div class="step-content">
+        <h3>Manda mensagem</h3>
+        <p>Chama no WhatsApp, nos dizemos os horarios disponiveis e voce escolhe o melhor pra voce.</p>
+      </div>
+    </div>
+    <div class="step fade-in">
+      <div class="step-num">2</div>
+      <div class="step-line"></div>
+      <div class="step-content">
+        <h3>Traz o carro</h3>
+        <p>Aparece no horario agendado. Rapido, sem fila, sem espera desnecessaria.</p>
+      </div>
+    </div>
+    <div class="step fade-in">
+      <div class="step-num">3</div>
+      <div class="step-line"></div>
+      <div class="step-content">
+        <h3>Retira impecavel</h3>
+        <p>Seu carro sai limpo, cheiroso e brilhando. Qualidade garantida em cada servico.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="testimonials">
+  <div class="fade-in">
+    <span class="section-label">Clientes</span>
+    <h2 class="section-title">O que falam de nos</h2>
+  </div>
+  <div class="reviews-grid">
+    <div class="review-card fade-in">
+      <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <p class="review-text">"Melhor lava rapido de Maringa! Meu carro ficou impecavel, serviram com muita atencao e cuidado. Super recomendo!"</p>
+      <div class="review-author">Ana Paula M. <span>— Google</span></div>
+    </div>
+    <div class="review-card fade-in">
+      <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <p class="review-text">"Fiz a higienizacao interna completa e ficou incrivel. O carro cheira muito bem e parece novo por dentro. Voltarei sempre!"</p>
+      <div class="review-author">Carlos R. <span>— Google</span></div>
+    </div>
+    <div class="review-card fade-in">
+      <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <p class="review-text">"Atendimento excelente, preco justo e resultado de primeira. O polimento ficou perfeito, zero arranhoes. Recomendo demais!"</p>
+      <div class="review-author">Marcos S. <span>— Google</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contato">
+  <div class="contact-inner">
+    <div class="fade-in">
+      <span class="section-label">Fale conosco</span>
+      <h2 class="section-title">Agende agora</h2>      <p class="section-desc">Chama no WhatsApp e a gente cuida do resto.</p>
+    </div>
+    <div class="contact-cards">
+      <div class="contact-card fade-in">
+        <div class="contact-icon">&#128222;</div>
+        <div class="contact-info-text">
+          <h4>WhatsApp 1</h4>
+          <p>(44) 99847-4238</p>
+        </div>
+      </div>
+      <div class="contact-card fade-in">
+        <div class="contact-icon">&#128222;</div>
+        <div class="contact-info-text">
+          <h4>WhatsApp 2</h4>
+          <p>(44) 98856-7684</p>
+        </div>
+      </div>
+      <div class="contact-card fade-in">
+        <div class="contact-icon">&#128205;</div>
+        <div class="contact-info-text">
+          <h4>Cidade</h4>
+          <p>Maringa, PR</p>
+        </div>
+      </div>
+      <div class="contact-card fade-in">
+        <div class="contact-icon">&#128336;</div>
+        <div class="contact-info-text">
+          <h4>Atendimento</h4>
+          <p>Seg a Sab</p>
+        </div>
+      </div>
+    </div>
+    <a href="https://wa.me/5544998474238" target="_blank" class="whatsapp-btn-large">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+      Chamar no WhatsApp — (44) 99847-4238
+    </a>
+    <a href="https://wa.me/5544988567684" target="_blank" class="whatsapp-btn-large2">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+      Ou chame em — (44) 98856-7684
+    </a>
+    <div class="map-wrap">
+      <iframe src="https://maps.google.com/maps?q=Maringa+PR&z=13&output=embed" frameborder="0" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">RAKUEN</div>
+  <div class="footer-tagline">Qualidade e cuidado que seu carro merece!</div>
+  <div class="footer-copy">Rakuen Lava Rapido &amp; Higienizacoes — Maringa, PR</div>
+</footer>
+
+<a href="https://wa.me/5544998474238" target="_blank" class="wa-float" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+</a>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
