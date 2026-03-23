@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel de Chamada — Fisiot</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Plus Jakarta Sans',sans-serif;background:#1a0a0a;color:#fff;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px}
+    .logo{display:flex;align-items:center;gap:12px;margin-bottom:32px}
+    .logo-icon{width:48px;height:48px;background:#CC0000;border-radius:10px;display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:1fr 1fr 1fr;gap:2px;padding:6px}
+    .logo-icon span{background:#fff;border-radius:2px}
+    .logo-icon span:nth-child(2),.logo-icon span:nth-child(4),.logo-icon span:nth-child(6),.logo-icon span:nth-child(8){background:#CC0000}
+    .logo h1{font-size:1.4rem;font-weight:800;color:#fff}
+    .logo h1 small{display:block;font-size:.75rem;color:rgba(255,255,255,.5);font-weight:500}
+    .card{background:#2a1010;border:1px solid rgba(204,0,0,.3);border-radius:20px;padding:32px;width:100%;max-width:500px}
+    .card h2{font-size:1.2rem;font-weight:700;color:#CC0000;margin-bottom:24px;text-align:center;text-transform:uppercase;letter-spacing:1px}
+    .field{margin-bottom:16px}
+    label{display:block;font-size:.8rem;font-weight:700;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+    input,select{width:100%;background:#1a0a0a;border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:12px 16px;font-size:1rem;color:#fff;font-family:'Plus Jakarta Sans',sans-serif;outline:none;transition:border .2s}
+    input:focus,select:focus{border-color:#CC0000}
+    select option{background:#1a0a0a;color:#fff}
+    .btn{width:100%;background:#CC0000;color:#fff;border:none;border-radius:12px;padding:16px;font-size:1rem;font-weight:800;cursor:pointer;margin-top:8px;transition:all .2s;text-transform:uppercase;letter-spacing:1px}
+    .btn:hover{background:#a80000;transform:translateY(-1px)}
+    .btn:active{transform:translateY(0)}
+    .preview{background:#0d1a0d;border:1px solid rgba(76,175,80,.3);border-radius:12px;padding:16px;margin-top:20px;display:none}
+    .preview h3{font-size:.75rem;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+    .preview p{font-size:1rem;color:#fff;line-height:1.6}
+    .preview p span{color:#FFD700;font-weight:700}
+    .sent{background:#0d1a0d;border:1px solid #4CAF50;border-radius:12px;padding:16px;margin-top:16px;text-align:center;display:none}
+    .sent p{color:#4CAF50;font-weight:700;font-size:1rem}
+    .hist{margin-top:24px}
+    .hist h3{font-size:.8rem;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+    .hist-item{background:#1a0a0a;border-radius:8px;padding:10px 14px;margin-bottom:6px;font-size:.85rem;color:rgba(255,255,255,.7);border-left:3px solid #CC0000}
+    .btn-clear{background:rgba(255,255,255,.05);color:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:8px 16px;font-size:.8rem;cursor:pointer;margin-top:8px;transition:all .2s}
+    .btn-clear:hover{background:rgba(255,0,0,.1);color:#fff}
+  </style>
+</head>
+<body>
+<div class="logo">
+  <div class="logo-icon"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+  <h1>TV Fisiot <small>Painel de Chamada</small></h1>
+</div>
+
+<div class="card">
+  <h2>📢 Chamar Paciente</h2>
+  
+  <div class="field">
+    <label>Nome do Paciente</label>
+    <input type="text" id="nome" placeholder="Ex: João Silva" autocomplete="off">
+  </div>
+  
+  <div class="field">
+    <label>Ginásio / Sala</label>
+    <select id="ginasio">
+      <option value="Ginásio 1">Ginásio 1</option>
+      <option value="Ginásio 2">Ginásio 2</option>
+      <option value="Sala de Pilates">Sala de Pilates</option>
+      <option value="Sala Hidro">Sala Hidro</option>
+      <option value="Sala de Avaliação">Sala de Avaliação</option>
+      <option value="Sala da Dra. Keila">Sala da Dra. Keila</option>
+    </select>
+  </div>
+  
+  <div class="field">
+    <label>Profissional</label>
+    <select id="profissional">
+      <option value="Dra. Keila Marques">Dra. Keila Marques</option>
+      <option value="Dra. Lívia">Dra. Lívia</option>
+      <option value="Dr. Carlos">Dr. Carlos</option>
+      <option value="Dra. Júlia">Dra. Júlia</option>
+    </select>
+  </div>
+  
+  <div class="field">
+    <label>Horário</label>
+    <input type="time" id="horario" value="">
+  </div>
+
+  <div class="preview" id="preview">
+    <h3>Prévia da chamada</h3>
+    <p id="preview-txt"></p>
+  </div>
+
+  <button class="btn" onclick="chamar()">📢 CHAMAR AGORA</button>
+  
+  <div class="sent" id="sent">
+    <p>✅ Chamada enviada para a TV!</p>
+  </div>
+</div>
+
+<div class="hist" id="hist-container">
+  <h3>Últimas chamadas</h3>
+  <div id="hist-list"></div>
+  <button class="btn-clear" onclick="limparHist()">Limpar histórico</button>
+</div>
+
+<script>
+// Definir horário atual como padrão
+const now = new Date();
+document.getElementById('horario').value = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+
+// Atualizar preview em tempo real
+['nome','ginasio','profissional','horario'].forEach(id => {
+  document.getElementById(id).addEventListener('input', atualizarPreview);
+  document.getElementById(id).addEventListener('change', atualizarPreview);
+});
+
+function atualizarPreview() {
+  const nome = document.getElementById('nome').value;
+  const gin = document.getElementById('ginasio').value;
+  const prof = document.getElementById('profissional').value;
+  const hor = document.getElementById('horario').value;
+  const prev = document.getElementById('preview');
+  const txt = document.getElementById('preview-txt');
+  if (nome) {
+    prev.style.display = 'block';
+    txt.innerHTML = `Paciente <span>${nome}</span>, dirija-se ao <span>${gin}</span> com <span>${prof}</span> às <span>${hor}</span>.`;
+  } else {
+    prev.style.display = 'none';
+  }
+}
+
+function chamar() {
+  const nome = document.getElementById('nome').value.trim();
+  const gin = document.getElementById('ginasio').value;
+  const prof = document.getElementById('profissional').value;
+  const hor = document.getElementById('horario').value;
+  
+  if (!nome) { alert('Digite o nome do paciente!'); return; }
+  
+  const msg = `Paciente ${nome}, dirija-se ao ${gin} com ${prof} às ${hor}.`;
+  const msgHtml = `Paciente <span class="d">${nome}</span> — ${gin} — <span class="d">${prof}</span> — ${hor}`;
+  
+  // Salvar no localStorage para a TV ler
+  const chamada = {
+    nome, ginasio: gin, profissional: prof, horario: hor,
+    msg, msgHtml, timestamp: Date.now()
+  };
+  localStorage.setItem('fisiot_chamada', JSON.stringify(chamada));
+  
+  // Voz (Web Speech API)
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+    const utt = new SpeechSynthesisUtterance(msg);
+    utt.lang = 'pt-BR';
+    utt.rate = 0.9;
+    utt.pitch = 1;
+    utt.volume = 1;
+    // Tentar usar voz feminina pt-BR
+    const voices = window.speechSynthesis.getVoices();
+    const ptVoz = voices.find(v => v.lang === 'pt-BR' && v.name.toLowerCase().includes('female')) 
+                || voices.find(v => v.lang === 'pt-BR')
+                || voices.find(v => v.lang.startsWith('pt'));
+    if (ptVoz) utt.voice = ptVoz;
+    window.speechSynthesis.speak(utt);
+  }
+  
+  // Mostrar confirmação
+  document.getElementById('sent').style.display = 'block';
+  setTimeout(() => document.getElementById('sent').style.display = 'none', 3000);
+  
+  // Histórico
+  const hist = JSON.parse(localStorage.getItem('fisiot_hist') || '[]');
+  hist.unshift({msg, time: new Date().toLocaleTimeString('pt-BR', {hour:'2-digit',minute:'2-digit'})});
+  if (hist.length > 10) hist.pop();
+  localStorage.setItem('fisiot_hist', JSON.stringify(hist));
+  renderHist();
+  
+  // Limpar nome
+  document.getElementById('nome').value = '';
+  atualizarPreview();
+}
+
+function renderHist() {
+  const hist = JSON.parse(localStorage.getItem('fisiot_hist') || '[]');
+  const list = document.getElementById('hist-list');
+  if (hist.length === 0) { list.innerHTML = '<p style="color:rgba(255,255,255,.3);font-size:.8rem">Nenhuma chamada ainda</p>'; return; }
+  list.innerHTML = hist.map(h => `<div class="hist-item"><strong>${h.time}</strong> — ${h.msg}</div>`).join('');
+}
+
+function limparHist() {
+  localStorage.removeItem('fisiot_hist');
+  renderHist();
+}
+
+// Carregar vozes
+if ('speechSynthesis' in window) {
+  window.speechSynthesis.onvoiceschanged = () => {};
+  window.speechSynthesis.getVoices();
+}
+
+renderHist();
+</script>
+</body>
+</html>

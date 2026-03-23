@@ -272,13 +272,43 @@ b.style.transition="width "+dur+"ms linear";b.style.width="100%";
 })});
 }
 sp();tmr=setTimeout(function(){go(1)},dur);
-var chs=["Paciente das <span class=\"d\">08h00</span>&mdash;Ginasio 1&mdash;<span class=\"d\">Dra. Livia</span>","Paciente das <span class=\"d\">08h30</span>&mdash;Ginasio 2&mdash;<span class=\"d\">Dr. Carlos</span>","Paciente das <span class=\"d\">09h00</span>&mdash;Sala Hidro&mdash;<span class=\"d\">Dra. Keila</span>","Programa <span class=\"d\">Idoso Presente</span>&mdash;Inscricoes abertas!","Servico <span class=\"d\">Leva e Traz</span>&mdash;(31) 98337-7662"],ci=0;
+var chs=["Programa <span class=\"d\">Idoso Presente</span> &mdash; Inscrições abertas!","Serviço <span class=\"d\">Leva e Traz</span> &mdash; (31) 98337-7662","Loja Fisiot &mdash; Produtos ortopédicos e suplementos"],ci=0;
+var lastChamada=null;
+function checkChamada(){
+  try{
+    var c=localStorage.getItem('fisiot_chamada');
+    if(c){
+      var d=JSON.parse(c);
+      if(d.timestamp!==lastChamada){
+        lastChamada=d.timestamp;
+        var el=document.getElementById("ct");
+        el.style.opacity="0";
+        setTimeout(function(){
+          el.innerHTML='<strong style="color:#FFD700">📢 CHAMADA:</strong> Paciente <span class="d">'+d.nome+'</span> &mdash; '+d.ginasio+' &mdash; <span class="d">'+d.profissional+'</span> &mdash; '+d.horario;
+          el.style.opacity="1";
+        },300);
+        // Voz na TV também
+        if('speechSynthesis' in window){
+          var msg='Paciente '+d.nome+', dirija-se ao '+d.ginasio+' com '+d.profissional+' às '+d.horario+'.';
+          window.speechSynthesis.cancel();
+          var utt=new SpeechSynthesisUtterance(msg);
+          utt.lang='pt-BR'; utt.rate=0.85; utt.pitch=1; utt.volume=1;
+          var voices=window.speechSynthesis.getVoices();
+          var voz=voices.find(function(v){return v.lang==='pt-BR';})||voices.find(function(v){return v.lang.startsWith('pt');});
+          if(voz) utt.voice=voz;
+          window.speechSynthesis.speak(utt);
+        }
+      }
+    }
+  }catch(e){}
+}
+setInterval(checkChamada,2000);
 setInterval(function(){
 ci=(ci+1)%chs.length;
 var el=document.getElementById("ct");
 el.style.opacity="0";
 setTimeout(function(){el.innerHTML=chs[ci];el.style.opacity="1"},400);
-},9000);
+},12000);
 </script>
 </body>
 </html>
