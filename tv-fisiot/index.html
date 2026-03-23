@@ -203,26 +203,55 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Plus Jakarta Sans'
 <div class="sl sl-loja" id="s4" style="padding:0;overflow:hidden;">
   <div style="display:flex;width:100%;height:100%;">
     <!-- Texto lado esquerdo -->
-    <div style="flex:0 0 52%;display:flex;flex-direction:column;justify-content:center;padding:24px 32px;background:linear-gradient(135deg,#0d0505 0%,#1a0808 100%);">
-      <div style="font-size:28px;margin-bottom:10px;">🛒</div>
-      <h2 class="h2pl" style="text-align:left;margin-bottom:6px;font-size:clamp(20px,3vw,38px);">Loja Fisiot &amp; Vc</h2>
-      <em style="color:#CC0000;font-size:clamp(14px,1.8vw,20px);margin-bottom:16px;display:block;">Saúde e Bem-estar</em>
-      <div class="prods" style="grid-template-columns:1fr 1fr;gap:7px;">
-        <div class="prod-item"><span>&#x1F9AF;</span><p>Bengalas e muletas</p></div>
-        <div class="prod-item"><span>&#x1FA7A;</span><p>Órteses e suportes</p></div>
-        <div class="prod-item"><span>&#x1F9E4;</span><p>Meias de compressão</p></div>
-        <div class="prod-item"><span>&#x267F;</span><p>Cadeiras de rodas</p></div>
-        <div class="prod-item"><span>&#x1F4AA;</span><p>Suplementos saudáveis</p></div>
-        <div class="prod-item"><span>&#x1FA79;</span><p>Produtos reabilitação</p></div>
+    <div style="flex:0 0 46%;display:flex;flex-direction:column;justify-content:center;padding:20px 28px;background:linear-gradient(135deg,#0d0505 0%,#1a0808 100%);">
+      <div style="font-size:24px;margin-bottom:8px;">🛒</div>
+      <h2 class="h2pl" style="text-align:left;margin-bottom:4px;font-size:clamp(18px,2.5vw,34px);">Loja Fisiot &amp; Vc</h2>
+      <em style="color:#CC0000;font-size:clamp(13px,1.6vw,18px);margin-bottom:14px;display:block;">Produtos para sua saúde</em>
+      <div id="loja-nome-prod" style="background:rgba(204,0,0,0.15);border:1px solid rgba(204,0,0,0.3);border-radius:10px;padding:10px 14px;margin-bottom:12px;">
+        <p id="loja-prod-titulo" style="font-size:clamp(13px,1.5vw,17px);font-weight:700;color:#fff;margin:0 0 4px 0;">Bolsa de Gel Terapêutica</p>
+        <p id="loja-prod-desc" style="font-size:clamp(11px,1.2vw,14px);color:rgba(255,255,255,.75);margin:0;line-height:1.5;">Terapia frio/calor para reduzir inflamação e dor</p>
       </div>
+      <div style="font-size:12px;color:rgba(255,255,255,.5);">📞 (31) 98337-7662 · @fisiotfisioterapia</div>
     </div>
-    <!-- Foto produto lado direito -->
-    <div style="flex:1;position:relative;overflow:hidden;background:#111;">
-      <img src="loja-produto.jpg" alt="Manta Térmica Fisiot" style="width:100%;height:100%;object-fit:contain;object-position:center;display:block;padding:16px;box-sizing:border-box;"/>
-      <div style="position:absolute;inset:0;background:linear-gradient(to right,#0d0505 0%,transparent 15%);pointer-events:none;"></div>
+    <!-- Carrossel de produtos lado direito -->
+    <div style="flex:1;position:relative;overflow:hidden;background:#0a0a0a;">
+      <img id="loja-img" src="prod-bolsa-gel.jpg" alt="Produto Fisiot" style="width:100%;height:100%;object-fit:contain;object-position:center;display:block;padding:12px;box-sizing:border-box;transition:opacity 0.6s ease;"/>
+      <div style="position:absolute;inset:0;background:linear-gradient(to right,#0d0505 0%,transparent 12%);pointer-events:none;"></div>
     </div>
   </div>
 </div>
+<script>
+(function(){
+  var prods=[
+    {img:'prod-bolsa-gel.jpg',nome:'Bolsa de Gel Terapêutica',desc:'Terapia frio/calor para reduzir inflamação e dor'},
+    {img:'prod-creme-ervas.jpg',nome:'Creme Ervas Milagrosas',desc:'Hidratante, anti-inflamatório e relaxante muscular'},
+    {img:'prod-tens.jpg',nome:'TENS Portátil',desc:'Estimulação elétrica para alívio de dores'},
+    {img:'prod-disco-flex.jpg',nome:'Disco de Equilíbrio',desc:'Melhora mobilidade, equilíbrio e coordenação'},
+    {img:'prod-faixa.jpg',nome:'Faixa de Alongamento',desc:'Alívio de dores e alongamento muscular'},
+    {img:'prod-pesos.jpg',nome:'Pesos para Assoalho Pélvico',desc:'Treinamento pélvico, previne incontinência'},
+    {img:'prod-rolo.jpg',nome:'Rolo Miofascial',desc:'Liberação miofascial e redução de tensões'},
+    {img:'prod-bola.jpg',nome:'Bola de Mobilidade Cervical',desc:'Massagem e relaxamento cervical'},
+    {img:'prod-sapatilha.jpg',nome:'Sapatilha de Pilates',desc:'Antiderrapante para atividades físicas'}
+  ];
+  var pi=0;
+  function nextProd(){
+    pi=(pi+1)%prods.length;
+    var img=document.getElementById('loja-img');
+    var tit=document.getElementById('loja-prod-titulo');
+    var desc=document.getElementById('loja-prod-desc');
+    if(img&&tit&&desc){
+      img.style.opacity='0';
+      setTimeout(function(){
+        img.src=prods[pi].img;
+        tit.textContent=prods[pi].nome;
+        desc.textContent=prods[pi].desc;
+        img.style.opacity='1';
+      },300);
+    }
+  }
+  setInterval(nextProd,4000);
+})();
+</script>
 <div class="sl sl-serv" id="s5" style="padding:0;background:#0a0a0f;overflow:hidden;">
   <div style="display:flex;width:100%;height:100%;">
     <!-- Texto lado esquerdo -->
