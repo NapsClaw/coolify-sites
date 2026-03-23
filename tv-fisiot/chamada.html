@@ -7,191 +7,310 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:'Plus Jakarta Sans',sans-serif;background:#1a0a0a;color:#fff;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px}
-    .logo{display:flex;align-items:center;gap:12px;margin-bottom:32px}
-    .logo-icon{width:48px;height:48px;background:#CC0000;border-radius:10px;display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:1fr 1fr 1fr;gap:2px;padding:6px}
-    .logo-icon span{background:#fff;border-radius:2px}
+    body{font-family:'Plus Jakarta Sans',sans-serif;background:#1a0a0a;color:#fff;min-height:100vh;padding:20px}
+    .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px}
+    .logo{display:flex;align-items:center;gap:12px}
+    .logo-icon{width:40px;height:40px;background:#CC0000;border-radius:8px;display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:1fr 1fr 1fr;gap:2px;padding:5px}
+    .logo-icon span{background:#fff;border-radius:1px}
     .logo-icon span:nth-child(2),.logo-icon span:nth-child(4),.logo-icon span:nth-child(6),.logo-icon span:nth-child(8){background:#CC0000}
-    .logo h1{font-size:1.4rem;font-weight:800;color:#fff}
-    .logo h1 small{display:block;font-size:.75rem;color:rgba(255,255,255,.5);font-weight:500}
-    .card{background:#2a1010;border:1px solid rgba(204,0,0,.3);border-radius:20px;padding:32px;width:100%;max-width:500px}
-    .card h2{font-size:1.2rem;font-weight:700;color:#CC0000;margin-bottom:24px;text-align:center;text-transform:uppercase;letter-spacing:1px}
-    .field{margin-bottom:16px}
-    label{display:block;font-size:.8rem;font-weight:700;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
-    input,select{width:100%;background:#1a0a0a;border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:12px 16px;font-size:1rem;color:#fff;font-family:'Plus Jakarta Sans',sans-serif;outline:none;transition:border .2s}
+    .logo h1{font-size:1.2rem;font-weight:800}
+    .logo h1 small{display:block;font-size:.7rem;color:rgba(255,255,255,.5);font-weight:500}
+    .relogio{font-size:1.4rem;font-weight:800;color:#FFD700;background:#2a1010;padding:8px 16px;border-radius:10px;border:1px solid rgba(204,0,0,.3)}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+    @media(max-width:700px){.grid{grid-template-columns:1fr}}
+    .card{background:#2a1010;border:1px solid rgba(204,0,0,.3);border-radius:16px;padding:24px}
+    .card h2{font-size:1rem;font-weight:700;color:#CC0000;margin-bottom:18px;text-transform:uppercase;letter-spacing:1px}
+    .field{margin-bottom:14px}
+    label{display:block;font-size:.75rem;font-weight:700;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:1px;margin-bottom:5px}
+    input,select{width:100%;background:#1a0a0a;border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:10px 14px;font-size:.95rem;color:#fff;font-family:'Plus Jakarta Sans',sans-serif;outline:none;transition:border .2s}
     input:focus,select:focus{border-color:#CC0000}
     select option{background:#1a0a0a;color:#fff}
-    .btn{width:100%;background:#CC0000;color:#fff;border:none;border-radius:12px;padding:16px;font-size:1rem;font-weight:800;cursor:pointer;margin-top:8px;transition:all .2s;text-transform:uppercase;letter-spacing:1px}
-    .btn:hover{background:#a80000;transform:translateY(-1px)}
-    .btn:active{transform:translateY(0)}
-    .preview{background:#0d1a0d;border:1px solid rgba(76,175,80,.3);border-radius:12px;padding:16px;margin-top:20px;display:none}
-    .preview h3{font-size:.75rem;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
-    .preview p{font-size:1rem;color:#fff;line-height:1.6}
-    .preview p span{color:#FFD700;font-weight:700}
-    .sent{background:#0d1a0d;border:1px solid #4CAF50;border-radius:12px;padding:16px;margin-top:16px;text-align:center;display:none}
-    .sent p{color:#4CAF50;font-weight:700;font-size:1rem}
-    .hist{margin-top:24px}
-    .hist h3{font-size:.8rem;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
-    .hist-item{background:#1a0a0a;border-radius:8px;padding:10px 14px;margin-bottom:6px;font-size:.85rem;color:rgba(255,255,255,.7);border-left:3px solid #CC0000}
-    .btn-clear{background:rgba(255,255,255,.05);color:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:8px 16px;font-size:.8rem;cursor:pointer;margin-top:8px;transition:all .2s}
-    .btn-clear:hover{background:rgba(255,0,0,.1);color:#fff}
+    .btn{width:100%;background:#CC0000;color:#fff;border:none;border-radius:10px;padding:13px;font-size:.9rem;font-weight:800;cursor:pointer;margin-top:6px;transition:all .2s;text-transform:uppercase;letter-spacing:1px}
+    .btn:hover{background:#a80000}
+    .btn-sec{background:rgba(255,255,255,.06);color:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:7px 14px;font-size:.8rem;cursor:pointer;transition:all .2s;font-family:'Plus Jakarta Sans',sans-serif}
+    .btn-sec:hover{background:rgba(255,0,0,.1);color:#fff}
+    /* Agenda */
+    .agenda-item{background:#1a0a0a;border-radius:10px;padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;gap:12px;border-left:4px solid #333;transition:all .3s}
+    .agenda-item.proximo{border-left-color:#FFD700;background:#1a1500}
+    .agenda-item.chamado{border-left-color:#4CAF50;background:#0a1a0a;opacity:.7}
+    .agenda-item.atrasado{border-left-color:#ff4444}
+    .ag-hora{font-size:1.1rem;font-weight:800;color:#FFD700;min-width:52px}
+    .ag-info{flex:1}
+    .ag-nome{font-size:.95rem;font-weight:700;color:#fff}
+    .ag-det{font-size:.78rem;color:rgba(255,255,255,.5);margin-top:2px}
+    .ag-status{font-size:.75rem;padding:4px 10px;border-radius:20px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+    .ag-status.ok{background:rgba(76,175,80,.2);color:#4CAF50}
+    .ag-status.prox{background:rgba(255,215,0,.2);color:#FFD700}
+    .ag-status.esp{background:rgba(255,255,255,.1);color:rgba(255,255,255,.5)}
+    .ag-btn{background:rgba(204,0,0,.2);color:#ff6666;border:1px solid rgba(204,0,0,.3);border-radius:6px;padding:4px 10px;font-size:.75rem;cursor:pointer;transition:all .2s;font-family:'Plus Jakarta Sans',sans-serif}
+    .ag-btn:hover{background:#CC0000;color:#fff}
+    .chamada-ativa{background:#0a1a0a;border:2px solid #4CAF50;border-radius:12px;padding:14px 18px;margin-bottom:16px;display:none}
+    .chamada-ativa h3{font-size:.75rem;color:#4CAF50;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px}
+    .chamada-ativa p{font-size:1rem;color:#fff}
+    .chamada-ativa span{color:#FFD700;font-weight:700}
+    .auto-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(76,175,80,.15);border:1px solid rgba(76,175,80,.3);color:#4CAF50;padding:6px 12px;border-radius:50px;font-size:.8rem;font-weight:700;margin-bottom:16px}
+    .auto-badge .dot{width:8px;height:8px;background:#4CAF50;border-radius:50%;animation:pulse 1.5s infinite}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+    .empty{color:rgba(255,255,255,.3);font-size:.85rem;text-align:center;padding:20px}
+    .tab-bar{display:flex;gap:8px;margin-bottom:20px}
+    .tab{padding:8px 18px;border-radius:8px;font-size:.85rem;font-weight:700;cursor:pointer;border:none;font-family:'Plus Jakarta Sans',sans-serif;transition:all .2s}
+    .tab.on{background:#CC0000;color:#fff}
+    .tab.off{background:rgba(255,255,255,.07);color:rgba(255,255,255,.5)}
   </style>
 </head>
 <body>
-<div class="logo">
-  <div class="logo-icon"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-  <h1>TV Fisiot <small>Painel de Chamada</small></h1>
+<div class="top">
+  <div class="logo">
+    <div class="logo-icon"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+    <h1>TV Fisiot <small>Painel de Chamada</small></h1>
+  </div>
+  <div class="relogio" id="relogio">--:--</div>
 </div>
 
-<div class="card">
-  <h2>📢 Chamar Paciente</h2>
-  
-  <div class="field">
-    <label>Nome do Paciente</label>
-    <input type="text" id="nome" placeholder="Ex: João Silva" autocomplete="off">
-  </div>
-  
-  <div class="field">
-    <label>Ginásio / Sala</label>
-    <select id="ginasio">
-      <option value="Ginásio 1">Ginásio 1</option>
-      <option value="Ginásio 2">Ginásio 2</option>
-      <option value="Sala de Pilates">Sala de Pilates</option>
-      <option value="Sala Hidro">Sala Hidro</option>
-      <option value="Sala de Avaliação">Sala de Avaliação</option>
-      <option value="Sala da Dra. Keila">Sala da Dra. Keila</option>
-    </select>
-  </div>
-  
-  <div class="field">
-    <label>Profissional</label>
-    <select id="profissional">
-      <option value="Dra. Keila Marques">Dra. Keila Marques</option>
-      <option value="Dra. Lívia">Dra. Lívia</option>
-      <option value="Dr. Carlos">Dr. Carlos</option>
-      <option value="Dra. Júlia">Dra. Júlia</option>
-    </select>
-  </div>
-  
-  <div class="field">
-    <label>Horário</label>
-    <input type="time" id="horario" value="">
-  </div>
+<div class="tab-bar">
+  <button class="tab on" id="tab1" onclick="trocarAba(1)">📅 Agenda do Dia</button>
+  <button class="tab off" id="tab2" onclick="trocarAba(2)">➕ Adicionar Paciente</button>
+  <button class="tab off" id="tab3" onclick="trocarAba(3)">📢 Chamar Agora</button>
+</div>
 
-  <div class="preview" id="preview">
-    <h3>Prévia da chamada</h3>
-    <p id="preview-txt"></p>
+<!-- ABA 1: Agenda -->
+<div id="aba1">
+  <div class="auto-badge"><div class="dot"></div> Chamada automática ATIVA</div>
+  <div class="chamada-ativa" id="chamada-ativa">
+    <h3>✅ Última chamada realizada</h3>
+    <p id="chamada-ativa-txt"></p>
   </div>
-
-  <button class="btn" onclick="chamar()">📢 CHAMAR AGORA</button>
-  
-  <div class="sent" id="sent">
-    <p>✅ Chamada enviada para a TV!</p>
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+      <h2 style="margin:0">📋 Pacientes de Hoje</h2>
+      <button class="btn-sec" onclick="limparAgenda()">🗑 Limpar tudo</button>
+    </div>
+    <div id="agenda-list"><div class="empty">Nenhum paciente cadastrado ainda.<br/>Use a aba "Adicionar Paciente".</div></div>
   </div>
 </div>
 
-<div class="hist" id="hist-container">
-  <h3>Últimas chamadas</h3>
-  <div id="hist-list"></div>
-  <button class="btn-clear" onclick="limparHist()">Limpar histórico</button>
+<!-- ABA 2: Adicionar -->
+<div id="aba2" style="display:none">
+  <div class="card" style="max-width:480px;margin:0 auto">
+    <h2>➕ Adicionar Paciente</h2>
+    <div class="field">
+      <label>Nome do Paciente</label>
+      <input type="text" id="add-nome" placeholder="Ex: João Silva" autocomplete="off">
+    </div>
+    <div class="field">
+      <label>Horário</label>
+      <input type="time" id="add-hora">
+    </div>
+    <div class="field">
+      <label>Ginásio / Sala</label>
+      <select id="add-gin">
+        <option>Ginásio 1</option>
+        <option>Ginásio 2</option>
+        <option>Sala de Pilates</option>
+        <option>Sala Hidro</option>
+        <option>Sala de Avaliação</option>
+        <option>Sala da Dra. Keila</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Profissional</label>
+      <select id="add-prof">
+        <option>Dra. Keila Marques</option>
+        <option>Dra. Lívia</option>
+        <option>Dr. Carlos</option>
+        <option>Dra. Júlia</option>
+      </select>
+    </div>
+    <button class="btn" onclick="adicionarPaciente()">➕ ADICIONAR À AGENDA</button>
+    <div id="add-ok" style="display:none;margin-top:12px;background:#0d1a0d;border:1px solid #4CAF50;border-radius:8px;padding:12px;text-align:center;color:#4CAF50;font-weight:700">✅ Paciente adicionado!</div>
+  </div>
+</div>
+
+<!-- ABA 3: Chamar agora -->
+<div id="aba3" style="display:none">
+  <div class="card" style="max-width:480px;margin:0 auto">
+    <h2>📢 Chamar Agora</h2>
+    <div class="field">
+      <label>Nome do Paciente</label>
+      <input type="text" id="now-nome" placeholder="Ex: João Silva" autocomplete="off">
+    </div>
+    <div class="field">
+      <label>Ginásio / Sala</label>
+      <select id="now-gin">
+        <option>Ginásio 1</option>
+        <option>Ginásio 2</option>
+        <option>Sala de Pilates</option>
+        <option>Sala Hidro</option>
+        <option>Sala de Avaliação</option>
+        <option>Sala da Dra. Keila</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Profissional</label>
+      <select id="now-prof">
+        <option>Dra. Keila Marques</option>
+        <option>Dra. Lívia</option>
+        <option>Dr. Carlos</option>
+        <option>Dra. Júlia</option>
+      </select>
+    </div>
+    <button class="btn" onclick="chamarAgora()">📢 CHAMAR AGORA</button>
+    <div id="now-ok" style="display:none;margin-top:12px;background:#0d1a0d;border:1px solid #4CAF50;border-radius:8px;padding:12px;text-align:center;color:#4CAF50;font-weight:700">✅ Chamada enviada para a TV!</div>
+  </div>
 </div>
 
 <script>
-// Definir horário atual como padrão
-const now = new Date();
-document.getElementById('horario').value = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
+// --- RELÓGIO ---
+function tick() {
+  const n = new Date();
+  document.getElementById('relogio').textContent = 
+    n.getHours().toString().padStart(2,'0') + ':' + n.getMinutes().toString().padStart(2,'0');
+}
+tick(); setInterval(tick, 1000);
 
-// Atualizar preview em tempo real
-['nome','ginasio','profissional','horario'].forEach(id => {
-  document.getElementById(id).addEventListener('input', atualizarPreview);
-  document.getElementById(id).addEventListener('change', atualizarPreview);
-});
+// Horário padrão
+const agora = new Date();
+document.getElementById('add-hora').value = agora.getHours().toString().padStart(2,'0') + ':' + agora.getMinutes().toString().padStart(2,'0');
 
-function atualizarPreview() {
-  const nome = document.getElementById('nome').value;
-  const gin = document.getElementById('ginasio').value;
-  const prof = document.getElementById('profissional').value;
-  const hor = document.getElementById('horario').value;
-  const prev = document.getElementById('preview');
-  const txt = document.getElementById('preview-txt');
-  if (nome) {
-    prev.style.display = 'block';
-    txt.innerHTML = `Paciente <span>${nome}</span>, dirija-se ao <span>${gin}</span> com <span>${prof}</span> às <span>${hor}</span>.`;
-  } else {
-    prev.style.display = 'none';
-  }
+// --- ABAS ---
+function trocarAba(n) {
+  [1,2,3].forEach(i => {
+    document.getElementById('aba'+i).style.display = i===n?'block':'none';
+    document.getElementById('tab'+i).className = 'tab ' + (i===n?'on':'off');
+  });
 }
 
-function chamar() {
-  const nome = document.getElementById('nome').value.trim();
-  const gin = document.getElementById('ginasio').value;
-  const prof = document.getElementById('profissional').value;
-  const hor = document.getElementById('horario').value;
-  
-  if (!nome) { alert('Digite o nome do paciente!'); return; }
-  
-  const msg = `Paciente ${nome}, dirija-se ao ${gin} com ${prof} às ${hor}.`;
-  const msgHtml = `Paciente <span class="d">${nome}</span> — ${gin} — <span class="d">${prof}</span> — ${hor}`;
-  
-  // Salvar no localStorage para a TV ler
-  const chamada = {
-    nome, ginasio: gin, profissional: prof, horario: hor,
-    msg, msgHtml, timestamp: Date.now()
-  };
+// --- AGENDA ---
+function getAgenda() { return JSON.parse(localStorage.getItem('fisiot_agenda')||'[]'); }
+function saveAgenda(a) { localStorage.setItem('fisiot_agenda', JSON.stringify(a)); }
+
+function renderAgenda() {
+  const agenda = getAgenda().sort((a,b)=>a.hora.localeCompare(b.hora));
+  const list = document.getElementById('agenda-list');
+  if (!agenda.length) { list.innerHTML = '<div class="empty">Nenhum paciente cadastrado ainda.<br/>Use a aba "Adicionar Paciente".</div>'; return; }
+  const agora = new Date();
+  const horaAtual = agora.getHours().toString().padStart(2,'0') + ':' + agora.getMinutes().toString().padStart(2,'0');
+  list.innerHTML = agenda.map((p, i) => {
+    let cls = '', statusLabel = '', statusCls = 'esp', statusTxt = 'Aguardando';
+    if (p.chamado) { cls='chamado'; statusCls='ok'; statusTxt='✅ Chamado'; }
+    else if (p.hora === horaAtual) { cls='proximo'; statusCls='prox'; statusTxt='🔔 AGORA'; }
+    else if (p.hora < horaAtual) { cls='atrasado'; statusCls='esp'; statusTxt='⏱ Atrasado'; }
+    return `<div class="agenda-item ${cls}" id="ag-${i}">
+      <div class="ag-hora">${p.hora}</div>
+      <div class="ag-info">
+        <div class="ag-nome">${p.nome}</div>
+        <div class="ag-det">${p.ginasio} · ${p.profissional}</div>
+      </div>
+      <span class="ag-status ${statusCls}">${statusTxt}</span>
+      <button class="ag-btn" onclick="chamarManual(${i})">📢</button>
+      <button class="btn-sec" onclick="removerPaciente(${i})" style="padding:4px 8px;font-size:.7rem">✕</button>
+    </div>`;
+  }).join('');
+}
+
+function adicionarPaciente() {
+  const nome = document.getElementById('add-nome').value.trim();
+  const hora = document.getElementById('add-hora').value;
+  const gin = document.getElementById('add-gin').value;
+  const prof = document.getElementById('add-prof').value;
+  if (!nome) { alert('Digite o nome!'); return; }
+  const agenda = getAgenda();
+  agenda.push({nome, hora, ginasio: gin, profissional: prof, chamado: false});
+  saveAgenda(agenda);
+  document.getElementById('add-nome').value = '';
+  document.getElementById('add-ok').style.display = 'block';
+  setTimeout(() => document.getElementById('add-ok').style.display='none', 2000);
+  renderAgenda();
+}
+
+function removerPaciente(i) {
+  const agenda = getAgenda().sort((a,b)=>a.hora.localeCompare(b.hora));
+  agenda.splice(i,1);
+  saveAgenda(agenda);
+  renderAgenda();
+}
+
+function limparAgenda() {
+  if (confirm('Limpar toda a agenda de hoje?')) { localStorage.removeItem('fisiot_agenda'); renderAgenda(); }
+}
+
+// --- CHAMADA ---
+function falar(msg) {
+  if (!('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  const utt = new SpeechSynthesisUtterance(msg);
+  utt.lang = 'pt-BR'; utt.rate = 0.88; utt.pitch = 1; utt.volume = 1;
+  const voices = window.speechSynthesis.getVoices();
+  const voz = voices.find(v => v.lang==='pt-BR') || voices.find(v => v.lang.startsWith('pt'));
+  if (voz) utt.voice = voz;
+  window.speechSynthesis.speak(utt);
+}
+
+function enviarTV(nome, ginasio, profissional, hora) {
+  const msg = `Atenção! Paciente ${nome}, por favor, dirija-se ao ${ginasio} com ${profissional}.`;
+  const msgHtml = `<strong style="color:#FFD700">📢 CHAMADA:</strong> Paciente <span class="d">${nome}</span> — ${ginasio} — <span class="d">${profissional}</span> — ${hora}`;
+  const chamada = { nome, ginasio, profissional, horario: hora, msg, msgHtml, timestamp: Date.now() };
   localStorage.setItem('fisiot_chamada', JSON.stringify(chamada));
-  
-  // Voz (Web Speech API)
-  if ('speechSynthesis' in window) {
-    window.speechSynthesis.cancel();
-    const utt = new SpeechSynthesisUtterance(msg);
-    utt.lang = 'pt-BR';
-    utt.rate = 0.9;
-    utt.pitch = 1;
-    utt.volume = 1;
-    // Tentar usar voz feminina pt-BR
-    const voices = window.speechSynthesis.getVoices();
-    const ptVoz = voices.find(v => v.lang === 'pt-BR' && v.name.toLowerCase().includes('female')) 
-                || voices.find(v => v.lang === 'pt-BR')
-                || voices.find(v => v.lang.startsWith('pt'));
-    if (ptVoz) utt.voice = ptVoz;
-    window.speechSynthesis.speak(utt);
-  }
-  
-  // Mostrar confirmação
-  document.getElementById('sent').style.display = 'block';
-  setTimeout(() => document.getElementById('sent').style.display = 'none', 3000);
-  
-  // Histórico
-  const hist = JSON.parse(localStorage.getItem('fisiot_hist') || '[]');
-  hist.unshift({msg, time: new Date().toLocaleTimeString('pt-BR', {hour:'2-digit',minute:'2-digit'})});
-  if (hist.length > 10) hist.pop();
-  localStorage.setItem('fisiot_hist', JSON.stringify(hist));
-  renderHist();
-  
-  // Limpar nome
-  document.getElementById('nome').value = '';
-  atualizarPreview();
+  falar(msg);
+  // Mostrar na aba agenda
+  const el = document.getElementById('chamada-ativa');
+  document.getElementById('chamada-ativa-txt').innerHTML = `<span>${nome}</span> → ${ginasio} · ${profissional}`;
+  el.style.display = 'block';
+  setTimeout(() => el.style.display='none', 8000);
 }
 
-function renderHist() {
-  const hist = JSON.parse(localStorage.getItem('fisiot_hist') || '[]');
-  const list = document.getElementById('hist-list');
-  if (hist.length === 0) { list.innerHTML = '<p style="color:rgba(255,255,255,.3);font-size:.8rem">Nenhuma chamada ainda</p>'; return; }
-  list.innerHTML = hist.map(h => `<div class="hist-item"><strong>${h.time}</strong> — ${h.msg}</div>`).join('');
+function chamarManual(i) {
+  const agenda = getAgenda().sort((a,b)=>a.hora.localeCompare(b.hora));
+  const p = agenda[i];
+  enviarTV(p.nome, p.ginasio, p.profissional, p.hora);
+  agenda[i].chamado = true;
+  saveAgenda(agenda);
+  renderAgenda();
 }
 
-function limparHist() {
-  localStorage.removeItem('fisiot_hist');
-  renderHist();
+function chamarAgora() {
+  const nome = document.getElementById('now-nome').value.trim();
+  const gin = document.getElementById('now-gin').value;
+  const prof = document.getElementById('now-prof').value;
+  if (!nome) { alert('Digite o nome!'); return; }
+  const agora = new Date();
+  const hora = agora.getHours().toString().padStart(2,'0') + ':' + agora.getMinutes().toString().padStart(2,'0');
+  enviarTV(nome, gin, prof, hora);
+  document.getElementById('now-ok').style.display = 'block';
+  setTimeout(() => document.getElementById('now-ok').style.display='none', 3000);
+  document.getElementById('now-nome').value = '';
 }
+
+// --- AUTOMÁTICO: verifica a cada 30 segundos ---
+var ultimaChamadaAuto = null;
+function verificarHorarios() {
+  const agora = new Date();
+  const horaAtual = agora.getHours().toString().padStart(2,'0') + ':' + agora.getMinutes().toString().padStart(2,'0');
+  const agenda = getAgenda();
+  agenda.forEach((p, i) => {
+    if (!p.chamado && p.hora === horaAtual) {
+      const chaveAuto = p.hora + '_' + p.nome;
+      if (ultimaChamadaAuto !== chaveAuto) {
+        ultimaChamadaAuto = chaveAuto;
+        enviarTV(p.nome, p.ginasio, p.profissional, p.hora);
+        agenda[i].chamado = true;
+        saveAgenda(agenda);
+        renderAgenda();
+      }
+    }
+  });
+}
+
+setInterval(verificarHorarios, 30000);
+setInterval(renderAgenda, 60000);
 
 // Carregar vozes
 if ('speechSynthesis' in window) {
-  window.speechSynthesis.onvoiceschanged = () => {};
   window.speechSynthesis.getVoices();
+  window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
 }
 
-renderHist();
+renderAgenda();
 </script>
 </body>
 </html>
