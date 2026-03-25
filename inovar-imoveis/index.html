@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Inovar Imóveis — Corretora especializada em compra, venda e locação de imóveis na Grande São Paulo.">
+  <title>Inovar Imóveis | Compra, Venda e Locação na Grande São Paulo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--bg:#f8f7f4;--bg2:#fff;--text:#1a1a1a;--text2:#5a5a5a;--accent:#1b4332;--accent2:#2d6a4f;--gold:#c9a84c;--gold2:#e8c96a;--border:#e5e0d8;--r:12px}
+    html{scroll-behavior:smooth}
+    body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+    img{display:block;width:100%;object-fit:cover}
+    a{text-decoration:none;color:inherit}
+
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(248,247,244,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between}
+    .logo{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--accent)}
+    .logo span{color:var(--gold)}
+    .nav-links{display:none;gap:32px;list-style:none}
+    .nav-links a{font-size:14px;font-weight:500;color:var(--text2);transition:color .2s}
+    .nav-links a:hover{color:var(--accent)}
+    .nav-cta{background:var(--accent)!important;color:#fff!important;padding:10px 20px;border-radius:8px;font-weight:600!important}
+    .hamburger{display:flex;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}
+    .hamburger span{display:block;width:24px;height:2px;background:var(--accent);border-radius:2px}
+
+    /* HERO */
+    .hero{position:relative;min-height:100vh;display:flex;flex-direction:column;overflow:hidden;padding-top:64px}
+    .hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1400&q=80') center/cover no-repeat;filter:brightness(.35);transform:scale(1.05);animation:zoom 20s ease infinite alternate}
+    @keyframes zoom{from{transform:scale(1.05)}to{transform:scale(1.12)}}
+    .hero-body{position:relative;z-index:2;flex:1;display:flex;align-items:center;padding:48px 24px}
+    .hero-content{max-width:640px}
+    .badge{display:inline-block;background:rgba(201,168,76,.2);border:1px solid var(--gold);color:var(--gold2);font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:6px 16px;border-radius:100px;margin-bottom:24px}
+    h1{font-family:'Playfair Display',serif;font-size:clamp(34px,8vw,60px);font-weight:900;color:#fff;line-height:1.1;margin-bottom:18px}
+    h1 em{color:var(--gold2);font-style:normal}
+    .hero-sub{font-size:clamp(14px,3vw,17px);color:rgba(255,255,255,.8);line-height:1.6;margin-bottom:36px}
+    .hero-btns{display:flex;flex-direction:column;gap:12px}
+    .btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:10px;background:var(--gold);color:var(--accent);font-family:'Plus Jakarta Sans',sans-serif;font-size:16px;font-weight:700;padding:16px 28px;border-radius:var(--r);transition:all .2s;min-height:54px}
+    .btn-primary:hover{background:var(--gold2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.3)}
+    .btn-ghost{display:inline-flex;align-items:center;justify-content:center;gap:10px;background:transparent;color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:500;padding:14px 28px;border-radius:var(--r);border:1px solid rgba(255,255,255,.4);transition:all .2s;min-height:54px}
+    .btn-ghost:hover{background:rgba(255,255,255,.1)}
+    .hero-stats{position:relative;z-index:2;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,.1)}
+    .stat{padding:20px 12px;text-align:center;background:rgba(27,67,50,.85);backdrop-filter:blur(4px)}
+    .stat-num{font-family:'Playfair Display',serif;font-size:clamp(20px,4vw,28px);font-weight:700;color:var(--gold2);line-height:1}
+    .stat-label{font-size:11px;color:rgba(255,255,255,.7);margin-top:4px}
+
+    /* SECTIONS */
+    section{padding:64px 24px}
+    .inner{max-width:960px;margin:0 auto}
+    .label{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+    h2{font-family:'Playfair Display',serif;font-size:clamp(26px,5vw,40px);font-weight:700;color:var(--text);line-height:1.2;margin-bottom:14px}
+    .sub{font-size:16px;color:var(--text2);line-height:1.7;max-width:580px}
+
+    /* ABOUT */
+    .about{background:var(--bg2)}
+    .about-grid{display:grid;gap:40px}
+    .about-img{border-radius:var(--r);overflow:hidden;aspect-ratio:4/3;box-shadow:0 24px 48px rgba(0,0,0,.1)}
+    .about-img img{height:100%;width:100%;object-fit:cover;transition:transform .5s}
+    .about-img:hover img{transform:scale(1.04)}
+    .about-list{list-style:none;margin-top:24px;display:flex;flex-direction:column;gap:14px}
+    .about-list li{display:flex;align-items:flex-start;gap:10px;font-size:15px;color:var(--text2);line-height:1.5}
+    .check{width:20px;height:20px;min-width:20px;background:var(--accent);border-radius:50%;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");background-repeat:no-repeat;background-position:center;margin-top:2px}
+
+    /* SERVICES */
+    .services{background:var(--accent)}
+    .services h2{color:#fff}
+    .services .label{color:var(--gold2)}
+    .services .sub{color:rgba(255,255,255,.75)}
+    .cards{display:grid;gap:16px;margin-top:36px}
+    .card{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:var(--r);padding:28px 24px;transition:all .3s}
+    .card:hover{background:rgba(255,255,255,.13);transform:translateY(-4px)}
+    .card-icon{font-size:32px;margin-bottom:16px}
+    .card h3{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:#fff;margin-bottom:8px}
+    .card p{font-size:14px;color:rgba(255,255,255,.7);line-height:1.7}
+
+    /* GALLERY */
+    .gallery{background:var(--bg)}
+    .gallery-grid{display:grid;gap:12px;margin-top:36px}
+    .gitem{border-radius:var(--r);overflow:hidden;position:relative}
+    .gitem img{aspect-ratio:4/3;height:100%;object-fit:cover;transition:transform .5s}
+    .gitem:hover img{transform:scale(1.06)}
+    .goverlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(27,67,50,.8) 0%,transparent 60%);opacity:0;transition:opacity .3s;display:flex;align-items:flex-end;padding:16px}
+    .gitem:hover .goverlay{opacity:1}
+    .glabel{color:#fff;font-weight:600;font-size:14px}
+
+    /* TESTIMONIALS */
+    .testimonials{background:var(--bg2)}
+    .tlist{display:flex;flex-direction:column;gap:16px;margin-top:36px}
+    .tcard{background:var(--bg);border-radius:var(--r);padding:24px 20px;border-left:4px solid var(--gold)}
+    .stars{color:var(--gold);font-size:16px;margin-bottom:12px;letter-spacing:2px}
+    .ttext{font-size:14px;color:var(--text2);line-height:1.7;margin-bottom:16px;font-style:italic}
+    .tauthor{display:flex;align-items:center;gap:10px}
+    .tavatar{width:40px;height:40px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:15px;flex-shrink:0}
+    .tname{font-weight:600;font-size:14px}
+    .tcity{font-size:12px;color:var(--text2)}
+
+    /* CONTACT */
+    .contact{background:var(--bg)}
+    .contact-grid{display:grid;gap:36px;margin-top:36px}
+    .citem{display:flex;align-items:flex-start;gap:14px;margin-bottom:24px}
+    .cicon{width:46px;height:46px;background:var(--accent);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+    .clabel{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:var(--text2);margin-bottom:4px}
+    .cvalue{font-size:15px;font-weight:500}
+    .wa-btn{display:flex;align-items:center;justify-content:center;gap:12px;background:#25D366;color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-size:17px;font-weight:700;padding:18px 28px;border-radius:var(--r);width:100%;transition:all .2s;min-height:60px;margin-top:8px}
+    .wa-btn:hover{background:#1ebe5d;transform:translateY(-2px);box-shadow:0 8px 24px rgba(37,211,102,.35)}
+    .map-embed{border-radius:var(--r);overflow:hidden;height:280px;background:#e5e0d8;display:flex;align-items:center;justify-content:center;color:var(--text2)}
+
+    /* FOOTER */
+    footer{background:var(--accent);color:rgba(255,255,255,.8);padding:40px 24px;text-align:center}
+    .footer-logo{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:#fff;margin-bottom:8px}
+    .footer-logo span{color:var(--gold2)}
+    .footer-desc{font-size:13px;color:rgba(255,255,255,.55);margin-bottom:24px}
+    .footer-links{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-bottom:24px}
+    .footer-links a{font-size:13px;color:rgba(255,255,255,.65);transition:color .2s}
+    .footer-links a:hover{color:var(--gold2)}
+    .footer-copy{font-size:12px;color:rgba(255,255,255,.35)}
+
+    /* FLOATING WA */
+    .wa-float{position:fixed;bottom:24px;right:24px;z-index:999;width:60px;height:60px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,.5);transition:all .2s;animation:wapulse 3s infinite}
+    .wa-float:hover{transform:scale(1.1)}
+    @keyframes wapulse{0%,100%{box-shadow:0 4px 20px rgba(37,211,102,.5)}50%{box-shadow:0 4px 32px rgba(37,211,102,.8)}}
+
+    /* DESKTOP */
+    @media(min-width:768px){
+      nav{padding:0 48px}
+      .nav-links{display:flex}
+      .hamburger{display:none}
+      section{padding:88px 48px}
+      .hero-body{padding:80px 48px}
+      .hero-btns{flex-direction:row}
+      .about-grid{grid-template-columns:1fr 1fr;align-items:center}
+      .cards{grid-template-columns:repeat(3,1fr)}
+      .gallery-grid{grid-template-columns:repeat(2,1fr)}
+      .gitem:first-child{grid-column:span 2}
+      .gitem:first-child img{aspect-ratio:16/7}
+      .tlist{display:grid;grid-template-columns:repeat(2,1fr)}
+      .contact-grid{grid-template-columns:1fr 1fr}
+      footer{padding:56px 48px}
+    }
+    @media(min-width:1024px){
+      .gallery-grid{grid-template-columns:repeat(3,1fr)}
+      .gitem:first-child{grid-column:span 2}
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Inovar<span>.</span></div>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#servicos">Serviços</a></li>
+    <li><a href="#imoveis">Imóveis</a></li>
+    <li><a href="#contato" class="nav-cta">Falar com Corretor</a></li>
+  </ul>
+  <button class="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-body">
+    <div class="hero-content">
+      <div class="badge">Grande São Paulo</div>
+      <h1>Seu próximo imóvel começa <em>aqui</em></h1>
+      <p class="hero-sub">Compra, venda e locação com corretores especializados. Atendimento personalizado para realizar o seu sonho.</p>
+      <div class="hero-btns">
+        <a href="https://wa.me/554197207461?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20saber%20mais%20sobre%20os%20im%C3%B3veis." class="btn-primary" target="_blank">
+          <svg width="20" height="20" fill="white" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.556 4.116 1.526 5.845L.057 24l6.304-1.654A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.783 9.783 0 01-5.003-1.375l-.36-.214-3.724.977.993-3.627-.234-.372A9.76 9.76 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z"/></svg>
+          Falar com Corretor
+        </a>
+        <a href="#imoveis" class="btn-ghost">Ver Imóveis</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">500+</div><div class="stat-label">Imóveis</div></div>
+    <div class="stat"><div class="stat-num">10+</div><div class="stat-label">Anos no mercado</div></div>
+    <div class="stat"><div class="stat-num">98%</div><div class="stat-label">Satisfação</div></div>
+  </div>
+</div>
+
+<section class="about" id="sobre">
+  <div class="inner">
+    <div class="about-grid">
+      <div class="about-img">
+        <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=800&q=80" alt="Equipe Inovar Imóveis" loading="lazy">
+      </div>
+      <div>
+        <p class="label">Sobre nós</p>
+        <h2>Especialistas no mercado imobiliário da Grande SP</h2>
+        <p class="sub">A Inovar Imóveis nasceu com um propósito claro: simplificar a jornada de quem quer comprar, vender ou alugar um imóvel. Atendimento humanizado com corretores que conhecem o mercado por dentro.</p>
+        <ul class="about-list">
+          <li><span class="check"></span>Atendimento personalizado do início ao fim</li>
+          <li><span class="check"></span>Corretores certificados com amplo conhecimento regional</li>
+          <li><span class="check"></span>Suporte jurídico e documental incluso</li>
+          <li><span class="check"></span>Mais de 500 imóveis disponíveis na Grande São Paulo</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="services" id="servicos">
+  <div class="inner">
+    <p class="label">O que fazemos</p>
+    <h2>Serviços completos para você</h2>
+    <p class="sub">Do primeiro contato à assinatura do contrato, cuidamos de tudo com segurança e tranquilidade.</p>
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon">🏠</div>
+        <h3>Compra</h3>
+        <p>Encontre o imóvel ideal com nossa curadoria de mais de 500 opções na Grande SP. Assessoria completa até a entrega das chaves.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">💰</div>
+        <h3>Venda</h3>
+        <p>Maximize o valor do seu imóvel com estratégia de divulgação profissional e ampla rede de compradores qualificados.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔑</div>
+        <h3>Locação</h3>
+        <p>Alugue seu imóvel ou encontre o imóvel certo para alugar com segurança contratual e gestão facilitada.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="gallery" id="imoveis">
+  <div class="inner">
+    <p class="label">Nossos imóveis</p>
+    <h2>Encontre o lar que você merece</h2>
+    <p class="sub">Uma seleção dos nossos melhores imóveis disponíveis na Grande São Paulo.</p>
+    <div class="gallery-grid">
+      <div class="gitem">
+        <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=900&q=80" alt="Casa moderna" loading="lazy">
+        <div class="goverlay"><span class="glabel">Casa — São Paulo</span></div>
+      </div>
+      <div class="gitem">
+        <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=80" alt="Apartamento" loading="lazy">
+        <div class="goverlay"><span class="glabel">Apartamento — Guarulhos</span></div>
+      </div>
+      <div class="gitem">
+        <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=600&q=80" alt="Casa com jardim" loading="lazy">
+        <div class="goverlay"><span class="glabel">Casa — Osasco</span></div>
+      </div>
+      <div class="gitem">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Cobertura" loading="lazy">
+        <div class="goverlay"><span class="glabel">Cobertura — Santo André</span></div>
+      </div>
+      <div class="gitem">
+        <img src="https://images.unsplash.com/photo-1523217582562-09d0def993a6?w=600&q=80" alt="Imóvel comercial" loading="lazy">
+        <div class="goverlay"><span class="glabel">Comercial — São Bernardo</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="testimonials">
+  <div class="inner">
+    <p class="label">Depoimentos</p>
+    <h2>O que nossos clientes dizem</h2>
+    <p class="sub">A satisfação de quem realizou o sonho da casa própria com a Inovar.</p>
+    <div class="tlist">
+      <div class="tcard">
+        <div class="stars">★★★★★</div>
+        <p class="ttext">"Atendimento impecável. O corretor nos acompanhou em tudo, desde as visitas até a assinatura. Recomendo demais!"</p>
+        <div class="tauthor"><div class="tavatar">M</div><div><div class="tname">Marcos Oliveira</div><div class="tcity">São Paulo – SP</div></div></div>
+      </div>
+      <div class="tcard">
+        <div class="stars">★★★★★</div>
+        <p class="ttext">"Vendi meu apartamento em menos de 30 dias. A equipe da Inovar foi super profissional e transparente em todo o processo."</p>
+        <div class="tauthor"><div class="tavatar">A</div><div><div class="tname">Ana Paula Costa</div><div class="tcity">Guarulhos – SP</div></div></div>
+      </div>
+      <div class="tcard">
+        <div class="stars">★★★★★</div>
+        <p class="ttext">"Finalmente encontrei o imóvel ideal pra locação. Rápido, seguro e sem dor de cabeça. Muito obrigado à Inovar!"</p>
+        <div class="tauthor"><div class="tavatar">R</div><div><div class="tname">Roberto Santos</div><div class="tcity">Osasco – SP</div></div></div>
+      </div>
+      <div class="tcard">
+        <div class="stars">★★★★★</div>
+        <p class="ttext">"Achei a casa dos meus sonhos pela Inovar. Processo tranquilo, corretores atenciosos e preço justo. Nota 10!"</p>
+        <div class="tauthor"><div class="tavatar">F</div><div><div class="tname">Fernanda Lima</div><div class="tcity">Santo André – SP</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contato">
+  <div class="inner">
+    <p class="label">Contato</p>
+    <h2>Fale com um corretor agora</h2>
+    <p class="sub">Nossa equipe está pronta para te ajudar a encontrar o imóvel perfeito na Grande São Paulo.</p>
+    <div class="contact-grid">
+      <div>
+        <div class="citem">
+          <div class="cicon">📍</div>
+          <div><div class="clabel">Região de atuação</div><div class="cvalue">Grande São Paulo</div></div>
+        </div>
+        <div class="citem">
+          <div class="cicon">🕐</div>
+          <div><div class="clabel">Horário de atendimento</div><div class="cvalue">Seg–Sex: 8h–18h | Sáb: 9h–13h</div></div>
+        </div>
+        <div class="citem">
+          <div class="cicon">📱</div>
+          <div><div class="clabel">WhatsApp</div><div class="cvalue">(41) 9720-7461</div></div>
+        </div>
+        <a href="https://wa.me/554197207461?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20saber%20mais%20sobre%20os%20im%C3%B3veis." class="wa-btn" target="_blank">
+          <svg width="24" height="24" fill="white" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.556 4.116 1.526 5.845L.057 24l6.304-1.654A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.783 9.783 0 01-5.003-1.375l-.36-.214-3.724.977.993-3.627-.234-.372A9.76 9.76 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z"/></svg>
+          Quero falar com um corretor
+        </a>
+      </div>
+      <div>
+        <div class="map-embed" style="background:linear-gradient(135deg,#1b4332,#2d6a4f);color:rgba(255,255,255,.7);font-size:15px;font-weight:500;flex-direction:column;gap:8px">
+          <span style="font-size:36px">📍</span>
+          <span>Grande São Paulo</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Inovar<span>.</span></div>
+  <p class="footer-desc">Corretora de imóveis especializada na Grande São Paulo</p>
+  <div class="footer-links">
+    <a href="#sobre">Sobre</a>
+    <a href="#servicos">Serviços</a>
+    <a href="#imoveis">Imóveis</a>
+    <a href="#contato">Contato</a>
+  </div>
+  <p class="footer-copy">© 2025 Inovar Imóveis. Todos os direitos reservados.</p>
+</footer>
+
+<a href="https://wa.me/554197207461?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20gostaria%20de%20saber%20mais%20sobre%20os%20im%C3%B3veis." class="wa-float" target="_blank" aria-label="WhatsApp">
+  <svg width="30" height="30" fill="white" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.556 4.116 1.526 5.845L.057 24l6.304-1.654A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.783 9.783 0 01-5.003-1.375l-.36-.214-3.724.977.993-3.627-.234-.372A9.76 9.76 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z"/></svg>
+</a>
+
+</body>
+</html>
