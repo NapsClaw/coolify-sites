@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rancho Fundo Arts — Artesanato em Madeira, Argila e Ferro</title>
+  <meta name="description" content="Rancho Fundo Arts — peças únicas artesanais em madeira, argila e ferro. Arte feita à mão com alma e tradição.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,800;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #f5f0e8; --bg2: #ede7d8; --dark: #1c1208; --brown: #5c3d1e;
+      --terracotta: #b85c38; --gold: #c9933a; --cream: #faf6ee;
+      --text: #2d1f0f; --text-soft: #6b4f35;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 18px 24px; display: flex; align-items: center;
+      justify-content: space-between;
+      background: rgba(245,240,232,0.94); backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(92,61,30,0.12);
+    }
+    .nav-logo { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 800; color: var(--brown); text-decoration: none; }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a { font-size: 12px; font-weight: 600; color: var(--text-soft); text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--terracotta); }
+    @media(max-width:640px){ .nav-links{display:none;} }
+
+    /* HERO */
+    .hero { min-height: 100vh; padding-top: 72px; display: flex; flex-direction: column; overflow: hidden; position: relative; }
+    .hero-bg { position: absolute; inset: 0; background: radial-gradient(ellipse at 80% 10%, rgba(201,147,58,0.1) 0%, transparent 55%), radial-gradient(ellipse at 10% 90%, rgba(184,92,56,0.07) 0%, transparent 50%); pointer-events: none; }
+    .hero-content { position: relative; z-index: 2; padding: 56px 28px 40px; max-width: 680px; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: var(--brown); color: var(--cream); font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; padding: 6px 14px; border-radius: 2px; margin-bottom: 28px; }
+    .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(48px, 11vw, 96px); font-weight: 800; line-height: 0.93; color: var(--dark); margin-bottom: 12px; letter-spacing: -0.02em; }
+    .hero-title em { font-style: italic; color: var(--terracotta); }
+    .hero-materials { font-family: 'Playfair Display', serif; font-size: clamp(16px, 3vw, 22px); font-style: italic; color: var(--text-soft); margin-bottom: 24px; letter-spacing: 0.04em; }
+    .hero-desc { font-size: 16px; color: var(--text-soft); line-height: 1.75; max-width: 400px; margin-bottom: 36px; }
+    .hero-cta { display: inline-flex; align-items: center; gap: 10px; background: var(--terracotta); color: #fff; font-size: 15px; font-weight: 600; padding: 16px 28px; border-radius: 3px; text-decoration: none; transition: background 0.2s, transform 0.15s; }
+    .hero-cta:hover { background: #9e4d2e; transform: translateY(-2px); }
+    .hero-cta svg { width: 20px; height: 20px; flex-shrink: 0; }
+    .hero-strip { margin-top: auto; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 3px; padding: 0; height: 200px; }
+    .strip-img { overflow: hidden; }
+    .strip-img img { width: 100%; height: 100%; object-fit: cover; filter: sepia(20%) saturate(0.85); transition: filter 0.4s, transform 0.5s; display: block; }
+    .strip-img:hover img { filter: sepia(0%) saturate(1); transform: scale(1.04); }
+    @media(max-width:640px){ .hero-strip{height:150px;} .hero-content{padding:40px 20px 28px;} }
+
+    /* UTILS */
+    section { padding: 80px 24px; }
+    .container { max-width: 920px; margin: 0 auto; }
+    .label { font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+    .title { font-family: 'Playfair Display', serif; font-size: clamp(30px, 6vw, 54px); font-weight: 800; line-height: 1.05; color: var(--dark); margin-bottom: 20px; }
+    .title em { font-style: italic; color: var(--terracotta); }
+
+    /* SOBRE */
+    .sobre { background: var(--dark); padding: 80px 24px; }
+    .sobre .label { color: var(--gold); }
+    .sobre .title { color: var(--cream); }
+    .sobre-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+    .sobre-text { font-size: 16px; line-height: 1.8; color: rgba(250,246,238,0.7); }
+    .sobre-text p+p { margin-top: 14px; }
+    .sobre-stats { display: flex; flex-direction: column; gap: 28px; }
+    .stat { border-left: 2px solid var(--terracotta); padding-left: 20px; }
+    .stat-n { font-family: 'Playfair Display', serif; font-size: 44px; font-weight: 800; color: var(--cream); line-height: 1; }
+    .stat-l { font-size: 13px; color: rgba(250,246,238,0.5); margin-top: 4px; letter-spacing: 0.04em; }
+    @media(max-width:720px){ .sobre-grid{grid-template-columns:1fr; gap:40px;} .sobre-stats{flex-direction:row; flex-wrap:wrap;} .stat{flex:1; min-width:110px;} }
+
+    /* MATERIAIS */
+    .materiais { background: var(--cream); }
+    .mat-head { text-align: center; margin-bottom: 52px; }
+    .mat-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+    .mat-card { background: var(--bg); border: 1px solid rgba(92,61,30,0.1); padding: 32px 24px; position: relative; overflow: hidden; transition: transform 0.3s, box-shadow 0.3s; }
+    .mat-card::before { content:''; position:absolute; top:0; left:0; width:3px; height:0; background:var(--terracotta); transition:height 0.3s; }
+    .mat-card:hover { transform:translateY(-4px); box-shadow:0 16px 40px rgba(28,18,8,0.1); }
+    .mat-card:hover::before { height:100%; }
+    .mat-icon { font-size: 34px; margin-bottom: 18px; display: block; }
+    .mat-name { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--brown); margin-bottom: 10px; }
+    .mat-desc { font-size: 14px; line-height: 1.7; color: var(--text-soft); }
+    .mat-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+    .tag { font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--brown); background: var(--bg2); padding: 4px 10px; border-radius: 2px; }
+    @media(max-width:720px){ .mat-grid{grid-template-columns:1fr; gap:14px;} }
+
+    /* GALERIA */
+    .galeria { background: var(--bg); padding: 80px 0; }
+    .gal-head { padding: 0 24px; margin-bottom: 36px; }
+    .gal-scroll { display: flex; gap: 10px; padding: 0 24px; overflow-x: auto; scrollbar-width: none; scroll-snap-type: x mandatory; }
+    .gal-scroll::-webkit-scrollbar { display: none; }
+    .gal-item { flex: 0 0 260px; height: 340px; overflow: hidden; scroll-snap-align: start; border-radius: 2px; position: relative; }
+    .gal-item img { width: 100%; height: 100%; object-fit: cover; filter: sepia(15%) saturate(0.9); transition: transform 0.5s, filter 0.4s; display: block; }
+    .gal-item:hover img { transform: scale(1.06); filter: sepia(0%) saturate(1.05); }
+    .gal-label { position:absolute; bottom:0; left:0; right:0; padding:24px 16px 16px; background:linear-gradient(transparent, rgba(28,18,8,0.65)); color:#fff; font-size:13px; font-weight:500; opacity:0; transition:opacity 0.3s; }
+    .gal-item:hover .gal-label { opacity:1; }
+    @media(max-width:480px){ .gal-item{flex:0 0 220px; height:280px;} }
+
+    /* PROCESSO */
+    .processo { background: var(--bg2); }
+    .proc-head { text-align: center; margin-bottom: 52px; }
+    .steps { display: grid; grid-template-columns: repeat(4,1fr); gap: 0; position: relative; }
+    .steps::before { content:''; position:absolute; top:31px; left:12%; right:12%; height:1px; background:linear-gradient(90deg, transparent, var(--brown), transparent); z-index:0; }
+    .step { text-align: center; padding: 0 12px; }
+    .step-n { width:62px; height:62px; background:var(--brown); color:var(--cream); font-family:'Playfair Display',serif; font-size:22px; font-weight:800; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 18px; position:relative; z-index:1; }
+    .step-t { font-family:'Playfair Display',serif; font-size:16px; font-weight:700; color:var(--brown); margin-bottom:6px; }
+    .step-d { font-size:13px; color:var(--text-soft); line-height:1.6; }
+    @media(max-width:720px){ .steps{grid-template-columns:repeat(2,1fr); gap:32px;} .steps::before{display:none;} }
+    @media(max-width:380px){ .steps{grid-template-columns:1fr;} }
+
+    /* CONTATO */
+    .contato { background: var(--dark); text-align: center; }
+    .contato .label { color: var(--gold); }
+    .contato .title { color: var(--cream); }
+    .contato-sub { font-size: 17px; color: rgba(250,246,238,0.6); max-width: 420px; margin: 0 auto 40px; line-height: 1.7; }
+    .cta-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .btn-wa { display:inline-flex; align-items:center; gap:10px; background:#25D366; color:#fff; font-size:15px; font-weight:600; padding:16px 28px; border-radius:3px; text-decoration:none; transition:background 0.2s,transform 0.15s; }
+    .btn-wa:hover { background:#1db354; transform:translateY(-2px); }
+    .btn-wa svg { width:20px; height:20px; }
+    .btn-outline { display:inline-flex; align-items:center; gap:10px; background:transparent; color:var(--cream); font-size:15px; font-weight:600; padding:16px 28px; border-radius:3px; text-decoration:none; border:1px solid rgba(250,246,238,0.25); transition:border-color 0.2s,color 0.2s,transform 0.15s; }
+    .btn-outline:hover { border-color:var(--gold); color:var(--gold); transform:translateY(-2px); }
+    .divider { width:44px; height:1px; background:rgba(250,246,238,0.15); margin:52px auto 40px; }
+    .info-row { display:flex; justify-content:center; gap:44px; flex-wrap:wrap; }
+    .info-item { text-align:center; }
+    .info-lbl { font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:var(--gold); margin-bottom:4px; }
+    .info-val { font-size:15px; color:rgba(250,246,238,0.65); }
+
+    footer { background:#110c05; color:rgba(250,246,238,0.35); text-align:center; padding:28px 24px; font-size:13px; }
+    footer strong { color:rgba(250,246,238,0.65); }
+
+    /* WHATSAPP FLOAT */
+    .wa-float { position:fixed; bottom:24px; right:24px; z-index:999; background:#25D366; border-radius:50%; width:60px; height:60px; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 20px rgba(37,211,102,0.4); text-decoration:none; transition:transform 0.2s; animation:wapulse 2.5s infinite; }
+    .wa-float:hover { transform:scale(1.1); animation:none; box-shadow:0 6px 28px rgba(37,211,102,0.55); }
+    .wa-float svg { width:30px; height:30px; }
+    @keyframes wapulse { 0%,100%{box-shadow:0 4px 20px rgba(37,211,102,0.4)} 50%{box-shadow:0 4px 32px rgba(37,211,102,0.65)} }
+
+    /* REVEAL ANIMATIONS */
+    .reveal { opacity:0; transform:translateY(28px); transition:opacity 0.65s ease, transform 0.65s ease; }
+    .reveal.on { opacity:1; transform:translateY(0); }
+    .d1 { transition-delay:0.1s; } .d2 { transition-delay:0.2s; } .d3 { transition-delay:0.3s; } .d4 { transition-delay:0.4s; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">Rancho Fundo Arts</a>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#materiais">Materiais</a></li>
+    <li><a href="#galeria">Galeria</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-badge">✦ Arte feita à mão</div>
+    <h1 class="hero-title">Rancho<br><em>Fundo</em><br>Arts</h1>
+    <p class="hero-materials">Madeira · Argila · Ferro</p>
+    <p class="hero-desc">Peças únicas criadas com matéria-prima natural e trabalho artesanal. Cada objeto carrega a marca das mãos que o fizeram.</p>
+    <a href="https://wa.me/558788165206" target="_blank" class="hero-cta">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+      Fale pelo WhatsApp
+    </a>
+  </div>
+  <div class="hero-strip">
+    <div class="strip-img"><img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=600&q=80" alt="Madeira artesanal" loading="lazy"></div>
+    <div class="strip-img"><img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=600&q=80" alt="Argila artesanal" loading="lazy"></div>
+    <div class="strip-img"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Ferro artesanal" loading="lazy"></div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section class="sobre" id="sobre">
+  <div class="container">
+    <div class="sobre-grid">
+      <div>
+        <p class="label reveal">Nossa história</p>
+        <h2 class="title reveal d1">Arte que nasce<br><em>do chão</em></h2>
+        <div class="sobre-text reveal d2">
+          <p>No Rancho Fundo Arts, cada peça é uma conversa entre o artista e o material. Trabalhamos com madeira, argila e ferro — três elementos que guardam em si a memória da terra.</p>
+          <p>Nosso trabalho valoriza o tempo necessário para fazer bem feito. Nada aqui é produzido em série. Cada objeto carrega marcas intencionais que o tornam único.</p>
+          <p>Criamos peças decorativas, funcionais e esculturas — sempre respeitando a natureza de cada matéria-prima.</p>
+        </div>
+      </div>
+      <div class="sobre-stats reveal d3">
+        <div class="stat">
+          <div class="stat-n">3</div>
+          <div class="stat-l">Materiais trabalhados<br>com maestria</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">100%</div>
+          <div class="stat-l">Peças feitas<br>à mão</div>
+        </div>
+        <div class="stat">
+          <div class="stat-n">∞</div>
+          <div class="stat-l">Possibilidades<br>por encomenda</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MATERIAIS -->
+<section class="materiais" id="materiais">
+  <div class="container">
+    <div class="mat-head">
+      <p class="label reveal">O que fazemos</p>
+      <h2 class="title reveal d1">Três materiais,<br><em>infinitas formas</em></h2>
+    </div>
+    <div class="mat-grid">
+      <div class="mat-card reveal">
+        <span class="mat-icon">🪵</span>
+        <h3 class="mat-name">Madeira</h3>
+        <p class="mat-desc">Esculpida à mão, a madeira revela veios, nós e texturas que nenhuma máquina consegue replicar. Trabalhamos com peças brutas e madeiras de reaproveitamento.</p>
+        <div class="mat-tags">
+          <span class="tag">Esculturas</span>
+          <span class="tag">Utensílios</span>
+          <span class="tag">Decoração</span>
+        </div>
+      </div>
+      <div class="mat-card reveal d1">
+        <span class="mat-icon">🏺</span>
+        <h3 class="mat-name">Argila</h3>
+        <p class="mat-desc">Das mãos direto ao forno. A argila permite formas orgânicas — vasos, tigelas, luminárias e objetos com superfícies únicas e texturas naturais.</p>
+        <div class="mat-tags">
+          <span class="tag">Vasos</span>
+          <span class="tag">Tigelas</span>
+          <span class="tag">Luminárias</span>
+        </div>
+      </div>
+      <div class="mat-card reveal d2">
+        <span class="mat-icon">⚙️</span>
+        <h3 class="mat-name">Ferro</h3>
+        <p class="mat-desc">Forjado e moldado com habilidade, o ferro ganha vida em peças que unem resistência e beleza. Suportes, esculturas e objetos com acabamento artesanal único.</p>
+        <div class="mat-tags">
+          <span class="tag">Suportes</span>
+          <span class="tag">Esculturas</span>
+          <span class="tag">Objetos</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALERIA -->
+<section class="galeria" id="galeria">
+  <div class="gal-head">
+    <p class="label reveal">Nosso trabalho</p>
+    <h2 class="title reveal d1">Peças que<br><em>contam histórias</em></h2>
+  </div>
+  <div class="gal-scroll">
+    <div class="gal-item">
+      <img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=600&q=80" alt="Madeira trabalhada" loading="lazy">
+      <div class="gal-label">Escultura em madeira</div>
+    </div>
+    <div class="gal-item">
+      <img src="https://images.unsplash.com/photo-1597696929736-6d13bed8e6a8?w=600&q=80" alt="Peça em argila" loading="lazy">
+      <div class="gal-label">Vaso de argila</div>
+    </div>
+    <div class="gal-item">
+      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Trabalho em ferro" loading="lazy">
+      <div class="gal-label">Objeto em ferro forjado</div>
+    </div>
+    <div class="gal-item">
+      <img src="https://images.unsplash.com/photo-1604881991720-f91add269bed?w=600&q=80" alt="Cerâmica artesanal" loading="lazy">
+      <div class="gal-label">Cerâmica artesanal</div>
+    </div>
+    <div class="gal-item">
+      <img src="https://images.unsplash.com/photo-1510172951991-856a654063f9?w=600&q=80" alt="Madeira bruta" loading="lazy">
+      <div class="gal-label">Madeira bruta</div>
+    </div>
+    <div class="gal-item">
+      <img src="https://images.unsplash.com/photo-1594736797933-d0501ba2fe65?w=600&q=80" alt="Peças de barro" loading="lazy">
+      <div class="gal-label">Peças de barro</div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESSO -->
+<section class="processo" id="processo">
+  <div class="container">
+    <div class="proc-head">
+      <p class="label reveal">Como trabalhamos</p>
+      <h2 class="title reveal d1">Do material<br><em>à peça única</em></h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="step-n">01</div>
+        <div class="step-t">Escolha do material</div>
+        <div class="step-d">Selecionamos madeiras, argilas e ferros com as melhores características para cada peça.</div>
+      </div>
+      <div class="step reveal d1">
+        <div class="step-n">02</div>
+        <div class="step-t">Esboço e projeto</div>
+        <div class="step-d">Desenhamos ou conversamos sobre a peça desejada, respeitando o que o material tem a oferecer.</div>
+      </div>
+      <div class="step reveal d2">
+        <div class="step-n">03</div>
+        <div class="step-t">Trabalho artesanal</div>
+        <div class="step-d">Cada peça é trabalhada à mão, sem pressa. O tempo necessário para que fique exatamente como deve ser.</div>
+      </div>
+      <div class="step reveal d3">
+        <div class="step-n">04</div>
+        <div class="step-t">Acabamento e entrega</div>
+        <div class="step-d">Lixagem, queima, pintura ou patina — o acabamento que realça a beleza natural do material.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section class="contato" id="contato">
+  <div class="container">
+    <p class="label reveal">Entre em contato</p>
+    <h2 class="title reveal d1">Vamos criar<br><em>algo único juntos</em></h2>
+    <p class="contato-sub reveal d2">Quer encomendar uma peça especial ou tem alguma dúvida? Fale diretamente pelo WhatsApp.</p>
+    <div class="cta-row reveal d3">
+      <a href="https://wa.me/558788165206" target="_blank" class="btn-wa">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        Falar pelo WhatsApp
+      </a>
+    </div>
+    <div class="divider"></div>
+    <div class="info-row">
+      <div class="info-item">
+        <div class="info-lbl">Atendimento</div>
+        <div class="info-val">Via WhatsApp</div>
+      </div>
+      <div class="info-item">
+        <div class="info-lbl">Encomendas</div>
+        <div class="info-val">Sob consulta</div>
+      </div>
+      <div class="info-item">
+        <div class="info-lbl">Entrega</div>
+        <div class="info-val">Todo o Brasil</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <strong>Rancho Fundo Arts</strong> — Madeira · Argila · Ferro<br>
+  <span>Arte artesanal feita à mão</span>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/558788165206" target="_blank" class="wa-float" aria-label="Fale pelo WhatsApp">
+  <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+</a>
+
+<script>
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('on'); obs.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
