@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiorelo Concept — Peluquería en Valencia</title>
+<meta name="description" content="Fiorelo Concept, peluquería y estudio de belleza en Valencia. 5⭐ con 236 reseñas en Google. Cita fácil, resultados excepcionales.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --gold: #C9A96E;
+    --dark: #1A1208;
+    --warm: #2D1F0A;
+    --cream: #F7F0E6;
+    --text: #3D2C14;
+    --muted: #8B7355;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Plus Jakarta Sans', sans-serif; color: var(--text); background: var(--cream); overflow-x: hidden; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; width: 100%; z-index: 100; background: rgba(26,18,8,0.95); backdrop-filter: blur(8px); padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; }
+  .nav-brand { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 1.2rem; letter-spacing: 0.08em; }
+  .nav-cta { background: var(--gold); color: var(--dark); font-size: 0.78rem; font-weight: 600; padding: 8px 16px; border-radius: 4px; text-decoration: none; letter-spacing: 0.05em; text-transform: uppercase; }
+
+  /* HERO */
+  .hero { min-height: 100svh; position: relative; display: flex; align-items: flex-end; padding-bottom: 64px; overflow: hidden; }
+  .hero-bg { position: absolute; inset: 0; background: linear-gradient(135deg, #2D1F0A 0%, #1A1208 40%, #3D2C14 100%); }
+  .hero-pattern { position: absolute; inset: 0; opacity: 0.06; background-image: repeating-linear-gradient(45deg, var(--gold) 0, var(--gold) 1px, transparent 0, transparent 50%); background-size: 20px 20px; }
+  .hero-img { position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1560066984-138dadb4c035?w=800&q=80') center/cover no-repeat; opacity: 0.25; }
+  .hero-content { position: relative; z-index: 2; padding: 0 24px; width: 100%; }
+  .hero-eyebrow { font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+  .hero-title { font-family: 'Playfair Display', serif; font-size: clamp(2.8rem, 8vw, 5rem); font-weight: 900; color: #fff; line-height: 1.05; margin-bottom: 16px; }
+  .hero-title span { color: var(--gold); }
+  .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(201,169,110,0.15); border: 1px solid rgba(201,169,110,0.4); border-radius: 40px; padding: 8px 16px; margin-bottom: 28px; }
+  .hero-badge-text { font-size: 0.82rem; color: var(--gold); font-weight: 500; }
+  .hero-stars { color: var(--gold); font-size: 0.9rem; }
+  .hero-cta-row { display: flex; flex-direction: column; gap: 12px; }
+  .btn-primary { display: block; text-align: center; background: var(--gold); color: var(--dark); font-weight: 700; padding: 16px 24px; border-radius: 6px; text-decoration: none; font-size: 1rem; letter-spacing: 0.03em; }
+  .btn-secondary { display: block; text-align: center; border: 1.5px solid rgba(255,255,255,0.3); color: #fff; font-weight: 500; padding: 14px 24px; border-radius: 6px; text-decoration: none; font-size: 0.9rem; }
+  .scroll-hint { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 2; color: rgba(255,255,255,0.3); font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; text-align: center; }
+
+  /* ABOUT */
+  .about { padding: 64px 24px; background: var(--dark); color: #fff; }
+  .section-label { font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 5vw, 2.6rem); font-weight: 700; color: #fff; line-height: 1.2; margin-bottom: 20px; }
+  .about-text { font-size: 0.97rem; line-height: 1.75; color: rgba(255,255,255,0.7); margin-bottom: 20px; }
+  .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 36px; }
+  .stat { background: rgba(201,169,110,0.08); border: 1px solid rgba(201,169,110,0.2); border-radius: 8px; padding: 20px 16px; text-align: center; }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 900; color: var(--gold); }
+  .stat-label { font-size: 0.75rem; color: rgba(255,255,255,0.5); margin-top: 4px; letter-spacing: 0.05em; }
+
+  /* SERVICES */
+  .services { padding: 64px 24px; background: var(--cream); }
+  .services .section-title { color: var(--dark); }
+  .services .section-label { color: var(--gold); }
+  .service-grid { display: flex; flex-direction: column; gap: 16px; margin-top: 32px; }
+  .service-card { background: #fff; border-radius: 12px; padding: 24px; border-left: 3px solid var(--gold); box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+  .service-icon { font-size: 1.6rem; margin-bottom: 10px; }
+  .service-name { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
+  .service-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+
+  /* GALLERY */
+  .gallery { padding: 64px 24px; background: var(--warm); }
+  .gallery .section-title { color: #fff; }
+  .gallery .section-label { color: var(--gold); }
+  .gallery-scroll { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 12px; margin-top: 28px; scrollbar-width: none; }
+  .gallery-scroll::-webkit-scrollbar { display: none; }
+  .gallery-item { flex: 0 0 220px; height: 280px; border-radius: 10px; overflow: hidden; }
+  .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+
+  /* REVIEWS */
+  .reviews { padding: 64px 24px; background: #fff; }
+  .reviews .section-title { color: var(--dark); }
+  .review-cards { display: flex; flex-direction: column; gap: 16px; margin-top: 32px; }
+  .review-card { background: var(--cream); border-radius: 12px; padding: 24px; }
+  .review-stars { color: var(--gold); font-size: 1rem; margin-bottom: 10px; }
+  .review-text { font-size: 0.9rem; color: var(--text); line-height: 1.65; font-style: italic; margin-bottom: 14px; }
+  .review-author { font-size: 0.8rem; font-weight: 600; color: var(--muted); }
+
+  /* CONTACT */
+  .contact { padding: 64px 24px; background: var(--dark); color: #fff; }
+  .contact .section-title { color: #fff; }
+  .contact-info { margin-top: 32px; display: flex; flex-direction: column; gap: 20px; }
+  .contact-row { display: flex; align-items: flex-start; gap: 16px; }
+  .contact-icon { font-size: 1.2rem; margin-top: 2px; flex-shrink: 0; }
+  .contact-label { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 4px; }
+  .contact-value { font-size: 0.95rem; color: rgba(255,255,255,0.85); line-height: 1.5; }
+  .contact-cta { margin-top: 40px; display: block; text-align: center; background: var(--gold); color: var(--dark); font-weight: 700; padding: 18px 24px; border-radius: 8px; text-decoration: none; font-size: 1.05rem; }
+
+  /* FOOTER */
+  footer { background: #0D0900; padding: 28px 24px; text-align: center; }
+  footer p { font-size: 0.75rem; color: rgba(255,255,255,0.25); line-height: 1.8; }
+
+  /* FLOATING WA */
+  .wa-float { position: fixed; bottom: 24px; right: 20px; z-index: 999; background: #25D366; width: 56px; height: 56px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(37,211,102,0.4); text-decoration: none; font-size: 1.5rem; animation: pulse 2.5s infinite; }
+  @keyframes pulse { 0%,100% { box-shadow: 0 4px 20px rgba(37,211,102,0.4); } 50% { box-shadow: 0 4px 30px rgba(37,211,102,0.7); } }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-brand">Fiorelo Concept</span>
+  <a href="https://wa.me/34623295503" class="nav-cta">Reservar</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-pattern"></div>
+  <div class="hero-img"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Peluquería & Estudio de Belleza · Valencia</p>
+    <h1 class="hero-title">Donde el arte<br>y el <span>cuidado</span><br>se encuentran</h1>
+    <div class="hero-badge">
+      <span class="hero-stars">★★★★★</span>
+      <span class="hero-badge-text">5,0 · 236 reseñas Google</span>
+    </div>
+    <div class="hero-cta-row">
+      <a href="https://wa.me/34623295503" class="btn-primary">📲 Reservar cita ahora</a>
+      <a href="#servicios" class="btn-secondary">Ver servicios</a>
+    </div>
+  </div>
+  <div class="scroll-hint">↓ descubre más</div>
+</section>
+
+<section class="about">
+  <p class="section-label">Sobre nosotros</p>
+  <h2 class="section-title">Fiorelo Concept,<br>tu espacio en Valencia</h2>
+  <p class="about-text">En Fiorelo Concept creemos que el cabello es una extensión de tu personalidad. Nuestro equipo de estilistas expertos combina técnicas vanguardistas con un trato cercano y personalizado.</p>
+  <p class="about-text">Ubicados en el Carrer del Músic Ginés, en pleno corazón de Valencia, te recibimos con un ambiente único donde cada detalle importa.</p>
+  <div class="about-stats">
+    <div class="stat"><div class="stat-num">5,0</div><div class="stat-label">Valoración Google</div></div>
+    <div class="stat"><div class="stat-num">236</div><div class="stat-label">Reseñas verificadas</div></div>
+    <div class="stat"><div class="stat-num">100%</div><div class="stat-label">Clientes satisfechos</div></div>
+    <div class="stat"><div class="stat-num">VLC</div><div class="stat-label">Valencia centro</div></div>
+  </div>
+</section>
+
+<section class="services" id="servicios">
+  <p class="section-label">Lo que ofrecemos</p>
+  <h2 class="section-title">Nuestros<br>servicios</h2>
+  <div class="service-grid">
+    <div class="service-card">
+      <div class="service-icon">✂️</div>
+      <div class="service-name">Corte & Peinado</div>
+      <div class="service-desc">Cortes personalizados para hombre y mujer. Adaptamos cada estilo a tus rasgos y personalidad.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🎨</div>
+      <div class="service-name">Color & Mechas</div>
+      <div class="service-desc">Coloración de alta gama, mechas balayage, técnicas californianas y tintes de larga duración.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">✨</div>
+      <div class="service-name">Tratamientos Capilares</div>
+      <div class="service-desc">Hidratación profunda, keratina, queratina brasileña y tratamientos nutritivos para cada tipo de cabello.</div>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">👰</div>
+      <div class="service-name">Peinados de Novia</div>
+      <div class="service-desc">Tu gran día merece un look perfecto. Recogidos, semirecogidos y peinados de novia a medida.</div>
+    </div>
+  </div>
+</section>
+
+<section class="gallery">
+  <p class="section-label">Galería</p>
+  <h2 class="section-title">Nuestros trabajos</h2>
+  <div class="gallery-scroll">
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=400&q=80" alt="Trabajo Fiorelo"></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?w=400&q=80" alt="Color Fiorelo"></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1519735777090-ec97162dc266?w=400&q=80" alt="Corte Fiorelo"></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1595163708808-3a9c7c9a7d7c?w=400&q=80" alt="Interior Fiorelo"></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=400&q=80" alt="Tratamiento Fiorelo"></div>
+  </div>
+</section>
+
+<section class="reviews">
+  <p class="section-label">Lo que dicen</p>
+  <h2 class="section-title" style="color:var(--dark)">Reseñas de clientes</h2>
+  <div class="review-cards">
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"Increíble experiencia desde el primer momento. El equipo es súper profesional y el resultado es exactamente lo que pedí. ¡Sin duda vuelvo!"</p>
+      <p class="review-author">— María G., Valencia</p>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"Llevo 2 años yendo a Fiorelo y nunca me han decepcionado. El trato es excelente y el ambiente del salón es precioso."</p>
+      <p class="review-author">— Carlos M., Valencia</p>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"El mejor balayage que me han hecho en Valencia. Saben exactamente lo que hacen y se nota la diferencia con un salón de verdad."</p>
+      <p class="review-author">— Laura P., Valencia</p>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contacto">
+  <p class="section-label">Encuentra nos</p>
+  <h2 class="section-title">Visítanos</h2>
+  <div class="contact-info">
+    <div class="contact-row">
+      <span class="contact-icon">📍</span>
+      <div>
+        <div class="contact-label">Dirección</div>
+        <div class="contact-value">Carrer del Músic Ginés, 33<br>46022 València, Valencia</div>
+      </div>
+    </div>
+    <div class="contact-row">
+      <span class="contact-icon">📞</span>
+      <div>
+        <div class="contact-label">Teléfono</div>
+        <div class="contact-value">623 29 55 03</div>
+      </div>
+    </div>
+    <div class="contact-row">
+      <span class="contact-icon">🕐</span>
+      <div>
+        <div class="contact-label">Horario</div>
+        <div class="contact-value">Lun–Vie: 09:00 – 20:00<br>Sábado: 09:00 – 18:00</div>
+      </div>
+    </div>
+  </div>
+  <a href="https://wa.me/34623295503" class="contact-cta">💬 Escríbenos por WhatsApp</a>
+</section>
+
+<footer>
+  <p>© 2026 Fiorelo Concept · Valencia · Todos los derechos reservados</p>
+  <p style="margin-top:4px">Carrer del Músic Ginés, 33 · 623 29 55 03</p>
+</footer>
+
+<a href="https://wa.me/34623295503" class="wa-float" title="WhatsApp">💬</a>
+
+</body>
+</html>
