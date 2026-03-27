@@ -261,10 +261,34 @@ body{font-family:'Inter',sans-serif;background:#0a0005;color:#fff;min-height:100
 
   <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:14px;margin-top:4px">
     <div style="font-size:12px;font-weight:700;color:#FFD700;margin-bottom:8px">📍 Destino Confirmado</div>
-    <div style="font-size:13px;color:rgba(255,255,255,0.8);line-height:1.6">
+    <div style="font-size:13px;color:rgba(255,255,255,0.8);line-height:1.6;margin-bottom:14px">
       🏥 <strong>Clínica Fisiot e Pilates</strong><br/>
       <span style="color:#CC0000;font-weight:700">Sua clínica está à sua direita</span><br/>
       Rua Dr. Benjamin Vieira, 27 — Joana D'Arc, Lagoa Santa MG
+    </div>
+    <div style="display:flex;gap:10px">
+      <button onclick="confirmarCorrida()" style="flex:1;background:linear-gradient(135deg,#CC0000,#8B0000);border:none;color:#fff;padding:13px;border-radius:12px;font-size:14px;font-weight:800;cursor:pointer">✅ Confirmar Corrida</button>
+      <button onclick="abrirNota()" style="flex:1;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:#fff;padding:13px;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer">⭐ Nota da Corrida</button>
+    </div>
+  </div>
+
+  <!-- Modal Nota da Corrida -->
+  <div id="modal-nota" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:300;align-items:flex-end">
+    <div style="background:#1a0005;border-radius:20px 20px 0 0;padding:24px;width:100%;border-top:2px solid #CC0000">
+      <div style="font-size:18px;font-weight:800;margin-bottom:6px">⭐ Nota da Corrida</div>
+      <div style="font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:20px">Como foi sua experiência com Antônio Carlos?</div>
+      <div style="display:flex;justify-content:center;gap:12px;margin-bottom:20px" id="star-rating">
+        <span onclick="setNota(1)" style="font-size:36px;cursor:pointer;opacity:0.4">⭐</span>
+        <span onclick="setNota(2)" style="font-size:36px;cursor:pointer;opacity:0.4">⭐</span>
+        <span onclick="setNota(3)" style="font-size:36px;cursor:pointer;opacity:0.4">⭐</span>
+        <span onclick="setNota(4)" style="font-size:36px;cursor:pointer;opacity:0.4">⭐</span>
+        <span onclick="setNota(5)" style="font-size:36px;cursor:pointer;opacity:0.4">⭐</span>
+      </div>
+      <textarea id="nota-obs" placeholder="Algum comentário? (opcional)" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:#fff;padding:12px;border-radius:12px;font-size:14px;font-family:inherit;resize:none;height:80px;margin-bottom:16px"></textarea>
+      <div style="display:flex;gap:10px">
+        <button onclick="fecharNota()" style="flex:1;background:rgba(255,255,255,0.08);border:none;color:#fff;padding:14px;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer">Cancelar</button>
+        <button onclick="enviarNota()" style="flex:2;background:linear-gradient(135deg,#CC0000,#8B0000);border:none;color:#fff;padding:14px;border-radius:12px;font-size:14px;font-weight:800;cursor:pointer">Enviar Avaliação</button>
+      </div>
     </div>
   </div>
 </div>
@@ -414,6 +438,37 @@ document.getElementById('pwa-install-btn') && document.getElementById('pwa-insta
 window.addEventListener('appinstalled', function(){
   document.getElementById('pwa-banner').style.display = 'none';
 });
+
+var notaSelecionada = 0;
+function confirmarCorrida(){
+  if('speechSynthesis' in window){
+    var u=new SpeechSynthesisUtterance('Corrida confirmada! Antônio Carlos está a caminho. Boa consulta!');
+    u.lang='pt-BR';window.speechSynthesis.speak(u);
+  }
+  alert('✅ Corrida confirmada! Antônio Carlos foi avisado e está a caminho!');
+}
+function abrirNota(){
+  document.getElementById('modal-nota').style.display='flex';
+}
+function fecharNota(){
+  document.getElementById('modal-nota').style.display='none';
+}
+function setNota(n){
+  notaSelecionada=n;
+  document.querySelectorAll('#star-rating span').forEach(function(s,i){
+    s.style.opacity = i<n ? '1' : '0.3';
+  });
+}
+function enviarNota(){
+  if(!notaSelecionada){alert('Selecione uma nota de 1 a 5 estrelas!');return;}
+  var obs=document.getElementById('nota-obs').value;
+  var msg='Avaliação da corrida Leva & Traz Fisiot%0A%0A'+
+    '⭐ Nota: '+notaSelecionada+'/5%0A'+
+    (obs?'💬 Comentário: '+obs+'%0A':'')+'%0A'+
+    '🚗 Motorista: Antônio Carlos';
+  fecharNota();
+  window.open('https://wa.me/5531992594953?text='+msg,'_blank');
+}
 </script>
 
 </body>
