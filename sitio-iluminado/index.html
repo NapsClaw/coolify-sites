@@ -329,24 +329,30 @@ footer{background:#0f172a;padding:40px 20px 24px;text-align:center}
       <h3>💰 Calcule o valor da sua reserva</h3>
       <div class="price-calc-row">
         <div class="price-calc-field">
-          <label>Quantidade de pessoas</label>
-          <select id="calc-guests" onchange="calcPrice()">
-            <option value="">Selecione</option>
-            <option value="15">Até 15 pessoas</option>
-            <option value="20">Até 20 pessoas</option>
-            <option value="25">Até 25 pessoas</option>
-            <option value="30">Até 30 pessoas</option>
-            <option value="30+">Acima de 30</option>
+          <label>Tipo de período</label>
+          <select id="calc-period" onchange="updateGuestsOptions();calcPrice()">
+            <option value="">Selecione o período</option>
+            <optgroup label="── Fim de semana ──">
+              <option value="fds">🗓️ Fim de semana (2 dias)</option>
+            </optgroup>
+            <optgroup label="── Feriados ──">
+              <option value="fer2">📅 Feriado 2 dias</option>
+              <option value="fer3">📅 Feriado 3 dias</option>
+              <option value="fer4">📅 Feriado 4 dias</option>
+            </optgroup>
+            <optgroup label="── Datas especiais ──">
+              <option value="natal">🎄 Natal 2026 (22–26/12)</option>
+              <option value="carnaval">🎭 Carnaval 2027 (05–09/02)</option>
+            </optgroup>
+            <optgroup label="── Eventos ──">
+              <option value="evento">🎉 Festa / Casamento / Debutante</option>
+            </optgroup>
           </select>
         </div>
         <div class="price-calc-field">
-          <label>Tipo de período</label>
-          <select id="calc-period" onchange="calcPrice()">
-            <option value="">Selecione</option>
-            <option value="fds">Fim de semana (2 dias)</option>
-            <option value="fer2">Feriado 2 dias</option>
-            <option value="fer3">Feriado 3 dias</option>
-            <option value="fer4">Feriado 4 dias</option>
+          <label>Quantidade de pessoas</label>
+          <select id="calc-guests" onchange="calcPrice()">
+            <option value="">Selecione primeiro o período</option>
           </select>
         </div>
       </div>
@@ -436,9 +442,12 @@ footer{background:#0f172a;padding:40px 20px 24px;text-align:center}
 
     <div class="pricing-tabs">
       <button class="ptab active" onclick="showTab('fds')">🗓️ Fim de semana</button>
-      <button class="ptab" onclick="showTab('fer2')">🏖️ Feriado 2 dias</button>
-      <button class="ptab" onclick="showTab('fer3')">🏖️ Feriado 3 dias</button>
-      <button class="ptab" onclick="showTab('fer4')">🏖️ Feriado 4 dias</button>
+      <button class="ptab" onclick="showTab('fer2')">📅 Feriado 2 dias</button>
+      <button class="ptab" onclick="showTab('fer3')">📅 Feriado 3 dias</button>
+      <button class="ptab" onclick="showTab('fer4')">📅 Feriado 4 dias</button>
+      <button class="ptab" onclick="showTab('natal')">🎄 Natal</button>
+      <button class="ptab" onclick="showTab('carnaval')">🎭 Carnaval</button>
+      <button class="ptab" onclick="showTab('evento')">🎉 Eventos</button>
     </div>
 
     <div class="pricing-table active" id="tab-fds">
@@ -488,9 +497,55 @@ footer{background:#0f172a;padding:40px 20px 24px;text-align:center}
       </table>
     </div>
 
+    <div class="pricing-table" id="tab-natal">
+      <table class="ptable">
+        <thead><tr><th colspan="2">🎄 Natal 2026 — 22/12 a 26/12/2026 (4 dias)</th></tr>
+        <tr><th>Quantidade de pessoas</th><th>Valor total</th></tr></thead>
+        <tbody>
+          <tr><td>Até 20 pessoas</td><td class="price-val">R$ 20.000</td></tr>
+          <tr><td>Até 25 pessoas</td><td class="price-val">R$ 25.000</td></tr>
+          <tr><td>Até 30 pessoas</td><td class="price-val">R$ 30.000</td></tr>
+          <tr><td>Mais de 30 pessoas</td><td class="price-val">A combinar</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pricing-table" id="tab-carnaval">
+      <table class="ptable">
+        <thead><tr><th colspan="2">🎭 Carnaval 2027 — 05/02 a 09/02/2027 (4 dias)</th></tr>
+        <tr><th>Quantidade de pessoas</th><th>Valor total</th></tr></thead>
+        <tbody>
+          <tr><td>Até 15 pessoas</td><td class="price-val">R$ 12.000</td></tr>
+          <tr><td>Até 20 pessoas</td><td class="price-val">R$ 14.000</td></tr>
+          <tr><td>Até 25 pessoas</td><td class="price-val">R$ 17.500</td></tr>
+          <tr><td>Até 30 pessoas</td><td class="price-val">R$ 20.000</td></tr>
+          <tr><td>Mais de 30 pessoas</td><td class="price-val">A combinar</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pricing-table" id="tab-evento">
+      <table class="ptable">
+        <thead><tr><th colspan="2">🎉 Diária para Eventos — Festas, Casamentos, Debutantes</th></tr>
+        <tr><th>Quantidade de pessoas</th><th>Valor (+ R$300 limpeza)</th></tr></thead>
+        <tbody>
+          <tr><td>Até 50 pessoas</td><td class="price-val">R$ 2.000</td></tr>
+          <tr><td>51 a 100 pessoas</td><td class="price-val">R$ 2.700</td></tr>
+          <tr><td>101 a 150 pessoas</td><td class="price-val">R$ 3.500</td></tr>
+          <tr><td>151 a 200 pessoas</td><td class="price-val">R$ 4.500</td></tr>
+          <tr><td>201 a 250 pessoas</td><td class="price-val">R$ 6.000</td></tr>
+          <tr><td>Mais de 250 pessoas</td><td class="price-val">A combinar</td></tr>
+        </tbody>
+      </table>
+      <div class="price-note" style="margin-top:12px">
+        <span>⚠️</span>
+        <span>Para eventos: taxa de limpeza R$ 300 <strong>NÃO inclusa</strong> nos valores acima. Evento pode ser alterado desde que não ultrapasse 00h00.</span>
+      </div>
+    </div>
+
     <div class="price-note">
       <span>⚠️</span>
-      <span><strong>Taxa de limpeza: R$ 300</strong> — inclusa nos valores acima. Pagamento via PIX. Confirme disponibilidade pelo WhatsApp antes de efetuar o pagamento.</span>
+      <span><strong>Taxa de limpeza: R$ 300</strong> — inclusa nos valores de fim de semana e feriados. Para eventos, cobra-se à parte. Pagamento via PIX. Confirme disponibilidade pelo WhatsApp antes de pagar.</span>
     </div>
 
     <div style="text-align:center;margin-top:28px">
@@ -972,12 +1027,43 @@ function closeDetail(){ document.getElementById('detail-modal').classList.remove
 
 // ===== PRICE CALCULATOR =====
 const PRICE_TABLE = {
-  fds:  {15:1700, 20:2000, 25:2500, 30:2800, '30+':'Consultar'},
-  fer2: {15:2000, 20:2300, 25:2800, 30:3200, '30+':'Consultar'},
-  fer3: {15:2700, 20:3200, 25:3750, 30:4200, '30+':'Consultar'},
-  fer4: {10:2800, 15:3600, 20:4000, 25:4500, 30:4800, '30+':'Consultar'},
+  fds:    {15:1700, 20:2000, 25:2500, 30:2800, '30+':'Combinar'},
+  fer2:   {15:2000, 20:2300, 25:2800, 30:3200, '30+':'Combinar'},
+  fer3:   {15:2700, 20:3200, 25:3750, 30:4200, '30+':'Combinar'},
+  fer4:   {10:2800, 15:3600, 20:4000, 25:4500, 30:4800, '30+':'Combinar'},
+  natal:  {20:20000, 25:25000, 30:30000, '30+':'Combinar'},
+  carnaval:{15:12000, 20:14000, 25:17500, 30:20000, '30+':'Combinar'},
+  evento: {50:2000, 100:2700, 150:3500, 200:4500, 250:6000, '250+':'Combinar'},
 };
-const PERIOD_LABEL = {fds:'Fim de semana (sáb–dom)', fer2:'Feriado 2 dias', fer3:'Feriado 3 dias', fer4:'Feriado 4 dias'};
+const PERIOD_LABEL = {
+  fds:     'Fim de semana · Check-in sáb 08h · Check-out dom 18h',
+  fer2:    'Feriado 2 dias (Dia dos Pais, Mães, Proclamação)',
+  fer3:    'Feriado 3 dias (Páscoa, Trabalhador, Independência, Crianças, Finados, Consciência)',
+  fer4:    'Feriado 4 dias (Páscoa, Trabalhador, Independência, Crianças, Finados, Consciência)',
+  natal:   'Natal 2026 · 22/12 a 26/12/2026 (4 dias)',
+  carnaval:'Carnaval 2027 · 05/02 a 09/02/2027 (4 dias)',
+  evento:  'Diária para eventos · Festas, Casamentos, Debutantes',
+};
+
+const GUESTS_OPTIONS = {
+  fds:     [{v:'15',l:'Até 15 pessoas'},{v:'20',l:'Até 20 pessoas'},{v:'25',l:'Até 25 pessoas'},{v:'30',l:'Até 30 pessoas'},{v:'30+',l:'Mais de 30 (a combinar)'}],
+  fer2:    [{v:'15',l:'Até 15 pessoas'},{v:'20',l:'Até 20 pessoas'},{v:'25',l:'Até 25 pessoas'},{v:'30',l:'Até 30 pessoas'},{v:'30+',l:'Mais de 30 (a combinar)'}],
+  fer3:    [{v:'15',l:'Até 15 pessoas'},{v:'20',l:'Até 20 pessoas'},{v:'25',l:'Até 25 pessoas'},{v:'30',l:'Até 30 pessoas'},{v:'30+',l:'Mais de 30 (a combinar)'}],
+  fer4:    [{v:'10',l:'Até 10 pessoas'},{v:'15',l:'Até 15 pessoas'},{v:'20',l:'Até 20 pessoas'},{v:'25',l:'Até 25 pessoas'},{v:'30',l:'Até 30 pessoas'},{v:'30+',l:'Mais de 30 (a combinar)'}],
+  natal:   [{v:'20',l:'Até 20 pessoas'},{v:'25',l:'Até 25 pessoas'},{v:'30',l:'Até 30 pessoas'},{v:'30+',l:'Mais de 30 (a combinar)'}],
+  carnaval:[{v:'15',l:'Até 15 pessoas'},{v:'20',l:'Até 20 pessoas'},{v:'25',l:'Até 25 pessoas'},{v:'30',l:'Até 30 pessoas'},{v:'30+',l:'Mais de 30 (a combinar)'}],
+  evento:  [{v:'50',l:'Até 50 pessoas'},{v:'100',l:'51 a 100 pessoas'},{v:'150',l:'101 a 150 pessoas'},{v:'200',l:'151 a 200 pessoas'},{v:'250',l:'201 a 250 pessoas'},{v:'250+',l:'Mais de 250 (a combinar)'}],
+};
+
+function updateGuestsOptions(){
+  const period = document.getElementById('calc-period').value;
+  const sel = document.getElementById('calc-guests');
+  sel.innerHTML = '<option value="">Selecione a quantidade</option>';
+  if(!period) return;
+  (GUESTS_OPTIONS[period]||[]).forEach(o=>{
+    sel.innerHTML += `<option value="${o.v}">${o.l}</option>`;
+  });
+}
 
 function calcPrice(){
   const guests = document.getElementById('calc-guests').value;
@@ -994,25 +1080,23 @@ function calcPrice(){
 
   document.querySelector('.price-result-label').textContent = 'Valor estimado';
   const table = PRICE_TABLE[period];
-  const val = table[guests] || table[30] || 'Consultar';
+  const val = table[parseInt(guests)] || table[guests] || 'Combinar';
+  const isEvento = period === 'evento';
+  const cleaningNote = isEvento
+    ? '🧹 Taxa de limpeza: R$ 300 NÃO inclusa no valor acima · Evento até 00h00'
+    : '🧹 Taxa de limpeza: R$ 300 inclusa no valor acima · Confirme pelo WhatsApp antes de pagar';
 
-  if(val === 'Consultar'){
-    valEl.textContent = 'Sob consulta';
-    valEl.style.display = 'block';
-    detEl.textContent = 'Para grupos acima de 30 pessoas, entre em contato pelo WhatsApp.';
+  if(val === 'Combinar'){
+    valEl.textContent = 'À combinar';
+    detEl.textContent = 'Entre em contato pelo WhatsApp para grupos maiores.';
   } else {
     valEl.textContent = 'R$ ' + val.toLocaleString('pt-BR');
-    valEl.style.display = 'block';
-    detEl.textContent = PERIOD_LABEL[period] + ' · ' + guests + ' pessoas';
+    detEl.textContent = (isEvento ? 'Até ' + guests + ' pessoas · ' : guests + ' pessoas · ') + PERIOD_LABEL[period];
   }
+  valEl.style.display = 'block';
   detEl.style.display = 'block';
-  noteEl.textContent = '⚠️ Inclui taxa de limpeza de R$ 300 · Confirme pelo WhatsApp antes de pagar · Check-in: sábado 08h · Check-out: domingo 18h';
+  noteEl.textContent = cleaningNote;
   noteEl.style.display = 'block';
-
-  // also update the guests field in the reserve form
-  const gMap = {'15':'até 15','20':'até 20','25':'até 25','30':'até 30','30+':'acima de 30'};
-  const fGuests = document.getElementById('f-guests');
-  if(fGuests && gMap[guests]) fGuests.value = gMap[guests];
 }
 
 // Update calculator when dates are selected
