@@ -4,6 +4,12 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <meta http-equiv="Cache-Control" content="no-cache,no-store,must-revalidate"/>
+<link rel="manifest" href="/manifest.json"/>
+<link rel="apple-touch-icon" href="/icon-192.png"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="Leva &amp; Traz"/>
+<meta name="theme-color" content="#CC0000"/>
 <title>Leva &amp; Traz Fisiot</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet"/>
 <style>
@@ -369,5 +375,46 @@ setTimeout(function(){
   if(notif){notif.classList.add('show')}
 },3000);
 </script>
+
+<!-- PWA Install Banner -->
+<div id="pwa-banner" style="display:none;position:fixed;bottom:0;left:0;right:0;background:linear-gradient(135deg,#CC0000,#8B0000);padding:16px 20px;z-index:999;box-shadow:0 -4px 20px rgba(0,0,0,0.5)">
+  <div style="display:flex;align-items:center;gap:12px;max-width:500px;margin:0 auto">
+    <img src="/icon-192.png" style="width:44px;height:44px;border-radius:10px"/>
+    <div style="flex:1">
+      <div style="font-size:13px;font-weight:800;color:#fff">Instalar Leva &amp; Traz Fisiot</div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.8)">Adicione à tela inicial e acesse mais rápido!</div>
+    </div>
+    <button id="pwa-install-btn" style="background:#fff;color:#CC0000;border:none;padding:8px 16px;border-radius:20px;font-size:13px;font-weight:800;cursor:pointer">Instalar</button>
+    <button onclick="document.getElementById('pwa-banner').style.display='none'" style="background:transparent;border:none;color:rgba(255,255,255,0.7);font-size:20px;cursor:pointer;padding:0 4px">✕</button>
+  </div>
+</div>
+
+<script>
+// Service Worker
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('/sw.js').catch(function(){});
+}
+
+// PWA Install Prompt
+var deferredPrompt;
+window.addEventListener('beforeinstallprompt', function(e){
+  e.preventDefault();
+  deferredPrompt = e;
+  document.getElementById('pwa-banner').style.display = 'block';
+});
+
+document.getElementById('pwa-install-btn') && document.getElementById('pwa-install-btn').addEventListener('click', function(){
+  document.getElementById('pwa-banner').style.display = 'none';
+  if(deferredPrompt){
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(function(){ deferredPrompt = null; });
+  }
+});
+
+window.addEventListener('appinstalled', function(){
+  document.getElementById('pwa-banner').style.display = 'none';
+});
+</script>
+
 </body>
 </html>
