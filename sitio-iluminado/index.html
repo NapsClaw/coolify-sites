@@ -152,10 +152,28 @@ nav{position:fixed;top:0;left:0;right:0;z-index:500;background:rgba(255,255,255,
 .gallery-section{padding:48px 20px;background:#fff}
 .gallery-inner{max-width:900px;margin:0 auto}
 .gallery-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:28px}
-.gallery-img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px;cursor:pointer;transition:opacity .2s}
-.gallery-img:hover{opacity:.9}
-.gallery-placeholder{width:100%;aspect-ratio:4/3;background:var(--light);border-radius:8px;border:2px dashed var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--mid);font-size:12px;gap:8px}
+.gallery-item{position:relative;cursor:pointer;border-radius:8px;overflow:hidden}
+.gallery-img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;transition:transform .3s}
+.gallery-item:hover .gallery-img{transform:scale(1.04)}
+.gallery-overlay{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.7));padding:20px 10px 10px;opacity:0;transition:opacity .25s}
+.gallery-item:hover .gallery-overlay{opacity:1}
+.gallery-overlay span{color:#fff;font-size:11px;font-weight:600;line-height:1.3;display:block}
 @media(min-width:600px){.gallery-grid{grid-template-columns:repeat(3,1fr)}}
+
+/* LIGHTBOX */
+.lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:900;flex-direction:column;align-items:center;justify-content:center}
+.lightbox.open{display:flex}
+.lb-close{position:absolute;top:16px;right:16px;background:rgba(255,255,255,.15);border:none;color:#fff;width:40px;height:40px;border-radius:50%;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10}
+.lb-img-wrap{position:relative;max-width:95vw;max-height:70vh;display:flex;align-items:center;justify-content:center}
+.lb-img-wrap img{max-width:95vw;max-height:70vh;object-fit:contain;border-radius:8px;display:block}
+.lb-arrow{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.15);border:none;color:#fff;width:44px;height:44px;border-radius:50%;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.lb-arrow:hover{background:rgba(255,255,255,.3)}
+.lb-arrow-prev{left:-22px}
+.lb-arrow-next{right:-22px}
+.lb-info{text-align:center;padding:16px 20px;max-width:600px}
+.lb-label{color:#fff;font-size:16px;font-weight:700;margin-bottom:6px}
+.lb-desc{color:rgba(255,255,255,.65);font-size:13px;line-height:1.6}
+.lb-counter{color:rgba(255,255,255,.4);font-size:12px;margin-top:8px}
 
 /* ── ABOUT ── */
 .about-section{padding:48px 20px;background:var(--dark)}
@@ -527,6 +545,21 @@ footer{background:#0f172a;padding:40px 20px 24px;text-align:center}
 
 <div class="toast" id="toast"></div>
 
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="if(event.target===this)closeLightbox()">
+  <button class="lb-close" onclick="closeLightbox()">✕</button>
+  <div class="lb-img-wrap">
+    <button class="lb-arrow lb-arrow-prev" onclick="lbPrev()">‹</button>
+    <img id="lb-img" src="" alt="">
+    <button class="lb-arrow lb-arrow-next" onclick="lbNext()">›</button>
+  </div>
+  <div class="lb-info">
+    <div class="lb-label" id="lb-label"></div>
+    <div class="lb-desc" id="lb-desc"></div>
+    <div class="lb-counter" id="lb-counter"></div>
+  </div>
+</div>
+
 <!-- DETAIL MODAL -->
 <div class="detail-modal-bg" id="detail-modal" onclick="if(event.target===this)closeDetail()">
   <div class="detail-modal">
@@ -547,32 +580,65 @@ function genId(){return Date.now().toString(36)+Math.random().toString(36).slice
 
 // ===== GALLERY IMAGES (fotos reais do Sítio Iluminado) =====
 const GALLERY_IMGS = [
-  {src:'fotos/piscina-principal.jpg',label:'Piscina principal'},
-  {src:'fotos/piscina-hidromassagem.jpg',label:'Piscina com hidromassagem'},
-  {src:'fotos/piscina-cascata.jpg',label:'Piscina com cascata'},
-  {src:'fotos/vista-piscina.jpg',label:'Vista da piscina'},
-  {src:'fotos/churrasqueira.jpg',label:'Churrasqueira e forno de pizza'},
-  {src:'fotos/salao-festas.jpg',label:'Salão de festas e jogos'},
-  {src:'fotos/salao-terraco.jpg',label:'Salão com terraço'},
-  {src:'fotos/sala-madeira.jpg',label:'Sala casa de madeira'},
-  {src:'fotos/sala-vista-piscina.jpg',label:'Sala com vista piscina'},
-  {src:'fotos/quarto-2.jpg',label:'Quarto 2'},
-  {src:'fotos/quarto-3.jpg',label:'Quarto 3'},
-  {src:'fotos/quarto-4.jpg',label:'Quarto 4'},
-  {src:'fotos/banheiro-completo.jpg',label:'Banheiro completo'},
-  {src:'fotos/banheiro-box.jpg',label:'Banheiro com box'},
-  {src:'fotos/quadra-volei.jpg',label:'Quadra de vôlei'},
-  {src:'fotos/campo-futebol.jpg',label:'Campo de futebol'},
-  {src:'fotos/capela.jpg',label:'Capela'},
-  {src:'fotos/sitio-externo.jpg',label:'Vista externa'},
-  {src:'fotos/bambu.jpg',label:'Bambuzal'},
-  {src:'fotos/palmeiras.jpg',label:'Palmeiras'},
+  {src:'fotos/piscina-principal.jpg',label:'🏊 Piscina com hidromassagem e cascata',desc:'Piscina com hidromassagem, cascata e tratamento de água com ozônio. Perfeita para relaxar e curtir com a família e amigos.'},
+  {src:'fotos/piscina-hidromassagem.jpg',label:'💦 Piscina com hidromassagem',desc:'Área de hidromassagem integrada à piscina principal. Conforto e lazer em um único espaço.'},
+  {src:'fotos/piscina-cascata.jpg',label:'🏊 Piscina — Hidromassagem e Cascata',desc:'Vista completa da piscina com cascata d\'água e área de hidromassagem. Água tratada com sistema de ozônio.'},
+  {src:'fotos/vista-piscina.jpg',label:'🌅 Vista da piscina',desc:'Vista panorâmica da piscina a partir do salão. Integração perfeita entre área interna e área de lazer.'},
+  {src:'fotos/churrasqueira.jpg',label:'🥩 Churrasqueira e forno de pizza 🍕',desc:'Churrasqueira coberta de alvenaria com forno de pizza de lenha. Espaço gourmet completo para eventos e festas.'},
+  {src:'fotos/salao-festas.jpg',label:'🎊 Salão de festas e jogos 🎱🎯',desc:'Salão amplo com sinuca, ping-pong e outros jogos. Espaço ideal para festa com capacidade para grandes grupos.'},
+  {src:'fotos/salao-terraco.jpg',label:'🌳 Salão com terraço ✅',desc:'Frente do salão com terraço aberto. Vista privilegiada para a área verde e piscina.'},
+  {src:'fotos/sala-madeira.jpg',label:'🪵 Sala — Casa de madeira',desc:'Sala aconchegante na casa de madeira. Ambiente rústico e confortável com lareira para os dias mais frios.'},
+  {src:'fotos/sala-vista-piscina.jpg',label:'💦 Sala — Dois ambientes com vista piscina',desc:'Sala integrada com dois ambientes e vista direta para a piscina. Conforto e integração com a área de lazer.'},
+  {src:'fotos/quarto-2.jpg',label:'🛏️ Quarto 2',desc:'Quarto 2 confortável com camas de casal. Acomoda até 2 pessoas com conforto e privacidade.'},
+  {src:'fotos/quarto-3.jpg',label:'🛏️ Quarto 3',desc:'Quarto 3 com camas individuais. Ideal para grupos de amigos ou crianças.'},
+  {src:'fotos/quarto-4.jpg',label:'🛏️ Quarto 4',desc:'Quarto 4 — Sítio com 4 quartos no total, acomodando até 12 pessoas em camas + 10 em colchonetes.'},
+  {src:'fotos/banheiro-completo.jpg',label:'🛀 Banheiro completo 🚾',desc:'Banheiro completo com pia, vaso e chuveiro. O sítio conta com 4 banheiros no total para maior conforto dos hóspedes.'},
+  {src:'fotos/banheiro-box.jpg',label:'🛀 Banheiro com box',desc:'Banheiro com box de vidro. Estrutura completa e bem cuidada para garantir o conforto de todos.'},
+  {src:'fotos/quadra-volei.jpg',label:'🏐 Quadra de vôlei',desc:'Quadra de vôlei gramada para diversão garantida. Perfeita para grupos que querem se exercitar e se divertir.'},
+  {src:'fotos/campo-futebol.jpg',label:'⚽ Campo de futebol',desc:'Campo de futebol gramado com traves. Diversão certa para os amantes do futebol durante os finais de semana.'},
+  {src:'fotos/capela.jpg',label:'💒 Capela',desc:'Capela no terreno do sítio — ideal para casamentos, cerimônias religiosas e momentos especiais em família.'},
+  {src:'fotos/sitio-externo.jpg',label:'🌳 Sítio Iluminado',desc:'Vista externa do Sítio Iluminado em Biritiba Mirim / Mogi das Cruzes. Área verde exuberante, 100 vagas de estacionamento e asfalto até a porta.'},
+  {src:'fotos/bambu.jpg',label:'🎋 Bambuzal',desc:'Área de bambu do sítio. Paisagismo natural que traz charme, frescor e uma atmosfera tranquila e bucólica.'},
+  {src:'fotos/palmeiras.jpg',label:'🌴 Palmeiras',desc:'Área de palmeiras imperiais que emolduram o sítio. Paisagem tropical deslumbrante em pleno interior de São Paulo.'},
 ];
 
 function renderGallery(){
   const g = document.getElementById('gallery-grid');
-  g.innerHTML = GALLERY_IMGS.map(i=>`<img class="gallery-img" src="${i.src}" alt="${i.label}" loading="lazy" onclick="window.open('${i.src}','_blank')">`).join('');
+  g.innerHTML = GALLERY_IMGS.map((i,idx)=>`
+    <div class="gallery-item" onclick="openLightbox(${idx})">
+      <img class="gallery-img" src="${i.src}" alt="${i.label}" loading="lazy">
+      <div class="gallery-overlay"><span>${i.label}</span></div>
+    </div>`).join('');
 }
+
+// ===== LIGHTBOX =====
+let lbIdx = 0;
+function openLightbox(idx){
+  lbIdx = idx;
+  showLightbox();
+}
+function showLightbox(){
+  const i = GALLERY_IMGS[lbIdx];
+  document.getElementById('lb-img').src = i.src;
+  document.getElementById('lb-img').alt = i.label;
+  document.getElementById('lb-label').textContent = i.label;
+  document.getElementById('lb-desc').textContent = i.desc;
+  document.getElementById('lb-counter').textContent = `${lbIdx+1} / ${GALLERY_IMGS.length}`;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox(){
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function lbPrev(){ lbIdx = (lbIdx - 1 + GALLERY_IMGS.length) % GALLERY_IMGS.length; showLightbox(); }
+function lbNext(){ lbIdx = (lbIdx + 1) % GALLERY_IMGS.length; showLightbox(); }
+document.addEventListener('keydown', e => {
+  if(!document.getElementById('lightbox').classList.contains('open')) return;
+  if(e.key === 'ArrowLeft') lbPrev();
+  if(e.key === 'ArrowRight') lbNext();
+  if(e.key === 'Escape') closeLightbox();
+});
 
 // ===== CALENDAR =====
 let calDate = new Date();
