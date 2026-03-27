@@ -39,12 +39,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:500;background:rgba(255,255,255,
 .hero-bg{position:absolute;inset:0;background:url('fotos/piscina-principal.jpg')center/cover;opacity:.45}
 .hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(15,23,42,1) 0%,rgba(15,23,42,.6) 50%,rgba(15,23,42,.2) 100%)}
 .hero-content{position:relative;z-index:1;padding:40px 20px 48px}
-.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(37,99,235,.25);border:1px solid rgba(37,99,235,.4);color:#93c5fd;font-size:12px;font-weight:600;letter-spacing:1px;padding:6px 14px;border-radius:100px;margin-bottom:20px;text-transform:uppercase}
-.hero h1{font-family:'Playfair Display',serif;font-size:clamp(32px,8vw,64px);font-weight:700;color:#fff;line-height:1.1;margin-bottom:16px}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(37,99,235,.25);border:1px solid rgba(37,99,235,.4);color:#93c5fd;font-size:13px;font-weight:600;letter-spacing:1px;padding:8px 18px;border-radius:100px;margin-bottom:24px;text-transform:uppercase}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(42px,10vw,80px);font-weight:700;color:#fff;line-height:1.05;margin-bottom:18px}
 .hero h1 span{color:#60a5fa}
-.hero-sub{font-size:clamp(14px,3vw,18px);color:rgba(255,255,255,.7);line-height:1.6;margin-bottom:32px;max-width:560px}
+.hero-sub{font-size:clamp(16px,3.5vw,22px);color:rgba(255,255,255,.8);line-height:1.6;margin-bottom:32px;max-width:580px}
 .hero-pill-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:32px}
-.hero-pill{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.85);font-size:12px;font-weight:500;padding:6px 14px;border-radius:100px}
+.hero-pill{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.9);font-size:13px;font-weight:500;padding:8px 16px;border-radius:100px}
 .hero-cta-row{display:flex;flex-wrap:wrap;gap:12px}
 .btn-primary{background:var(--accent);color:#fff;padding:14px 28px;border-radius:8px;font-size:15px;font-weight:600;text-decoration:none;display:inline-block;border:none;cursor:pointer}
 .btn-outline{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.5);padding:14px 28px;border-radius:8px;font-size:15px;font-weight:600;text-decoration:none;display:inline-block}
@@ -85,6 +85,20 @@ nav{position:fixed;top:0;left:0;right:0;z-index:500;background:rgba(255,255,255,
 .cal-legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:16px;padding-top:16px;border-top:1px solid var(--border)}
 .leg{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--mid)}
 .leg-box{width:14px;height:14px;border-radius:3px}
+
+/* ── PRICE CALCULATOR ── */
+.price-calc{background:linear-gradient(135deg,#1d4ed8,#2563eb);border-radius:12px;padding:20px;margin-bottom:20px;color:#fff}
+.price-calc h3{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;margin-bottom:16px;color:#fff}
+.price-calc-row{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;margin-bottom:16px}
+.price-calc-field{display:flex;flex-direction:column;gap:6px;flex:1;min-width:120px}
+.price-calc-field label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.7)}
+.price-calc-field select{padding:10px 12px;border-radius:8px;border:1.5px solid rgba(255,255,255,.25);background:rgba(255,255,255,.12);color:#fff;font-size:14px;font-weight:500;font-family:'Plus Jakarta Sans',sans-serif}
+.price-calc-field select option{background:#1d4ed8;color:#fff}
+.price-result{background:rgba(255,255,255,.15);border-radius:10px;padding:16px;text-align:center}
+.price-result-label{font-size:12px;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.price-result-value{font-family:'Playfair Display',serif;font-size:36px;font-weight:700;color:#fff}
+.price-result-detail{font-size:12px;color:rgba(255,255,255,.6);margin-top:4px}
+.price-result-note{font-size:12px;color:rgba(255,255,255,.75);margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.15)}
 
 /* ── FORM ── */
 .form-section{background:#fff;border-radius:12px;border:1px solid var(--border);padding:24px;margin-bottom:20px}
@@ -310,6 +324,40 @@ footer{background:#0f172a;padding:40px 20px 24px;text-align:center}
       </div>
     </div>
 
+    <!-- PRICE CALCULATOR -->
+    <div class="price-calc" id="price-calc-box">
+      <h3>💰 Calcule o valor da sua reserva</h3>
+      <div class="price-calc-row">
+        <div class="price-calc-field">
+          <label>Quantidade de pessoas</label>
+          <select id="calc-guests" onchange="calcPrice()">
+            <option value="">Selecione</option>
+            <option value="15">Até 15 pessoas</option>
+            <option value="20">Até 20 pessoas</option>
+            <option value="25">Até 25 pessoas</option>
+            <option value="30">Até 30 pessoas</option>
+            <option value="30+">Acima de 30</option>
+          </select>
+        </div>
+        <div class="price-calc-field">
+          <label>Tipo de período</label>
+          <select id="calc-period" onchange="calcPrice()">
+            <option value="">Selecione</option>
+            <option value="fds">Fim de semana (2 dias)</option>
+            <option value="fer2">Feriado 2 dias</option>
+            <option value="fer3">Feriado 3 dias</option>
+            <option value="fer4">Feriado 4 dias</option>
+          </select>
+        </div>
+      </div>
+      <div class="price-result" id="price-result">
+        <div class="price-result-label">Selecione as opções acima para ver o valor</div>
+        <div class="price-result-value" id="price-value" style="display:none"></div>
+        <div class="price-result-detail" id="price-detail" style="display:none"></div>
+        <div class="price-result-note" id="price-note" style="display:none"></div>
+      </div>
+    </div>
+
     <!-- FORM -->
     <div class="form-section">
       <h3>📝 Solicitar reserva</h3>
@@ -457,25 +505,69 @@ footer{background:#0f172a;padding:40px 20px 24px;text-align:center}
     <span class="sec-label">Estrutura completa</span>
     <h2 class="sec-h2">Tudo que você precisa</h2>
     <p class="sec-sub">Sítio completo para festas, eventos, finais de semana e feriados com a família ou amigos</p>
+    <!-- ACOMODAÇÕES -->
+    <h3 style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;margin:32px 0 16px;color:var(--dark)">🛌 Acomodações</h3>
     <div class="amenity-grid">
-      <div class="amenity-item"><div class="amenity-icon">🏊</div><span class="amenity-name">Piscina com Cascata</span></div>
-      <div class="amenity-item"><div class="amenity-icon">💦</div><span class="amenity-name">Hidromassagem</span></div>
-      <div class="amenity-item"><div class="amenity-icon">🫧</div><span class="amenity-name">Tratamento com Ozônio</span></div>
-      <div class="amenity-item"><div class="amenity-icon">🥩</div><span class="amenity-name">Churrasqueira Coberta</span></div>
-      <div class="amenity-item"><div class="amenity-icon">🍕</div><span class="amenity-name">Forno de Pizza</span></div>
-      <div class="amenity-item"><div class="amenity-icon">🎉</div><span class="amenity-name">Salão de Festas</span></div>
-      <div class="amenity-item"><div class="amenity-icon">🎱</div><span class="amenity-name">Mesa de Sinuca</span></div>
-      <div class="amenity-item"><div class="amenity-icon">🏓</div><span class="amenity-name">Ping-Pong</span></div>
-      <div class="amenity-item"><div class="amenity-icon">🔥</div><span class="amenity-name">Lareira</span></div>
-      <div class="amenity-item"><div class="amenity-icon">⚽</div><span class="amenity-name">Campo de Futebol</span></div>
-      <div class="amenity-item"><div class="amenity-icon">🏐</div><span class="amenity-name">Quadra de Vôlei</span></div>
-      <div class="amenity-item"><div class="amenity-icon">💒</div><span class="amenity-name">Capela</span></div>
-      <div class="amenity-item"><div class="amenity-icon">🛏️</div><span class="amenity-name">4 Quartos / 4 Banheiros</span></div>
       <div class="amenity-item"><div class="amenity-icon">👥</div><span class="amenity-name">Até 22 pessoas (pernoite)</span></div>
-      <div class="amenity-item"><div class="amenity-icon">🚗</div><span class="amenity-name">100 vagas de estacionamento</span></div>
+      <div class="amenity-item"><div class="amenity-icon">🛏️</div><span class="amenity-name">12 em camas · 10 em colchões</span></div>
+      <div class="amenity-item"><div class="amenity-icon">🛌</div><span class="amenity-name">4 Quartos · 4 Camas de casal</span></div>
+      <div class="amenity-item"><div class="amenity-icon">🛌</div><span class="amenity-name">2 Camas de solteiro · 1 Beliche</span></div>
+      <div class="amenity-item"><div class="amenity-icon">🚽</div><span class="amenity-name">4 Banheiros completos</span></div>
+      <div class="amenity-item"><div class="amenity-icon">🧺</div><span class="amenity-name">Levando colchão: até 100 pessoas</span></div>
+    </div>
+
+    <!-- PISCINA & LAZER -->
+    <h3 style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;margin:32px 0 16px;color:var(--dark)">🏊 Piscina & Lazer</h3>
+    <div class="amenity-grid">
+      <div class="amenity-item"><div class="amenity-icon">🏊</div><span class="amenity-name">Piscina com cascata</span></div>
+      <div class="amenity-item"><div class="amenity-icon">💦</div><span class="amenity-name">Hidromassagem</span></div>
+      <div class="amenity-item"><div class="amenity-icon">🫧</div><span class="amenity-name">Tratamento com ozônio</span></div>
+      <div class="amenity-item"><div class="amenity-icon">⚽</div><span class="amenity-name">Campo de futebol</span></div>
+      <div class="amenity-item"><div class="amenity-icon">🏐</div><span class="amenity-name">Quadra de vôlei</span></div>
+      <div class="amenity-item"><div class="amenity-icon">💒</div><span class="amenity-name">Capela</span></div>
+    </div>
+
+    <!-- ÁREA GOURMET -->
+    <h3 style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;margin:32px 0 16px;color:var(--dark)">🍖 Área Gourmet & Entretenimento</h3>
+    <div class="amenity-grid">
+      <div class="amenity-item"><div class="amenity-icon">🥩</div><span class="amenity-name">Churrasqueira coberta</span></div>
+      <div class="amenity-item"><div class="amenity-icon">🍕</div><span class="amenity-name">Forno de pizza a lenha</span></div>
+      <div class="amenity-item"><div class="amenity-icon">🎉</div><span class="amenity-name">Salão de festas</span></div>
+      <div class="amenity-item"><div class="amenity-icon">🎱</div><span class="amenity-name">Mesa de sinuca</span></div>
+      <div class="amenity-item"><div class="amenity-icon">🏓</div><span class="amenity-name">Ping-pong</span></div>
+      <div class="amenity-item"><div class="amenity-icon">🔥</div><span class="amenity-name">Lareira</span></div>
+    </div>
+
+    <!-- INFRAESTRUTURA -->
+    <h3 style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;margin:32px 0 16px;color:var(--dark)">✅ Infraestrutura</h3>
+    <div class="amenity-grid">
       <div class="amenity-item"><div class="amenity-icon">📶</div><span class="amenity-name">Wi-Fi</span></div>
-      <div class="amenity-item"><div class="amenity-icon">💧</div><span class="amenity-name">Água filtrada</span></div>
+      <div class="amenity-item"><div class="amenity-icon">💧</div><span class="amenity-name">Água filtrada em todo o sítio</span></div>
       <div class="amenity-item"><div class="amenity-icon">🛣️</div><span class="amenity-name">Asfalto até a porta</span></div>
+      <div class="amenity-item"><div class="amenity-icon">🚗</div><span class="amenity-name">100 vagas de estacionamento</span></div>
+    </div>
+
+    <!-- LOCALIZAÇÃO -->
+    <h3 style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;margin:32px 0 16px;color:var(--dark)">📍 Localização privilegiada</h3>
+    <div style="background:#fff;border-radius:12px;border:1px solid var(--border);padding:24px;margin-bottom:8px">
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;align-items:flex-start;gap:10px;font-size:14px"><span style="font-size:20px">📍</span><span><strong>Biritiba Mirim / Mogi das Cruzes – SP</strong><br><span style="color:var(--mid)">Apenas 20 minutos do Shopping Mogi</span></span></div>
+        <div style="display:flex;align-items:flex-start;gap:10px;font-size:14px"><span style="font-size:20px">🚗</span><span><strong>Fácil acesso</strong> — estrada totalmente asfaltada até a porta</span></div>
+        <div style="display:flex;align-items:flex-start;gap:10px;font-size:14px"><span style="font-size:20px">🏪</span><span><strong>1 km da cidade</strong> — mercado, padaria, posto de saúde próximos</span></div>
+        <div style="display:flex;align-items:flex-start;gap:10px;font-size:14px"><span style="font-size:20px">🌿</span><span>Próximo a <strong>áreas naturais</strong> e pontos turísticos da região</span></div>
+        <div style="display:flex;align-items:flex-start;gap:10px;font-size:14px"><span style="font-size:20px">⏱️</span><span><strong>Apenas 1 hora de São Paulo</strong> — perfeito para finais de semana</span></div>
+      </div>
+    </div>
+
+    <!-- IDEAL PARA -->
+    <h3 style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;margin:32px 0 16px;color:var(--dark)">✨ Ideal para</h3>
+    <div class="amenity-grid">
+      <div class="amenity-item"><div class="amenity-icon">🗓️</div><span class="amenity-name">Finais de semana e feriados</span></div>
+      <div class="amenity-item"><div class="amenity-icon">🏖️</div><span class="amenity-name">Temporada e férias</span></div>
+      <div class="amenity-item"><div class="amenity-icon">👨‍👩‍👧</div><span class="amenity-name">Famílias grandes e grupos</span></div>
+      <div class="amenity-item"><div class="amenity-icon">🎊</div><span class="amenity-name">Confraternizações e retiros</span></div>
+      <div class="amenity-item"><div class="amenity-icon">🎓</div><span class="amenity-name">Formaturas e aniversários</span></div>
+      <div class="amenity-item"><div class="amenity-icon">💼</div><span class="amenity-name">Eventos corporativos</span></div>
     </div>
   </div>
 </section>
@@ -497,8 +589,9 @@ footer{background:#0f172a;padding:40px 20px 24px;text-align:center}
   <div class="about-inner">
     <span class="sec-label">Sobre o sítio</span>
     <h2 class="sec-h2">Sítio Iluminado</h2>
-    <p class="sec-sub" style="margin-bottom:16px">Localizado em Mogi das Cruzes / Biritiba Mirim, a apenas 1 hora de São Paulo, o Sítio Iluminado é o lugar perfeito para quem quer fugir da rotina com conforto e estrutura completa.</p>
-    <p class="sec-sub" style="margin-bottom:16px">Ideal para finais de semana, feriados, festas de formatura, aniversários, eventos corporativos e reuniões de família. Estrada asfaltada até o portão, Wi-Fi, água filtrada e piscina com tratamento de ozônio.</p>
+    <p class="sec-sub" style="margin-bottom:16px">🌿 Localizado em Biritiba Mirim / Mogi das Cruzes – SP, a apenas <strong style="color:#60a5fa">1 hora de São Paulo</strong> e 20 minutos do Shopping Mogi. Estrada totalmente asfaltada até a porta.</p>
+    <p class="sec-sub" style="margin-bottom:16px">💦 Piscina com cascata, hidromassagem e tratamento em ozônio. Água filtrada em todo o sítio. Acomoda até <strong style="color:#60a5fa">22 pessoas</strong> em camas (4 quartos, 4 banheiros) e até 100 pessoas trazendo colchões.</p>
+    <p class="sec-sub" style="margin-bottom:16px">🍖 Churrasqueira coberta, forno de pizza a lenha, salão de festas com sinuca e ping-pong, lareira, campo de futebol, quadra de vôlei, capela e 100 vagas de estacionamento.</p>
     <p class="sec-sub">Gerenciado diretamente pelo proprietário Arlei — sem intermediários, atendimento personalizado e comunicação rápida pelo WhatsApp.</p>
     <div class="about-social">
       <a href="https://www.instagram.com/sitioiluminadotemporada/" target="_blank" class="social-btn">
@@ -705,6 +798,7 @@ function selectDay(ds){
     document.getElementById('disp-ci').classList.remove('empty');
     document.getElementById('disp-co').textContent = fmtDate(selEnd);
     document.getElementById('disp-co').classList.remove('empty');
+    updateCalcFromDates();
   } else {
     selStart = ds; selEnd = null;
     document.getElementById('disp-ci').textContent = fmtDate(selStart);
@@ -875,6 +969,64 @@ function openDetailById(id){
   document.getElementById('detail-modal').classList.add('open');
 }
 function closeDetail(){ document.getElementById('detail-modal').classList.remove('open'); }
+
+// ===== PRICE CALCULATOR =====
+const PRICE_TABLE = {
+  fds:  {15:1700, 20:2000, 25:2500, 30:2800, '30+':'Consultar'},
+  fer2: {15:2000, 20:2300, 25:2800, 30:3200, '30+':'Consultar'},
+  fer3: {15:2700, 20:3200, 25:3750, 30:4200, '30+':'Consultar'},
+  fer4: {10:2800, 15:3600, 20:4000, 25:4500, 30:4800, '30+':'Consultar'},
+};
+const PERIOD_LABEL = {fds:'Fim de semana (sáb–dom)', fer2:'Feriado 2 dias', fer3:'Feriado 3 dias', fer4:'Feriado 4 dias'};
+
+function calcPrice(){
+  const guests = document.getElementById('calc-guests').value;
+  const period = document.getElementById('calc-period').value;
+  const valEl = document.getElementById('price-value');
+  const detEl = document.getElementById('price-detail');
+  const noteEl = document.getElementById('price-note');
+
+  if(!guests || !period){
+    document.querySelector('.price-result-label').textContent = 'Selecione as opções acima para ver o valor';
+    valEl.style.display = 'none'; detEl.style.display = 'none'; noteEl.style.display = 'none';
+    return;
+  }
+
+  document.querySelector('.price-result-label').textContent = 'Valor estimado';
+  const table = PRICE_TABLE[period];
+  const val = table[guests] || table[30] || 'Consultar';
+
+  if(val === 'Consultar'){
+    valEl.textContent = 'Sob consulta';
+    valEl.style.display = 'block';
+    detEl.textContent = 'Para grupos acima de 30 pessoas, entre em contato pelo WhatsApp.';
+  } else {
+    valEl.textContent = 'R$ ' + val.toLocaleString('pt-BR');
+    valEl.style.display = 'block';
+    detEl.textContent = PERIOD_LABEL[period] + ' · ' + guests + ' pessoas';
+  }
+  detEl.style.display = 'block';
+  noteEl.textContent = '⚠️ Inclui taxa de limpeza de R$ 300 · Confirme pelo WhatsApp antes de pagar · Check-in: sábado 08h · Check-out: domingo 18h';
+  noteEl.style.display = 'block';
+
+  // also update the guests field in the reserve form
+  const gMap = {'15':'até 15','20':'até 20','25':'até 25','30':'até 30','30+':'acima de 30'};
+  const fGuests = document.getElementById('f-guests');
+  if(fGuests && gMap[guests]) fGuests.value = gMap[guests];
+}
+
+// Update calculator when dates are selected
+function updateCalcFromDates(){
+  if(!selStart || !selEnd) return;
+  const diff = Math.round((new Date(selEnd) - new Date(selStart)) / (1000*60*60*24));
+  const periodSel = document.getElementById('calc-period');
+  if(diff <= 2) periodSel.value = 'fds';
+  else if(diff === 2) periodSel.value = 'fer2';
+  else if(diff === 3) periodSel.value = 'fer3';
+  else if(diff >= 4) periodSel.value = 'fer4';
+  calcPrice();
+  document.getElementById('price-calc-box').scrollIntoView({behavior:'smooth', block:'nearest'});
+}
 
 // ===== PRICING TABS =====
 function showTab(tab){
