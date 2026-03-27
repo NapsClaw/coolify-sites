@@ -137,7 +137,8 @@
     @keyframes wapulse { 0%,100%{box-shadow:0 4px 20px rgba(37,211,102,0.4)} 50%{box-shadow:0 4px 32px rgba(37,211,102,0.65)} }
 
     /* REVEAL ANIMATIONS */
-    .reveal { opacity:0; transform:translateY(28px); transition:opacity 0.65s ease, transform 0.65s ease; }
+    .reveal { opacity:1; transform:translateY(0); transition:opacity 0.65s ease, transform 0.65s ease; }
+    .reveal.animate-hidden { opacity:0; transform:translateY(28px); }
     .reveal.on { opacity:1; transform:translateY(0); }
     .d1 { transition-delay:0.1s; } .d2 { transition-delay:0.2s; } .d3 { transition-delay:0.3s; } .d4 { transition-delay:0.4s; }
   </style>
@@ -355,9 +356,17 @@
 </a>
 
 <script>
+  // Add hidden class only after JS loads, then animate in
+  document.querySelectorAll('.reveal').forEach(el => el.classList.add('animate-hidden'));
   const obs = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('on'); obs.unobserve(e.target); } });
-  }, { threshold: 0.12 });
+    entries.forEach(e => {
+      if(e.isIntersecting) {
+        e.target.classList.remove('animate-hidden');
+        e.target.classList.add('on');
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 </script>
 </body>
