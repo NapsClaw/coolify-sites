@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sítio Iluminado — Mogi das Cruzes | Reserva Online</title>
+<meta name="description" content="Sítio Iluminado em Mogi das Cruzes, SP. Piscina com hidromassagem e cascata, churrasqueira, forno de pizza, campo de futebol. Reserve online.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green:#16a34a;--green-l:rgba(22,163,74,.12);
+  --red:#dc2626;--red-l:rgba(220,38,38,.12);
+  --amber:#d97706;--amber-l:rgba(217,119,6,.12);
+  --blue:#2563eb;--blue-l:rgba(37,99,235,.1);
+  --dark:#111827;--mid:#6b7280;--light:#f3f4f6;
+  --white:#fff;--border:#e5e7eb;
+  --accent:#1d4ed8;--accent-h:#1e40af;
+  --wa:#25D366;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:#f9fafb;color:var(--dark);overflow-x:hidden;font-size:15px}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;background:rgba(255,255,255,.97);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:0 20px;height:60px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--dark);text-decoration:none}
+.nav-logo span{color:var(--accent)}
+.nav-links{display:none;gap:24px}
+.nav-links a{font-size:13px;font-weight:500;color:var(--mid);text-decoration:none}
+.nav-links a:hover{color:var(--dark)}
+.nav-actions{display:flex;gap:8px;align-items:center}
+.btn-wa-nav{background:var(--wa);color:#fff;padding:8px 16px;border-radius:6px;font-size:13px;font-weight:600;text-decoration:none;display:flex;align-items:center;gap:6px}
+.btn-reserve-nav{background:var(--accent);color:#fff;padding:8px 16px;border-radius:6px;font-size:13px;font-weight:600;border:none;cursor:pointer}
+@media(min-width:768px){.nav-links{display:flex};nav{padding:0 40px}}
+
+/* ── HERO ── */
+.hero{margin-top:60px;background:#0f172a;min-height:92vh;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1600&q=80')center/cover;opacity:.45}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(15,23,42,1) 0%,rgba(15,23,42,.6) 50%,rgba(15,23,42,.2) 100%)}
+.hero-content{position:relative;z-index:1;padding:40px 20px 48px}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(37,99,235,.25);border:1px solid rgba(37,99,235,.4);color:#93c5fd;font-size:12px;font-weight:600;letter-spacing:1px;padding:6px 14px;border-radius:100px;margin-bottom:20px;text-transform:uppercase}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(32px,8vw,64px);font-weight:700;color:#fff;line-height:1.1;margin-bottom:16px}
+.hero h1 span{color:#60a5fa}
+.hero-sub{font-size:clamp(14px,3vw,18px);color:rgba(255,255,255,.7);line-height:1.6;margin-bottom:32px;max-width:560px}
+.hero-pill-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:32px}
+.hero-pill{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.85);font-size:12px;font-weight:500;padding:6px 14px;border-radius:100px}
+.hero-cta-row{display:flex;flex-wrap:wrap;gap:12px}
+.btn-primary{background:var(--accent);color:#fff;padding:14px 28px;border-radius:8px;font-size:15px;font-weight:600;text-decoration:none;display:inline-block;border:none;cursor:pointer}
+.btn-outline{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.5);padding:14px 28px;border-radius:8px;font-size:15px;font-weight:600;text-decoration:none;display:inline-block}
+.hero-stats{position:relative;z-index:1;display:flex;border-top:1px solid rgba(255,255,255,.12);padding:24px 20px;gap:0;background:rgba(15,23,42,.6);backdrop-filter:blur(8px)}
+.hstat{flex:1;text-align:center;padding:0 12px;border-right:1px solid rgba(255,255,255,.12)}
+.hstat:last-child{border-right:none}
+.hstat-n{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:#fff;display:block}
+.hstat-l{font-size:11px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:1px;display:block;margin-top:2px}
+
+/* ── CARD ── */
+.card{background:#fff;border-radius:12px;border:1px solid var(--border);overflow:hidden}
+
+/* ── RESERVE SECTION ── */
+.reserve-section{padding:48px 20px;background:#f9fafb}
+.reserve-inner{max-width:900px;margin:0 auto}
+.sec-label{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:10px}
+.sec-h2{font-family:'Playfair Display',serif;font-size:clamp(24px,5vw,36px);font-weight:700;color:var(--dark);line-height:1.2;margin-bottom:8px}
+.sec-sub{font-size:15px;color:var(--mid);line-height:1.7;margin-bottom:32px}
+
+/* Calendar */
+.cal-card{background:#fff;border-radius:12px;border:1px solid var(--border);padding:20px;margin-bottom:20px}
+.cal-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.cal-month-label{font-family:'Playfair Display',serif;font-size:18px;font-weight:700}
+.cal-nav{display:flex;gap:6px}
+.cal-nav-btn{background:var(--light);border:none;width:34px;height:34px;border-radius:6px;cursor:pointer;font-size:16px;color:var(--dark);display:flex;align-items:center;justify-content:center}
+.cal-nav-btn:hover{background:var(--border)}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.cal-head{text-align:center;font-size:10px;font-weight:700;letter-spacing:.5px;color:var(--mid);padding:8px 2px;text-transform:uppercase}
+.cal-day{text-align:center;padding:0;aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:6px;font-size:13px;cursor:pointer;color:var(--dark);position:relative;font-weight:500;transition:background .15s}
+.cal-day.empty{opacity:0;pointer-events:none}
+.cal-day.past{opacity:.3;pointer-events:none;text-decoration:line-through}
+.cal-day.free:hover{background:var(--blue-l);color:var(--blue)}
+.cal-day.reserved-pending{background:var(--red-l);color:var(--red);cursor:pointer}
+.cal-day.reserved-paid{background:var(--green-l);color:var(--green);cursor:pointer}
+.cal-day.sel-start,.cal-day.sel-end{background:var(--accent);color:#fff;font-weight:700}
+.cal-day.sel-range{background:var(--blue-l);color:var(--blue)}
+.cal-day-dot{position:absolute;bottom:3px;left:50%;transform:translateX(-50%);width:5px;height:5px;border-radius:50%}
+.cal-legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:16px;padding-top:16px;border-top:1px solid var(--border)}
+.leg{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--mid)}
+.leg-box{width:14px;height:14px;border-radius:3px}
+
+/* ── FORM ── */
+.form-section{background:#fff;border-radius:12px;border:1px solid var(--border);padding:24px;margin-bottom:20px}
+.form-section h3{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;margin-bottom:20px;color:var(--dark)}
+.form-grid{display:grid;gap:14px}
+.form-row{display:flex;flex-direction:column;gap:6px}
+.form-row label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--dark)}
+.form-row input,.form-row select,.form-row textarea{padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:var(--dark);background:#fff;width:100%;transition:border-color .2s}
+.form-row input:focus,.form-row select:focus,.form-row textarea:focus{outline:none;border-color:var(--accent)}
+.form-row textarea{resize:vertical;min-height:80px}
+.dates-row{display:flex;gap:10px}
+.date-chip{flex:1;background:var(--light);border-radius:8px;padding:12px;text-align:center}
+.date-chip-l{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mid)}
+.date-chip-v{font-size:15px;font-weight:700;color:var(--dark);margin-top:2px}
+.date-chip-v.empty{color:var(--mid);font-weight:400;font-size:13px}
+.btn-submit{width:100%;background:var(--accent);color:#fff;border:none;border-radius:8px;padding:16px;font-size:15px;font-weight:700;cursor:pointer;margin-top:6px;transition:background .2s}
+.btn-submit:hover{background:var(--accent-h)}
+.btn-submit:disabled{opacity:.5;cursor:not-allowed}
+
+/* ── RESERVATIONS LIST ── */
+.reservations-panel{background:#fff;border-radius:12px;border:1px solid var(--border);padding:24px;margin-bottom:20px}
+.reservations-panel h3{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center}
+.res-item{border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:12px;position:relative}
+.res-item-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.res-name{font-weight:700;font-size:15px}
+.res-dates{font-size:13px;color:var(--mid);margin-top:2px}
+.res-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:4px 10px;border-radius:100px;text-transform:uppercase;letter-spacing:.5px;cursor:pointer;border:none;white-space:nowrap}
+.badge-pending{background:var(--amber-l);color:var(--amber)}
+.badge-paid{background:var(--green-l);color:var(--green)}
+.res-info{display:flex;flex-wrap:wrap;gap:12px;margin-top:10px}
+.res-info-item{font-size:12px;color:var(--mid)}
+.res-info-item strong{color:var(--dark)}
+.res-delete{position:absolute;top:12px;right:12px;background:none;border:none;color:var(--mid);cursor:pointer;font-size:16px;padding:4px}
+.res-delete:hover{color:var(--red)}
+.no-reservations{text-align:center;padding:32px;color:var(--mid);font-size:14px}
+
+/* ── PRICING ── */
+.pricing-section{padding:48px 20px;background:#fff}
+.pricing-inner{max-width:900px;margin:0 auto}
+.pricing-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+.ptab{padding:8px 20px;border-radius:100px;border:1.5px solid var(--border);font-size:13px;font-weight:600;cursor:pointer;background:#fff;color:var(--mid);transition:all .2s}
+.ptab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.pricing-table{display:none}
+.pricing-table.active{display:block}
+.ptable{width:100%;border-collapse:collapse;font-size:14px}
+.ptable th{background:var(--dark);color:#fff;padding:12px 16px;text-align:left;font-weight:600;font-size:13px}
+.ptable th:last-child,.ptable td:last-child{text-align:right}
+.ptable td{padding:12px 16px;border-bottom:1px solid var(--border)}
+.ptable tr:last-child td{border-bottom:none}
+.ptable tr:nth-child(even) td{background:var(--light)}
+.ptable .price-val{font-weight:700;color:var(--accent);font-size:15px}
+.price-note{background:var(--amber-l);border:1px solid rgba(217,119,6,.2);border-radius:8px;padding:14px 16px;font-size:13px;color:var(--amber);margin-top:16px;display:flex;gap:8px;align-items:flex-start}
+
+/* ── AMENITIES ── */
+.amenities-section{padding:48px 20px;background:var(--light)}
+.amenities-inner{max-width:900px;margin:0 auto}
+.amenity-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:28px}
+.amenity-item{background:#fff;border-radius:10px;padding:16px;display:flex;align-items:center;gap:12px;border:1px solid var(--border)}
+.amenity-icon{width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;background:var(--blue-l)}
+.amenity-name{font-size:13px;font-weight:600;color:var(--dark)}
+@media(min-width:600px){.amenity-grid{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:900px){.amenity-grid{grid-template-columns:repeat(4,1fr)}}
+
+/* ── GALLERY ── */
+.gallery-section{padding:48px 20px;background:#fff}
+.gallery-inner{max-width:900px;margin:0 auto}
+.gallery-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:28px}
+.gallery-img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px;cursor:pointer;transition:opacity .2s}
+.gallery-img:hover{opacity:.9}
+.gallery-placeholder{width:100%;aspect-ratio:4/3;background:var(--light);border-radius:8px;border:2px dashed var(--border);display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--mid);font-size:12px;gap:8px}
+@media(min-width:600px){.gallery-grid{grid-template-columns:repeat(3,1fr)}}
+
+/* ── ABOUT ── */
+.about-section{padding:48px 20px;background:var(--dark)}
+.about-inner{max-width:900px;margin:0 auto}
+.about-section .sec-label{color:#60a5fa}
+.about-section .sec-h2{color:#fff}
+.about-section .sec-sub{color:rgba(255,255,255,.65)}
+.about-social{display:flex;gap:12px;margin-top:24px;flex-wrap:wrap}
+.social-btn{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;padding:12px 20px;border-radius:8px;font-size:14px;font-weight:500;text-decoration:none}
+.social-btn:hover{background:rgba(255,255,255,.15)}
+
+/* ── CONTACT ── */
+.contact-section{padding:48px 20px;background:var(--accent)}
+.contact-inner{max-width:900px;margin:0 auto;text-align:center}
+.contact-section .sec-label{color:rgba(255,255,255,.65)}
+.contact-section .sec-h2{color:#fff;margin-bottom:8px}
+.contact-section .sec-sub{color:rgba(255,255,255,.75);margin-bottom:32px}
+.wa-btn-big{display:inline-flex;align-items:center;gap:12px;background:#25D366;color:#fff;padding:18px 36px;border-radius:12px;font-size:16px;font-weight:700;text-decoration:none;transition:transform .2s}
+.wa-btn-big:hover{transform:scale(1.02)}
+
+/* ── FOOTER ── */
+footer{background:#0f172a;padding:40px 20px 24px;text-align:center}
+.foot-logo{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#fff;margin-bottom:8px}
+.foot-logo span{color:#60a5fa}
+.foot-sub{font-size:13px;color:rgba(255,255,255,.35);margin-bottom:24px}
+.foot-links{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;margin-bottom:24px}
+.foot-links a{color:rgba(255,255,255,.4);text-decoration:none;font-size:12px}
+.foot-copy{font-size:11px;color:rgba(255,255,255,.2);border-top:1px solid rgba(255,255,255,.08);padding-top:20px}
+
+/* ── FLOAT WA ── */
+.wa-float{position:fixed;bottom:20px;right:20px;z-index:400;background:#25D366;border-radius:50%;width:56px;height:56px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(37,211,102,.4);text-decoration:none}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:88px;left:50%;transform:translateX(-50%);background:var(--dark);color:#fff;padding:12px 24px;border-radius:8px;font-size:14px;font-weight:500;z-index:600;display:none;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,.3)}
+.toast.show{display:block}
+.toast.green{background:var(--green)}
+
+/* ── MODAL DETAIL ── */
+.detail-modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:550;align-items:center;justify-content:center;padding:20px}
+.detail-modal-bg.open{display:flex}
+.detail-modal{background:#fff;border-radius:16px;padding:28px 24px;width:100%;max-width:480px;max-height:80vh;overflow-y:auto}
+.detail-modal h3{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center}
+.detail-close{background:none;border:none;font-size:22px;cursor:pointer;color:var(--mid)}
+.detail-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:14px}
+.detail-row:last-child{border-bottom:none}
+.detail-row strong{color:var(--mid);font-weight:500}
+.detail-row span{font-weight:600;text-align:right;max-width:60%}
+.detail-actions{display:flex;gap:10px;margin-top:20px}
+.btn-pay-toggle{flex:1;padding:12px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;border:none}
+.btn-mark-paid{background:var(--green-l);color:var(--green)}
+.btn-mark-pending{background:var(--amber-l);color:var(--amber)}
+.btn-del-res{background:var(--red-l);color:var(--red);padding:12px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;border:none}
+
+@media(min-width:600px){
+  .form-grid{grid-template-columns:repeat(2,1fr)}
+  .form-full{grid-column:1/-1}
+}
+@media(min-width:768px){
+  .reserve-section,.pricing-section,.amenities-section,.gallery-section,.about-section,.contact-section{padding:72px 40px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Sítio<span>Iluminado</span></a>
+  <div class="nav-links">
+    <a href="#reservar">Reservar</a>
+    <a href="#precos">Preços</a>
+    <a href="#estrutura">Estrutura</a>
+    <a href="#galeria">Galeria</a>
+    <a href="#contato">Contato</a>
+  </div>
+  <div class="nav-actions">
+    <a href="https://wa.me/5511941942210?text=Olá Arlei! Gostaria de informações sobre o Sítio Iluminado." target="_blank" class="btn-wa-nav">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      WhatsApp
+    </a>
+    <button class="btn-reserve-nav" onclick="scrollTo('reservar')">Reservar</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="hero-badge">🌳 Mogi das Cruzes · Biritiba Mirim — 1h de SP</span>
+    <h1>Sítio <span>Iluminado</span></h1>
+    <p class="hero-sub">Piscina com hidromassagem e cascata, churrasqueira, forno de pizza, campo de futebol e muito mais. Acomoda até 22 pessoas.</p>
+    <div class="hero-pill-row">
+      <span class="hero-pill">🏊 Piscina + Hidromassagem</span>
+      <span class="hero-pill">🍕 Forno de Pizza</span>
+      <span class="hero-pill">⚽ Campo de Futebol</span>
+      <span class="hero-pill">🏐 Quadra de Vôlei</span>
+      <span class="hero-pill">💒 Capela</span>
+    </div>
+    <div class="hero-cta-row">
+      <button class="btn-primary" onclick="scrollTo('reservar')">📅 Reservar agora</button>
+      <a href="https://wa.me/5511941942210" target="_blank" class="btn-outline">Falar com Arlei</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="hstat"><span class="hstat-n">22</span><span class="hstat-l">Pessoas</span></div>
+    <div class="hstat"><span class="hstat-n">4</span><span class="hstat-l">Quartos</span></div>
+    <div class="hstat"><span class="hstat-n">100</span><span class="hstat-l">Vagas</span></div>
+    <div class="hstat"><span class="hstat-n">1h</span><span class="hstat-l">de SP</span></div>
+  </div>
+</section>
+
+<!-- RESERVE SECTION -->
+<section class="reserve-section" id="reservar">
+  <div class="reserve-inner">
+    <span class="sec-label">Calendário & Reservas</span>
+    <h2 class="sec-h2">Verifique disponibilidade e reserve</h2>
+    <p class="sec-sub">Datas em vermelho = reservadas. Selecione as datas desejadas e preencha o formulário.</p>
+
+    <!-- CALENDAR -->
+    <div class="cal-card">
+      <div class="cal-top">
+        <span class="cal-month-label" id="cal-label">Março 2026</span>
+        <div class="cal-nav">
+          <button class="cal-nav-btn" onclick="calPrev()" title="Mês anterior">‹</button>
+          <button class="cal-nav-btn" onclick="calNext()" title="Próximo mês">›</button>
+        </div>
+      </div>
+      <div class="cal-grid" id="cal-grid"></div>
+      <div class="cal-legend">
+        <div class="leg"><div class="leg-box" style="background:var(--light);border:1px solid var(--border)"></div>Disponível</div>
+        <div class="leg"><div class="leg-box" style="background:var(--red-l);border:1px solid rgba(220,38,38,.3)"></div>Reservado — Pendente</div>
+        <div class="leg"><div class="leg-box" style="background:var(--green-l);border:1px solid rgba(22,163,74,.3)"></div>Reservado — Pago</div>
+        <div class="leg"><div class="leg-box" style="background:var(--accent)"></div>Selecionado</div>
+      </div>
+    </div>
+
+    <!-- FORM -->
+    <div class="form-section">
+      <h3>📝 Solicitar reserva</h3>
+      <div class="dates-row" style="margin-bottom:20px">
+        <div class="date-chip">
+          <div class="date-chip-l">Check-in</div>
+          <div class="date-chip-v empty" id="disp-ci">Selecione no calendário</div>
+        </div>
+        <div class="date-chip">
+          <div class="date-chip-l">Check-out</div>
+          <div class="date-chip-v empty" id="disp-co">Selecione no calendário</div>
+        </div>
+      </div>
+      <div class="form-grid">
+        <div class="form-row form-full">
+          <label>Nome completo *</label>
+          <input type="text" id="f-name" placeholder="Seu nome completo">
+        </div>
+        <div class="form-row">
+          <label>Telefone / WhatsApp *</label>
+          <input type="tel" id="f-phone" placeholder="(11) 99999-9999">
+        </div>
+        <div class="form-row">
+          <label>E-mail</label>
+          <input type="email" id="f-email" placeholder="seu@email.com">
+        </div>
+        <div class="form-row">
+          <label>Quantidade de pessoas *</label>
+          <select id="f-guests">
+            <option value="">Selecione</option>
+            <option value="até 15">Até 15 pessoas</option>
+            <option value="até 20">Até 20 pessoas</option>
+            <option value="até 25">Até 25 pessoas</option>
+            <option value="até 30">Até 30 pessoas</option>
+            <option value="acima de 30">Acima de 30 (consultar)</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>Tipo de evento</label>
+          <select id="f-occasion">
+            <option>Fim de semana / Lazer</option>
+            <option>Festa / Evento</option>
+            <option>Formatura</option>
+            <option>Aniversário</option>
+            <option>Casamento / Recepção</option>
+            <option>Feriado</option>
+            <option>Corporativo</option>
+            <option>Outro</option>
+          </select>
+        </div>
+        <div class="form-row form-full">
+          <label>Observações (opcional)</label>
+          <textarea id="f-obs" placeholder="Informações adicionais, dúvidas, necessidades especiais..."></textarea>
+        </div>
+      </div>
+      <button class="btn-submit" onclick="submitReserve()">📲 Enviar solicitação via WhatsApp</button>
+    </div>
+
+    <!-- RESERVATIONS LIST -->
+    <div class="reservations-panel">
+      <h3>
+        <span>Reservas registradas</span>
+        <button onclick="togglePanel()" style="background:none;border:none;font-size:13px;color:var(--mid);cursor:pointer" id="toggle-btn">▼ Ver</button>
+      </h3>
+      <div id="reservations-list" style="display:none"></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing-section" id="precos">
+  <div class="pricing-inner">
+    <span class="sec-label">Tabela de Preços</span>
+    <h2 class="sec-h2">Valores por período</h2>
+    <p class="sec-sub">Check-in: sábado às 08h · Check-out: domingo às 18h. Taxa de limpeza: R$300 (inclusa nos valores abaixo)</p>
+
+    <div class="pricing-tabs">
+      <button class="ptab active" onclick="showTab('fds')">🗓️ Fim de semana</button>
+      <button class="ptab" onclick="showTab('fer2')">🏖️ Feriado 2 dias</button>
+      <button class="ptab" onclick="showTab('fer3')">🏖️ Feriado 3 dias</button>
+      <button class="ptab" onclick="showTab('fer4')">🏖️ Feriado 4 dias</button>
+    </div>
+
+    <div class="pricing-table active" id="tab-fds">
+      <table class="ptable">
+        <thead><tr><th>Quantidade de pessoas</th><th>Valor total</th></tr></thead>
+        <tbody>
+          <tr><td>Até 15 pessoas</td><td class="price-val">R$ 1.700</td></tr>
+          <tr><td>Até 20 pessoas</td><td class="price-val">R$ 2.000</td></tr>
+          <tr><td>Até 25 pessoas</td><td class="price-val">R$ 2.500</td></tr>
+          <tr><td>Até 30 pessoas</td><td class="price-val">R$ 2.800</td></tr>
+          <tr><td>Acima de 30 pessoas</td><td class="price-val">Sob consulta</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="pricing-table" id="tab-fer2">
+      <table class="ptable">
+        <thead><tr><th>Quantidade de pessoas</th><th>Valor total (2 dias)</th></tr></thead>
+        <tbody>
+          <tr><td>Até 15 pessoas</td><td class="price-val">R$ 2.000</td></tr>
+          <tr><td>Até 20 pessoas</td><td class="price-val">R$ 2.300</td></tr>
+          <tr><td>Até 25 pessoas</td><td class="price-val">R$ 2.800</td></tr>
+          <tr><td>Até 30 pessoas</td><td class="price-val">R$ 3.200</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="pricing-table" id="tab-fer3">
+      <table class="ptable">
+        <thead><tr><th>Quantidade de pessoas</th><th>Valor total (3 dias)</th></tr></thead>
+        <tbody>
+          <tr><td>Até 15 pessoas</td><td class="price-val">R$ 2.700</td></tr>
+          <tr><td>Até 20 pessoas</td><td class="price-val">R$ 3.200</td></tr>
+          <tr><td>Até 25 pessoas</td><td class="price-val">R$ 3.750</td></tr>
+          <tr><td>Até 30 pessoas</td><td class="price-val">R$ 4.200</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="pricing-table" id="tab-fer4">
+      <table class="ptable">
+        <thead><tr><th>Quantidade de pessoas</th><th>Valor total (4 dias)</th></tr></thead>
+        <tbody>
+          <tr><td>Até 10 pessoas</td><td class="price-val">R$ 2.800</td></tr>
+          <tr><td>Até 15 pessoas</td><td class="price-val">R$ 3.600</td></tr>
+          <tr><td>Até 20 pessoas</td><td class="price-val">R$ 4.000</td></tr>
+          <tr><td>Até 25 pessoas</td><td class="price-val">R$ 4.500</td></tr>
+          <tr><td>Até 30 pessoas</td><td class="price-val">R$ 4.800</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="price-note">
+      <span>⚠️</span>
+      <span><strong>Taxa de limpeza: R$ 300</strong> — inclusa nos valores acima. Pagamento via PIX. Confirme disponibilidade pelo WhatsApp antes de efetuar o pagamento.</span>
+    </div>
+
+    <div style="text-align:center;margin-top:28px">
+      <a href="https://wa.me/5511941942210?text=Olá Arlei! Gostaria de verificar disponibilidade e valores do Sítio Iluminado." target="_blank" class="btn-primary" style="text-decoration:none;display:inline-block">💬 Verificar disponibilidade via WhatsApp</a>
+    </div>
+  </div>
+</section>
+
+<!-- AMENITIES -->
+<section class="amenities-section" id="estrutura">
+  <div class="amenities-inner">
+    <span class="sec-label">Estrutura completa</span>
+    <h2 class="sec-h2">Tudo que você precisa</h2>
+    <p class="sec-sub">Sítio completo para festas, eventos, finais de semana e feriados com a família ou amigos</p>
+    <div class="amenity-grid">
+      <div class="amenity-item"><div class="amenity-icon">🏊</div><span class="amenity-name">Piscina com Cascata</span></div>
+      <div class="amenity-item"><div class="amenity-icon">💦</div><span class="amenity-name">Hidromassagem</span></div>
+      <div class="amenity-item"><div class="amenity-icon">🫧</div><span class="amenity-name">Tratamento com Ozônio</span></div>
+      <div class="amenity-item"><div class="amenity-icon">🥩</div><span class="amenity-name">Churrasqueira Coberta</span></div>
+      <div class="amenity-item"><div class="amenity-icon">🍕</div><span class="amenity-name">Forno de Pizza</span></div>
+      <div class="amenity-item"><div class="amenity-icon">🎉</div><span class="amenity-name">Salão de Festas</span></div>
+      <div class="amenity-item"><div class="amenity-icon">🎱</div><span class="amenity-name">Mesa de Sinuca</span></div>
+      <div class="amenity-item"><div class="amenity-icon">🏓</div><span class="amenity-name">Ping-Pong</span></div>
+      <div class="amenity-item"><div class="amenity-icon">🔥</div><span class="amenity-name">Lareira</span></div>
+      <div class="amenity-item"><div class="amenity-icon">⚽</div><span class="amenity-name">Campo de Futebol</span></div>
+      <div class="amenity-item"><div class="amenity-icon">🏐</div><span class="amenity-name">Quadra de Vôlei</span></div>
+      <div class="amenity-item"><div class="amenity-icon">💒</div><span class="amenity-name">Capela</span></div>
+      <div class="amenity-item"><div class="amenity-icon">🛏️</div><span class="amenity-name">4 Quartos / 4 Banheiros</span></div>
+      <div class="amenity-item"><div class="amenity-icon">👥</div><span class="amenity-name">Até 22 pessoas (pernoite)</span></div>
+      <div class="amenity-item"><div class="amenity-icon">🚗</div><span class="amenity-name">100 vagas de estacionamento</span></div>
+      <div class="amenity-item"><div class="amenity-icon">📶</div><span class="amenity-name">Wi-Fi</span></div>
+      <div class="amenity-item"><div class="amenity-icon">💧</div><span class="amenity-name">Água filtrada</span></div>
+      <div class="amenity-item"><div class="amenity-icon">🛣️</div><span class="amenity-name">Asfalto até a porta</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery-section" id="galeria">
+  <div class="gallery-inner">
+    <span class="sec-label">Galeria de fotos</span>
+    <h2 class="sec-h2">Conheça o espaço</h2>
+    <p class="sec-sub">Veja como é o Sítio Iluminado por dentro e por fora</p>
+    <div class="gallery-grid" id="gallery-grid">
+      <!-- Filled by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section">
+  <div class="about-inner">
+    <span class="sec-label">Sobre o sítio</span>
+    <h2 class="sec-h2">Sítio Iluminado</h2>
+    <p class="sec-sub" style="margin-bottom:16px">Localizado em Mogi das Cruzes / Biritiba Mirim, a apenas 1 hora de São Paulo, o Sítio Iluminado é o lugar perfeito para quem quer fugir da rotina com conforto e estrutura completa.</p>
+    <p class="sec-sub" style="margin-bottom:16px">Ideal para finais de semana, feriados, festas de formatura, aniversários, eventos corporativos e reuniões de família. Estrada asfaltada até o portão, Wi-Fi, água filtrada e piscina com tratamento de ozônio.</p>
+    <p class="sec-sub">Gerenciado diretamente pelo proprietário Arlei — sem intermediários, atendimento personalizado e comunicação rápida pelo WhatsApp.</p>
+    <div class="about-social">
+      <a href="https://www.instagram.com/sitioiluminadotemporada/" target="_blank" class="social-btn">
+        📸 @sitioiluminadotemporada
+      </a>
+      <a href="https://wa.me/5511941942210" target="_blank" class="social-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        (11) 94194-2210
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contato">
+  <div class="contact-inner">
+    <span class="sec-label">Contato</span>
+    <h2 class="sec-h2">Pronto para reservar?</h2>
+    <p class="sec-sub">Fale diretamente com Arlei pelo WhatsApp e garanta sua data!</p>
+    <a href="https://wa.me/5511941942210?text=Olá Arlei! Quero fazer uma reserva no Sítio Iluminado." target="_blank" class="wa-btn-big">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Reservar pelo WhatsApp
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-logo">Sítio<span>Iluminado</span></div>
+  <p class="foot-sub">Mogi das Cruzes / Biritiba Mirim, SP · 1h de São Paulo</p>
+  <div class="foot-links">
+    <a href="#reservar">Reservar</a>
+    <a href="#precos">Preços</a>
+    <a href="#estrutura">Estrutura</a>
+    <a href="#galeria">Galeria</a>
+    <a href="https://www.instagram.com/sitioiluminadotemporada/" target="_blank">Instagram</a>
+    <a href="https://wa.me/5511941942210" target="_blank">WhatsApp</a>
+  </div>
+  <p class="foot-copy">© 2026 Sítio Iluminado · Proprietário: Arlei</p>
+</footer>
+
+<a href="https://wa.me/5511941942210?text=Olá! Quero fazer uma reserva no Sítio Iluminado." target="_blank" class="wa-float">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<div class="toast" id="toast"></div>
+
+<!-- DETAIL MODAL -->
+<div class="detail-modal-bg" id="detail-modal" onclick="if(event.target===this)closeDetail()">
+  <div class="detail-modal">
+    <h3>
+      <span>Detalhes da reserva</span>
+      <button class="detail-close" onclick="closeDetail()">✕</button>
+    </h3>
+    <div id="detail-content"></div>
+  </div>
+</div>
+
+<script>
+// ===== STORAGE =====
+const SK = 'sitio_iluminado_res_v2';
+function getRes(){try{return JSON.parse(localStorage.getItem(SK))||[];}catch(e){return[];}}
+function saveRes(arr){localStorage.setItem(SK,JSON.stringify(arr));}
+function genId(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
+
+// ===== GALLERY IMAGES (replace with real photos) =====
+const GALLERY_IMGS = [
+  {src:'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=80',label:'Vista geral'},
+  {src:'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800&q=80',label:'Piscina'},
+  {src:'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&q=80',label:'Área de lazer'},
+  {src:'https://images.unsplash.com/photo-1540541338287-41700207dee6?w=800&q=80',label:'Área externa'},
+  {src:'https://images.unsplash.com/photo-1598928506311-c55ded91a20c?w=800&q=80',label:'Quarto'},
+  {src:'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=800&q=80',label:'Sala'},
+  {src:'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80',label:'Natureza'},
+  {src:'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800&q=80',label:'Churrasqueira'},
+];
+
+function renderGallery(){
+  const g = document.getElementById('gallery-grid');
+  g.innerHTML = GALLERY_IMGS.map(i=>`<img class="gallery-img" src="${i.src}" alt="${i.label}" loading="lazy" onclick="window.open('${i.src}','_blank')">`).join('');
+}
+
+// ===== CALENDAR =====
+let calDate = new Date();
+let selStart = null, selEnd = null;
+const MONTHS = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+const DAYS_SH = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+
+function getReservedDates(){
+  const res = getRes();
+  const map = {}; // dateStr -> {id, status}
+  res.forEach(r => {
+    let cur = new Date(r.checkin);
+    const end = new Date(r.checkout);
+    while(cur <= end){
+      const ds = cur.toISOString().split('T')[0];
+      map[ds] = {id: r.id, status: r.status};
+      cur.setDate(cur.getDate()+1);
+    }
+  });
+  return map;
+}
+
+function renderCal(){
+  const today = new Date(); today.setHours(0,0,0,0);
+  document.getElementById('cal-label').textContent = MONTHS[calDate.getMonth()] + ' ' + calDate.getFullYear();
+  const resMap = getReservedDates();
+  const grid = document.getElementById('cal-grid');
+  grid.innerHTML = DAYS_SH.map(d=>`<div class="cal-head">${d}</div>`).join('');
+
+  const firstDay = new Date(calDate.getFullYear(), calDate.getMonth(), 1).getDay();
+  for(let i=0;i<firstDay;i++) grid.innerHTML += `<div class="cal-day empty"></div>`;
+
+  const daysInMonth = new Date(calDate.getFullYear(), calDate.getMonth()+1, 0).getDate();
+  for(let d=1;d<=daysInMonth;d++){
+    const dt = new Date(calDate.getFullYear(), calDate.getMonth(), d);
+    const ds = dt.toISOString().split('T')[0];
+    const isPast = dt < today;
+    const res = resMap[ds];
+    let cls = 'cal-day ';
+    let dot = '';
+    let click = '';
+    if(isPast){ cls += 'past'; }
+    else if(res){
+      cls += res.status === 'paid' ? 'reserved-paid' : 'reserved-pending';
+      dot = `<div class="cal-day-dot" style="background:${res.status==='paid'?'var(--green)':'var(--red)'}"></div>`;
+      click = `onclick="openDetailById('${res.id}')"`;
+    } else {
+      cls += 'free';
+      if(selStart && ds === selStart) cls += ' sel-start';
+      else if(selEnd && ds === selEnd) cls += ' sel-end';
+      else if(selStart && selEnd && ds > selStart && ds < selEnd) cls += ' sel-range';
+      click = `onclick="selectDay('${ds}')"`;
+    }
+    grid.innerHTML += `<div class="${cls}" ${click}>${d}${dot}</div>`;
+  }
+}
+
+function selectDay(ds){
+  if(!selStart || (selStart && selEnd)){
+    selStart = ds; selEnd = null;
+  } else if(ds > selStart){
+    selEnd = ds;
+    document.getElementById('disp-ci').textContent = fmtDate(selStart);
+    document.getElementById('disp-ci').classList.remove('empty');
+    document.getElementById('disp-co').textContent = fmtDate(selEnd);
+    document.getElementById('disp-co').classList.remove('empty');
+  } else {
+    selStart = ds; selEnd = null;
+    document.getElementById('disp-ci').textContent = fmtDate(selStart);
+    document.getElementById('disp-ci').classList.remove('empty');
+    document.getElementById('disp-co').textContent = 'Selecione no calendário';
+    document.getElementById('disp-co').classList.add('empty');
+  }
+  renderCal();
+}
+
+function fmtDate(ds){
+  if(!ds) return '—';
+  const [y,m,d] = ds.split('-');
+  return `${d}/${m}/${y}`;
+}
+
+function calPrev(){ calDate.setMonth(calDate.getMonth()-1); renderCal(); }
+function calNext(){ calDate.setMonth(calDate.getMonth()+1); renderCal(); }
+
+// ===== SUBMIT =====
+function submitReserve(){
+  const name = document.getElementById('f-name').value.trim();
+  const phone = document.getElementById('f-phone').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+  const guests = document.getElementById('f-guests').value;
+  const occasion = document.getElementById('f-occasion').value;
+  const obs = document.getElementById('f-obs').value.trim();
+
+  if(!name){ showToast('Por favor, informe o nome completo.'); return; }
+  if(!phone){ showToast('Por favor, informe o WhatsApp.'); return; }
+  if(!guests){ showToast('Por favor, selecione a quantidade de pessoas.'); return; }
+  if(!selStart || !selEnd){ showToast('Selecione as datas de check-in e check-out no calendário.'); return; }
+
+  // Check conflict
+  const resMap = getReservedDates();
+  let cur = new Date(selStart);
+  const end = new Date(selEnd);
+  while(cur <= end){
+    const ds = cur.toISOString().split('T')[0];
+    if(resMap[ds]){ showToast('⚠️ Algumas datas selecionadas já estão reservadas!'); return; }
+    cur.setDate(cur.getDate()+1);
+  }
+
+  // Save
+  const newRes = {
+    id: genId(),
+    name, phone, email,
+    guests, occasion, obs,
+    checkin: selStart,
+    checkout: selEnd,
+    status: 'pending',
+    createdAt: new Date().toISOString()
+  };
+  const arr = getRes();
+  arr.push(newRes);
+  saveRes(arr);
+
+  // WhatsApp
+  const msg = encodeURIComponent(
+    `🏡 *Solicitação de Reserva — Sítio Iluminado*\n\n` +
+    `*Nome:* ${name}\n` +
+    `*WhatsApp:* ${phone}\n` +
+    `*E-mail:* ${email||'Não informado'}\n` +
+    `*Check-in:* ${fmtDate(selStart)}\n` +
+    `*Check-out:* ${fmtDate(selEnd)}\n` +
+    `*Pessoas:* ${guests}\n` +
+    `*Ocasião:* ${occasion}\n` +
+    `*Obs:* ${obs||'—'}\n\n` +
+    `Aguardo confirmação! 😊`
+  );
+  window.open(`https://wa.me/5511941942210?text=${msg}`, '_blank');
+
+  // Reset
+  selStart = null; selEnd = null;
+  document.getElementById('f-name').value = '';
+  document.getElementById('f-phone').value = '';
+  document.getElementById('f-email').value = '';
+  document.getElementById('f-guests').value = '';
+  document.getElementById('f-obs').value = '';
+  document.getElementById('disp-ci').textContent = 'Selecione no calendário';
+  document.getElementById('disp-ci').classList.add('empty');
+  document.getElementById('disp-co').textContent = 'Selecione no calendário';
+  document.getElementById('disp-co').classList.add('empty');
+
+  renderCal();
+  renderResList();
+  showToast('✅ Solicitação enviada! Aguarde confirmação pelo WhatsApp.', true);
+}
+
+// ===== RESERVATIONS LIST =====
+let panelOpen = false;
+function togglePanel(){
+  panelOpen = !panelOpen;
+  document.getElementById('reservations-list').style.display = panelOpen ? 'block' : 'none';
+  document.getElementById('toggle-btn').textContent = panelOpen ? '▲ Fechar' : '▼ Ver';
+  if(panelOpen) renderResList();
+}
+
+function renderResList(){
+  const arr = getRes();
+  const el = document.getElementById('reservations-list');
+  if(!arr.length){
+    el.innerHTML = `<div class="no-reservations">Nenhuma reserva registrada ainda.<br><small>As reservas feitas pelo site aparecem aqui.</small></div>`;
+    return;
+  }
+  el.innerHTML = arr.slice().reverse().map(r => `
+    <div class="res-item" id="ri-${r.id}">
+      <div class="res-item-top">
+        <div>
+          <div class="res-name">${r.name}</div>
+          <div class="res-dates">📅 ${fmtDate(r.checkin)} → ${fmtDate(r.checkout)} · ${r.guests}</div>
+        </div>
+        <button class="res-badge ${r.status==='paid'?'badge-paid':'badge-pending'}" onclick="toggleStatus('${r.id}')">
+          ${r.status==='paid'?'✅ Pago':'⏳ Pendente'}
+        </button>
+      </div>
+      <div class="res-info">
+        <span class="res-info-item">📞 <strong>${r.phone}</strong></span>
+        ${r.email?`<span class="res-info-item">📧 <strong>${r.email}</strong></span>`:''}
+        <span class="res-info-item">🎉 <strong>${r.occasion}</strong></span>
+      </div>
+      ${r.obs?`<div style="margin-top:8px;font-size:12px;color:var(--mid)">💬 ${r.obs}</div>`:''}
+      <button class="res-delete" onclick="deleteRes('${r.id}')" title="Excluir reserva">🗑</button>
+    </div>
+  `).join('');
+}
+
+function toggleStatus(id){
+  const arr = getRes();
+  const r = arr.find(x=>x.id===id);
+  if(!r) return;
+  r.status = r.status === 'paid' ? 'pending' : 'paid';
+  saveRes(arr);
+  renderResList();
+  renderCal();
+  showToast(r.status==='paid'?'✅ Marcado como Pago':'⏳ Marcado como Pendente', r.status==='paid');
+}
+
+function deleteRes(id){
+  if(!confirm('Excluir esta reserva?')) return;
+  saveRes(getRes().filter(x=>x.id!==id));
+  renderResList();
+  renderCal();
+  showToast('Reserva excluída.');
+}
+
+// ===== DETAIL MODAL (click on reserved day) =====
+function openDetailById(id){
+  const r = getRes().find(x=>x.id===id);
+  if(!r) return;
+  document.getElementById('detail-content').innerHTML = `
+    <div class="detail-row"><strong>Nome</strong><span>${r.name}</span></div>
+    <div class="detail-row"><strong>WhatsApp</strong><span>${r.phone}</span></div>
+    <div class="detail-row"><strong>E-mail</strong><span>${r.email||'—'}</span></div>
+    <div class="detail-row"><strong>Check-in</strong><span>${fmtDate(r.checkin)}</span></div>
+    <div class="detail-row"><strong>Check-out</strong><span>${fmtDate(r.checkout)}</span></div>
+    <div class="detail-row"><strong>Pessoas</strong><span>${r.guests}</span></div>
+    <div class="detail-row"><strong>Ocasião</strong><span>${r.occasion}</span></div>
+    <div class="detail-row"><strong>Status</strong><span style="color:${r.status==='paid'?'var(--green)':'var(--amber)'}"><strong>${r.status==='paid'?'✅ Pago':'⏳ Pendente'}</strong></span></div>
+    ${r.obs?`<div class="detail-row"><strong>Obs</strong><span>${r.obs}</span></div>`:''}
+    <div class="detail-actions">
+      <button class="btn-pay-toggle ${r.status==='paid'?'btn-mark-pending':'btn-mark-paid'}" onclick="toggleStatus('${r.id}');closeDetail();renderCal()">
+        ${r.status==='paid'?'⏳ Marcar como Pendente':'✅ Marcar como Pago'}
+      </button>
+      <button class="btn-del-res" onclick="deleteRes('${r.id}');closeDetail()">🗑 Excluir</button>
+    </div>
+  `;
+  document.getElementById('detail-modal').classList.add('open');
+}
+function closeDetail(){ document.getElementById('detail-modal').classList.remove('open'); }
+
+// ===== PRICING TABS =====
+function showTab(tab){
+  document.querySelectorAll('.pricing-table').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.ptab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+tab).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ===== UTILS =====
+function scrollTo(id){ document.getElementById(id).scrollIntoView({behavior:'smooth'}); }
+function showToast(msg, green=false){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (green?' green':'');
+  setTimeout(()=>t.classList.remove('show'), 3500);
+}
+
+// ===== INIT =====
+renderCal();
+renderGallery();
+</script>
+</body>
+</html>
