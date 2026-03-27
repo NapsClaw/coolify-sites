@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta http-equiv="Cache-Control" content="no-cache,no-store,must-revalidate"/>
+<title>Leva &amp; Traz Fisiot</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#0a0005;color:#fff;min-height:100vh}
+.header{background:linear-gradient(135deg,#CC0000,#8B0000);padding:16px 20px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100;box-shadow:0 2px 20px rgba(0,0,0,0.5)}
+.header-logo{font-family:'Playfair Display',serif;font-size:22px;font-weight:900;color:#fff}
+.header-logo span{color:#FFD700}
+.header-sub{font-size:11px;color:rgba(255,255,255,0.8);text-transform:uppercase;letter-spacing:2px}
+.hero{background:linear-gradient(135deg,#1a0005 0%,#0a0005 100%);padding:32px 20px;text-align:center;border-bottom:1px solid rgba(204,0,0,0.2)}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(26px,7vw,40px);color:#fff;line-height:1.2;margin-bottom:8px}
+.hero h1 span{color:#CC0000}
+.hero p{font-size:14px;color:rgba(255,255,255,0.7);margin-bottom:20px;line-height:1.6}
+.tabs{display:flex;background:rgba(255,255,255,0.05);border-bottom:1px solid rgba(204,0,0,0.2);overflow-x:auto}
+.tab{flex:1;min-width:100px;padding:14px 8px;text-align:center;font-size:12px;font-weight:700;color:rgba(255,255,255,0.5);cursor:pointer;border-bottom:3px solid transparent;transition:all 0.2s;white-space:nowrap}
+.tab.active{color:#CC0000;border-bottom-color:#CC0000;background:rgba(204,0,0,0.08)}
+.tab-content{display:none;padding:20px}
+.tab-content.active{display:block}
+.section-title{font-size:13px;font-weight:800;color:#FFD700;text-transform:uppercase;letter-spacing:2px;margin-bottom:16px}
+.day-badge{display:inline-block;background:rgba(204,0,0,0.2);border:1px solid rgba(204,0,0,0.4);color:#fff;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:700;margin-bottom:16px}
+.schedule-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:16px;margin-bottom:12px}
+.schedule-card .driver{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.driver-avatar{width:42px;height:42px;background:linear-gradient(135deg,#CC0000,#8B0000);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.driver-name{font-size:15px;font-weight:700;color:#fff}
+.driver-car{font-size:12px;color:rgba(255,255,255,0.5)}
+.time-slots{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.slot{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:10px 6px;text-align:center;cursor:pointer;transition:all 0.2s}
+.slot:hover,.slot.selected{background:rgba(204,0,0,0.3);border-color:#CC0000}
+.slot.taken{background:rgba(255,255,255,0.02);border-color:rgba(255,255,255,0.05);cursor:not-allowed;opacity:0.4}
+.slot-time{font-size:14px;font-weight:700;color:#fff}
+.slot-status{font-size:10px;color:rgba(255,255,255,0.5);margin-top:2px}
+.slot.selected .slot-status{color:#CC0000}
+.book-btn{width:100%;background:linear-gradient(135deg,#CC0000,#8B0000);color:#fff;border:none;padding:16px;border-radius:14px;font-size:16px;font-weight:800;cursor:pointer;margin-top:20px;letter-spacing:0.5px}
+.book-btn:disabled{opacity:0.5;cursor:not-allowed}
+/* GPS Map */
+.gps-container{background:rgba(255,255,255,0.04);border:1px solid rgba(204,0,0,0.2);border-radius:16px;overflow:hidden;margin-bottom:16px}
+.gps-map{width:100%;height:220px;background:linear-gradient(135deg,#0d1b2a,#1a2b3d);position:relative;display:flex;align-items:center;justify-content:center}
+.gps-map iframe{width:100%;height:100%;border:none}
+.gps-info{padding:14px}
+.gps-status{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.status-dot{width:10px;height:10px;border-radius:50%;background:#22c55e;animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.6;transform:scale(1.3)}}
+.status-text{font-size:13px;font-weight:700;color:#22c55e}
+.route-steps{display:flex;flex-direction:column;gap:8px}
+.route-step{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:10px;background:rgba(255,255,255,0.03)}
+.route-step.active{background:rgba(204,0,0,0.15);border:1px solid rgba(204,0,0,0.3)}
+.step-icon{font-size:18px;width:28px;text-align:center}
+.step-text{font-size:13px;color:rgba(255,255,255,0.8)}
+.step-text strong{color:#fff}
+/* Audio Banner */
+.audio-banner{background:linear-gradient(135deg,#1a0005,#2d0008);border:1px solid rgba(204,0,0,0.3);border-radius:14px;padding:16px;margin-bottom:16px;display:flex;align-items:center;gap:12px}
+.audio-icon{font-size:28px}
+.audio-text{flex:1}
+.audio-title{font-size:13px;font-weight:800;color:#FFD700;margin-bottom:4px}
+.audio-msg{font-size:12px;color:rgba(255,255,255,0.7);line-height:1.5;font-style:italic}
+.play-btn{background:rgba(204,0,0,0.8);border:none;color:#fff;width:40px;height:40px;border-radius:50%;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+/* Booking form */
+.form-group{margin-bottom:16px}
+.form-label{font-size:12px;font-weight:700;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;display:block}
+.form-input{width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:#fff;padding:12px 16px;border-radius:12px;font-size:14px;font-family:'Inter',sans-serif}
+.form-input:focus{outline:none;border-color:#CC0000}
+.confirm-card{background:rgba(204,0,0,0.1);border:1px solid rgba(204,0,0,0.3);border-radius:14px;padding:16px;margin-bottom:20px}
+.confirm-row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.06);font-size:13px}
+.confirm-row:last-child{border:none}
+.confirm-label{color:rgba(255,255,255,0.5)}
+.confirm-value{color:#fff;font-weight:600}
+/* Notif */
+.notif{background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.3);border-radius:12px;padding:14px;margin-bottom:16px;display:flex;align-items:center;gap:10px;display:none}
+.notif.show{display:flex}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:200;align-items:flex-end}
+.modal.show{display:flex}
+.modal-content{background:#1a0005;border-radius:20px 20px 0 0;padding:24px;width:100%;border-top:2px solid #CC0000}
+.modal-title{font-size:18px;font-weight:800;margin-bottom:8px}
+.modal-sub{font-size:13px;color:rgba(255,255,255,0.6);margin-bottom:20px}
+.modal-btns{display:flex;gap:10px}
+.btn-cancel{flex:1;background:rgba(255,255,255,0.08);border:none;color:#fff;padding:14px;border-radius:12px;font-size:14px;font-weight:700;cursor:pointer}
+.btn-confirm{flex:2;background:linear-gradient(135deg,#CC0000,#8B0000);border:none;color:#fff;padding:14px;border-radius:12px;font-size:14px;font-weight:800;cursor:pointer}
+.empty-state{text-align:center;padding:40px 20px;color:rgba(255,255,255,0.3)}
+.empty-state .emoji{font-size:48px;display:block;margin-bottom:12px}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <div class="header-logo">Leva &amp; Traz <span>Fisiot</span></div>
+    <div class="header-sub">🚗 Transporte para sua saúde</div>
+  </div>
+</div>
+
+<div class="hero">
+  <h1>Seu transporte<br/>para a <span>Fisiot</span></h1>
+  <p>Agendamento simples, motorista pontual e GPS em tempo real até a clínica.</p>
+</div>
+
+<!-- Tabs -->
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('agenda1')">📅 Seg/Qua/Sex</div>
+  <div class="tab" onclick="switchTab('agenda2')">📅 Ter/Qui</div>
+  <div class="tab" onclick="switchTab('agenda3')">⭐ Extra</div>
+  <div class="tab" onclick="switchTab('rastrear')">📍 GPS</div>
+</div>
+
+<!-- Aba 1: Seg/Qua/Sex -->
+<div class="tab-content active" id="tab-agenda1">
+  <div class="section-title">Agenda — Segunda / Quarta / Sexta</div>
+  <div class="day-badge" id="day-badge1">Selecione o dia</div>
+
+  <div style="display:flex;gap:8px;margin-bottom:16px;overflow-x:auto;padding-bottom:4px">
+    <button class="slot" style="min-width:80px" onclick="selectDay('seg','Segunda')">SEG</button>
+    <button class="slot" style="min-width:80px" onclick="selectDay('qua','Quarta')">QUA</button>
+    <button class="slot" style="min-width:80px" onclick="selectDay('sex','Sexta')">SEX</button>
+  </div>
+
+  <div class="schedule-card">
+    <div class="driver">
+      <div class="driver-avatar">🚗</div>
+      <div>
+        <div class="driver-name">Antônio Carlos</div>
+        <div class="driver-car">Chevrolet Spin • Lagoa Santa MG</div>
+      </div>
+    </div>
+    <div class="time-slots" id="slots1">
+      <div class="slot" onclick="selectSlot(this,'07:00')"><div class="slot-time">07:00</div><div class="slot-status">Disponível</div></div>
+      <div class="slot" onclick="selectSlot(this,'07:30')"><div class="slot-time">07:30</div><div class="slot-status">Disponível</div></div>
+      <div class="slot" onclick="selectSlot(this,'08:00')"><div class="slot-time">08:00</div><div class="slot-status">Disponível</div></div>
+      <div class="slot" onclick="selectSlot(this,'08:30')"><div class="slot-time">08:30</div><div class="slot-status">Disponível</div></div>
+      <div class="slot" onclick="selectSlot(this,'09:00')"><div class="slot-time">09:00</div><div class="slot-status">Disponível</div></div>
+      <div class="slot" onclick="selectSlot(this,'09:30')"><div class="slot-time">09:30</div><div class="slot-status">Disponível</div></div>
+      <div class="slot" onclick="selectSlot(this,'10:00')"><div class="slot-time">10:00</div><div class="slot-status">Disponível</div></div>
+      <div class="slot" onclick="selectSlot(this,'10:30')"><div class="slot-time">10:30</div><div class="slot-status">Disponível</div></div>
+      <div class="slot" onclick="selectSlot(this,'11:00')"><div class="slot-time">11:00</div><div class="slot-status">Disponível</div></div>
+      <div class="slot taken"><div class="slot-time">11:30</div><div class="slot-status">Ocupado</div></div>
+      <div class="slot" onclick="selectSlot(this,'13:00')"><div class="slot-time">13:00</div><div class="slot-status">Disponível</div></div>
+      <div class="slot" onclick="selectSlot(this,'13:30')"><div class="slot-time">13:30</div><div class="slot-status">Disponível</div></div>
+      <div class="slot" onclick="selectSlot(this,'14:00')"><div class="slot-time">14:00</div><div class="slot-status">Disponível</div></div>
+      <div class="slot" onclick="selectSlot(this,'14:30')"><div class="slot-time">14:30</div><div class="slot-status">Disponível</div></div>
+      <div class="slot" onclick="selectSlot(this,'15:00')"><div class="slot-time">15:00</div><div class="slot-status">Disponível</div></div>
+      <div class="slot" onclick="selectSlot(this,'15:30')"><div class="slot-time">15:30</div><div class="slot-status">Disponível</div></div>
+      <div class="slot" onclick="selectSlot(this,'16:00')"><div class="slot-time">16:00</div><div class="slot-status">Disponível</div></div>
+      <div class="slot" onclick="selectSlot(this,'16:30')"><div class="slot-time">16:30</div><div class="slot-status">Disponível</div></div>
+    </div>
+  </div>
+  <button class="book-btn" id="btn-book1" onclick="openBooking()" disabled>Selecione um horário</button>
+</div>
+
+<!-- Aba 2: Ter/Qui -->
+<div class="tab-content" id="tab-agenda2">
+  <div class="section-title">Agenda — Terça / Quinta</div>
+  <div class="day-badge">Selecione o dia</div>
+  <div style="display:flex;gap:8px;margin-bottom:16px">
+    <button class="slot" style="min-width:80px" onclick="selectDay('ter','Terça')">TER</button>
+    <button class="slot" style="min-width:80px" onclick="selectDay('qui','Quinta')">QUI</button>
+  </div>
+  <div class="schedule-card">
+    <div class="driver">
+      <div class="driver-avatar">🚗</div>
+      <div>
+        <div class="driver-name">Antônio Carlos</div>
+        <div class="driver-car">Chevrolet Spin • Lagoa Santa MG</div>
+      </div>
+    </div>
+    <div class="time-slots">
+      <div class="slot" onclick="selectSlot(this,'07:00')"><div class="slot-time">07:00</div><div class="slot-status">Disponível</div></div>
+      <div class="slot" onclick="selectSlot(this,'07:30')"><div class="slot-time">07:30</div><div class="slot-status">Disponível</div></div>
+      <div class="slot" onclick="selectSlot(this,'08:00')"><div class="slot-time">08:00</div><div class="slot-status">Disponível</div></div>
+      <div class="slot" onclick="selectSlot(this,'08:30')"><div class="slot-time">08:30</div><div class="slot-status">Disponível</div></div>
+      <div class="slot" onclick="selectSlot(this,'09:00')"><div class="slot-time">09:00</div><div class="slot-status">Disponível</div></div>
+      <div class="slot" onclick="selectSlot(this,'09:30')"><div class="slot-time">09:30</div><div class="slot-status">Disponível</div></div>
+      <div class="slot" onclick="selectSlot(this,'10:00')"><div class="slot-time">10:00</div><div class="slot-status">Disponível</div></div>
+      <div class="slot" onclick="selectSlot(this,'10:30')"><div class="slot-time">10:30</div><div class="slot-status">Disponível</div></div>
+      <div class="slot" onclick="selectSlot(this,'14:00')"><div class="slot-time">14:00</div><div class="slot-status">Disponível</div></div>
+      <div class="slot" onclick="selectSlot(this,'14:30')"><div class="slot-time">14:30</div><div class="slot-status">Disponível</div></div>
+      <div class="slot" onclick="selectSlot(this,'15:00')"><div class="slot-time">15:00</div><div class="slot-status">Disponível</div></div>
+      <div class="slot" onclick="selectSlot(this,'15:30')"><div class="slot-time">15:30</div><div class="slot-status">Disponível</div></div>
+    </div>
+  </div>
+  <button class="book-btn" onclick="openBooking()">Selecione um horário</button>
+</div>
+
+<!-- Aba 3: Extra -->
+<div class="tab-content" id="tab-agenda3">
+  <div class="section-title">Agenda Extra</div>
+  <div class="empty-state">
+    <span class="emoji">📋</span>
+    <p style="font-size:14px;margin-bottom:8px">Nenhuma vaga extra disponível no momento</p>
+    <p style="font-size:12px">Quando houver disponibilidade extra,<br/>os horários aparecerão aqui.</p>
+    <button onclick="openWhatsApp()" style="margin-top:20px;background:rgba(204,0,0,0.8);border:none;color:#fff;padding:12px 24px;border-radius:20px;font-size:14px;font-weight:700;cursor:pointer">📞 Falar pelo WhatsApp</button>
+  </div>
+</div>
+
+<!-- Aba 4: GPS -->
+<div class="tab-content" id="tab-rastrear">
+  <div class="section-title">Rastreamento em Tempo Real</div>
+
+  <div class="audio-banner">
+    <div class="audio-icon">🔊</div>
+    <div class="audio-text">
+      <div class="audio-title">Mensagem da Fisiot</div>
+      <div class="audio-msg">"Fisiot — 30 anos! Você ainda não conhece nossos atendimentos? Agende um horário e venha conhecer a Fisiot!"</div>
+    </div>
+    <button class="play-btn" onclick="playAudio()">▶</button>
+  </div>
+
+  <div class="gps-container">
+    <div class="gps-map">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15000!2d-43.8988!3d-19.6311!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTnCsDM3JzUyLjAiUyA0M8KwNTMnNTYuMiJX!5e0!3m2!1spt!2sbr!4v1700000000000"
+        allowfullscreen="" loading="lazy">
+      </iframe>
+    </div>
+    <div class="gps-info">
+      <div class="gps-status">
+        <div class="status-dot"></div>
+        <div class="status-text">Antônio Carlos — Em movimento</div>
+      </div>
+      <div class="route-steps">
+        <div class="route-step active">
+          <div class="step-icon">🏥</div>
+          <div class="step-text"><strong>Partida:</strong> Clínica Fisiot — Rua Dr. Benjamin Vieira, 27</div>
+        </div>
+        <div class="route-step" id="step2">
+          <div class="step-icon">🚗</div>
+          <div class="step-text"><strong>Em rota:</strong> Indo buscar paciente em casa</div>
+        </div>
+        <div class="route-step" id="step3">
+          <div class="step-icon">🏠</div>
+          <div class="step-text"><strong>Chegada em:</strong> ~10 minutos na sua porta</div>
+        </div>
+        <div class="route-step" id="step4">
+          <div class="step-icon">🏥</div>
+          <div class="step-text"><strong>Retorno:</strong> Sua casa → Clínica Fisiot</div>
+        </div>
+        <div class="route-step" id="step5">
+          <div class="step-icon">🏠</div>
+          <div class="step-text"><strong>Final:</strong> Após atendimento → Retorno para seu lar</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="notif show" id="arrival-notif">
+    <span style="font-size:20px">🔔</span>
+    <div>
+      <div style="font-size:13px;font-weight:700;color:#22c55e">Antônio Carlos chegando!</div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.7)">Seu motorista está a caminho — chegará em ~10 minutos</div>
+    </div>
+  </div>
+
+  <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:14px;margin-top:4px">
+    <div style="font-size:12px;font-weight:700;color:#FFD700;margin-bottom:8px">📍 Destino Confirmado</div>
+    <div style="font-size:13px;color:rgba(255,255,255,0.8);line-height:1.6">
+      🏥 <strong>Clínica Fisiot e Pilates</strong><br/>
+      <span style="color:#CC0000;font-weight:700">Sua clínica está à sua direita</span><br/>
+      Rua Dr. Benjamin Vieira, 27 — Joana D'Arc, Lagoa Santa MG
+    </div>
+  </div>
+</div>
+
+<!-- Modal de agendamento -->
+<div class="modal" id="booking-modal">
+  <div class="modal-content">
+    <div class="modal-title">Confirmar Agendamento</div>
+    <div class="modal-sub">Preencha seus dados para confirmar</div>
+    <div class="form-group">
+      <label class="form-label">Seu Nome</label>
+      <input class="form-input" type="text" id="input-name" placeholder="Nome completo"/>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Seu Endereço</label>
+      <input class="form-input" type="text" id="input-address" placeholder="Rua, número — bairro"/>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Telefone (WhatsApp)</label>
+      <input class="form-input" type="tel" id="input-phone" placeholder="(31) 9XXXX-XXXX"/>
+    </div>
+    <div class="confirm-card">
+      <div class="confirm-row">
+        <span class="confirm-label">Motorista</span>
+        <span class="confirm-value">Antônio Carlos</span>
+      </div>
+      <div class="confirm-row">
+        <span class="confirm-label">Horário</span>
+        <span class="confirm-value" id="confirm-time">—</span>
+      </div>
+      <div class="confirm-row">
+        <span class="confirm-label">Destino</span>
+        <span class="confirm-value">Clínica Fisiot</span>
+      </div>
+    </div>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
+      <button class="btn-confirm" onclick="confirmBooking()">✅ Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+var selectedTime = null;
+var selectedDay = null;
+
+function switchTab(tab){
+  document.querySelectorAll('.tab').forEach(function(t,i){
+    t.classList.toggle('active', ['agenda1','agenda2','agenda3','rastrear'][i]===tab);
+  });
+  document.querySelectorAll('.tab-content').forEach(function(c){c.classList.remove('active')});
+  document.getElementById('tab-'+tab).classList.add('active');
+}
+
+function selectDay(code,name){
+  selectedDay=name;
+  document.querySelectorAll('#tab-agenda1 .day-badge, #tab-agenda2 .day-badge').forEach(function(b){b.textContent=name+'-feira selecionada'});
+}
+
+function selectSlot(el,time){
+  if(el.classList.contains('taken')) return;
+  document.querySelectorAll('.slot').forEach(function(s){s.classList.remove('selected');var st=s.querySelector('.slot-status');if(st&&!s.classList.contains('taken'))st.textContent='Disponível'});
+  el.classList.add('selected');
+  var st=el.querySelector('.slot-status');if(st)st.textContent='Selecionado ✓';
+  selectedTime=time;
+  document.getElementById('confirm-time').textContent=time;
+  var btn=document.getElementById('btn-book1');
+  if(btn){btn.disabled=false;btn.textContent='Agendar às '+time}
+}
+
+function openBooking(){
+  if(!selectedTime){alert('Selecione um horário primeiro!');return;}
+  document.getElementById('booking-modal').classList.add('show');
+}
+
+function closeModal(){document.getElementById('booking-modal').classList.remove('show');}
+
+function confirmBooking(){
+  var name=document.getElementById('input-name').value.trim();
+  var addr=document.getElementById('input-address').value.trim();
+  var phone=document.getElementById('input-phone').value.trim();
+  if(!name||!addr||!phone){alert('Preencha todos os campos!');return;}
+  var msg='Olá! Quero agendar o Leva & Traz Fisiot.%0A%0A'+
+    '👤 Nome: '+name+'%0A'+
+    '📍 Endereço: '+addr+'%0A'+
+    '📞 Telefone: '+phone+'%0A'+
+    '🕐 Horário: '+selectedTime+'%0A'+
+    '📅 Dia: '+(selectedDay||'a confirmar')+'%0A'+
+    '🏥 Destino: Clínica Fisiot — Lagoa Santa MG';
+  closeModal();
+  window.open('https://wa.me/5531992594953?text='+msg,'_blank');
+}
+
+function openWhatsApp(){
+  window.open('https://wa.me/5531992594953?text=Olá! Gostaria de mais informações sobre o Leva & Traz Fisiot.','_blank');
+}
+
+function playAudio(){
+  if('speechSynthesis' in window){
+    var u=new SpeechSynthesisUtterance('Fisiot, 30 anos! Você ainda não conhece nossos atendimentos? Agende um horário e venha conhecer a Fisiot!');
+    u.lang='pt-BR';u.rate=0.9;window.speechSynthesis.speak(u);
+  }
+}
+
+// Simular notificação de chegada após 3s
+setTimeout(function(){
+  var notif=document.getElementById('arrival-notif');
+  if(notif){notif.classList.add('show')}
+},3000);
+</script>
+</body>
+</html>
