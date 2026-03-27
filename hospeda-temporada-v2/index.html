@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hospeda Temporada — Reserve seu imóvel com calendário online</title>
+<meta name="description" content="9 imóveis para temporada, eventos, festas e formaturas. Calendário de reservas online. Sítio Iluminado e mais — Biritiba Mirim, Mogi das Cruzes, SP.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cream:#F7F2EB;--terra:#AC4747;--terra-dark:#8a3636;--dark:#1a1410;
+  --mid:#5a4f45;--light:#d4c9b8;--white:#ffffff;--green:#22c55e;--red:#ef4444;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--cream);color:var(--dark);overflow-x:hidden}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(247,242,235,.97);backdrop-filter:blur(8px);border-bottom:1px solid rgba(172,71,71,.1);padding:14px 20px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--dark);text-decoration:none}
+.nav-logo span{color:var(--terra)}
+.nav-btn{background:var(--terra);color:#fff;padding:10px 20px;border-radius:4px;font-size:13px;font-weight:600;text-decoration:none;border:none;cursor:pointer}
+
+/* HERO */
+.hero{min-height:100vh;background:linear-gradient(160deg,#1a1410,#2e1c18);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:90px 20px 50px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1600&q=80')center/cover;opacity:.2}
+.hero-content{position:relative;z-index:1;max-width:680px}
+.hero-tag{display:inline-block;background:rgba(172,71,71,.25);border:1px solid rgba(172,71,71,.4);color:#e8b4a0;font-size:11px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:7px 18px;border-radius:100px;margin-bottom:24px}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(32px,8vw,66px);font-weight:700;color:var(--cream);line-height:1.1;margin-bottom:20px}
+.hero h1 em{color:var(--terra);font-style:italic}
+.hero p{font-size:clamp(14px,3vw,17px);color:rgba(247,242,235,.7);line-height:1.7;margin-bottom:36px}
+.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-primary{background:var(--terra);color:#fff;padding:14px 28px;border-radius:4px;font-size:14px;font-weight:600;text-decoration:none;display:inline-block;text-align:center;border:none;cursor:pointer}
+.btn-ghost{background:transparent;color:var(--cream);border:1px solid rgba(247,242,235,.35);padding:14px 28px;border-radius:4px;font-size:14px;font-weight:500;text-decoration:none;display:inline-block;text-align:center}
+.hero-stats{position:relative;z-index:1;display:flex;margin-top:56px;border-top:1px solid rgba(247,242,235,.12);padding-top:36px;width:100%;max-width:480px;justify-content:center}
+.stat{flex:1;text-align:center;padding:0 16px;border-right:1px solid rgba(247,242,235,.12)}
+.stat:last-child{border-right:none}
+.stat-n{font-family:'Playfair Display',serif;font-size:32px;font-weight:700;color:var(--cream);display:block}
+.stat-l{font-size:11px;color:rgba(247,242,235,.45);text-transform:uppercase;letter-spacing:1px;display:block;margin-top:4px}
+
+/* SEARCH */
+.search-bar{background:#fff;padding:36px 20px}
+.search-inner{max-width:640px;margin:0 auto}
+.search-inner h2{font-family:'Playfair Display',serif;font-size:22px;text-align:center;margin-bottom:20px}
+.search-row{display:flex;flex-direction:column;gap:10px}
+.search-row input,.search-row select{padding:14px 16px;border:1.5px solid #e0d8cc;border-radius:4px;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;background:var(--cream);color:var(--dark);width:100%}
+.search-row input:focus,.search-row select:focus{outline:none;border-color:var(--terra)}
+.search-btn{width:100%;padding:16px;background:var(--terra);color:#fff;border:none;border-radius:4px;font-size:15px;font-weight:600;cursor:pointer}
+
+/* SECTION */
+section{padding:64px 20px}
+.sec-tag{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--terra);display:block;margin-bottom:12px}
+.sec-title{font-family:'Playfair Display',serif;font-size:clamp(26px,5vw,40px);font-weight:700;color:var(--dark);line-height:1.2;margin-bottom:12px}
+.sec-sub{font-size:15px;color:var(--mid);line-height:1.7;font-weight:300}
+
+/* PROPERTY GRID */
+.props{background:var(--cream)}
+.props-grid{display:flex;flex-direction:column;gap:20px;margin-top:36px}
+.prop-card{background:#fff;border-radius:10px;overflow:hidden;box-shadow:0 2px 12px rgba(26,20,16,.07);cursor:pointer;transition:transform .2s}
+.prop-card:hover{transform:translateY(-2px)}
+.prop-img-wrap{position:relative;height:220px;overflow:hidden}
+.prop-img-wrap img{width:100%;height:100%;object-fit:cover;display:block}
+.prop-badge{position:absolute;top:12px;left:12px;background:var(--terra);color:#fff;font-size:11px;font-weight:600;letter-spacing:.5px;padding:4px 10px;border-radius:100px}
+.prop-avail{position:absolute;top:12px;right:12px;font-size:11px;font-weight:600;padding:4px 10px;border-radius:100px}
+.avail-yes{background:rgba(34,197,94,.15);color:#16a34a;border:1px solid rgba(34,197,94,.3)}
+.avail-no{background:rgba(239,68,68,.15);color:#dc2626;border:1px solid rgba(239,68,68,.3)}
+.prop-body{padding:20px}
+.prop-name{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--dark);margin-bottom:6px}
+.prop-loc{font-size:12px;color:var(--mid);margin-bottom:12px}
+.prop-feats{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:14px}
+.prop-feat{font-size:12px;color:var(--mid)}
+.prop-price{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--terra)}
+.prop-price span{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:400;color:var(--mid)}
+.prop-actions{display:flex;gap:10px;margin-top:14px}
+.prop-btn-main{flex:1;background:var(--terra);color:#fff;padding:12px;border-radius:4px;font-size:14px;font-weight:600;text-align:center;border:none;cursor:pointer}
+.prop-btn-wa{width:48px;height:44px;background:#25D366;border:none;border-radius:4px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+
+/* MODAL IMOVEL */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(26,20,16,.75);z-index:300;overflow-y:auto}
+.modal-bg.open{display:block}
+.modal-box{background:#fff;min-height:100vh;max-width:580px;margin:0 auto;padding-bottom:60px}
+.modal-gallery{position:relative}
+.gallery-main{width:100%;height:280px;object-fit:cover;display:block}
+.gallery-thumbs{display:flex;gap:6px;padding:8px 12px;overflow-x:auto;background:#f5f0e8}
+.gallery-thumbs img{width:70px;height:52px;object-fit:cover;border-radius:4px;cursor:pointer;flex-shrink:0;opacity:.7;transition:opacity .2s}
+.gallery-thumbs img.active{opacity:1;outline:2px solid var(--terra)}
+.modal-close{position:absolute;top:12px;right:12px;background:rgba(0,0,0,.5);border:none;color:#fff;width:36px;height:36px;border-radius:50%;font-size:20px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.modal-content{padding:24px 20px}
+.modal-title{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;margin-bottom:6px}
+.modal-loc{font-size:13px;color:var(--mid);margin-bottom:16px}
+.modal-feats{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:20px}
+.modal-feat{background:rgba(172,71,71,.08);color:var(--terra);font-size:12px;font-weight:500;padding:6px 14px;border-radius:100px}
+.modal-desc{font-size:14px;color:var(--mid);line-height:1.7;margin-bottom:24px}
+.modal-price-row{display:flex;align-items:baseline;gap:8px;margin-bottom:24px}
+.modal-price{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--terra)}
+.modal-price-unit{font-size:14px;color:var(--mid)}
+
+/* CALENDAR IN MODAL */
+.cal-section{background:var(--cream);border-radius:8px;padding:20px;margin-bottom:20px}
+.cal-section h3{font-family:'Playfair Display',serif;font-size:18px;margin-bottom:16px}
+.cal-nav-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.cal-month-label{font-weight:600;font-size:15px}
+.cal-nav-btns{display:flex;gap:6px}
+.cal-nav-btn{background:rgba(172,71,71,.1);border:none;color:var(--terra);width:32px;height:32px;border-radius:4px;cursor:pointer;font-size:16px}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.cal-head{text-align:center;font-size:10px;font-weight:600;letter-spacing:.5px;color:var(--mid);padding:6px 2px;text-transform:uppercase}
+.cal-day{text-align:center;padding:8px 2px;border-radius:4px;font-size:13px;cursor:pointer;color:var(--dark)}
+.cal-day.empty{opacity:0;pointer-events:none}
+.cal-day.past{opacity:.3;pointer-events:none;text-decoration:line-through}
+.cal-day.reserved{background:rgba(239,68,68,.12);color:#dc2626;text-decoration:line-through;cursor:not-allowed;font-size:12px}
+.cal-day.free:hover{background:rgba(172,71,71,.12)}
+.cal-day.sel-start,.cal-day.sel-end{background:var(--terra);color:#fff;font-weight:600}
+.cal-day.sel-range{background:rgba(172,71,71,.18)}
+.cal-legend{display:flex;gap:16px;margin-top:12px;flex-wrap:wrap}
+.leg-item{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--mid)}
+.leg-dot{width:12px;height:12px;border-radius:2px}
+
+.reserve-form{background:#fff;border:1.5px solid var(--light);border-radius:8px;padding:20px;margin-bottom:16px}
+.reserve-form h3{font-family:'Playfair Display',serif;font-size:18px;margin-bottom:16px}
+.form-row{margin-bottom:14px}
+.form-row label{display:block;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;color:var(--dark)}
+.form-row input,.form-row select{width:100%;padding:12px 14px;border:1.5px solid #e0d8cc;border-radius:4px;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;background:var(--cream)}
+.form-row input:focus,.form-row select:focus{outline:none;border-color:var(--terra)}
+.dates-display{display:flex;gap:10px}
+.date-box{flex:1;background:var(--cream);border:1.5px solid #e0d8cc;border-radius:4px;padding:12px;text-align:center}
+.date-box-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--mid)}
+.date-box-val{font-size:15px;font-weight:600;color:var(--dark);margin-top:2px}
+.reserve-btn{width:100%;background:var(--terra);color:#fff;border:none;border-radius:4px;padding:16px;font-size:15px;font-weight:600;cursor:pointer;margin-top:6px}
+.wa-btn-full{display:flex;align-items:center;justify-content:center;gap:10px;background:#25D366;color:#fff;padding:16px;border-radius:4px;font-size:15px;font-weight:600;text-decoration:none;width:100%}
+
+/* ABOUT */
+.about-sec{background:#fff}
+.about-img{width:100%;height:260px;object-fit:cover;border-radius:8px;margin-bottom:28px}
+.about-chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+.chip{background:rgba(172,71,71,.08);color:var(--terra);padding:7px 16px;border-radius:100px;font-size:13px;font-weight:500}
+
+/* CONTACT */
+.contact-sec{background:var(--terra)}
+.contact-sec .sec-tag{color:rgba(247,242,235,.65)}
+.contact-sec .sec-title{color:#fff}
+.contact-sec .sec-sub{color:rgba(247,242,235,.75)}
+.contact-opts{display:flex;flex-direction:column;gap:14px;margin-top:32px}
+.contact-opt{display:flex;align-items:center;gap:14px;background:rgba(247,242,235,.14);border-radius:8px;padding:18px;text-decoration:none;color:#fff}
+.opt-icon{width:44px;height:44px;background:rgba(247,242,235,.18);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.opt-strong{display:block;font-weight:600;font-size:15px;margin-bottom:2px}
+.opt-sub{font-size:12px;opacity:.7}
+.wa-big{display:flex;align-items:center;justify-content:center;gap:10px;background:#25D366;color:#fff;padding:18px;border-radius:8px;font-size:16px;font-weight:600;text-decoration:none;margin-top:16px}
+
+/* FOOTER */
+footer{background:var(--dark);padding:44px 20px 28px;text-align:center}
+.foot-logo{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--cream);margin-bottom:12px}
+.foot-logo span{color:var(--terra)}
+.foot-sub{font-size:13px;color:rgba(247,242,235,.35);margin-bottom:28px;line-height:1.6}
+.foot-links{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-bottom:28px}
+.foot-links a{color:rgba(247,242,235,.45);text-decoration:none;font-size:12px}
+.foot-copy{font-size:11px;color:rgba(247,242,235,.2);border-top:1px solid rgba(247,242,235,.07);padding-top:20px}
+
+/* FLOAT WA */
+.wa-float{position:fixed;bottom:20px;right:20px;z-index:150;background:#25D366;border-radius:50%;width:58px;height:58px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(37,211,102,.4);text-decoration:none}
+
+/* SUCCESS BANNER */
+.success-banner{display:none;background:#22c55e;color:#fff;padding:14px 20px;text-align:center;font-weight:600;font-size:14px;border-radius:8px;margin-bottom:16px}
+.success-banner.show{display:block}
+
+@media(min-width:640px){
+  .props-grid{display:grid;grid-template-columns:repeat(2,1fr)}
+}
+@media(min-width:960px){
+  .props-grid{grid-template-columns:repeat(3,1fr)}
+  section{padding:80px 48px}
+  nav{padding:14px 48px}
+  .search-row{flex-direction:row}
+  .search-btn{width:auto;padding:14px 28px}
+  .modal-box{border-radius:12px;margin:40px auto;min-height:auto}
+  .modal-bg{padding:20px}
+  .gallery-main{height:360px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">Hospeda<span>Temporada</span></a>
+  <button class="nav-btn" onclick="document.getElementById('imoveis').scrollIntoView({behavior:'smooth'})">Ver imóveis</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <span class="hero-tag">🏠 Temporada · Eventos · Festas · Formaturas</span>
+    <h1>Reserve online,<br><em>sem complicação</em></h1>
+    <p>Calendário de reservas em tempo real — datas bloqueadas automaticamente. Nenhum imóvel alugado duas vezes.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="document.getElementById('imoveis').scrollIntoView({behavior:'smooth'})">Ver imóveis disponíveis</button>
+      <a href="https://wa.me/5511941942210" target="_blank" class="btn-ghost">Falar no WhatsApp</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat"><span class="stat-n">9+</span><span class="stat-l">Imóveis</span></div>
+    <div class="stat"><span class="stat-n">SP · PE</span><span class="stat-l">Regiões</span></div>
+    <div class="stat"><span class="stat-n">Online</span><span class="stat-l">Reserva</span></div>
+  </div>
+</section>
+
+<!-- SEARCH -->
+<div class="search-bar">
+  <div class="search-inner">
+    <h2>Encontre seu imóvel ideal</h2>
+    <div class="search-row">
+      <input type="text" id="search-input" placeholder="🔍 Nome ou cidade..." oninput="filterProps()">
+      <select id="search-type" onchange="filterProps()">
+        <option value="">Todos os tipos</option>
+        <option value="temporada">🏖️ Temporada</option>
+        <option value="festa">🎉 Festa / Evento</option>
+        <option value="formatura">🎓 Formatura</option>
+        <option value="venda">🏷️ Venda</option>
+      </select>
+      <button class="search-btn" onclick="filterProps()">Buscar</button>
+    </div>
+  </div>
+</div>
+
+<!-- PROPERTIES -->
+<section class="props" id="imoveis">
+  <span class="sec-tag">Portfólio</span>
+  <h2 class="sec-title">Nossos imóveis</h2>
+  <p class="sec-sub">Clique em qualquer imóvel para ver galeria, detalhes e reservar com calendário</p>
+  <div class="props-grid" id="props-grid"></div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-sec">
+  <img class="about-img" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80" alt="Sobre Hospeda Temporada" loading="lazy">
+  <span class="sec-tag">Sobre</span>
+  <h2 class="sec-title">Arlei — proprietário direto</h2>
+  <p class="sec-sub">Cuido pessoalmente de cada imóvel do portfólio para garantir que sua experiência seja impecável. Reserve direto, sem intermediários, com total transparência de datas.</p>
+  <div class="about-chips">
+    <span class="chip">✅ Reserva 100% online</span>
+    <span class="chip">📅 Calendário em tempo real</span>
+    <span class="chip">🚫 Sem double booking</span>
+    <span class="chip">🏠 9+ imóveis</span>
+    <span class="chip">🎉 Eventos & festas</span>
+    <span class="chip">🇧🇷 SP · PE</span>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-sec" id="contato">
+  <span class="sec-tag">Contato</span>
+  <h2 class="sec-title">Fale diretamente com Arlei</h2>
+  <p class="sec-sub">Tire dúvidas, confirme disponibilidade ou faça sua reserva pelo WhatsApp</p>
+  <div class="contact-opts">
+    <a href="https://wa.me/5511941942210?text=Olá Arlei! Vi os imóveis no site e gostaria de informações." target="_blank" class="contact-opt">
+      <div class="opt-icon">💬</div>
+      <div><span class="opt-strong">WhatsApp</span><span class="opt-sub">Resposta rápida</span></div>
+    </a>
+    <a href="https://www.instagram.com/sitioiluminadotemporada/" target="_blank" class="contact-opt">
+      <div class="opt-icon">📸</div>
+      <div><span class="opt-strong">@sitioiluminadotemporada</span><span class="opt-sub">Instagram</span></div>
+    </a>
+  </div>
+  <a href="https://wa.me/5511941942210?text=Olá! Quero reservar um imóvel." target="_blank" class="wa-big">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Reservar pelo WhatsApp
+  </a>
+</section>
+
+<footer>
+  <div class="foot-logo">Hospeda<span>Temporada</span></div>
+  <p class="foot-sub">Imóveis para temporada, eventos, festas e formaturas<br>em todo o Brasil 🇧🇷</p>
+  <div class="foot-links">
+    <a href="#imoveis">Imóveis</a>
+    <a href="#contato">Contato</a>
+    <a href="https://www.instagram.com/sitioiluminadotemporada/" target="_blank">Instagram</a>
+    <a href="https://wa.me/5511941942210" target="_blank">WhatsApp</a>
+  </div>
+  <p class="foot-copy">© 2026 Hospeda Temporada — Arlei Proprietário Direto</p>
+</footer>
+
+<!-- FLOAT -->
+<a href="https://wa.me/5511941942210?text=Olá! Tenho interesse em um imóvel." target="_blank" class="wa-float">
+  <svg width="30" height="30" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<!-- MODAL IMOVEL -->
+<div class="modal-bg" id="prop-modal">
+  <div class="modal-box">
+    <div class="modal-gallery" id="modal-gallery">
+      <img class="gallery-main" id="modal-main-img" src="" alt="">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div class="gallery-thumbs" id="modal-thumbs"></div>
+    </div>
+    <div class="modal-content">
+      <div class="success-banner" id="success-banner">✅ Solicitação enviada! Aguarde confirmação pelo WhatsApp.</div>
+      <h2 class="modal-title" id="modal-title"></h2>
+      <p class="modal-loc" id="modal-loc"></p>
+      <div class="modal-feats" id="modal-feats"></div>
+      <p class="modal-desc" id="modal-desc"></p>
+      <div class="modal-price-row">
+        <span class="modal-price" id="modal-price"></span>
+        <span class="modal-price-unit" id="modal-unit"></span>
+      </div>
+
+      <!-- CALENDAR -->
+      <div class="cal-section">
+        <h3>📅 Disponibilidade</h3>
+        <div class="cal-nav-row">
+          <span class="cal-month-label" id="cal-label"></span>
+          <div class="cal-nav-btns">
+            <button class="cal-nav-btn" onclick="calPrev()">‹</button>
+            <button class="cal-nav-btn" onclick="calNext()">›</button>
+          </div>
+        </div>
+        <div class="cal-grid" id="cal-grid"></div>
+        <div class="cal-legend">
+          <div class="leg-item"><div class="leg-dot" style="background:rgba(172,71,71,.15)"></div>Livre</div>
+          <div class="leg-item"><div class="leg-dot" style="background:rgba(239,68,68,.2)"></div>Reservado</div>
+          <div class="leg-item"><div class="leg-dot" style="background:var(--terra)"></div>Selecionado</div>
+        </div>
+      </div>
+
+      <!-- RESERVE FORM -->
+      <div class="reserve-form" id="reserve-form-section">
+        <h3>Solicitar reserva</h3>
+        <div class="dates-display" style="margin-bottom:16px">
+          <div class="date-box">
+            <div class="date-box-label">Check-in</div>
+            <div class="date-box-val" id="display-checkin">—</div>
+          </div>
+          <div class="date-box">
+            <div class="date-box-label">Check-out</div>
+            <div class="date-box-val" id="display-checkout">—</div>
+          </div>
+        </div>
+        <div class="form-row">
+          <label>Seu nome</label>
+          <input type="text" id="f-name" placeholder="Nome completo">
+        </div>
+        <div class="form-row">
+          <label>WhatsApp</label>
+          <input type="tel" id="f-phone" placeholder="(11) 99999-9999">
+        </div>
+        <div class="form-row">
+          <label>Nº de pessoas</label>
+          <select id="f-guests">
+            <option>1–5 pessoas</option>
+            <option>6–10 pessoas</option>
+            <option>11–20 pessoas</option>
+            <option>21–30 pessoas</option>
+            <option>Mais de 30 pessoas</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>Ocasião</label>
+          <select id="f-occasion">
+            <option>Temporada / Férias</option>
+            <option>Festa / Evento</option>
+            <option>Formatura</option>
+            <option>Aniversário</option>
+            <option>Casamento</option>
+            <option>Corporativo</option>
+            <option>Outro</option>
+          </select>
+        </div>
+        <button class="reserve-btn" onclick="sendReserve()">Enviar solicitação via WhatsApp</button>
+      </div>
+
+      <a href="#" id="wa-direct-btn" target="_blank" class="wa-btn-full">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Conversar no WhatsApp
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== DATA =====
+const PROPS = [
+  {
+    id:'sitio-iluminado',
+    name:'Sítio Iluminado',
+    loc:'📍 Biritiba Mirim / Mogi das Cruzes, SP — 1h de SP',
+    type:'festa',
+    badge:'🌟 Destaque',
+    price:'R$699',unit:'/diária + taxa limpeza',
+    guests:'até 22 pessoas',
+    feats:['🛏️ 4 quartos','🏊 Piscina c/ hidromassagem','🍕 Churrasqueira + forno de pizza','🎱 Salão de festas e jogos','⚽ Campo de futebol','🏐 Quadra de vôlei','💒 Capela','🌳 Área verde com bambuzal','📶 Wi-Fi','📺 TV a cabo','💧 Água filtrada'],
+    desc:'Sítio espaçoso a 1h de São Paulo, ideal para festas, eventos, formaturas e temporadas. Piscina com hidromassagem e cascata, salão de festas com sinuca e pebolim, churrasqueira coberta, forno de pizza, campo de futebol e quadra de vôlei. Acomoda até 22 pessoas pernoitando (12 em camas + 10 em colchonetes). Estrada asfaltada até o portão.',
+    imgs:[
+      'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=80',
+      'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800&q=80',
+      'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&q=80',
+      'https://images.unsplash.com/photo-1540541338287-41700207dee6?w=800&q=80',
+      'https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=800&q=80'
+    ],
+    reservedRanges:[]
+  },
+  {
+    id:'chacara-mairipoa',
+    name:'Chácara Mairiporã',
+    loc:'📍 Mairiporã, SP',
+    type:'festa',
+    badge:'🎉 Eventos',
+    price:'A consultar',unit:'',
+    guests:'até 30 pessoas',
+    feats:['🛏️ 3 quartos','🏊 Piscina','🥩 Churrasqueira','🌳 Área verde','👥 até 30 pessoas'],
+    desc:'Chácara em Mairiporã, ótima para eventos, festas e reuniões de família. Ampla área verde, piscina e churrasqueira.',
+    imgs:['https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800&q=80','https://images.unsplash.com/photo-1602343168117-bb8ffe3e2e9f?w=800&q=80'],
+    reservedRanges:[]
+  },
+  {
+    id:'chacara-sao-roque',
+    name:'Chácara São Roque',
+    loc:'📍 São Roque, SP',
+    type:'temporada',
+    badge:'🏖️ Temporada',
+    price:'A consultar',unit:'',
+    guests:'até 15 pessoas',
+    feats:['🛏️ 3 quartos','🏊 Piscina','🥩 Churrasqueira','🌿 Área verde'],
+    desc:'Espaço tranquilo em São Roque para férias e temporadas em família. Piscina, churrasqueira e muito verde.',
+    imgs:['https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80','https://images.unsplash.com/photo-1534430480872-3498386e7856?w=800&q=80'],
+    reservedRanges:[]
+  },
+  {
+    id:'chacara-atibaia',
+    name:'Chácara Atibaia',
+    loc:'📍 Atibaia, SP',
+    type:'temporada',
+    badge:'🌿 Natureza',
+    price:'A consultar',unit:'',
+    guests:'até 20 pessoas',
+    feats:['🛏️ 4 quartos','🏊 Piscina','🥩 Churrasqueira','⛰️ Contato com a natureza'],
+    desc:'Atibaia é famosa pelo clima ameno. Esta chácara é perfeita para descanso, com piscina e natureza exuberante.',
+    imgs:['https://images.unsplash.com/photo-1416331108676-a22ccb276e35?w=800&q=80','https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80'],
+    reservedRanges:[]
+  },
+  {
+    id:'chacara-mogi',
+    name:'Chácara Mogi das Cruzes',
+    loc:'📍 Mogi das Cruzes, SP',
+    type:'festa',
+    badge:'🎊 Festas',
+    price:'A consultar',unit:'',
+    guests:'até 25 pessoas',
+    feats:['🛏️ 3 quartos','🏊 Piscina','🎉 Salão de festas','🥩 Churrasqueira'],
+    desc:'Ideal para festas e comemorações. Salão coberto, piscina e churrasqueira a poucos km do centro de Mogi.',
+    imgs:['https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&q=80','https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80'],
+    reservedRanges:[]
+  },
+  {
+    id:'sitio-mogi-2',
+    name:'Sítio Mogi das Cruzes 2',
+    loc:'📍 Mogi das Cruzes, SP',
+    type:'temporada',
+    badge:'🌳 Sítio',
+    price:'A consultar',unit:'',
+    guests:'até 18 pessoas',
+    feats:['🛏️ 3 quartos','🌊 Rio ou lago','🥩 Churrasqueira','🌳 Área rural'],
+    desc:'Sítio rural tranquilo em Mogi das Cruzes. Ótimo para quem busca paz e contato com a natureza.',
+    imgs:['https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800&q=80','https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=800&q=80'],
+    reservedRanges:[]
+  },
+  {
+    id:'terreno-venda',
+    name:'Terreno à Venda — SP',
+    loc:'📍 Grande São Paulo, SP',
+    type:'venda',
+    badge:'🏷️ Venda',
+    price:'A consultar',unit:'',
+    guests:'—',
+    feats:['📐 Área a definir','🌳 Área verde','🚗 Acesso asfaltado','📋 Documentação ok'],
+    desc:'Terreno com ótima localização na Grande São Paulo. Documentação em ordem. Entre em contato para mais detalhes.',
+    imgs:['https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&q=80'],
+    reservedRanges:[]
+  },
+  {
+    id:'apart-olinda',
+    name:'Apartamento Olinda',
+    loc:'📍 Olinda, PE',
+    type:'temporada',
+    badge:'🌊 Praia',
+    price:'A consultar',unit:'',
+    guests:'até 6 pessoas',
+    feats:['🛏️ 2 quartos','🏖️ Próximo à praia','📶 Wi-Fi','🏛️ Centro histórico'],
+    desc:'Apartamento confortável em Olinda, Patrimônio Mundial da UNESCO. Perto das praias e do centro histórico de Recife.',
+    imgs:['https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&q=80','https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=800&q=80'],
+    reservedRanges:[]
+  },
+  {
+    id:'imovel-9',
+    name:'Novo Imóvel (Em breve)',
+    loc:'📍 Em cadastro',
+    type:'temporada',
+    badge:'🆕 Novo',
+    price:'Em breve',unit:'',
+    guests:'—',
+    feats:['📋 Informações em breve'],
+    desc:'Novo imóvel sendo adicionado ao portfólio. Entre em contato pelo WhatsApp para mais informações.',
+    imgs:['https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80'],
+    reservedRanges:[]
+  }
+];
+
+// LocalStorage reservations key
+const STORAGE_KEY = 'hospeda_reservations';
+
+function getReservations() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch(e) { return {}; }
+}
+function saveReservation(propId, checkin, checkout) {
+  const r = getReservations();
+  if (!r[propId]) r[propId] = [];
+  r[propId].push({checkin, checkout, ts: Date.now()});
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(r));
+}
+function getPropReservedDates(propId) {
+  const r = getReservations();
+  const ranges = r[propId] || [];
+  const dates = new Set();
+  ranges.forEach(({checkin, checkout}) => {
+    let cur = new Date(checkin);
+    const end = new Date(checkout);
+    while (cur <= end) {
+      dates.add(cur.toISOString().split('T')[0]);
+      cur.setDate(cur.getDate() + 1);
+    }
+  });
+  return dates;
+}
+
+// ===== RENDER CARDS =====
+function isAvailable(prop) {
+  const r = getReservations();
+  const today = new Date().toISOString().split('T')[0];
+  const ranges = r[prop.id] || [];
+  // check if any current/future reservation exists
+  return !ranges.some(({checkout}) => checkout >= today);
+}
+
+function renderProps(filter = null, typeFilter = '') {
+  const grid = document.getElementById('props-grid');
+  const q = (filter || '').toLowerCase();
+  const filtered = PROPS.filter(p => {
+    const matchQ = !q || p.name.toLowerCase().includes(q) || p.loc.toLowerCase().includes(q);
+    const matchT = !typeFilter || p.type === typeFilter;
+    return matchQ && matchT;
+  });
+  grid.innerHTML = filtered.map(p => {
+    const avail = isAvailable(p);
+    return `<div class="prop-card" onclick="openProp('${p.id}')">
+      <div class="prop-img-wrap">
+        <img src="${p.imgs[0]}" alt="${p.name}" loading="lazy">
+        <span class="prop-badge">${p.badge}</span>
+        <span class="prop-avail ${avail ? 'avail-yes' : 'avail-no'}">${avail ? '✅ Disponível' : '⏳ Verificar'}</span>
+      </div>
+      <div class="prop-body">
+        <h3 class="prop-name">${p.name}</h3>
+        <p class="prop-loc">${p.loc}</p>
+        <div class="prop-feats">${p.feats.slice(0,3).map(f=>`<span class="prop-feat">${f}</span>`).join('')}</div>
+        <p class="prop-price">${p.price}<span>${p.unit}</span></p>
+        <div class="prop-actions">
+          <button class="prop-btn-main" onclick="event.stopPropagation();openProp('${p.id}')">Ver calendário</button>
+          <button class="prop-btn-wa" onclick="event.stopPropagation();window.open('https://wa.me/5511941942210?text=Olá! Tenho interesse no ${encodeURIComponent(p.name)}','_blank')">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>`;
+  }).join('') || '<p style="padding:20px;color:var(--mid)">Nenhum imóvel encontrado para esse filtro.</p>';
+}
+function filterProps(){
+  renderProps(document.getElementById('search-input').value, document.getElementById('search-type').value);
+}
+
+// ===== MODAL =====
+let currentProp = null;
+let calDate = new Date();
+let selStart = null, selEnd = null;
+
+function openProp(id) {
+  currentProp = PROPS.find(p => p.id === id);
+  if (!currentProp) return;
+  selStart = null; selEnd = null;
+  calDate = new Date();
+  document.getElementById('display-checkin').textContent = '—';
+  document.getElementById('display-checkout').textContent = '—';
+  document.getElementById('success-banner').classList.remove('show');
+
+  document.getElementById('modal-title').textContent = currentProp.name;
+  document.getElementById('modal-loc').textContent = currentProp.loc;
+  document.getElementById('modal-desc').textContent = currentProp.desc;
+  document.getElementById('modal-price').textContent = currentProp.price;
+  document.getElementById('modal-unit').textContent = currentProp.unit;
+  document.getElementById('wa-direct-btn').href = `https://wa.me/5511941942210?text=Olá Arlei! Tenho interesse no ${encodeURIComponent(currentProp.name)}. Pode me dar mais informações?`;
+
+  // feats
+  document.getElementById('modal-feats').innerHTML = currentProp.feats.map(f=>`<span class="modal-feat">${f}</span>`).join('');
+
+  // gallery
+  const main = document.getElementById('modal-main-img');
+  main.src = currentProp.imgs[0];
+  main.alt = currentProp.name;
+  const thumbs = document.getElementById('modal-thumbs');
+  thumbs.innerHTML = currentProp.imgs.map((img,i)=>`<img src="${img}" alt="" class="${i===0?'active':''}" onclick="setMainImg('${img}',this)">`).join('');
+
+  renderCal();
+  document.getElementById('prop-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('prop-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function setMainImg(src, el) {
+  document.getElementById('modal-main-img').src = src;
+  document.querySelectorAll('.gallery-thumbs img').forEach(i=>i.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// ===== CALENDAR =====
+const MONTHS = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+const DAYS = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+
+function renderCal() {
+  if (!currentProp) return;
+  const reserved = getPropReservedDates(currentProp.id);
+  const today = new Date(); today.setHours(0,0,0,0);
+  document.getElementById('cal-label').textContent = MONTHS[calDate.getMonth()] + ' ' + calDate.getFullYear();
+
+  const grid = document.getElementById('cal-grid');
+  grid.innerHTML = DAYS.map(d=>`<div class="cal-head">${d}</div>`).join('');
+
+  const first = new Date(calDate.getFullYear(), calDate.getMonth(), 1).getDay();
+  for (let i=0;i<first;i++) grid.innerHTML += `<div class="cal-day empty"></div>`;
+
+  const days = new Date(calDate.getFullYear(), calDate.getMonth()+1, 0).getDate();
+  for (let d=1;d<=days;d++) {
+    const dt = new Date(calDate.getFullYear(), calDate.getMonth(), d);
+    const dStr = dt.toISOString().split('T')[0];
+    const isPast = dt < today;
+    const isRes = reserved.has(dStr);
+    let cls = 'cal-day ';
+    if (isPast) cls += 'past';
+    else if (isRes) cls += 'reserved';
+    else {
+      cls += 'free';
+      if (selStart && dStr === selStart) cls += ' sel-start';
+      else if (selEnd && dStr === selEnd) cls += ' sel-end';
+      else if (selStart && selEnd && dStr > selStart && dStr < selEnd) cls += ' sel-range';
+    }
+    const click = (!isPast && !isRes) ? `onclick="selectDay('${dStr}')"` : '';
+    grid.innerHTML += `<div class="${cls}" ${click}>${d}</div>`;
+  }
+}
+
+function selectDay(dStr) {
+  if (!selStart || (selStart && selEnd)) {
+    selStart = dStr; selEnd = null;
+  } else if (dStr > selStart) {
+    selEnd = dStr;
+    document.getElementById('display-checkin').textContent = formatDate(selStart);
+    document.getElementById('display-checkout').textContent = formatDate(selEnd);
+  } else {
+    selStart = dStr; selEnd = null;
+  }
+  renderCal();
+}
+
+function formatDate(d) {
+  if (!d) return '—';
+  const [y,m,day] = d.split('-');
+  return `${day}/${m}/${y}`;
+}
+
+function calPrev() {
+  calDate.setMonth(calDate.getMonth()-1);
+  renderCal();
+}
+function calNext() {
+  calDate.setMonth(calDate.getMonth()+1);
+  renderCal();
+}
+
+// ===== RESERVE =====
+function sendReserve() {
+  if (!selStart || !selEnd) {
+    alert('Por favor, selecione as datas de check-in e check-out no calendário!');
+    return;
+  }
+  const name = document.getElementById('f-name').value.trim() || 'Não informado';
+  const phone = document.getElementById('f-phone').value.trim() || 'Não informado';
+  const guests = document.getElementById('f-guests').value;
+  const occasion = document.getElementById('f-occasion').value;
+
+  // Save locally
+  saveReservation(currentProp.id, selStart, selEnd);
+
+  // Send WhatsApp
+  const msg = encodeURIComponent(
+    `🏠 *Solicitação de Reserva*\n\n` +
+    `*Imóvel:* ${currentProp.name}\n` +
+    `*Local:* ${currentProp.loc}\n` +
+    `*Check-in:* ${formatDate(selStart)}\n` +
+    `*Check-out:* ${formatDate(selEnd)}\n` +
+    `*Pessoas:* ${guests}\n` +
+    `*Ocasião:* ${occasion}\n` +
+    `*Nome:* ${name}\n` +
+    `*Telefone:* ${phone}\n\n` +
+    `Aguardo confirmação! 😊`
+  );
+  window.open(`https://wa.me/5511941942210?text=${msg}`, '_blank');
+
+  // Show success
+  document.getElementById('success-banner').classList.add('show');
+  // Refresh calendar to show new reservation
+  renderCal();
+  // Refresh cards
+  renderProps(document.getElementById('search-input').value, document.getElementById('search-type').value);
+}
+// Init
+renderProps();
+// Close modal on bg click
+document.getElementById('prop-modal').addEventListener('click', function(e){
+  if (e.target === this) closeModal();
+});
+</script>
+</body>
+</html>
