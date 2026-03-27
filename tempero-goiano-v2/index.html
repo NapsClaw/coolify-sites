@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tempero Goiano – Comida Goiana Típica | Delivery e Salão em Goiânia</title>
+  <meta name="description" content="Tempero Goiano em Goiânia: autêntica comida goiana com delivery e salão. Peça agora pelo WhatsApp!">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #fdf6ee;
+      --bg2: #fff8f0;
+      --text: #1c1008;
+      --text2: #6b4a20;
+      --orange: #d4581a;
+      --orange2: #e8742e;
+      --brown: #7a3d10;
+      --brown2: #a05520;
+      --amber: #e8a030;
+      --amber2: #f5c060;
+      --cream: #f5e8d4;
+      --border: #e8d4b8;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(253,246,238,0.96);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 19px; font-weight: 900;
+      color: var(--orange); text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 22px; list-style: none; }
+    .nav-links a { color: var(--text2); text-decoration: none; font-size: 14px; font-weight: 500; }
+    .nav-cta {
+      background: var(--orange); color: #fff !important;
+      padding: 8px 18px; border-radius: 24px; font-weight: 600 !important;
+    }
+    @media (max-width: 768px) { .nav-links { display: none; } }
+
+    /* HERO */
+    .hero {
+      min-height: 100svh;
+      padding: 80px 24px 60px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      position: relative; overflow: hidden;
+      background: linear-gradient(170deg, #1c0800 0%, #4a1800 45%, #7a2800 100%);
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&q=80') center/cover no-repeat;
+      opacity: 0.2;
+    }
+    .hero-badge {
+      position: relative;
+      background: var(--amber); color: var(--text);
+      font-size: 11px; font-weight: 800;
+      letter-spacing: 2.5px; text-transform: uppercase;
+      padding: 6px 20px; border-radius: 24px;
+      margin-bottom: 22px; display: inline-block;
+      animation: fadeUp 0.6s ease both;
+    }
+    .hero h1 {
+      position: relative;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(44px, 11vw, 84px);
+      font-weight: 900; color: #fff;
+      line-height: 1.04; letter-spacing: -1px;
+      margin-bottom: 18px;
+      animation: fadeUp 0.6s 0.12s ease both;
+    }
+    .hero h1 span { color: var(--amber2); }
+    .hero-sub {
+      position: relative;
+      font-size: 17px; color: rgba(255,255,255,0.72);
+      max-width: 380px; margin: 0 auto 36px;
+      animation: fadeUp 0.6s 0.22s ease both;
+    }
+    .hero-btns {
+      position: relative;
+      display: flex; flex-direction: column; gap: 12px;
+      width: 100%; max-width: 320px; margin: 0 auto;
+      animation: fadeUp 0.6s 0.32s ease both;
+    }
+    .btn-green {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      background: #25D366; color: #fff;
+      font-weight: 700; font-size: 16px;
+      padding: 16px 24px; border-radius: 12px;
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+    }
+    .btn-outline {
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(255,255,255,0.1);
+      border: 1.5px solid rgba(255,255,255,0.25);
+      color: #fff; font-weight: 600; font-size: 15px;
+      padding: 14px 24px; border-radius: 12px;
+      text-decoration: none;
+    }
+    .hero-scroll {
+      position: absolute; bottom: 26px; left: 50%;
+      transform: translateX(-50%);
+    }
+    .scroll-dot {
+      width: 20px; height: 30px;
+      border: 1.5px solid rgba(255,255,255,0.3);
+      border-radius: 10px;
+      display: flex; align-items: flex-start; justify-content: center;
+      padding-top: 4px;
+    }
+    .scroll-dot::after {
+      content: ''; width: 4px; height: 8px;
+      background: rgba(255,255,255,0.5); border-radius: 2px;
+      animation: scrolldown 1.6s ease-in-out infinite;
+    }
+
+    /* BADGES */
+    .badges {
+      background: var(--orange);
+      padding: 20px 24px;
+    }
+    .badges-inner {
+      max-width: 800px; margin: 0 auto;
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .badge-item {
+      display: flex; align-items: center; gap: 12px; color: #fff;
+    }
+    .badge-icon { font-size: 26px; flex-shrink: 0; }
+    .badge-item strong { display: block; font-size: 14px; font-weight: 700; }
+    .badge-item span { font-size: 12px; opacity: 0.85; }
+    @media (min-width: 600px) {
+      .badges-inner { flex-direction: row; flex-wrap: wrap; justify-content: center; }
+      .badge-item { width: calc(50% - 14px); }
+    }
+    @media (min-width: 900px) { .badge-item { width: auto; flex: 1; } }
+
+    /* SECTIONS */
+    .ornament {
+      display: flex; align-items: center; gap: 12px;
+      justify-content: center; margin-bottom: 16px;
+    }
+    .ornament-line { height: 1px; width: 36px; background: var(--orange); }
+    .ornament-dot { width: 7px; height: 7px; background: var(--orange); border-radius: 50%; }
+    .section-label {
+      font-size: 11px; font-weight: 800; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--orange); margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 7vw, 44px);
+      font-weight: 900; line-height: 1.12;
+      color: var(--text); margin-bottom: 16px;
+    }
+    .section-text {
+      color: var(--text2); font-size: 16px;
+      line-height: 1.75; margin-bottom: 24px;
+    }
+
+    /* SOBRE */
+    .sobre {
+      padding: 80px 24px;
+      max-width: 680px; margin: 0 auto; text-align: center;
+    }
+    .sobre-img {
+      width: 100%; height: 260px;
+      object-fit: cover; border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+    }
+
+    /* CARDÁPIO */
+    .cardapio { background: var(--bg2); padding: 80px 24px; }
+    .cardapio-inner { max-width: 800px; margin: 0 auto; }
+    .cardapio-header { text-align: center; margin-bottom: 40px; }
+    .pratos-grid { display: flex; flex-direction: column; gap: 16px; }
+    .prato-card {
+      background: #fff; border-radius: 16px;
+      overflow: hidden; display: flex; align-items: center;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 16px rgba(0,0,0,0.05);
+    }
+    .prato-img { width: 105px; min-height: 105px; object-fit: cover; flex-shrink: 0; }
+    .prato-info { padding: 16px 18px; flex: 1; }
+    .prato-nome {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px; font-weight: 700;
+      color: var(--text); margin-bottom: 5px;
+    }
+    .prato-desc { font-size: 13px; color: var(--text2); line-height: 1.5; }
+    .prato-tag {
+      display: inline-block; margin-top: 8px;
+      background: var(--cream); color: var(--brown);
+      font-size: 11px; font-weight: 700;
+      padding: 3px 10px; border-radius: 20px;
+      border: 1px solid var(--border);
+    }
+
+    /* DELIVERY */
+    .delivery {
+      padding: 80px 24px;
+      background: linear-gradient(135deg, var(--brown) 0%, var(--orange) 100%);
+      text-align: center;
+    }
+    .delivery-inner { max-width: 560px; margin: 0 auto; }
+    .delivery .section-label { color: var(--amber2); }
+    .delivery .section-title { color: #fff; }
+    .delivery .section-text { color: rgba(255,255,255,0.75); }
+    .delivery-grid {
+      display: flex; flex-direction: column; gap: 14px;
+      margin: 32px 0;
+    }
+    .delivery-item {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 14px; padding: 18px 20px;
+      display: flex; align-items: center; gap: 14px; text-align: left;
+      color: #fff;
+    }
+    .delivery-icon { font-size: 28px; flex-shrink: 0; }
+    .delivery-item strong { display: block; font-size: 15px; font-weight: 700; margin-bottom: 2px; }
+    .delivery-item span { font-size: 13px; opacity: 0.8; }
+    .btn-wa-delivery {
+      display: flex; align-items: center; justify-content: center; gap: 12px;
+      background: #25D366; color: #fff;
+      font-weight: 700; font-size: 17px;
+      padding: 18px 32px; border-radius: 14px;
+      text-decoration: none; width: 100%; max-width: 340px;
+      margin: 0 auto;
+      box-shadow: 0 6px 30px rgba(37,211,102,0.4);
+    }
+
+    /* GALERIA */
+    .galeria { padding: 80px 24px; }
+    .galeria-inner { max-width: 800px; margin: 0 auto; }
+    .galeria-header { text-align: center; margin-bottom: 28px; }
+    .galeria-scroll {
+      display: flex; gap: 14px;
+      overflow-x: auto; padding-bottom: 10px;
+      scrollbar-width: none;
+    }
+    .galeria-scroll::-webkit-scrollbar { display: none; }
+    .galeria-item {
+      flex-shrink: 0; width: 230px; height: 195px;
+      border-radius: 16px; overflow: hidden;
+    }
+    .galeria-item img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform 0.3s;
+    }
+    .galeria-item:hover img { transform: scale(1.06); }
+
+    /* CONTATO */
+    .contato {
+      background: var(--bg2);
+      padding: 80px 24px; text-align: center;
+    }
+    .contato-inner { max-width: 600px; margin: 0 auto; }
+    .contato-cards { display: flex; flex-direction: column; gap: 14px; margin: 36px 0; }
+    .contato-card {
+      background: #fff; border: 1px solid var(--border);
+      border-radius: 14px; padding: 18px 20px;
+      display: flex; align-items: center; gap: 14px; text-align: left;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+    }
+    .contato-icon { font-size: 26px; flex-shrink: 0; }
+    .contato-label {
+      font-size: 10px; font-weight: 800; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--orange); margin-bottom: 2px;
+    }
+    .contato-value { font-size: 15px; color: var(--text); font-weight: 500; }
+    .btn-wa-contato {
+      display: flex; align-items: center; justify-content: center; gap: 12px;
+      background: #25D366; color: #fff;
+      font-weight: 700; font-size: 17px;
+      padding: 18px 32px; border-radius: 14px;
+      text-decoration: none; width: 100%; max-width: 340px;
+      margin: 0 auto;
+      box-shadow: 0 6px 30px rgba(37,211,102,0.4);
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--text);
+      color: rgba(255,255,255,0.5);
+      text-align: center; padding: 28px 24px; font-size: 13px;
+    }
+    footer strong { color: rgba(255,255,255,0.9); }
+
+    /* WA FLOAT */
+    .wa-float {
+      position: fixed; bottom: 24px; right: 20px; z-index: 999;
+      background: #25D366; border-radius: 50%;
+      width: 58px; height: 58px;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.5);
+      transition: transform 0.2s;
+    }
+    .wa-float:hover { transform: scale(1.1); }
+    .wa-float svg { width: 30px; height: 30px; fill: #fff; }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(26px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes scrolldown {
+      0%, 100% { transform: translateY(0); opacity: 1; }
+      60% { transform: translateY(8px); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">Tempero Goiano</a>
+    <ul class="nav-links">
+      <li><a href="#cardapio">Cardápio</a></li>
+      <li><a href="#delivery">Delivery</a></li>
+      <li><a href="#contato">Contato</a></li>
+      <li><a href="https://wa.me/5562999000099?text=Olá!%20Quero%20fazer%20um%20pedido." target="_blank" class="nav-cta">Pedir agora</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">🌽 Comida Goiana · Delivery e Salão</div>
+    <h1>O <span>sabor</span><br>que só<br>Goiás tem</h1>
+    <p class="hero-sub">Pratos típicos preparados com carinho. Peça pelo delivery ou venha nos visitar em Goiânia!</p>
+    <div class="hero-btns">
+      <a href="https://wa.me/5562999000099?text=Olá!%20Quero%20fazer%20um%20pedido." target="_blank" class="btn-green">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Pedir pelo WhatsApp
+      </a>
+      <a href="#cardapio" class="btn-outline">Ver o cardápio</a>
+    </div>
+    <div class="hero-scroll"><div class="scroll-dot"></div></div>
+  </section>
+
+  <!-- BADGES -->
+  <div class="badges">
+    <div class="badges-inner">
+      <div class="badge-item">
+        <span class="badge-icon">🚗</span>
+        <div><strong>Delivery</strong><span>Entregamos na sua casa</span></div>
+      </div>
+      <div class="badge-item">
+        <span class="badge-icon">🍽️</span>
+        <div><strong>Salão</strong><span>Ambiente aconchegante</span></div>
+      </div>
+      <div class="badge-item">
+        <span class="badge-icon">🌽</span>
+        <div><strong>Receitas Típicas</strong><span>Do jeito que Goiás faz</span></div>
+      </div>
+      <div class="badge-item">
+        <span class="badge-icon">📱</span>
+        <div><strong>Peça pelo WhatsApp</strong><span>Rápido e fácil</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SOBRE -->
+  <section class="sobre" id="sobre">
+    <div class="ornament">
+      <div class="ornament-line"></div>
+      <div class="ornament-dot"></div>
+      <div class="ornament-line"></div>
+    </div>
+    <p class="section-label">Quem Somos</p>
+    <h2 class="section-title">Tradição goiana<br>em cada garfada</h2>
+    <p class="section-text">
+      No Tempero Goiano, cada prato é feito com ingredientes frescos e receitas que carregam a alma do Cerrado. Do arroz com pequi fumegante à galinhada temperada do jeito certo — tudo preparado com cuidado e muito amor.
+    </p>
+    <p class="section-text">
+      Seja no nosso salão aconchegante ou pelo delivery, a gente leva o sabor verdadeiro de Goiás até você. 🌿
+    </p>
+    <img
+      src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800&q=80"
+      alt="Salão do restaurante Tempero Goiano em Goiânia"
+      class="sobre-img" loading="lazy"
+    >
+  </section>
+
+  <!-- CARDÁPIO -->
+  <section class="cardapio" id="cardapio">
+    <div class="cardapio-inner">
+      <div class="cardapio-header">
+        <div class="ornament">
+          <div class="ornament-line"></div>
+          <div class="ornament-dot"></div>
+          <div class="ornament-line"></div>
+        </div>
+        <p class="section-label">Nossos Pratos</p>
+        <h2 class="section-title">Cardápio</h2>
+        <p class="section-text" style="margin-bottom:0">Pratos típicos goianos feitos com ingredientes frescos e selecionados todo dia.</p>
+      </div>
+      <div class="pratos-grid">
+        <div class="prato-card">
+          <img src="https://images.unsplash.com/photo-1546549032-9571cd6b27df?w=300&q=80" alt="Arroz com Pequi" class="prato-img" loading="lazy">
+          <div class="prato-info">
+            <p class="prato-nome">Arroz com Pequi</p>
+            <p class="prato-desc">O ícone da culinária goiana. Arroz soltinho com frango caipira e pequi fresco na medida certa.</p>
+            <span class="prato-tag">⭐ Mais pedido</span>
+          </div>
+        </div>
+        <div class="prato-card">
+          <img src="https://images.unsplash.com/photo-1598103442097-8b74394b95c2?w=300&q=80" alt="Galinhada" class="prato-img" loading="lazy">
+          <div class="prato-info">
+            <p class="prato-nome">Galinhada Goiana</p>
+            <p class="prato-desc">Galinha cozida lentamente com açafrão-da-terra, colorau e temperos do Cerrado. Tradição pura.</p>
+            <span class="prato-tag">🍗 Favorito da casa</span>
+          </div>
+        </div>
+        <div class="prato-card">
+          <img src="https://images.unsplash.com/photo-1605478371310-a9f1e96b4ff4?w=300&q=80" alt="Empadão Goiano" class="prato-img" loading="lazy">
+          <div class="prato-info">
+            <p class="prato-nome">Empadão Goiano</p>
+            <p class="prato-desc">Massa artesanal recheada com frango, pequi, palmito e queijo. Assado fresquinho todo dia.</p>
+            <span class="prato-tag">🥧 Artesanal</span>
+          </div>
+        </div>
+        <div class="prato-card">
+          <img src="https://images.unsplash.com/photo-1567521464027-f127ff144326?w=300&q=80" alt="Pamonha" class="prato-img" loading="lazy">
+          <div class="prato-info">
+            <p class="prato-nome">Pamonha & Curau</p>
+            <p class="prato-desc">Sobremesas típicas goianas feitas com milho fresco. Doce ou salgada, vai no seu gosto!</p>
+            <span class="prato-tag">🌽 Típico do Cerrado</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DELIVERY -->
+  <section class="delivery" id="delivery">
+    <div class="delivery-inner">
+      <div class="ornament">
+        <div class="ornament-line" style="background:rgba(255,255,255,0.3)"></div>
+        <div class="ornament-dot" style="background:var(--amber2)"></div>
+        <div class="ornament-line" style="background:rgba(255,255,255,0.3)"></div>
+      </div>
+      <p class="section-label">Delivery e Salão</p>
+      <h2 class="section-title">Tempero Goiano<br>onde você estiver</h2>
+      <p class="section-text">Peça pelo WhatsApp e receba em casa, ou venha nos visitar no salão. É fácil e rápido!</p>
+      <div class="delivery-grid">
+        <div class="delivery-item">
+          <span class="delivery-icon">🚗</span>
+          <div>
+            <strong>Delivery</strong>
+            <span>Peça pelo WhatsApp e receba quentinho em casa</span>
+          </div>
+        </div>
+        <div class="delivery-item">
+          <span class="delivery-icon">🍽️</span>
+          <div>
+            <strong>Salão Presencial</strong>
+            <span>Ambiente aconchegante pra você e sua família</span>
+          </div>
+        </div>
+        <div class="delivery-item">
+          <span class="delivery-icon">⏱️</span>
+          <div>
+            <strong>Atendimento Rápido</strong>
+            <span>Respondemos na hora pelo WhatsApp</span>
+          </div>
+        </div>
+      </div>
+      <a href="https://wa.me/5562999000099?text=Olá!%20Quero%20fazer%20um%20pedido%20pelo%20delivery." target="_blank" class="btn-wa-delivery">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Pedir pelo delivery agora
+      </a>
+    </div>
+  </section>
+
+  <!-- GALERIA -->
+  <section class="galeria">
+    <div class="galeria-inner">
+      <div class="galeria-header">
+        <p class="section-label">Galeria</p>
+        <h2 class="section-title">Veja nosso espaço</h2>
+      </div>
+      <div class="galeria-scroll">
+        <div class="galeria-item">
+          <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=500&q=80" alt="Ambiente do restaurante" loading="lazy">
+        </div>
+        <div class="galeria-item">
+          <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=500&q=80" alt="Pratos goianos" loading="lazy">
+        </div>
+        <div class="galeria-item">
+          <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=500&q=80" alt="Interior do salão" loading="lazy">
+        </div>
+        <div class="galeria-item">
+          <img src="https://images.unsplash.com/photo-1567521464027-f127ff144326?w=500&q=80" alt="Mesa posta" loading="lazy">
+        </div>
+        <div class="galeria-item">
+          <img src="https://images.unsplash.com/photo-1482049016688-2d3e1b311543?w=500&q=80" alt="Comida regional" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTATO -->
+  <section class="contato" id="contato">
+    <div class="contato-inner">
+      <div class="ornament">
+        <div class="ornament-line"></div>
+        <div class="ornament-dot"></div>
+        <div class="ornament-line"></div>
+      </div>
+      <p class="section-label">Fale Conosco</p>
+      <h2 class="section-title">Venha nos visitar<br>ou peça agora</h2>
+      <div class="contato-cards">
+        <div class="contato-card">
+          <span class="contato-icon">📍</span>
+          <div>
+            <p class="contato-label">Endereço</p>
+            <p class="contato-value">Goiânia – GO</p>
+          </div>
+        </div>
+        <div class="contato-card">
+          <span class="contato-icon">🕐</span>
+          <div>
+            <p class="contato-label">Horário</p>
+            <p class="contato-value">Seg–Sex: 11h às 15h | Sáb–Dom: 11h às 16h</p>
+          </div>
+        </div>
+        <div class="contato-card">
+          <span class="contato-icon">🚗</span>
+          <div>
+            <p class="contato-label">Delivery</p>
+            <p class="contato-value">Peça pelo WhatsApp — rápido e fácil!</p>
+          </div>
+        </div>
+      </div>
+      <a href="https://wa.me/5562999000099?text=Olá!%20Vi%20o%20site%20e%20quero%20fazer%20um%20pedido." target="_blank" class="btn-wa-contato">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Chamar no WhatsApp
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p><strong>Tempero Goiano</strong> · Comida Goiana Típica · Goiânia – GO</p>
+    <p style="margin-top:8px">© 2025 Tempero Goiano. Todos os direitos reservados.</p>
+  </footer>
+
+  <!-- WA FLOAT -->
+  <a href="https://wa.me/5562999000099?text=Olá!%20Vi%20o%20site%20e%20quero%20fazer%20um%20pedido." target="_blank" class="wa-float" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+</body>
+</html>
