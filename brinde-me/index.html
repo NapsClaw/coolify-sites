@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brinde.me — A Plataforma para Empresas de Brindes Corporativos</title>
+  <meta name="description" content="Brinde.me: o SaaS completo para empresas que vendem brindes corporativos. Site profissional + sistema de gestão integrado.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --bg:#f5f2ee;--card:#fff;--primary:#2d1b69;--accent:#f5a623;--accent2:#ff6b35;
+      --text:#1a1a2e;--muted:#6b7280;--light:#9ca3af;--border:#e5e0d8;
+      --r:16px;--fh:'Cabinet Grotesk',sans-serif;--fb:'Plus Jakarta Sans',sans-serif;
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:var(--fb);background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.6}
+
+    /* NAV */
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(245,242,238,0.92);
+      backdrop-filter:blur(12px);border-bottom:1px solid var(--border);
+      padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between}
+    .logo{font-family:var(--fh);font-weight:900;font-size:22px;color:var(--primary);text-decoration:none}
+    .logo span{color:var(--accent)}
+    .nav-btn{background:var(--primary);color:#fff;border:none;padding:10px 22px;border-radius:50px;
+      font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;transition:all .2s}
+    .nav-btn:hover{background:#3d2879;transform:translateY(-1px)}
+
+    /* HERO */
+    .hero{min-height:100vh;padding:120px 24px 80px;display:flex;flex-direction:column;
+      align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden}
+    .hero::before{content:'';position:absolute;top:-200px;right:-200px;width:600px;height:600px;
+      background:radial-gradient(circle,rgba(245,166,35,.15) 0%,transparent 70%);pointer-events:none}
+    .hero::after{content:'';position:absolute;bottom:-100px;left:-100px;width:500px;height:500px;
+      background:radial-gradient(circle,rgba(45,27,105,.1) 0%,transparent 70%);pointer-events:none}
+
+    .badge{display:inline-flex;align-items:center;gap:6px;background:var(--card);
+      border:1px solid var(--border);border-radius:50px;padding:6px 16px;
+      font-size:13px;font-weight:600;color:var(--primary);margin-bottom:28px;animation:fadeUp .6s ease both}
+    .dot{width:8px;height:8px;background:#22c55e;border-radius:50%;animation:pulse 2s infinite}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(1.3)}}
+
+    .hero h1{font-family:var(--fh);font-weight:900;font-size:clamp(36px,8vw,72px);
+      line-height:1.05;color:var(--primary);max-width:800px;margin:0 auto 24px;animation:fadeUp .7s ease .1s both}
+    .hero h1 em{font-style:normal;color:var(--accent)}
+    .hero-sub{font-size:clamp(16px,2.5vw,20px);color:var(--muted);max-width:560px;
+      margin:0 auto 40px;line-height:1.7;animation:fadeUp .7s ease .2s both}
+    .hero-actions{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;animation:fadeUp .7s ease .3s both}
+
+    .btn-primary{background:var(--primary);color:#fff;padding:16px 32px;border-radius:50px;
+      font-size:16px;font-weight:700;text-decoration:none;border:none;cursor:pointer;
+      transition:all .2s;display:inline-flex;align-items:center;gap:8px;min-height:52px}
+    .btn-primary:hover{background:#3d2879;transform:translateY(-2px);box-shadow:0 8px 24px rgba(45,27,105,.3)}
+    .btn-outline{background:transparent;color:var(--primary);padding:16px 32px;border-radius:50px;
+      font-size:16px;font-weight:600;text-decoration:none;border:2px solid var(--border);
+      cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:8px;min-height:52px}
+    .btn-outline:hover{border-color:var(--primary);background:rgba(45,27,105,.04)}
+
+    /* MOCKUP */
+    .hero-mockup{margin-top:60px;max-width:680px;width:100%;background:var(--card);border-radius:20px;
+      border:1px solid var(--border);overflow:hidden;
+      box-shadow:0 24px 80px rgba(0,0,0,.1),0 4px 16px rgba(0,0,0,.06);animation:fadeUp .8s ease .4s both}
+    .mock-bar{background:#f0ede8;height:40px;display:flex;align-items:center;padding:0 16px;gap:6px;border-bottom:1px solid var(--border)}
+    .md{width:10px;height:10px;border-radius:50%}
+    .md:nth-child(1){background:#ff5f57}.md:nth-child(2){background:#febc2e}.md:nth-child(3){background:#28c840}
+    .mock-url{flex:1;background:#fff;border-radius:6px;height:26px;margin:0 12px;display:flex;
+      align-items:center;padding:0 10px;font-size:12px;color:var(--muted)}
+    .mock-body{padding:28px;background:linear-gradient(135deg,#f5f2ee 0%,#fff 100%);
+      min-height:260px;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .mc{background:#fff;border-radius:12px;padding:18px;border:1px solid var(--border)}
+    .mc-label{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+    .mc-val{font-family:var(--fh);font-size:28px;font-weight:900;color:var(--primary)}
+    .mc-sub{font-size:12px;color:#22c55e;font-weight:600;margin-top:4px}
+    .mc-chart{background:#fff;border-radius:12px;padding:16px;border:1px solid var(--border);
+      grid-column:span 2;display:flex;align-items:flex-end;gap:6px;height:90px}
+    .mb{flex:1;background:var(--primary);border-radius:4px 4px 0 0;opacity:.12}
+    .mb:nth-child(4){opacity:.35}.mb:nth-child(5){opacity:.55}.mb:nth-child(6){opacity:.75}
+    .mb:last-child{background:var(--accent);opacity:1}
+
+    /* LOGOS */
+    .logos{padding:40px 24px;text-align:center}
+    .logos-label{font-size:13px;font-weight:600;color:var(--light);text-transform:uppercase;letter-spacing:.1em;margin-bottom:24px}
+    .logos-row{display:flex;flex-wrap:wrap;justify-content:center;gap:28px;align-items:center}
+    .logo-item{font-family:var(--fh);font-weight:800;font-size:17px;color:var(--light);opacity:.5}
+
+    /* SECTIONS */
+    .section{padding:80px 24px;max-width:1100px;margin:0 auto}
+    .sec-label{font-size:13px;font-weight:700;color:var(--accent2);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px}
+    .sec-title{font-family:var(--fh);font-weight:900;font-size:clamp(28px,5vw,48px);
+      color:var(--primary);line-height:1.1;max-width:600px;margin-bottom:14px}
+    .sec-sub{font-size:17px;color:var(--muted);max-width:520px;line-height:1.7;margin-bottom:52px}
+
+    /* FEATURES */
+    .grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px}
+    .feat-card{background:var(--card);border-radius:var(--r);padding:30px;border:1px solid var(--border);transition:transform .2s,box-shadow .2s}
+    .feat-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.08)}
+    .feat-icon{width:50px;height:50px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:18px}
+    .ip{background:rgba(45,27,105,.1)}.io{background:rgba(245,166,35,.15)}.ig{background:rgba(34,197,94,.12)}
+    .ir{background:rgba(255,107,53,.12)}.ib{background:rgba(59,130,246,.12)}.ik{background:rgba(236,72,153,.12)}
+    .feat-title{font-family:var(--fh);font-weight:800;font-size:19px;color:var(--primary);margin-bottom:8px}
+    .feat-desc{font-size:15px;color:var(--muted);line-height:1.7}
+
+    /* HOW IT WORKS */
+    .how{background:var(--primary);padding:80px 24px;position:relative;overflow:hidden}
+    .how::before{content:'';position:absolute;top:-100px;right:-100px;width:400px;height:400px;
+      background:radial-gradient(circle,rgba(245,166,35,.2) 0%,transparent 70%)}
+    .how-inner{max-width:1100px;margin:0 auto}
+    .how-label{font-size:13px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px}
+    .how-title{font-family:var(--fh);font-weight:900;font-size:clamp(28px,5vw,48px);
+      color:#fff;line-height:1.1;margin-bottom:52px;max-width:500px}
+    .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:36px}
+    .step-num{font-family:var(--fh);font-size:60px;font-weight:900;color:rgba(255,255,255,.08);line-height:1;margin-bottom:-14px}
+    .step-title{font-family:var(--fh);font-weight:800;font-size:19px;color:#fff;margin-bottom:8px}
+    .step-desc{font-size:15px;color:rgba(255,255,255,.6);line-height:1.7}
+
+    /* RESULTS */
+    .res-section{padding:80px 24px;max-width:1100px;margin:0 auto}
+    .results{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;margin-bottom:56px}
+    .res-card{background:var(--card);border-radius:var(--r);padding:36px 24px;border:1px solid var(--border);text-align:center}
+    .res-val{font-family:var(--fh);font-weight:900;font-size:48px;color:var(--primary);line-height:1;margin-bottom:6px}
+    .res-val span{color:var(--accent)}
+    .res-label{font-size:15px;color:var(--muted);line-height:1.5}
+
+    /* TESTIMONIALS */
+    .testimonials{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+    .tcard{background:var(--card);border-radius:var(--r);padding:28px;border:1px solid var(--border)}
+    .stars{color:var(--accent);font-size:14px;margin-bottom:12px}
+    .ttext{font-size:15px;color:var(--text);line-height:1.7;margin-bottom:18px;font-style:italic}
+    .tauthor{display:flex;align-items:center;gap:12px}
+    .avatar{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+      font-size:15px;font-weight:700;color:#fff;flex-shrink:0}
+    .av1{background:var(--primary)}.av2{background:var(--accent2)}.av3{background:#0891b2}
+    .aname{font-weight:700;font-size:14px;color:var(--text)}
+    .arole{font-size:12px;color:var(--muted)}
+
+    /* PRICING */
+    .pricing{background:#fff;padding:80px 24px}
+    .pricing-inner{max-width:900px;margin:0 auto;text-align:center}
+    .pgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;margin-top:48px;text-align:left}
+    .pcard{background:var(--bg);border-radius:var(--r);padding:36px 28px;border:2px solid var(--border);position:relative;transition:transform .2s}
+    .pcard:hover{transform:translateY(-4px)}
+    .pcard.featured{background:var(--primary);border-color:var(--primary);color:#fff}
+    .pbadge{position:absolute;top:-14px;left:50%;transform:translateX(-50%);
+      background:var(--accent);color:var(--primary);font-size:12px;font-weight:800;
+      padding:4px 16px;border-radius:50px;white-space:nowrap}
+    .pplan{font-family:var(--fh);font-weight:800;font-size:18px;margin-bottom:6px}
+    .featured .pplan{color:rgba(255,255,255,.8)}
+    .pprice{font-family:var(--fh);font-weight:900;font-size:42px;color:var(--primary);line-height:1;margin-bottom:4px}
+    .featured .pprice{color:#fff}
+    .ppsub{font-size:13px;color:var(--muted);margin-bottom:24px}
+    .featured .ppsub{color:rgba(255,255,255,.6)}
+    .pdiv{height:1px;background:var(--border);margin-bottom:20px}
+    .featured .pdiv{background:rgba(255,255,255,.15)}
+    .pfeats{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+    .pfeats li{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--muted)}
+    .featured .pfeats li{color:rgba(255,255,255,.75)}
+    .pfeats .ck{color:#22c55e;font-size:16px;flex-shrink:0;margin-top:1px}
+    .featured .pfeats .ck{color:var(--accent)}
+    .pbtn{width:100%;padding:14px;border-radius:50px;font-weight:700;font-size:15px;cursor:pointer;
+      border:none;text-decoration:none;display:block;text-align:center;transition:all .2s;font-family:var(--fb)}
+    .pbtn-out{background:transparent;border:2px solid var(--border);color:var(--primary)}
+    .pbtn-out:hover{border-color:var(--primary);background:rgba(45,27,105,.04)}
+    .pbtn-fill{background:var(--accent);color:var(--primary)}
+    .pbtn-fill:hover{background:#e8961a;transform:translateY(-1px)}
+
+    /* CTA */
+    .cta{padding:80px 24px;text-align:center;max-width:700px;margin:0 auto}
+    .cta h2{font-family:var(--fh);font-weight:900;font-size:clamp(28px,5vw,48px);
+      color:var(--primary);line-height:1.1;margin-bottom:14px}
+    .cta p{font-size:17px;color:var(--muted);margin-bottom:36px;line-height:1.7}
+
+    /* FOOTER */
+    footer{background:var(--primary);color:rgba(255,255,255,.7);padding:48px 24px;text-align:center}
+    .flogo{font-family:var(--fh);font-weight:900;font-size:24px;color:#fff;margin-bottom:14px}
+    .flogo span{color:var(--accent)}
+    .ftext{font-size:14px;max-width:400px;margin:0 auto 20px;line-height:1.7}
+    .flinks{display:flex;flex-wrap:wrap;justify-content:center;gap:20px;margin-bottom:28px}
+    .flinks a{color:rgba(255,255,255,.6);text-decoration:none;font-size:14px;transition:color .2s}
+    .flinks a:hover{color:#fff}
+    .fcopy{font-size:13px;color:rgba(255,255,255,.4)}
+
+    /* WA FLOAT */
+    .wa{position:fixed;bottom:24px;right:24px;z-index:999;background:#25D366;border-radius:50%;
+      width:60px;height:60px;display:flex;align-items:center;justify-content:center;
+      box-shadow:0 4px 16px rgba(37,211,102,.4);text-decoration:none;transition:transform .2s,box-shadow .2s}
+    .wa:hover{transform:scale(1.1);box-shadow:0 8px 24px rgba(37,211,102,.5)}
+    .wa svg{width:30px;height:30px}
+
+    @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+    /* MOBILE */
+    @media(max-width:768px){
+      .hero{padding:100px 20px 60px}
+      .hero h1{font-size:34px}
+      .hero-sub{font-size:16px}
+      .hero-actions{flex-direction:column;align-items:center}
+      .btn-primary,.btn-outline{width:100%;max-width:320px;justify-content:center}
+      .mock-body{grid-template-columns:1fr}
+      .mc-chart{grid-column:span 1}
+      .section{padding:56px 20px}
+      .sec-sub{margin-bottom:36px}
+      .grid-3{grid-template-columns:1fr}
+      .how{padding:56px 20px}
+      .steps{grid-template-columns:1fr;gap:36px}
+      .res-section{padding:56px 20px}
+      .results{grid-template-columns:repeat(2,1fr)}
+      .res-val{font-size:36px}
+      .testimonials{grid-template-columns:1fr}
+      .pricing{padding:56px 20px}
+      .pgrid{grid-template-columns:1fr}
+      .cta{padding:56px 20px}
+      footer{padding:40px 20px}
+      .flinks{gap:14px}
+    }
+    @media(max-width:480px){
+      .results{grid-template-columns:1fr}
+      .logos-row{gap:14px}
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">Brinde<span>.me</span></a>
+  <a href="#contato" class="nav-btn">Começar grátis →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="badge">
+    <span class="dot"></span>
+    Mais de 300 empresas na plataforma
+  </div>
+  <h1>O sistema que<br><em>transforma</em> sua<br>empresa de brindes</h1>
+  <p class="hero-sub">Site profissional + sistema completo para vender, gerir pedidos e atender clientes — tudo em um lugar só.</p>
+  <div class="hero-actions">
+    <a href="#contato" class="btn-primary">Quero uma demo gratuita →</a>
+    <a href="#como-funciona" class="btn-outline">Como funciona</a>
+  </div>
+
+  <div class="hero-mockup">
+    <div class="mock-bar">
+      <div class="md"></div><div class="md"></div><div class="md"></div>
+      <div class="mock-url">🔒 app.brinde.me/dashboard</div>
+    </div>
+    <div class="mock-body">
+      <div class="mc">
+        <div class="mc-label">Pedidos este mês</div>
+        <div class="mc-val">248</div>
+        <div class="mc-sub">↑ 32% vs mês anterior</div>
+      </div>
+      <div class="mc">
+        <div class="mc-label">Faturamento</div>
+        <div class="mc-val">R$89k</div>
+        <div class="mc-sub">↑ 18% vs mês anterior</div>
+      </div>
+      <div class="mc-chart">
+        <div class="mb" style="height:35%"></div>
+        <div class="mb" style="height:50%"></div>
+        <div class="mb" style="height:42%"></div>
+        <div class="mb" style="height:65%"></div>
+        <div class="mb" style="height:78%"></div>
+        <div class="mb" style="height:88%"></div>
+        <div class="mb" style="height:100%"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOGOS -->
+<div class="logos">
+  <p class="logos-label">Empresas que já usam o Brinde.me</p>
+  <div class="logos-row">
+    <span class="logo-item">CorpGifts</span>
+    <span class="logo-item">BrindesRJ</span>
+    <span class="logo-item">PromoStore</span>
+    <span class="logo-item">GiftBrasil</span>
+    <span class="logo-item">MarcaBrinde</span>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<div class="section" id="funcionalidades">
+  <p class="sec-label">O que você recebe</p>
+  <h2 class="sec-title">Tudo que sua empresa precisa para crescer</h2>
+  <p class="sec-sub">Chega de usar planilha, WhatsApp e e-mail ao mesmo tempo. O Brinde.me centraliza tudo.</p>
+  <div class="grid-3">
+    <div class="feat-card">
+      <div class="feat-icon ip">🌐</div>
+      <div class="feat-title">Site Profissional</div>
+      <div class="feat-desc">Sua empresa na internet com cara de grande. Site responsivo, rápido e otimizado para o Google — pronto em minutos.</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon io">📦</div>
+      <div class="feat-title">Catálogo de Produtos</div>
+      <div class="feat-desc">Exiba seu portfólio de brindes com fotos, descrições e preços. Clientes pedem orçamento direto pelo site.</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon ig">📋</div>
+      <div class="feat-title">Gestão de Pedidos</div>
+      <div class="feat-desc">Acompanhe todos os pedidos em um painel claro. Status, prazo, cliente — tudo organizado, sem perder nada.</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon ir">💬</div>
+      <div class="feat-title">CRM de Clientes</div>
+      <div class="feat-desc">Histórico completo de cada cliente, pedidos anteriores e preferências. Atenda melhor, venda mais.</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon ib">📊</div>
+      <div class="feat-title">Relatórios e Métricas</div>
+      <div class="feat-desc">Veja quanto vendeu, quais produtos são mais pedidos e como sua empresa está crescendo mês a mês.</div>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon ik">🚀</div>
+      <div class="feat-title">Orçamentos Automáticos</div>
+      <div class="feat-desc">Gere propostas profissionais em segundos. O cliente recebe por e-mail e aprova online — sem vai-e-vem.</div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="how" id="como-funciona">
+  <div class="how-inner">
+    <p class="how-label">Como funciona</p>
+    <h2 class="how-title">Da contratação ao primeiro pedido em menos de 24h</h2>
+    <div class="steps">
+      <div>
+        <div class="step-num">01</div>
+        <div class="step-title">Cria sua conta</div>
+        <div class="step-desc">Cadastro simples em 2 minutos. Sem cartão de crédito pra começar. Sem burocracia.</div>
+      </div>
+      <div>
+        <div class="step-num">02</div>
+        <div class="step-title">Configura sua loja</div>
+        <div class="step-desc">Adiciona seus produtos, fotos e preços. O sistema gera seu site automaticamente com sua identidade visual.</div>
+      </div>
+      <div>
+        <div class="step-num">03</div>
+        <div class="step-title">Compartilha com clientes</div>
+        <div class="step-desc">Envia o link do seu site. Clientes pedem orçamento, você responde e fecha pelo painel — simples assim.</div>
+      </div>
+      <div>
+        <div class="step-num">04</div>
+        <div class="step-title">Cresce com dados</div>
+        <div class="step-desc">Acompanha pedidos, faturamento e clientes em tempo real. Sabe exatamente onde investir para vender mais.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RESULTS -->
+<div class="res-section">
+  <p class="sec-label">Resultados reais</p>
+  <h2 class="sec-title">Números de quem já usa</h2>
+  <div class="results">
+    <div class="res-card">
+      <div class="res-val">+<span>40</span>%</div>
+      <div class="res-label">de aumento em pedidos no primeiro trimestre</div>
+    </div>
+    <div class="res-card">
+      <div class="res-val"><span>3</span>h</div>
+      <div class="res-label">economizadas por semana em tarefas manuais</div>
+    </div>
+    <div class="res-card">
+      <div class="res-val">+<span>300</span></div>
+      <div class="res-label">empresas de brindes na plataforma hoje</div>
+    </div>
+    <div class="res-card">
+      <div class="res-val"><span>98</span>%</div>
+      <div class="res-label">de satisfação dos usuários no suporte</div>
+    </div>
+  </div>
+
+  <p class="sec-label">O que dizem os clientes</p>
+  <h2 class="sec-title" style="margin-bottom:40px">Histórias de quem cresceu</h2>
+  <div class="testimonials">
+    <div class="tcard">
+      <div class="stars">★★★★★</div>
+      <p class="ttext">"Antes eu perdia pedido por e-mail, por WhatsApp, por onde fosse. Agora tudo chega no painel e eu nunca esqueço nada. Em 3 meses meu faturamento subiu 35%."</p>
+      <div class="tauthor">
+        <div class="avatar av1">M</div>
+        <div>
+          <div class="aname">Marcos Henrique</div>
+          <div class="arole">CEO, BrindesRJ</div>
+        </div>
+      </div>
+    </div>
+    <div class="tcard">
+      <div class="stars">★★★★★</div>
+      <p class="ttext">"O site que veio junto com o sistema é lindo. Clientes me elogiam. Antes eu nem tinha site, agora estou no Google e recebo contatos orgânicos toda semana."</p>
+      <div class="tauthor">
+        <div class="avatar av2">F</div>
+        <div>
+          <div class="aname">Fernanda Costa</div>
+          <div class="arole">Diretora, PromoStore SP</div>
+        </div>
+      </div>
+    </div>
+    <div class="tcard">
+      <div class="stars">★★★★★</div>
+      <p class="ttext">"O melhor investimento que fiz pra empresa. O suporte é ótimo e a plataforma não trava. Recomendo pra qualquer empresa de brindes que quer crescer de verdade."</p>
+      <div class="tauthor">
+        <div class="avatar av3">R</div>
+        <div>
+          <div class="aname">Rafael Oliveira</div>
+          <div class="arole">Sócio, GiftBrasil</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PRICING -->
+<div class="pricing" id="planos">
+  <div class="pricing-inner">
+    <p class="sec-label" style="color:var(--accent2)">Planos</p>
+    <h2 class="sec-title" style="margin:0 auto 12px;text-align:center">Simples, transparente, sem surpresa</h2>
+    <p class="sec-sub" style="margin:0 auto 0;text-align:center">Comece grátis por 14 dias. Cancele quando quiser.</p>
+    <div class="pgrid">
+      <div class="pcard">
+        <div class="pplan">Starter</div>
+        <div class="pprice">R$197</div>
+        <div class="ppsub">/mês · até 5 usuários</div>
+        <div class="pdiv"></div>
+        <ul class="pfeats">
+          <li><span class="ck">✓</span> Site profissional incluso</li>
+          <li><span class="ck">✓</span> Catálogo até 50 produtos</li>
+          <li><span class="ck">✓</span> Gestão de pedidos</li>
+          <li><span class="ck">✓</span> CRM básico</li>
+          <li><span class="ck">✓</span> Suporte por e-mail</li>
+        </ul>
+        <a href="#contato" class="pbtn pbtn-out">Começar grátis</a>
+      </div>
+      <div class="pcard featured">
+        <div class="pbadge">Mais popular</div>
+        <div class="pplan">Professional</div>
+        <div class="pprice">R$397</div>
+        <div class="ppsub">/mês · usuários ilimitados</div>
+        <div class="pdiv"></div>
+        <ul class="pfeats">
+          <li><span class="ck">✓</span> Tudo do Starter</li>
+          <li><span class="ck">✓</span> Produtos ilimitados</li>
+          <li><span class="ck">✓</span> Orçamentos automáticos</li>
+          <li><span class="ck">✓</span> Relatórios avançados</li>
+          <li><span class="ck">✓</span> Integração WhatsApp</li>
+          <li><span class="ck">✓</span> Suporte prioritário</li>
+        </ul>
+        <a href="#contato" class="pbtn pbtn-fill">Quero uma demo</a>
+      </div>
+      <div class="pcard">
+        <div class="pplan">Enterprise</div>
+        <div class="pprice">Sob consulta</div>
+        <div class="ppsub">para grandes operações</div>
+        <div class="pdiv"></div>
+        <ul class="pfeats">
+          <li><span class="ck">✓</span> Tudo do Professional</li>
+          <li><span class="ck">✓</span> Multi-filiais</li>
+          <li><span class="ck">✓</span> API personalizada</li>
+          <li><span class="ck">✓</span> Gestor de conta dedicado</li>
+          <li><span class="ck">✓</span> SLA garantido</li>
+        </ul>
+        <a href="#contato" class="pbtn pbtn-out">Falar com vendas</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta" id="contato">
+  <h2>Pronto para profissionalizar sua empresa de brindes?</h2>
+  <p>Mais de 300 empresas já usam o Brinde.me. A sua pode ser a próxima. Comece com 14 dias grátis, sem cartão.</p>
+  <a href="https://wa.me/5511998103532" class="btn-primary" target="_blank" rel="noopener">
+    Falar com um especialista →
+  </a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="flogo">Brinde<span>.me</span></div>
+  <p class="ftext">A plataforma completa para empresas de brindes corporativos crescerem com tecnologia.</p>
+  <div class="flinks">
+    <a href="#funcionalidades">Funcionalidades</a>
+    <a href="#como-funciona">Como funciona</a>
+    <a href="#planos">Planos</a>
+    <a href="#contato">Contato</a>
+  </div>
+  <p class="fcopy">© 2025 Brinde.me — Todos os direitos reservados</p>
+</footer>
+
+<!-- WA FLOAT -->
+<a href="https://wa.me/5511998103532" target="_blank" rel="noopener" class="wa" aria-label="Fale no WhatsApp">
+  <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+    <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.555 4.118 1.528 5.847L0 24l6.336-1.51A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.807 9.807 0 01-5.003-1.368l-.36-.214-3.727.888.927-3.625-.235-.373A9.796 9.796 0 012.182 12C2.182 6.58 6.58 2.182 12 2.182c5.42 0 9.818 4.398 9.818 9.818 0 5.42-4.398 9.818-9.818 9.818z"/>
+  </svg>
+</a>
+
+</body>
+</html>
