@@ -893,6 +893,60 @@ function showToast(msg, green=false){
   setTimeout(()=>t.classList.remove('show'), 3500);
 }
 
+// ===== DEMO RESERVATIONS (remove after testing) =====
+function loadDemoReservations(){
+  const existing = getRes();
+  if(existing.length > 0) return; // don't overwrite real data
+  const demos = [
+    {
+      id: genId(),
+      name: 'João Silva',
+      phone: '(11) 98765-4321',
+      email: 'joao@email.com',
+      guests: 'até 20',
+      occasion: 'Festa / Evento',
+      obs: 'Aniversário de 15 anos',
+      checkin: getNextDate(6),
+      checkout: getNextDate(8),
+      status: 'paid',
+      createdAt: new Date().toISOString()
+    },
+    {
+      id: genId(),
+      name: 'Maria Santos',
+      phone: '(11) 91234-5678',
+      email: 'maria@email.com',
+      guests: 'até 15',
+      occasion: 'Formatura',
+      obs: 'Formatura de engenharia',
+      checkin: getNextDate(13),
+      checkout: getNextDate(15),
+      status: 'pending',
+      createdAt: new Date().toISOString()
+    },
+    {
+      id: genId(),
+      name: 'Carlos Oliveira',
+      phone: '(11) 99999-0000',
+      email: 'carlos@email.com',
+      guests: 'até 25',
+      occasion: 'Aniversário',
+      obs: '',
+      checkin: getNextDate(20),
+      checkout: getNextDate(22),
+      status: 'paid',
+      createdAt: new Date().toISOString()
+    }
+  ];
+  saveRes(demos);
+}
+function getNextDate(daysFromNow){
+  const d = new Date();
+  d.setDate(d.getDate() + daysFromNow);
+  return d.toISOString().split('T')[0];
+}
+loadDemoReservations();
+
 // ===== INIT =====
 renderCal();
 renderGallery();
