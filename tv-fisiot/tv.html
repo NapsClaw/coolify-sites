@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>TV Fisiot</title>
+<style>
+body{margin:0;padding:0;background:#111;color:#fff;font-family:Arial,sans-serif;overflow:hidden;width:100vw;height:100vh}
+#header{background:#CC0000;padding:12px 24px;display:table;width:100%;box-sizing:border-box}
+#header-left{display:table-cell;vertical-align:middle}
+#header-right{display:table-cell;vertical-align:middle;text-align:right}
+#logo-text{font-size:24px;font-weight:bold;color:#fff}
+#logo-sub{font-size:11px;color:rgba(255,255,255,0.8);text-transform:uppercase;letter-spacing:2px}
+#clock{font-size:42px;font-weight:bold;color:#fff}
+#date{font-size:11px;color:rgba(255,255,255,0.8)}
+#main{display:table;width:100%;height:calc(100vh - 80px)}
+#slide-area{display:table-cell;vertical-align:middle;text-align:center;padding:30px}
+#sidebar{display:table-cell;vertical-align:top;width:240px;background:#1a1a1a;border-left:1px solid #333;padding:16px}
+#slide-title{font-size:36px;font-weight:bold;color:#fff;margin-bottom:16px;line-height:1.2}
+#slide-title .hl{color:#FF4444}
+#slide-sub{font-size:18px;color:rgba(255,255,255,0.75);margin-bottom:20px;line-height:1.5}
+#slide-badge{display:inline-block;background:#CC0000;color:#fff;font-size:12px;font-weight:bold;padding:6px 18px;border-radius:20px;letter-spacing:1px;text-transform:uppercase}
+.sidebar-title{font-size:10px;font-weight:bold;color:#FFD700;text-transform:uppercase;letter-spacing:2px;margin-bottom:12px}
+.dot-wrap{display:table;width:100%}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#444;margin:3px}
+.dot.on{background:#CC0000}
+#progress{position:absolute;bottom:0;left:0;height:3px;background:#CC0000;transition:width 0.1s linear}
+.slide-img{max-width:100%;max-height:300px;border-radius:12px;margin-bottom:16px;display:block;margin-left:auto;margin-right:auto}
+#chamada-bar{background:#1a1a1a;border-top:1px solid #333;padding:8px 24px;font-size:14px;color:rgba(255,255,255,0.6);position:fixed;bottom:0;left:0;right:0}
+#chamada-bar span{color:#FFD700;font-weight:bold}
+</style>
+</head>
+<body>
+
+<div id="header">
+  <div id="header-left">
+    <div id="logo-text">&#9829; Fisiot &amp; Vc</div>
+    <div id="logo-sub">Cl&iacute;nica Fisiot &bull; 30 Anos</div>
+  </div>
+  <div id="header-right">
+    <div id="clock">00:00</div>
+    <div id="date">Carregando...</div>
+  </div>
+</div>
+
+<div id="main">
+  <div id="slide-area">
+    <div id="slide-title">Carregando...</div>
+    <div id="slide-sub"></div>
+    <div id="slide-badge" style="display:none"></div>
+    <div id="progress"></div>
+  </div>
+  <div id="sidebar">
+    <div class="sidebar-title">Slides</div>
+    <div id="dots" class="dot-wrap"></div>
+    <br/>
+    <div class="sidebar-title">Contato</div>
+    <div style="font-size:12px;color:rgba(255,255,255,0.7);line-height:1.8">
+      (31) 98337-7662<br/>
+      (31) 98756-9375<br/>
+      <span style="color:#FFD700">@fisiotfisioterapia</span><br/>
+      Lagoa Santa MG
+    </div>
+    <br/>
+    <div class="sidebar-title">Hor&aacute;rio</div>
+    <div style="font-size:12px;color:rgba(255,255,255,0.7);line-height:1.8">
+      Seg&ndash;Sex<br/>
+      Manh&atilde;: 7h &ndash; 12h<br/>
+      Tarde: 13h &ndash; 18h
+    </div>
+  </div>
+</div>
+
+<div id="chamada-bar">Chamada: <span id="chamada-txt">Aguardando...</span></div>
+
+<script>
+var slides = [
+  {t:"Fisiot <span class='hl'>30 Anos</span>", s:"Cl&iacute;nica de Fisioterapia e Pilates em Lagoa Santa MG", b:"Desde 1994"},
+  {t:"Programa <span class='hl'>Idoso Presente</span>", s:"Cuidado especializado para melhor idade. Fisioterapia, Pilates e muito mais!", b:"Idoso Presente"},
+  {t:"Dra. <span class='hl'>Keila Marques</span>", s:"Fisioterapeuta especialista. Atendimento humanizado e personalizado.", b:"Diretora Cl&iacute;nica"},
+  {t:"<span class='hl'>Loja Fisiot</span>", s:"Produtos ortop&eacute;dicos e de bem-estar. Consulte nosso cat&aacute;logo!", b:"Produtos"},
+  {t:"Nossos <span class='hl'>Atendimentos</span>", s:"Ventosaterapia &bull; Pilates &bull; Neuro &bull; Ortopedia &bull; Geriatria", b:"Especilidades"},
+  {t:"<span class='hl'>Leva &amp; Traz</span> Fisiot", s:"N&atilde;o deixe de se cuidar por dificuldade de vir at&eacute; a Fisiot. Transporte especializado!", b:"(31) 99259-4953"},
+  {t:"Ana Clara <span class='hl'>Esportes</span>", s:"Fisioterapia esportiva de alto rendimento. Campeonato Nacional!", b:"Esportiva"},
+  {t:"<span class='hl'>Pilates</span> Cl&iacute;nico", s:"Fortalecimento, postura e qualidade de vida. Turmas dispon&iacute;veis!", b:"Pilates"},
+  {t:"<span class='hl'>Neuro</span>fisioterapia", s:"Reabilita&ccedil;&atilde;o neurol&oacute;gica especializada. Cuidado completo para voc&ecirc;.", b:"Neuro"},
+  {t:"Melhor <span class='hl'>Idade</span>", s:"Programa exclusivo para terceira idade. Mais sa&uacute;de e independ&ecirc;ncia!", b:"Geriatria"},
+  {t:"<span class='hl'>Ventosaterapia</span>", s:"T&eacute;cnica milenar para al&iacute;vio de dores e bem-estar. Experimente!", b:"Tratamento"},
+  {t:"Fisiot &amp; <span class='hl'>Pilates</span>", s:"Aulas em grupo e individuais. Todos os n&iacute;veis. Agende sua aula!", b:"Pilates"},
+  {t:"<span class='hl'>Reabilita&ccedil;&atilde;o</span> Completa", s:"Da avalia&ccedil;&atilde;o ao tratamento. Equipe multidisciplinar dedicada a voc&ecirc;.", b:"Reabilita&ccedil;&atilde;o"},
+  {t:"<span class='hl'>Agende</span> sua Consulta", s:"WhatsApp: (31) 98337-7662 ou (31) 98756-9375. Venha nos conhecer!", b:"Agende J&aacute;"},
+  {t:"<span class='hl'>30 Anos</span> de Cuidado", s:"Tr&ecirc;s d&eacute;cadas cuidando da sa&uacute;de dos moradores de Lagoa Santa e regi&atilde;o.", b:"Desde 1994"},
+  {t:"Fisiot <span class='hl'>Online</span>", s:"Acompanhe nossas novidades! @fisiotfisioterapia nas redes sociais.", b:"Redes Sociais"},
+  {t:"Nossa <span class='hl'>Equipe</span>", s:"Dras. B&aacute;rbara, L&iacute;via, Priscila, Daniela, Nathalia, K&ecirc;nia, Mirian e mais!", b:"Profissionais"},
+  {t:"<span class='hl'>Agenda</span> Manh&atilde;", s:"G1: Dra. B&aacute;rbara &bull; G2: Dra. L&iacute;via &bull; G3: Dra. Priscila (Seg/Qua/Sex)", b:"Manh&atilde;"},
+  {t:"<span class='hl'>Agenda</span> Tarde", s:"G1: Dra. Nathalia (Seg/Qua/Sex) &bull; G1: Dra. K&ecirc;nia (Ter/Qui) &bull; G2: Dra. Mirian", b:"Tarde"},
+  {t:"<span class='hl'>Fisiot</span> &mdash; Sempre com Voc&ecirc;", s:"Rua Dr. Benjamin Vieira, 27 &mdash; Joana D'Arc, Lagoa Santa MG &bull; CEP 33239-238", b:"Venha nos visitar"}
+];
+
+var N = slides.length;
+var cur = 0;
+var DURATION = 8000;
+var startTime;
+var timer;
+
+// Criar dots
+var dotsEl = document.getElementById('dots');
+for(var i=0;i<N;i++){
+  var d = document.createElement('span');
+  d.className = 'dot';
+  d.id = 'dot'+i;
+  dotsEl.appendChild(d);
+}
+
+function showSlide(n){
+  cur = n;
+  var s = slides[n];
+  document.getElementById('slide-title').innerHTML = s.t;
+  document.getElementById('slide-sub').innerHTML = s.s;
+  var badge = document.getElementById('slide-badge');
+  if(s.b){
+    badge.innerHTML = s.b;
+    badge.style.display = 'inline-block';
+  } else {
+    badge.style.display = 'none';
+  }
+  // dots
+  for(var i=0;i<N;i++){
+    var d = document.getElementById('dot'+i);
+    if(d) d.className = i===n ? 'dot on' : 'dot';
+  }
+  // progress bar
+  startTime = Date.now();
+  updateProgress();
+}
+
+function updateProgress(){
+  var el = document.getElementById('progress');
+  var elapsed = Date.now() - startTime;
+  var pct = Math.min(100, (elapsed / DURATION) * 100);
+  el.style.width = pct + '%';
+  if(pct < 100){
+    setTimeout(updateProgress, 100);
+  }
+}
+
+function nextSlide(){
+  var next = (cur + 1) % N;
+  showSlide(next);
+}
+
+function startTimer(){
+  clearInterval(timer);
+  timer = setInterval(nextSlide, DURATION);
+}
+
+// Clock
+function updateClock(){
+  var now = new Date();
+  var h = now.getHours();
+  var m = now.getMinutes();
+  var s = now.getSeconds();
+  document.getElementById('clock').innerHTML =
+    (h<10?'0':'')+h+':'+(m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+  var days = ['Domingo','Segunda','Ter&ccedil;a','Quarta','Quinta','Sexta','S&aacute;bado'];
+  var months = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  document.getElementById('date').innerHTML =
+    days[now.getDay()]+', '+now.getDate()+' '+months[now.getMonth()]+' '+now.getFullYear();
+}
+
+// Chamada paciente
+function updateChamada(){
+  try {
+    var p = localStorage.getItem('fisiot_patients');
+    if(p){
+      var list = JSON.parse(p);
+      if(list && list.length > 0){
+        var last = list[list.length-1];
+        document.getElementById('chamada-txt').innerHTML =
+          (last.name||'Paciente') + ' &mdash; ' + (last.room||'Consultório') + ' &mdash; ' + (last.prof||'');
+      }
+    }
+  } catch(e){}
+}
+
+// Init
+showSlide(0);
+startTimer();
+setInterval(updateClock, 1000);
+setInterval(updateChamada, 2000);
+updateClock();
+</script>
+</body>
+</html>
