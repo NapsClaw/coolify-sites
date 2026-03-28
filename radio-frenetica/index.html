@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rádio Frenética Web | Grupo RV Propaganda — Resende, RJ</title>
+  <meta name="description" content="Ouça a Rádio Frenética Web ao vivo! A rádio online do Grupo RV Propaganda em Resende, RJ. Música, entretenimento e publicidade." />
+  <meta name="keywords" content="rádio frenética, rádio web, grupo rv propaganda, resende rj, rádio online, publicidade resende" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #FFD700;
+      --bg2: #FFC400;
+      --bg3: #FFB800;
+      --accent: #CC1111;
+      --accent2: #e63030;
+      --gold: #FF8C00;
+      --text: #1a0000;
+      --text2: #6b1010;
+      --border: rgba(180,0,0,0.18);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(255,196,0,0.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 2px solid rgba(180,0,0,0.3);
+      padding: 0 20px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      letter-spacing: 2px;
+      color: var(--text);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-logo span {
+      color: var(--accent);
+    }
+
+    .nav-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: pulse-dot 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.3); }
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text2);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      padding: 80px 20px 60px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      background: radial-gradient(ellipse at 50% 0%, rgba(255,140,0,0.3) 0%, transparent 55%),
+                  radial-gradient(ellipse at 80% 80%, rgba(204,17,17,0.1) 0%, transparent 45%),
+                  var(--bg);
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.015'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") repeat;
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(230,57,70,0.15);
+      border: 1px solid rgba(230,57,70,0.3);
+      border-radius: 100px;
+      padding: 6px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 24px;
+      letter-spacing: 0.5px;
+    }
+
+    .live-indicator {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: pulse-dot 1.5s ease-in-out infinite;
+    }
+
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(56px, 16vw, 120px);
+      line-height: 0.9;
+      letter-spacing: 3px;
+      margin-bottom: 8px;
+      position: relative;
+    }
+
+    .hero-title .line1 { color: var(--text); display: block; }
+    .hero-title .line2 { color: var(--accent); display: block; }
+
+    .hero-subtitle {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(20px, 5vw, 36px);
+      letter-spacing: 6px;
+      color: var(--text2);
+      margin-bottom: 32px;
+    }
+
+    .hero-desc {
+      font-size: 16px;
+      color: var(--text2);
+      max-width: 460px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+    }
+
+    /* PLAYER */
+    .player-card {
+      background: #fff9e0;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 24px rgba(180,0,0,0.15);
+      border-radius: 20px;
+      padding: 28px 24px;
+      width: 100%;
+      max-width: 400px;
+      margin: 0 auto 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .player-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+    }
+
+    .player-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .player-station {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18px;
+      letter-spacing: 2px;
+      color: var(--text);
+    }
+
+    .player-live-badge {
+      background: var(--accent);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      padding: 3px 10px;
+      border-radius: 100px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    /* Audio waveform visual */
+    .waveform {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      height: 32px;
+      margin-bottom: 20px;
+      justify-content: center;
+    }
+
+    .waveform-bar {
+      width: 3px;
+      border-radius: 2px;
+      background: linear-gradient(to top, var(--accent), var(--accent2));
+      animation: wave 1.2s ease-in-out infinite;
+    }
+
+    .waveform-bar:nth-child(1) { height: 12px; animation-delay: 0s; }
+    .waveform-bar:nth-child(2) { height: 20px; animation-delay: 0.1s; }
+    .waveform-bar:nth-child(3) { height: 28px; animation-delay: 0.2s; }
+    .waveform-bar:nth-child(4) { height: 16px; animation-delay: 0.3s; }
+    .waveform-bar:nth-child(5) { height: 24px; animation-delay: 0.4s; }
+    .waveform-bar:nth-child(6) { height: 32px; animation-delay: 0.5s; }
+    .waveform-bar:nth-child(7) { height: 20px; animation-delay: 0.6s; }
+    .waveform-bar:nth-child(8) { height: 14px; animation-delay: 0.7s; }
+    .waveform-bar:nth-child(9) { height: 26px; animation-delay: 0.8s; }
+    .waveform-bar:nth-child(10) { height: 18px; animation-delay: 0.9s; }
+    .waveform-bar:nth-child(11) { height: 22px; animation-delay: 1.0s; }
+    .waveform-bar:nth-child(12) { height: 10px; animation-delay: 1.1s; }
+
+    .waveform.paused .waveform-bar {
+      animation-play-state: paused;
+      opacity: 0.3;
+    }
+
+    @keyframes wave {
+      0%, 100% { transform: scaleY(0.4); }
+      50% { transform: scaleY(1); }
+    }
+
+    .play-btn {
+      width: 100%;
+      height: 52px;
+      border-radius: 12px;
+      border: none;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: transform 0.2s, opacity 0.2s;
+      letter-spacing: 0.5px;
+    }
+
+    .play-btn:hover { transform: translateY(-1px); opacity: 0.9; }
+    .play-btn:active { transform: translateY(0); }
+
+    .play-icon { font-size: 18px; }
+
+    audio { display: none; }
+
+    .volume-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .volume-icon { font-size: 16px; color: var(--text2); }
+
+    .volume-slider {
+      flex: 1;
+      -webkit-appearance: none;
+      height: 4px;
+      border-radius: 2px;
+      background: #FFB800;
+      outline: none;
+    }
+
+    .volume-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: var(--accent);
+      cursor: pointer;
+    }
+
+    /* SOBRE */
+    .section {
+      padding: 80px 20px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(36px, 8vw, 60px);
+      letter-spacing: 2px;
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+
+    .section-text {
+      font-size: 16px;
+      color: var(--text2);
+      line-height: 1.8;
+      max-width: 600px;
+    }
+
+    .sobre-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 40px;
+      margin-top: 48px;
+    }
+
+    @media (min-width: 768px) {
+      .sobre-grid {
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+      }
+    }
+
+    .sobre-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .stat-box {
+      background: #fff9e0;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px 20px;
+      text-align: center;
+      box-shadow: 0 2px 12px rgba(180,0,0,0.1);
+    }
+
+    .stat-number {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 42px;
+      letter-spacing: 1px;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: var(--text2);
+      font-weight: 500;
+    }
+
+    /* SERVIÇOS */
+    .services-bg {
+      background: #FFC400;
+      padding: 80px 20px;
+    }
+
+    .services-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-top: 48px;
+    }
+
+    @media (min-width: 600px) {
+      .services-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (min-width: 900px) {
+      .services-grid { grid-template-columns: 1fr 1fr 1fr; }
+    }
+
+    .service-card {
+      background: #fff9e0;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 24px;
+      transition: border-color 0.2s, transform 0.2s;
+      box-shadow: 0 2px 10px rgba(180,0,0,0.08);
+    }
+
+    .service-card:hover {
+      border-color: rgba(230,57,70,0.4);
+      transform: translateY(-3px);
+    }
+
+    .service-icon {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      background: rgba(230,57,70,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      margin-bottom: 16px;
+    }
+
+    .service-name {
+      font-weight: 700;
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    .service-desc {
+      font-size: 14px;
+      color: var(--text2);
+      line-height: 1.6;
+    }
+
+    /* ANUNCIE */
+    .anuncie-section {
+      padding: 80px 20px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .anuncie-card {
+      background: linear-gradient(135deg, rgba(230,57,70,0.12) 0%, rgba(255,107,53,0.08) 100%);
+      border: 1px solid rgba(230,57,70,0.25);
+      border-radius: 24px;
+      padding: 48px 32px;
+      text-align: center;
+    }
+
+    .anuncie-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(36px, 8vw, 56px);
+      letter-spacing: 2px;
+      margin-bottom: 16px;
+    }
+
+    .anuncie-text {
+      font-size: 16px;
+      color: var(--text2);
+      max-width: 500px;
+      margin: 0 auto 32px;
+      line-height: 1.7;
+    }
+
+    .anuncie-items {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-width: 380px;
+      margin: 0 auto 36px;
+      text-align: left;
+    }
+
+    .anuncie-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 15px;
+      color: var(--text);
+    }
+
+    .anuncie-item::before {
+      content: '✓';
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      background: rgba(230,57,70,0.2);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 16px 32px;
+      border-radius: 12px;
+      text-decoration: none;
+      transition: transform 0.2s, opacity 0.2s;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      max-width: 320px;
+    }
+
+    .btn-primary:hover { transform: translateY(-2px); opacity: 0.9; }
+
+    /* CONTATO */
+    .contato-bg {
+      background: #FFC400;
+      padding: 80px 20px;
+    }
+
+    .contato-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .contato-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+      margin-top: 48px;
+    }
+
+    @media (min-width: 768px) {
+      .contato-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    .contato-info {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .contato-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .contato-icon {
+      width: 44px; height: 44px;
+      border-radius: 10px;
+      background: rgba(230,57,70,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .contato-label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text2);
+      margin-bottom: 4px;
+    }
+
+    .contato-value {
+      font-size: 15px;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .contato-form {
+      background: #fff9e0;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px 24px;
+    }
+
+    .form-title {
+      font-weight: 700;
+      font-size: 18px;
+      margin-bottom: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text2);
+      margin-bottom: 8px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      background: #fff9e0;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 16px;
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: rgba(230,57,70,0.5);
+    }
+
+    .form-group textarea {
+      height: 100px;
+      resize: none;
+    }
+
+    /* FOOTER */
+    footer {
+      background: #FFB800;
+      border-top: 2px solid rgba(180,0,0,0.3);
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28px;
+      letter-spacing: 3px;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .footer-logo span { color: var(--accent); }
+
+    .footer-sub {
+      font-size: 13px;
+      color: var(--text2);
+      margin-bottom: 24px;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 24px;
+      margin-bottom: 32px;
+      list-style: none;
+    }
+
+    .footer-links a {
+      color: var(--text2);
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--text); }
+
+    .footer-divider {
+      height: 1px;
+      background: var(--border);
+      margin-bottom: 24px;
+    }
+
+    .footer-copy {
+      font-size: 13px;
+      color: var(--text2);
+    }
+
+    /* WhatsApp float */
+    .wa-float {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 200;
+      width: 60px; height: 60px;
+      border-radius: 50%;
+      background: #25D366;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+      text-decoration: none;
+      transition: transform 0.2s;
+    }
+
+    .wa-float:hover { transform: scale(1.1); }
+
+    .wa-float svg { width: 28px; height: 28px; fill: #fff; }
+
+    /* Animations */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Divider */
+    .divider {
+      height: 1px;
+      background: var(--border);
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#inicio" class="nav-logo">
+      <img src="logo.jpg" alt="Rádio Frenética" style="height:44px;width:auto;object-fit:contain;" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="#sobre">Sobre</a></li>
+      <li><a href="#servicos">Serviços</a></li>
+      <li><a href="#anuncie">Anuncie</a></li>
+      <li><a href="#contato">Contato</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="inicio">
+    <img src="logo.jpg" alt="Rádio Frenética Web" style="width:260px;height:auto;object-fit:contain;margin-bottom:20px;filter:drop-shadow(0 6px 24px rgba(180,0,0,0.25));" />
+
+    <div class="hero-badge">
+      <span class="live-indicator"></span>
+      AO VIVO AGORA
+    </div>
+
+    <p class="hero-subtitle" style="margin-bottom:8px;">A ÚNICA DO BRASIL</p>
+
+    <p class="hero-desc">
+      Sua rádio online em Resende, RJ. Música, entretenimento e a voz do Grupo RV Propaganda no dial digital.
+    </p>
+
+    <!-- Player -->
+    <div class="player-card fade-in">
+      <div class="player-header">
+        <span class="player-station">FRENÉTICA WEB</span>
+        <span class="player-live-badge">
+          <span class="live-indicator"></span>
+          AO VIVO
+        </span>
+      </div>
+
+      <div class="waveform paused" id="waveform">
+        <div class="waveform-bar"></div>
+        <div class="waveform-bar"></div>
+        <div class="waveform-bar"></div>
+        <div class="waveform-bar"></div>
+        <div class="waveform-bar"></div>
+        <div class="waveform-bar"></div>
+        <div class="waveform-bar"></div>
+        <div class="waveform-bar"></div>
+        <div class="waveform-bar"></div>
+        <div class="waveform-bar"></div>
+        <div class="waveform-bar"></div>
+        <div class="waveform-bar"></div>
+      </div>
+
+      <audio id="radio-audio" preload="none">
+        <source src="https://servidor30.brlogic.com:8244/live" type="audio/mpeg" />
+      </audio>
+
+      <button class="play-btn" id="play-btn" onclick="togglePlay()">
+        <span class="play-icon" id="play-icon">▶</span>
+        <span id="play-text">OUVIR AO VIVO</span>
+      </button>
+
+      <div class="volume-row">
+        <span class="volume-icon">🔊</span>
+        <input type="range" class="volume-slider" min="0" max="1" step="0.05" value="0.8" oninput="setVolume(this.value)" />
+      </div>
+    </div>
+
+    <a href="https://wa.me/5524998249952" class="btn-primary" style="display:inline-flex;">
+      💬 Fale com a gente
+    </a>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- SOBRE -->
+  <section class="section" id="sobre">
+    <div class="sobre-grid">
+      <div class="fade-in">
+        <p class="section-label">Quem somos</p>
+        <h2 class="section-title">GRUPO RV<br>PROPAGANDA</h2>
+        <p class="section-text">
+          Somos uma empresa de comunicação e publicidade com sede em Resende, RJ. 
+          Por meio da Rádio Frenética Web, levamos entretenimento, notícias e 
+          publicidade eficiente para toda a região do Sul Fluminense e para o Brasil inteiro pelo streaming digital.
+        </p>
+        <p class="section-text" style="margin-top: 16px;">
+          Conectamos marcas ao seu público de forma autêntica, criativa e com o alcance que só a rádio proporciona.
+        </p>
+      </div>
+
+      <div class="sobre-stats fade-in">
+        <div class="stat-box">
+          <div class="stat-number">24h</div>
+          <div class="stat-label">No ar por dia</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">100%</div>
+          <div class="stat-label">Digital e online</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">RJ</div>
+          <div class="stat-label">Resende & região</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">BR</div>
+          <div class="stat-label">Alcance nacional</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- SERVIÇOS -->
+  <div class="services-bg" id="servicos">
+    <div class="services-inner">
+      <div class="fade-in">
+        <p class="section-label">O que fazemos</p>
+        <h2 class="section-title">NOSSOS<br>SERVIÇOS</h2>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-card fade-in">
+          <div class="service-icon">🎙️</div>
+          <h3 class="service-name">Rádio Web ao Vivo</h3>
+          <p class="service-desc">Transmissão 24 horas por dia com programação variada, música e informação para toda a região.</p>
+        </div>
+        <div class="service-card fade-in">
+          <div class="service-icon">📢</div>
+          <h3 class="service-name">Publicidade no Rádio</h3>
+          <p class="service-desc">Spots, jingles e anúncios veiculados durante a programação para impactar o seu público.        </p>
+        </div>
+        <div class="service-card fade-in">
+          <div class="service-icon">🎵</div>
+          <h3 class="service-name">Produção de Conteúdo</h3>
+          <p class="service-desc">Criação de jingles, vinhetas e conteúdo sonoro personalizado para a sua marca.</p>
+        </div>
+        <div class="service-card fade-in">
+          <div class="service-icon">📱</div>
+          <h3 class="service-name">Divulgação Digital</h3>
+          <p class="service-desc">Promoção nas redes sociais integrada às ações da rádio para ampliar o alcance da sua campanha.</p>
+        </div>
+        <div class="service-card fade-in">
+          <div class="service-icon">🤝</div>
+          <h3 class="service-name">Parcerias e Patrocínios</h3>
+          <p class="service-desc">Patrocine programas, quadros especiais e eventos transmitidos pela Rádio Frenética Web.</p>
+        </div>
+        <div class="service-card fade-in">
+          <div class="service-icon">🌐</div>
+          <h3 class="service-name">Streaming Online</h3>
+          <p class="service-desc">Disponível em qualquer dispositivo, 24h por dia, de qualquer lugar do Brasil.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ANUNCIE -->
+  <section class="anuncie-section" id="anuncie">
+    <div class="anuncie-card fade-in">
+      <p class="section-label" style="margin-bottom:12px;">Para empresas</p>
+      <h2 class="anuncie-title">ANUNCIE NA<br><span style="color:var(--accent)">FRENÉTICA</span></h2>
+      <p class="anuncie-text">
+        Alcance milhares de ouvintes em Resende e no Brasil inteiro. Sua marca na voz da rádio que nunca para.
+      </p>
+
+      <div class="anuncie-items">
+        <div class="anuncie-item">Spots e vinhetas personalizados</div>
+        <div class="anuncie-item">Programas patrocinados</div>
+        <div class="anuncie-item">Pacotes a partir de R$150/mês</div>
+        <div class="anuncie-item">Relatório de veiculação</div>
+        <div class="anuncie-item">Criação do anúncio incluída</div>
+      </div>
+
+      <a href="https://wa.me/5524998249952?text=Ol%C3%A1!%20Quero%20anunciar%20na%20R%C3%A1dio%20Fren%C3%A9tica%20Web!" class="btn-primary" target="_blank">
+        📲 Quero anunciar agora
+      </a>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- CONTATO -->
+  <div class="contato-bg" id="contato">
+    <div class="contato-inner">
+      <div class="fade-in">
+        <p class="section-label">Fale conosco</p>
+        <h2 class="section-title">CONTATO</h2>
+      </div>
+
+      <div class="contato-grid">
+        <div class="contato-info fade-in">
+          <div class="contato-item">
+            <div class="contato-icon">📍</div>
+            <div>
+              <div class="contato-label">Localização</div>
+              <div class="contato-value">Resende, RJ — Sul Fluminense</div>
+            </div>
+          </div>
+          <div class="contato-item">
+            <div class="contato-icon">📱</div>
+            <div>
+              <div class="contato-label">WhatsApp</div>
+              <div class="contato-value">(24) 99824-9952</div>
+            </div>
+          </div>
+          <div class="contato-item">
+            <div class="contato-icon">🎙️</div>
+            <div>
+              <div class="contato-label">Transmissão</div>
+              <div class="contato-value">24 horas por dia, 7 dias por semana</div>
+            </div>
+          </div>
+          <div class="contato-item">
+            <div class="contato-icon">📻</div>
+            <div>
+              <div class="contato-label">Rádio</div>
+              <div class="contato-value">Rádio Frenética Web — Grupo RV Propaganda</div>
+            </div>
+          </div>
+          <a href="https://wa.me/5524998249952?text=Ol%C3%A1!%20Gostaria%20de%20mais%20informa%C3%A7%C3%B5es." class="btn-primary" target="_blank" style="margin-top:8px;">
+            💬 Chamar no WhatsApp
+          </a>
+        </div>
+
+        <div class="contato-form fade-in">
+          <p class="form-title">Envie uma mensagem</p>
+          <form onsubmit="sendForm(event)">
+            <div class="form-group">
+              <label>Seu nome</label>
+              <input type="text" id="form-name" placeholder="João Silva" required />
+            </div>
+            <div class="form-group">
+              <label>WhatsApp / Telefone</label>
+              <input type="tel" id="form-phone" placeholder="(24) 99999-9999" required />
+            </div>
+            <div class="form-group">
+              <label>Assunto</label>
+              <input type="text" id="form-subject" placeholder="Quero anunciar / Sugestão / Outro" />
+            </div>
+            <div class="form-group">
+              <label>Mensagem</label>
+              <textarea id="form-msg" placeholder="Escreva aqui..." required></textarea>
+            </div>
+            <button type="submit" class="btn-primary" style="max-width:100%;">
+              Enviar via WhatsApp
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <img src="logo.jpg" alt="Rádio Frenética Web" style="height:70px;width:auto;object-fit:contain;margin-bottom:12px;" />
+    <div class="footer-logo">RÁDIO <span>FRENÉTICA</span> WEB</div>
+    <p class="footer-sub">Grupo RV Propaganda — Resende, RJ</p>
+
+    <ul class="footer-links">
+      <li><a href="#inicio">Início</a></li>
+      <li><a href="#sobre">Sobre</a></li>
+      <li><a href="#servicos">Serviços</a></li>
+      <li><a href="#anuncie">Anuncie</a></li>
+      <li><a href="#contato">Contato</a></li>
+    </ul>
+
+    <div class="footer-divider"></div>
+    <p class="footer-copy">© 2025 Rádio Frenética Web — Grupo RV Propaganda. Todos os direitos reservados.</p>
+  </footer>
+
+  <!-- WhatsApp float -->
+  <a href="https://wa.me/5524998249952" target="_blank" class="wa-float" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+
+  <script>
+    // === PLAYER ===
+    const audio = document.getElementById('radio-audio');
+    const playBtn = document.getElementById('play-btn');
+    const playIcon = document.getElementById('play-icon');
+    const playText = document.getElementById('play-text');
+    const waveform = document.getElementById('waveform');
+    let playing = false;
+
+    function togglePlay() {
+      if (!playing) {
+        audio.play().then(() => {
+          playing = true;
+          playIcon.textContent = '⏸';
+          playText.textContent = 'PAUSAR';
+          waveform.classList.remove('paused');
+        }).catch(e => {
+          console.log('Audio error:', e);
+        });
+      } else {
+        audio.pause();
+        playing = false;
+        playIcon.textContent = '▶';
+        playText.textContent = 'OUVIR AO VIVO';
+        waveform.classList.add('paused');
+      }
+    }
+
+    function setVolume(val) {
+      audio.volume = parseFloat(val);
+    }
+
+    // === FADE IN ON SCROLL ===
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // === CONTACT FORM → WhatsApp ===
+    function sendForm(e) {
+      e.preventDefault();
+      const name = document.getElementById('form-name').value;
+      const phone = document.getElementById('form-phone').value;
+      const subject = document.getElementById('form-subject').value;
+      const msg = document.getElementById('form-msg').value;
+      const text = encodeURIComponent(`Olá! Meu nome é ${name}, telefone ${phone}.\n\nAssunto: ${subject}\n\n${msg}`);
+      window.open(`https://wa.me/5524998249952?text=${text}`, '_blank');
+    }
+  </script>
+
+</body>
+</html>
