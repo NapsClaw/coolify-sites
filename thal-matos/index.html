@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thal Matos | Forro Folemoleque</title>
+  <meta name="description" content="Thal Matos e o grupo Forro Folemoleque - musica, shows e muito forro! Contrate agora via WhatsApp.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #080604;
+      --bg2: #110d06;
+      --bg3: #1a1308;
+      --accent: #f5820a;
+      --accent2: #e04a0e;
+      --gold: #f0c040;
+      --text: #f5f0e8;
+      --text2: #c8b89a;
+      --text3: #8a7a60;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 14px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: linear-gradient(to bottom, rgba(8,6,4,0.97), rgba(8,6,4,0));
+    }
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 2px;
+      background: linear-gradient(135deg, var(--accent2), var(--accent), var(--gold));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      text-decoration: none;
+    }
+    .nav-links { display: none; gap: 28px; list-style: none; }
+    .nav-links a { color: var(--text2); text-decoration: none; font-size: 13px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-cta {
+      background: linear-gradient(135deg, var(--accent2), var(--accent));
+      color: #fff; border: none; padding: 10px 18px; border-radius: 6px;
+      font-weight: 700; font-size: 13px; text-decoration: none; white-space: nowrap;
+    }
+    @media(min-width:768px){ .nav-links { display: flex; } }
+
+    /* HERO */
+    #hero {
+      min-height: 100vh; position: relative;
+      display: flex; align-items: flex-end; padding-bottom: 80px; overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 50% at 50% 30%, rgba(245,130,10,0.2) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 70% at 80% 60%, rgba(224,74,14,0.12) 0%, transparent 60%),
+        linear-gradient(180deg, #080604 0%, #18120a 50%, #080604 100%);
+    }
+    .hero-deco {
+      position: absolute; top: 12%; right: 6%;
+      font-size: 200px; line-height: 1;
+      color: rgba(245,130,10,0.05);
+      font-family: 'Bebas Neue', sans-serif; letter-spacing: 4px;
+      pointer-events: none; user-select: none;
+    }
+    .hero-content { position: relative; z-index: 2; padding: 0 24px; width: 100%; max-width: 900px; margin: 0 auto; }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(245,130,10,0.12); border: 1px solid rgba(245,130,10,0.25);
+      color: var(--accent); font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; padding: 6px 16px; border-radius: 20px; margin-bottom: 20px;
+    }
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(72px, 20vw, 180px); line-height: 0.88; letter-spacing: 2px; margin-bottom: 6px;
+    }
+    .hero-title-accent {
+      display: block;
+      background: linear-gradient(135deg, var(--accent2), var(--accent), var(--gold));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero-subtitle {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(24px, 6vw, 52px); letter-spacing: 5px; color: var(--text2); margin-bottom: 20px;
+    }
+    .hero-desc { font-size: 16px; color: var(--text2); line-height: 1.65; max-width: 460px; margin-bottom: 36px; }
+    .hero-btns { display: flex; flex-wrap: wrap; gap: 12px; }
+    .btn-main {
+      background: linear-gradient(135deg, var(--accent2), var(--accent));
+      color: #fff; border: none; padding: 16px 32px; border-radius: 8px;
+      font-weight: 800; font-size: 16px; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .btn-main:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn-ghost {
+      background: transparent; color: var(--text);
+      border: 1.5px solid rgba(245,130,10,0.35); padding: 16px 32px; border-radius: 8px;
+      font-weight: 700; font-size: 16px; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* DIVIDER */
+    .divider { height: 1px; background: linear-gradient(to right, transparent, rgba(245,130,10,0.25), transparent); }
+
+    /* SECTIONS */
+    section { padding: 80px 24px; }
+    .container { max-width: 960px; margin: 0 auto; }
+    .label { font-size: 11px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+    .sec-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(40px, 10vw, 72px); letter-spacing: 2px; line-height: 1; margin-bottom: 14px; }
+    .sec-sub { color: var(--text2); font-size: 16px; line-height: 1.6; max-width: 520px; }
+
+    /* SOBRE */
+    #sobre { background: var(--bg2); }
+    .about-grid { display: grid; grid-template-columns: 1fr; gap: 48px; align-items: center; }
+    @media(min-width:768px){ .about-grid { grid-template-columns: 1fr 1fr; } }
+    .about-img {
+      position: relative; border-radius: 12px; overflow: hidden;
+      aspect-ratio: 3/4; background: var(--bg3);
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
+    }
+    .about-img-inner { position: absolute; inset: 14px; border: 1px solid rgba(245,130,10,0.18); border-radius: 8px; pointer-events: none; }
+    .about-img span { font-size: 72px; }
+    .about-img p { color: var(--text3); font-size: 13px; }
+    .about-text p { color: var(--text2); line-height: 1.8; margin-bottom: 14px; font-size: 16px; }
+    .highlights { display: flex; flex-direction: column; gap: 12px; margin-top: 28px; }
+    .hl {
+      display: flex; align-items: center; gap: 14px; padding: 14px 18px;
+      background: rgba(245,130,10,0.05); border: 1px solid rgba(245,130,10,0.1); border-radius: 8px;
+    }
+    .hl-icon { font-size: 26px; flex-shrink: 0; }
+    .hl-body strong { display: block; font-weight: 700; font-size: 15px; }
+    .hl-body span { color: var(--text3); font-size: 13px; }
+
+    /* AGENDA */
+    #agenda { background: var(--bg); }
+    .shows-empty { text-align: center; padding: 60px 24px; }
+    .shows-empty .ico { font-size: 48px; margin-bottom: 12px; }
+    .shows-empty p { color: var(--text3); font-size: 15px; }
+    .agenda-cta { text-align: center; margin-top: 40px; }
+
+    /* REPERTORIO */
+    #repertorio { background: var(--bg3); }
+    .rep-grid { display: grid; grid-template-columns: 1fr; gap: 14px; margin-top: 44px; }
+    @media(min-width:600px){ .rep-grid { grid-template-columns: 1fr 1fr; } }
+    @media(min-width:900px){ .rep-grid { grid-template-columns: repeat(3, 1fr); } }
+    .rep-card {
+      background: var(--bg2); border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 10px; padding: 22px; position: relative; overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .rep-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(135deg, var(--accent2), var(--accent), var(--gold)); opacity: 0; transition: opacity 0.2s;
+    }
+    .rep-card:hover { border-color: rgba(245,130,10,0.3); transform: translateY(-2px); }
+    .rep-card:hover::before { opacity: 1; }
+    .rep-card .ico { font-size: 30px; margin-bottom: 10px; }
+    .rep-card h3 { font-weight: 700; font-size: 16px; margin-bottom: 6px; }
+    .rep-card p { color: var(--text3); font-size: 13px; line-height: 1.5; }
+
+    /* CONTATO */
+    #contato { background: var(--bg2); text-align: center; }
+    .contato-inner { max-width: 580px; margin: 0 auto; }
+    .contato-card {
+      background: var(--bg3); border: 1px solid rgba(245,130,10,0.14);
+      border-radius: 16px; padding: 40px 28px; margin: 40px 0 28px;
+    }
+    .contato-card .ico { font-size: 48px; margin-bottom: 14px; }
+    .contato-card h3 { font-family: 'Bebas Neue', sans-serif; font-size: 30px; letter-spacing: 2px; margin-bottom: 8px; }
+    .contato-card p { color: var(--text2); font-size: 15px; line-height: 1.6; margin-bottom: 24px; }
+    .btn-wpp {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      background: #25D366; color: #fff; border: none; padding: 18px 32px; border-radius: 10px;
+      font-weight: 800; font-size: 17px; text-decoration: none; cursor: pointer; width: 100%;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .btn-wpp:hover { opacity: 0.9; transform: translateY(-2px); }
+    .socials { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .soc {
+      display: flex; align-items: center; gap: 8px; padding: 11px 18px;
+      background: var(--bg3); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px;
+      color: var(--text2); text-decoration: none; font-size: 14px; font-weight: 600;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .soc:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* FOOTER */
+    footer { background: var(--bg); border-top: 1px solid rgba(255,255,255,0.05); padding: 40px 24px; text-align: center; }
+    .footer-logo {
+      font-family: 'Bebas Neue', sans-serif; font-size: 32px; letter-spacing: 3px;
+      background: linear-gradient(135deg, var(--accent2), var(--accent), var(--gold));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 6px;
+    }
+    footer p { color: var(--text3); font-size: 12px; margin-top: 4px; }
+
+    /* FAB */
+    .fab {
+      position: fixed; bottom: 20px; right: 20px; z-index: 999;
+      width: 60px; height: 60px; border-radius: 50%; background: #25D366;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.4); text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .fab:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(37,211,102,0.55); }
+    .fab-ring {
+      position: absolute; width: 60px; height: 60px; border-radius: 50%;
+      background: #25D366; animation: ring 2s ease-out infinite;
+    }
+    @keyframes ring { 0%{transform:scale(1);opacity:.6} 100%{transform:scale(1.6);opacity:0} }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Thal Matos</a>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#agenda">Agenda</a></li>
+    <li><a href="#repertorio">Repertorio</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ul>
+  <a href="https://wa.me/557999620465?text=Oi!%20Quero%20contratar%20o%20Thal%20Matos!" class="nav-cta" target="_blank">Contratar Show</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-deco">♫</div>
+  <div class="hero-content">
+    <div class="hero-badge">🎸 Forro Folemoleque</div>
+    <h1 class="hero-title">
+      <span class="hero-title-accent">THAL</span>
+      MATOS
+    </h1>
+    <p class="hero-subtitle">Forro Folemoleque</p>
+    <p class="hero-desc">Do baiao ao xote, do arrocha ao piseiro — a energia do forro que aquece qualquer festa. Shows para casamentos, formaturas, eventos e baladas!</p>
+    <div class="hero-btns">
+      <a href="https://wa.me/557999620465?text=Oi!%20Quero%20contratar%20o%20Thal%20Matos%20para%20um%20show!" class="btn-main" target="_blank">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zm-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884z"/></svg>
+        Contratar Show
+      </a>
+      <a href="#sobre" class="btn-ghost">Conhecer</a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SOBRE -->
+<section id="sobre">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-img">
+        <span>🎤</span>
+        <p>Foto do artista</p>
+        <div class="about-img-inner"></div>
+      </div>
+      <div class="about-text">
+        <p class="label">Conheca</p>
+        <h2 class="sec-title">Thal Matos<br>&amp; o Grupo</h2>
+        <p>Thal Matos e um cantor apaixonado pelo forro de raiz e pelas batidas modernas do folemoleque. Com um estilo unico que mistura tradicao e modernidade, leva alegria a cada show.</p>
+        <p>O grupo Forro Folemoleque e formado por musicos talentosos que compartilham o amor pelo forro e pela arte de animar multidoes. Cada apresentacao e uma festa memoravel!</p>
+        <div class="highlights">
+          <div class="hl">
+            <span class="hl-icon">🎵</span>
+            <div class="hl-body">
+              <strong>Forro Folemoleque</strong>
+              <span>Do baiao ao piseiro, repertorio completo</span>
+            </div>
+          </div>
+          <div class="hl">
+            <span class="hl-icon">🎉</span>
+            <div class="hl-body">
+              <strong>Shows ao vivo</strong>
+              <span>Festas, casamentos, formaturas e eventos</span>
+            </div>
+          </div>
+          <div class="hl">
+            <span class="hl-icon">📍</span>
+            <div class="hl-body">
+              <strong>Disponivel para contratacao</strong>
+              <span>Consulte agenda e valores pelo WhatsApp</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- AGENDA -->
+<section id="agenda">
+  <div class="container">
+    <p class="label">Proximos shows</p>
+    <h2 class="sec-title">Agenda</h2>
+    <p class="sec-sub">Fique de olho nos proximos shows e venha curtir ao vivo!</p>
+    <div class="shows-empty" style="margin-top:40px">
+      <div class="ico">🎸</div>
+      <p>Novos shows em breve — fale no WhatsApp para saber as datas!</p>
+    </div>
+    <div class="agenda-cta">
+      <a href="https://wa.me/557999620465?text=Oi!%20Quero%20saber%20a%20agenda%20do%20Thal%20Matos!" class="btn-main" target="_blank">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zm-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884z"/></svg>
+        Consultar Agenda
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- REPERTORIO -->
+<section id="repertorio">
+  <div class="container">
+    <p class="label">O que tocamos</p>
+    <h2 class="sec-title">Repertorio</h2>
+    <p class="sec-sub">Um repertorio variado para agitar a galera do comeco ao fim!</p>
+    <div class="rep-grid">
+      <div class="rep-card">
+        <div class="ico">🪗</div>
+        <h3>Forro de Raiz</h3>
+        <p>Baiao, xote e xaxado tradicionais que fazem todo mundo danar.</p>
+      </div>
+      <div class="rep-card">
+        <div class="ico">🥁</div>
+        <h3>Forro Eletronico</h3>
+        <p>Batidas modernas e animadas para sacudir a festa.</p>
+      </div>
+      <div class="rep-card">
+        <div class="ico">🎸</div>
+        <h3>Folemoleque</h3>
+        <p>O estilo que e a nossa marca registrada — energetico e contagiante!</p>
+      </div>
+      <div class="rep-card">
+        <div class="ico">💃</div>
+        <h3>Piseiro</h3>
+        <p>Os hits do momento que todo mundo conhece e ama danar.</p>
+      </div>
+      <div class="rep-card">
+        <div class="ico">🎤</div>
+        <h3>Arrocha</h3>
+        <p>As musicas romanticas que emocionam e contagiam os casais.</p>
+      </div>
+      <div class="rep-card">
+        <div class="ico">🎵</div>
+        <h3>Especial Pedidos</h3>
+        <p>Atendemos pedidos especiais para deixar seu evento ainda mais unico!</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTATO -->
+<section id="contato">
+  <div class="container">
+    <div class="contato-inner">
+      <p class="label">Fale com a gente</p>
+      <h2 class="sec-title">Contratar Show</h2>
+      <p class="sec-sub" style="margin:0 auto 0;">Quer ter o Thal Matos no seu evento? Entre em contato e receba um orcamento rapido!</p>
+      <div class="contato-card">
+        <div class="ico">🎤</div>
+        <h3>Vamos Fechar um Show?</h3>
+        <p>Casamento, formatura, festa privada, evento corporativo — fazemos de tudo com muita energia e profissionalismo!</p>
+        <a href="https://wa.me/557999620465?text=Oi%20Thal!%20Quero%20contratar%20o%20Forro%20Folemoleque%20para%20meu%20evento!" class="btn-wpp" target="_blank">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zm-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884z"/></svg>
+          Falar no WhatsApp
+        </a>
+      </div>
+      <div class="socials">
+        <a href="#" class="soc">📸 Instagram</a>
+        <a href="#" class="soc">▶ YouTube</a>
+        <a href="#" class="soc">👍 Facebook</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Thal Matos</div>
+  <p>Forro Folemoleque &mdash; Musica e Energia em cada show</p>
+  <p style="margin-top:8px;color:var(--text3)">Site criado pela Sparkz Agency</p>
+</footer>
+
+<!-- FAB WhatsApp -->
+<a href="https://wa.me/557999620465?text=Oi!%20Quero%20contratar%20o%20Thal%20Matos!" class="fab" target="_blank">
+  <div class="fab-ring"></div>
+  <svg width="30" height="30" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zm-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884z"/></svg>
+</a>
+
+</body>
+</html>
