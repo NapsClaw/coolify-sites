@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel Admin — Sítio Iluminado</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green:#16a34a;--green-l:rgba(22,163,74,.12);
+  --red:#dc2626;--red-l:rgba(220,38,38,.12);
+  --amber:#d97706;--amber-l:rgba(217,119,6,.12);
+  --blue:#2563eb;--blue-l:rgba(37,99,235,.1);
+  --dark:#111827;--mid:#6b7280;--light:#f3f4f6;
+  --white:#fff;--border:#e5e7eb;
+  --accent:#1d4ed8;--accent-h:#1e40af;
+  --wa:#25D366;
+  --sidebar:220px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:#f1f5f9;color:var(--dark);min-height:100vh}
+
+/* ── LOGIN ── */
+#login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:linear-gradient(135deg,#0f172a,#1e3a8a)}
+.login-box{background:#fff;border-radius:16px;padding:40px 36px;width:100%;max-width:360px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.login-logo{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;text-align:center;margin-bottom:6px}
+.login-logo span{color:var(--accent)}
+.login-sub{font-size:13px;color:var(--mid);text-align:center;margin-bottom:28px}
+.login-field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+.login-field label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.login-field input{padding:12px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit}
+.login-field input:focus{outline:none;border-color:var(--accent)}
+.login-btn{width:100%;background:var(--accent);color:#fff;border:none;border-radius:8px;padding:14px;font-size:15px;font-weight:700;cursor:pointer;margin-top:6px}
+.login-btn:hover{background:var(--accent-h)}
+.login-err{color:var(--red);font-size:13px;text-align:center;margin-top:10px;display:none}
+
+/* ── LAYOUT ── */
+#app{display:none;min-height:100vh}
+.topbar{position:fixed;top:0;left:0;right:0;height:60px;background:#fff;border-bottom:1px solid var(--border);z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 20px;gap:16px}
+.topbar-logo{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;white-space:nowrap}
+.topbar-logo span{color:var(--accent)}
+.topbar-right{display:flex;align-items:center;gap:12px}
+.topbar-badge{background:var(--green-l);color:var(--green);font-size:11px;font-weight:700;padding:4px 10px;border-radius:100px}
+.btn-logout{background:none;border:1.5px solid var(--border);color:var(--mid);font-size:12px;font-weight:600;padding:6px 14px;border-radius:6px;cursor:pointer}
+.btn-logout:hover{border-color:var(--red);color:var(--red)}
+
+.main-wrap{padding-top:60px;display:flex;min-height:100vh}
+.sidebar{width:var(--sidebar);background:#fff;border-right:1px solid var(--border);padding:16px 0;position:fixed;top:60px;left:0;bottom:0;overflow-y:auto;z-index:100}
+.sidebar-section{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--mid);padding:16px 20px 6px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 20px;font-size:13px;font-weight:500;color:var(--dark);cursor:pointer;transition:background .15s;text-decoration:none}
+.nav-item:hover{background:var(--light)}
+.nav-item.active{background:var(--blue-l);color:var(--accent);font-weight:700}
+.nav-item .ni-icon{font-size:16px;width:20px;text-align:center}
+
+.content{margin-left:var(--sidebar);padding:28px 24px;flex:1}
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%);transition:transform .25s}
+  .sidebar.open{transform:translateX(0)}
+  .content{margin-left:0}
+  .mob-menu-btn{display:flex!important}
+}
+.mob-menu-btn{display:none;background:none;border:none;font-size:22px;cursor:pointer;color:var(--dark)}
+
+/* ── STATS ── */
+.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:28px}
+@media(min-width:600px){.stats-grid{grid-template-columns:repeat(4,1fr)}}
+.stat-card{background:#fff;border-radius:12px;border:1px solid var(--border);padding:20px 18px}
+.stat-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mid);margin-bottom:8px}
+.stat-value{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--dark)}
+.stat-sub{font-size:11px;color:var(--mid);margin-top:4px}
+.stat-card.green .stat-value{color:var(--green)}
+.stat-card.red .stat-value{color:var(--red)}
+.stat-card.blue .stat-value{color:var(--blue)}
+.stat-card.amber .stat-value{color:var(--amber)}
+
+/* ── SECTION HEADER ── */
+.sec-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px}
+.sec-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700}
+.sec-actions{display:flex;gap:8px;flex-wrap:wrap}
+
+/* ── FILTERS ── */
+.filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.filter-btn{padding:7px 16px;border-radius:100px;border:1.5px solid var(--border);font-size:12px;font-weight:600;cursor:pointer;background:#fff;color:var(--mid);transition:all .15s}
+.filter-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.search-input{flex:1;min-width:180px;padding:8px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;font-family:inherit}
+.search-input:focus{outline:none;border-color:var(--accent)}
+
+/* ── TABLE ── */
+.table-wrap{background:#fff;border-radius:12px;border:1px solid var(--border);overflow:hidden}
+.res-table{width:100%;border-collapse:collapse;font-size:13px}
+.res-table th{background:var(--light);padding:12px 16px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mid);border-bottom:1px solid var(--border)}
+.res-table td{padding:14px 16px;border-bottom:1px solid var(--border);vertical-align:middle}
+.res-table tr:last-child td{border-bottom:none}
+.res-table tr:hover td{background:#fafafa}
+.res-name-cell{font-weight:600;font-size:13px}
+.res-phone-cell{color:var(--mid);font-size:12px}
+.badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:4px 10px;border-radius:100px;text-transform:uppercase;letter-spacing:.5px;cursor:pointer;border:none;white-space:nowrap}
+.badge-pending{background:var(--amber-l);color:var(--amber)}
+.badge-paid{background:var(--green-l);color:var(--green)}
+.badge-cancelled{background:var(--red-l);color:var(--red)}
+.btn-wa{background:var(--wa);color:#fff;border:none;border-radius:6px;padding:6px 12px;font-size:12px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:5px;text-decoration:none;white-space:nowrap}
+.btn-icon{background:none;border:1.5px solid var(--border);color:var(--mid);border-radius:6px;padding:5px 8px;font-size:13px;cursor:pointer}
+.btn-icon:hover{border-color:var(--red);color:var(--red)}
+.days-badge{display:inline-block;background:var(--blue-l);color:var(--blue);font-size:11px;font-weight:700;padding:3px 8px;border-radius:100px}
+.no-data{text-align:center;padding:48px;color:var(--mid);font-size:14px}
+
+/* ── TABLE SCROLL MOBILE ── */
+.table-scroll{overflow-x:auto}
+
+/* ── CALENDAR VIEW ── */
+.cal-admin-wrap{background:#fff;border-radius:12px;border:1px solid var(--border);padding:20px;margin-bottom:20px}
+.cal-admin-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.cal-month-label{font-family:'Playfair Display',serif;font-size:18px;font-weight:700}
+.cal-nav{display:flex;gap:6px}
+.cal-nav-btn{background:var(--light);border:none;width:34px;height:34px;border-radius:6px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center}
+.cal-nav-btn:hover{background:var(--border)}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.cal-head{text-align:center;font-size:10px;font-weight:700;letter-spacing:.5px;color:var(--mid);padding:8px 2px;text-transform:uppercase}
+.cal-day{text-align:center;padding:0;aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:6px;font-size:12px;cursor:default;position:relative;font-weight:500;gap:2px}
+.cal-day.empty{opacity:0;pointer-events:none}
+.cal-day.today{border:2px solid var(--accent)}
+.cal-day.free{color:var(--dark)}
+.cal-day.reserved-pending{background:var(--amber-l);color:var(--amber);cursor:pointer}
+.cal-day.reserved-paid{background:var(--green-l);color:var(--green);cursor:pointer}
+.cal-day-dot{width:5px;height:5px;border-radius:50%;background:currentColor;margin:0 auto}
+.cal-legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:16px;padding-top:16px;border-top:1px solid var(--border)}
+.leg{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--mid)}
+.leg-box{width:14px;height:14px;border-radius:3px}
+
+/* ── TIMELINE ── */
+.timeline{display:flex;flex-direction:column;gap:0}
+.tl-item{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--border)}
+.tl-item:last-child{border-bottom:none}
+.tl-dot{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;margin-top:2px}
+.tl-dot.paid{background:var(--green-l)}
+.tl-dot.pending{background:var(--amber-l)}
+.tl-body{flex:1}
+.tl-title{font-weight:600;font-size:14px}
+.tl-sub{font-size:12px;color:var(--mid);margin-top:2px}
+.tl-when{font-size:11px;color:var(--mid);margin-top:4px}
+
+/* ── MODAL ── */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:800;align-items:center;justify-content:center;padding:16px}
+.modal-bg.open{display:flex}
+.modal{background:#fff;border-radius:16px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto}
+.modal-header{padding:20px 24px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.modal-header h3{font-family:'Playfair Display',serif;font-size:18px;font-weight:700}
+.modal-close{background:none;border:none;font-size:22px;cursor:pointer;color:var(--mid);line-height:1}
+.modal-body{padding:20px 24px}
+.modal-field{margin-bottom:14px}
+.modal-field label{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mid);margin-bottom:5px}
+.modal-field .val{font-size:14px;font-weight:500;color:var(--dark)}
+.modal-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.modal-footer{padding:16px 24px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap}
+.btn-cancel-res{background:none;border:1.5px solid var(--red);color:var(--red);border-radius:8px;padding:10px 18px;font-size:13px;font-weight:600;cursor:pointer}
+.btn-confirm-res{background:var(--green);color:#fff;border:none;border-radius:8px;padding:10px 18px;font-size:13px;font-weight:600;cursor:pointer}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:12px 24px;border-radius:8px;font-size:14px;font-weight:500;z-index:9999;opacity:0;pointer-events:none;transition:opacity .3s;white-space:nowrap}
+.toast.show{opacity:1}
+
+/* ── EXPORT BTN ── */
+.btn-export{background:#fff;border:1.5px solid var(--border);color:var(--dark);border-radius:8px;padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.btn-export:hover{border-color:var(--accent);color:var(--accent)}
+.btn-new{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.btn-new:hover{background:var(--accent-h)}
+
+/* ── TABS ── */
+.page{display:none}
+.page.active{display:block}
+
+/* ── REVENUE CARD ── */
+.rev-card{background:linear-gradient(135deg,#1d4ed8,#2563eb);border-radius:12px;padding:24px;margin-bottom:20px;color:#fff}
+.rev-card h3{font-size:13px;font-weight:600;opacity:.8;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.rev-value{font-family:'Playfair Display',serif;font-size:36px;font-weight:700}
+.rev-sub{font-size:12px;opacity:.7;margin-top:4px}
+
+/* ── EMPTY STATE ── */
+.empty-state{text-align:center;padding:48px 24px;color:var(--mid)}
+.empty-icon{font-size:48px;margin-bottom:12px}
+.empty-title{font-size:16px;font-weight:600;color:var(--dark);margin-bottom:6px}
+.empty-sub{font-size:13px;line-height:1.6}
+
+/* ── ADD RESERVATION FORM ── */
+.add-form{background:#fff;border-radius:12px;border:1px solid var(--border);padding:24px;margin-bottom:20px}
+.add-form h3{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;margin-bottom:20px}
+.form-grid-2{display:grid;gap:14px}
+@media(min-width:540px){.form-grid-2{grid-template-columns:1fr 1fr}}
+.form-row{display:flex;flex-direction:column;gap:6px}
+.form-row label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--dark)}
+.form-row input,.form-row select,.form-row textarea{padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:var(--dark);background:#fff;width:100%}
+.form-row input:focus,.form-row select:focus,.form-row textarea:focus{outline:none;border-color:var(--accent)}
+.form-row textarea{resize:vertical;min-height:70px}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">Sítio <span>Iluminado</span></div>
+    <div class="login-sub">Painel Administrativo</div>
+    <div class="login-field">
+      <label>Usuário</label>
+      <input type="text" id="l-user" placeholder="admin" autocomplete="username">
+    </div>
+    <div class="login-field">
+      <label>Senha</label>
+      <input type="password" id="l-pass" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <button class="login-btn" onclick="doLogin()">Entrar</button>
+    <div class="login-err" id="login-err">Usuário ou senha incorretos.</div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:12px">
+      <button class="mob-menu-btn" onclick="toggleSidebar()">☰</button>
+      <div class="topbar-logo">Sítio <span>Iluminado</span> · Admin</div>
+    </div>
+    <div class="topbar-right">
+      <span class="topbar-badge" id="tb-pending-count"></span>
+      <a href="index.html" target="_blank" style="font-size:12px;color:var(--accent);text-decoration:none;font-weight:600">🔗 Ver site</a>
+      <button class="btn-logout" onclick="doLogout()">Sair</button>
+    </div>
+  </div>
+
+  <div class="main-wrap">
+    <!-- SIDEBAR -->
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-section">Menu</div>
+      <div class="nav-item active" onclick="goPage('dashboard')"><span class="ni-icon">📊</span> Dashboard</div>
+      <div class="nav-item" onclick="goPage('reservas')"><span class="ni-icon">📋</span> Reservas</div>
+      <div class="nav-item" onclick="goPage('calendario')"><span class="ni-icon">🗓️</span> Calendário</div>
+      <div class="nav-item" onclick="goPage('leads')"><span class="ni-icon">👥</span> Leads</div>
+      <div class="nav-item" onclick="goPage('nova')"><span class="ni-icon">➕</span> Nova reserva</div>
+      <div class="sidebar-section">Acesso rápido</div>
+      <a class="nav-item" href="https://wa.me/5511941942210" target="_blank"><span class="ni-icon">📲</span> Meu WhatsApp</a>
+      <a class="nav-item" href="index.html" target="_blank"><span class="ni-icon">🌐</span> Ver site público</a>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content">
+
+      <!-- PAGE: DASHBOARD -->
+      <div class="page active" id="page-dashboard">
+        <div class="sec-header">
+          <div class="sec-title">📊 Visão geral</div>
+          <div style="font-size:12px;color:var(--mid)" id="dash-updated"></div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card blue">
+            <div class="stat-label">Total de reservas</div>
+            <div class="stat-value" id="stat-total">0</div>
+            <div class="stat-sub">desde o início</div>
+          </div>
+          <div class="stat-card amber">
+            <div class="stat-label">Pendentes (pagto)</div>
+            <div class="stat-value" id="stat-pending">0</div>
+            <div class="stat-sub">aguardando confirmação</div>
+          </div>
+          <div class="stat-card green">
+            <div class="stat-label">Confirmadas (pagas)</div>
+            <div class="stat-value" id="stat-paid">0</div>
+            <div class="stat-sub">pagamento confirmado</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Próxima reserva</div>
+            <div class="stat-value" id="stat-next" style="font-size:18px">—</div>
+            <div class="stat-sub" id="stat-next-name"></div>
+          </div>
+        </div>
+
+        <div class="rev-card">
+          <h3>💰 Receita estimada (confirmadas)</h3>
+          <div class="rev-value" id="stat-revenue">R$ 0</div>
+          <div class="rev-sub">Soma dos valores das reservas com status "Pago"</div>
+        </div>
+
+        <div style="background:#fff;border-radius:12px;border:1px solid var(--border);padding:20px;margin-bottom:20px">
+          <div class="sec-title" style="font-size:16px;margin-bottom:16px">📅 Próximas reservas</div>
+          <div id="upcoming-list"></div>
+        </div>
+
+        <div style="background:#fff;border-radius:12px;border:1px solid var(--border);padding:20px">
+          <div class="sec-title" style="font-size:16px;margin-bottom:16px">🕐 Atividade recente</div>
+          <div class="timeline" id="timeline-list"></div>
+        </div>
+      </div>
+
+      <!-- PAGE: RESERVAS -->
+      <div class="page" id="page-reservas">
+        <div class="sec-header">
+          <div class="sec-title">📋 Todas as reservas</div>
+          <div class="sec-actions">
+            <button class="btn-export" onclick="exportCSV()">📥 Exportar CSV</button>
+            <button class="btn-new" onclick="goPage('nova')">➕ Nova reserva</button>
+          </div>
+        </div>
+
+        <div class="filter-bar">
+          <button class="filter-btn active" onclick="filterRes('all',this)">Todas</button>
+          <button class="filter-btn" onclick="filterRes('pending',this)">⏳ Pendentes</button>
+          <button class="filter-btn" onclick="filterRes('paid',this)">✅ Pagas</button>
+          <button class="filter-btn" onclick="filterRes('upcoming',this)">📅 Futuras</button>
+          <input class="search-input" id="search-input" placeholder="🔍 Buscar por nome, telefone..." oninput="renderResTable()">
+        </div>
+
+        <div class="table-scroll">
+          <div class="table-wrap">
+            <table class="res-table">
+              <thead>
+                <tr>
+                  <th>Hóspede</th>
+                  <th>Check-in</th>
+                  <th>Check-out</th>
+                  <th>Dias</th>
+                  <th>Pessoas</th>
+                  <th>Ocasião</th>
+                  <th>Status</th>
+                  <th>Contato</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="res-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE: CALENDÁRIO -->
+      <div class="page" id="page-calendario">
+        <div class="sec-header">
+          <div class="sec-title">🗓️ Calendário de reservas</div>
+        </div>
+        <div class="cal-admin-wrap">
+          <div class="cal-admin-top">
+            <div class="cal-month-label" id="admin-cal-label"></div>
+            <div class="cal-nav">
+              <button class="cal-nav-btn" onclick="adminCalPrev()">‹</button>
+              <button class="cal-nav-btn" onclick="adminCalNext()">›</button>
+            </div>
+          </div>
+          <div class="cal-grid">
+            <div class="cal-head">Dom</div><div class="cal-head">Seg</div><div class="cal-head">Ter</div>
+            <div class="cal-head">Qua</div><div class="cal-head">Qui</div><div class="cal-head">Sex</div><div class="cal-head">Sáb</div>
+          </div>
+          <div class="cal-grid" id="admin-cal-grid" style="margin-top:4px"></div>
+          <div class="cal-legend">
+            <div class="leg"><div class="leg-box" style="background:var(--amber-l);border:1px solid var(--amber)"></div>Reserva pendente</div>
+            <div class="leg"><div class="leg-box" style="background:var(--green-l);border:1px solid var(--green)"></div>Reserva paga</div>
+            <div class="leg"><div class="leg-box" style="background:var(--blue-l);border:1px solid var(--blue)"></div>Hoje</div>
+          </div>
+        </div>
+        <div style="background:#fff;border-radius:12px;border:1px solid var(--border);padding:20px">
+          <div class="sec-title" style="font-size:16px;margin-bottom:16px" id="cal-detail-title">Clique em uma data para ver detalhes</div>
+          <div id="cal-detail-content"><div class="empty-state"><div class="empty-icon">📅</div><div class="empty-sub">Selecione uma data no calendário acima</div></div></div>
+        </div>
+      </div>
+
+      <!-- PAGE: LEADS -->
+      <div class="page" id="page-leads">
+        <div class="sec-header">
+          <div class="sec-title">👥 Leads & Contatos</div>
+          <button class="btn-export" onclick="exportLeadsCSV()">📥 Exportar CSV</button>
+        </div>
+        <div class="filter-bar">
+          <input class="search-input" id="leads-search" placeholder="🔍 Buscar por nome, e-mail, telefone..." oninput="renderLeads()" style="max-width:400px">
+        </div>
+        <div class="table-scroll">
+          <div class="table-wrap">
+            <table class="res-table">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Telefone</th>
+                  <th>E-mail</th>
+                  <th>Reservas</th>
+                  <th>Última reserva</th>
+                  <th>Contato rápido</th>
+                </tr>
+              </thead>
+              <tbody id="leads-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- PAGE: NOVA RESERVA -->
+      <div class="page" id="page-nova">
+        <div class="sec-header">
+          <div class="sec-title">➕ Lançar nova reserva</div>
+        </div>
+        <div class="add-form">
+          <h3>📝 Dados da reserva</h3>
+          <div class="form-grid-2">
+            <div class="form-row">
+              <label>Nome completo *</label>
+              <input type="text" id="nf-name" placeholder="João Silva">
+            </div>
+            <div class="form-row">
+              <label>Telefone / WhatsApp *</label>
+              <input type="tel" id="nf-phone" placeholder="(11) 99999-0000">
+            </div>
+            <div class="form-row">
+              <label>E-mail</label>
+              <input type="email" id="nf-email" placeholder="joao@email.com">
+            </div>
+            <div class="form-row">
+              <label>Quantidade de pessoas *</label>
+              <select id="nf-guests">
+                <option value="">Selecione</option>
+                <option>até 15</option><option>até 20</option><option>até 25</option>
+                <option>até 30</option><option>acima de 30</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label>Check-in *</label>
+              <input type="date" id="nf-checkin">
+            </div>
+            <div class="form-row">
+              <label>Check-out *</label>
+              <input type="date" id="nf-checkout">
+            </div>
+            <div class="form-row">
+              <label>Ocasião</label>
+              <select id="nf-occasion">
+                <option value="">Selecione</option>
+                <option>Temporada / Férias</option>
+                <option>Festa / Evento</option>
+                <option>Formatura</option>
+                <option>Aniversário</option>
+                <option>Casamento</option>
+                <option>Confraternização</option>
+                <option>Retiro / Corporativo</option>
+                <option>Outro</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label>Status inicial</label>
+              <select id="nf-status">
+                <option value="pending">⏳ Pendente</option>
+                <option value="paid">✅ Pago</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row" style="margin-top:14px">
+            <label>Observações</label>
+            <textarea id="nf-obs" placeholder="Informações adicionais, valor combinado, etc."></textarea>
+          </div>
+          <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap">
+            <button class="btn-new" onclick="saveNewReservation()" style="padding:12px 28px;font-size:14px">💾 Salvar reserva</button>
+            <button class="btn-export" onclick="goPage('reservas')" style="padding:12px 20px">Cancelar</button>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /content -->
+  </div><!-- /main-wrap -->
+</div><!-- /app -->
+
+<!-- MODAL: Detalhes da reserva -->
+<div class="modal-bg" id="modal-bg" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>📋 Detalhes da reserva</h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-row">
+        <div class="modal-field"><label>Nome</label><div class="val" id="md-name"></div></div>
+        <div class="modal-field"><label>Telefone</label><div class="val" id="md-phone"></div></div>
+      </div>
+      <div class="modal-row">
+        <div class="modal-field"><label>E-mail</label><div class="val" id="md-email"></div></div>
+        <div class="modal-field"><label>Pessoas</label><div class="val" id="md-guests"></div></div>
+      </div>
+      <div class="modal-row">
+        <div class="modal-field"><label>Check-in</label><div class="val" id="md-checkin"></div></div>
+        <div class="modal-field"><label>Check-out</label><div class="val" id="md-checkout"></div></div>
+      </div>
+      <div class="modal-row">
+        <div class="modal-field"><label>Ocasião</label><div class="val" id="md-occasion"></div></div>
+        <div class="modal-field"><label>Status</label><div class="val" id="md-status"></div></div>
+      </div>
+      <div class="modal-field"><label>Observações</label><div class="val" id="md-obs"></div></div>
+      <div class="modal-field"><label>Registrado em</label><div class="val" id="md-created"></div></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel-res" onclick="cancelReservation()" id="md-cancel-btn">🗑️ Excluir</button>
+      <button class="btn-confirm-res" onclick="toggleResStatus()" id="md-toggle-btn">✅ Marcar como pago</button>
+      <a class="btn-wa" id="md-wa-link" href="#" target="_blank">📲 WhatsApp</a>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ===== AUTH =====
+const ADMIN_USER = 'arlei';
+const ADMIN_PASS = 'sitio2025';
+const SESSION_KEY = 'sitio_admin_session';
+
+function doLogin(){
+  const u = document.getElementById('l-user').value.trim().toLowerCase();
+  const p = document.getElementById('l-pass').value;
+  if(u === ADMIN_USER && p === ADMIN_PASS){
+    sessionStorage.setItem(SESSION_KEY, '1');
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    init();
+  } else {
+    document.getElementById('login-err').style.display = 'block';
+  }
+}
+function doLogout(){
+  sessionStorage.removeItem(SESSION_KEY);
+  location.reload();
+}
+if(sessionStorage.getItem(SESSION_KEY)){
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+}
+
+// ===== STORAGE (shared with main site) =====
+const STORAGE_KEY = 'sitio_reservations';
+function getRes(){ try{return JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');}catch{return[];} }
+function saveRes(a){ localStorage.setItem(STORAGE_KEY, JSON.stringify(a)); }
+function genId(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
+
+// ===== UTILS =====
+function fmtDate(s){
+  if(!s) return '—';
+  const [y,m,d] = s.split('-');
+  return `${d}/${m}/${y}`;
+}
+function fmtMoney(n){ return n ? 'R$ '+Number(n).toLocaleString('pt-BR') : '—'; }
+function diffDays(a,b){ return Math.round((new Date(b)-new Date(a))/(1000*60*60*24)); }
+function todayStr(){ return new Date().toISOString().split('T')[0]; }
+function isUpcoming(r){ return r.checkin >= todayStr(); }
+function isFuture(r){ return r.checkout > todayStr(); }
+
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2800);
+}
+
+// ===== NAVIGATION =====
+let currentPage = 'dashboard';
+let currentFilter = 'all';
+
+function goPage(p){
+  document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));
+  document.getElementById('page-'+p).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(el=>{
+    if(el.textContent.toLowerCase().includes(p==='nova'?'nova':p==='reservas'?'reservas':p==='calendario'?'calend':p==='leads'?'leads':'dashboard')) el.classList.add('active');
+  });
+  currentPage = p;
+  if(p==='dashboard') renderDashboard();
+  if(p==='reservas') renderResTable();
+  if(p==='calendario') renderAdminCal();
+  if(p==='leads') renderLeads();
+  // close sidebar on mobile
+  document.getElementById('sidebar').classList.remove('open');
+}
+
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+}
+
+// ===== DASHBOARD =====
+function renderDashboard(){
+  const all = getRes();
+  const pending = all.filter(r=>r.status==='pending');
+  const paid = all.filter(r=>r.status==='paid');
+  document.getElementById('stat-total').textContent = all.length;
+  document.getElementById('stat-pending').textContent = pending.length;
+  document.getElementById('stat-paid').textContent = paid.length;
+
+  // Pending badge in topbar
+  const pb = document.getElementById('tb-pending-count');
+  if(pending.length > 0){ pb.textContent = pending.length+' pendente'+(pending.length>1?'s':''); pb.style.display=''; }
+  else { pb.style.display='none'; }
+
+  // Revenue (estimated from occasion/guests rough mapping)
+  document.getElementById('stat-revenue').textContent = '—';
+
+  // Next reservation
+  const upcoming = all.filter(r=>r.checkin >= todayStr()).sort((a,b)=>a.checkin.localeCompare(b.checkin));
+  if(upcoming.length){
+    document.getElementById('stat-next').textContent = fmtDate(upcoming[0].checkin);
+    document.getElementById('stat-next-name').textContent = upcoming[0].name;
+  }
+
+  // Upcoming list
+  const ul = document.getElementById('upcoming-list');
+  const next5 = upcoming.slice(0,5);
+  if(!next5.length){ ul.innerHTML = '<div class="empty-state"><div class="empty-icon">🗓️</div><div class="empty-sub">Nenhuma reserva futura registrada</div></div>'; return; }
+  ul.innerHTML = next5.map(r=>`
+    <div class="tl-item" onclick="openModal('${r.id}')" style="cursor:pointer">
+      <div class="tl-dot ${r.status}">${r.status==='paid'?'✅':'⏳'}</div>
+      <div class="tl-body">
+        <div class="tl-title">${r.name} <span class="days-badge">${diffDays(r.checkin,r.checkout)} dias</span></div>
+        <div class="tl-sub">${fmtDate(r.checkin)} → ${fmtDate(r.checkout)} · ${r.guests||'?'} pessoas · ${r.occasion||'—'}</div>
+        <div class="tl-when">${r.phone||''}</div>
+      </div>
+      <button class="btn-wa" onclick="event.stopPropagation();waContact('${r.phone||''}')" style="align-self:center">📲</button>
+    </div>`).join('');
+
+  // Timeline (recent)
+  const recent = [...all].sort((a,b)=>new Date(b.createdAt||0)-new Date(a.createdAt||0)).slice(0,6);
+  const tl = document.getElementById('timeline-list');
+  if(!recent.length){ tl.innerHTML='<div class="empty-state"><div class="empty-sub">Nenhuma reserva ainda</div></div>'; return; }
+  tl.innerHTML = recent.map(r=>`
+    <div class="tl-item">
+      <div class="tl-dot ${r.status}">${r.status==='paid'?'✅':'⏳'}</div>
+      <div class="tl-body">
+        <div class="tl-title">${r.name}</div>
+        <div class="tl-sub">${fmtDate(r.checkin)} → ${fmtDate(r.checkout)} · ${r.occasion||'—'}</div>
+        <div class="tl-when">${r.createdAt ? new Date(r.createdAt).toLocaleString('pt-BR') : ''}</div>
+      </div>
+    </div>`).join('');
+
+  document.getElementById('dash-updated').textContent = 'Atualizado: '+new Date().toLocaleTimeString('pt-BR');
+}
+
+// ===== RESERVAS TABLE =====
+function filterRes(f, btn){
+  currentFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderResTable();
+}
+
+function renderResTable(){
+  let all = getRes();
+  const search = (document.getElementById('search-input')||{}).value?.toLowerCase()||'';
+  if(currentFilter==='pending') all = all.filter(r=>r.status==='pending');
+  if(currentFilter==='paid') all = all.filter(r=>r.status==='paid');
+  if(currentFilter==='upcoming') all = all.filter(r=>isFuture(r));
+  if(search) all = all.filter(r=>(r.name||'').toLowerCase().includes(search)||(r.phone||'').includes(search)||(r.email||'').toLowerCase().includes(search));
+  all.sort((a,b)=>a.checkin.localeCompare(b.checkin));
+
+  const tbody = document.getElementById('res-table-body');
+  if(!all.length){
+    tbody.innerHTML = `<tr><td colspan="9"><div class="no-data">Nenhuma reserva encontrada</div></td></tr>`;
+    return;
+  }
+  tbody.innerHTML = all.map(r=>`
+    <tr>
+      <td>
+        <div class="res-name-cell">${r.name}</div>
+        <div class="res-phone-cell">${r.phone||'—'}</div>
+      </td>
+      <td>${fmtDate(r.checkin)}</td>
+      <td>${fmtDate(r.checkout)}</td>
+      <td><span class="days-badge">${diffDays(r.checkin,r.checkout)}d</span></td>
+      <td>${r.guests||'—'}</td>
+      <td>${r.occasion||'—'}</td>
+      <td>
+        <button class="badge badge-${r.status}" onclick="toggleStatusDirect('${r.id}')">
+          ${r.status==='paid'?'✅ Pago':'⏳ Pendente'}
+        </button>
+      </td>
+      <td>
+        ${r.phone ? `<a class="btn-wa" href="https://wa.me/55${r.phone.replace(/\D/g,'')}" target="_blank">📲 WA</a>` : '—'}
+      </td>
+      <td style="display:flex;gap:6px;align-items:center">
+        <button class="btn-icon" onclick="openModal('${r.id}')" title="Ver detalhes">🔍</button>
+        <button class="btn-icon" onclick="deleteRes('${r.id}')" title="Excluir">🗑️</button>
+      </td>
+    </tr>`).join('');
+}
+
+function toggleStatusDirect(id){
+  const all = getRes();
+  const r = all.find(x=>x.id===id);
+  if(!r) return;
+  r.status = r.status==='paid' ? 'pending' : 'paid';
+  saveRes(all);
+  renderResTable();
+  showToast(r.status==='paid' ? '✅ Marcado como pago!' : '⏳ Marcado como pendente');
+}
+
+function deleteRes(id){
+  if(!confirm('Excluir esta reserva?')) return;
+  saveRes(getRes().filter(r=>r.id!==id));
+  renderResTable();
+  showToast('🗑️ Reserva excluída');
+}
+
+// ===== MODAL =====
+let modalResId = null;
+function openModal(id){
+  const r = getRes().find(x=>x.id===id);
+  if(!r) return;
+  modalResId = id;
+  document.getElementById('md-name').textContent = r.name||'—';
+  document.getElementById('md-phone').textContent = r.phone||'—';
+  document.getElementById('md-email').textContent = r.email||'—';
+  document.getElementById('md-guests').textContent = r.guests||'—';
+  document.getElementById('md-checkin').textContent = fmtDate(r.checkin)+' (08h)';
+  document.getElementById('md-checkout').textContent = fmtDate(r.checkout)+' (18h)';
+  document.getElementById('md-occasion').textContent = r.occasion||'—';
+  document.getElementById('md-obs').textContent = r.obs||'—';
+  document.getElementById('md-created').textContent = r.createdAt ? new Date(r.createdAt).toLocaleString('pt-BR') : '—';
+  const badge = r.status==='paid'
+    ? '<span class="badge badge-paid">✅ Pago</span>'
+    : '<span class="badge badge-pending">⏳ Pendente</span>';
+  document.getElementById('md-status').innerHTML = badge;
+  document.getElementById('md-toggle-btn').textContent = r.status==='paid' ? '⏳ Marcar pendente' : '✅ Marcar como pago';
+  const waNum = (r.phone||'').replace(/\D/g,'');
+  const waMsg = encodeURIComponent(`Olá ${r.name}! Confirmando sua reserva no Sítio Iluminado: check-in ${fmtDate(r.checkin)}, check-out ${fmtDate(r.checkout)}. Qualquer dúvida é só falar! 😊`);
+  document.getElementById('md-wa-link').href = `https://wa.me/55${waNum}?text=${waMsg}`;
+  document.getElementById('modal-bg').classList.add('open');
+}
+function closeModal(){ document.getElementById('modal-bg').classList.remove('open'); modalResId=null; }
+function toggleResStatus(){
+  if(!modalResId) return;
+  const all = getRes();
+  const r = all.find(x=>x.id===modalResId);
+  if(!r) return;
+  r.status = r.status==='paid' ? 'pending' : 'paid';
+  saveRes(all);
+  closeModal();
+  if(currentPage==='dashboard') renderDashboard();
+  if(currentPage==='reservas') renderResTable();
+  showToast(r.status==='paid' ? '✅ Pago!' : '⏳ Pendente');
+}
+function cancelReservation(){
+  if(!modalResId) return;
+  if(!confirm('Excluir esta reserva?')) return;
+  saveRes(getRes().filter(r=>r.id!==modalResId));
+  closeModal();
+  renderDashboard();
+  renderResTable();
+  showToast('🗑️ Reserva excluída');
+}
+function waContact(phone){
+  const n = phone.replace(/\D/g,'');
+  if(!n) return;
+  window.open(`https://wa.me/55${n}`,'_blank');
+}
+
+// ===== ADMIN CALENDAR =====
+let adminCalYear = new Date().getFullYear();
+let adminCalMonth = new Date().getMonth();
+const MONTHS = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+
+function renderAdminCal(){
+  const all = getRes();
+  const today = todayStr();
+  const firstDay = new Date(adminCalYear, adminCalMonth, 1).getDay();
+  const daysInMonth = new Date(adminCalYear, adminCalMonth+1, 0).getDate();
+  document.getElementById('admin-cal-label').textContent = MONTHS[adminCalMonth]+' '+adminCalYear;
+
+  function dateStr(d){ return `${adminCalYear}-${String(adminCalMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`; }
+  function getResForDate(ds){ return all.find(r=>r.checkin<=ds && r.checkout>ds); }
+
+  let html = '';
+  for(let i=0;i<firstDay;i++) html += '<div class="cal-day empty"></div>';
+  for(let d=1;d<=daysInMonth;d++){
+    const ds = dateStr(d);
+    const res = getResForDate(ds);
+    const isToday = ds===today;
+    let cls = 'cal-day free';
+    if(isToday) cls += ' today';
+    if(res) cls = 'cal-day '+(res.status==='paid'?'reserved-paid':'reserved-pending');
+    const onclick = res ? `onclick="showCalDetail('${ds}')"` : '';
+    html += `<div class="${cls}" ${onclick}><span>${d}</span>${res?'<div class="cal-day-dot"></div>':''}</div>`;
+  }
+  document.getElementById('admin-cal-grid').innerHTML = html;
+}
+function adminCalPrev(){ adminCalMonth--; if(adminCalMonth<0){adminCalMonth=11;adminCalYear--;} renderAdminCal(); }
+function adminCalNext(){ adminCalMonth++; if(adminCalMonth>11){adminCalMonth=0;adminCalYear++;} renderAdminCal(); }
+
+function showCalDetail(ds){
+  const all = getRes();
+  const res = all.filter(r=>r.checkin<=ds && r.checkout>ds);
+  document.getElementById('cal-detail-title').textContent = '📋 Reservas em '+fmtDate(ds);
+  if(!res.length){ document.getElementById('cal-detail-content').innerHTML='<div class="empty-state"><div class="empty-sub">Nenhuma reserva nesta data</div></div>'; return; }
+  document.getElementById('cal-detail-content').innerHTML = res.map(r=>`
+    <div class="tl-item" onclick="openModal('${r.id}')" style="cursor:pointer">
+      <div class="tl-dot ${r.status}">${r.status==='paid'?'✅':'⏳'}</div>
+      <div class="tl-body">
+        <div class="tl-title">${r.name} · ${r.guests||'?'} pessoas</div>
+        <div class="tl-sub">${fmtDate(r.checkin)} → ${fmtDate(r.checkout)} · ${r.occasion||'—'}</div>
+        <div class="tl-when">${r.phone||''} ${r.email||''}</div>
+      </div>
+      <button class="btn-wa" onclick="event.stopPropagation();waContact('${r.phone||''}')" style="align-self:center">📲</button>
+    </div>`).join('');
+}
+
+// ===== LEADS =====
+function renderLeads(){
+  let all = getRes();
+  const search = (document.getElementById('leads-search')||{}).value?.toLowerCase()||'';
+  // Group by phone
+  const map = {};
+  all.forEach(r=>{
+    const key = (r.phone||r.email||r.name||'').replace(/\D/g,'').slice(-8) || r.name;
+    if(!map[key]) map[key] = {name:r.name,phone:r.phone||'—',email:r.email||'—',reservas:[],last:r.checkin};
+    map[key].reservas.push(r);
+    if(r.checkin > map[key].last) map[key].last = r.checkin;
+  });
+  let leads = Object.values(map);
+  if(search) leads = leads.filter(l=>(l.name||'').toLowerCase().includes(search)||(l.phone||'').includes(search)||(l.email||'').toLowerCase().includes(search));
+
+  const tbody = document.getElementById('leads-table-body');
+  if(!leads.length){ tbody.innerHTML=`<tr><td colspan="6"><div class="no-data">Nenhum lead encontrado</div></td></tr>`; return; }
+  tbody.innerHTML = leads.map(l=>`
+    <tr>
+      <td><div class="res-name-cell">${l.name}</div></td>
+      <td>${l.phone}</td>
+      <td>${l.email}</td>
+      <td><span class="days-badge">${l.reservas.length}</span></td>
+      <td>${fmtDate(l.last)}</td>
+      <td>${l.phone!=='—'?`<a class="btn-wa" href="https://wa.me/55${l.phone.replace(/\D/g,'')}" target="_blank">📲 WA</a>`:'—'}</td>
+    </tr>`).join('');
+}
+
+// ===== EXPORT CSV =====
+function exportCSV(){
+  const all = getRes();
+  const header = ['Nome','Telefone','Email','Check-in','Check-out','Dias','Pessoas','Ocasião','Status','Observações','Registrado em'];
+  const rows = all.map(r=>[
+    r.name, r.phone||'', r.email||'',
+    fmtDate(r.checkin), fmtDate(r.checkout),
+    diffDays(r.checkin,r.checkout),
+    r.guests||'', r.occasion||'',
+    r.status==='paid'?'Pago':'Pendente',
+    r.obs||'',
+    r.createdAt ? new Date(r.createdAt).toLocaleString('pt-BR') : ''
+  ]);
+  downloadCSV([header,...rows], 'reservas-sitio-iluminado.csv');
+}
+function exportLeadsCSV(){
+  const all = getRes();
+  const header = ['Nome','Telefone','Email','Total reservas'];
+  const map = {};
+  all.forEach(r=>{
+    const key = (r.phone||r.name);
+    if(!map[key]) map[key]={name:r.name,phone:r.phone||'',email:r.email||'',count:0};
+    map[key].count++;
+  });
+  const rows = Object.values(map).map(l=>[l.name,l.phone,l.email,l.count]);
+  downloadCSV([header,...rows], 'leads-sitio-iluminado.csv');
+}
+function downloadCSV(rows, filename){
+  const csv = rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,\uFEFF'+encodeURIComponent(csv);
+  a.download = filename;
+  a.click();
+  showToast('📥 CSV exportado!');
+}
+
+// ===== NOVA RESERVA =====
+function saveNewReservation(){
+  const name = document.getElementById('nf-name').value.trim();
+  const phone = document.getElementById('nf-phone').value.trim();
+  const email = document.getElementById('nf-email').value.trim();
+  const guests = document.getElementById('nf-guests').value;
+  const checkin = document.getElementById('nf-checkin').value;
+  const checkout = document.getElementById('nf-checkout').value;
+  const occasion = document.getElementById('nf-occasion').value;
+  const status = document.getElementById('nf-status').value;
+  const obs = document.getElementById('nf-obs').value.trim();
+
+  if(!name||!phone||!checkin||!checkout||!guests){ showToast('⚠️ Preencha os campos obrigatórios'); return; }
+  if(checkin >= checkout){ showToast('⚠️ Check-out deve ser depois do check-in'); return; }
+
+  const all = getRes();
+  all.push({ id:genId(), name, phone, email, guests, checkin, checkout, occasion, status, obs, createdAt:new Date().toISOString() });
+  saveRes(all);
+
+  // reset
+  ['nf-name','nf-phone','nf-email','nf-checkin','nf-checkout','nf-obs'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('nf-guests').value='';
+  document.getElementById('nf-occasion').value='';
+  document.getElementById('nf-status').value='pending';
+
+  showToast('✅ Reserva salva com sucesso!');
+  goPage('reservas');
+}
+
+// ===== INIT =====
+function init(){
+  renderDashboard();
+}
+if(sessionStorage.getItem(SESSION_KEY)) init();
+</script>
+</body>
+</html>
