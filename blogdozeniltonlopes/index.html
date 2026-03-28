@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blog do Zenilton Lopes | Notícias e Informação</title>
+<meta name="description" content="Blog do Zenilton Lopes — Notícias, análises e informação de qualidade. Fique por dentro dos principais acontecimentos.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --red: #CC0000;
+  --red-dark: #990000;
+  --black: #111111;
+  --nav-bg: #1a1a1a;
+  --white: #ffffff;
+  --gray-light: #f4f4f4;
+  --gray-mid: #e0e0e0;
+  --gray-text: #555555;
+  --font-headline: 'Oswald', sans-serif;
+  --font-body: 'Merriweather', serif;
+  --font-ui: 'Source Sans 3', sans-serif;
+}
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-ui); background: var(--white); color: var(--black); line-height: 1.6; }
+a { text-decoration: none; color: inherit; }
+img { max-width: 100%; height: auto; display: block; }
+
+.utility-bar {
+  background: var(--black); color: #aaa;
+  font-family: var(--font-ui); font-size: 12px;
+  padding: 6px 20px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.utility-bar a { color: #ccc; margin-left: 12px; }
+.utility-bar a:hover { color: var(--red); }
+
+.site-header {
+  background: var(--white);
+  border-bottom: 3px solid var(--red);
+  padding: 20px 20px 16px;
+  text-align: center;
+}
+.site-logo {
+  font-family: var(--font-headline);
+  font-size: clamp(30px, 8vw, 62px);
+  font-weight: 700; color: var(--black);
+  letter-spacing: -1px; line-height: 1;
+  text-transform: uppercase;
+}
+.site-logo span { color: var(--red); }
+.site-tagline {
+  font-family: var(--font-ui); font-size: 12px;
+  color: var(--gray-text); margin-top: 6px;
+  text-transform: uppercase; letter-spacing: 2px;
+}
+
+.main-nav { background: var(--nav-bg); position: sticky; top: 0; z-index: 100; }
+.main-nav ul { display: flex; list-style: none; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.main-nav ul::-webkit-scrollbar { display: none; }
+.main-nav ul li a {
+  display: block; padding: 14px 15px;
+  font-family: var(--font-headline); font-size: 13px; font-weight: 500;
+  color: #ccc; text-transform: uppercase; letter-spacing: 1px; white-space: nowrap;
+  transition: color 0.2s, background 0.2s;
+}
+.main-nav ul li a:hover, .main-nav ul li.active a { color: var(--white); background: var(--red); }
+
+.container { max-width: 1180px; margin: 0 auto; padding: 0 20px; }
+
+.breaking-bar { background: var(--red); color: var(--white); padding: 10px 0; overflow: hidden; }
+.breaking-inner { display: flex; align-items: center; gap: 16px; }
+.breaking-label {
+  background: var(--black); color: var(--white);
+  font-family: var(--font-headline); font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 2px;
+  padding: 4px 10px; white-space: nowrap; flex-shrink: 0;
+}
+.breaking-text { font-family: var(--font-ui); font-size: 14px; font-weight: 600; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+
+.hero-section { margin: 24px 0; }
+.hero-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+@media (min-width: 768px) { .hero-grid { grid-template-columns: 2fr 1fr; } }
+
+.hero-main { position: relative; border-radius: 4px; overflow: hidden; min-height: 300px; background: #222; }
+.hero-main img { width: 100%; height: 380px; object-fit: cover; opacity: 0.75; transition: opacity 0.3s; }
+@media (min-width: 768px) { .hero-main img { height: 460px; } }
+.hero-main:hover img { opacity: 0.6; }
+.hero-overlay {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: linear-gradient(transparent, rgba(0,0,0,0.92));
+  padding: 40px 24px 24px;
+}
+.hero-category {
+  display: inline-block; background: var(--red); color: var(--white);
+  font-family: var(--font-headline); font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 2px; padding: 4px 10px; margin-bottom: 10px;
+}
+.hero-title {
+  font-family: var(--font-headline); font-size: clamp(22px, 4vw, 34px);
+  font-weight: 700; color: var(--white); line-height: 1.2; margin-bottom: 10px; text-transform: uppercase;
+}
+.hero-meta { color: #ccc; font-size: 13px; }
+
+.hero-side { display: flex; flex-direction: column; gap: 12px; }
+.side-card {
+  display: flex; gap: 12px; background: var(--white);
+  border: 1px solid var(--gray-mid); border-radius: 4px; overflow: hidden;
+  transition: box-shadow 0.2s;
+}
+.side-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.1); }
+.side-card img { width: 90px; height: 78px; object-fit: cover; flex-shrink: 0; }
+.side-card-body { padding: 10px 12px 10px 0; display: flex; flex-direction: column; justify-content: center; }
+.side-card-cat { font-family: var(--font-headline); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--red); margin-bottom: 4px; }
+.side-card-title { font-family: var(--font-headline); font-size: 14px; font-weight: 600; color: var(--black); line-height: 1.3; text-transform: uppercase; }
+.side-card-title:hover { color: var(--red); }
+.side-card-meta { font-size: 11px; color: var(--gray-text); margin-top: 4px; }
+
+.section-title-bar {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 20px; padding-bottom: 12px; border-bottom: 3px solid var(--black);
+}
+.section-title-bar h2 { font-family: var(--font-headline); font-size: clamp(18px, 3vw, 22px); font-weight: 700; text-transform: uppercase; letter-spacing: 1px; }
+.section-title-bar .red-bar { width: 4px; height: 28px; background: var(--red); flex-shrink: 0; }
+.section-title-bar .see-all { margin-left: auto; font-family: var(--font-ui); font-size: 12px; font-weight: 600; color: var(--red); text-transform: uppercase; letter-spacing: 1px; }
+.section-title-bar .see-all:hover { color: var(--red-dark); }
+
+.news-section { padding: 32px 0; }
+.news-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+@media (min-width: 500px) { .news-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 900px) { .news-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.news-card { background: var(--white); border: 1px solid var(--gray-mid); border-radius: 4px; overflow: hidden; transition: box-shadow 0.2s, transform 0.2s; }
+.news-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.12); transform: translateY(-2px); }
+.news-card-img { width: 100%; height: 190px; object-fit: cover; }
+.news-card-body { padding: 16px; }
+.news-card-cat { display: inline-block; font-family: var(--font-headline); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--white); background: var(--red); padding: 3px 8px; margin-bottom: 10px; border-radius: 2px; }
+.news-card-title { font-family: var(--font-headline); font-size: 16px; font-weight: 700; color: var(--black); line-height: 1.3; margin-bottom: 8px; text-transform: uppercase; transition: color 0.2s; }
+.news-card:hover .news-card-title { color: var(--red); }
+.news-card-excerpt { font-family: var(--font-body); font-size: 13px; color: var(--gray-text); line-height: 1.6; margin-bottom: 12px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.news-card-meta { display: flex; align-items: center; gap: 8px; font-size: 12px; color: #888; border-top: 1px solid var(--gray-mid); padding-top: 10px; }
+
+.popular-section { padding: 32px 0; background: var(--gray-light); }
+.popular-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+@media (min-width: 600px) { .popular-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 900px) { .popular-grid { grid-template-columns: repeat(5, 1fr); } }
+.popular-item { display: flex; gap: 12px; align-items: flex-start; }
+.popular-num { font-family: var(--font-headline); font-size: 36px; font-weight: 700; color: var(--red); line-height: 1; flex-shrink: 0; width: 36px; }
+.popular-title { font-family: var(--font-headline); font-size: 14px; font-weight: 600; color: var(--black); text-transform: uppercase; line-height: 1.3; transition: color 0.2s; }
+.popular-title:hover { color: var(--red); }
+.popular-meta { font-size: 11px; color: #888; margin-top: 4px; }
+
+.newsletter-section { background: var(--red); padding: 48px 20px; text-align: center; }
+.newsletter-label { font-family: var(--font-headline); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; color: rgba(255,255,255,0.7); margin-bottom: 10px; }
+.newsletter-title { font-family: var(--font-headline); font-size: clamp(24px, 5vw, 40px); font-weight: 700; color: var(--white); text-transform: uppercase; margin-bottom: 10px; }
+.newsletter-sub { color: rgba(255,255,255,0.85); font-size: 16px; margin-bottom: 28px; }
+.newsletter-form { display: flex; flex-direction: column; gap: 12px; max-width: 480px; margin: 0 auto; }
+@media (min-width: 480px) { .newsletter-form { flex-direction: row; } }
+.newsletter-input { flex: 1; padding: 14px 18px; font-family: var(--font-ui); font-size: 15px; border: none; border-radius: 3px; outline: none; }
+.newsletter-btn {
+  padding: 14px 28px; background: var(--black); color: var(--white);
+  font-family: var(--font-headline); font-size: 14px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 1px;
+  border: none; border-radius: 3px; cursor: pointer; transition: background 0.2s; white-space: nowrap;
+}
+.newsletter-btn:hover { background: #333; }
+
+.site-footer { background: var(--black); color: #aaa; padding: 48px 20px 24px; }
+.footer-top { display: grid; grid-template-columns: 1fr; gap: 32px; margin-bottom: 32px; padding-bottom: 32px; border-bottom: 1px solid #333; }
+@media (min-width: 600px) { .footer-top { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 900px) { .footer-top { grid-template-columns: 2fr 1fr 1fr 1fr; } }
+.footer-brand .logo { font-family: var(--font-headline); font-size: 26px; font-weight: 700; color: var(--white); text-transform: uppercase; margin-bottom: 10px; }
+.footer-brand .logo span { color: var(--red); }
+.footer-brand p { font-size: 13px; line-height: 1.7; }
+.footer-col h4 { font-family: var(--font-headline); font-size: 13px; font-weight: 700; color: var(--white); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 2px solid var(--red); display: inline-block; }
+.footer-col ul { list-style: none; }
+.footer-col ul li { margin-bottom: 8px; }
+.footer-col ul li a { font-size: 13px; color: #aaa; transition: color 0.2s; }
+.footer-col ul li a:hover { color: var(--white); }
+.footer-bottom { display: flex; flex-direction: column; gap: 10px; align-items: center; text-align: center; font-size: 12px; color: #555; }
+@media (min-width: 600px) { .footer-bottom { flex-direction: row; justify-content: space-between; text-align: left; } }
+.footer-social { display: flex; gap: 10px; }
+.footer-social a { width: 36px; height: 36px; background: #333; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--white); font-size: 15px; transition: background 0.2s; }
+.footer-social a:hover { background: var(--red); }
+
+.back-top { position: fixed; bottom: 24px; right: 24px; z-index: 999; width: 46px; height: 46px; background: var(--red); color: var(--white); border: none; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.3); transition: background 0.2s, transform 0.2s; opacity: 0; pointer-events: none; }
+.back-top.show { opacity: 1; pointer-events: all; }
+.back-top:hover { background: var(--red-dark); transform: translateY(-3px); }
+</style>
+</head>
+<body>
+
+<!-- Utility Bar -->
+<div class="utility-bar">
+  <span>Sábado, 28 de março de 2026</span>
+  <div>
+    <a href="#">Facebook</a>
+    <a href="#">Instagram</a>
+    <a href="#">YouTube</a>
+  </div>
+</div>
+
+<!-- Header -->
+<header class="site-header">
+  <div class="site-logo">Blog do <span>Zenilton</span> Lopes</div>
+  <p class="site-tagline">Notícias, análises e informação de qualidade</p>
+</header>
+
+<!-- Navigation -->
+<nav class="main-nav">
+  <div class="container">
+    <ul>
+      <li class="active"><a href="#">Início</a></li>
+      <li><a href="#">Política</a></li>
+      <li><a href="#">Economia</a></li>
+      <li><a href="#">Brasil</a></li>
+      <li><a href="#">Mundo</a></li>
+      <li><a href="#">Esportes</a></li>
+      <li><a href="#">Tecnologia</a></li>
+      <li><a href="#">Saúde</a></li>
+      <li><a href="#">Opinião</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Breaking News Ticker -->
+<div class="breaking-bar">
+  <div class="container">
+    <div class="breaking-inner">
+      <span class="breaking-label">⚡ Urgente</span>
+      <span class="breaking-text">Acompanhe as últimas notícias do Brasil e do Mundo no Blog do Zenilton Lopes — Informação com credibilidade e imparcialidade</span>
+    </div>
+  </div>
+</div>
+
+<!-- Hero Section -->
+<section class="hero-section">
+  <div class="container">
+    <div class="hero-grid">
+      <a href="#" class="hero-main">
+        <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=900&q=80&fit=crop" alt="Notícia destaque" loading="lazy">
+        <div class="hero-overlay">
+          <span class="hero-category">Destaque</span>
+          <h1 class="hero-title">O Cenário Político Nacional em Debate: O Que Esperar dos Próximos Meses</h1>
+          <p class="hero-meta">28 mar 2026 &bull; 5 min de leitura</p>
+        </div>
+      </a>
+      <div class="hero-side">
+        <a href="#" class="side-card">
+          <img src="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=200&q=80&fit=crop" alt="Economia">
+          <div class="side-card-body">
+            <span class="side-card-cat">Economia</span>
+            <p class="side-card-title">Dólar e inflação: entenda o cenário econômico de 2026</p>
+            <span class="side-card-meta">28 mar 2026</span>
+          </div>
+        </a>
+        <a href="#" class="side-card">
+          <img src="https://images.unsplash.com/photo-1540910419892-4a36d2c3266c?w=200&q=80&fit=crop" alt="Brasil">
+          <div class="side-card-body">
+            <span class="side-card-cat">Brasil</span>
+            <p class="side-card-title">Obras de infraestrutura avançam em todo o país</p>
+            <span class="side-card-meta">27 mar 2026</span>
+          </div>
+        </a>
+        <a href="#" class="side-card">
+          <img src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=200&q=80&fit=crop" alt="Esportes">
+          <div class="side-card-body">
+            <span class="side-card-cat">Esportes</span>
+            <p class="side-card-title">Seleção brasileira se prepara para eliminatórias decisivas</p>
+            <span class="side-card-meta">27 mar 2026</span>
+          </div>
+        </a>
+        <a href="#" class="side-card">
+          <img src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=200&q=80&fit=crop" alt="Tecnologia">
+          <div class="side-card-body">
+            <span class="side-card-cat">Tecnologia</span>
+            <p class="side-card-title">Inteligência artificial transforma o mercado de trabalho</p>
+            <span class="side-card-meta">26 mar 2026</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Latest News Grid -->
+<section class="news-section">
+  <div class="container">
+    <div class="section-title-bar">
+      <div class="red-bar"></div>
+      <h2>Últimas Notícias</h2>
+      <a href="#" class="see-all">Ver todas &rarr;</a>
+    </div>
+    <div class="news-grid">
+      <a href="#" class="news-card">
+        <img class="news-card-img" src="https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=600&q=80&fit=crop" alt="Política" loading="lazy">
+        <div class="news-card-body">
+          <span class="news-card-cat">Política</span>
+          <p class="news-card-title">Congresso aprova medidas que impactam diretamente a vida dos brasileiros</p>
+          <p class="news-card-excerpt">As votações mais recentes no parlamento trouxeram mudanças significativas para diversas áreas, desde o mercado de trabalho até benefícios sociais.</p>
+          <div class="news-card-meta">
+            <span>28 mar 2026</span>
+            <span>&bull;</span>
+            <span>4 min</span>
+          </div>
+        </div>
+      </a>
+      <a href="#" class="news-card">
+        <img class="news-card-img" src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&q=80&fit=crop" alt="Economia" loading="lazy">
+        <div class="news-card-body">
+          <span class="news-card-cat">Economia</span>
+          <p class="news-card-title">Banco Central mantém taxa de juros e analistas divergem sobre próximos passos</p>
+          <p class="news-card-excerpt">A decisão do Copom gerou repercussão no mercado financeiro, com especialistas divididos entre a manutenção e uma possível queda nos juros.</p>
+          <div class="news-card-meta">
+            <span>28 mar 2026</span>
+            <span>&bull;</span>
+            <span>3 min</span>
+          </div>
+        </div>
+      </a>
+      <a href="#" class="news-card">
+        <img class="news-card-img" src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80&fit=crop" alt="Saúde" loading="lazy">
+        <div class="news-card-body">
+          <span class="news-card-cat">Saúde</span>
+          <p class="news-card-title">Ministério da Saúde anuncia nova campanha de vacinação em todo o Brasil</p>
+          <p class="news-card-excerpt">O programa nacional prevê imunizar mais de 50 milhões de brasileiros nos próximos seis meses, com foco nas populações mais vulneráveis.</p>
+          <div class="news-card-meta">
+            <span>27 mar 2026</span>
+            <span>&bull;</span>
+            <span>4 min</span>
+          </div>
+        </div>
+      </a>
+      <a href="#" class="news-card">
+        <img class="news-card-img" src="https://images.unsplash.com/photo-1569163139394-de4e4f43e4e3?w=600&q=80&fit=crop" alt="Mundo" loading="lazy">
+        <div class="news-card-body">
+          <span class="news-card-cat">Mundo</span>
+          <p class="news-card-title">Tensões internacionais crescem e diplomacia global busca solução negociada</p>
+          <p class="news-card-excerpt">Líderes mundiais se reúnem em cúpula de emergência para discutir caminhos para a paz em meio a escalada de conflitos em diversas regiões.</p>
+          <div class="news-card-meta">
+            <span>27 mar 2026</span>
+            <span>&bull;</span>
+            <span>5 min</span>
+          </div>
+        </div>
+      </a>
+      <a href="#" class="news-card">
+        <img class="news-card-img" src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600&q=80&fit=crop" alt="Brasil" loading="lazy">
+        <div class="news-card-body">
+          <span class="news-card-cat">Brasil</span>
+          <p class="news-card-title">Nordeste registra crescimento econômico acima da média nacional em 2026</p>
+          <p class="news-card-excerpt">Os dados do IBGE confirmam que estados do Nordeste lideram o crescimento do PIB regional, impulsionados por investimentos em energia renovável.</p>
+          <div class="news-card-meta">
+            <span>26 mar 2026</span>
+            <span>&bull;</span>
+            <span>3 min</span>
+          </div>
+        </div>
+      </a>
+      <a href="#" class="news-card">
+        <img class="news-card-img" src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&q=80&fit=crop" alt="Tecnologia" loading="lazy">
+        <div class="news-card-body">
+          <span class="news-card-cat">Tecnologia</span>
+          <p class="news-card-title">Startups brasileiras batem recorde de investimentos no primeiro trimestre</p>
+          <p class="news-card-excerpt">O ecossistema de inovação do país atraiu mais de R$4 bilhões nos primeiros meses do ano, consolidando o Brasil como hub tecnológico da América Latina.</p>
+          <div class="news-card-meta">
+            <span>26 mar 2026</span>
+            <span>&bull;</span>
+            <span>4 min</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Most Read -->
+<section class="popular-section">
+  <div class="container">
+    <div class="section-title-bar">
+      <div class="red-bar"></div>
+      <h2>Mais Lidas</h2>
+    </div>
+    <div class="popular-grid">
+      <div class="popular-item">
+        <span class="popular-num">1</span>
+        <div>
+          <a href="#" class="popular-title">Reforma tributária entra em vigor e mexe com bolso dos brasileiros</a>
+          <p class="popular-meta">28 mar 2026 &bull; 6 min</p>
+        </div>
+      </div>
+      <div class="popular-item">
+        <span class="popular-num">2</span>
+        <div>
+          <a href="#" class="popular-title">Copa do Mundo: Brasil divulga lista de convocados para a competição</a>
+          <p class="popular-meta">27 mar 2026 &bull; 3 min</p>
+        </div>
+      </div>
+      <div class="popular-item">
+        <span class="popular-num">3</span>
+        <div>
+          <a href="#" class="popular-title">Eleições municipais: cenário se define e candidatos ganham força</a>
+          <p class="popular-meta">27 mar 2026 &bull; 5 min</p>
+        </div>
+      </div>
+      <div class="popular-item">
+        <span class="popular-num">4</span>
+        <div>
+          <a href="#" class="popular-title">Nova lei de trânsito traz mudanças importantes a partir de abril</a>
+          <p class="popular-meta">26 mar 2026 &bull; 4 min</p>
+        </div>
+      </div>
+      <div class="popular-item">
+        <span class="popular-num">5</span>
+        <div>
+          <a href="#" class="popular-title">Energias renováveis: Brasil anuncia meta ambiciosa para 2030</a>
+          <p class="popular-meta">25 mar 2026 &bull; 4 min</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Newsletter -->
+<section class="newsletter-section">
+  <p class="newsletter-label">Fique por dentro de tudo</p>
+  <h2 class="newsletter-title">Receba as Notícias no Seu E-mail</h2>
+  <p class="newsletter-sub">Cadastre-se e fique por dentro de tudo que acontece no Brasil e no Mundo.</p>
+  <form class="newsletter-form" onsubmit="return false;">
+    <input type="email" class="newsletter-input" placeholder="Seu melhor e-mail" required>
+    <button type="submit" class="newsletter-btn">Inscrever-se</button>
+  </form>
+</section>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="logo">Blog do <span>Zenilton</span> Lopes</div>
+        <p>Informação de qualidade, análises aprofundadas e cobertura jornalística dos principais acontecimentos do Brasil e do Mundo.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Editorias</h4>
+        <ul>
+          <li><a href="#">Política</a></li>
+          <li><a href="#">Economia</a></li>
+          <li><a href="#">Brasil</a></li>
+          <li><a href="#">Mundo</a></li>
+          <li><a href="#">Esportes</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Mais</h4>
+        <ul>
+          <li><a href="#">Tecnologia</a></li>
+          <li><a href="#">Saúde</a></li>
+          <li><a href="#">Opinião</a></li>
+          <li><a href="#">Colunas</a></li>
+          <li><a href="#">Podcast</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Blog</h4>
+        <ul>
+          <li><a href="#">Sobre</a></li>
+          <li><a href="#">Contato</a></li>
+          <li><a href="#">Política Editorial</a></li>
+          <li><a href="#">Anuncie</a></li>
+          <li><a href="#">Newsletter</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 Blog do Zenilton Lopes. Todos os direitos reservados.</span>
+      <div class="footer-social">
+        <a href="#" title="Facebook">f</a>
+        <a href="#" title="Instagram">in</a>
+        <a href="#" title="YouTube">yt</a>
+        <a href="#" title="Twitter/X">x</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Back to Top -->
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#8679;</button>
+
+<script>
+  // Back to top button
+  window.addEventListener('scroll', function() {
+    var btn = document.getElementById('backTop');
+    if (window.scrollY > 300) { btn.classList.add('show'); }
+    else { btn.classList.remove('show'); }
+  });
+
+  // Newsletter form
+  var form = document.querySelector('.newsletter-form');
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var input = form.querySelector('input');
+      var btn = form.querySelector('button');
+      btn.textContent = 'Inscrito! ✓';
+      btn.style.background = '#222';
+      input.value = '';
+      setTimeout(function() { btn.textContent = 'Inscrever-se'; }, 3000);
+    });
+  }
+</script>
+</body>
+</html>
