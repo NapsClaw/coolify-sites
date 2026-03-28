@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Instituto Teológico Daniel Berg – Capacitando Obreiros para o Reino de Deus</title>
+  <meta name="description" content="Instituto Teológico Daniel Berg – Cursos Teológicos Básico, Médio e Avançado, formação de líderes evangélicos, mentorias, EAD e presencial. Capacitando obreiros para o Reino de Deus." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: #0d1b2a;
+      color: #e8e0d0;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ===== CSS VARIABLES ===== */
+    :root {
+      --navy: #0d1b2a;
+      --navy-mid: #142235;
+      --navy-light: #1e3352;
+      --gold: #c9a84c;
+      --gold-light: #e8c96b;
+      --gold-pale: #f0e0a0;
+      --crimson: #8b1a1a;
+      --crimson-bright: #c0392b;
+      --white: #f8f4ec;
+      --text-muted: #a09880;
+    }
+
+    /* ===== NAVBAR ===== */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(13, 27, 42, 0.97);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(201, 168, 76, 0.2);
+      padding: 14px 20px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none;
+    }
+    .nav-logo-icon {
+      width: 40px; height: 40px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .nav-logo-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 14px; font-weight: 700;
+      color: var(--gold);
+      line-height: 1.2;
+      letter-spacing: 0.03em;
+    }
+    .nav-logo-text span { color: var(--crimson-bright); }
+    .nav-cta {
+      background: var(--crimson);
+      color: var(--white);
+      border: none; border-radius: 6px;
+      padding: 10px 18px; font-size: 13px; font-weight: 600;
+      text-decoration: none; cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: background 0.2s;
+    }
+    .nav-cta:hover { background: var(--crimson-bright); }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100vh;
+      background:
+        linear-gradient(180deg, rgba(13,27,42,0.85) 0%, rgba(13,27,42,0.7) 50%, rgba(13,27,42,0.92) 100%),
+        url('https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=1200&q=80') center/cover no-repeat;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 100px 24px 60px;
+      position: relative;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at center top, rgba(201,168,76,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(201,168,76,0.12);
+      border: 1px solid rgba(201,168,76,0.35);
+      border-radius: 100px;
+      padding: 6px 16px; margin-bottom: 28px;
+      font-size: 12px; font-weight: 600;
+      color: var(--gold-light); letter-spacing: 0.1em; text-transform: uppercase;
+    }
+    .hero-logo {
+      width: 90px; height: 90px; margin: 0 auto 20px;
+      animation: fadeInDown 0.8s ease both;
+    }
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 8vw, 72px);
+      font-weight: 700; line-height: 1.1;
+      color: var(--white);
+      margin-bottom: 8px;
+      animation: fadeInUp 0.8s ease 0.1s both;
+    }
+    .hero-title span { color: var(--crimson-bright); }
+    .hero-subtitle-institute {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(14px, 3vw, 18px);
+      color: var(--gold);
+      letter-spacing: 0.15em; text-transform: uppercase;
+      margin-bottom: 20px;
+      animation: fadeInUp 0.8s ease 0.2s both;
+    }
+    .hero-tagline {
+      font-size: clamp(15px, 3vw, 19px);
+      color: var(--text-muted);
+      font-style: italic;
+      margin-bottom: 40px;
+      max-width: 520px;
+      animation: fadeInUp 0.8s ease 0.3s both;
+    }
+    .hero-divider {
+      width: 60px; height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 0 auto 40px;
+    }
+    .hero-ctas {
+      display: flex; flex-direction: column; gap: 14px; width: 100%;
+      max-width: 320px; margin: 0 auto;
+      animation: fadeInUp 0.8s ease 0.4s both;
+    }
+    .btn-primary {
+      background: var(--crimson);
+      color: var(--white); border: none; border-radius: 8px;
+      padding: 16px 32px; font-size: 16px; font-weight: 600;
+      text-decoration: none; cursor: pointer; display: block; text-align: center;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: all 0.2s; letter-spacing: 0.02em;
+    }
+    .btn-primary:hover { background: var(--crimson-bright); transform: translateY(-2px); }
+    .btn-outline {
+      background: transparent;
+      color: var(--gold); border: 1.5px solid var(--gold);
+      border-radius: 8px; padding: 15px 32px;
+      font-size: 16px; font-weight: 600;
+      text-decoration: none; cursor: pointer; display: block; text-align: center;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: all 0.2s;
+    }
+    .btn-outline:hover { background: rgba(201,168,76,0.1); transform: translateY(-2px); }
+    .hero-scroll {
+      position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      color: var(--text-muted); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+      animation: bounce 2s ease infinite;
+    }
+
+    /* ===== STATS BAR ===== */
+    .stats-bar {
+      background: var(--navy-mid);
+      border-top: 1px solid rgba(201,168,76,0.15);
+      border-bottom: 1px solid rgba(201,168,76,0.15);
+      padding: 28px 24px;
+    }
+    .stats-grid {
+      max-width: 800px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px;
+    }
+    .stat-item { text-align: center; }
+    .stat-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 36px; font-weight: 700;
+      color: var(--gold); line-height: 1;
+      margin-bottom: 4px;
+    }
+    .stat-label {
+      font-size: 12px; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.08em;
+    }
+
+    /* ===== SECTIONS ===== */
+    section { padding: 72px 24px; }
+    .section-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(28px, 6vw, 46px);
+      font-weight: 700; line-height: 1.15;
+      color: var(--white); margin-bottom: 16px;
+    }
+    .section-title span { color: var(--crimson-bright); }
+    .section-text {
+      font-size: 16px; line-height: 1.75;
+      color: var(--text-muted); max-width: 600px;
+    }
+
+    /* ===== SOBRE ===== */
+    .about { background: var(--navy); }
+    .about-inner { max-width: 700px; margin: 0 auto; }
+    .about-quote {
+      border-left: 3px solid var(--gold);
+      padding-left: 20px; margin: 32px 0;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px; font-style: italic; color: var(--gold-pale);
+      line-height: 1.6;
+    }
+    .about-highlights {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 32px;
+    }
+    .highlight-item {
+      display: flex; align-items: flex-start; gap: 12px;
+      background: var(--navy-mid); border-radius: 10px;
+      padding: 16px; border: 1px solid rgba(201,168,76,0.1);
+    }
+    .highlight-icon {
+      width: 36px; height: 36px; flex-shrink: 0;
+      background: rgba(201,168,76,0.1);
+      border-radius: 8px; display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+    }
+    .highlight-text { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+    .highlight-text strong { color: var(--white); display: block; margin-bottom: 2px; font-size: 14px; }
+
+    /* ===== CURSOS ===== */
+    .courses { background: var(--navy-mid); }
+    .courses-header { text-align: center; margin-bottom: 48px; }
+    .courses-header .section-text { margin: 0 auto; }
+    .courses-grid {
+      max-width: 960px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr; gap: 20px;
+    }
+    .course-card {
+      background: var(--navy);
+      border: 1px solid rgba(201,168,76,0.15);
+      border-radius: 14px; padding: 28px 24px;
+      position: relative; overflow: hidden;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .course-card:hover { transform: translateY(-4px); border-color: rgba(201,168,76,0.4); }
+    .course-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--crimson));
+    }
+    .course-level {
+      display: inline-block;
+      background: rgba(201,168,76,0.12);
+      border: 1px solid rgba(201,168,76,0.25);
+      color: var(--gold); border-radius: 100px;
+      padding: 4px 12px; font-size: 11px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .course-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px; font-weight: 700; color: var(--white);
+      margin-bottom: 10px;
+    }
+    .course-desc { font-size: 14px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.65; }
+    .course-details {
+      display: flex; flex-wrap: wrap; gap: 12px;
+    }
+    .course-detail {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 12px; color: var(--text-muted);
+    }
+    .course-detail svg { flex-shrink: 0; }
+
+    /* ===== FORMATOS ===== */
+    .formats { background: var(--navy); }
+    .formats-header { text-align: center; margin-bottom: 48px; }
+    .formats-grid {
+      max-width: 800px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr; gap: 20px;
+    }
+    .format-card {
+      background: var(--navy-mid);
+      border: 1px solid rgba(201,168,76,0.12);
+      border-radius: 14px; padding: 28px 24px;
+      display: flex; gap: 20px; align-items: flex-start;
+    }
+    .format-icon-wrap {
+      width: 56px; height: 56px; flex-shrink: 0;
+      background: rgba(201,168,76,0.08);
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 12px; display: flex; align-items: center; justify-content: center;
+    }
+    .format-content h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px; font-weight: 700; color: var(--white);
+      margin-bottom: 8px;
+    }
+    .format-content p { font-size: 14px; color: var(--text-muted); line-height: 1.65; }
+
+    /* ===== MENTORIA ===== */
+    .mentoria {
+      background: linear-gradient(135deg, var(--navy-mid) 0%, var(--navy-light) 100%);
+      border-top: 1px solid rgba(201,168,76,0.15);
+      border-bottom: 1px solid rgba(201,168,76,0.15);
+    }
+    .mentoria-inner { max-width: 700px; margin: 0 auto; text-align: center; }
+    .mentoria-icon {
+      width: 72px; height: 72px; margin: 0 auto 24px;
+      background: rgba(201,168,76,0.1);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 32px;
+    }
+    .mentoria-list {
+      list-style: none; margin: 24px auto;
+      display: flex; flex-direction: column; gap: 12px;
+      text-align: left; max-width: 480px;
+    }
+    .mentoria-list li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 15px; color: var(--text-muted);
+    }
+    .mentoria-list li::before {
+      content: '✦'; color: var(--gold); font-size: 10px;
+      margin-top: 5px; flex-shrink: 0;
+    }
+
+    /* ===== LIDERANÇA ===== */
+    .leadership { background: var(--navy-mid); }
+    .leadership-header { text-align: center; margin-bottom: 48px; }
+    .leadership-grid {
+      max-width: 900px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr; gap: 16px;
+    }
+    .leadership-item {
+      background: var(--navy);
+      border-radius: 12px; padding: 20px 22px;
+      border: 1px solid rgba(201,168,76,0.1);
+      display: flex; align-items: center; gap: 16px;
+    }
+    .leadership-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px; font-weight: 700;
+      color: rgba(201,168,76,0.3); flex-shrink: 0; min-width: 36px;
+    }
+    .leadership-text h4 { font-size: 15px; font-weight: 600; color: var(--white); margin-bottom: 3px; }
+    .leadership-text p { font-size: 13px; color: var(--text-muted); }
+
+    /* ===== CTA BANNER ===== */
+    .cta-banner {
+      background: linear-gradient(135deg, var(--crimson) 0%, #6b1212 100%);
+      padding: 60px 24px; text-align: center;
+    }
+    .cta-banner h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(28px, 6vw, 44px);
+      font-weight: 700; color: var(--white); margin-bottom: 14px;
+    }
+    .cta-banner p { font-size: 16px; color: rgba(255,255,255,0.8); margin-bottom: 32px; }
+    .cta-btn-white {
+      display: inline-block;
+      background: var(--white); color: var(--crimson);
+      border-radius: 8px; padding: 16px 36px;
+      font-size: 16px; font-weight: 700;
+      text-decoration: none; font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: all 0.2s;
+    }
+    .cta-btn-white:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.2); }
+
+    /* ===== CONTACT ===== */
+    .contact { background: var(--navy); }
+    .contact-inner { max-width: 700px; margin: 0 auto; }
+    .contact-header { margin-bottom: 40px; }
+    .contact-items { display: flex; flex-direction: column; gap: 20px; }
+    .contact-item {
+      display: flex; align-items: flex-start; gap: 16px;
+      background: var(--navy-mid); border-radius: 12px;
+      padding: 18px; border: 1px solid rgba(201,168,76,0.1);
+    }
+    .contact-icon {
+      width: 44px; height: 44px; flex-shrink: 0;
+      background: rgba(201,168,76,0.1); border-radius: 10px;
+      display: flex; align-items: center; justify-content: center; font-size: 20px;
+    }
+    .contact-info h4 { font-size: 13px; font-weight: 700; color: var(--gold); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 4px; }
+    .contact-info p { font-size: 15px; color: var(--white); }
+    .contact-info a { color: var(--white); text-decoration: none; }
+    .contact-info a:hover { color: var(--gold); }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: #080f18;
+      border-top: 1px solid rgba(201,168,76,0.15);
+      padding: 40px 24px;
+      text-align: center;
+    }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px; font-weight: 700; color: var(--gold);
+      margin-bottom: 8px;
+    }
+    .footer-logo span { color: var(--crimson-bright); }
+    .footer-tagline {
+      font-size: 13px; color: var(--text-muted); font-style: italic;
+      margin-bottom: 24px;
+    }
+    .footer-links {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 16px;
+      margin-bottom: 24px;
+    }
+    .footer-links a { font-size: 13px; color: var(--text-muted); text-decoration: none; }
+    .footer-links a:hover { color: var(--gold); }
+    .footer-bottom {
+      font-size: 12px; color: rgba(160,152,128,0.5);
+      border-top: 1px solid rgba(201,168,76,0.08); padding-top: 20px;
+    }
+
+    /* ===== WHATSAPP BUTTON ===== */
+    .whatsapp-btn {
+      position: fixed; bottom: 22px; right: 22px; z-index: 999;
+      background: #25D366; border-radius: 50%;
+      width: 60px; height: 60px;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 18px rgba(37,211,102,0.45);
+      text-decoration: none; transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .whatsapp-btn:hover { transform: scale(1.1); box-shadow: 0 6px 24px rgba(37,211,102,0.55); }
+    .whatsapp-pulse {
+      position: absolute; inset: 0; border-radius: 50%;
+      background: rgba(37,211,102,0.3);
+      animation: pulse 2.5s ease infinite;
+    }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(6px); }
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 0.6; }
+      100% { transform: scale(1.6); opacity: 0; }
+    }
+    .fade-in {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* ===== DESKTOP ===== */
+    @media (min-width: 640px) {
+      .stats-grid { grid-template-columns: repeat(4, 1fr); }
+      .courses-grid { grid-template-columns: repeat(3, 1fr); }
+      .formats-grid { grid-template-columns: 1fr 1fr; }
+      .leadership-grid { grid-template-columns: 1fr 1fr; }
+      .about-highlights { grid-template-columns: 1fr 1fr; }
+      .hero-ctas { flex-direction: row; max-width: none; justify-content: center; }
+      .hero-ctas a { min-width: 180px; }
+    }
+    @media (min-width: 900px) {
+      section { padding: 90px 40px; }
+      .course-name { font-size: 26px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-icon">
+      <svg width="38" height="38" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="12" y="38" width="56" height="32" rx="3" fill="#1e3352" stroke="#c9a84c" stroke-width="2"/>
+        <rect x="38" y="38" width="2" height="32" fill="#c9a84c" opacity="0.5"/>
+        <path d="M40 14 L48 36 L32 36 Z" fill="#c0392b"/>
+        <path d="M40 8 L44 22 L36 22 Z" fill="#e05030"/>
+        <text x="22" y="60" font-family="serif" font-size="11" fill="#c9a84c" font-weight="bold">Α</text>
+        <text x="48" y="60" font-family="serif" font-size="11" fill="#c9a84c" font-weight="bold">Ω</text>
+      </svg>
+    </div>
+    <div class="nav-logo-text">INSTITUTO TEOLÓGICO<br/><span>DANIEL BERG</span></div>
+  </a>
+  <a href="https://wa.me/5516991876103?text=Olá!%20Quero%20saber%20mais%20sobre%20os%20cursos%20do%20Instituto%20Teológico%20Daniel%20Berg." class="nav-cta" target="_blank">Fale Conosco</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+    Reconhecido pelo MEC
+  </div>
+
+  <div class="hero-logo fade-in">
+    <svg width="90" height="90" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="60" cy="60" r="58" fill="rgba(13,27,42,0.7)" stroke="#c9a84c" stroke-width="1.5"/>
+      <rect x="22" y="62" width="76" height="44" rx="4" fill="#142235" stroke="#c9a84c" stroke-width="1.5"/>
+      <rect x="58" y="62" width="3" height="44" fill="#c9a84c" opacity="0.4"/>
+      <path d="M60 22 L72 60 L48 60 Z" fill="#c0392b"/>
+      <path d="M60 14 L66 38 L54 38 Z" fill="#e05030" opacity="0.8"/>
+      <text x="32" y="90" font-family="Georgia, serif" font-size="14" fill="#c9a84c" font-weight="bold">Α</text>
+      <text x="74" y="90" font-family="Georgia, serif" font-size="14" fill="#c9a84c" font-weight="bold">Ω</text>
+    </svg>
+  </div>
+
+  <div class="hero-subtitle-institute fade-in">Instituto Teológico</div>
+  <h1 class="hero-title fade-in">Daniel <span>Berg</span></h1>
+  <div class="hero-divider"></div>
+  <p class="hero-tagline fade-in">"Capacitando Obreiros para o Reino de Deus"</p>
+
+  <div class="hero-ctas fade-in">
+    <a href="#cursos" class="btn-primary">Conheça os Cursos</a>
+    <a href="https://wa.me/5516991876103?text=Olá!%20Quero%20me%20matricular%20no%20Instituto%20Teológico%20Daniel%20Berg." class="btn-outline" target="_blank">Matricule-se Agora</a>
+  </div>
+
+  <div class="hero-scroll">
+    <svg width="20" height="28" viewBox="0 0 20 28" fill="none"><rect x="1" y="1" width="18" height="26" rx="9" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="8" r="3" fill="currentColor"><animate attributeName="cy" values="8;17;8" dur="2s" repeatCount="indefinite"/></circle></svg>
+    Rolar
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stats-grid">    <div class="stat-item fade-in">
+      <div class="stat-number">3</div>
+      <div class="stat-label">Níveis de Curso</div>
+    </div>
+    <div class="stat-item fade-in">
+      <div class="stat-number">360h</div>
+      <div class="stat-label">Carga Horária</div>
+    </div>
+    <div class="stat-item fade-in">
+      <div class="stat-number">8</div>
+      <div class="stat-label">Módulos por Curso</div>
+    </div>
+    <div class="stat-item fade-in">
+      <div class="stat-number">EAD+</div>
+      <div class="stat-label">Presencial</div>
+    </div>
+  </div>
+</div>
+
+<!-- SOBRE -->
+<section class="about" id="sobre">
+  <div class="about-inner">
+    <div class="fade-in">
+      <p class="section-label">Sobre Nós</p>
+      <h2 class="section-title">Uma Instituição a <span>Serviço</span> do Reino</h2>
+    </div>
+    <p class="section-text fade-in">
+      O Instituto Teológico Daniel Berg nasceu com um propósito claro: formar e equipar obreiros, líderes e pastores para servirem com excelência nas igrejas e missões ao redor do Brasil. Com uma grade curricular sólida e professores experientes, preparamos nossos alunos teológica e praticamente.
+    </p>
+    <blockquote class="about-quote fade-in">
+      "Toda Escritura é inspirada por Deus e útil para o ensino, para a repreensão, para a correção e para a instrução na justiça."<br/>
+      <small style="color: var(--gold); font-size: 14px;">— 2 Timóteo 3:16</small>
+    </blockquote>
+    <div class="about-highlights fade-in">
+      <div class="highlight-item">
+        <div class="highlight-icon">📖</div>
+        <div class="highlight-text"><strong>Base Bíblica Sólida</strong>Ensino fundamentado nas Escrituras Sagradas em todos os níveis</div>
+      </div>
+      <div class="highlight-item">
+        <div class="highlight-icon">🎓</div>
+        <div class="highlight-text"><strong>Reconhecimento MEC</strong>Extensão Universitária em Teologia com certificação oficial</div>
+      </div>
+      <div class="highlight-item">
+        <div class="highlight-icon">🌐</div>
+        <div class="highlight-text"><strong>EAD + Presencial</strong>Flexibilidade para estudar de onde você estiver</div>
+      </div>
+      <div class="highlight-item">
+        <div class="highlight-icon">🤝</div>
+        <div class="highlight-text"><strong>Mentoria Pastoral</strong>Acompanhamento personalizado com líderes experientes</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CURSOS -->
+<section class="courses" id="cursos">
+  <div class="courses-header fade-in">
+    <p class="section-label">Formação Teológica</p>
+    <h2 class="section-title">Nossos <span>Cursos</span></h2>
+    <p class="section-text">Três níveis de formação para cada etapa da sua jornada no ministério.</p>
+  </div>
+  <div class="courses-grid">
+
+    <div class="course-card fade-in">
+      <div class="course-level">Nível 1</div>
+      <div class="course-name">Curso Teológico Básico</div>
+      <p class="course-desc">Fundamentos da fé cristã, introdução às Escrituras, doutrina bíblica e princípios da vida cristã. Ideal para quem está começando ou quer solidificar sua base.</p>
+      <div class="course-details">
+        <span class="course-detail">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          360 horas/aula
+        </span>
+        <span class="course-detail">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/></svg>
+          8 módulos
+        </span>
+        <span class="course-detail">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+          EAD + Presencial
+        </span>
+      </div>
+    </div>
+
+    <div class="course-card fade-in">
+      <div class="course-level">Nível 2</div>
+      <div class="course-name">Curso Teológico Médio</div>
+      <p class="course-desc">Aprofundamento em hermenêutica, homilética, teologia sistemática e ministério pastoral. Para quem já tem base e busca crescer no conhecimento.</p>
+      <div class="course-details">
+        <span class="course-detail">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          360 horas/aula
+        </span>
+        <span class="course-detail">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/></svg>
+          8 módulos
+        </span>
+        <span class="course-detail">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+          EAD + Presencial
+        </span>
+      </div>
+    </div>
+
+    <div class="course-card fade-in">
+      <div class="course-level">Nível 3</div>
+      <div class="course-name">Curso Teológico Avançado</div>
+      <p class="course-desc">Formação completa em liderança eclesiástica, administração de igrejas, missiologia e plantação de igrejas. Para líderes e pastores em formação.</p>
+      <div class="course-details">
+        <span class="course-detail">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          360 horas/aula
+        </span>
+        <span class="course-detail">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/></svg>
+          8 módulos
+        </span>
+        <span class="course-detail">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+          EAD + Presencial
+        </span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FORMATOS -->
+<section class="formats" id="modalidades">
+  <div class="formats-header fade-in">
+    <p class="section-label">Modalidades</p>
+    <h2 class="section-title">Estude do <span>Seu Jeito</span></h2>
+    <p class="section-text">Oferecemos duas modalidades para você se encaixar no formato que melhor serve à sua vida e ministério.</p>
+  </div>
+  <div class="formats-grid">
+
+    <div class="format-card fade-in">
+      <div class="format-icon-wrap">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+      </div>
+      <div class="format-content">
+        <h3>EAD</h3>
+        <p>Estude onde e quando quiser. Aulas gravadas, material didático completo e suporte online. Perfeito para quem tem agenda ministerial intensa ou mora em outra cidade.</p>
+      </div>
+    </div>
+
+    <div class="format-card fade-in">
+      <div class="format-icon-wrap">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#c9a84c" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <div class="format-content">
+        <h3>Presencial</h3>
+        <p>Aulas semanais com interação direta com professores e colegas. Comunhão, vivência prática e crescimento em comunidade. Ideal para quem valoriza o contato pessoal.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- MENTORIA -->
+<section class="mentoria" id="mentoria">
+  <div class="mentoria-inner">
+    <div class="mentoria-icon">🙏</div>
+    <div class="fade-in">
+      <p class="section-label" style="text-align:center;">Acompanhamento</p>
+      <h2 class="section-title" style="text-align:center;">Mentorias e <span>Treinamentos</span></h2>
+    </div>
+    <p class="section-text fade-in" style="text-align:center;margin:0 auto 8px;">
+      Além dos cursos formais, oferecemos um programa completo de mentorias e treinamentos para capacitar líderes na prática do ministério.
+    </p>
+    <ul class="mentoria-list fade-in">
+      <li>Mentoria individual com pastores e líderes experientes</li>
+      <li>Treinamento para plantação e administração de igrejas</li>
+      <li>Capacitação em liderança cristã e gestão ministerial</li>
+      <li>Formação de discipuladores e multiplicadores</li>
+      <li>Acompanhamento contínuo durante toda a formação</li>
+      <li>Grupos de estudo e comunhão entre alunos</li>
+    </ul>
+    <div style="text-align:center; margin-top: 32px;">
+      <a href="https://wa.me/5516991876103?text=Quero%20saber%20sobre%20as%20mentorias%20do%20Instituto%20Daniel%20Berg." class="btn-primary" style="display:inline-block; max-width: 280px;" target="_blank">Saiba Mais Sobre Mentoria</a>
+    </div>
+  </div>
+</section>
+
+<!-- EXTENSÃO / LIDERANÇA -->
+<section class="leadership" id="extensao">
+  <div class="leadership-header fade-in">
+    <p class="section-label">Extensão Universitária</p>
+    <h2 class="section-title">Áreas de <span>Formação</span></h2>
+    <p class="section-text" style="margin: 0 auto; text-align:center;">Nossa extensão universitária em Teologia abrange as principais áreas do ministério evangélico.</p>
+  </div>
+  <div class="leadership-grid">
+    <div class="leadership-item fade-in">
+      <div class="leadership-num">01</div>
+      <div class="leadership-text">
+        <h4>Ministério Pastoral</h4>
+        <p>Formação completa para o pastoreio e cuidado da comunidade cristã</p>
+      </div>
+    </div>
+    <div class="leadership-item fade-in">
+      <div class="leadership-num">02</div>
+      <div class="leadership-text">
+        <h4>Administração Eclesiástica</h4>
+        <p>Gestão e liderança organizacional de igrejas e ministérios</p>
+      </div>
+    </div>
+    <div class="leadership-item fade-in">
+      <div class="leadership-num">03</div>
+      <div class="leadership-text">
+        <h4>Plantação de Igrejas</h4>
+        <p>Estratégias e fundamentos para iniciar e consolidar novas igrejas</p>
+      </div>
+    </div>
+    <div class="leadership-item fade-in">
+      <div class="leadership-num">04</div>
+      <div class="leadership-text">
+        <h4>Missiologia</h4>
+        <p>Teologia e prática da missão cristã no Brasil e no mundo</p>
+      </div>
+    </div>
+    <div class="leadership-item fade-in">
+      <div class="leadership-num">05</div>
+      <div class="leadership-text">
+        <h4>Liderança Cristã</h4>
+        <p>Desenvolvimento de líderes íntegros, sábios e servidores</p>
+      </div>
+    </div>
+    <div class="leadership-item fade-in">
+      <div class="leadership-num">06</div>
+      <div class="leadership-text">
+        <h4>CFOL – Formação de Obreiros</h4>
+        <p>Curso intensivo de capacitação prática para obreiros do evangelho</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<div class="cta-banner fade-in">
+  <h2>Pronto para Responder ao Chamado?</h2>
+  <p>Dê o próximo passo na sua formação ministerial. Matrículas abertas!</p>
+  <a href="https://wa.me/5516991876103?text=Quero%20me%20matricular%20no%20Instituto%20Teológico%20Daniel%20Berg!%20Pode%20me%20enviar%20mais%20informações?" class="cta-btn-white" target="_blank">Iniciar Matrícula pelo WhatsApp</a>
+</div>
+
+<!-- CONTATO -->
+<section class="contact" id="contato">
+  <div class="contact-inner">
+    <div class="contact-header fade-in">
+      <p class="section-label">Contato</p>
+      <h2 class="section-title">Fale <span>Conosco</span></h2>
+      <p class="section-text">Nossa equipe está pronta para esclarecer suas dúvidas sobre cursos, matrículas e formatos de ensino.</p>
+    </div>
+    <div class="contact-items">
+      <div class="contact-item fade-in">
+        <div class="contact-icon">💬</div>
+        <div class="contact-info">
+          <h4>WhatsApp</h4>
+          <p><a href="https://wa.me/5516991876103?text=Olá!%20Quero%20saber%20mais%20sobre%20o%20Instituto%20Teológico%20Daniel%20Berg." target="_blank">(16) 99187-6103</a></p>
+        </div>
+      </div>
+      <div class="contact-item fade-in">
+        <div class="contact-icon">🎓</div>
+        <div class="contact-info">
+          <h4>Modalidades Disponíveis</h4>
+          <p>EAD (todo o Brasil) · Presencial (aulas semanais)</p>
+        </div>
+      </div>
+      <div class="contact-item fade-in">
+        <div class="contact-icon">⏰</div>
+        <div class="contact-info">
+          <h4>Atendimento</h4>
+          <p>Segunda a Sexta, das 8h às 18h</p>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top: 32px; text-align: center;" class="fade-in">
+      <a href="https://wa.me/5516991876103?text=Olá!%20Tenho%20interesse%20nos%20cursos%20do%20Instituto%20Teológico%20Daniel%20Berg.%20Pode%20me%20ajudar?" class="btn-primary" style="display:inline-block; max-width: 320px;" target="_blank">
+        Enviar Mensagem no WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">INSTITUTO TEOLÓGICO <span>DANIEL BERG</span></div>
+  <div class="footer-tagline">"Capacitando Obreiros para o Reino de Deus"</div>
+  <div class="footer-links">
+    <a href="#sobre">Sobre</a>
+    <a href="#cursos">Cursos</a>
+    <a href="#modalidades">Modalidades</a>
+    <a href="#mentoria">Mentoria</a>
+    <a href="#extensao">Extensão</a>
+    <a href="#contato">Contato</a>
+  </div>
+  <div class="footer-bottom">
+    © 2025 Instituto Teológico Daniel Berg — Todos os direitos reservados
+  </div>
+</footer>
+
+<!-- WHATSAPP FLOATING BUTTON -->
+<a href="https://wa.me/5516991876103?text=Olá!%20Quero%20saber%20mais%20sobre%20os%20cursos%20do%20Instituto%20Teológico%20Daniel%20Berg." class="whatsapp-btn" target="_blank" aria-label="Conversar no WhatsApp">
+  <div class="whatsapp-pulse"></div>
+  <svg width="30" height="30" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+
+<script>
+  // Fade-in on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Smooth scroll for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const id = a.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) { e.preventDefault(); el.scrollIntoView({ behavior: 'smooth' }); }
+    });
+  });
+</script>
+</body>
+</html>
