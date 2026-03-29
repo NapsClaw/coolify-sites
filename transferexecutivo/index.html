@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TransferExecutivo — Transporte Executivo Premium</title>
+  <meta name="description" content="TransferExecutivo: transporte executivo premium com pontualidade, segurança e conforto. Solicite seu transfer agora.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black: #0a0a0a;
+      --white: #ffffff;
+      --gray-light: #f5f5f5;
+      --gray-mid: #e0e0e0;
+      --gray-text: #666666;
+      --accent: #c8a96e;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--white); color: var(--black); overflow-x: hidden; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(10,10,10,0.95); backdrop-filter: blur(10px);
+      padding: 18px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px; font-weight: 700;
+      color: var(--white); letter-spacing: 1px;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-cta {
+      background: var(--white); color: var(--black);
+      padding: 10px 22px; border-radius: 2px;
+      font-size: 13px; font-weight: 600; letter-spacing: 0.5px;
+      text-decoration: none; text-transform: uppercase;
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(160deg, #0a0a0a 0%, #1a1a1a 50%, #0d0d0d 100%);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 100px 24px 60px;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url('https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1400&q=80') center/cover;
+      opacity: 0.12;
+    }
+    .hero-badge {
+      display: inline-block;
+      border: 1px solid var(--accent);
+      color: var(--accent); font-size: 11px; font-weight: 600;
+      letter-spacing: 3px; text-transform: uppercase;
+      padding: 8px 20px; border-radius: 2px; margin-bottom: 28px;
+      position: relative;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(42px, 10vw, 80px);
+      font-weight: 900; color: var(--white);
+      line-height: 1.05; margin-bottom: 20px;
+      position: relative;
+    }
+    .hero h1 em { color: var(--accent); font-style: normal; }
+    .hero p {
+      font-size: 17px; font-weight: 300; color: rgba(255,255,255,0.7);
+      max-width: 480px; line-height: 1.7; margin-bottom: 44px;
+      position: relative;
+    }
+    .hero-btns { display: flex; flex-direction: column; gap: 14px; width: 100%; max-width: 320px; position: relative; }
+    .btn-primary {
+      background: var(--white); color: var(--black);
+      padding: 18px 32px; border-radius: 2px;
+      font-size: 15px; font-weight: 700; letter-spacing: 0.5px;
+      text-decoration: none; text-align: center; text-transform: uppercase;
+    }
+    .btn-outline {
+      border: 1px solid rgba(255,255,255,0.4); color: var(--white);
+      padding: 17px 32px; border-radius: 2px;
+      font-size: 15px; font-weight: 400;
+      text-decoration: none; text-align: center;
+    }
+    .hero-stats {
+      display: flex; gap: 32px; margin-top: 56px; position: relative;
+    }
+    .stat-item { text-align: center; }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px; font-weight: 700; color: var(--white);
+      line-height: 1;
+    }
+    .stat-label { font-size: 11px; color: rgba(255,255,255,0.5); letter-spacing: 1px; text-transform: uppercase; margin-top: 4px; }
+
+    /* COMO FUNCIONA */
+    .section { padding: 80px 24px; }
+    .section-dark { background: var(--black); }
+    .section-light { background: var(--white); }
+    .section-gray { background: var(--gray-light); }
+    .section-label {
+      font-size: 11px; font-weight: 600; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(30px, 7vw, 44px); font-weight: 700;
+      line-height: 1.15; margin-bottom: 16px;
+    }
+    .section-title-white { color: var(--white); }
+    .section-sub {
+      font-size: 15px; color: var(--gray-text); line-height: 1.7; max-width: 480px;
+    }
+    .section-sub-white { color: rgba(255,255,255,0.6); }
+    .divider { width: 40px; height: 2px; background: var(--accent); margin: 20px 0 40px; }
+
+    /* STEPS */
+    .steps { display: flex; flex-direction: column; gap: 0; margin-top: 48px; }
+    .step {
+      display: flex; gap: 20px; align-items: flex-start;
+      padding: 28px 0; border-bottom: 1px solid var(--gray-mid);
+    }
+    .step:last-child { border-bottom: none; }
+    .step-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px; font-weight: 900; color: var(--gray-mid);
+      line-height: 1; min-width: 60px;
+    }
+    .step-content h3 { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+    .step-content p { font-size: 14px; color: var(--gray-text); line-height: 1.6; }
+
+    /* DIFERENCIAIS */
+    .features { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(255,255,255,0.1); margin-top: 48px; }
+    .feature-card {
+      background: #111; padding: 32px 24px;
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .feature-icon { font-size: 28px; }
+    .feature-title { font-size: 16px; font-weight: 600; color: var(--white); }
+    .feature-desc { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.6; }
+
+    /* FROTA */
+    .fleet-img {
+      width: 100%; height: 220px;
+      object-fit: cover; border-radius: 2px; margin-bottom: 20px;
+    }
+    .fleet-grid { display: flex; flex-direction: column; gap: 24px; margin-top: 40px; }
+    .fleet-card { background: var(--white); }
+    .fleet-info { padding: 0 4px; }
+    .fleet-name { font-size: 17px; font-weight: 600; margin-bottom: 6px; }
+    .fleet-desc { font-size: 13px; color: var(--gray-text); }
+    .fleet-tag {
+      display: inline-block; margin-top: 10px;
+      border: 1px solid var(--black); padding: 4px 12px;
+      font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+    }
+
+    /* MOTORISTAS */
+    .driver-section {
+      background: var(--black);
+      padding: 80px 24px;
+    }
+    .driver-card {
+      background: #111; border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 2px; padding: 32px 24px; margin-top: 40px;
+    }
+    .driver-card h3 { font-family: 'Playfair Display', serif; font-size: 24px; color: var(--white); margin-bottom: 16px; }
+    .driver-card p { font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.7; margin-bottom: 28px; }
+    .driver-benefits { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+    .driver-benefits li { font-size: 14px; color: rgba(255,255,255,0.8); display: flex; gap: 10px; align-items: flex-start; }
+    .driver-benefits li::before { content: '✓'; color: var(--accent); font-weight: 700; flex-shrink: 0; }
+
+    /* FORM */
+    .form-section { background: var(--gray-light); padding: 80px 24px; }
+    .form-title { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; margin-bottom: 8px; }
+    .form-sub { font-size: 14px; color: var(--gray-text); margin-bottom: 32px; }
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 12px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; color: var(--black); }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%; padding: 14px 16px;
+      border: 1px solid var(--gray-mid); border-radius: 2px;
+      font-size: 15px; font-family: 'Inter', sans-serif;
+      background: var(--white); color: var(--black);
+      outline: none; transition: border-color 0.2s;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      border-color: var(--black);
+    }
+    .form-group textarea { min-height: 100px; resize: vertical; }
+    .btn-form {
+      width: 100%; padding: 18px; background: var(--black); color: var(--white);
+      border: none; border-radius: 2px; font-size: 15px; font-weight: 700;
+      letter-spacing: 0.5px; text-transform: uppercase; cursor: pointer;
+    }
+
+    /* DEPOIMENTOS */
+    .reviews { margin-top: 48px; display: flex; flex-direction: column; gap: 20px; }
+    .review-card {
+      background: var(--white); border-left: 3px solid var(--accent);
+      padding: 24px 20px;
+    }
+    .review-text { font-size: 14px; color: var(--gray-text); line-height: 1.7; margin-bottom: 16px; font-style: italic; }
+    .review-author { font-size: 13px; font-weight: 600; }
+    .review-role { font-size: 12px; color: var(--gray-text); }
+    .stars { color: var(--accent); font-size: 14px; margin-bottom: 12px; }
+
+    /* FOOTER */
+    footer {
+      background: var(--black); padding: 56px 24px 32px;
+      color: rgba(255,255,255,0.6);
+    }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px; font-weight: 700; color: var(--white);
+      margin-bottom: 12px;
+    }
+    .footer-logo span { color: var(--accent); }
+    .footer-tagline { font-size: 13px; margin-bottom: 32px; }
+    .footer-contact { display: flex; flex-direction: column; gap: 10px; margin-bottom: 40px; }
+    .footer-contact a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 14px; }
+    .footer-divider { height: 1px; background: rgba(255,255,255,0.1); margin-bottom: 24px; }
+    .footer-bottom { font-size: 12px; color: rgba(255,255,255,0.3); }
+
+    /* WHATSAPP FLOAT */
+    .wa-float {
+      position: fixed; bottom: 24px; right: 24px; z-index: 999;
+      background: #25D366; border-radius: 50%;
+      width: 60px; height: 60px;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+      text-decoration: none;
+    }
+    .wa-float svg { width: 30px; height: 30px; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Transfer<span>Executivo</span></div>
+  <a href="#solicitar" class="nav-cta">Solicitar</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">Transporte Executivo Premium</div>
+  <h1>Chegue com <em>classe</em> em qualquer destino</h1>
+  <p>Transfer executivo com pontualidade garantida, motoristas profissionais e frota premium para você e sua empresa.</p>
+  <div class="hero-btns">
+    <a href="https://wa.me/5513991312275" target="_blank" class="btn-primary">Solicitar Transfer Agora</a>
+    <a href="#como-funciona" class="btn-outline">Como Funciona</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-num">500+</div>
+      <div class="stat-label">Clientes</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">98%</div>
+      <div class="stat-label">Pontualidade</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">24h</div>
+      <div class="stat-label">Disponível</div>
+    </div>
+  </div>
+</section>
+
+<!-- COMO FUNCIONA -->
+<section class="section section-light" id="como-funciona">
+  <div class="section-label">Simples e Rápido</div>
+  <h2 class="section-title">Como funciona</h2>
+  <div class="divider"></div>
+  <p class="section-sub">Em 3 passos você garante seu transfer com a qualidade que merece.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-content">
+        <h3>Solicite pelo WhatsApp</h3>
+        <p>Entre em contato, informe origem, destino, data e horário. Respondemos em minutos.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-content">
+        <h3>Confirme sua reserva</h3>
+        <p>Receba o orçamento personalizado, confirme e aguarde a confirmação do seu motorista.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-content">
+        <h3>Viaje com conforto</h3>
+        <p>Seu motorista chegará no horário combinado. Sem surpresas, sem atrasos.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIFERENCIAIS -->
+<section class="section section-dark">
+  <div class="section-label" style="color: var(--accent);">Por que nos escolher</div>
+  <h2 class="section-title section-title-white">Excelência em cada detalhe</h2>
+  <div class="divider"></div>
+  <p class="section-sub section-sub-white">Nossa missão é garantir que cada viagem seja uma experiência inesquecível.</p>
+  <div class="features">
+    <div class="feature-card">
+      <div class="feature-icon">🕐</div>
+      <div class="feature-title">Pontualidade Garantida</div>
+      <div class="feature-desc">Monitoramos seu voo e ajustamos o horário automaticamente. Zero atrasos.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🛡️</div>
+      <div class="feature-title">Segurança Total</div>
+      <div class="feature-desc">Motoristas certificados, veículos rastreados e seguro completo em todas as viagens.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">💼</div>
+      <div class="feature-title">Foco Corporativo</div>
+      <div class="feature-desc">Nota fiscal, faturamento mensal e relatórios para sua empresa.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">⭐</div>
+      <div class="feature-title">Serviço Premium</div>
+      <div class="feature-desc">Água mineral, wi-fi a bordo e motoristas treinados para o padrão executivo.</div>
+    </div>
+  </div>
+</section>
+
+<!-- FROTA -->
+<section class="section section-gray">
+  <div class="section-label">Nossa Frota</div>
+  <h2 class="section-title">Veículos de alto padrão</h2>
+  <div class="divider"></div>
+  <p class="section-sub">Todos os veículos passam por inspeção rigorosa e manutenção preventiva.</p>
+  <div class="fleet-grid">
+    <div class="fleet-card">
+      <img src="https://images.unsplash.com/photo-1550355291-bbee04a92027?w=800&q=80" alt="Sedan Executivo" class="fleet-img" loading="lazy">
+      <div class="fleet-info">
+        <div class="fleet-name">Sedan Executivo</div>
+        <div class="fleet-desc">Ideal para transfers individuais e executivos. Conforto e discrição.</div>
+        <span class="fleet-tag">Até 3 passageiros</span>
+      </div>
+    </div>
+    <div class="fleet-card">
+      <img src="https://images.unsplash.com/photo-1570872626485-d8ffea69f463?w=800&q=80" alt="SUV Premium" class="fleet-img" loading="lazy">
+      <div class="fleet-info">
+        <div class="fleet-name">SUV Premium</div>
+        <div class="fleet-desc">Espaço e sofisticação para grupos ou executivos com bagagem.</div>
+        <span class="fleet-tag">Até 5 passageiros</span>
+      </div>
+    </div>
+    <div class="fleet-card">
+      <img src="https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=800&q=80" alt="Van Executiva" class="fleet-img" loading="lazy">
+      <div class="fleet-info">
+        <div class="fleet-name">Van Executiva</div>
+        <div class="fleet-desc">Perfeita para grupos corporativos e eventos empresariais.</div>
+        <span class="fleet-tag">Até 12 passageiros</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section class="section section-light" id="depoimentos">
+  <div class="section-label">Clientes Satisfeitos</div>
+  <h2 class="section-title">O que dizem sobre nós</h2>
+  <div class="divider"></div>
+  <div class="reviews">
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p class="review-text">"Usamos o TransferExecutivo para todos os transfers do nosso time corporativo. Pontualidade impecável, motoristas educados e veículos sempre limpos. Recomendo muito!"</p>
+      <div class="review-author">Carlos Mendes</div>
+      <div class="review-role">Diretor Comercial — Empresa de Tecnologia</div>
+    </div>
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p class="review-text">"Precisei de um transfer para o aeroporto às 4h da manhã. Motorista chegou 10 minutos antes, muito educado. Viagem tranquila e confortável. Com certeza vou usar sempre!"</p>
+      <div class="review-author">Ana Lúcia Silva</div>
+      <div class="review-role">Executiva</div>
+    </div>
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p class="review-text">"Serviço de altíssimo padrão. Contratamos para o transfer de convidados no nosso evento corporativo e superou todas as expectativas. Nota 10!"</p>
+      <div class="review-author">Roberto Alves</div>
+      <div class="review-role">Gerente de Eventos</div>
+    </div>
+  </div>
+</section>
+
+<!-- MOTORISTAS -->
+<section class="driver-section" id="motoristas">
+  <div class="section-label" style="color: var(--accent);">Oportunidade</div>
+  <h2 class="section-title section-title-white">Seja um motorista parceiro</h2>
+  <div class="divider"></div>
+  <p class="section-sub section-sub-white">Junte-se à nossa frota de motoristas executivos e aumente sua renda com liberdade e dignidade.</p>
+  <div class="driver-card">
+    <h3>Por que trabalhar conosco?</h3>
+    <p>Oferecemos as melhores condições do mercado para motoristas que buscam crescimento profissional no segmento executivo.</p>
+    <ul class="driver-benefits">
+      <li>Ganhos acima da média do mercado</li>
+      <li>Horários flexíveis — você escolhe quando trabalhar</li>
+      <li>Suporte e treinamento profissional</li>
+      <li>Pagamento semanal garantido</li>
+      <li>Clientes corporativos de alto padrão</li>
+    </ul>
+    <a href="#cadastro" class="btn-primary" style="display:block;text-align:center;padding:18px;font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;text-decoration:none;background:var(--white);color:var(--black);border-radius:2px;">Quero me cadastrar</a>
+  </div>
+</section>
+
+<!-- FORMULÁRIO MOTORISTAS -->
+<section class="form-section" id="cadastro">
+  <div class="section-label">Cadastro</div>
+  <div class="form-title">Cadastro de Motoristas</div>
+  <p class="form-sub">Preencha o formulário abaixo e entraremos em contato em até 24 horas.</p>
+  <form onsubmit="enviarCadastro(event)">
+    <div class="form-group">
+      <label>Nome completo</label>
+      <input type="text" placeholder="Seu nome" required>
+    </div>
+    <div class="form-group">
+      <label>WhatsApp</label>
+      <input type="tel" placeholder="(00) 00000-0000" required>
+    </div>
+    <div class="form-group">
+      <label>Cidade</label>
+      <input type="text" placeholder="Sua cidade" required>
+    </div>
+    <div class="form-group">
+      <label>Tipo de veículo</label>
+      <select>
+        <option value="">Selecione...</option>
+        <option>Sedan (Corolla, Civic...)</option>
+        <option>SUV (SW4, Q5, X5...)</option>
+        <option>Van (Sprinter, Master...)</option>
+        <option>Outro</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Experiência com transporte executivo</label>
+      <select>
+        <option>Não tenho experiência</option>
+        <option>Menos de 1 ano</option>
+        <option>1 a 3 anos</option>
+        <option>Mais de 3 anos</option>
+      </select>
+    </div>
+    <button type="submit" class="btn-form">Enviar Cadastro</button>
+  </form>
+</section>
+
+<!-- SOLICITAR -->
+<section class="section section-dark" id="solicitar">
+  <div class="section-label" style="color: var(--accent);">Contato</div>
+  <h2 class="section-title section-title-white">Solicite seu transfer</h2>
+  <div class="divider"></div>
+  <p class="section-sub section-sub-white" style="margin-bottom: 36px;">Atendimento 24 horas por dia, 7 dias por semana. Resposta imediata via WhatsApp.</p>
+  <a href="https://wa.me/5513991312275?text=Olá!%20Gostaria%20de%20solicitar%20um%20transfer%20executivo." target="_blank" class="btn-primary" style="display:inline-block;padding:20px 40px;font-size:15px;font-weight:700;letter-spacing:1px;text-transform:uppercase;text-decoration:none;background:var(--white);color:var(--black);border-radius:2px;">
+    💬 Falar no WhatsApp
+  </a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Transfer<span>Executivo</span></div>
+  <p class="footer-tagline">Transporte executivo premium — pontualidade, segurança e conforto.</p>
+  <div class="footer-contact">
+    <a href="https://wa.me/5513991312275">📱 WhatsApp: (13) 99131-2275</a>
+    <a href="mailto:contato@transferexecutivo.com.br">✉️ contato@transferexecutivo.com.br</a>
+    <span>📍 Atendemos em toda a região</span>
+  </div>
+  <div class="footer-divider"></div>
+  <p class="footer-bottom">© 2025 TransferExecutivo. Todos os direitos reservados.</p>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/5513991312275?text=Olá!%20Gostaria%20de%20solicitar%20um%20transfer." target="_blank" class="wa-float" aria-label="WhatsApp">
+  <svg fill="white" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+
+<script>
+function enviarCadastro(e) {
+  e.preventDefault();
+  const form = e.target;
+  const nome = form.querySelector('input[type="text"]').value;
+  const tel = form.querySelector('input[type="tel"]').value;
+  const msg = `Olá! Me chamo ${nome} e tenho interesse em ser motorista parceiro. Meu WhatsApp é ${tel}.`;
+  window.open(`https://wa.me/5513991312275?text=${encodeURIComponent(msg)}`, '_blank');
+}
+</script>
+
+</body>
+</html>
