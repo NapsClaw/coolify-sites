@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MN Turismo MCZ | Passeios, Roteiros e Transfer em Maceió</title>
+  <meta name="description" content="Explore Maceió com a MN Turismo! Passeios pelas praias, roteiros personalizados e transfer com conforto e segurança. Reserve agora pelo WhatsApp." />
+  <meta property="og:title" content="MN Turismo MCZ | Passeios em Maceió" />
+  <meta property="og:description" content="Explore Maceió com a MN Turismo! Passeios, roteiros personalizados e transfer." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ocean: #006994;
+      --ocean-dark: #004d6e;
+      --ocean-light: #0088c2;
+      --sand: #f5e6c8;
+      --sand-dark: #e8cc99;
+      --white: #ffffff;
+      --dark: #0a1628;
+      --text: #1a2e44;
+      --text-light: #4a6080;
+      --accent: #f4a20b;
+      --accent-dark: #d4890a;
+      --green: #25D366;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--text);
+      background: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ─── NAVBAR ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(0, 10, 30, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--white);
+      letter-spacing: -0.5px;
+    }
+
+    .nav-logo span { color: var(--accent); }
+
+    .nav-cta {
+      background: var(--accent);
+      color: var(--dark);
+      font-weight: 700;
+      font-size: 14px;
+      padding: 10px 20px;
+      border-radius: 50px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .nav-cta:hover { background: var(--accent-dark); }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: 
+        linear-gradient(180deg, rgba(0,20,50,0.7) 0%, rgba(0,50,100,0.5) 50%, rgba(0,20,50,0.8) 100%),
+        url('https://images.unsplash.com/photo-1559131397-f94da358f7ca?w=1200&auto=format&fit=crop&q=80') center/cover no-repeat;
+      z-index: 0;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 600px;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(244, 162, 11, 0.2);
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 50px;
+      margin-bottom: 24px;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 52px;
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 20px;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+
+    .hero-title span { color: var(--accent); }
+
+    .hero-subtitle {
+      font-size: 17px;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.7;
+      margin-bottom: 36px;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+
+    .hero-buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: center;
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+
+    .btn-primary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: var(--green);
+      color: var(--white);
+      font-weight: 700;
+      font-size: 16px;
+      padding: 16px 32px;
+      border-radius: 50px;
+      text-decoration: none;
+      width: 100%;
+      max-width: 300px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.3);
+    }
+
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(37,211,102,0.4); }
+
+    .btn-secondary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--white);
+      font-weight: 600;
+      font-size: 15px;
+      padding: 14px 28px;
+      border-radius: 50px;
+      border: 2px solid rgba(255,255,255,0.4);
+      text-decoration: none;
+      width: 100%;
+      max-width: 300px;
+      transition: border-color 0.2s;
+    }
+
+    .btn-secondary:hover { border-color: var(--white); }
+
+    .hero-wave {
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      right: 0;
+      z-index: 1;
+    }
+
+    /* ─── STATS ─── */
+    .stats {
+      background: var(--ocean-dark);
+      padding: 40px 24px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 40px;
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: rgba(255,255,255,0.75);
+      margin-top: 4px;
+    }
+
+    /* ─── SERVICES ─── */
+    .services {
+      padding: 80px 24px;
+      background: var(--white);
+    }
+
+    .section-label {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--ocean);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      font-weight: 900;
+      color: var(--dark);
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .section-sub {
+      font-size: 16px;
+      color: var(--text-light);
+      line-height: 1.7;
+      margin-bottom: 48px;
+      max-width: 520px;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .service-card {
+      background: var(--white);
+      border: 1.5px solid #e8eef5;
+      border-radius: 20px;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .service-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0,105,148,0.12);
+    }
+
+    .service-img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+
+    .service-body {
+      padding: 24px;
+    }
+
+    .service-icon {
+      width: 48px;
+      height: 48px;
+      background: linear-gradient(135deg, var(--ocean), var(--ocean-light));
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      font-size: 22px;
+    }
+
+    .service-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 8px;
+    }
+
+    .service-desc {
+      font-size: 15px;
+      color: var(--text-light);
+      line-height: 1.7;
+    }
+
+    /* ─── ABOUT ─── */
+    .about {
+      padding: 80px 24px;
+      background: linear-gradient(180deg, #f0f7fc 0%, var(--white) 100%);
+    }
+
+    .about-img-wrap {
+      position: relative;
+      margin-bottom: 40px;
+    }
+
+    .about-img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      border-radius: 24px;
+    }
+
+    .about-badge {
+      position: absolute;
+      bottom: -16px;
+      right: 20px;
+      background: var(--accent);
+      color: var(--dark);
+      font-weight: 800;
+      font-size: 13px;
+      padding: 10px 20px;
+      border-radius: 50px;
+      box-shadow: 0 4px 16px rgba(244,162,11,0.4);
+    }
+
+    .about-text {
+      margin-top: 32px;
+    }
+
+    .about-features {
+      margin-top: 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .about-feature {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .feature-dot {
+      width: 36px;
+      height: 36px;
+      min-width: 36px;
+      background: linear-gradient(135deg, var(--ocean), var(--ocean-light));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      margin-top: 2px;
+    }
+
+    .feature-text strong {
+      display: block;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 2px;
+    }
+
+    .feature-text p {
+      font-size: 14px;
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+
+    /* ─── GALLERY ─── */
+    .gallery {
+      padding: 80px 0 80px 24px;
+      background: var(--dark);
+      overflow: hidden;
+    }
+
+    .gallery .section-title { color: var(--white); }
+    .gallery .section-sub { color: rgba(255,255,255,0.65); }
+
+    .gallery-scroll {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      padding-bottom: 16px;
+      padding-right: 24px;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .gallery-scroll::-webkit-scrollbar { display: none; }
+
+    .gallery-item {
+      flex: 0 0 260px;
+      height: 320px;
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s;
+    }
+
+    .gallery-item:hover img { transform: scale(1.05); }
+
+    .gallery-label {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 20px 16px 16px;
+      background: linear-gradient(transparent, rgba(0,0,0,0.7));
+      color: white;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    /* ─── REVIEWS ─── */
+    .reviews {
+      padding: 80px 24px;
+      background: var(--sand);
+    }
+
+    .reviews .section-title { color: var(--dark); }
+    .reviews .section-sub { color: var(--text-light); }
+
+    .reviews-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .review-card {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    }
+
+    .review-stars {
+      color: var(--accent);
+      font-size: 18px;
+      margin-bottom: 12px;
+      letter-spacing: 2px;
+    }
+
+    .review-text {
+      font-size: 15px;
+      color: var(--text);
+      line-height: 1.7;
+      font-style: italic;
+      margin-bottom: 16px;
+    }
+
+    .review-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .review-avatar {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, var(--ocean), var(--ocean-light));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 16px;
+    }
+
+    .review-name {
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--dark);
+    }
+
+    .review-origin {
+      font-size: 12px;
+      color: var(--text-light);
+    }
+
+    /* ─── CTA BAND ─── */
+    .cta-band {
+      padding: 80px 24px;
+      background: linear-gradient(135deg, var(--ocean-dark) 0%, var(--ocean) 60%, var(--ocean-light) 100%);
+      text-align: center;
+    }
+
+    .cta-band h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .cta-band p {
+      font-size: 16px;
+      color: rgba(255,255,255,0.85);
+      line-height: 1.7;
+      margin-bottom: 36px;
+    }
+
+    .btn-whatsapp {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: var(--green);
+      color: var(--white);
+      font-weight: 700;
+      font-size: 17px;
+      padding: 18px 36px;
+      border-radius: 50px;
+      text-decoration: none;
+      box-shadow: 0 4px 24px rgba(37,211,102,0.35);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-whatsapp:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(37,211,102,0.5); }
+
+    /* ─── CONTACT ─── */
+    .contact {
+      padding: 80px 24px;
+      background: var(--white);
+    }
+
+    .contact-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 40px;
+    }
+
+    .contact-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px;
+      background: #f5f9fc;
+      border-radius: 16px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .contact-card:hover { background: #e8f3f9; }
+
+    .contact-icon {
+      width: 52px;
+      height: 52px;
+      min-width: 52px;
+      background: linear-gradient(135deg, var(--ocean), var(--ocean-light));
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+
+    .contact-info strong {
+      display: block;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--dark);
+    }
+
+    .contact-info span {
+      font-size: 14px;
+      color: var(--text-light);
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--dark);
+      padding: 40px 24px;
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px;
+      font-weight: 900;
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+
+    .footer-logo span { color: var(--accent); }
+
+    .footer-text {
+      font-size: 13px;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.7;
+    }
+
+    /* ─── FLOATING WHATSAPP ─── */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 999;
+      width: 60px;
+      height: 60px;
+      background: var(--green);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(37,211,102,0.4);
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      animation: pulse 2s infinite;
+    }
+
+    .whatsapp-float:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 24px rgba(37,211,102,0.5);
+    }
+
+    .whatsapp-float svg {
+      width: 30px;
+      height: 30px;
+      fill: white;
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 4px 16px rgba(37,211,102,0.4); }
+      50% { box-shadow: 0 4px 28px rgba(37,211,102,0.7); }
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── DESKTOP ─── */
+    @media (min-width: 768px) {
+      .hero-title { font-size: 72px; }
+      .hero-buttons { flex-direction: row; justify-content: center; }
+      .btn-primary, .btn-secondary { width: auto; }
+
+      .stats-grid { grid-template-columns: repeat(4, 1fr); max-width: 800px; }
+
+      .services-grid { grid-template-columns: repeat(3, 1fr); }
+
+      .about-inner {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: center;
+      }
+
+      .about-img-wrap { margin-bottom: 0; }
+      .about-img { height: 380px; }
+      .about-text { margin-top: 0; }
+
+      .reviews-list { grid-template-columns: 1fr 1fr; display: grid; }
+
+      .section-title { font-size: 44px; }
+      .cta-band h2 { font-size: 48px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">MN<span>Turismo</span></div>
+    <a href="https://wa.me/558299703309?text=Olá!%20Quero%20saber%20mais%20sobre%20os%20passeios%20em%20Maceió!" class="nav-cta" target="_blank">Reserve Agora</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-badge">✦ Maceió, Alagoas</div>
+      <h1 class="hero-title">
+        Descubra as <span>maravilhas</span> de Maceió
+      </h1>
+      <p class="hero-subtitle">
+        Passeios inesquecíveis pelas praias cristalinas, roteiros personalizados e transfer com conforto e segurança. Sua melhor experiência começa aqui!
+      </p>
+      <div class="hero-buttons">
+        <a href="https://wa.me/558299703309?text=Olá!%20Quero%20conhecer%20os%20passeios%20da%20MN%20Turismo!" class="btn-primary" target="_blank">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/>
+          </svg>
+          Falar no WhatsApp
+        </a>
+        <a href="#services" class="btn-secondary">
+          Ver Passeios ↓
+        </a>
+      </div>
+    </div>
+    <svg class="hero-wave" viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="#004d6e"/>
+    </svg>
+  </section>
+
+  <!-- STATS -->
+  <section class="stats">
+    <div class="stats-grid">
+      <div class="fade-in">
+        <div class="stat-number">500+</div>
+        <div class="stat-label">Clientes felizes</div>
+      </div>
+      <div class="fade-in">
+        <div class="stat-number">5★</div>
+        <div class="stat-label">Avaliação média</div>
+      </div>
+      <div class="fade-in">
+        <div class="stat-number">10+</div>
+        <div class="stat-label">Anos de experiência</div>
+      </div>
+      <div class="fade-in">
+        <div class="stat-number">50+</div>
+        <div class="stat-label">Roteiros disponíveis</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services" id="services">
+    <div class="section-label">O que oferecemos</div>
+    <h2 class="section-title fade-in">Nossos Serviços</h2>
+    <p class="section-sub fade-in">Cada experiência é pensada para você. Do traslado ao passeio perfeito pelas praias de Maceió.</p>
+    <div class="services-grid">
+      <div class="service-card fade-in">
+        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&auto=format&fit=crop&q=80" alt="Passeios em Maceió" class="service-img" loading="lazy" />
+        <div class="service-body">
+          <div class="service-icon">🏖️</div>
+          <div class="service-name">Passeios nas Praias</div>
+          <p class="service-desc">Conheça as praias mais deslumbrantes de Maceió e região. Piscinas naturais, corais coloridos e água cristalina te esperam.</p>
+        </div>
+      </div>
+      <div class="service-card fade-in">
+        <img src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=600&auto=format&fit=crop&q=80" alt="Roteiros personalizados" class="service-img" loading="lazy" />
+        <div class="service-body">
+          <div class="service-icon">🗺️</div>
+          <div class="service-name">Roteiros Personalizados</div>
+          <p class="service-desc">Montamos o roteiro ideal para você e sua família ou grupo. Cada detalhe planejado para tornar sua viagem inesquecível.</p>
+        </div>
+      </div>
+      <div class="service-card fade-in">
+        <img src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=600&auto=format&fit=crop&q=80" alt="Transfer Maceió" class="service-img" loading="lazy" />
+        <div class="service-body">
+          <div class="service-icon">🚐</div>
+          <div class="service-name">Transfer</div>
+          <p class="service-desc">Aeroporto, hotel, pontos turísticos — levamos e buscamos com pontualidade, conforto e total segurança.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="about-inner">
+      <div class="about-img-wrap fade-in">
+        <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=700&auto=format&fit=crop&q=80" alt="Guia turístico em Maceió" class="about-img" loading="lazy" />
+        <div class="about-badge">🏅 +10 anos de experiência</div>
+      </div>
+      <div class="about-text fade-in">
+        <div class="section-label">Sobre nós</div>
+        <h2 class="section-title">Seu guia de <span style="color:var(--ocean)">confiança</span> em Maceió</h2>
+        <p style="color:var(--text-light);line-height:1.8;margin-bottom:24px;">
+          A MN Turismo MCZ nasceu da paixão por Maceió e pela vontade de mostrar o melhor da cidade para cada visitante. Somos guias locais com profundo conhecimento dos melhores pontos, segredos e experiências únicas que só quem é daqui sabe!
+        </p>
+        <div class="about-features">
+          <div class="about-feature">
+            <div class="feature-dot">✓</div>
+            <div class="feature-text">
+              <strong>Guia Credenciado</strong>
+              <p>Profissional certificado e com ampla experiência em turismo local</p>
+            </div>
+          </div>
+          <div class="about-feature">
+            <div class="feature-dot">🛡️</div>
+            <div class="feature-text">
+              <strong>Segurança em Primeiro Lugar</strong>
+              <p>Veículos revisados, rotas seguras e total tranquilidade para sua família</p>
+            </div>
+          </div>
+          <div class="about-feature">
+            <div class="feature-dot">💬</div>
+            <div class="feature-text">
+              <strong>Atendimento Personalizado</strong>
+              <p>Cada passeio adaptado ao seu ritmo, interesse e necessidade</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery" id="gallery">
+    <div class="section-label" style="color:var(--sand-dark);">Nossa galeria</div>
+    <h2 class="section-title fade-in" style="color:white;margin-bottom:8px;">Momentos inesquecíveis</h2>
+    <p class="section-sub fade-in">Cada foto conta uma história vivida aqui, em Maceió.</p>
+    <div class="gallery-scroll">
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1559131397-f94da358f7ca?w=500&auto=format&fit=crop&q=80" alt="Praia de Maceió" loading="lazy" />
+        <div class="gallery-label">Piscinas Naturais de Pajuçara</div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=500&auto=format&fit=crop&q=80" alt="Praias de Alagoas" loading="lazy" />
+        <div class="gallery-label">Praia do Francês</div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?w=500&auto=format&fit=crop&q=80" alt="Passeio de barco" loading="lazy" />
+        <div class="gallery-label">Passeio de Barco</div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1473116763249-2faaef81ccda?w=500&auto=format&fit=crop&q=80" alt="Roteiro turístico" loading="lazy" />
+        <div class="gallery-label">Roteiro Histórico de Maceió</div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1540979388789-6cee28a1cdc9?w=500&auto=format&fit=crop&q=80" alt="Gastronomia local" loading="lazy" />
+        <div class="gallery-label">Gastronomia Alagoana</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="reviews" id="reviews">
+    <div class="section-label">Depoimentos</div>
+    <h2 class="section-title fade-in">O que dizem nossos clientes</h2>
+    <p class="section-sub fade-in">Mais de 500 famílias já viveram experiências únicas com a MN Turismo.</p>
+    <div class="reviews-list">
+      <div class="review-card fade-in">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"O passeio pelas piscinas naturais foi simplesmente mágico! O Michael conhece cada cantinho de Maceió e faz a experiência ser muito além do turismo comum. Super indico!"</p>
+        <div class="review-author">
+          <div class="review-avatar">A</div>
+          <div>
+            <div class="review-name">Ana Paula S.</div>
+            <div class="review-origin">São Paulo, SP</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card fade-in">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Fizemos o transfer do aeroporto e o passeio em família. Pontualidade impecável, veículo limpo e confortável. A criançada adorou cada momento. Voltaremos com certeza!"</p>
+        <div class="review-author">
+          <div class="review-avatar">R</div>
+          <div>
+            <div class="review-name">Roberto e família</div>
+            <div class="review-origin">Brasília, DF</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card fade-in">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"O roteiro personalizado que o Michael montou pra gente foi perfeito! Visitamos lugares que nenhum guia comum nos levaria. Conhecimento local de verdade!"</p>
+        <div class="review-author">
+          <div class="review-avatar">C</div>
+          <div>
+            <div class="review-name">Carla e Ricardo</div>
+            <div class="review-origin">Rio de Janeiro, RJ</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card fade-in">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Melhor decisão da nossa viagem foi contratar a MN Turismo. Atendimento super atencioso, preço justo e passeio sensacional. Maceió é linda e Michael sabe mostrar isso!"</p>
+        <div class="review-author">
+          <div class="review-avatar">F</div>
+          <div>
+            <div class="review-name">Fernanda Lima</div>
+            <div class="review-origin">Belo Horizonte, MG</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BAND -->
+  <section class="cta-band">
+    <h2 class="fade-in">Pronto para explorar<br>Maceió do jeito certo?</h2>
+    <p class="fade-in">Entre em contato agora pelo WhatsApp e monte o roteiro dos seus sonhos. Atendimento rápido e personalizado!</p>
+    <a href="https://wa.me/558299703309?text=Olá!%20Quero%20reservar%20um%20passeio%20com%20a%20MN%20Turismo!" class="btn-whatsapp fade-in" target="_blank">
+      <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 16 16">
+        <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/>
+      </svg>
+      Falar com Michael agora
+    </a>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="section-label">Contato</div>
+    <h2 class="section-title fade-in">Fale com a gente</h2>
+    <p class="section-sub fade-in">Respondemos rapidinho! Mande sua dúvida, reserve seu passeio ou solicite um roteiro personalizado.</p>
+    <div class="contact-cards">
+      <a href="https://wa.me/558299703309?text=Olá!%20Quero%20saber%20mais%20sobre%20os%20passeios!" class="contact-card fade-in" target="_blank">
+        <div class="contact-icon">💬</div>
+        <div class="contact-info">
+          <strong>WhatsApp</strong>
+          <span>Resposta rápida pelo WhatsApp</span>
+        </div>
+      </a>
+      <div class="contact-card fade-in">
+        <div class="contact-icon">📍</div>
+        <div class="contact-info">
+          <strong>Maceió, Alagoas</strong>
+          <span>Atendemos toda a região de Maceió e entornos</span>
+        </div>
+      </div>
+      <div class="contact-card fade-in">
+        <div class="contact-icon">🕐</div>
+        <div class="contact-info">
+          <strong>Horário de Atendimento</strong>
+          <span>Segunda a Domingo, das 7h às 21h</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">MN<span>Turismo</span> MCZ</div>
+    <p class="footer-text">
+      Passeios · Roteiros · Transfer em Maceió, Alagoas<br />
+      © 2025 MN Turismo MCZ. Todos os direitos reservados.
+    </p>
+  </footer>
+
+  <!-- FLOATING WHATSAPP -->
+  <a href="https://wa.me/558299703309?text=Olá!%20Quero%20saber%20mais%20sobre%20os%20passeios%20da%20MN%20Turismo!" class="whatsapp-float" target="_blank" aria-label="WhatsApp">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+      <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"/>
+    </svg>
+  </a>
+
+  <script>
+    // Fade-in on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(el => {
+        if (el.isIntersecting) {
+          el.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
