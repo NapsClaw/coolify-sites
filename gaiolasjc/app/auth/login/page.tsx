@@ -1,11 +1,12 @@
 'use client'
-import { useState } from 'react'
+export const dynamic = 'force-dynamic'
+import { useState, Suspense } from 'react'
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 
-export default function LoginPage() {
+function LoginForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [form, setForm] = useState({ email: '', password: '' })
@@ -32,6 +33,43 @@ export default function LoginPage() {
   }
 
   return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div>
+        <label className="block text-sm font-semibold text-gray-700 mb-1">E-mail</label>
+        <input
+          type="email"
+          className="input-field"
+          placeholder="seu@email.com"
+          value={form.email}
+          onChange={e => setForm({ ...form, email: e.target.value })}
+          required
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-semibold text-gray-700 mb-1">Senha</label>
+        <input
+          type="password"
+          className="input-field"
+          placeholder="Sua senha"
+          value={form.password}
+          onChange={e => setForm({ ...form, password: e.target.value })}
+          required
+        />
+      </div>
+      {error && <p className="text-red-600 text-sm font-semibold bg-red-50 p-3 rounded-lg">{error}</p>}
+      <button
+        type="submit"
+        disabled={loading}
+        className="btn-secondary disabled:opacity-50"
+      >
+        {loading ? 'Entrando...' : 'Entrar'}
+      </button>
+    </form>
+  )
+}
+
+export default function LoginPage() {
+  return (
     <>
       <Header />
       <main className="max-w-md mx-auto px-4 py-12">
@@ -44,38 +82,9 @@ export default function LoginPage() {
             <p className="text-gray-500 text-sm mt-1">Acesse sua conta GaiolasJC</p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-1">E-mail</label>
-              <input
-                type="email"
-                className="input-field"
-                placeholder="seu@email.com"
-                value={form.email}
-                onChange={e => setForm({ ...form, email: e.target.value })}
-                required
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-1">Senha</label>
-              <input
-                type="password"
-                className="input-field"
-                placeholder="Sua senha"
-                value={form.password}
-                onChange={e => setForm({ ...form, password: e.target.value })}
-                required
-              />
-            </div>
-            {error && <p className="text-red-600 text-sm font-semibold bg-red-50 p-3 rounded-lg">{error}</p>}
-            <button
-              type="submit"
-              disabled={loading}
-              className="btn-secondary disabled:opacity-50"
-            >
-              {loading ? 'Entrando...' : 'Entrar'}
-            </button>
-          </form>
+          <Suspense fallback={<div className="text-center text-gray-400">Carregando...</div>}>
+            <LoginForm />
+          </Suspense>
 
           <p className="text-center text-sm text-gray-500 mt-6">
             Não tem conta?{' '}
