@@ -54,7 +54,8 @@ export default function Home() {
           <span className="text-yellow-300"> & </span>
           Felipe Show
         </h1>
-        <p className="text-yellow-300 text-xl font-semibold mb-6">Candidatos do Povo</p>
+        <p className="text-yellow-300 text-xl font-semibold mb-1">Candidatos do Povo</p>
+        <p className="text-white text-lg font-medium mb-6">O Amapá merece o melhor!</p>
 
         <p className="text-blue-100 text-lg max-w-xl mb-10">
           Juntos, construiremos uma cidade mais justa, igualitária e com oportunidades para todos.
