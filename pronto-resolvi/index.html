@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pronto Resolvi | Manutenção Residencial em Florianópolis</title>
+  <meta name="description" content="Serviços de manutenção residencial em Florianópolis — elétrica, hidráulica e construção. Atendimento emergencial 24h. Ligue agora!" />
+  <meta property="og:title" content="Pronto Resolvi | Manutenção Residencial em Florianópolis" />
+  <meta property="og:description" content="Elétrica, hidráulica e construção com atendimento emergencial 24h em Florianópolis." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --bg2: #111111;
+      --bg3: #181818;
+      --gold: #c9a227;
+      --gold-light: #e0b84a;
+      --gold-dark: #a07e18;
+      --text: #f5f0e8;
+      --text-muted: #a09880;
+      --border: rgba(201,162,39,0.2);
+      --shadow-gold: 0 0 30px rgba(201,162,39,0.15);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ====== NAVBAR ====== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 16px 20px;
+      background: rgba(10,10,10,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--gold);
+      letter-spacing: -0.5px;
+      text-decoration: none;
+    }
+
+    .nav-logo span { color: var(--text); }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--gold);
+      color: #0a0a0a;
+      font-weight: 700;
+      font-size: 13px;
+      padding: 10px 18px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .nav-cta:hover { background: var(--gold-light); }
+
+    /* ====== HERO ====== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 120px 20px 80px;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.85) 100%),
+        url('https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=1200&q=80') center/cover no-repeat;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 30% 50%, rgba(201,162,39,0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(201,162,39,0.15);
+      border: 1px solid var(--border);
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 50px;
+      margin-bottom: 24px;
+      width: fit-content;
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.3); }
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(40px, 9vw, 80px);
+      font-weight: 900;
+      line-height: 1.05;
+      margin-bottom: 20px;
+      color: var(--text);
+    }
+
+    .hero h1 span {
+      color: var(--gold);
+      display: block;
+    }
+
+    .hero-sub {
+      font-size: 17px;
+      color: var(--text-muted);
+      max-width: 480px;
+      margin-bottom: 36px;
+      line-height: 1.7;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      align-items: flex-start;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--gold);
+      color: #0a0a0a;
+      font-weight: 700;
+      font-size: 16px;
+      padding: 16px 28px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.2s;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .btn-primary:hover {
+      background: var(--gold-light);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(201,162,39,0.3);
+    }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: transparent;
+      color: var(--text);
+      font-weight: 600;
+      font-size: 15px;
+      padding: 14px 24px;
+      border-radius: 8px;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.2);
+      transition: all 0.2s;
+      width: 100%;
+      justify-content: center;
+    }
+
+    .btn-outline:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    /* Hero stats */
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 48px;
+      padding-top: 40px;
+      border-top: 1px solid var(--border);
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--gold);
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 2px;
+    }
+
+    /* ====== SECTIONS GENERAL ====== */
+    section {
+      padding: 72px 20px;
+    }
+
+    .section-label {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 6vw, 44px);
+      font-weight: 900;
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+
+    .section-desc {
+      font-size: 16px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      max-width: 520px;
+      margin-bottom: 40px;
+    }
+
+    /* ====== EMERGENCY STRIP ====== */
+    .emergency-strip {
+      background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-dark));
+      padding: 18px 20px;
+      text-align: center;
+    }
+
+    .emergency-strip p {
+      color: #0a0a0a;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.5px;
+    }
+
+    .emergency-strip a {
+      color: #0a0a0a;
+      font-weight: 800;
+    }
+
+    /* ====== SERVICES ====== */
+    .services-section {
+      background: var(--bg2);
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-top: 8px;
+    }
+
+    .service-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 24px;
+      transition: all 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px;
+      height: 100%;
+      background: var(--gold);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .service-card:hover {
+      border-color: rgba(201,162,39,0.4);
+      transform: translateX(4px);
+    }
+
+    .service-card:hover::before { opacity: 1; }
+
+    .service-icon {
+      font-size: 36px;
+      margin-bottom: 14px;
+    }
+
+    .service-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .service-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* Emergency highlight card */
+    .service-card.emergency {
+      background: linear-gradient(135deg, rgba(201,162,39,0.12), rgba(201,162,39,0.05));
+      border-color: rgba(201,162,39,0.4);
+    }
+
+    .service-card.emergency .service-title { color: var(--gold); }
+
+    /* ====== ABOUT ====== */
+    .about-section { background: var(--bg); }
+
+    .about-img {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      margin-bottom: 32px;
+    }
+
+    .about-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .about-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 15px;
+      color: var(--text-muted);
+    }
+
+    .about-list li::before {
+      content: '✦';
+      color: var(--gold);
+      font-size: 12px;
+      margin-top: 3px;
+      flex-shrink: 0;
+    }
+
+    /* ====== WHY US ====== */
+    .why-section { background: var(--bg2); }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 8px;
+    }
+
+    .why-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 22px 18px;
+      text-align: center;
+    }
+
+    .why-emoji { font-size: 28px; margin-bottom: 10px; display: block; }
+
+    .why-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+
+    .why-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* ====== GALLERY ====== */
+    .gallery-section { background: var(--bg); }
+
+    .gallery-scroll {
+      display: flex;
+      gap: 14px;
+      overflow-x: auto;
+      padding-bottom: 12px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+      margin-top: 8px;
+    }
+
+    .gallery-scroll::-webkit-scrollbar { display: none; }
+
+    .gallery-item {
+      flex: 0 0 260px;
+      height: 200px;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      position: relative;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s;
+    }
+
+    .gallery-item:hover img { transform: scale(1.05); }
+
+    .gallery-caption {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,0.8));
+      padding: 20px 14px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.5px;
+    }
+
+    /* ====== TESTIMONIALS ====== */
+    .testimonials-section { background: var(--bg2); }
+
+    .reviews-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 8px;
+    }
+
+    .review-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px 20px;
+    }
+
+    .review-stars {
+      color: var(--gold);
+      font-size: 14px;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+    }
+
+    .review-text {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 16px;
+      font-style: italic;
+    }
+
+    .review-author {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .review-avatar {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: var(--gold-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 14px;
+      color: #0a0a0a;
+      flex-shrink: 0;
+    }
+
+    .review-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .review-platform {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* ====== CONTACT ====== */
+    .contact-section { background: var(--bg); }
+
+    .contact-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 8px;
+    }
+
+    .contact-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .contact-icon {
+      width: 44px; height: 44px;
+      background: rgba(201,162,39,0.15);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .contact-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--gold);
+      margin-bottom: 2px;
+    }
+
+    .contact-value {
+      font-size: 15px;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* ====== CTA SECTION ====== */
+    .cta-section {
+      background: linear-gradient(135deg, var(--bg2), var(--bg3));
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+      padding: 64px 20px;
+    }
+
+    .cta-section .section-title { margin-bottom: 12px; }
+    .cta-section .section-desc { margin: 0 auto 32px; text-align: center; }
+
+    .cta-section .btn-primary {
+      max-width: 340px;
+      margin: 0 auto;
+    }
+
+    /* ====== FOOTER ====== */
+    footer {
+      background: #060606;
+      border-top: 1px solid var(--border);
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px;
+      font-weight: 900;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+
+    .footer-tagline {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--gold); }
+
+    .footer-copy {
+      font-size: 12px;
+      color: rgba(160,152,128,0.5);
+    }
+
+    /* ====== FLOATING WHATSAPP ====== */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 24px;
+      right: 20px;
+      z-index: 999;
+      background: #25D366;
+      border-radius: 50%;
+      width: 62px; height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+      text-decoration: none;
+      animation: floatBounce 3s infinite;
+      transition: transform 0.2s;
+    }
+
+    .whatsapp-float:hover {
+      transform: scale(1.1);
+    }
+
+    @keyframes floatBounce {
+      0%, 100% { box-shadow: 0 4px 20px rgba(37,211,102,0.4); }
+      50% { box-shadow: 0 6px 28px rgba(37,211,102,0.6); }
+    }
+
+    /* Divider */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 0 20px;
+    }
+
+    /* Scroll animations */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <a href="#" class="nav-logo">Pronto<span>Resolvi</span></a>
+    <a href="https://wa.me/555193135581?text=Olá!%20Preciso%20de%20um%20orçamento." class="nav-cta" target="_blank">
+      📞 Emergência
+    </a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">🔴 Atendimento 24h em Florianópolis</div>
+    <h1>
+      Problema em casa?
+      <span>Pronto Resolvi.</span>
+    </h1>
+    <p class="hero-sub">Elétrica, hidráulica e construção residencial com atendimento emergencial rápido em Florianópolis e região.</p>
+    <div class="hero-actions">
+      <a href="https://wa.me/555193135581?text=Olá!%20Preciso%20de%20ajuda%20urgente!" class="btn-primary" target="_blank">
+        ⚡ Chamar agora pelo WhatsApp
+      </a>
+      <a href="#servicos" class="btn-outline">Ver serviços →</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <span class="stat-number">24h</span>
+        <span class="stat-label">Emergências</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">+500</span>
+        <span class="stat-label">Atendimentos</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number">Floripa</span>
+        <span class="stat-label">e Região</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- EMERGENCY STRIP -->
+  <div class="emergency-strip">
+    <p>🚨 Emergência? Ligue agora → <a href="https://wa.me/555193135581?text=EMERGÊNCIA!" target="_blank">WhatsApp 24 horas</a></p>
+  </div>
+
+  <!-- SERVICES -->
+  <section class="services-section" id="servicos">
+    <span class="section-label">O que fazemos</span>
+    <h2 class="section-title">Serviços completos<br/>para sua casa</h2>
+    <p class="section-desc">Do problema simples à obra completa — com a qualidade e agilidade que você precisa.</p>
+
+    <div class="services-grid fade-in">
+      <div class="service-card emergency">
+        <div class="service-icon">🚨</div>
+        <div class="service-title">Atendimento Emergencial</div>
+        <p class="service-desc">Disponíveis 24 horas por dia, 7 dias por semana. Problema urgente? A gente vai até você rapidinho.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">⚡</div>
+        <div class="service-title">Elétrica Residencial</div>
+        <p class="service-desc">Instalações, reparos, troca de disjuntores, tomadas, iluminação e quadro elétrico. Tudo com segurança.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">🔧</div>
+        <div class="service-title">Hidráulica</div>
+        <p class="service-desc">Vazamentos, entupimentos, troca de canos, registros, torneiras, chuveiros e caixas d'água.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">🏗️</div>
+        <div class="service-title">Construção em Geral</div>
+        <p class="service-desc">Reformas, pintura, revestimentos, pequenas obras e reparos estruturais com acabamento impecável.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ABOUT -->
+  <section class="about-section" id="sobre">
+    <span class="section-label">Quem somos</span>
+    <h2 class="section-title">Experiência e<br/>agilidade juntas</h2>
+
+    <img
+      src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=800&q=80"
+      alt="Técnico realizando manutenção residencial"
+      class="about-img fade-in"
+      loading="lazy"
+    />
+
+    <p class="section-desc">
+      A Pronto Resolvi nasceu com um propósito simples: estar disponível quando você mais precisa. Com profissionais qualificados em Florianópolis, garantimos atendimento rápido e serviço de qualidade — seja uma emergência às 2h da manhã ou uma reforma planejada.
+    </p>
+
+    <ul class="about-list fade-in">
+      <li>Profissionais experientes e capacitados</li>
+      <li>Atendimento emergencial 24h, todos os dias</li>
+      <li>Orçamento sem compromisso</li>
+      <li>Materiais de primeira qualidade</li>
+      <li>Garantia em todos os serviços realizados</li>
+      <li>Cobertura em Florianópolis e região</li>
+    </ul>
+  </section>
+
+  <!-- WHY US -->
+  <section class="why-section">
+    <span class="section-label">Diferenciais</span>
+    <h2 class="section-title">Por que escolher<br/>a Pronto Resolvi?</h2>
+
+    <div class="why-grid fade-in">
+      <div class="why-card">
+        <span class="why-emoji">⚡</span>
+        <div class="why-title">Resposta Rápida</div>
+        <p class="why-desc">Atendemos emergências com a maior agilidade possível</p>
+      </div>
+      <div class="why-card">
+        <span class="why-emoji">🛡️</span>
+        <div class="why-title">Serviço Garantido</div>
+        <p class="why-desc">Garantia em todos os nossos serviços e materiais</p>
+      </div>
+      <div class="why-card">
+        <span class="why-emoji">💰</span>
+        <div class="why-title">Preço Justo</div>
+        <p class="why-desc">Orçamento transparente e sem surpresas na hora do pagamento</p>
+      </div>
+      <div class="why-card">
+        <span class="why-emoji">🔍</span>
+        <div class="why-title">Diagnóstico Preciso</div>
+        <p class="why-desc">Identificamos o problema na raiz para uma solução duradoura</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- GALLERY -->
+  <section class="gallery-section" id="galeria">
+    <span class="section-label">Trabalhos realizados</span>
+    <h2 class="section-title">Nossos serviços<br/>em ação</h2>
+
+    <div class="gallery-scroll">
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Instalação elétrica" loading="lazy" />
+        <div class="gallery-caption">Elétrica Residencial</div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=600&q=80" alt="Hidráulica" loading="lazy" />
+        <div class="gallery-caption">Hidráulica</div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=600&q=80" alt="Manutenção geral" loading="lazy" />
+        <div class="gallery-caption">Manutenção Geral</div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1565538810643-b5bdb714032a?w=600&q=80" alt="Reforma residencial" loading="lazy" />
+        <div class="gallery-caption">Reforma Residencial</div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1590846406792-0adc7f938f1d?w=600&q=80" alt="Pintura e acabamento" loading="lazy" />
+        <div class="gallery-caption">Pintura e Acabamento</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials-section" id="avaliacoes">
+    <span class="section-label">Avaliações</span>
+    <h2 class="section-title">O que nossos<br/>clientes dizem</h2>
+
+    <div class="reviews-list fade-in">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Tive um vazamento enorme às 22h e eles atenderam em menos de 40 minutos. Resolveram tudo de forma rápida e profissional. Super recomendo!"</p>
+        <div class="review-author">
+          <div class="review-avatar">M</div>
+          <div>
+            <div class="review-name">Mariana Costa</div>
+            <div class="review-platform">Florianópolis</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Chamei para trocar o quadro elétrico da minha casa. Serviço impecável, preço justo e com nota fiscal. Profissionais de verdade!"</p>
+        <div class="review-author">
+          <div class="review-avatar">R</div>
+          <div>
+            <div class="review-name">Ricardo Almeida</div>
+            <div class="review-platform">Trindade, Fpolis</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Reforma completa do banheiro. Prazo cumprido, acabamento perfeito e equipe muito educada. Com certeza vou chamar de novo!"</p>
+        <div class="review-author">
+          <div class="review-avatar">A</div>
+          <div>
+            <div class="review-name">Ana Paula Ferreira</div>
+            <div class="review-platform">Córrego Grande, Fpolis</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact-section" id="contato">
+    <span class="section-label">Contato</span>
+    <h2 class="section-title">Fale com a gente<br/>agora mesmo</h2>
+    <p class="section-desc">Estamos em Florianópolis, prontos para resolver qualquer problema na sua casa — urgente ou não.</p>
+
+    <div class="contact-cards fade-in">
+      <a href="https://wa.me/555193135581?text=Olá!%20Preciso%20de%20um%20orçamento." class="contact-card" style="text-decoration:none;" target="_blank">
+        <div class="contact-icon">💬</div>
+        <div>
+          <div class="contact-label">WhatsApp</div>
+          <div class="contact-value">Chame no WhatsApp →</div>
+        </div>
+      </a>
+
+      <div class="contact-card">
+        <div class="contact-icon">📍</div>
+        <div>
+          <div class="contact-label">Localização</div>
+          <div class="contact-value">Florianópolis, SC</div>
+        </div>
+      </div>
+
+      <div class="contact-card">
+        <div class="contact-icon">🕐</div>
+        <div>
+          <div class="contact-label">Atendimento</div>
+          <div class="contact-value">24h — Todos os dias</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA SECTION -->
+  <section class="cta-section">
+    <span class="section-label">Solicite já</span>
+    <h2 class="section-title">Resolvemos<br/>o seu problema!</h2>
+    <p class="section-desc">Envie uma mensagem agora e receba um orçamento sem compromisso.</p>
+    <a href="https://wa.me/555193135581?text=Olá!%20Preciso%20de%20um%20orçamento%20para%20manutenção%20residencial." class="btn-primary" target="_blank">
+      💬 Solicitar orçamento grátis
+    </a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">ProntoResolvi</div>
+    <p class="footer-tagline">Manutenção residencial em Florianópolis — 24 horas</p>
+    <div class="footer-links">
+      <a href="#servicos">Serviços</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#galeria">Galeria</a>
+      <a href="#avaliacoes">Avaliações</a>
+      <a href="#contato">Contato</a>
+    </div>
+    <p class="footer-copy">© 2025 Pronto Resolvi · Todos os direitos reservados</p>
+  </footer>
+
+  <!-- FLOATING WHATSAPP -->
+  <a href="https://wa.me/555193135581?text=Olá!%20Preciso%20de%20atendimento!" class="whatsapp-float" target="_blank" aria-label="Falar no WhatsApp">
+    <svg width="30" height="30" viewBox="0 0 24 24" fill="white">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+
+  <script>
+    // Scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+  </script>
+</body>
+</html>
