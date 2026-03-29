@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clicks Rota Mar | Passeios de Quadriciclo e Buggy com Fotografia</title>
+  <meta name="description" content="Clicks Rota Mar – Passeios inesquecíveis de quadriciclo e buggy com fotografias profissionais. Reserve seu pacote e leve a aventura pra casa!">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --bg2: #161616;
+      --surface: #1e1e1e;
+      --border: #2a2a2a;
+      --text: #f5f0e8;
+      --text-muted: #8a8078;
+      --accent: #e8a020;
+      --accent2: #c4410c;
+      --green: #25D366;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 16px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: linear-gradient(to bottom, rgba(13,13,13,0.95), transparent);
+      backdrop-filter: blur(8px);
+    }
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 24px;
+      letter-spacing: 2px;
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--text); }
+    .nav-cta {
+      background: var(--accent);
+      color: #000;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 14px;
+      text-decoration: none;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .nav-cta:hover { background: #f5b030; transform: translateY(-1px); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 100px 24px 60px;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: 
+        linear-gradient(180deg, rgba(13,13,13,0.5) 0%, rgba(13,13,13,0.3) 40%, rgba(13,13,13,0.8) 100%),
+        linear-gradient(135deg, #1a0a00 0%, #0d1a0a 50%, #0a0a1a 100%);
+    }
+    .hero-bg::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: url('https://images.unsplash.com/photo-1533107862482-0e6974b06ec4?w=1600&q=80') center/cover no-repeat;
+      opacity: 0.35;
+      mix-blend-mode: luminosity;
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 700px; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(232,160,32,0.15);
+      border: 1px solid rgba(232,160,32,0.3);
+      color: var(--accent);
+      font-size: 13px; font-weight: 600;
+      padding: 6px 16px; border-radius: 50px;
+      margin-bottom: 24px;
+      letter-spacing: 1px;
+    }
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(52px, 12vw, 96px);
+      line-height: 0.95;
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+    }
+    .hero-title .line2 { color: var(--accent); }
+    .hero-subtitle {
+      font-size: clamp(16px, 4vw, 19px);
+      color: rgba(245,240,232,0.75);
+      line-height: 1.6;
+      margin-bottom: 36px;
+      max-width: 500px;
+      margin-left: auto; margin-right: auto;
+    }
+    .hero-buttons {
+      display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #000;
+      padding: 15px 32px;
+      border-radius: 8px;
+      font-weight: 700; font-size: 16px;
+      text-decoration: none;
+      transition: all 0.2s;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .btn-primary:hover { background: #f5b030; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(232,160,32,0.3); }
+    .btn-secondary {
+      border: 2px solid rgba(245,240,232,0.3);
+      color: var(--text);
+      padding: 13px 28px;
+      border-radius: 8px;
+      font-weight: 600; font-size: 16px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+    .hero-scroll {
+      position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      color: rgba(245,240,232,0.4); font-size: 12px; letter-spacing: 2px;
+      animation: bounce 2s ease infinite;
+    }
+    @keyframes bounce {
+      0%,100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(8px); }
+    }
+
+    /* STATS */
+    .stats {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 32px 24px;
+    }
+    .stats-inner {
+      max-width: 900px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+    }
+    .stat-item {
+      text-align: center;
+      padding: 16px 12px;
+      border-right: 1px solid var(--border);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 48px;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      line-height: 1.3;
+    }
+
+    /* SECTION SHARED */
+    section { padding: 72px 24px; }
+    .section-tag {
+      font-size: 12px; font-weight: 700; letter-spacing: 3px;
+      color: var(--accent); text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(36px, 8vw, 60px);
+      letter-spacing: 1px;
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+    .section-desc {
+      font-size: 16px; line-height: 1.7;
+      color: rgba(245,240,232,0.7);
+      max-width: 600px;
+    }
+    .section-header { margin-bottom: 48px; }
+
+    /* ABOUT */
+    .about { background: var(--bg); }
+    .about-inner {
+      max-width: 900px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+    }
+    .about-img-wrap {
+      position: relative; border-radius: 12px; overflow: hidden;
+      aspect-ratio: 4/5;
+    }
+    .about-img-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    .about-img-wrap::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(232,160,32,0.2), transparent);
+      z-index: 1;
+    }
+    .about-badge {
+      position: absolute; bottom: 20px; left: 20px; right: 20px;
+      background: rgba(13,13,13,0.9);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      border-radius: 8px; padding: 14px;
+      z-index: 2;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .about-badge-icon {
+      font-size: 28px;
+    }
+    .about-badge-text { font-size: 13px; color: var(--text-muted); }
+    .about-badge-text strong { display: block; color: var(--text); font-size: 15px; }
+    .about-text .section-desc { margin-bottom: 28px; }
+    .about-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .about-list li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 15px; color: rgba(245,240,232,0.8);
+    }
+    .about-list li::before {
+      content: '→';
+      color: var(--accent); flex-shrink: 0; margin-top: 1px;
+    }
+
+    /* PACOTES */
+    .packages { background: var(--bg2); }
+    .packages-inner { max-width: 900px; margin: 0 auto; }
+    .packages-grid {
+      display: grid; grid-template-columns: 1fr; gap: 24px;
+    }
+    .package-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all 0.3s;
+    }
+    .package-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.4);
+    }
+    .package-card.featured {
+      border-color: var(--accent);
+    }
+    .package-img {
+      width: 100%; height: 220px;
+      object-fit: cover;
+    }
+    .package-body { padding: 24px; }
+    .package-tag {
+      font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      text-transform: uppercase; margin-bottom: 8px;
+    }
+    .package-tag.orange { color: var(--accent); }
+    .package-tag.red { color: var(--accent2); }
+    .package-tag.gold { color: #f5c842; }
+    .package-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28px; letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+    .package-desc {
+      font-size: 14px; line-height: 1.6;
+      color: var(--text-muted); margin-bottom: 20px;
+    }
+    .package-includes {
+      list-style: none; margin-bottom: 24px;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .package-includes li {
+      font-size: 14px; display: flex; align-items: center; gap: 8px;
+      color: rgba(245,240,232,0.8);
+    }
+    .package-includes li::before {
+      content: '✓';
+      color: var(--accent); font-weight: 700; flex-shrink: 0;
+    }
+    .package-cta {
+      display: block;
+      background: var(--accent);
+      color: #000; text-align: center;
+      padding: 14px; border-radius: 8px;
+      font-weight: 700; font-size: 15px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .package-cta:hover { background: #f5b030; }
+
+    /* GALLERY */
+    .gallery { background: var(--bg); }
+    .gallery-inner { max-width: 900px; margin: 0 auto; }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto;
+      gap: 12px;
+    }
+    .gallery-item {
+      border-radius: 10px; overflow: hidden;
+      position: relative;
+    }
+    .gallery-item.tall { grid-row: span 2; }
+    .gallery-item img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+      transition: transform 0.4s;
+      min-height: 180px;
+    }
+    .gallery-item:hover img { transform: scale(1.05); }
+    .gallery-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(13,13,13,0.7), transparent);
+      opacity: 0; transition: opacity 0.3s;
+      display: flex; align-items: flex-end; padding: 16px;
+    }
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+    .gallery-caption { font-size: 13px; color: var(--text); font-weight: 600; }
+
+    /* HOW IT WORKS */
+    .how { background: var(--bg2); }
+    .how-inner { max-width: 700px; margin: 0 auto; }
+    .steps { display: flex; flex-direction: column; gap: 32px; }
+    .step {
+      display: flex; gap: 24px; align-items: flex-start;
+    }
+    .step-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 56px; line-height: 1;
+      color: rgba(232,160,32,0.2);
+      flex-shrink: 0; width: 56px; text-align: center;
+    }
+    .step-content {}
+    .step-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 24px; letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+    .step-desc { font-size: 15px; line-height: 1.6; color: var(--text-muted); }
+
+    /* DEPOIMENTOS */
+    .reviews { background: var(--bg); }
+    .reviews-inner { max-width: 900px; margin: 0 auto; }
+    .reviews-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+    .review-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px; padding: 24px;
+    }
+    .review-stars { color: var(--accent); font-size: 16px; margin-bottom: 12px; }
+    .review-text { font-size: 15px; line-height: 1.7; color: rgba(245,240,232,0.8); margin-bottom: 16px; }
+    .review-author { display: flex; align-items: center; gap: 12px; }
+    .review-avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      object-fit: cover; border: 2px solid var(--accent);
+    }
+    .review-name { font-weight: 700; font-size: 14px; }
+    .review-place { font-size: 12px; color: var(--text-muted); }
+
+    /* CONTATO */
+    .contact { background: var(--bg2); }
+    .contact-inner {
+      max-width: 900px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr; gap: 48px;
+    }
+    .contact-info { display: flex; flex-direction: column; gap: 20px; }
+    .contact-item { display: flex; gap: 14px; align-items: flex-start; }
+    .contact-icon {
+      width: 44px; height: 44px;
+      background: rgba(232,160,32,0.1);
+      border: 1px solid rgba(232,160,32,0.2);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; flex-shrink: 0;
+    }
+    .contact-item-label { font-size: 12px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+    .contact-item-value { font-size: 15px; color: var(--text); margin-top: 2px; }
+    .whatsapp-big {
+      display: flex; align-items: center; justify-content: center; gap: 12px;
+      background: var(--green);
+      color: #fff;
+      padding: 20px 32px;
+      border-radius: 12px;
+      font-weight: 700; font-size: 18px;
+      text-decoration: none;
+      transition: all 0.2s;
+      margin-top: 8px;
+    }
+    .whatsapp-big:hover { background: #22c55e; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,211,102,0.3); }
+    .whatsapp-big svg { width: 28px; height: 28px; }
+
+    /* FOOTER */
+    footer {
+      background: #080808;
+      border-top: 1px solid var(--border);
+      padding: 32px 24px;
+      text-align: center;
+    }
+    .footer-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28px; letter-spacing: 3px;
+      color: var(--accent); margin-bottom: 8px;
+    }
+    .footer-logo span { color: var(--text); }
+    .footer-copy { font-size: 13px; color: var(--text-muted); }
+
+    /* FLOATING WA */
+    .wa-float {
+      position: fixed; bottom: 24px; right: 24px; z-index: 999;
+      background: var(--green);
+      border-radius: 50%; width: 60px; height: 60px;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+      text-decoration: none;
+      transition: all 0.2s;
+      animation: pulse 2.5s ease infinite;
+    }
+    .wa-float:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(37,211,102,0.5); }
+    @keyframes pulse {
+      0%,100% { box-shadow: 0 4px 20px rgba(37,211,102,0.4); }
+      50% { box-shadow: 0 4px 32px rgba(37,211,102,0.7); }
+    }
+    .wa-float svg { width: 32px; height: 32px; fill: #fff; }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      .about-inner { grid-template-columns: 1fr; gap: 36px; }
+      .about-img-wrap { aspect-ratio: 16/9; }
+      .stats-inner { grid-template-columns: 1fr 1fr; }
+      .stat-item:nth-child(3) { grid-column: span 2; border-right: none; border-top: 1px solid var(--border); padding-top: 20px; }
+      .gallery-grid { grid-template-columns: 1fr; }
+      .gallery-item.tall { grid-row: span 1; }
+      .contact-inner { grid-template-columns: 1fr; }
+      .hero-buttons { flex-direction: column; align-items: center; }
+      .btn-primary, .btn-secondary { width: 100%; max-width: 320px; justify-content: center; text-align: center; }
+    }
+    @media (max-width: 480px) {
+      section { padding: 56px 20px; }
+      .stats-inner { grid-template-columns: 1fr; }
+      .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
+      .stat-item:last-child { border-bottom: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">CLICKS <span>ROTA MAR</span></a>
+  <a href="https://wa.me/558496034619?text=Olá!%20Quero%20reservar%20um%20passeio!" class="nav-cta" target="_blank">Reservar Agora</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      📸 Aventura + Fotografia Profissional
+    </div>
+    <h1 class="hero-title">
+      VIVA A<br>
+      <span class="line2">AVENTURA</span><br>
+      LEVE PRO LAR
+    </h1>
+    <p class="hero-subtitle">
+      Passeios de quadriciclo e buggy com fotografia profissional inclusa. 
+      Cada curva, cada sorriso, cada momento — eternizados com qualidade.
+    </p>
+    <div class="hero-buttons">
+      <a href="#pacotes" class="btn-primary">
+        🏍️ Ver Pacotes
+      </a>
+      <a href="#galeria" class="btn-secondary">Ver Galeria</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>SCROLL</span>
+    <svg width="16" height="24" viewBox="0 0 16 24" fill="none"><path d="M8 4v16M2 14l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <div class="stat-num">500+</div>
+      <div class="stat-label">Aventureiros<br>atendidos</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Fotos entregues<br>no mesmo dia</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">5★</div>
+      <div class="stat-label">Avaliação<br>dos clientes</div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="sobre">
+  <div class="about-inner">
+    <div class="about-img-wrap">
+      <img src="https://images.unsplash.com/photo-1549920568-b0a3aff4c9ae?w=800&q=80" alt="Passeio de buggy nas dunas" loading="lazy">
+      <div class="about-badge">
+        <div class="about-badge-icon">🏆</div>
+        <div class="about-badge-text">
+          <strong>Joelson Santos</strong>
+          Fotógrafo & Guia de Aventura
+        </div>
+      </div>
+    </div>
+    <div class="about-text">
+      <div class="section-tag">Sobre Nós</div>
+      <h2 class="section-title">MAIS QUE UM PASSEIO — UMA MEMÓRIA</h2>
+      <p class="section-desc">
+        A Clicks Rota Mar nasceu da paixão por aventura e fotografia. Combinamos a emoção dos passeios de quadriciclo e buggy com registros fotográficos profissionais, para que você leve pra casa não só a experiência — mas as imagens dela.
+      </p>
+      <ul class="about-list">
+        <li>Fotógrafo profissional durante todo o passeio</li>
+        <li>Equipamentos de segurança incluídos</li>
+        <li>Rotas exclusivas em paisagens deslumbrantes</li>
+        <li>Fotos editadas e entregues no mesmo dia</li>
+        <li>Grupos pequenos para experiência personalizada</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PACOTES -->
+<section class="packages" id="pacotes">
+  <div class="packages-inner">
+    <div class="section-header">
+      <div class="section-tag">Nossos Pacotes</div>
+      <h2 class="section-title">ESCOLHA SUA AVENTURA</h2>
+      <p class="section-desc">Pacotes com veículos, guia e fotografia profissional inclusa. Reserve pelo WhatsApp!</p>
+    </div>
+    <div class="packages-grid">
+
+      <div class="package-card">
+        <img src="https://images.unsplash.com/photo-1612613895499-c2a5bf9960c3?w=800&q=80" alt="Passeio Quadriciclo Solo" class="package-img" loading="lazy">
+        <div class="package-body">
+          <div class="package-tag orange">🏍️ Mais Popular</div>
+          <h3 class="package-name">ROTA AVENTURA — QUADRICICLO</h3>
+          <p class="package-desc">Passeio guiado de quadriciclo pelas trilhas e praias, com paradas estratégicas para as melhores fotos da paisagem.</p>
+          <ul class="package-includes">
+            <li>Passeio de quadriciclo (1h30)</li>
+            <li>Fotógrafo profissional incluso</li>
+            <li>20+ fotos editadas entregues</li>
+            <li>Equipamentos de segurança</li>
+            <li>Entrega por WhatsApp no mesmo dia</li>
+          </ul>
+          <a href="https://wa.me/558496034619?text=Quero%20reservar%20o%20pacote%20Rota%20Aventura%20Quadriciclo!" class="package-cta" target="_blank">
+            📲 Reservar via WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <div class="package-card featured">
+        <img src="https://images.unsplash.com/photo-1533107862482-0e6974b06ec4?w=800&q=80" alt="Passeio Buggy" class="package-img" loading="lazy">
+        <div class="package-body">
+          <div class="package-tag red">🐛 Destaque</div>
+          <h3 class="package-name">ROTA MAR — BUGGY COMPLETO</h3>
+          <p class="package-desc">A experiência completa em buggy pelas dunas e litoral, com ensaio fotográfico exclusivo nos pontos mais bonitos da rota.</p>
+          <ul class="package-includes">
+            <li>Passeio de buggy (2h30)</li>
+            <li>Ensaio fotográfico em locais icônicos</li>
+            <li>40+ fotos editadas profissionalmente</li>
+            <li>Até 4 pessoas por buggy</li>
+            <li>Paradas nas melhores paisagens</li>
+            <li>Álbum digital de alta resolução</li>
+          </ul>
+          <a href="https://wa.me/558496034619?text=Quero%20reservar%20o%20pacote%20Rota%20Mar%20Buggy!" class="package-cta" target="_blank">
+            📲 Reservar via WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <div class="package-card">
+        <img src="https://images.unsplash.com/photo-1531986362435-16b427eb9c26?w=800&q=80" alt="Pacote Família" class="package-img" loading="lazy">
+        <div class="package-body">
+          <div class="package-tag gold">👨‍👩‍👧 Família & Grupos</div>
+          <h3 class="package-name">ROTA FAMÍLIA — EXPERIÊNCIA COMPLETA</h3>
+          <p class="package-desc">Pacote ideal para famílias e grupos de amigos. Quadriciclos + buggy com sessão fotográfica em família, criando lembranças únicas.</p>
+          <ul class="package-includes">
+            <li>Combinação quadriciclo + buggy</li>
+            <li>Sessão fotográfica em família/grupo</li>
+            <li>60+ fotos editadas</li>
+            <li>Roteiro personalizado</li>
+            <li>Ideal para 5–10 pessoas</li>
+            <li>Opção de vídeo curto (Reels)</li>
+          </ul>
+          <a href="https://wa.me/558496034619?text=Quero%20saber%20mais%20sobre%20o%20pacote%20Família!" class="package-cta" target="_blank">
+            📲 Falar sobre o Pacote
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery" id="galeria">
+  <div class="gallery-inner">
+    <div class="section-header">
+      <div class="section-tag">Galeria</div>
+      <h2 class="section-title">MOMENTOS QUE FICAM</h2>
+      <p class="section-desc">Cada passeio é uma história nova. Veja como a aventura fica linda quando registrada com qualidade.</p>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item tall">
+        <img src="https://images.unsplash.com/photo-1549920568-b0a3aff4c9ae?w=600&q=80" alt="Buggy nas dunas" loading="lazy">
+        <div class="gallery-overlay"><span class="gallery-caption">Buggy nas Dunas</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1612613895499-c2a5bf9960c3?w=600&q=80" alt="Quadriciclo na praia" loading="lazy">
+        <div class="gallery-overlay"><span class="gallery-caption">Rota da Praia</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1531986362435-16b427eb9c26?w=600&q=80" alt="Grupo no passeio" loading="lazy">
+        <div class="gallery-overlay"><span class="gallery-caption">Diversão em Grupo</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1470125634676-b9b9b9b76b0a?w=600&q=80" alt="Vista panorâmica" loading="lazy">
+        <div class="gallery-overlay"><span class="gallery-caption">Vista Panorâmica</span></div>
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1519671282429-b44660ead0a2?w=600&q=80" alt="Pôr do sol na rota" loading="lazy">
+        <div class="gallery-overlay"><span class="gallery-caption">Pôr do Sol na Rota</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how">
+  <div class="how-inner">
+    <div class="section-header">
+      <div class="section-tag">Como Funciona</div>
+      <h2 class="section-title">DO WHATSAPP À AVENTURA</h2>
+      <p class="section-desc">Reservar é fácil. Em menos de 5 minutos você está agendado!</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-content">
+          <h3 class="step-title">ESCOLHA SEU PACOTE</h3>
+          <p class="step-desc">Veja os pacotes disponíveis e escolha o que mais combina com você — quadriciclo, buggy ou experiência completa em família.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-content">
+          <h3 class="step-title">RESERVE PELO WHATSAPP</h3>
+          <p class="step-desc">Mande uma mensagem pra gente. Combinamos a data, horário e confirmamos sua reserva na hora. Sem burocracia!</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-content">
+          <h3 class="step-title">VIVA A AVENTURA</h3>
+          <p class="step-desc">No dia do passeio, você aproveita cada momento. Nosso fotógrafo profissional registra tudo enquanto você curte a experiência.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-content">
+          <h3 class="step-title">RECEBA SUAS FOTOS</h3>
+          <p class="step-desc">Ainda no mesmo dia, você recebe todas as fotos editadas diretamente no seu WhatsApp. Alta resolução, prontas pra postar!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section class="reviews">
+  <div class="reviews-inner">
+    <div class="section-header">
+      <div class="section-tag">Depoimentos</div>
+      <h2 class="section-title">QUEM VIU, ADOROU</h2>
+      <p class="section-desc">Veja o que nossos aventureiros falam sobre a experiência.</p>
+    </div>
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Experiência incrível! O passeio de buggy foi emocionante e as fotos ficaram lindas demais. A gente ainda estava no carro quando já chegaram as primeiras fotos no WhatsApp. Recomendo demais!"</p>
+        <div class="review-author">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&q=80" alt="Carlos M." class="review-avatar" loading="lazy">
+          <div>
+            <div class="review-name">Carlos M.</div>
+            <div class="review-place">📍 Natal, RN</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"Fiz o passeio em família com meus filhos e foi uma das melhores experiências que já tivemos juntos. As fotos capturaram a alegria de cada momento. Voltaremos com certeza!"</p>
+        <div class="review-author">
+          <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=80&h=80&q=80" alt="Ana Paula S." class="review-avatar" loading="lazy">
+          <div>
+            <div class="review-name">Ana Paula S.</div>
+            <div class="review-place">📍 Recife, PE</div>
+          </div>
+        </div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"O Joelson é excelente! Guia experiente, fotógrafo talentoso e pessoa ótima. O quadriciclo pela beira-mar foi sensacional e as fotos ficaram dignas de revista. Nota 10!"</p>
+        <div class="review-author">
+          <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=80&h=80&q=80" alt="Rafael T." class="review-avatar" loading="lazy">
+          <div>
+            <div class="review-name">Rafael T.</div>
+            <div class="review-place">📍 São Paulo, SP</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contato">
+  <div class="contact-inner">
+    <div>
+      <div class="section-tag">Contato</div>
+      <h2 class="section-title">BORA MARCAR?</h2>
+      <p class="section-desc" style="margin-bottom: 32px;">Reserve seu passeio agora mesmo. Respondemos rapidinho pelo WhatsApp!</p>
+      <div class="contact-info">
+        <div class="contact-item">
+          <div class="contact-icon">📍</div>
+          <div>
+            <div class="contact-item-label">Localização</div>
+            <div class="contact-item-value">Rio Grande do Norte, Brasil</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">📸</div>
+          <div>
+            <div class="contact-item-label">Especialidade</div>
+            <div class="contact-item-value">Fotografia de Passeios de Quadriciclo e Buggy</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon">🕐</div>
+          <div>
+            <div class="contact-item-label">Horários</div>
+            <div class="contact-item-value">Segunda a Domingo — 7h às 18h</div>
+          </div>
+        </div>
+      </div>
+      <a href="https://wa.me/558496034619?text=Olá!%20Quero%20reservar%20um%20passeio%20na%20Clicks%20Rota%20Mar!" class="whatsapp-big" target="_blank">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+        </svg>
+        Reservar pelo WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">CLICKS <span>ROTA MAR</span></div>
+  <p class="footer-copy">Passeios de Quadriciclo e Buggy com Fotografia Profissional · Rio Grande do Norte · © 2025</p>
+</footer>
+
+<!-- FLOATING WHATSAPP -->
+<a href="https://wa.me/558496034619?text=Olá!%20Quero%20reservar%20um%20passeio!" class="wa-float" target="_blank" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+  </svg>
+</a>
+
+</body>
+</html>
