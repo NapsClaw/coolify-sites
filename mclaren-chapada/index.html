@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Os McLaren da Chapada | Guias na Chapada Diamantina - BA</title>
+  <meta name="description" content="Os McLaren da Chapada - Guias especializados em trilhas e atrativos da Chapada Diamantina, BA. Vale do Pati e muito mais!">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --green-dark: #1a3a2a;
+      --green-mid: #2d5a3d;
+      --green-accent: #4a8c5c;
+      --ochre: #c8943a;
+      --ochre-light: #e8b060;
+      --cream: #f5f0e8;
+      --white: #ffffff;
+      --text-dark: #1a1a1a;
+      --text-mid: #4a4a4a;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; color: var(--text-dark); background: var(--cream); overflow-x: hidden; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 16px 20px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(26,58,42,0.94); backdrop-filter: blur(8px);
+    }
+    .nav-logo { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 900; color: var(--ochre-light); line-height: 1.2; }
+    .nav-logo span { display: block; font-size: 10px; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 500; color: rgba(255,255,255,0.65); letter-spacing: 2px; text-transform: uppercase; }
+    .nav-cta { background: var(--ochre); color: white; padding: 10px 18px; border-radius: 50px; font-size: 13px; font-weight: 700; text-decoration: none; transition: background 0.2s; white-space: nowrap; }
+    .nav-cta:hover { background: var(--ochre-light); }
+
+    /* HERO */
+    .hero { min-height: 100svh; position: relative; display: flex; align-items: flex-end; padding: 100px 20px 56px; overflow: hidden; }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.05) 35%, rgba(20,50,35,0.88) 100%),
+        url('https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=1400&q=80') center/cover no-repeat;
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 520px; }
+    .hero-badge { display: inline-block; background: var(--ochre); color: white; font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 6px 14px; border-radius: 50px; margin-bottom: 20px; animation: fadeUp 0.6s ease both; }
+    .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(36px, 10vw, 58px); font-weight: 900; color: white; line-height: 1.1; margin-bottom: 18px; animation: fadeUp 0.6s 0.15s ease both; }
+    .hero h1 em { font-style: italic; color: var(--ochre-light); }
+    .hero p { font-size: 16px; color: rgba(255,255,255,0.85); line-height: 1.65; margin-bottom: 32px; max-width: 420px; animation: fadeUp 0.6s 0.3s ease both; }
+    .hero-btns { display: flex; flex-direction: column; gap: 12px; animation: fadeUp 0.6s 0.45s ease both; }
+    .btn-wpp { display: flex; align-items: center; justify-content: center; gap: 10px; background: #25D366; color: white; padding: 16px 28px; border-radius: 50px; font-size: 16px; font-weight: 700; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 20px rgba(37,211,102,0.4); }
+    .btn-wpp:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(37,211,102,0.5); }
+    .btn-ghost { display: flex; align-items: center; justify-content: center; gap: 8px; background: rgba(255,255,255,0.12); backdrop-filter: blur(4px); color: white; border: 1px solid rgba(255,255,255,0.28); padding: 14px 28px; border-radius: 50px; font-size: 15px; font-weight: 600; text-decoration: none; transition: background 0.2s; }
+    .btn-ghost:hover { background: rgba(255,255,255,0.22); }
+
+    /* STATS */
+    .stats { background: var(--green-dark); display: grid; grid-template-columns: repeat(3,1fr); }
+    .stat { text-align: center; padding: 28px 10px; border-right: 1px solid rgba(255,255,255,0.08); }
+    .stat:last-child { border-right: none; }
+    .stat-n { font-family: 'Playfair Display', serif; font-size: 30px; font-weight: 900; color: var(--ochre-light); display: block; }
+    .stat-l { font-size: 10px; color: rgba(255,255,255,0.55); letter-spacing: 1.5px; text-transform: uppercase; margin-top: 4px; }
+
+    /* BASE SECTION */
+    section { padding: 72px 20px; }
+    .tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 2.5px; text-transform: uppercase; color: var(--green-accent); margin-bottom: 12px; }
+    .h2 { font-family: 'Playfair Display', serif; font-size: clamp(28px, 7vw, 40px); font-weight: 900; color: var(--green-dark); line-height: 1.2; margin-bottom: 14px; }
+    .desc { font-size: 16px; color: var(--text-mid); line-height: 1.7; max-width: 480px; }
+
+    /* SOBRE */
+    .sobre { background: white; }
+    .sobre-grid { display: flex; flex-direction: column; gap: 40px; }
+    .sobre-img { border-radius: 18px; overflow: hidden; height: 280px; flex-shrink: 0; }
+    .sobre-img img { width: 100%; height: 100%; object-fit: cover; }
+    .checks { list-style: none; display: flex; flex-direction: column; gap: 14px; margin-top: 28px; }
+    .checks li { display: flex; align-items: center; gap: 12px; font-size: 15px; color: var(--text-mid); }
+    .chk { width: 22px; height: 22px; background: var(--green-accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .chk svg { width: 12px; height: 12px; }
+
+    /* VALE DO PATI */
+    .vale { background: var(--green-dark); padding: 0; overflow: hidden; }
+    .vale-inner { display: flex; flex-direction: column; }
+    .vale-img { height: 300px; overflow: hidden; }
+    .vale-img img { width: 100%; height: 100%; object-fit: cover; }
+    .vale-body { padding: 56px 20px; }
+    .vale-body .tag { color: var(--ochre-light); }
+    .vale-body .h2 { color: white; }
+    .vale-body .desc { color: rgba(255,255,255,0.72); }
+    .vale-feats { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 32px; }
+    .vf { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 18px 14px; }
+    .vf-icon { font-size: 26px; margin-bottom: 8px; display: block; }
+    .vf h4 { font-size: 13px; font-weight: 700; color: var(--ochre-light); margin-bottom: 5px; }
+    .vf p { font-size: 12px; color: rgba(255,255,255,0.55); line-height: 1.5; }
+
+    /* SERVIÇOS */
+    .servicos { background: var(--cream); }
+    .cards { display: flex; flex-direction: column; gap: 16px; margin-top: 40px; }
+    .card { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s; }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+    .card-img { height: 200px; overflow: hidden; }
+    .card-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+    .card:hover .card-img img { transform: scale(1.05); }
+    .card-body { padding: 22px 20px; }
+    .card-tag { display: inline-block; background: var(--green-dark); color: var(--ochre-light); font-size: 10px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 10px; border-radius: 4px; margin-bottom: 10px; }
+    .card-body h3 { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--green-dark); margin-bottom: 8px; }
+    .card-body p { font-size: 14px; color: var(--text-mid); line-height: 1.6; }
+
+    /* GALERIA */
+    .galeria { background: white; padding: 72px 0; }
+    .galeria .tag, .galeria .h2, .galeria .desc { padding: 0 20px; }
+    .gal-scroll { display: flex; gap: 12px; overflow-x: auto; padding: 32px 20px; scrollbar-width: none; -ms-overflow-style: none; }
+    .gal-scroll::-webkit-scrollbar { display: none; }
+    .gal-item { flex-shrink: 0; width: 230px; height: 300px; border-radius: 14px; overflow: hidden; position: relative; }
+    .gal-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+    .gal-item:hover img { transform: scale(1.07); }
+    .gal-lbl { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); color: white; font-size: 12px; font-weight: 600; padding: 20px 14px 12px; }
+
+    /* DEPOIMENTOS */
+    .depos { background: var(--cream); }
+    .reviews { display: flex; flex-direction: column; gap: 16px; margin-top: 40px; }
+    .rev { background: white; border-radius: 16px; padding: 24px 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+    .stars { display: flex; gap: 3px; margin-bottom: 14px; }
+    .stars svg { width: 16px; height: 16px; fill: #f59e0b; }
+    .rev-txt { font-size: 15px; color: var(--text-mid); line-height: 1.7; margin-bottom: 18px; font-style: italic; }
+    .rev-author { display: flex; align-items: center; gap: 12px; }
+    .avatar { width: 42px; height: 42px; border-radius: 50%; background: var(--green-accent); display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 16px; flex-shrink: 0; }
+    .rev-name { font-size: 14px; font-weight: 700; color: var(--text-dark); }
+    .rev-from { font-size: 12px; color: #999; margin-top: 2px; }
+
+    /* CONTATO */
+    .contato { background: var(--green-dark); }
+    .contato .tag { color: var(--ochre-light); }
+    .contato .h2 { color: white; }
+    .contato .desc { color: rgba(255,255,255,0.7); }
+    .cont-cards { display: flex; flex-direction: column; gap: 14px; margin-top: 36px; }
+    .cont-card { display: flex; align-items: center; gap: 16px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 18px 20px; }
+    .cont-icon { width: 46px; height: 46px; background: rgba(255,255,255,0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+    .cont-card h4 { font-size: 11px; color: var(--ochre-light); font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 3px; }
+    .cont-card p { font-size: 15px; color: rgba(255,255,255,0.85); }
+    .cta-box { margin-top: 44px; text-align: center; }
+    .btn-wpp-big { display: inline-flex; align-items: center; gap: 12px; background: #25D366; color: white; padding: 18px 36px; border-radius: 50px; font-size: 17px; font-weight: 700; text-decoration: none; box-shadow: 0 4px 20px rgba(37,211,102,0.4); transition: transform 0.2s, box-shadow 0.2s; }
+    .btn-wpp-big:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(37,211,102,0.5); }
+
+    /* FOOTER */
+    footer { background: #0f2218; padding: 36px 20px; text-align: center; }
+    .foot-logo { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 900; color: var(--ochre-light); margin-bottom: 10px; }
+    footer p { font-size: 13px; color: rgba(255,255,255,0.35); line-height: 1.6; }
+
+    /* FLOATING WPP */
+    .float-wpp { position: fixed; bottom: 20px; right: 20px; z-index: 999; background: #25D366; border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(37,211,102,0.5); text-decoration: none; transition: transform 0.2s; }
+    .float-wpp:hover { transform: scale(1.1); }
+    .float-wpp svg { width: 30px; height: 30px; }
+
+    /* DESKTOP */
+    @media (min-width: 768px) {
+      nav { padding: 20px 48px; }
+      .hero { padding: 140px 48px 80px; }
+      section { padding: 96px 48px; }
+      .sobre-grid { flex-direction: row; align-items: center; gap: 60px; }
+      .sobre-img { flex: 1; height: 400px; }
+      .vale-inner { flex-direction: row; }
+      .vale-img { flex: 1; height: auto; min-height: 480px; }
+      .vale-body { flex: 1; padding: 80px 60px; }
+      .cards { display: grid; grid-template-columns: 1fr 1fr; }
+      .reviews { display: grid; grid-template-columns: 1fr 1fr; }
+      .cont-cards { display: grid; grid-template-columns: 1fr 1fr; }
+      .galeria .tag, .galeria .h2, .galeria .desc { padding: 0 48px; }
+      .gal-scroll { padding: 32px 48px; }
+    }
+    @media (min-width: 1024px) {
+      .cards { grid-template-columns: repeat(3,1fr); }
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+    .hero-badge { animation: fadeUp 0.6s ease both; }
+    .hero h1 { animation: fadeUp 0.6s 0.15s ease both; }
+    .hero p { animation: fadeUp 0.6s 0.3s ease both; }
+    .hero-btns { animation: fadeUp 0.6s 0.45s ease both; }
+  </style>
+</head>
+<body>
+
+<!-- FLOATING WHATSAPP -->
+<a href="https://wa.me/557588067401?text=Olá!%20Quero%20saber%20sobre%20os%20passeios%20na%20Chapada!" class="float-wpp" target="_blank" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    Os McLaren
+    <span>Chapada Diamantina · BA</span>
+  </div>
+  <a href="https://wa.me/557588067401?text=Olá!%20Quero%20contratar%20um%20guia%20na%20Chapada!" class="nav-cta" target="_blank">📲 Falar agora</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <span class="hero-badge">🏔️ Chapada Diamantina · BA</span>
+    <h1>Guias que conhecem cada <em>trilha</em> da Chapada</h1>
+    <p>Descubra o Vale do Pati e os atrativos mais incríveis da Chapada Diamantina com quem realmente conhece cada detalhe da região.</p>
+    <div class="hero-btns">
+      <a href="https://wa.me/557588067401?text=Olá!%20Quero%20saber%20mais%20sobre%20os%20passeios!" class="btn-wpp" target="_blank">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Falar com um guia
+      </a>
+      <a href="#servicos" class="btn-ghost">↓ Ver nossos passeios</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat"><span class="stat-n">100%</span><span class="stat-l">Chapada</span></div>
+  <div class="stat"><span class="stat-n">+50</span><span class="stat-l">Atrativos</span></div>
+  <div class="stat"><span class="stat-n">⭐ 5,0</span><span class="stat-l">Avaliação</span></div>
+</div>
+
+<!-- SOBRE -->
+<section class="sobre" id="sobre">
+  <div class="sobre-grid">
+    <div class="sobre-img">
+      <img src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800&q=80" alt="Paisagem da Chapada Diamantina" loading="lazy">
+    </div>
+    <div>
+      <span class="tag">Sobre nós</span>
+      <h2 class="h2">Os McLaren da Chapada Diamantina</h2>
+      <p class="desc">Somos guias especializados em todos os atrativos da Chapada Diamantina. Nosso foco é proporcionar experiências únicas e seguras nas trilhas mais incríveis da Bahia — com destaque para a lendária Trilha do Vale do Pati.</p>
+      <ul class="checks">
+        <li>
+          <div class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+          Guias certificados e experientes na região
+        </li>
+        <li>
+          <div class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+          Conhecimento profundo de flora, fauna e história local
+        </li>
+        <li>
+          <div class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+          Segurança e cuidado em cada trilha
+        </li>
+        <li>
+          <div class="chk"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+          Atendimento personalizado para grupos e famílias
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- VALE DO PATI DESTAQUE -->
+<section class="vale" id="vale-do-pati">
+  <div class="vale-inner">
+    <div class="vale-img">
+      <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=900&q=80" alt="Trilha do Vale do Pati" loading="lazy">
+    </div>
+    <div class="vale-body">
+      <span class="tag">Destaque</span>
+      <h2 class="h2">Trilha do Vale do Pati</h2>
+      <p class="desc">Uma das trilhas mais famosas e desafiadoras do Brasil. O Vale do Pati oferece paisagens de tirar o fôlego, com chapadas, cachoeiras e a rica biodiversidade do Parque Nacional.</p>
+      <div class="vale-feats">
+        <div class="vf">
+          <span class="vf-icon">🥾</span>
+          <h4>Dificuldade</h4>
+          <p>Moderada a difícil — para todos os perfis com guia</p>
+        </div>
+        <div class="vf">
+          <span class="vf-icon">📅</span>
+          <h4>Duração</h4>
+          <p>3 a 5 dias imersivos na natureza</p>
+        </div>
+        <div class="vf">
+          <span class="vf-icon">🏕️</span>
+          <h4>Camping</h4>
+          <p>Dormidas em pousadas rurais no percurso</p>
+        </div>
+        <div class="vf">
+          <span class="vf-icon">🌿</span>
+          <h4>Natureza</h4>
+          <p>Flora e fauna únicas do Cerrado baiano</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVIÇOS -->
+<section class="servicos" id="servicos">
+  <span class="tag">O que fazemos</span>
+  <h2 class="h2">Nossos Passeios</h2>
+  <p class="desc">De trilhas épicas a cachoeiras escondidas — temos o passeio certo pra você.</p>
+  <div class="cards">
+    <div class="card">
+      <div class="card-img">
+        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80" alt="Vale do Pati" loading="lazy">
+      </div>
+      <div class="card-body">
+        <span class="card-tag">⭐ Principal</span>
+        <h3>Trilha do Vale do Pati</h3>
+        <p>A experiência completa: 3 a 5 dias percorrendo um dos vales mais bonitos do Brasil, com dormidas e paisagens inesquecíveis.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-img">
+        <img src="https://images.unsplash.com/photo-1437622368342-7a3d73a34c8f?w=600&q=80" alt="Cachoeiras" loading="lazy">
+      </div>
+      <div class="card-body">
+        <span class="card-tag">🌊 Popular</span>
+        <h3>Cachoeiras da Chapada</h3>
+        <p>Cachoeira da Fumaça, Mosquito, Riachinho e muito mais — os saltos mais lindos da Bahia.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-img">
+        <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80" alt="Mirantes" loading="lazy">
+      </div>
+      <div class="card-body">
+        <span class="card-tag">🔭 Vista</span>
+        <h3>Mirantes e Chapadas</h3>
+        <p>Pôr do sol no Morro do Pai Inácio e vistas 360° que só a Chapada Diamantina tem.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALERIA -->
+<section class="galeria" id="galeria">
+  <span class="tag">Galeria</span>
+  <h2 class="h2">A Chapada em fotos</h2>
+  <p class="desc">Imagens que não fazem jus ao que você vai ver pessoalmente.</p>
+  <div class="gal-scroll">
+    <div class="gal-item">
+      <img src="https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=500&q=80" alt="Cachoeira" loading="lazy">
+      <span class="gal-lbl">Cachoeiras</span>
+    </div>
+    <div class="gal-item">
+      <img src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=500&q=80" alt="Paisagem" loading="lazy">
+      <span class="gal-lbl">Paisagens</span>
+    </div>
+    <div class="gal-item">
+      <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=500&q=80" alt="Chapada" loading="lazy">
+      <span class="gal-lbl">Chapada</span>
+    </div>
+    <div class="gal-item">
+      <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=500&q=80" alt="Trilha" loading="lazy">
+      <span class="gal-lbl">Trilhas</span>
+    </div>
+    <div class="gal-item">
+      <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=500&q=80" alt="Vale" loading="lazy">
+      <span class="gal-lbl">Vale do Pati</span>
+    </div>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section class="depos" id="depoimentos">
+  <span class="tag">Quem foi, aprovou</span>
+  <h2 class="h2">O que dizem nossos viajantes</h2>
+  <div class="reviews">
+    <div class="rev">
+      <div class="stars">
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+      <p class="rev-txt">"Experiência incrível no Vale do Pati! Os guias conhecem cada pedra do caminho. Segurança, bom humor e paisagens que nunca vou esquecer."</p>
+      <div class="rev-author">
+        <div class="avatar">M</div>
+        <div>
+          <div class="rev-name">Mariana Costa</div>
+          <div class="rev-from">São Paulo, SP</div>
+        </div>
+      </div>
+    </div>
+    <div class="rev">
+      <div class="stars">
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+      <p class="rev-txt">"Fui com a família e foi a melhor decisão. Os McLaren sabem como tornar trilhas desafiadoras acessíveis pra todo mundo. Voltaremos com certeza!"</p>
+      <div class="rev-author">
+        <div class="avatar">R</div>
+        <div>
+          <div class="rev-name">Ricardo Alves</div>
+          <div class="rev-from">Belo Horizonte, MG</div>
+        </div>
+      </div>
+    </div>
+    <div class="rev">
+      <div class="stars">
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+      <p class="rev-txt">"Profissionalismo total. Me senti segura em cada passo da trilha. As explicações sobre a flora e fauna foram um bônus incrível!"</p>
+      <div class="rev-author">
+        <div class="avatar">A</div>
+        <div>
+          <div class="rev-name">Ana Beatriz Lima</div>
+          <div class="rev-from">Brasília, DF</div>
+        </div>
+      </div>
+    </div>
+    <div class="rev">
+      <div class="stars">
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+      <p class="rev-txt">"Vale do Pati foi transformador. 5 dias que mudaram minha forma de ver o Brasil. Os McLaren são apaixonados pelo que fazem — isso faz toda diferença."</p>
+      <div class="rev-author">
+        <div class="avatar">P</div>
+        <div>
+          <div class="rev-name">Pedro Nascimento</div>
+          <div class="rev-from">Recife, PE</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section class="contato" id="contato">
+  <span class="tag">Onde estamos</span>
+  <h2 class="h2">Vem conhecer a Chapada</h2>
+  <p class="desc">Entre em contato pelo WhatsApp e a gente monta o passeio ideal pra você. Respondemos rápido!</p>
+  <div class="cont-cards">
+    <div class="cont-card">
+      <div class="cont-icon">📍</div>
+      <div>
+        <h4>Localização</h4>
+        <p>Chapada Diamantina, Bahia</p>
+      </div>
+    </div>
+    <div class="cont-card">
+      <div class="cont-icon">📲</div>
+      <div>
+        <h4>WhatsApp</h4>
+        <p>(75) 9806-7401</p>
+      </div>
+    </div>
+    <div class="cont-card">
+      <div class="cont-icon">🕐</div>
+      <div>
+        <h4>Atendimento</h4>
+        <p>Todos os dias, 7h às 21h</p>
+      </div>
+    </div>
+    <div class="cont-card">
+      <div class="cont-icon">🏔️</div>
+      <div>
+        <h4>Especialidade</h4>
+        <p>Vale do Pati e +50 atrativos</p>
+      </div>
+    </div>
+  </div>
+  <div class="cta-box">
+    <a href="https://wa.me/557588067401?text=Olá!%20Quero%20contratar%20um%20passeio%20na%20Chapada%20Diamantina!" class="btn-wpp-big" target="_blank">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Reservar meu passeio
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-logo">Os McLaren da Chapada</div>
+  <p>Guias turísticos especializados na Chapada Diamantina · Bahia, Brasil</p>
+  <p style="margin-top:8px;">© 2025 Os McLaren da Chapada — Todos os direitos reservados</p>
+</footer>
+
+</body>
+</html>
