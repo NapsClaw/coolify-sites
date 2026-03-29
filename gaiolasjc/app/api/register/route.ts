@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
       RETURNING id, name, email, role
     `
 
-    const token = signToken({ userId: user.id, email: user.email, role: user.role })
+    const token = await signToken({ userId: user.id, email: user.email, role: user.role })
     const cookieStore = await cookies()
     cookieStore.set('auth_token', token, { httpOnly: true, maxAge: 60 * 60 * 24 * 7, path: '/' })
 
