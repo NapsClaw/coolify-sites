@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 export default function Home() {
   return (
@@ -7,7 +8,7 @@ export default function Home() {
       <header className="w-full py-4 px-6 flex items-center justify-between bg-blue-900/80 backdrop-blur-sm sticky top-0 z-50">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-full bg-yellow-400 flex items-center justify-center text-blue-900 font-bold text-lg">
-            JF
+            IE
           </div>
           <span className="font-bold text-lg hidden sm:block">Idealeleitor</span>
         </div>
@@ -21,15 +22,39 @@ export default function Home() {
 
       {/* Hero */}
       <section className="flex flex-col items-center text-center px-6 py-16 md:py-24">
-        {/* Avatar */}
-        <div className="w-32 h-32 md:w-40 md:h-40 rounded-full bg-blue-800 border-4 border-yellow-400 flex items-center justify-center mb-6 shadow-2xl overflow-hidden">
-          <svg className="w-20 h-20 text-blue-300" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/>
-          </svg>
+        {/* Candidatos */}
+        <div className="flex items-center justify-center gap-6 mb-8">
+          <div className="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-yellow-400 shadow-2xl overflow-hidden bg-blue-800 flex-shrink-0">
+            <Image
+              src="/candidato1.jpg"
+              alt="Joselyo Mais Saúde"
+              width={160}
+              height={160}
+              className="w-full h-full object-cover"
+              unoptimized
+            />
+          </div>
+          <div className="w-8 h-8 rounded-full bg-yellow-400 flex items-center justify-center text-blue-900 font-bold text-lg shrink-0">
+            &amp;
+          </div>
+          <div className="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-green-400 shadow-2xl overflow-hidden bg-blue-800 flex-shrink-0">
+            <Image
+              src="/candidato2.jpg"
+              alt="Felipe Show"
+              width={160}
+              height={160}
+              className="w-full h-full object-cover"
+              unoptimized
+            />
+          </div>
         </div>
 
-        <h1 className="text-4xl md:text-5xl font-bold mb-2">Joselyo Felipe</h1>
-        <p className="text-yellow-300 text-xl font-semibold mb-6">Candidato do Povo</p>
+        <h1 className="text-3xl md:text-5xl font-bold mb-2">
+          Joselyo Mais Saúde
+          <span className="text-yellow-300"> & </span>
+          Felipe Show
+        </h1>
+        <p className="text-yellow-300 text-xl font-semibold mb-6">Candidatos do Povo</p>
 
         <p className="text-blue-100 text-lg max-w-xl mb-10">
           Juntos, construiremos uma cidade mais justa, igualitária e com oportunidades para todos.
@@ -81,7 +106,7 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="bg-blue-900 text-blue-300 text-center py-6 px-4 text-sm">
-        <p>© 2024 Joselyo Felipe — Todos os direitos reservados</p>
+        <p>© 2025 Joselyo Mais Saúde & Felipe Show — Todos os direitos reservados</p>
       </footer>
     </main>
   )
