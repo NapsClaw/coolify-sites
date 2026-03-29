@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Lopes Fernandes Vidraçaria — Box de banheiro, janelas, espelhos e vidros temperados no Rio de Janeiro. Qualidade e atendimento especializado.">
+  <title>Lopes Fernandes Vidraçaria | Box, Janelas e Espelhos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d1117;
+      --bg2: #141b24;
+      --bg3: #1c2533;
+      --text: #eef2f7;
+      --text2: #8fa3bc;
+      --accent: #4fc3f7;
+      --accent2: #0288d1;
+      --gold: #c9a84c;
+      --glass-bg: rgba(255,255,255,0.04);
+      --glass-border: rgba(79,195,247,0.15);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(13,17,23,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--glass-border);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: 0.5px;
+    }
+
+    .nav-logo span { color: var(--accent); }
+
+    .nav-cta {
+      background: var(--accent);
+      color: #000;
+      font-weight: 600;
+      font-size: 14px;
+      padding: 10px 20px;
+      border-radius: 50px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .nav-cta:hover { background: #81d4fa; transform: scale(1.03); }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 100px 24px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1400&q=80') center/cover no-repeat;
+      filter: brightness(0.2) saturate(0.6);
+      z-index: 0;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(13,17,23,0.4) 0%, rgba(13,17,23,0.85) 80%, var(--bg) 100%);
+      z-index: 1;
+    }
+
+    .hero-content { position: relative; z-index: 2; max-width: 700px; }
+
+    .hero-badge {
+      display: inline-block;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 6px 16px;
+      border-radius: 50px;
+      margin-bottom: 24px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(38px, 8vw, 72px);
+      font-weight: 900;
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+
+    .hero h1 .accent-line { color: var(--accent); display: block; }
+
+    .hero p {
+      font-size: 18px;
+      color: var(--text2);
+      margin-bottom: 36px;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #000;
+      font-weight: 700;
+      font-size: 16px;
+      padding: 16px 32px;
+      border-radius: 50px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .btn-primary:hover { background: #81d4fa; transform: translateY(-2px); }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      font-weight: 600;
+      font-size: 16px;
+      padding: 16px 32px;
+      border-radius: 50px;
+      border: 1px solid var(--glass-border);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ===== STATS ===== */
+    .stats {
+      padding: 60px 24px;
+      background: var(--bg2);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 40px;
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: var(--text2);
+      margin-top: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* ===== SECTION BASE ===== */
+    section { padding: 80px 24px; }
+
+    .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 5vw, 44px);
+      font-weight: 900;
+      color: var(--text);
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .section-subtitle {
+      font-size: 16px;
+      color: var(--text2);
+      max-width: 500px;
+    }
+
+    .section-header { margin-bottom: 48px; }
+
+    /* ===== ABOUT ===== */
+    .about { background: var(--bg); }
+
+    .about-grid {
+      max-width: 900px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    .about-image {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      border-radius: 16px;
+      border: 1px solid var(--glass-border);
+    }
+
+    .about-text p {
+      color: var(--text2);
+      font-size: 16px;
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+
+    .about-text strong { color: var(--text); }
+
+    .about-feature {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .about-feature-icon {
+      width: 36px;
+      height: 36px;
+      background: rgba(79,195,247,0.1);
+      border: 1px solid var(--glass-border);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .about-feature-text {
+      font-size: 15px;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* ===== SERVICES ===== */
+    .services { background: var(--bg2); }
+
+    .services-grid {
+      max-width: 900px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .service-card {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .service-card:hover {
+      border-color: var(--accent);
+      transform: translateX(4px);
+    }
+
+    .service-icon {
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(135deg, rgba(79,195,247,0.15), rgba(2,136,209,0.1));
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+
+    .service-info h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .service-info p {
+      font-size: 14px;
+      color: var(--text2);
+      line-height: 1.6;
+    }
+
+    /* ===== GALLERY ===== */
+    .gallery { background: var(--bg); }
+
+    .gallery-scroll {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      padding-bottom: 16px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--glass-border) transparent;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .gallery-scroll::-webkit-scrollbar { height: 4px; }
+    .gallery-scroll::-webkit-scrollbar-thumb { background: var(--glass-border); border-radius: 2px; }
+
+    .gallery-item {
+      flex-shrink: 0;
+      width: 260px;
+      height: 200px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--glass-border);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s;
+    }
+
+    .gallery-item:hover img { transform: scale(1.06); }
+
+    /* ===== TESTIMONIALS ===== */
+    .testimonials { background: var(--bg2); }
+
+    .testimonials-list {
+      max-width: 700px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .testimonial-card {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 24px;
+    }
+
+    .testimonial-stars { color: var(--gold); font-size: 16px; margin-bottom: 12px; }
+
+    .testimonial-text {
+      color: var(--text2);
+      font-size: 15px;
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+
+    .testimonial-author {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--text);
+    }
+
+    /* ===== CONTACT ===== */
+    .contact { background: var(--bg); }
+
+    .contact-wrapper {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .contact-cards {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .contact-card {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .contact-card-icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(79,195,247,0.1);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+
+    .contact-card-label {
+      font-size: 12px;
+      color: var(--text2);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 4px;
+    }
+
+    .contact-card-value {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .cta-whatsapp {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: #25D366;
+      color: #fff;
+      font-weight: 700;
+      font-size: 18px;
+      padding: 20px 32px;
+      border-radius: 50px;
+      text-decoration: none;
+      width: 100%;
+      transition: all 0.2s;
+      box-shadow: 0 8px 30px rgba(37,211,102,0.3);
+    }
+
+    .cta-whatsapp:hover { background: #20b858; transform: translateY(-2px); }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--bg2);
+      border-top: 1px solid var(--glass-border);
+      padding: 32px 24px;
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 900;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .footer-logo span { color: var(--accent); }
+
+    footer p {
+      font-size: 13px;
+      color: var(--text2);
+      margin-top: 8px;
+    }
+
+    /* ===== WHATSAPP FLOAT ===== */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 999;
+      width: 60px;
+      height: 60px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.5);
+      text-decoration: none;
+      transition: transform 0.2s;
+    }
+
+    .whatsapp-float:hover { transform: scale(1.1); }
+
+    /* ===== ANIMATIONS ===== */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===== DESKTOP ===== */
+    @media (min-width: 768px) {
+      .about-grid {
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+      }
+
+      .services-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .contact-cards {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .stats-grid {
+        max-width: 600px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">Lopes <span>Fernandes</span></a>
+    <a href="https://wa.me/5521975610359?text=Olá!%20Gostaria%20de%20um%20orçamento." class="nav-cta" target="_blank">Solicitar Orçamento</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <span class="hero-badge">🪟 Vidraçaria Especializada</span>
+      <h1>
+        Transparência
+        <span class="accent-line">em cada detalhe</span>
+      </h1>
+      <p>Box de banheiro, janelas, espelhos e vidros temperados com qualidade superior e atendimento personalizado.</p>
+      <div class="hero-buttons">
+        <a href="https://wa.me/5521975610359?text=Olá!%20Gostaria%20de%20um%20orçamento." class="btn-primary" target="_blank">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Pedir Orçamento
+        </a>
+        <a href="#servicos" class="btn-secondary">Ver Serviços ↓</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats fade-in">
+    <div class="stats-grid">
+      <div>
+        <div class="stat-number">+15</div>
+        <div class="stat-label">Anos de experiência</div>
+      </div>
+      <div>
+        <div class="stat-number">500+</div>
+        <div class="stat-label">Clientes atendidos</div>
+      </div>
+      <div>
+        <div class="stat-number">5★</div>
+        <div class="stat-label">Avaliação Google</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section class="about fade-in">
+    <div class="about-grid">
+      <img
+        src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80"
+        alt="Instalação de vidros"
+        class="about-image"
+        loading="lazy"
+      >
+      <div class="about-text">
+        <div class="section-label">Sobre nós</div>
+        <h2 class="section-title">Qualidade que reflete no resultado</h2>
+        <p>A <strong>Lopes Fernandes Vidraçaria</strong> é especializada em soluções de vidro para residências e empresas. Com anos de experiência, entregamos projetos com precisão, segurança e acabamento impecável.</p>
+        <p>Do box de banheiro ao fechamento de varanda, cada projeto é tratado com atenção aos detalhes e compromisso com a satisfação do cliente.</p>
+        <br>
+        <div class="about-feature">
+          <div class="about-feature-icon">✅</div>
+          <span class="about-feature-text">Vidros com qualidade e garantia</span>
+        </div>
+        <div class="about-feature">
+          <div class="about-feature-icon">🛠️</div>
+          <span class="about-feature-text">Instalação profissional e segura</span>
+        </div>
+        <div class="about-feature">
+          <div class="about-feature-icon">⚡</div>
+          <span class="about-feature-text">Atendimento rápido e pontual</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services fade-in" id="servicos">
+    <div style="max-width: 900px; margin: 0 auto;">
+      <div class="section-header">
+        <div class="section-label">O que fazemos</div>
+        <h2 class="section-title">Nossos Serviços</h2>
+        <p class="section-subtitle">Soluções completas em vidro para seu imóvel.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">🚿</div>
+          <div class="service-info">
+            <h3>Box de Banheiro</h3>
+            <p>Box frontal, canto e banheira. Vidro temperado com perfis modernos e dobradiças de alta qualidade.</p>
+          </div>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🪟</div>
+          <div class="service-info">
+            <h3>Janelas de Vidro</h3>
+            <p>Janelas de correr, basculante e fixas. Projetos sob medida para residências e comércios.</p>
+          </div>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🪞</div>
+          <div class="service-info">
+            <h3>Espelhos</h3>
+            <p>Espelhos para banheiro, quarto, academia, salão e muito mais. Corte e instalação precisos.</p>
+          </div>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🏢</div>
+          <div class="service-info">
+            <h3>Fachadas e Divisórias</h3>
+            <p>Fechamento de varanda, divisórias internas e fachadas de vidro para ambientes modernos.</p>
+          </div>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🛡️</div>
+          <div class="service-info">
+            <h3>Vidro Temperado</h3>
+            <p>Vidros temperados para maior segurança e resistência. Ideal para portas, mesas e sacadas.</p>
+          </div>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🔧</div>
+          <div class="service-info">
+            <h3>Reparos e Substituição</h3>
+            <p>Troca de vidros quebrados, ajuste de perfis e manutenção de box e janelas existentes.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery fade-in">
+    <div style="max-width: 900px; margin: 0 auto;">
+      <div class="section-header">
+        <div class="section-label">Portfólio</div>
+        <h2 class="section-title">Nossos Trabalhos</h2>
+        <p class="section-subtitle">Projetos realizados com dedicação e qualidade.</p>
+      </div>
+      <div class="gallery-scroll">
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=600&q=80" alt="Box de banheiro" loading="lazy">
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1620626011761-996317702519?w=600&q=80" alt="Janelas de vidro" loading="lazy">
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&q=80" alt="Espelho instalado" loading="lazy">
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&q=80" alt="Fachada de vidro" loading="lazy">
+        </div>
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1564540583246-934409427776?w=600&q=80" alt="Vidro temperado" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="testimonials fade-in">
+    <div style="max-width: 700px; margin: 0 auto;">
+      <div class="section-header">
+        <div class="section-label">Avaliações</div>
+        <h2 class="section-title">O que dizem nossos clientes</h2>
+      </div>
+      <div class="testimonials-list">
+        <div class="testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"Excelente serviço! Instalaram o box do meu banheiro com muito cuidado e ficou perfeito. Recomendo muito!"</p>
+          <div class="testimonial-author">— Mariana S.</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"Profissionais pontuais e muito caprichosos. As janelas ficaram lindas e o acabamento impecável. Com certeza vou chamar de novo!"</p>
+          <div class="testimonial-author">— Carlos R.</div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"Fiz espelhos para o salão e ficou maravilhoso. Ótimo atendimento do começo ao fim. Nota 10!"</p>
+          <div class="testimonial-author">— Fernanda L.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact fade-in" id="contato">
+    <div class="contact-wrapper">
+      <div class="section-header">
+        <div class="section-label">Fale conosco</div>
+        <h2 class="section-title">Entre em Contato</h2>
+        <p class="section-subtitle">Atendemos no Rio de Janeiro e região. Solicite seu orçamento sem compromisso!</p>
+      </div>
+      <div class="contact-cards">
+        <div class="contact-card">
+          <div class="contact-card-icon">📍</div>
+          <div>
+            <div class="contact-card-label">Localização</div>
+            <div class="contact-card-value">Rio de Janeiro, RJ</div>
+          </div>
+        </div>
+        <div class="contact-card">
+          <div class="contact-card-icon">🕐</div>
+          <div>
+            <div class="contact-card-label">Horário</div>
+            <div class="contact-card-value">Seg–Sex: 8h–18h | Sáb: 8h–13h</div>
+          </div>
+        </div>
+      </div>
+      <a href="https://wa.me/5521975610359?text=Olá!%20Gostaria%20de%20solicitar%20um%20orçamento." class="cta-whatsapp" target="_blank">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Chamar no WhatsApp
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Lopes <span>Fernandes</span></div>
+    <p>Vidraçaria Especializada — Rio de Janeiro, RJ</p>
+    <p style="margin-top: 16px;">© 2025 Lopes Fernandes Vidraçaria. Todos os direitos reservados.</p>
+  </footer>
+
+  <!-- WHATSAPP FLOAT -->
+  <a href="https://wa.me/5521975610359?text=Olá!%20Gostaria%20de%20um%20orçamento." class="whatsapp-float" target="_blank" aria-label="Contato via WhatsApp">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+  <script>
+    // Fade-in on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
