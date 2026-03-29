@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Premium Transporte Turismo | Transfer e Passeios</title>
+  <meta name="description" content="Premium Transporte Turismo — Transfer executivo e passeios turísticos com conforto, pontualidade e segurança. Solicite seu orçamento pelo WhatsApp!">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --red: #C8102E;
+      --red-dark: #a00d24;
+      --black: #0a0a0a;
+      --dark: #111111;
+      --dark2: #1a1a1a;
+      --dark3: #222222;
+      --gray: #888888;
+      --light: #f5f5f5;
+      --white: #ffffff;
+      --gold: #c9a84c;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--black);
+      color: var(--white);
+      line-height: 1.6;
+      font-size: 16px;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(10,10,10,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(200,16,46,0.2);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 0.5px;
+    }
+    .nav-logo span { color: var(--red); }
+    .nav-cta {
+      background: var(--red);
+      color: var(--white);
+      padding: 10px 20px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #0a0a0a 0%, #1a0505 60%, #0a0a0a 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 100px 24px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=80') center/cover no-repeat;
+      opacity: 0.12;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: rgba(200,16,46,0.15);
+      border: 1px solid rgba(200,16,46,0.4);
+      color: var(--red);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+      position: relative;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(36px, 8vw, 64px);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 20px;
+      position: relative;
+    }
+    .hero h1 span { color: var(--red); }
+    .hero p {
+      font-size: 17px;
+      color: rgba(255,255,255,0.65);
+      max-width: 480px;
+      margin: 0 auto 36px;
+      line-height: 1.7;
+      position: relative;
+    }
+    .hero-btns {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      width: 100%;
+      max-width: 340px;
+      margin: 0 auto;
+      position: relative;
+    }
+    .btn-primary {
+      background: var(--red);
+      color: var(--white);
+      padding: 16px 24px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 600;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background 0.2s;
+    }
+    .btn-primary:hover { background: var(--red-dark); }
+    .btn-secondary {
+      border: 1px solid rgba(255,255,255,0.25);
+      color: var(--white);
+      padding: 16px 24px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 500;
+      text-align: center;
+    }
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      margin-top: 52px;
+      position: relative;
+    }
+    .stat {
+      text-align: center;
+    }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--red);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 11px;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 4px;
+    }
+
+    /* SECTION BASE */
+    section { padding: 64px 24px; }
+    .section-tag {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 12px;
+      display: block;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(26px, 5vw, 40px);
+      font-weight: 700;
+      line-height: 1.25;
+      margin-bottom: 16px;
+    }
+    .section-desc {
+      color: rgba(255,255,255,0.55);
+      font-size: 15px;
+      line-height: 1.75;
+      max-width: 560px;
+    }
+
+    /* DIVIDER */
+    .divider {
+      width: 48px;
+      height: 3px;
+      background: var(--red);
+      margin: 16px 0 24px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">PREMIUM<span>.</span></div>
+  <a href="https://wa.me/556791909306?text=Olá!%20Gostaria%20de%20solicitar%20um%20orçamento." class="nav-cta">Solicitar</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <span class="hero-badge">✦ Transfer &amp; Turismo Premium</span>
+  <h1>Viaje com<br><span>Conforto</span> e<br>Elegância</h1>
+  <p>Transfer executivo e passeios turísticos com pontualidade, segurança e um serviço que supera as expectativas.</p>
+  <div class="hero-btns">
+    <a href="https://wa.me/556791909306?text=Olá!%20Gostaria%20de%20solicitar%20um%20orçamento." class="btn-primary">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.112 1.524 5.838L.057 23.486a.5.5 0 0 0 .63.61l5.805-1.524A11.935 11.935 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.65-.518-5.163-1.42l-.37-.22-3.452.905.921-3.37-.242-.38A9.956 9.956 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+      Pedir Orçamento
+    </a>
+    <a href="#servicos" class="btn-secondary">Ver nossos serviços</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-num">500+</div>
+      <div class="stat-label">Viagens</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Pontual</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">5★</div>
+      <div class="stat-label">Avaliações</div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* SOBRE */
+  .sobre {
+    background: var(--dark2);
+  }
+  .sobre-inner {
+    max-width: 600px;
+  }
+  .sobre-img {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-top: 28px;
+    border: 1px solid rgba(200,16,46,0.2);
+  }
+  .sobre-features {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 28px;
+  }
+  .sobre-feat {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .feat-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(200,16,46,0.1);
+    border: 1px solid rgba(200,16,46,0.25);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 18px;
+  }
+  .feat-text h4 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+  .feat-text p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.5;
+  }
+
+  /* SERVIÇOS */
+  #servicos {
+    background: var(--black);
+  }
+  .servicos-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 36px;
+  }
+  .servico-card {
+    background: var(--dark2);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 12px;
+    padding: 28px 24px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .servico-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--red);
+  }
+  .servico-card:hover { border-color: rgba(200,16,46,0.4); }
+  .servico-icon {
+    font-size: 32px;
+    margin-bottom: 14px;
+    display: block;
+  }
+  .servico-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .servico-card p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.65;
+    margin-bottom: 18px;
+  }
+  .servico-card ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .servico-card ul li {
+    font-size: 13px;
+    color: rgba(255,255,255,0.65);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .servico-card ul li::before {
+    content: '✓';
+    color: var(--red);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  /* POR QUE NÓS */
+  .porque {
+    background: var(--dark2);
+  }
+  .porque-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 36px;
+  }
+  .porque-item {
+    background: var(--dark3);
+    border-radius: 12px;
+    padding: 20px 16px;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.05);
+  }
+  .porque-item .icon { font-size: 28px; margin-bottom: 10px; display: block; }
+  .porque-item h4 { font-size: 14px; font-weight: 600; margin-bottom: 6px; }
+  .porque-item p { font-size: 12px; color: rgba(255,255,255,0.5); line-height: 1.5; }
+</style>
+
+<!-- SOBRE -->
+<section class="sobre">
+  <div class="sobre-inner">
+    <span class="section-tag">Sobre nós</span>
+    <h2 class="section-title">Experiência em<br>cada quilômetro</h2>
+    <div class="divider"></div>
+    <p class="section-desc">A Premium Transporte Turismo oferece serviços de transfer e passeios com veículos confortáveis, motoristas experientes e o cuidado que cada viagem merece.</p>
+    <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=800&q=80" alt="Veículo Premium" class="sobre-img" loading="lazy">
+    <div class="sobre-features">
+      <div class="sobre-feat">
+        <div class="feat-icon">🏆</div>
+        <div class="feat-text">
+          <h4>Excelência no atendimento</h4>
+          <p>Desde o primeiro contato até o destino, você está em boas mãos.</p>
+        </div>
+      </div>
+      <div class="sobre-feat">
+        <div class="feat-icon">⏰</div>
+        <div class="feat-text">
+          <h4>Pontualidade garantida</h4>
+          <p>Respeitamos seu tempo. Estamos sempre no lugar certo, na hora certa.</p>
+        </div>
+      </div>
+      <div class="sobre-feat">
+        <div class="feat-icon">🛡️</div>
+        <div class="feat-text">
+          <h4>Segurança e conforto</h4>
+          <p>Frota revisada, motoristas capacitados e toda atenção para sua tranquilidade.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVIÇOS -->
+<section id="servicos">
+  <span class="section-tag">O que fazemos</span>
+  <h2 class="section-title">Nossos Serviços</h2>
+  <div class="divider"></div>
+  <div class="servicos-grid">
+    <div class="servico-card">
+      <span class="servico-icon">🚗</span>
+      <h3>Transfer Executivo</h3>
+      <p>Transporte com pontualidade e discrição para aeroportos, hotéis, eventos corporativos e qualquer destino.</p>
+      <ul>
+        <li>Aeroportos e rodoviárias</li>
+        <li>Hotéis e pousadas</li>
+        <li>Eventos e reuniões</li>
+        <li>Disponível 24 horas</li>
+        <li>Veículos climatizados</li>
+      </ul>
+    </div>
+    <div class="servico-card">
+      <span class="servico-icon">🏖️</span>
+      <h3>Passeios Turísticos</h3>
+      <p>Explore os melhores destinos com conforto e a liberdade de aproveitar cada momento da viagem.</p>
+      <ul>
+        <li>Passeios personalizados</li>
+        <li>Roteiros sob medida</li>
+        <li>Grupos e famílias</li>
+        <li>Guia experiente</li>
+        <li>Flexibilidade de horários</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- POR QUE NÓS -->
+<section class="porque">
+  <span class="section-tag">Diferenciais</span>
+  <h2 class="section-title">Por que escolher a Premium?</h2>
+  <div class="divider"></div>
+  <div class="porque-grid">
+    <div class="porque-item">
+      <span class="icon">🚀</span>
+      <h4>Agilidade</h4>
+      <p>Orçamento rápido pelo WhatsApp</p>
+    </div>
+    <div class="porque-item">
+      <span class="icon">💎</span>
+      <h4>Qualidade</h4>
+      <p>Frota premium revisada</p>
+    </div>
+    <div class="porque-item">
+      <span class="icon">📍</span>
+      <h4>Pontualidade</h4>
+      <p>Sempre no horário combinado</p>
+    </div>
+    <div class="porque-item">
+      <span class="icon">😊</span>
+      <h4>Atendimento</h4>
+      <p>Cuidado em cada detalhe</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* GALERIA */
+  .galeria {
+    background: var(--black);
+  }
+  .galeria-scroll {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    margin-top: 28px;
+    padding-bottom: 12px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .galeria-scroll::-webkit-scrollbar { display: none; }
+  .galeria-item {
+    flex-shrink: 0;
+    width: 260px;
+    height: 180px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid rgba(200,16,46,0.15);
+  }
+  .galeria-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+  }
+  .galeria-item:hover img { transform: scale(1.05); }
+
+  /* DEPOIMENTOS */
+  .depoimentos {
+    background: var(--dark2);
+  }
+  .depo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 32px;
+  }
+  .depo-card {
+    background: var(--dark3);
+    border-radius: 12px;
+    padding: 24px;
+    border: 1px solid rgba(255,255,255,0.06);
+    position: relative;
+  }
+  .depo-stars {
+    color: var(--gold);
+    font-size: 14px;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+  .depo-text {
+    font-size: 14px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.65;
+    font-style: italic;
+    margin-bottom: 16px;
+  }
+  .depo-author {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .depo-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--red);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .depo-name { font-size: 13px; font-weight: 600; }
+  .depo-date { font-size: 11px; color: rgba(255,255,255,0.4); }
+
+  /* CTA BANNER */
+  .cta-banner {
+    background: linear-gradient(135deg, var(--red-dark) 0%, var(--red) 100%);
+    text-align: center;
+    padding: 52px 24px;
+  }
+  .cta-banner h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(24px, 6vw, 38px);
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+  .cta-banner p {
+    font-size: 15px;
+    opacity: 0.88;
+    margin-bottom: 28px;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .cta-btn-white {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--white);
+    color: var(--red);
+    padding: 16px 32px;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    width: 100%;
+    max-width: 320px;
+    justify-content: center;
+  }
+
+  /* CONTATO */
+  .contato {
+    background: var(--black);
+  }
+  .contato-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 32px;
+  }
+  .contato-card {
+    background: var(--dark2);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .contato-card-icon {
+    width: 48px;
+    height: 48px;
+    background: rgba(200,16,46,0.1);
+    border: 1px solid rgba(200,16,46,0.25);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .contato-card-text h4 { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
+  .contato-card-text p { font-size: 13px; color: rgba(255,255,255,0.55); }
+  .contato-card-text a { color: rgba(255,255,255,0.55); text-decoration: none; }
+  .contato-wpp {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #25D366;
+    color: white;
+    padding: 18px 24px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 8px;
+    justify-content: center;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark2);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 28px 24px;
+    text-align: center;
+  }
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .footer-logo span { color: var(--red); }
+  footer p {
+    font-size: 12px;
+    color: rgba(255,255,255,0.35);
+    margin-top: 4px;
+  }
+
+  /* FLOATING WHATSAPP */
+  .float-wpp {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 999;
+    background: #25D366;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(37,211,102,0.4);
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .float-wpp:hover {
+    transform: scale(1.08);
+    box-shadow: 0 6px 24px rgba(37,211,102,0.5);
+  }
+
+  @media (min-width: 640px) {
+    .hero-btns { flex-direction: row; max-width: 480px; }
+    .servicos-grid { flex-direction: row; }
+    .depo-list { flex-direction: row; flex-wrap: wrap; }
+    .depo-card { flex: 1; min-width: 260px; }
+    .contato-cards { flex-direction: row; flex-wrap: wrap; }
+    .contato-card { flex: 1; min-width: 220px; }
+  }
+</style>
+
+<!-- GALERIA -->
+<section class="galeria">
+  <span class="section-tag">Nossa frota</span>
+  <h2 class="section-title">Viaje com estilo</h2>
+  <div class="divider"></div>
+  <div class="galeria-scroll">
+    <div class="galeria-item">
+      <img src="https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=600&q=80" alt="Veículo executivo" loading="lazy">
+    </div>
+    <div class="galeria-item">
+      <img src="https://images.unsplash.com/photo-1502877338535-766e1452684a?w=600&q=80" alt="Transfer premium" loading="lazy">
+    </div>
+    <div class="galeria-item">
+      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Passeio turístico" loading="lazy">
+    </div>
+    <div class="galeria-item">
+      <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=600&q=80" alt="Interior confortável" loading="lazy">
+    </div>
+    <div class="galeria-item">
+      <img src="https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=600&q=80" alt="Viagem em família" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section class="depoimentos">
+  <span class="section-tag">Clientes satisfeitos</span>
+  <h2 class="section-title">O que dizem sobre nós</h2>
+  <div class="divider"></div>
+  <div class="depo-list">
+    <div class="depo-card">
+      <div class="depo-stars">★★★★★</div>
+      <p class="depo-text">"Serviço impecável! Pontual, veículo limpo e motorista super atencioso. Com certeza vou contratar de novo!"</p>
+      <div class="depo-author">
+        <div class="depo-avatar">M</div>
+        <div>
+          <div class="depo-name">Maria Fernanda</div>
+          <div class="depo-date">Passeio turístico</div>
+        </div>
+      </div>
+    </div>
+    <div class="depo-card">
+      <div class="depo-stars">★★★★★</div>
+      <p class="depo-text">"Transfer do aeroporto perfeito. Chegaram antes do horário, veículo espaçoso e a viagem foi super tranquila."</p>
+      <div class="depo-author">
+        <div class="depo-avatar">R</div>
+        <div>
+          <div class="depo-name">Roberto Alves</div>
+          <div class="depo-date">Transfer executivo</div>
+        </div>
+      </div>
+    </div>
+    <div class="depo-card">
+      <div class="depo-stars">★★★★★</div>
+      <p class="depo-text">"Levamos toda a família num passeio incrível. Roteiro personalizado, guia excelente. Recomendo demais!"</p>
+      <div class="depo-author">
+        <div class="depo-avatar">A</div>
+        <div>
+          <div class="depo-name">Ana Costa</div>
+          <div class="depo-date">Passeio em família</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section class="cta-banner">
+  <h2>Pronto para sua próxima viagem?</h2>
+  <p>Solicite um orçamento agora e viaje com todo o conforto que você merece.</p>
+  <a href="https://wa.me/556791909306?text=Olá!%20Gostaria%20de%20solicitar%20um%20orçamento." class="cta-btn-white">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.112 1.524 5.838L.057 23.486a.5.5 0 0 0 .63.61l5.805-1.524A11.935 11.935 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.65-.518-5.163-1.42l-.37-.22-3.452.905.921-3.37-.242-.38A9.956 9.956 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+    Solicitar pelo WhatsApp
+  </a>
+</section>
+
+<!-- CONTATO -->
+<section class="contato">
+  <span class="section-tag">Fale conosco</span>
+  <h2 class="section-title">Entre em contato</h2>
+  <div class="divider"></div>
+  <div class="contato-cards">
+    <div class="contato-card">
+      <div class="contato-card-icon">📱</div>
+      <div class="contato-card-text">
+        <h4>WhatsApp</h4>
+        <p><a href="https://wa.me/556791909306">(67) 9190-9306</a></p>
+      </div>
+    </div>
+    <div class="contato-card">
+      <div class="contato-card-icon">⏰</div>
+      <div class="contato-card-text">
+        <h4>Atendimento</h4>
+        <p>7 dias por semana, 24h</p>
+      </div>
+    </div>
+    <div class="contato-card">
+      <div class="contato-card-icon">🚗</div>
+      <div class="contato-card-text">
+        <h4>Área de atuação</h4>
+        <p>Consulte disponibilidade</p>
+      </div>
+    </div>
+  </div>
+  <a href="https://wa.me/556791909306?text=Olá!%20Gostaria%20de%20solicitar%20um%20orçamento%20de%20transfer%2Fpasseio." class="contato-wpp" style="margin-top:28px;display:flex;">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.112 1.524 5.838L.057 23.486a.5.5 0 0 0 .63.61l5.805-1.524A11.935 11.935 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.65-.518-5.163-1.42l-.37-.22-3.452.905.921-3.37-.242-.38A9.956 9.956 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+    Falar no WhatsApp agora
+  </a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">PREMIUM<span>.</span></div>
+  <p>Premium Transporte Turismo</p>
+  <p style="margin-top:8px;">Transfer executivo e passeios turísticos</p>
+  <p style="margin-top:8px;">© 2025 Premium Transporte Turismo. Todos os direitos reservados.</p>
+</footer>
+
+<!-- FLOATING WHATSAPP -->
+<a href="https://wa.me/556791909306?text=Olá!%20Gostaria%20de%20solicitar%20um%20orçamento." class="float-wpp" target="_blank" rel="noopener" aria-label="Falar no WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.112 1.524 5.838L.057 23.486a.5.5 0 0 0 .63.61l5.805-1.524A11.935 11.935 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.65-.518-5.163-1.42l-.37-.22-3.452.905.921-3.37-.242-.38A9.956 9.956 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+</a>
+
+</body>
+</html>
