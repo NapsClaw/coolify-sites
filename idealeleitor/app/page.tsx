@@ -21,32 +21,17 @@ export default function Home() {
       </header>
 
       {/* Hero */}
-      <section className="flex flex-col items-center text-center px-6 py-16 md:py-24">
-        {/* Candidatos */}
-        <div className="flex items-center justify-center gap-6 mb-8">
-          <div className="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-yellow-400 shadow-2xl overflow-hidden bg-blue-800 flex-shrink-0">
-            <Image
-              src="/candidato1.jpg"
-              alt="Joselyo Mais Saúde"
-              width={160}
-              height={160}
-              className="w-full h-full object-cover"
-              unoptimized
-            />
-          </div>
-          <div className="w-8 h-8 rounded-full bg-yellow-400 flex items-center justify-center text-blue-900 font-bold text-lg shrink-0">
-            &amp;
-          </div>
-          <div className="w-32 h-32 md:w-40 md:h-40 rounded-full border-4 border-green-400 shadow-2xl overflow-hidden bg-blue-800 flex-shrink-0">
-            <Image
-              src="/candidato2.jpg"
-              alt="Felipe Show"
-              width={160}
-              height={160}
-              className="w-full h-full object-cover"
-              unoptimized
-            />
-          </div>
+      <section className="flex flex-col items-center text-center px-6 py-12 md:py-20">
+        {/* Foto dos candidatos */}
+        <div className="w-64 h-64 md:w-80 md:h-80 rounded-2xl border-4 border-yellow-400 shadow-2xl overflow-hidden bg-blue-800 mb-8">
+          <Image
+            src="/candidatos.jpg"
+            alt="Joselyo Mais Saúde & Felipe Show"
+            width={320}
+            height={320}
+            className="w-full h-full object-cover object-top"
+            unoptimized
+          />
         </div>
 
         <h1 className="text-3xl md:text-5xl font-bold mb-2">
@@ -55,12 +40,7 @@ export default function Home() {
           Felipe Show
         </h1>
         <p className="text-yellow-300 text-xl font-semibold mb-1">Candidatos do Povo</p>
-        <p className="text-white text-lg font-medium mb-6">O Amapá merece o melhor!</p>
-
-        <p className="text-blue-100 text-lg max-w-xl mb-10">
-          Juntos, construiremos uma cidade mais justa, igualitária e com oportunidades para todos.
-          Faça parte dessa mudança!
-        </p>
+        <p className="text-white text-lg font-medium mb-10">O Amapá merece o melhor!</p>
 
         <Link
           href="/auth/login"
