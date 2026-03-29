@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cheguei — Seu transporte na palma da mão</title>
+  <meta name="description" content="Cheguei: peça seu carro com motorista agora. Rápido, seguro e acessível. Seja motorista parceiro e aumente sua renda.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --yellow: #FFD200;
+      --yellow-dark: #E6BC00;
+      --black: #111111;
+      --white: #ffffff;
+      --gray: #f4f4f4;
+      --gray-text: #666;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--white); color: var(--black); overflow-x: hidden; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: var(--black);
+      padding: 16px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-size: 22px; font-weight: 800;
+      color: var(--yellow); letter-spacing: -0.5px;
+    }
+    .nav-cta {
+      background: var(--yellow); color: var(--black);
+      padding: 10px 22px; border-radius: 50px;
+      font-size: 13px; font-weight: 700;
+      text-decoration: none;
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      background: var(--black);
+      display: flex; flex-direction: column;
+      align-items: flex-start; justify-content: center;
+      padding: 100px 24px 60px;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; right: -60px; top: 50%; transform: translateY(-50%);
+      width: 340px; height: 340px;
+      background: var(--yellow);
+      border-radius: 50%;
+      opacity: 0.08;
+    }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,210,0,0.12);
+      border: 1px solid rgba(255,210,0,0.3);
+      color: var(--yellow); font-size: 12px; font-weight: 600;
+      letter-spacing: 2px; text-transform: uppercase;
+      padding: 8px 16px; border-radius: 50px; margin-bottom: 24px;
+    }
+    .hero-tag::before { content: '●'; font-size: 8px; }
+    .hero h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(44px, 11vw, 72px);
+      font-weight: 800; color: var(--white);
+      line-height: 1.0; margin-bottom: 20px;
+      letter-spacing: -1px;
+    }
+    .hero h1 span { color: var(--yellow); }
+    .hero p {
+      font-size: 16px; font-weight: 400; color: rgba(255,255,255,0.6);
+      max-width: 400px; line-height: 1.7; margin-bottom: 40px;
+    }
+    .hero-btns { display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 300px; }
+    .btn-yellow {
+      background: var(--yellow); color: var(--black);
+      padding: 18px 28px; border-radius: 50px;
+      font-size: 15px; font-weight: 700;
+      text-decoration: none; text-align: center;
+    }
+    .btn-ghost {
+      border: 1px solid rgba(255,255,255,0.25); color: var(--white);
+      padding: 17px 28px; border-radius: 50px;
+      font-size: 15px; font-weight: 500;
+      text-decoration: none; text-align: center;
+    }
+    .hero-car {
+      width: 100%; margin-top: 48px;
+      border-radius: 16px; overflow: hidden; position: relative;
+    }
+    .hero-car img {
+      width: 100%; height: 200px; object-fit: cover; display: block;
+    }
+    .hero-badge {
+      position: absolute; bottom: 16px; left: 16px;
+      background: var(--yellow); border-radius: 12px;
+      padding: 10px 14px;
+    }
+    .hero-badge-num { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; color: var(--black); }
+    .hero-badge-label { font-size: 11px; color: rgba(0,0,0,0.6); }
+
+    /* STATS BAR */
+    .stats-bar {
+      background: var(--yellow);
+      padding: 28px 24px;
+      display: flex; justify-content: space-around;
+    }
+    .stat { text-align: center; }
+    .stat-num { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; color: var(--black); }
+    .stat-label { font-size: 11px; color: rgba(0,0,0,0.6); font-weight: 500; margin-top: 2px; }
+
+    /* SECTIONS */
+    .section { padding: 72px 24px; }
+    .section-black { background: var(--black); }
+    .section-white { background: var(--white); }
+    .section-gray { background: var(--gray); }
+    .tag {
+      display: inline-block;
+      background: rgba(255,210,0,0.15);
+      color: var(--yellow-dark); font-size: 11px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      padding: 6px 14px; border-radius: 50px; margin-bottom: 16px;
+    }
+    .tag-dark { background: rgba(0,0,0,0.07); color: var(--black); }
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(28px, 7vw, 40px); font-weight: 800;
+      line-height: 1.1; margin-bottom: 12px;
+      letter-spacing: -0.5px;
+    }
+    .title-white { color: var(--white); }
+    .section-sub { font-size: 15px; color: var(--gray-text); line-height: 1.7; max-width: 460px; }
+    .sub-white { color: rgba(255,255,255,0.55); }
+    .divider { width: 40px; height: 3px; background: var(--yellow); margin: 16px 0 36px; border-radius: 2px; }
+
+    /* COMO FUNCIONA — TABS */
+    .tabs { display: flex; gap: 8px; margin-bottom: 36px; margin-top: 32px; }
+    .tab {
+      flex: 1; padding: 12px; border-radius: 50px; text-align: center;
+      font-size: 14px; font-weight: 600; cursor: pointer;
+      border: none; transition: all 0.2s;
+    }
+    .tab-active { background: var(--yellow); color: var(--black); }
+    .tab-inactive { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.5); }
+    .steps { display: flex; flex-direction: column; gap: 0; }
+    .step {
+      display: flex; gap: 16px; align-items: flex-start;
+      padding: 24px 0; border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .step:last-child { border-bottom: none; }
+    .step-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      background: var(--yellow); display: flex; align-items: center; justify-content: center;
+      font-size: 20px; flex-shrink: 0;
+    }
+    .step-title { font-size: 16px; font-weight: 600; color: var(--white); margin-bottom: 4px; }
+    .step-desc { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.6; }
+
+    /* DIFERENCIAIS */
+    .features { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 36px; }
+    .feature-card {
+      background: var(--white); border-radius: 16px;
+      padding: 24px 18px; border: 1px solid #eee;
+    }
+    .feature-icon { font-size: 28px; margin-bottom: 12px; }
+    .feature-title { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+    .feature-desc { font-size: 13px; color: var(--gray-text); line-height: 1.5; }
+
+    /* MOTORISTAS */
+    .driver-section { background: var(--yellow); padding: 72px 24px; }
+    .driver-section .section-title { color: var(--black); }
+    .driver-section .section-sub { color: rgba(0,0,0,0.6); }
+    .driver-perks { display: flex; flex-direction: column; gap: 12px; margin: 28px 0; }
+    .perk {
+      background: rgba(0,0,0,0.07); border-radius: 12px;
+      padding: 14px 16px; display: flex; gap: 12px; align-items: center;
+    }
+    .perk-icon { font-size: 22px; }
+    .perk-text { font-size: 14px; font-weight: 600; color: var(--black); }
+
+    /* FORM */
+    .form-section { background: var(--black); padding: 72px 24px; }
+    .form-card { background: #1a1a1a; border-radius: 20px; padding: 28px 20px; margin-top: 32px; }
+    .form-group { margin-bottom: 14px; }
+    .form-group label { display: block; font-size: 12px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; color: rgba(255,255,255,0.5); }
+    .form-group input, .form-group select {
+      width: 100%; padding: 14px 16px;
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px; font-size: 15px; font-family: 'Inter', sans-serif;
+      color: var(--white); outline: none;
+    }
+    .form-group input::placeholder { color: rgba(255,255,255,0.25); }
+    .form-group select { color: rgba(255,255,255,0.7); }
+    .form-group select option { background: #222; }
+    .btn-form {
+      width: 100%; padding: 18px; background: var(--yellow); color: var(--black);
+      border: none; border-radius: 50px; font-size: 15px; font-weight: 800;
+      cursor: pointer; margin-top: 8px; font-family: 'Syne', sans-serif;
+    }
+
+    /* APP DOWNLOAD */
+    .app-section { background: var(--gray); padding: 72px 24px; text-align: center; }
+    .app-section .section-title { margin-bottom: 12px; }
+    .app-btns { display: flex; flex-direction: column; gap: 12px; max-width: 280px; margin: 32px auto 0; }
+    .app-btn {
+      display: flex; align-items: center; gap: 12px;
+      background: var(--black); color: var(--white);
+      padding: 14px 20px; border-radius: 12px;
+      text-decoration: none;
+    }
+    .app-btn-icon { font-size: 26px; }
+    .app-btn-text-small { font-size: 10px; color: rgba(255,255,255,0.5); }
+    .app-btn-text-big { font-size: 16px; font-weight: 700; }
+
+    /* FOOTER */
+    footer { background: var(--black); padding: 48px 24px 28px; }
+    .footer-logo { font-family: 'Syne', sans-serif; font-size: 26px; font-weight: 800; color: var(--yellow); margin-bottom: 10px; }
+    .footer-sub { font-size: 13px; color: rgba(255,255,255,0.4); margin-bottom: 28px; }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 32px; }
+    .footer-links a { color: rgba(255,255,255,0.6); font-size: 13px; text-decoration: none; }
+    .footer-divider { height: 1px; background: rgba(255,255,255,0.08); margin-bottom: 20px; }
+    .footer-bottom { font-size: 12px; color: rgba(255,255,255,0.25); }
+
+    /* WHATSAPP FLOAT */
+    .wa-float {
+      position: fixed; bottom: 24px; right: 24px; z-index: 999;
+      background: #25D366; border-radius: 50%;
+      width: 58px; height: 58px;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.35);
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Cheguei</div>
+  <a href="#motoristas" class="nav-cta">Seja motorista</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-tag">Novo jeito de andar</div>
+  <h1>Seu carro,<br>quando <span>quiser</span></h1>
+  <p>Peça um motorista em segundos. Rápido, seguro e com o melhor preço da cidade.</p>
+  <div class="hero-btns">
+    <a href="#download" class="btn-yellow">📱 Baixar o App</a>
+    <a href="#motoristas" class="btn-ghost">Quero ser motorista</a>
+  </div>
+  <div class="hero-car">
+    <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=800&q=80" alt="Carro executivo" loading="lazy">
+    <div class="hero-badge">
+      <div class="hero-badge-num">2 min</div>
+      <div class="hero-badge-label">tempo médio de espera</div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stat">
+    <div class="stat-num">50k+</div>
+    <div class="stat-label">Corridas</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">4.9★</div>
+    <div class="stat-label">Avaliação</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">24h</div>
+    <div class="stat-label">Disponível</div>
+  </div>
+</div>
+
+<!-- COMO FUNCIONA -->
+<section class="section section-black" id="como-funciona">
+  <div class="tag">Simples assim</div>
+  <h2 class="section-title title-white">Como funciona</h2>
+  <div class="divider"></div>
+  <div class="tabs">
+    <button class="tab tab-active" onclick="showTab('passageiro', this)">Passageiro</button>
+    <button class="tab tab-inactive" onclick="showTab('motorista-tab', this)">Motorista</button>
+  </div>
+  <div id="passageiro" class="steps">
+    <div class="step">
+      <div class="step-icon">📍</div>
+      <div>
+        <div class="step-title">Informe o destino</div>
+        <div class="step-desc">Abra o app, coloque sua origem e destino. Veja o preço na hora, sem surpresas.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-icon">🚗</div>
+      <div>
+        <div class="step-title">Motorista aceita</div>
+        <div class="step-desc">Um motorista próximo aceita sua corrida em segundos. Acompanhe em tempo real.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-icon">🏁</div>
+      <div>
+        <div class="step-title">Chegou!</div>
+        <div class="step-desc">Viagem concluída. Pague pelo app e avalie seu motorista. Simples assim.</div>
+      </div>
+    </div>
+  </div>
+  <div id="motorista-tab" class="steps" style="display:none">
+    <div class="step">
+      <div class="step-icon">📋</div>
+      <div>
+        <div class="step-title">Cadastre-se</div>
+        <div class="step-desc">Preencha o formulário abaixo com seus dados e aguarde a aprovação em até 24h.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-icon">📲</div>
+      <div>
+        <div class="step-title">Baixe o app de motorista</div>
+        <div class="step-desc">Instale o aplicativo Cheguei Motorista e comece a receber corridas.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-icon">💰</div>
+      <div>
+        <div class="step-title">Ganhe dinheiro</div>
+        <div class="step-desc">Trabalhe nos seus horários e receba semanalmente no seu banco.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIFERENCIAIS -->
+<section class="section section-white">
+  <div class="tag tag-dark">Por que Cheguei</div>
+  <h2 class="section-title">A melhor escolha<br>pra você</h2>
+  <div class="divider" style="background:var(--black)"></div>
+  <div class="features">
+    <div class="feature-card">
+      <div class="feature-icon">⚡</div>
+      <div class="feature-title">Ultra rápido</div>
+      <div class="feature-desc">Motorista em até 2 minutos onde você estiver.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔒</div>
+      <div class="feature-title">100% seguro</div>
+      <div class="feature-desc">Motoristas verificados, rastreamento em tempo real.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">💳</div>
+      <div class="feature-title">Pague fácil</div>
+      <div class="feature-desc">Cartão, Pix ou dinheiro. Você escolhe como pagar.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📞</div>
+      <div class="feature-title">Suporte 24h</div>
+      <div class="feature-desc">Atendimento a qualquer hora pra você e seu motorista.</div>
+    </div>
+  </div>
+</section>
+
+<!-- MOTORISTAS CTA -->
+<section class="driver-section" id="motoristas">
+  <div class="tag tag-dark">Ganhe mais</div>
+  <h2 class="section-title">Seja motorista<br>parceiro Cheguei</h2>
+  <p class="section-sub">Você no controle. Trabalhe quando quiser e ganhe muito mais.</p>
+  <div class="driver-perks">
+    <div class="perk">
+      <div class="perk-icon">💰</div>
+      <div class="perk-text">Ganhos acima da média do mercado</div>
+    </div>
+    <div class="perk">
+      <div class="perk-icon">🕐</div>
+      <div class="perk-text">Horários flexíveis — você decide</div>
+    </div>
+    <div class="perk">
+      <div class="perk-icon">📅</div>
+      <div class="perk-text">Pagamento toda semana</div>
+    </div>
+    <div class="perk">
+      <div class="perk-icon">🤝</div>
+      <div class="perk-text">Suporte e treinamento inclusos</div>
+    </div>
+  </div>
+  <a href="#cadastro" class="btn-yellow" style="display:block;text-align:center;padding:18px;font-size:15px;font-weight:800;text-decoration:none;border-radius:50px;font-family:'Syne',sans-serif;">Quero me cadastrar agora</a>
+</section>
+
+<!-- FORMULÁRIO MOTORISTAS -->
+<section class="form-section" id="cadastro">
+  <div class="tag">Cadastro Motorista</div>
+  <h2 class="section-title title-white">Comece agora</h2>
+  <div class="divider"></div>
+  <p class="section-sub sub-white">Preencha abaixo e entraremos em contato em até 24 horas.</p>
+  <div class="form-card">
+    <form onsubmit="enviarCadastro(event)">
+      <div class="form-group">
+        <label>Nome completo</label>
+        <input type="text" placeholder="Seu nome completo" required>
+      </div>
+      <div class="form-group">
+        <label>WhatsApp</label>
+        <input type="tel" placeholder="(00) 00000-0000" required>
+      </div>
+      <div class="form-group">
+        <label>Cidade</label>
+        <input type="text" placeholder="Sua cidade" required>
+      </div>
+      <div class="form-group">
+        <label>Tipo de veículo</label>
+        <select>
+          <option value="">Selecione seu veículo...</option>
+          <option>Hatch (Gol, HB20, Argo...)</option>
+          <option>Sedan (Corolla, Civic, Cronos...)</option>
+          <option>SUV (Creta, Tracker, HR-V...)</option>
+          <option>Van / Minivan</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Já trabalhou com app de transporte?</label>
+        <select>
+          <option>Não, é minha primeira vez</option>
+          <option>Sim, já usei outros apps</option>
+        </select>
+      </div>
+      <button type="submit" class="btn-form">Enviar cadastro 🚀</button>
+    </form>
+  </div>
+</section>
+
+<!-- DOWNLOAD -->
+<section class="app-section" id="download">
+  <div class="tag tag-dark">App disponível</div>
+  <h2 class="section-title">Baixe o Cheguei<br>agora mesmo</h2>
+  <p class="section-sub" style="margin:0 auto;text-align:center;">Disponível para Android e iOS. Gratuito, sem taxa de adesão.</p>
+  <div class="app-btns">
+    <a href="#" class="app-btn">
+      <span class="app-btn-icon">🤖</span>
+      <div>
+        <div class="app-btn-text-small">DISPONÍVEL NO</div>
+        <div class="app-btn-text-big">Google Play</div>
+      </div>
+    </a>
+    <a href="#" class="app-btn">
+      <span class="app-btn-icon">🍎</span>
+      <div>
+        <div class="app-btn-text-small">BAIXAR NA</div>
+        <div class="app-btn-text-big">App Store</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Cheguei</div>
+  <p class="footer-sub">Seu transporte na palma da mão.</p>
+  <div class="footer-links">
+    <a href="#como-funciona">Como funciona</a>
+    <a href="#motoristas">Seja motorista</a>
+    <a href="#download">Baixar app</a>
+    <a href="#cadastro">Cadastro</a>
+  </div>
+  <div class="footer-divider"></div>
+  <p class="footer-bottom">© 2025 Cheguei. Todos os direitos reservados.</p>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/5513991312275" target="_blank" class="wa-float" aria-label="WhatsApp">
+  <svg fill="white" width="28" height="28" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+
+<script>
+function showTab(id, btn) {
+  document.querySelectorAll('.steps').forEach(el => el.style.display = 'none');
+  document.querySelectorAll('.tab').forEach(el => { el.className = 'tab tab-inactive'; });
+  document.getElementById(id).style.display = 'flex';
+  btn.className = 'tab tab-active';
+}
+function enviarCadastro(e) {
+  e.preventDefault();
+  const form = e.target;
+  const nome = form.querySelector('input[type="text"]').value;
+  const tel = form.querySelector('input[type="tel"]').value;
+  const msg = `Olá! Me chamo ${nome} e tenho interesse em ser motorista parceiro do Cheguei. Meu WhatsApp é ${tel}.`;
+  window.open(`https://wa.me/5513991312275?text=${encodeURIComponent(msg)}`, '_blank');
+}
+</script>
+
+</body>
+</html>
