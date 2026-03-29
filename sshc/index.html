@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SSHC – Associação Esportiva Sento-Sé Handebol Clube</title>
+<meta name="description" content="Associação Esportiva Sento-Sé Handebol Clube – SSHC. Formando atletas e transformando vidas pelo handebol em Sento Sé, Bahia desde 2006.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --blue: #0033A0;
+    --yellow: #FFD100;
+    --dark: #0a0f1e;
+    --gray: #f4f4f4;
+    --text: #1a1a2e;
+    --white: #ffffff;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; color: var(--text); background: var(--white); overflow-x: hidden; }
+  h1, h2, h3, .bebas { font-family: 'Bebas Neue', sans-serif; letter-spacing: 1px; }
+  img { max-width: 100%; display: block; }
+  a { text-decoration: none; color: inherit; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(0,0,0,0.85); backdrop-filter: blur(10px);
+    padding: 14px 20px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .nav-logo .badge {
+    background: var(--yellow); color: var(--dark);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px; padding: 4px 10px; border-radius: 4px;
+    letter-spacing: 2px;
+  }
+  .nav-logo span {
+    color: var(--white); font-size: 13px; font-weight: 600;
+    line-height: 1.3; max-width: 160px;
+  }
+  .nav-cta {
+    background: var(--yellow); color: var(--dark);
+    font-weight: 700; font-size: 14px;
+    padding: 10px 18px; border-radius: 6px;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0033A0 0%, #001A5C 50%, #0a0f1e 100%);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 100px 24px 60px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url('https://images.unsplash.com/photo-1526232761682-d26e03ac148e?w=1200&q=80') center/cover no-repeat;
+    opacity: 0.15;
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 600px; }
+  .hero-badge {
+    display: inline-block;
+    background: var(--yellow); color: var(--dark);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 14px; letter-spacing: 3px;
+    padding: 6px 16px; border-radius: 4px;
+    margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-size: clamp(42px, 12vw, 80px);
+    color: var(--white);
+    line-height: 1; margin-bottom: 12px;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  }
+  .hero h1 span { color: var(--yellow); }
+  .hero p {
+    color: rgba(255,255,255,0.85);
+    font-size: 16px; line-height: 1.7;
+    margin-bottom: 36px;
+  }
+  .hero-buttons { display: flex; flex-direction: column; gap: 12px; align-items: center; }
+  .btn-primary {
+    display: block; width: 100%; max-width: 300px;
+    background: var(--yellow); color: var(--dark);
+    font-weight: 700; font-size: 16px;
+    padding: 16px 24px; border-radius: 8px;
+    text-align: center;
+  }
+  .btn-secondary {
+    display: block; width: 100%; max-width: 300px;
+    border: 2px solid rgba(255,255,255,0.5); color: var(--white);
+    font-weight: 600; font-size: 15px;
+    padding: 14px 24px; border-radius: 8px;
+    text-align: center;
+  }
+  .hero-stats {
+    position: relative; z-index: 1;
+    display: flex; gap: 32px; margin-top: 48px;
+    justify-content: center; flex-wrap: wrap;
+  }
+  .hero-stat { text-align: center; }
+  .hero-stat strong { font-family: 'Bebas Neue', sans-serif; font-size: 36px; color: var(--yellow); display: block; }
+  .hero-stat span { font-size: 12px; color: rgba(255,255,255,0.7); letter-spacing: 1px; text-transform: uppercase; }
+
+  /* SOBRE */
+  .sobre {
+    padding: 64px 24px;
+    background: var(--white);
+  }
+  .section-label {
+    font-size: 12px; font-weight: 700; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--blue);
+    margin-bottom: 10px;
+  }
+  .section-title {
+    font-size: clamp(32px, 8vw, 52px);
+    line-height: 1.1; margin-bottom: 20px;
+    color: var(--text);
+  }
+  .section-title span { color: var(--blue); }
+  .sobre p {
+    font-size: 16px; line-height: 1.8; color: #555;
+    margin-bottom: 16px;
+  }
+  .sobre-img {
+    width: 100%; aspect-ratio: 16/9;
+    object-fit: cover; border-radius: 12px;
+    margin-bottom: 32px;
+    box-shadow: 0 8px 30px rgba(0,51,160,0.15);
+  }
+  .pilares {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 16px; margin-top: 32px;
+  }
+  .pilar {
+    background: var(--gray);
+    padding: 20px 16px; border-radius: 10px;
+    border-left: 4px solid var(--blue);
+  }
+  .pilar h4 { font-size: 14px; font-weight: 700; color: var(--blue); margin-bottom: 6px; }
+  .pilar p { font-size: 13px; color: #666; line-height: 1.5; }
+
+  /* ATIVIDADES */
+  .atividades {
+    background: var(--dark);
+    padding: 64px 24px;
+    color: var(--white);
+  }
+  .atividades .section-title { color: var(--white); }
+  .atividades .section-title span { color: var(--yellow); }
+  .atividades .section-label { color: var(--yellow); }
+  .cards-grid {
+    display: flex; flex-direction: column; gap: 16px;
+    margin-top: 36px;
+  }
+  .card {
+    border-radius: 12px; overflow: hidden;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .card-img {
+    width: 100%; aspect-ratio: 16/9; object-fit: cover;
+  }
+  .card-body { padding: 20px; }
+  .card-body h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; color: var(--yellow); }
+  .card-body p { font-size: 14px; color: rgba(255,255,255,0.7); line-height: 1.6; }
+  .card-tag {
+    display: inline-block; background: var(--blue);
+    color: var(--white); font-size: 11px; font-weight: 600;
+    padding: 4px 10px; border-radius: 20px; margin-bottom: 10px;
+    letter-spacing: 1px; text-transform: uppercase;
+  }
+
+  /* GALERIA */
+  .galeria {
+    padding: 64px 24px;
+    background: var(--white);
+  }
+  .galeria .section-label { color: var(--blue); }
+  .gallery-scroll {
+    display: flex; gap: 12px;
+    overflow-x: auto; padding-bottom: 12px;
+    scroll-snap-type: x mandatory;
+    margin-top: 28px;
+    -webkit-overflow-scrolling: touch;
+  }
+  .gallery-scroll::-webkit-scrollbar { height: 4px; }
+  .gallery-scroll::-webkit-scrollbar-track { background: #eee; border-radius: 2px; }
+  .gallery-scroll::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 2px; }
+  .gallery-item {
+    flex: 0 0 280px; scroll-snap-align: start;
+    border-radius: 10px; overflow: hidden;
+    aspect-ratio: 4/3;
+  }
+  .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+  .gallery-note {
+    margin-top: 16px; font-size: 13px; color: #999; text-align: center;
+    font-style: italic;
+  }
+
+  /* TIMELINE */
+  .timeline-sec {
+    background: linear-gradient(180deg, #0033A0 0%, #001A5C 100%);
+    padding: 64px 24px; color: var(--white);
+  }
+  .timeline-sec .section-label { color: var(--yellow); }
+  .timeline-sec .section-title { color: var(--white); }
+  .timeline-sec .section-title span { color: var(--yellow); }
+  .timeline {
+    margin-top: 36px; position: relative;
+    padding-left: 24px;
+    border-left: 2px solid rgba(255,209,0,0.3);
+  }
+  .timeline-item { margin-bottom: 36px; position: relative; }
+  .timeline-item::before {
+    content: '';
+    position: absolute; left: -31px; top: 4px;
+    width: 14px; height: 14px;
+    background: var(--yellow); border-radius: 50%;
+    border: 2px solid var(--dark);
+  }
+  .timeline-year {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px; color: var(--yellow);
+    margin-bottom: 6px;
+  }
+  .timeline-item h4 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+  .timeline-item p { font-size: 14px; color: rgba(255,255,255,0.7); line-height: 1.6; }
+
+  /* CONTATO */
+  .contato {
+    padding: 64px 24px;
+    background: var(--gray);
+  }
+  .contato .section-label { color: var(--blue); }
+  .info-list { list-style: none; margin-top: 28px; display: flex; flex-direction: column; gap: 16px; }
+  .info-list li {
+    display: flex; align-items: flex-start; gap: 14px;
+    background: var(--white); padding: 16px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+  .info-icon {
+    width: 42px; height: 42px; flex-shrink: 0;
+    background: var(--blue); border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .info-icon svg { fill: var(--white); width: 20px; height: 20px; }
+  .info-list li div { display: flex; flex-direction: column; }
+  .info-list li strong { font-size: 13px; color: var(--blue); font-weight: 700; margin-bottom: 2px; }
+  .info-list li span { font-size: 14px; color: #555; line-height: 1.5; }
+  .map-embed {
+    margin-top: 28px; border-radius: 12px; overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  }
+  .map-embed iframe { width: 100%; height: 220px; border: none; display: block; }
+  .whatsapp-big {
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    background: #25D366; color: var(--white);
+    font-weight: 700; font-size: 18px;
+    padding: 18px 24px; border-radius: 12px;
+    margin-top: 24px; width: 100%;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark); color: rgba(255,255,255,0.6);
+    padding: 40px 24px; text-align: center;
+  }
+  footer .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px; color: var(--yellow);
+    letter-spacing: 3px; margin-bottom: 12px;
+  }
+  footer p { font-size: 13px; line-height: 1.8; }
+  footer .footer-links {
+    display: flex; justify-content: center; gap: 20px;
+    margin: 16px 0; font-size: 13px;
+  }
+  footer .footer-links a { color: rgba(255,255,255,0.5); }
+  footer .footer-links a:hover { color: var(--yellow); }
+  .divider { width: 40px; height: 2px; background: var(--yellow); margin: 16px auto; }
+
+  /* FLOATING WA BUTTON */
+  .wa-float {
+    position: fixed; bottom: 20px; right: 20px; z-index: 999;
+    background: #25D366; border-radius: 50%;
+    width: 60px; height: 60px;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 15px rgba(37,211,102,0.5);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { box-shadow: 0 4px 15px rgba(37,211,102,0.5); }
+    50% { box-shadow: 0 4px 25px rgba(37,211,102,0.8); }
+  }
+  .wa-float svg { width: 30px; height: 30px; fill: white; }
+
+  /* DESKTOP */
+  @media (min-width: 768px) {
+    .hero h1 { font-size: 88px; }
+    .hero-buttons { flex-direction: row; justify-content: center; }
+    .btn-primary, .btn-secondary { width: auto; }
+    .sobre-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+    .sobre-img { margin-bottom: 0; }
+    .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
+    .gallery-item { flex: 0 0 340px; }
+    .info-list { display: grid; grid-template-columns: 1fr 1fr; }
+    .map-embed iframe { height: 300px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="badge">SSHC</div>
+    <span>Associação Esportiva<br>Sento-Sé Handebol</span>
+  </div>
+  <a href="#contato" class="nav-cta">Contato</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">⚡ Fundada em 2006 · Sento Sé, BA</div>
+    <h1><span>SSHC</span><br>Handebol<br>Clube</h1>
+    <p>Formando atletas, construindo caráter e transformando vidas pelo esporte há quase 20 anos em Sento Sé, Bahia.</p>
+    <div class="hero-buttons">
+      <a href="#sobre" class="btn-primary">Conheça a Associação</a>
+      <a href="#galeria" class="btn-secondary">Ver Galeria de Fotos</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <strong>2006</strong>
+      <span>Fundação</span>
+    </div>
+    <div class="hero-stat">
+      <strong>18+</strong>
+      <span>Anos de história</span>
+    </div>
+    <div class="hero-stat">
+      <strong>100%</strong>
+      <span>Esporte & Educação</span>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section class="sobre" id="sobre">
+  <div class="section-label">Nossa história</div>
+  <div class="sobre-grid">
+    <div>
+      <img src="https://images.unsplash.com/photo-1546519638-68e109498ffc?w=800&q=80" alt="Handebol SSHC" class="sobre-img" loading="lazy">
+    </div>
+    <div>
+      <h2 class="section-title">Muito mais que <span>um clube</span></h2>
+      <p>A Associação Esportiva Sento-Sé Handebol Clube nasceu em 2006 com um propósito claro: usar o esporte como ferramenta de transformação social. Ao longo de quase duas décadas, o SSHC formou gerações de atletas e cidadãos no interior da Bahia.</p>
+      <p>Nossa missão vai além das quadras. Acreditamos que o handebol ensina disciplina, trabalho em equipe e superação — valores que acompanham nossos atletas pela vida toda.</p>
+      <div class="pilares">
+        <div class="pilar">
+          <h4>🏆 Esporte</h4>
+          <p>Treinamentos e competições regionais e estaduais</p>
+        </div>
+        <div class="pilar">
+          <h4>📚 Educação</h4>
+          <p>Apoio ao desenvolvimento integral dos jovens</p>
+        </div>
+        <div class="pilar">
+          <h4>🤝 Comunidade</h4>
+          <p>Projetos sociais para Sento Sé e região</p>
+        </div>
+        <div class="pilar">
+          <h4>💪 Inclusão</h4>
+          <p>Aberto a todos, independente de condição</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ATIVIDADES -->
+<section class="atividades" id="atividades">
+  <div class="section-label">O que fazemos</div>
+  <h2 class="section-title">Nossas <span>Atividades</span></h2>
+  <div class="cards-grid">
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1529900748604-07564a03e7a6?w=600&q=80" alt="Treinamentos" class="card-img" loading="lazy">
+      <div class="card-body">
+        <div class="card-tag">Esporte</div>
+        <h3>Treinamentos</h3>
+        <p>Sessões regulares de treinamento de handebol para todas as idades, do iniciante ao competidor.</p>
+      </div>
+    </div>
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80" alt="Competições" class="card-img" loading="lazy">
+      <div class="card-body">
+        <div class="card-tag">Competição</div>
+        <h3>Campeonatos</h3>
+        <p>Participação em torneios regionais e estaduais representando Sento Sé com orgulho.</p>
+      </div>
+    </div>
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1491897554428-130a60dd4757?w=600&q=80" alt="Projetos Sociais" class="card-img" loading="lazy">
+      <div class="card-body">
+        <div class="card-tag">Social</div>
+        <h3>Projetos Sociais</h3>
+        <p>Ações na comunidade que unem esporte, educação e inclusão para jovens da região.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALERIA -->
+<section class="galeria" id="galeria">
+  <div class="section-label">Momentos</div>
+  <h2 class="section-title">Nossa <span>Galeria</span></h2>
+  <p style="color:#666;font-size:15px;margin-top:12px;">Fotos e registros das nossas atividades ao longo do ano.</p>
+  <div class="gallery-scroll">
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1588115550851-eca1d7fdd49c?w=600&q=80" alt="Galeria SSHC" loading="lazy">
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1546519638-68e109498ffc?w=600&q=80" alt="Galeria SSHC" loading="lazy">
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1526232761682-d26e03ac148e?w=600&q=80" alt="Galeria SSHC" loading="lazy">
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1529900748604-07564a03e7a6?w=600&q=80" alt="Galeria SSHC" loading="lazy">
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=80" alt="Galeria SSHC" loading="lazy">
+    </div>
+  </div>
+  <p class="gallery-note">📸 Novas fotos serão adicionadas ao longo do ano</p>
+</section>
+
+<!-- TIMELINE -->
+<section class="timeline-sec" id="historia">
+  <div class="section-label">Trajetória</div>
+  <h2 class="section-title">Nossa <span>História</span></h2>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-year">2006</div>
+      <h4>Fundação do SSHC</h4>
+      <p>A Associação Esportiva Sento-Sé Handebol Clube é fundada com o objetivo de promover o handebol no interior da Bahia.</p>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">2010</div>
+      <h4>Primeiros Campeonatos</h4>
+      <p>O SSHC começa a participar de competições regionais, colocando Sento Sé no mapa do handebol baiano.</p>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">2015</div>
+      <h4>Expansão dos Projetos Sociais</h4>
+      <p>A associação amplia seu alcance com projetos de inclusão social, atendendo mais jovens da comunidade.</p>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">2020</div>
+      <h4>Resistência e Superação</h4>
+      <p>Mesmo diante dos desafios da pandemia, o SSHC manteve seus laços com a comunidade e reinventou suas atividades.</p>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-year">2024</div>
+      <h4>Quase 20 Anos de História</h4>
+      <p>Chegando a quase duas décadas de existência, o SSHC celebra sua trajetória e olha para o futuro com novos projetos.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section class="contato" id="contato">
+  <div class="section-label">Fale conosco</div>
+  <h2 class="section-title">Entre em <span>Contato</span></h2>
+  <ul class="info-list">
+    <li>
+      <div class="info-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+      </div>
+      <div>
+        <strong>Endereço</strong>
+        <span>Av. Joaquim Domingos da Silva<br>Sento Sé – BA, 47.350-000</span>
+      </div>
+    </li>
+    <li>
+      <div class="info-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 17.93V18a1 1 0 0 0-2 0v1.93A8 8 0 0 1 4.07 13H6a1 1 0 0 0 0-2H4.07A8 8 0 0 1 11 4.07V6a1 1 0 0 0 2 0V4.07A8 8 0 0 1 19.93 11H18a1 1 0 0 0 0 2h1.93A8 8 0 0 1 13 19.93z"/></svg>
+      </div>
+      <div>
+        <strong>Instagram</strong>
+        <span>@asssociacao_esportiva_sse</span>
+      </div>
+    </li>
+    <li>
+      <div class="info-icon">
+        <svg viewBox="0 0 24 24"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg>
+      </div>
+      <div>
+        <strong>Fundação</strong>
+        <span>28 de setembro de 2006<br>CNPJ: 08.718.349/0001-75</span>
+      </div>
+    </li>
+  </ul>
+
+  <div class="map-embed">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15524.4!2d-41.873!3d-9.740!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x77310f0e4c7e8f%3A0x0!2sSento+S%C3%A9%2C+BA!5e0!3m2!1spt-BR!2sbr!4v1"
+      allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+  </div>
+
+  <a href="https://wa.me/557488328425" target="_blank" class="whatsapp-big">
+    <svg viewBox="0 0 24 24" width="28" height="28" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Fale conosco pelo WhatsApp
+  </a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">SSHC</div>
+  <p>Associação Esportiva Sento-Sé Handebol Clube</p>
+  <div class="divider"></div>
+  <p>CNPJ 08.718.349/0001-75 · Sento Sé – BA<br>Fundada em 28 de setembro de 2006</p>
+  <div class="footer-links">
+    <a href="#sobre">Sobre</a>
+    <a href="#atividades">Atividades</a>
+    <a href="#galeria">Galeria</a>
+    <a href="#historia">História</a>
+    <a href="#contato">Contato</a>
+  </div>
+  <p style="margin-top:16px;font-size:12px;">© 2024 SSHC – Todos os direitos reservados</p>
+</footer>
+
+<!-- FLOATING WHATSAPP -->
+<a href="https://wa.me/557488328425" target="_blank" class="wa-float" title="Fale conosco">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) t.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+  // Nav scroll effect
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    nav.style.background = window.scrollY > 50
+      ? 'rgba(0,0,0,0.95)'
+      : 'rgba(0,0,0,0.85)';
+  });
+</script>
+</body>
+</html>
