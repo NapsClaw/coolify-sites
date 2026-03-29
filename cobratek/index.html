@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cobratek Informática | Assistência Técnica Especializada</title>
+  <meta name="description" content="Cobratek Informática - Assistência técnica especializada em reparo de notebooks, impressoras, televisões e computadores. Orçamento grátis!">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg-primary: #0d0d0d;
+      --bg-secondary: #141414;
+      --bg-card: #1a1a1a;
+      --text-primary: #f5f5f5;
+      --text-secondary: #a0a0a0;
+      --accent: #00c4ff;
+      --accent-dark: #0099cc;
+      --accent-glow: rgba(0, 196, 255, 0.15);
+      --border: rgba(255,255,255,0.08);
+      --radius: 12px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Instrument Sans', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE TEXTURE ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.025;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 16px 20px;
+      background: rgba(13,13,13,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-primary);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+
+    .logo span { color: var(--accent); }
+
+    .header-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: #000;
+      font-weight: 600;
+      font-size: 14px;
+      padding: 10px 18px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .header-cta:hover { background: var(--accent-dark); transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 120px 20px 80px;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .hero-glow {
+      position: absolute;
+      top: 20%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 400px;
+      background: radial-gradient(ellipse, rgba(0,196,255,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--accent-glow);
+      border: 1px solid rgba(0,196,255,0.3);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 28px;
+      animation: fadeDown 0.6s ease both;
+    }
+
+    .hero-badge .dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      animation: pulse 2s ease infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.3); }
+    }
+
+    .hero h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(38px, 8vw, 72px);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -2px;
+      margin-bottom: 20px;
+      animation: fadeUp 0.7s ease 0.1s both;
+    }
+
+    .hero h1 .highlight {
+      color: var(--accent);
+    }
+
+    .hero p {
+      font-size: clamp(16px, 3vw, 18px);
+      color: var(--text-secondary);
+      max-width: 520px;
+      margin: 0 auto 36px;
+      animation: fadeUp 0.7s ease 0.2s both;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: fadeUp 0.7s ease 0.3s both;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: #000;
+      font-weight: 700;
+      font-size: 16px;
+      padding: 15px 28px;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: all 0.2s;
+      min-height: 52px;
+    }
+
+    .btn-primary:hover { background: var(--accent-dark); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0,196,255,0.25); }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--text-primary);
+      font-weight: 600;
+      font-size: 16px;
+      padding: 15px 28px;
+      border-radius: 10px;
+      text-decoration: none;
+      border: 1px solid var(--border);
+      transition: all 0.2s;
+      min-height: 52px;
+    }
+
+    .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+    .hero-stats {
+      display: flex;
+      gap: 40px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 56px;
+      animation: fadeUp 0.7s ease 0.4s both;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── SECTIONS COMMON ── */
+    section { padding: 80px 20px; position: relative; z-index: 1; }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 52px;
+    }
+
+    .section-tag {
+      display: inline-block;
+      background: var(--accent-glow);
+      border: 1px solid rgba(0,196,255,0.2);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 100px;
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(28px, 5vw, 42px);
+      font-weight: 700;
+      letter-spacing: -1px;
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+
+    .section-subtitle {
+      font-size: 16px;
+      color: var(--text-secondary);
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .container { max-width: 1100px; margin: 0 auto; }
+
+    /* ── SERVICES ── */
+    .services { background: var(--bg-secondary); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+    }
+
+    .service-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      transition: border-color 0.2s, transform 0.2s;
+      cursor: default;
+    }
+
+    .service-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+    }
+
+    .service-icon {
+      width: 52px; height: 52px;
+      background: var(--accent-glow);
+      border: 1px solid rgba(0,196,255,0.2);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 18px;
+      font-size: 24px;
+    }
+
+    .service-card h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .service-card p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* ── ABOUT ── */
+    .about-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .about-text h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(28px, 4vw, 38px);
+      font-weight: 700;
+      letter-spacing: -1px;
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+
+    .about-text p {
+      font-size: 16px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+
+    .about-perks {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .perk {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 15px;
+      font-weight: 500;
+    }
+
+    .perk-icon {
+      width: 28px; height: 28px;
+      background: var(--accent-glow);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--accent);
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .about-visual {
+      position: relative;
+    }
+
+    .about-card-big {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-card-big::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 160px; height: 160px;
+      background: radial-gradient(circle, var(--accent-glow), transparent 70%);
+      pointer-events: none;
+    }
+
+    .big-number {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 72px;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .big-label {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .big-sub {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    /* ── PROCESS ── */
+    .process { background: var(--bg-secondary); }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 0;
+      position: relative;
+    }
+
+    .steps::before {
+      content: '';
+      position: absolute;
+      top: 36px;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), var(--border), transparent);
+    }
+
+    .step {
+      text-align: center;
+      padding: 0 20px 32px;
+      position: relative;
+    }
+
+    .step-number {
+      width: 56px; height: 56px;
+      background: var(--bg-card);
+      border: 2px solid var(--accent);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--accent);
+      margin: 0 auto 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .step h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .step p {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    /* ── DIFERENCIAIS ── */
+    .diff-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .diff-card {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      transition: border-color 0.2s;
+    }
+
+    .diff-card:hover { border-color: rgba(0,196,255,0.4); }
+
+    .diff-icon {
+      font-size: 28px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .diff-card h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .diff-card p {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    /* ── CTA BAND ── */
+    .cta-band {
+      background: linear-gradient(135deg, #001a26 0%, #0d0d0d 50%, #001a26 100%);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+      padding: 80px 20px;
+    }
+
+    .cta-band h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(26px, 5vw, 40px);
+      font-weight: 700;
+      letter-spacing: -1px;
+      margin-bottom: 14px;
+    }
+
+    .cta-band p {
+      font-size: 16px;
+      color: var(--text-secondary);
+      max-width: 420px;
+      margin: 0 auto 32px;
+    }
+
+    /* ── CONTACT ── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+
+    .contact-info h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(26px, 4vw, 36px);
+      font-weight: 700;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+    }
+
+    .contact-info p {
+      font-size: 16px;
+      color: var(--text-secondary);
+      margin-bottom: 28px;
+    }
+
+    .contact-items {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 15px;
+    }
+
+    .contact-item-icon {
+      width: 40px; height: 40px;
+      background: var(--accent-glow);
+      border: 1px solid rgba(0,196,255,0.2);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .contact-item-text strong {
+      display: block;
+      font-size: 13px;
+      color: var(--text-secondary);
+      font-weight: 500;
+      margin-bottom: 2px;
+    }
+
+    .contact-wa {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+    }
+
+    .contact-wa h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .contact-wa p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+    }
+
+    .wa-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      background: #25D366;
+      color: #fff;
+      font-weight: 700;
+      font-size: 16px;
+      padding: 16px;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+      min-height: 54px;
+    }
+
+    .wa-btn:hover { background: #1da851; transform: translateY(-2px); }
+
+    .hours-box {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px;
+      margin-top: 16px;
+    }
+
+    .hours-box h4 {
+      font-size: 13px;
+      color: var(--text-secondary);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      padding: 5px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hours-row:last-child { border-bottom: none; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border);
+      padding: 32px 20px;
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .footer-logo span { color: var(--accent); }
+
+    footer p {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    /* ── WHATSAPP FLOAT ── */
+    .wa-float {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 999;
+      width: 60px; height: 60px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .wa-float:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 28px rgba(37,211,102,0.55);
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      section { padding: 60px 20px; }
+
+      .header-cta span { display: none; }
+
+      .hero { padding: 100px 20px 60px; }
+
+      .hero-stats { gap: 24px; }
+
+      .stat-number { font-size: 26px; }
+
+      .about-inner, .contact-grid { grid-template-columns: 1fr; gap: 32px; }
+
+      .about-visual { order: -1; }
+
+      .steps::before { display: none; }
+
+      .services-grid { grid-template-columns: 1fr; }
+
+      .diff-grid { grid-template-columns: 1fr; }
+
+      .steps { gap: 0; }
+
+      .step { padding-bottom: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <a href="#" class="logo">Cobra<span>tek</span></a>
+  <a href="https://wa.me/554396206143?text=Olá!%20Quero%20um%20orçamento%20para%20meu%20equipamento." class="header-cta" target="_blank">
+    <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.097.543 4.068 1.496 5.779L0 24l6.394-1.467A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.854 0-3.601-.483-5.117-1.33l-.367-.213-3.797.871.906-3.691-.233-.381A9.935 9.935 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+    Orçamento grátis
+  </a>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-badge">
+    <span class="dot"></span>
+    Assistência técnica especializada
+  </div>
+  <h1>Seu equipamento<br>de volta a <span class="highlight">funcionar</span></h1>
+  <p>Reparos rápidos e confiáveis em notebooks, computadores, impressoras e televisões. Orçamento gratuito e sem compromisso.</p>
+  <div class="hero-buttons">
+    <a href="https://wa.me/554396206143?text=Olá!%20Gostaria%20de%20um%20orçamento%20para%20meu%20equipamento." class="btn-primary" target="_blank">
+      <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.097.543 4.068 1.496 5.779L0 24l6.394-1.467A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.854 0-3.601-.483-5.117-1.33l-.367-.213-3.797.871.906-3.691-.233-.381A9.935 9.935 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+      Pedir orçamento
+    </a>
+    <a href="#servicos" class="btn-secondary">Ver serviços ↓</a>
+  </div>
+  <div class="hero-stats">
+    <div class="stat">
+      <div class="stat-number">+500</div>
+      <div class="stat-label">Equipamentos reparados</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">4</div>
+      <div class="stat-label">Tipos de dispositivos</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">100%</div>
+      <div class="stat-label">Orçamento grátis</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="servicos">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Serviços</div>
+      <h2 class="section-title">O que a gente conserta</h2>
+      <p class="section-subtitle">Atendimento especializado para os principais dispositivos eletrônicos</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">💻</div>
+        <h3>Notebooks</h3>
+        <p>Tela quebrada, bateria fraca, superaquecimento, lentidão, teclado com problema, placa-mãe, HD e SSD.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🖥️</div>
+        <h3>Computadores</h3>
+        <p>Montagem e upgrades, formatação, vírus, lentidão, problemas de energia e substituição de peças.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🖨️</div>
+        <h3>Impressoras</h3>
+        <p>Calibração, troca de cabeçote, problema de papel, manutenção preventiva e instalação de cartuchos.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📺</div>
+        <h3>Televisões</h3>
+        <p>Tela apagada, imagem com listras, placa de energia, backlight, HDMI com defeito e controle remoto.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="sobre">
+  <div class="container">
+    <div class="about-inner">
+      <div class="about-text">
+        <div class="section-tag">Sobre nós</div>
+        <h2>Técnicos de verdade,<br>que resolvem de verdade</h2>
+        <p>A Cobratek Informática nasceu da paixão por tecnologia e do compromisso em oferecer assistência técnica de qualidade, com transparência e preço justo.</p>
+        <p>Nossos técnicos têm anos de experiência em reparos de eletrônicos. Diagnóstico honesto, peças de qualidade e prazo cumprido — é assim que trabalhamos.</p>
+        <div class="about-perks">
+          <div class="perk">
+            <div class="perk-icon">✓</div>
+            Orçamento gratuito e sem compromisso
+          </div>
+          <div class="perk">
+            <div class="perk-icon">✓</div>
+            Prazo rápido — a maioria em até 48h
+          </div>
+          <div class="perk">
+            <div class="perk-icon">✓</div>
+            Garantia em todos os reparos realizados
+          </div>
+          <div class="perk">
+            <div class="perk-icon">✓</div>
+            Peças originais ou de alta qualidade
+          </div>
+        </div>
+      </div>
+      <div class="about-visual">
+        <div class="about-card-big">
+          <div class="big-number">48h</div>
+          <div class="big-label">Prazo médio de reparo</div>
+          <div class="big-sub">A maioria dos equipamentos fica pronta em até 2 dias úteis</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process" id="como-funciona">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Como funciona</div>
+      <h2 class="section-title">Do diagnóstico à entrega</h2>
+      <p class="section-subtitle">Processo simples, transparente e sem surpresas</p>
+    </div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-number">1</div>
+        <h3>Leve o equipamento</h3>
+        <p>Traga até nossa loja ou entre em contato para combinar a retirada.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">2</div>
+        <h3>Diagnóstico gratuito</h3>
+        <p>Nossos técnicos analisam o equipamento e identificam o problema.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">3</div>
+        <h3>Orçamento aprovado</h3>
+        <p>Você recebe o valor antes de qualquer reparo. Sem surpresas.</p>
+      </div>
+      <div class="step">
+        <div class="step-number">4</div>
+        <h3>Equipamento pronto</h3>
+        <p>Reparo realizado com garantia. Seu equipamento de volta a funcionar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIFERENCIAIS -->
+<section id="diferenciais">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Por que a Cobratek</div>
+      <h2 class="section-title">Você em boas mãos</h2>
+    </div>
+    <div class="diff-grid">
+      <div class="diff-card">
+        <div class="diff-icon">🔍</div>
+        <div>
+          <h3>Diagnóstico Honesto</h3>
+          <p>Avaliamos sem custo e informamos exatamente o que precisa ser feito — sem enrolação.</p>
+        </div>
+      </div>
+      <div class="diff-card">
+        <div class="diff-icon">🛡️</div>
+        <div>
+          <h3>Garantia Garantida</h3>
+          <p>Todo reparo tem garantia. Se o problema voltar, a gente resolve sem custo adicional.</p>
+        </div>
+      </div>
+      <div class="diff-card">
+        <div class="diff-icon">⚡</div>
+        <div>
+          <h3>Atendimento Rápido</h3>
+          <p>Sabemos que seu equipamento é essencial. Por isso trabalhamos para ter o menor prazo possível.</p>
+        </div>
+      </div>
+      <div class="diff-card">
+        <div class="diff-icon">💰</div>
+        <div>
+          <h3>Preço Justo</h3>
+          <p>Cobramos o que é justo. Sem taxas escondidas, sem cobrar por diagnóstico que não resolveu.</p>
+        </div>
+      </div>
+      <div class="diff-card">
+        <div class="diff-icon">🔧</div>
+        <div>
+          <h3>Técnicos Experientes</h3>
+          <p>Equipe com anos de experiência em eletrônicos de todas as marcas e modelos.</p>
+        </div>
+      </div>
+      <div class="diff-card">
+        <div class="diff-icon">📱</div>
+        <div>
+          <h3>Atendimento no WhatsApp</h3>
+          <p>Fale direto com a gente pelo WhatsApp. Orçamento, dúvidas e acompanhamento do reparo.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<div class="cta-band">
+  <h2>Equipamento com problema?<br>A gente resolve!</h2>
+  <p>Mande uma mensagem agora e receba seu orçamento grátis em minutos.</p>
+  <a href="https://wa.me/554396206143?text=Olá!%20Meu%20equipamento%20está%20com%20problema%20e%20gostaria%20de%20um%20orçamento." class="btn-primary" target="_blank" style="display:inline-flex;">
+    <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.097.543 4.068 1.496 5.779L0 24l6.394-1.467A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.854 0-3.601-.483-5.117-1.33l-.367-.213-3.797.871.906-3.691-.233-.381A9.935 9.935 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+    Chamar no WhatsApp agora
+  </a>
+</div>
+
+<!-- CONTACT -->
+<section id="contato">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h2>Fale com<br>a Cobratek</h2>
+        <p>Estamos prontos para ajudar com o seu equipamento. Entre em contato!</p>
+        <div class="contact-items">
+          <div class="contact-item">
+            <div class="contact-item-icon">📱</div>
+            <div class="contact-item-text">
+              <strong>WhatsApp</strong>
+              (43) 9620-6143
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">🏪</div>
+            <div class="contact-item-text">
+              <strong>Atendimento</strong>
+              Cobratek Informática
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">🔧</div>
+            <div class="contact-item-text">
+              <strong>Especialidade</strong>
+              Notebooks, Computadores, Impressoras e TVs
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-wa">
+        <h3>Solicite seu orçamento</h3>
+        <p>Diagnóstico gratuito. Sem compromisso. Resposta rápida!</p>
+        <a href="https://wa.me/554396206143?text=Olá!%20Quero%20um%20orçamento%20para%20meu%20equipamento." class="wa-btn" target="_blank">
+          <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.097.543 4.068 1.496 5.779L0 24l6.394-1.467A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.854 0-3.601-.483-5.117-1.33l-.367-.213-3.797.871.906-3.691-.233-.381A9.935 9.935 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+          Chamar no WhatsApp
+        </a>
+        <div class="hours-box">
+          <h4>🕐 Horário de atendimento</h4>
+          <div class="hours-row">
+            <span>Segunda a Sexta</span>
+            <span>08h – 18h</span>
+          </div>
+          <div class="hours-row">
+            <span>Sábado</span>
+            <span>08h – 12h</span>
+          </div>
+          <div class="hours-row">
+            <span>Domingo</span>
+            <span>Fechado</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Cobra<span>tek</span> Informática</div>
+  <p>Assistência técnica especializada em notebooks, computadores, impressoras e televisões.</p>
+  <p style="margin-top: 12px;">© 2024 Cobratek Informática. Todos os direitos reservados.</p>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/554396206143?text=Olá!%20Gostaria%20de%20um%20orçamento." class="wa-float" target="_blank" aria-label="WhatsApp">
+  <svg width="28" height="28" fill="#fff" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.097.543 4.068 1.496 5.779L0 24l6.394-1.467A11.933 11.933 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.854 0-3.601-.483-5.117-1.33l-.367-.213-3.797.871.906-3.691-.233-.381A9.935 9.935 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+</a>
+
+</body>
+</html>
