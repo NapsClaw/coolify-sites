@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jardim das Orquídeas – Floricultura em Curitiba</title>
+  <meta name="description" content="Jardim das Orquídeas em Curitiba: arranjos, buquês, plantas e decoração de eventos. Peça pelo WhatsApp!">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #fdf8fb;
+      --bg2: #fdf0f6;
+      --text: #1a0d14;
+      --text2: #6b3a54;
+      --pink: #c2547a;
+      --pink2: #d96e90;
+      --pink3: #f0b8cc;
+      --green: #2d6b4a;
+      --green2: #3d8a60;
+      --green3: #b8e0c8;
+      --border: #ecc8d8;
+      --white: #fffbfd;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(253,248,251,0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 19px; font-weight: 700;
+      color: var(--pink); text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 22px; list-style: none; }
+    .nav-links a { color: var(--text2); text-decoration: none; font-size: 14px; font-weight: 500; }
+    .nav-cta {
+      background: var(--pink); color: #fff !important;
+      padding: 8px 18px; border-radius: 24px; font-weight: 600 !important;
+    }
+    @media (max-width: 768px) { .nav-links { display: none; } }
+
+    .hero {
+      min-height: 100svh;
+      padding: 80px 24px 60px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      position: relative; overflow: hidden;
+      background: linear-gradient(160deg, #1a0510 0%, #3d1028 50%, #6b2050 100%);
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url('https://images.unsplash.com/photo-1487530811176-3780de880c2d?w=1400&q=80') center/cover no-repeat;
+      opacity: 0.22;
+    }
+    .hero-badge {
+      position: relative;
+      background: var(--green3); color: var(--green);
+      font-size: 11px; font-weight: 800;
+      letter-spacing: 2.5px; text-transform: uppercase;
+      padding: 6px 20px; border-radius: 24px;
+      margin-bottom: 22px; display: inline-block;
+      animation: fadeUp 0.6s ease both;
+    }
+    .hero h1 {
+      position: relative;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(46px, 12vw, 88px);
+      font-weight: 700; color: #fff;
+      line-height: 1.04;
+      margin-bottom: 18px;
+      animation: fadeUp 0.6s 0.12s ease both;
+    }
+    .hero h1 em { font-style: italic; color: var(--pink3); }
+    .hero-sub {
+      position: relative;
+      font-size: 17px; color: rgba(255,255,255,0.7);
+      max-width: 380px; margin: 0 auto 36px;
+      animation: fadeUp 0.6s 0.22s ease both;
+    }
+    .hero-btns {
+      position: relative;
+      display: flex; flex-direction: column; gap: 12px;
+      width: 100%; max-width: 320px; margin: 0 auto;
+      animation: fadeUp 0.6s 0.32s ease both;
+    }
+    .btn-wa {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      background: #25D366; color: #fff;
+      font-weight: 700; font-size: 16px;
+      padding: 16px 24px; border-radius: 12px;
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+    }
+    .btn-outline {
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(255,255,255,0.09);
+      border: 1.5px solid rgba(255,255,255,0.22);
+      color: #fff; font-weight: 600; font-size: 15px;
+      padding: 14px 24px; border-radius: 12px;
+      text-decoration: none;
+    }
+    .hero-scroll {
+      position: absolute; bottom: 26px; left: 50%; transform: translateX(-50%);
+    }
+    .scroll-dot {
+      width: 20px; height: 30px;
+      border: 1.5px solid rgba(255,255,255,0.3);
+      border-radius: 10px;
+      display: flex; align-items: flex-start; justify-content: center;
+      padding-top: 4px;
+    }
+    .scroll-dot::after {
+      content: ''; width: 4px; height: 8px;
+      background: rgba(255,255,255,0.5); border-radius: 2px;
+      animation: scrolldown 1.6s ease-in-out infinite;
+    }
+
+    .strip { background: var(--pink); padding: 20px 24px; }
+    .strip-inner {
+      max-width: 800px; margin: 0 auto;
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .strip-item { display: flex; align-items: center; gap: 12px; color: #fff; }
+    .strip-icon { font-size: 24px; flex-shrink: 0; }
+    .strip-item strong { display: block; font-size: 14px; font-weight: 700; }
+    .strip-item span { font-size: 12px; opacity: 0.85; }
+    @media (min-width: 600px) {
+      .strip-inner { flex-direction: row; flex-wrap: wrap; justify-content: center; }
+      .strip-item { width: calc(50% - 14px); }
+    }
+    @media (min-width: 900px) { .strip-item { width: auto; flex: 1; } }
+
+    .ornament {
+      display: flex; align-items: center; gap: 12px;
+      justify-content: center; margin-bottom: 16px;
+    }
+    .ornament-line { height: 1px; width: 36px; background: var(--pink); }
+    .ornament-dot { width: 7px; height: 7px; background: var(--pink); border-radius: 50%; }
+    .section-label {
+      font-size: 11px; font-weight: 800; letter-spacing: 3px;
+      text-transform: uppercase; color: var(--pink); margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(28px, 7vw, 46px);
+      font-weight: 700; line-height: 1.1;
+      color: var(--text); margin-bottom: 16px;
+    }
+    .section-text {
+      color: var(--text2); font-size: 16px;
+      line-height: 1.75; margin-bottom: 24px;
+    }
+
+    .sobre {
+      padding: 88px 24px;
+      max-width: 680px; margin: 0 auto; text-align: center;
+    }
+    .sobre-img {
+      width: 100%; height: 270px;
+      object-fit: cover; border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+    }
+
+    .servicos { background: var(--bg2); padding: 88px 24px; }
+    .servicos-inner { max-width: 800px; margin: 0 auto; }
+    .servicos-header { text-align: center; margin-bottom: 44px; }
+    .servicos-grid { display: flex; flex-direction: column; gap: 16px; }
+    .servico-card {
+      background: var(--white); border-radius: 18px;
+      padding: 22px 20px;
+      display: flex; align-items: flex-start; gap: 16px;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 14px rgba(194,84,122,0.06);
+    }
+    .servico-icon {
+      width: 52px; height: 52px;
+      background: var(--bg2); border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px; flex-shrink: 0;
+      border: 1px solid var(--border);
+    }
+    .servico-nome {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px; font-weight: 700;
+      color: var(--text); margin-bottom: 5px;
+    }
+    .servico-desc { font-size: 14px; color: var(--text2); line-height: 1.6; }
+    .servico-tag {
+      display: inline-block; margin-top: 8px;
+      background: var(--pink3); color: var(--pink);
+      font-size: 11px; font-weight: 700;
+      padding: 3px 12px; border-radius: 20px;
+    }
+
+    .eventos {
+      padding: 88px 24px;
+      background: linear-gradient(150deg, #0d1a10 0%, #1a3d28 60%, #2d6b4a 100%);
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .eventos::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=1200&q=60') center/cover no-repeat;
+      opacity: 0.1;
+    }
+    .eventos-inner { position: relative; max-width: 560px; margin: 0 auto; }
+    .eventos .section-label { color: var(--green3); }
+    .eventos .section-title { color: #fff; }
+    .eventos .section-text { color: rgba(255,255,255,0.72); }
+    .eventos-items { display: flex; flex-direction: column; gap: 14px; margin: 32px 0; }
+    .eventos-item {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 14px; padding: 18px 20px;
+      display: flex; align-items: center; gap: 14px; text-align: left;
+      color: #fff;
+    }
+    .eventos-icon { font-size: 26px; flex-shrink: 0; }
+    .eventos-item strong { display: block; font-size: 15px; font-weight: 700; margin-bottom: 2px; }
+    .eventos-item span { font-size: 13px; opacity: 0.75; }
+    .btn-wa-eventos {
+      display: flex; align-items: center; justify-content: center; gap: 12px;
+      background: #25D366; color: #fff;
+      font-weight: 700; font-size: 17px;
+      padding: 18px 32px; border-radius: 14px;
+      text-decoration: none; width: 100%; max-width: 340px;
+      margin: 0 auto;
+      box-shadow: 0 6px 30px rgba(37,211,102,0.4);
+    }
+
+    .galeria { padding: 88px 24px; }
+    .galeria-inner { max-width: 800px; margin: 0 auto; }
+    .galeria-header { text-align: center; margin-bottom: 28px; }
+    .galeria-scroll {
+      display: flex; gap: 14px;
+      overflow-x: auto; padding-bottom: 10px; scrollbar-width: none;
+    }
+    .galeria-scroll::-webkit-scrollbar { display: none; }
+    .galeria-item { flex-shrink: 0; width: 220px; height: 200px; border-radius: 16px; overflow: hidden; }
+    .galeria-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+    .galeria-item:hover img { transform: scale(1.06); }
+
+    .depoimentos { background: var(--bg2); padding: 88px 24px; }
+    .depoimentos-inner { max-width: 700px; margin: 0 auto; }
+    .depoimentos-header { text-align: center; margin-bottom: 40px; }
+    .dep-list { display: flex; flex-direction: column; gap: 16px; }
+    .dep-card {
+      background: var(--white); border-radius: 16px; padding: 22px 20px;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+    }
+    .dep-stars { color: #f59e0b; font-size: 15px; margin-bottom: 10px; }
+    .dep-text { font-size: 14px; color: var(--text2); line-height: 1.7; font-style: italic; margin-bottom: 14px; }
+    .dep-autor { display: flex; align-items: center; gap: 10px; }
+    .dep-avatar {
+      width: 36px; height: 36px; background: var(--bg2);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px;
+    }
+    .dep-nome { font-size: 13px; font-weight: 700; color: var(--text); }
+
+    .contato { padding: 88px 24px; text-align: center; }
+    .contato-inner { max-width: 560px; margin: 0 auto; }
+    .contato-cards { display: flex; flex-direction: column; gap: 14px; margin: 36px 0; }
+    .contato-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 14px; padding: 18px 20px;
+      display: flex; align-items: center; gap: 14px; text-align: left;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+    }
+    .contato-icon { font-size: 24px; flex-shrink: 0; }
+    .contato-label {
+      font-size: 10px; font-weight: 800; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--pink); margin-bottom: 2px;
+    }
+    .contato-value { font-size: 15px; color: var(--text); font-weight: 500; }
+    .btn-wa-contato {
+      display: flex; align-items: center; justify-content: center; gap: 12px;
+      background: #25D366; color: #fff;
+      font-weight: 700; font-size: 17px;
+      padding: 18px 32px; border-radius: 14px;
+      text-decoration: none; width: 100%; max-width: 340px;
+      margin: 0 auto;
+      box-shadow: 0 6px 30px rgba(37,211,102,0.4);
+    }
+
+    footer {
+      background: var(--text);
+      color: rgba(255,255,255,0.5);
+      text-align: center; padding: 28px 24px; font-size: 13px;
+    }
+    footer strong { color: rgba(255,255,255,0.9); }
+
+    .wa-float {
+      position: fixed; bottom: 24px; right: 20px; z-index: 999;
+      background: #25D366; border-radius: 50%;
+      width: 58px; height: 58px;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.5);
+      transition: transform 0.2s;
+    }
+    .wa-float:hover { transform: scale(1.1); }
+    .wa-float svg { width: 30px; height: 30px; fill: #fff; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(26px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes scrolldown {
+      0%, 100% { transform: translateY(0); opacity: 1; }
+      60% { transform: translateY(8px); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="#" class="nav-logo">Jardim das Orquídeas 🌸</a>
+    <ul class="nav-links">
+      <li><a href="#servicos">Serviços</a></li>
+      <li><a href="#eventos">Eventos</a></li>
+      <li><a href="#contato">Contato</a></li>
+      <li><a href="https://wa.me/5548999291659?text=Olá!%20Gostaria%20de%20fazer%20um%20pedido." target="_blank" class="nav-cta">Pedir agora</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-badge">🌸 Floricultura · Curitiba</div>
+    <h1>Flores que<br><em>falam</em> pelo<br>coração</h1>
+    <p class="hero-sub">Arranjos, buquês, plantas e decoração de eventos. Cada peça feita com carinho em Curitiba.</p>
+    <div class="hero-btns">
+      <a href="https://wa.me/5548999291659?text=Olá!%20Gostaria%20de%20fazer%20um%20pedido." target="_blank" class="btn-wa">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Pedir pelo WhatsApp
+      </a>
+      <a href="#servicos" class="btn-outline">Ver nossos serviços</a>
+    </div>
+    <div class="hero-scroll"><div class="scroll-dot"></div></div>
+  </section>
+
+  <div class="strip">
+    <div class="strip-inner">
+      <div class="strip-item"><span class="strip-icon">💐</span><div><strong>Arranjos & Buquês</strong><span>Feitos com flores frescas</span></div></div>
+      <div class="strip-item"><span class="strip-icon">🌿</span><div><strong>Plantas</strong><span>Internas e externas</span></div></div>
+      <div class="strip-item"><span class="strip-icon">🎊</span><div><strong>Decoração de Eventos</strong><span>Casamentos, aniversários e mais</span></div></div>
+      <div class="strip-item"><span class="strip-icon">📍</span><div><strong>Curitiba – PR</strong><span>Entregamos na sua porta</span></div></div>
+    </div>
+  </div>
+
+  <section class="sobre" id="sobre">
+    <div class="ornament"><div class="ornament-line"></div><div class="ornament-dot"></div><div class="ornament-line"></div></div>
+    <p class="section-label">Quem Somos</p>
+    <h2 class="section-title">Beleza natural<br>em cada detalhe</h2>
+    <p class="section-text">No Jardim das Orquídeas, cada arranjo é criado com atenção e afeto. Trabalhamos com flores frescas selecionadas, plantas cuidadosas e composições que transformam qualquer ambiente em algo especial.</p>
+    <p class="section-text">De um buquê simples para alegrar o dia de alguém até a decoração completa do seu casamento — estamos em Curitiba prontas pra fazer acontecer. 🌸</p>
+    <img src="https://images.unsplash.com/photo-1487530811176-3780de880c2d?w=800&q=80" alt="Floricultura Jardim das Orquídeas em Curitiba" class="sobre-img" loading="lazy">
+  </section>
+
+  <section class="servicos" id="servicos">
+    <div class="servicos-inner">
+      <div class="servicos-header">
+        <div class="ornament"><div class="ornament-line"></div><div class="ornament-dot"></div><div class="ornament-line"></div></div>
+        <p class="section-label">O Que Fazemos</p>
+        <h2 class="section-title">Nossos Serviços</h2>
+        <p class="section-text" style="margin-bottom:0">Flores e plantas para cada momento especial da sua vida.</p>
+      </div>
+      <div class="servicos-grid">
+        <div class="servico-card">
+          <div class="servico-icon">💐</div>
+          <div>
+            <p class="servico-nome">Arranjos Florais</p>
+            <p class="servico-desc">Composições únicas para presentear, decorar ou expressar sentimentos. Do clássico ao moderno, sempre com flores frescas da melhor qualidade.</p>
+            <span class="servico-tag">🌸 Mais pedido</span>
+          </div>
+        </div>
+        <div class="servico-card">
+          <div class="servico-icon">🌹</div>
+          <div>
+            <p class="servico-nome">Buquês</p>
+            <p class="servico-desc">Buquês para aniversários, datas especiais, pedidos de namoro ou simplesmente para dizer "te amo". Montamos do tamanho que você quiser.</p>
+            <span class="servico-tag">❤️ Presente perfeito</span>
+          </div>
+        </div>
+        <div class="servico-card">
+          <div class="servico-icon">🌿</div>
+          <div>
+            <p class="servico-nome">Plantas</p>
+            <p class="servico-desc">Orquídeas, suculentas, plantas tropicais e muito mais. Perfeitas para presentear ou trazer vida e cor para casa ou escritório.</p>
+            <span class="servico-tag">🌱 Duradouro</span>
+          </div>
+        </div>
+        <div class="servico-card">
+          <div class="servico-icon">🎊</div>
+          <div>
+            <p class="servico-nome">Decoração de Eventos</p>
+            <p class="servico-desc">Transformamos casamentos, aniversários, formaturas e eventos corporativos com decorações florais que encantam cada convidado.</p>
+            <span class="servico-tag">✨ Sob medida</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="eventos" id="eventos">
+    <div class="eventos-inner">
+      <div class="ornament">
+        <div class="ornament-line" style="background:rgba(255,255,255,0.25)"></div>
+        <div class="ornament-dot" style="background:var(--green3)"></div>
+        <div class="ornament-line" style="background:rgba(255,255,255,0.25)"></div>
+      </div>
+      <p class="section-label">Decoração de Eventos</p>
+      <h2 class="section-title">Seu evento<br>inesquecível</h2>
+      <p class="section-text">Da entrada ao altar, do centro de mesa ao buquê da noiva — cuidamos de cada detalhe floral do seu evento especial.</p>
+      <div class="eventos-items">
+        <div class="eventos-item"><span class="eventos-icon">💍</span><div><strong>Casamentos</strong><span>Decoração completa, buquê da noiva e cortejo</span></div></div>
+        <div class="eventos-item"><span class="eventos-icon">🎂</span><div><strong>Aniversários & Festas</strong><span>Arranjos de mesa, arcos florais e muito mais</span></div></div>
+        <div class="eventos-item"><span class="eventos-icon">🏢</span><div><strong>Eventos Corporativos</strong><span>Ambientação floral para empresas e lançamentos</span></div></div>
+        <div class="eventos-item"><span class="eventos-icon">📋</span><div><strong>Orçamento Personalizado</strong><span>Conte seu evento e montamos a proposta ideal</span></div></div>
+      </div>
+      <a href="https://wa.me/5548999291659?text=Olá!%20Quero%20um%20orçamento%20para%20decoração%20de%20evento." target="_blank" class="btn-wa-eventos">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Pedir orçamento de evento
+      </a>
+    </div>
+  </section>
+
+  <section class="galeria">
+    <div class="galeria-inner">
+      <div class="galeria-header">
+        <p class="section-label">Galeria</p>
+        <h2 class="section-title">Nossos trabalhos</h2>
+      </div>
+      <div class="galeria-scroll">
+        <div class="galeria-item"><img src="https://images.unsplash.com/photo-1487530811176-3780de880c2d?w=500&q=80" alt="Arranjo floral" loading="lazy"></div>
+        <div class="galeria-item"><img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=500&q=80" alt="Decoração casamento" loading="lazy"></div>
+        <div class="galeria-item"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&q=80" alt="Buquê de rosas" loading="lazy"></div>
+        <div class="galeria-item"><img src="https://images.unsplash.com/photo-1591886960571-74d43a9d4166?w=500&q=80" alt="Orquídeas" loading="lazy"></div>
+        <div class="galeria-item"><img src="https://images.unsplash.com/photo-1468327768560-75b778cbb551?w=500&q=80" alt="Plantas" loading="lazy"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="depoimentos">
+    <div class="depoimentos-inner">
+      <div class="depoimentos-header">
+        <div class="ornament"><div class="ornament-line"></div><div class="ornament-dot"></div><div class="ornament-line"></div></div>
+        <p class="section-label">Avaliações</p>
+        <h2 class="section-title">O que dizem<br>nossos clientes</h2>
+      </div>
+      <div class="dep-list">
+        <div class="dep-card">
+          <div class="dep-stars">★★★★★</div>
+          <p class="dep-text">"Os arranjos para o meu casamento ficaram simplesmente perfeitos! Cada detalhe estava exatamente como eu sonhei. O buquê da noiva era lindo demais — chorei de emoção!"</p>
+          <div class="dep-autor"><div class="dep-avatar">💍</div><span class="dep-nome">Camila S. · Curitiba</span></div>
+        </div>
+        <div class="dep-card">
+          <div class="dep-stars">★★★★★</div>
+          <p class="dep-text">"Encomendei um buquê surpresa pra minha mãe e ela adorou! Chegou super fresquinho e montado com muito capricho. Com certeza vou pedir sempre aqui."</p>
+          <div class="dep-autor"><div class="dep-avatar">🌹</div><span class="dep-nome">Rafael M. · Curitiba</span></div>
+        </div>
+        <div class="dep-card">
+          <div class="dep-stars">★★★★★</div>
+          <p class="dep-text">"Comprei uma orquídea presente e a qualidade era incrível. Super bem embalada e com dicas de cuidado. Atendimento pelo WhatsApp foi rapidíssimo. Recomendo demais!"</p>
+          <div class="dep-autor"><div class="dep-avatar">🌸</div><span class="dep-nome">Ana P. · Curitiba</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contato" id="contato">
+    <div class="contato-inner">
+      <div class="ornament"><div class="ornament-line"></div><div class="ornament-dot"></div><div class="ornament-line"></div></div>
+      <p class="section-label">Fale Conosco</p>
+      <h2 class="section-title">Faça seu pedido<br>agora</h2>
+      <div class="contato-cards">
+        <div class="contato-card">
+          <span class="contato-icon">📍</span>
+          <div><p class="contato-label">Localização</p><p class="contato-value">Curitiba – PR</p></div>
+        </div>
+        <div class="contato-card">
+          <span class="contato-icon">🕐</span>
+          <div><p class="contato-label">Horário</p><p class="contato-value">Seg–Sex: 8h às 18h | Sáb: 8h às 14h</p></div>
+        </div>
+        <div class="contato-card">
+          <span class="contato-icon">📱</span>
+          <div><p class="contato-label">WhatsApp</p><p class="contato-value">(48) 99929-1659</p></div>
+        </div>
+      </div>
+      <a href="https://wa.me/5548999291659?text=Olá!%20Gostaria%20de%20fazer%20um%20pedido." target="_blank" class="btn-wa-contato">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Pedir pelo WhatsApp
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    <p><strong>Jardim das Orquídeas</strong> · Floricultura · Curitiba – PR</p>
+    <p style="margin-top:8px">© 2025 Jardim das Orquídeas. Todos os direitos reservados.</p>
+  </footer>
+
+  <a href="https://wa.me/5548999291659?text=Olá!%20Gostaria%20de%20fazer%20um%20pedido." target="_blank" class="wa-float" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+</body>
+</html>
