@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JF Contabilidade | Escritório de Contabilidade Profissional</title>
+  <meta name="description" content="JF Contabilidade — Abertura de empresa, MEI, Imposto de Renda e Consultoria Financeira. Soluções contábeis completas para o seu negócio.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #0d1b2e;
+      --navy-light: #162540;
+      --navy-mid: #1e3354;
+      --gold: #c8a84b;
+      --gold-light: #e2c97e;
+      --gold-dark: #a8882b;
+      --white: #ffffff;
+      --off-white: #f5f0e8;
+      --text-muted: #94a3b8;
+      --text-body: #cbd5e1;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--navy);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* NOISE TEXTURE */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    /* HEADER */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+      padding: 16px 24px;
+      background: rgba(13, 27, 46, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(200, 168, 75, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .header-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .header-logo img {
+      height: 44px;
+      width: auto;
+    }
+
+    .header-logo-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header-logo-text .brand {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.5px;
+      line-height: 1.1;
+    }
+
+    .header-logo-text .tagline {
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--text-muted);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    nav {
+      display: flex;
+      gap: 28px;
+      align-items: center;
+    }
+
+    nav a {
+      color: var(--text-body);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    nav a:hover { color: var(--gold); }
+
+    .btn-nav {
+      background: var(--gold);
+      color: var(--navy) !important;
+      padding: 10px 20px;
+      border-radius: 6px;
+      font-weight: 700 !important;
+      font-size: 13px !important;
+      transition: background 0.2s !important;
+    }
+
+    .btn-nav:hover { background: var(--gold-light) !important; }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--gold);
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      padding: 120px 24px 80px;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: 
+        radial-gradient(ellipse 80% 60% at 60% 50%, rgba(200, 168, 75, 0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 80% at 20% 80%, rgba(30, 51, 84, 0.8) 0%, transparent 60%),
+        linear-gradient(135deg, #0d1b2e 0%, #162540 50%, #0d1b2e 100%);
+    }
+
+    .hero-grid-pattern {
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(rgba(200, 168, 75, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(200, 168, 75, 0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 680px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(200, 168, 75, 0.1);
+      border: 1px solid rgba(200, 168, 75, 0.3);
+      border-radius: 100px;
+      padding: 8px 16px;
+      margin-bottom: 28px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      animation: fadeDown 0.8s ease both;
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(36px, 8vw, 68px);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      animation: fadeUp 0.8s ease 0.2s both;
+    }
+
+    .hero-title em {
+      font-style: normal;
+      color: var(--gold);
+      position: relative;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(16px, 3vw, 18px);
+      color: var(--text-body);
+      line-height: 1.7;
+      margin-bottom: 40px;
+      animation: fadeUp 0.8s ease 0.4s both;
+    }
+
+    .hero-ctas {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeUp 0.8s ease 0.6s both;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--gold);
+      color: var(--navy);
+      padding: 16px 32px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 15px;
+      text-decoration: none;
+      transition: all 0.2s;
+      box-shadow: 0 4px 20px rgba(200, 168, 75, 0.3);
+    }
+
+    .btn-primary:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(200, 168, 75, 0.4);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: transparent;
+      color: var(--white);
+      padding: 16px 32px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 15px;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.2);
+      transition: all 0.2s;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 40px;
+      justify-content: center;
+      margin-top: 60px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(200, 168, 75, 0.15);
+      animation: fadeUp 0.8s ease 0.8s both;
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 4px;
+    }
+
+    /* SECTIONS */
+    section {
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-pad {
+      padding: 80px 24px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-eyebrow {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 5vw, 44px);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .section-subtitle {
+      font-size: 16px;
+      color: var(--text-body);
+      line-height: 1.7;
+      max-width: 560px;
+    }
+
+    .gold-line {
+      width: 48px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      border-radius: 2px;
+      margin: 20px 0;
+    }
+
+    /* SERVICES */
+    .services-bg {
+      background: var(--navy-light);
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    .service-card {
+      background: var(--navy);
+      border: 1px solid rgba(200, 168, 75, 0.15);
+      border-radius: 16px;
+      padding: 32px;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), var(--gold-light));
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .service-card:hover {
+      border-color: rgba(200, 168, 75, 0.4);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+    }
+
+    .service-card:hover::before {
+      opacity: 1;
+    }
+
+    .service-icon {
+      width: 52px;
+      height: 52px;
+      background: rgba(200, 168, 75, 0.1);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+
+    .service-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--white);
+    }
+
+    .service-desc {
+      font-size: 14px;
+      color: var(--text-body);
+      line-height: 1.7;
+    }
+
+    /* ABOUT */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      margin-top: 0;
+    }
+
+    .about-visual {
+      position: relative;
+    }
+
+    .about-img-wrap {
+      background: var(--navy-light);
+      border: 1px solid rgba(200, 168, 75, 0.2);
+      border-radius: 20px;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .about-logo-display {
+      padding: 48px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      text-align: center;
+    }
+
+    .about-logo-display img {
+      width: 160px;
+      height: auto;
+    }
+
+    .about-accent-box {
+      position: absolute;
+      bottom: -20px;
+      right: -20px;
+      background: var(--gold);
+      color: var(--navy);
+      padding: 20px 24px;
+      border-radius: 12px;
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 700;
+      text-align: center;
+      line-height: 1.1;
+    }
+
+    .about-accent-box small {
+      display: block;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .about-features {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 28px;
+    }
+
+    .about-feature {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 16px;
+      background: var(--navy-light);
+      border-radius: 10px;
+      border-left: 3px solid var(--gold);
+    }
+
+    .about-feature-icon {
+      font-size: 22px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .about-feature-text strong {
+      display: block;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+
+    .about-feature-text span {
+      font-size: 13px;
+      color: var(--text-body);
+    }
+
+    /* PROCESS */
+    .process-bg {
+      background: var(--navy-light);
+    }
+
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+      margin-top: 48px;
+      position: relative;
+    }
+
+    .process-step {
+      text-align: center;
+      padding: 32px 20px;
+      position: relative;
+    }
+
+    .step-number {
+      width: 60px;
+      height: 60px;
+      background: rgba(200, 168, 75, 0.1);
+      border: 2px solid var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .step-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+
+    .step-desc {
+      font-size: 14px;
+      color: var(--text-body);
+      line-height: 1.6;
+    }
+
+    /* TESTIMONIALS */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    .testimonial-card {
+      background: var(--navy-light);
+      border: 1px solid rgba(200, 168, 75, 0.12);
+      border-radius: 16px;
+      padding: 28px;
+    }
+
+    .testimonial-stars {
+      color: var(--gold);
+      font-size: 16px;
+      letter-spacing: 2px;
+      margin-bottom: 16px;
+    }
+
+    .testimonial-text {
+      font-size: 15px;
+      color: var(--text-body);
+      line-height: 1.7;
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .author-avatar {
+      width: 44px;
+      height: 44px;
+      background: var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--navy);
+      flex-shrink: 0;
+    }
+
+    .author-info strong {
+      display: block;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    .author-info span {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* CONTACT */
+    .contact-bg {
+      background: var(--navy-light);
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 20px;
+      background: var(--navy);
+      border-radius: 12px;
+      border: 1px solid rgba(200, 168, 75, 0.12);
+    }
+
+    .contact-item-icon {
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+
+    .contact-item-text strong {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+
+    .contact-item-text span {
+      font-size: 15px;
+      color: var(--text-body);
+    }
+
+    .contact-cta {
+      background: linear-gradient(135deg, rgba(200,168,75,0.1), rgba(200,168,75,0.05));
+      border: 1px solid rgba(200, 168, 75, 0.25);
+      border-radius: 20px;
+      padding: 40px;
+      text-align: center;
+    }
+
+    .contact-cta h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .contact-cta p {
+      color: var(--text-body);
+      margin-bottom: 28px;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .btn-whatsapp {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: #25D366;
+      color: #fff;
+      padding: 18px 36px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 16px;
+      text-decoration: none;
+      transition: all 0.2s;
+      box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
+      width: 100%;
+      justify-content: center;
+    }
+
+    .btn-whatsapp:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(37, 211, 102, 0.4);
+    }
+
+    /* FOOTER */
+    footer {
+      background: #080f1a;
+      padding: 40px 24px;
+      border-top: 1px solid rgba(200, 168, 75, 0.15);
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .footer-brand img {
+      height: 40px;
+    }
+
+    .footer-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .footer-copy {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* FLOATING WHATSAPP */
+    .float-wa {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 999;
+      background: #25D366;
+      border-radius: 50%;
+      width: 62px;
+      height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(37, 211, 102, 0.45);
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .float-wa:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 30px rgba(37, 211, 102, 0.55);
+    }
+
+    .float-wa svg {
+      width: 32px;
+      height: 32px;
+    }
+
+    /* ANIMATIONS */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      header { padding: 14px 20px; }
+      nav { display: none; }
+      .hamburger { display: flex; }
+
+      .hero { padding: 100px 20px 60px; }
+      .hero-stats { gap: 24px; }
+      .stat-number { font-size: 28px; }
+
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .about-accent-box { bottom: -16px; right: 12px; }
+      .about-visual { padding-bottom: 40px; }
+
+      .contact-grid { grid-template-columns: 1fr; gap: 32px; }
+
+      .footer-inner { flex-direction: column; text-align: center; }
+
+      .section-pad { padding: 60px 20px; }
+    }
+
+    @media (max-width: 480px) {
+      .hero-ctas { flex-direction: column; align-items: stretch; }
+      .btn-primary, .btn-secondary { justify-content: center; }
+      .hero-stats { gap: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-logo">
+    <img src="https://raw.githubusercontent.com/NapsClaw/coolify-sites/main/jf-contabilidade/logo.jpg" alt="JF Contabilidade" onerror="this.style.display='none'">
+    <div class="header-logo-text">
+      <span class="brand">JF Contabilidade</span>
+      <span class="tagline">Soluções Contábeis</span>
+    </div>
+  </div>
+  <nav>
+    <a href="#servicos">Serviços</a>
+    <a href="#sobre">Sobre</a>
+    <a href="#depoimentos">Depoimentos</a>
+    <a href="#contato" class="btn-nav">Fale Conosco</a>
+  </nav>
+  <div class="hamburger" onclick="document.querySelector('nav').style.display = document.querySelector('nav').style.display === 'flex' ? 'none' : 'flex'; document.querySelector('nav').style.flexDirection = 'column'; document.querySelector('nav').style.position = 'absolute'; document.querySelector('nav').style.top = '70px'; document.querySelector('nav').style.left = '0'; document.querySelector('nav').style.right = '0'; document.querySelector('nav').style.background = '#0d1b2e'; document.querySelector('nav').style.padding = '20px 24px'; document.querySelector('nav').style.borderBottom = '1px solid rgba(200,168,75,0.15)';">
+    <span></span><span></span><span></span>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid-pattern"></div>
+  <div class="hero-content">
+    <div class="hero-badge">✦ Escritório de Contabilidade</div>
+    <h1 class="hero-title">
+      Sua empresa em <em>ordem</em>,<br>seu crescimento sem limites
+    </h1>
+    <p class="hero-subtitle">
+      Abertura de empresa, MEI, Imposto de Renda e Consultoria Financeira.<br>
+      Soluções contábeis completas com atendimento personalizado.
+    </p>
+    <div class="hero-ctas">
+      <a href="https://wa.me/558198072917" class="btn-primary" target="_blank">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Falar com Especialista
+      </a>
+      <a href="#servicos" class="btn-secondary">
+        Ver Serviços
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-number">+200</div>
+        <div class="stat-label">Clientes Ativos</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">10+</div>
+        <div class="stat-label">Anos de Experiência</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">98%</div>
+        <div class="stat-label">Satisfação</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section-pad services-bg" id="servicos">
+  <div class="container">
+    <div class="section-eyebrow">O que fazemos</div>
+    <h2 class="section-title">Serviços que impulsionam<br>seu negócio</h2>
+    <div class="gold-line"></div>
+    <p class="section-subtitle">Cuidamos de toda a parte contábil e financeira para você focar no que realmente importa: crescer.</p>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">🏢</div>
+        <h3 class="service-title">Abertura de Empresa</h3>
+        <p class="service-desc">Abrimos sua empresa de forma rápida e segura. Escolha do regime tributário ideal, registro em juntas e obtenção de todos os alvarás necessários.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📋</div>
+        <h3 class="service-title">MEI</h3>
+        <p class="service-desc">Registro e gestão completa do Microempreendedor Individual. Emissão de notas fiscais, declarações anuais e orientações para seu negócio crescer.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📊</div>
+        <h3 class="service-title">Imposto de Renda</h3>
+        <p class="service-desc">Declaração do IR para pessoas físicas e jurídicas. Maximizamos suas restituições e garantimos total conformidade com a Receita Federal.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">💼</div>
+        <h3 class="service-title">Consultoria Financeira</h3>
+        <p class="service-desc">Análise financeira aprofundada do seu negócio. Planejamento tributário, fluxo de caixa e estratégias para aumentar a lucratividade da sua empresa.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section-pad" id="sobre">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-visual">
+        <div class="about-img-wrap">
+          <div class="about-logo-display">
+            <img src="https://raw.githubusercontent.com/NapsClaw/coolify-sites/main/jf-contabilidade/logo.jpg" alt="JF Contabilidade Logo">
+            <div style="color: var(--text-body); font-size: 14px; line-height: 1.6; text-align: center; max-width: 240px;">
+              Excelência e confiança em cada serviço prestado
+            </div>
+          </div>
+        </div>
+        <div class="about-accent-box">
+          10+<small>Anos de<br>Experiência</small>
+        </div>
+      </div>
+      <div>
+        <div class="section-eyebrow">Sobre nós</div>
+        <h2 class="section-title">Contabilidade que você<br>pode confiar</h2>
+        <div class="gold-line"></div>
+        <p style="color: var(--text-body); font-size: 15px; line-height: 1.8; margin-bottom: 24px;">
+          A JF Contabilidade nasceu com o propósito de oferecer soluções contábeis de alto nível com atendimento próximo e personalizado. Acreditamos que cada cliente merece atenção individual e orientação clara.
+        </p>
+        <p style="color: var(--text-body); font-size: 15px; line-height: 1.8; margin-bottom: 28px;">
+          Com mais de uma década de experiência, auxiliamos empresas de todos os portes a manterem sua saúde financeira em dia e crescerem com segurança.
+        </p>
+        <div class="about-features">
+          <div class="about-feature">
+            <div class="about-feature-icon">🎯</div>
+            <div class="about-feature-text">
+              <strong>Atendimento Personalizado</strong>
+              <span>Cada cliente tem um contador dedicado às suas necessidades específicas.</span>
+            </div>
+          </div>
+          <div class="about-feature">
+            <div class="about-feature-icon">⚡</div>
+            <div class="about-feature-text">
+              <strong>Agilidade e Praticidade</strong>
+              <span>Processos otimizados para resolver tudo de forma rápida e digital.</span>
+            </div>
+          </div>
+          <div class="about-feature">
+            <div class="about-feature-icon">🔒</div>
+            <div class="about-feature-text">
+              <strong>Segurança e Conformidade</strong>
+              <span>Total conformidade com a legislação vigente, sem surpresas desagradáveis.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="section-pad process-bg">
+  <div class="container">
+    <div style="text-align: center; margin-bottom: 0;">
+      <div class="section-eyebrow" style="justify-content: center; display: flex;">Como funciona</div>
+      <h2 class="section-title">Simples, rápido e<br>sem complicações</h2>
+      <div class="gold-line" style="margin: 16px auto 0;"></div>
+    </div>
+    <div class="process-steps">
+      <div class="process-step">
+        <div class="step-number">1</div>
+        <h3 class="step-title">Primeiro Contato</h3>
+        <p class="step-desc">Entre em contato via WhatsApp. Explicamos tudo e entendemos as suas necessidades.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-number">2</div>
+        <h3 class="step-title">Análise e Proposta</h3>
+        <p class="step-desc">Analisamos seu perfil e apresentamos a solução mais adequada e o melhor enquadramento tributário.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-number">3</div>
+        <h3 class="step-title">Documentação</h3>
+        <p class="step-desc">Você nos envia os documentos necessários. Cuidamos de toda a burocracia por você.</p>
+      </div>
+      <div class="process-step">
+        <div class="step-number">4</div>
+        <h3 class="step-title">Tudo Resolvido</h3>
+        <p class="step-desc">Finalizamos o processo e você fica tranquilo sabendo que sua empresa está em total conformidade.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section-pad" id="depoimentos">
+  <div class="container">
+    <div class="section-eyebrow">Depoimentos</div>
+    <h2 class="section-title">O que nossos clientes<br>dizem sobre nós</h2>
+    <div class="gold-line"></div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Abri minha empresa em menos de 5 dias com a ajuda da JF Contabilidade. Atendimento excelente, explicaram tudo de forma clara e sem enrolação!"</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">M</div>
+          <div class="author-info">
+            <strong>Marcos Oliveira</strong>
+            <span>Empresário</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Finalmente encontrei um contador que explica tudo de forma simples. Me economizaram bastante no Imposto de Renda e ainda me orientaram muito bem sobre meu MEI."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">A</div>
+          <div class="author-info">
+            <strong>Ana Paula Souza</strong>
+            <span>MEI — Estética</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"A consultoria financeira transformou meu negócio. Hoje tenho clareza total sobre as finanças da empresa e tomo decisões com muito mais segurança."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">R</div>
+          <div class="author-info">
+            <strong>Ricardo Matos</strong>
+            <span>Proprietário — Comércio</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section-pad contact-bg" id="contato">
+  <div class="container">
+    <div class="section-eyebrow">Contato</div>
+    <h2 class="section-title">Vamos conversar<br>sobre seu negócio</h2>
+    <div class="gold-line"></div>
+    <p class="section-subtitle" style="margin-bottom: 40px;">Entre em contato agora mesmo e receba uma consultoria gratuita.</p>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <div class="contact-item">
+          <div class="contact-item-icon">📱</div>
+          <div class="contact-item-text">
+            <strong>WhatsApp</strong>
+            <span>(81) 9807-2917</span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">⏰</div>
+          <div class="contact-item-text">
+            <strong>Horário de Atendimento</strong>
+            <span>Segunda a Sexta: 8h às 18h</span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">💬</div>
+          <div class="contact-item-text">
+            <strong>Resposta Rápida</strong>
+            <span>Respondemos em até 1 hora no horário comercial</span>
+          </div>
+        </div>
+      </div>
+      <div class="contact-cta">
+        <h3>Pronto para começar?</h3>
+        <p>Fale com nossos especialistas agora mesmo pelo WhatsApp. Primeira consultoria totalmente gratuita!</p>
+        <a href="https://wa.me/558198072917?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es!" class="btn-whatsapp" target="_blank">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Falar agora no WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <img src="https://raw.githubusercontent.com/NapsClaw/coolify-sites/main/jf-contabilidade/logo.jpg" alt="JF Contabilidade" onerror="this.style.display='none'">
+      <span class="footer-text">JF Contabilidade</span>
+    </div>
+    <div class="footer-copy">© 2025 JF Contabilidade. Todos os direitos reservados.</div>
+  </div>
+</footer>
+
+<!-- FLOATING WHATSAPP BUTTON -->
+<a href="https://wa.me/558198072917" class="float-wa" target="_blank" aria-label="Falar no WhatsApp">
+  <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+</body>
+</html>
