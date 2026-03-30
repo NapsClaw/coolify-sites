@@ -572,6 +572,78 @@
     box-shadow: 0 6px 20px rgba(37,211,102,0.35);
   }
   .pro-popup-wa:hover { background: #1ea855; transform: translateY(-2px); }
+
+  /* TESTIMONIALS */
+  .testimonials-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .testimonial-card {
+    background: var(--gradient-card);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: var(--radius);
+    padding: 24px;
+    transition: transform 0.2s;
+  }
+  .testimonial-card:hover { transform: translateY(-3px); }
+  .testimonial-stars { color: #D4AF37; font-size: 16px; margin-bottom: 12px; }
+  .testimonial-text {
+    font-size: 14px; color: rgba(255,255,255,0.8);
+    line-height: 1.8; margin-bottom: 16px; font-style: italic;
+  }
+  .testimonial-author { display: flex; align-items: center; gap: 12px; }
+  .testimonial-avatar {
+    width: 42px; height: 42px; border-radius: 50%;
+    object-fit: cover; border: 2px solid rgba(212,175,55,0.3);
+    background: var(--surface2);
+  }
+  .testimonial-name { font-size: 14px; font-weight: 700; }
+  .testimonial-role { font-size: 12px; color: var(--text-muted); }
+
+  /* ADVERTISE */
+  .advertise-section {
+    background: linear-gradient(135deg, #0D0802 0%, #1A0A08 50%, #0D0802 100%);
+    position: relative; overflow: hidden;
+  }
+  .advertise-section::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 60% 50%, rgba(192,57,43,0.15) 0%, transparent 60%);
+  }
+  .advertise-inner { position: relative; z-index: 1; }
+  .advertise-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 20px; margin-bottom: 40px;
+  }
+  .advertise-benefit {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(212,175,55,0.15);
+    border-radius: var(--radius-sm);
+    padding: 20px 16px; text-align: center;
+  }
+  .advertise-benefit-icon { font-size: 32px; margin-bottom: 10px; display: block; }
+  .advertise-benefit h4 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+  .advertise-benefit p { font-size: 12px; color: var(--text-muted); line-height: 1.6; }
+  .advertise-price {
+    text-align: center;
+    background: rgba(212,175,55,0.08);
+    border: 1px solid rgba(212,175,55,0.2);
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    margin-bottom: 28px;
+  }
+  .advertise-price .price-label { font-size: 13px; color: var(--text-muted); margin-bottom: 8px; }
+  .advertise-price .price-value {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 48px; font-weight: 700; color: #D4AF37;
+    line-height: 1;
+  }
+  .advertise-price .price-period { font-size: 14px; color: var(--text-muted); margin-top: 4px; }
+
+  @media (max-width: 768px) {
+    .advertise-grid { grid-template-columns: 1fr; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
@@ -854,11 +926,11 @@
     </div>
     <div class="hero-stats">
       <div>
-        <span class="hero-stat-num">100+</span>
+        <span class="hero-stat-num" id="counter-pros">0</span>
         <span class="hero-stat-label">Profissionais cadastrados</span>
       </div>
       <div>
-        <span class="hero-stat-num">15+</span>
+        <span class="hero-stat-num">20+</span>
         <span class="hero-stat-label">Áreas de atuação</span>
       </div>
       <div>
@@ -866,6 +938,20 @@
         <span class="hero-stat-label">Gratuito para clientes</span>
       </div>
     </div>
+    <script>
+      // Animated counter
+      (function() {
+        var target = 47;
+        var el = document.getElementById('counter-pros');
+        var current = 0;
+        var step = Math.ceil(target / 30);
+        var timer = setInterval(function() {
+          current += step;
+          if (current >= target) { current = target; clearInterval(timer); }
+          el.textContent = current + '+';
+        }, 50);
+      })();
+    </script>
   </div>
 </section>
 
@@ -1580,6 +1666,95 @@ function enviarCadastro(e) {
   window.open("https://wa.me/5561982242096?text=" + msg, "_blank");
 }
 </script>
+
+
+<!-- DEPOIMENTOS -->
+<section class="section" id="depoimentos" style="background: var(--secondary);">
+  <div class="section-inner">
+    <span class="section-label">Depoimentos</span>
+    <h2 class="section-title">O que dizem sobre o Acheaki</h2>
+    <p class="section-subtitle">Clientes e profissionais que já usaram a plataforma.</p>
+    <div class="testimonials-grid">
+
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Encontrei uma fisioterapeuta excelente em menos de 5 minutos! Indicação certeira, atendimento top. Com certeza vou usar sempre."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar" style="display:flex;align-items:center;justify-content:center;font-size:18px;">👩</div>
+          <div>
+            <div class="testimonial-name">Maria Clara</div>
+            <div class="testimonial-role">Cliente • Brasília-DF</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Me cadastrei como eletricista e já na primeira semana recebi 3 contatos de clientes. A plataforma facilita muito!"</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar" style="display:flex;align-items:center;justify-content:center;font-size:18px;">👨</div>
+          <div>
+            <div class="testimonial-name">João Paulo</div>
+            <div class="testimonial-role">Eletricista • Ceilândia-DF</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Precisava de uma diarista de confiança e achei pelo Acheaki. Prático, rápido e sem complicação. Recomendo muito!"</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar" style="display:flex;align-items:center;justify-content:center;font-size:18px;">👩</div>
+          <div>
+            <div class="testimonial-name">Fernanda Lima</div>
+            <div class="testimonial-role">Cliente • Águas Claras-DF</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ANUNCIE AQUI -->
+<section class="section advertise-section" id="anuncie">
+  <div class="section-inner advertise-inner">
+    <span class="section-label">Para Empresas</span>
+    <h2 class="section-title">Anuncie seu negócio no Acheaki</h2>
+    <p class="section-subtitle">Alcance clientes da sua cidade que já estão buscando pelo que você oferece.</p>
+
+    <div class="advertise-grid">
+      <div class="advertise-benefit">
+        <span class="advertise-benefit-icon">📣</span>
+        <h4>Visibilidade real</h4>
+        <p>Sua marca aparece para centenas de pessoas da sua região todos os dias.</p>
+      </div>
+      <div class="advertise-benefit">
+        <span class="advertise-benefit-icon">🎯</span>
+        <h4>Público segmentado</h4>
+        <p>Quem acessa o Acheaki já está buscando serviços — é audiência qualificada.</p>
+      </div>
+      <div class="advertise-benefit">
+        <span class="advertise-benefit-icon">💬</span>
+        <h4>Contato direto</h4>
+        <p>Seu card inclui botão de WhatsApp — o cliente fala direto com você.</p>
+      </div>
+    </div>
+
+    <div class="advertise-price">
+      <div class="price-label">Investimento mensal</div>
+      <div class="price-value">R$49<span style="font-size:24px;">,90</span></div>
+      <div class="price-period">/ mês · Cancele quando quiser</div>
+    </div>
+
+    <div style="text-align:center;">
+      <a href="https://wa.me/5561982242096?text=Olá! Quero anunciar meu negócio no Acheaki. Pode me dar mais informações?" class="btn-primary" target="_blank" style="display:inline-flex;margin:0 auto;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.533 5.853L.057 23.535a.998.998 0 001.08 1.354l5.844-1.529A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.86 0-3.601-.5-5.109-1.371l-.363-.214-3.767.986.995-3.683-.235-.377A9.954 9.954 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+        Quero anunciar meu negócio
+      </a>
+    </div>
+  </div>
+</section>
 
 <!-- FOOTER -->
 <footer>
