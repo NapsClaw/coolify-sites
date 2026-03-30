@@ -457,8 +457,27 @@ function selecionarBranco(btn) {
   document.getElementById('btn-enviar').disabled = false;
 }
 
+function jaVotou() {
+  return localStorage.getItem('pesquisaja_voto_registrado') === '1';
+}
+
+function marcarVotado() {
+  localStorage.setItem('pesquisaja_voto_registrado', '1');
+}
+
+function verificarVotoAnterior() {
+  if (jaVotou()) {
+    document.getElementById('btn-enviar').disabled = true;
+    document.getElementById('btn-enviar').textContent = '✅ Você já participou desta pesquisa';
+    document.getElementById('btn-enviar').style.background = '#6b7280';
+    document.getElementById('btn-enviar').style.boxShadow = 'none';
+    document.querySelectorAll('.candidato-btn, .branco-btn').forEach(b => b.style.pointerEvents = 'none');
+  }
+}
+
 function enviarVoto() {
   if (!candidatoSelecionado) return;
+  if (jaVotou()) { alert('Você já participou desta pesquisa!'); return; }
   const cidade = document.getElementById('cidade').value.trim();
   const faixa = document.getElementById('faixa').value;
   const genero = document.getElementById('genero').value;
@@ -473,7 +492,12 @@ function enviarVoto() {
     `*Gênero:* ${genero}\n\n` +
     `_Participação registrada pelo site pesquisa https://pesquisaja-voto.sparkz.agency_`;
   window.open(`https://wa.me/5513991312275?text=${encodeURIComponent(msg)}`, '_blank');
+  marcarVotado();
+  setTimeout(() => verificarVotoAnterior(), 500);
 }
+
+// Verificar ao carregar a página
+window.addEventListener('DOMContentLoaded', verificarVotoAnterior);
 
 // Simulação de votos em tempo real
 let votos = { c1: 399, c2: 299, c3: 237, c4: 187, c5: 75, branco: 50 };
