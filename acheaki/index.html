@@ -434,13 +434,66 @@
 <body>
 
 <!-- RADIO BAR -->
-<div class="radio-bar">
+<div class="radio-bar" id="radio-bar">
   <div class="radio-live"><span class="radio-dot"></span> Ao vivo</div>
   <span class="radio-name">🎵 Rádio & TV Web Show</span>
-  <a href="https://www.radioetvwebshow.audiohd.com.br/" target="_blank" class="radio-play-btn">
-    ▶ Ouvir Rádio
-  </a>
+  <div style="display:flex;align-items:center;gap:10px;">
+    <button id="radio-toggle" onclick="toggleRadio()"
+      style="background:#D4AF37;color:#0D0802;font-weight:700;font-size:13px;padding:8px 20px;border-radius:50px;border:none;cursor:pointer;transition:all 0.2s;white-space:nowrap;">
+      ⏸ Pausar
+    </button>
+    <span id="radio-status" style="font-size:12px;color:rgba(255,255,255,0.5);">Carregando...</span>
+  </div>
+  <audio id="radio-audio" preload="none">
+    <source src="https://stm19.voxhd.com.br:10164/;" type="audio/mpeg">
+  </audio>
 </div>
+<script>
+  var audio = document.getElementById('radio-audio');
+  var btn = document.getElementById('radio-toggle');
+  var status = document.getElementById('radio-status');
+  var playing = false;
+
+  function tryAutoplay() {
+    audio.play().then(function() {
+      playing = true;
+      btn.textContent = '⏸ Pausar';
+      status.textContent = 'Tocando ao vivo';
+    }).catch(function() {
+      playing = false;
+      btn.textContent = '▶ Ouvir Rádio';
+      status.textContent = 'Clique para ouvir';
+    });
+  }
+
+  function toggleRadio() {
+    if (playing) {
+      audio.pause();
+      playing = false;
+      btn.textContent = '▶ Ouvir Rádio';
+      status.textContent = 'Pausado';
+    } else {
+      audio.play().then(function() {
+        playing = true;
+        btn.textContent = '⏸ Pausar';
+        status.textContent = 'Tocando ao vivo';
+      });
+    }
+  }
+
+  // Try autoplay on load
+  window.addEventListener('load', function() {
+    tryAutoplay();
+  });
+
+  // Also try on first user interaction (fallback for browsers that block autoplay)
+  document.addEventListener('click', function handler() {
+    if (!playing) {
+      tryAutoplay();
+    }
+    document.removeEventListener('click', handler);
+  }, { once: true });
+</script>
 
 <!-- NAV -->
 <nav style="top: 56px;">
