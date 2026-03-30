@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pesquisa Já — Instituto de Pesquisa Eleitoral</title>
+  <meta name="description" content="Pesquisa Já: instituto de pesquisa eleitoral com rigor metodológico, transparência e credibilidade. Acompanhe as últimas pesquisas.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --blue: #1a56db;
+      --blue-dark: #0e3d91;
+      --blue-light: #3b82f6;
+      --black: #0a0a0a;
+      --white: #ffffff;
+      --gray: #f4f6fb;
+      --gray-text: #6b7280;
+      --border: #e5e7eb;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--white); color: var(--black); overflow-x: hidden; }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: var(--black);
+      padding: 16px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 2px solid var(--blue);
+    }
+    .nav-logo {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 18px; font-weight: 900;
+      color: var(--white); letter-spacing: -0.5px;
+    }
+    .nav-logo span { color: var(--blue-light); }
+    .nav-badge {
+      font-size: 10px; font-weight: 600; letter-spacing: 1px;
+      color: rgba(255,255,255,0.4); text-transform: uppercase;
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(160deg, #060c1a 0%, #0a1628 60%, #0e1f3d 100%);
+      display: flex; flex-direction: column;
+      align-items: flex-start; justify-content: center;
+      padding: 100px 24px 60px;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: 0; right: -100px; bottom: 0;
+      width: 300px;
+      background: radial-gradient(circle, rgba(26,86,219,0.15) 0%, transparent 70%);
+    }
+    .hero::after {
+      content: '';
+      position: absolute; bottom: -60px; left: -60px;
+      width: 250px; height: 250px;
+      border: 1px solid rgba(26,86,219,0.2);
+      border-radius: 50%;
+    }
+    .hero-chip {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(26,86,219,0.15); border: 1px solid rgba(26,86,219,0.4);
+      color: var(--blue-light); font-size: 11px; font-weight: 600;
+      letter-spacing: 2px; text-transform: uppercase;
+      padding: 8px 16px; border-radius: 4px; margin-bottom: 24px;
+      position: relative;
+    }
+    .live-dot {
+      width: 7px; height: 7px; background: #22c55e;
+      border-radius: 50%; animation: blink 1.5s infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+    .hero h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(38px, 10vw, 64px);
+      font-weight: 900; color: var(--white);
+      line-height: 1.05; margin-bottom: 20px;
+      letter-spacing: -1px; position: relative;
+    }
+    .hero h1 span { color: var(--blue-light); }
+    .hero p {
+      font-size: 16px; color: rgba(255,255,255,0.6);
+      max-width: 420px; line-height: 1.8; margin-bottom: 40px;
+      position: relative;
+    }
+    .hero-btns { display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 300px; position: relative; }
+    .btn-blue {
+      background: var(--blue); color: var(--white);
+      padding: 17px 28px; border-radius: 6px;
+      font-size: 15px; font-weight: 700;
+      text-decoration: none; text-align: center;
+    }
+    .btn-outline-w {
+      border: 1px solid rgba(255,255,255,0.2); color: var(--white);
+      padding: 16px 28px; border-radius: 6px;
+      font-size: 15px; font-weight: 400;
+      text-decoration: none; text-align: center;
+    }
+
+    /* STATS BAR */
+    .stats-bar {
+      background: var(--blue-dark);
+      padding: 24px;
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+    }
+    .stat { text-align: center; padding: 8px 0; border-right: 1px solid rgba(255,255,255,0.1); }
+    .stat:last-child { border-right: none; }
+    .stat-num { font-family: 'Montserrat', sans-serif; font-size: 26px; font-weight: 900; color: var(--white); }
+    .stat-label { font-size: 10px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1px; margin-top: 3px; }
+
+    /* SECTIONS */
+    .section { padding: 72px 24px; }
+    .section-dark { background: var(--black); }
+    .section-white { background: var(--white); }
+    .section-gray { background: var(--gray); }
+    .tag {
+      display: inline-block;
+      font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      padding: 6px 12px; border-radius: 4px; margin-bottom: 14px;
+    }
+    .tag-blue { background: rgba(26,86,219,0.1); color: var(--blue); }
+    .tag-white { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.5); }
+    .section-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(26px, 7vw, 38px); font-weight: 900;
+      line-height: 1.1; margin-bottom: 12px; letter-spacing: -0.5px;
+    }
+    .title-white { color: var(--white); }
+    .section-sub { font-size: 15px; color: var(--gray-text); line-height: 1.7; max-width: 480px; }
+    .sub-white { color: rgba(255,255,255,0.5); }
+    .divider { width: 36px; height: 3px; background: var(--blue); margin: 14px 0 32px; border-radius: 2px; }
+
+    /* PESQUISAS */
+    .pesquisa-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: 12px; padding: 24px 20px; margin-bottom: 16px;
+      border-left: 4px solid var(--blue);
+    }
+    .pesquisa-title { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+    .pesquisa-meta { font-size: 12px; color: var(--gray-text); margin-bottom: 20px; }
+    .candidato { margin-bottom: 14px; }
+    .cand-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+    .cand-name { font-size: 13px; font-weight: 600; }
+    .cand-pct { font-size: 14px; font-weight: 800; color: var(--blue); }
+    .bar-bg { background: #e5e7eb; border-radius: 50px; height: 8px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 50px; background: var(--blue); transition: width 1.5s ease; }
+    .bar-fill-alt { background: var(--blue-dark); }
+    .bar-fill-gray { background: #9ca3af; }
+    .pesquisa-footer { font-size: 11px; color: var(--gray-text); margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--border); }
+
+    /* METODOLOGIA */
+    .metodo-cards { display: flex; flex-direction: column; gap: 16px; margin-top: 32px; }
+    .metodo-card {
+      background: #0f1a2e; border-radius: 12px; padding: 20px;
+      display: flex; gap: 16px; align-items: flex-start;
+    }
+    .metodo-num {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 28px; font-weight: 900; color: var(--blue-light);
+      min-width: 40px; line-height: 1;
+    }
+    .metodo-title { font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+    .metodo-desc { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.6; }
+
+    /* CONTATO */
+    .contato-section { background: var(--gray); padding: 72px 24px; }
+    .form-group { margin-bottom: 14px; }
+    .form-group label { display: block; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 6px; color: var(--gray-text); }
+    .form-group input, .form-group textarea, .form-group select {
+      width: 100%; padding: 13px 16px;
+      border: 1px solid var(--border); border-radius: 8px;
+      font-size: 15px; font-family: 'Inter', sans-serif;
+      background: var(--white); color: var(--black); outline: none;
+    }
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--blue); }
+    .form-group textarea { min-height: 100px; resize: vertical; }
+    .btn-submit {
+      width: 100%; padding: 17px; background: var(--blue); color: var(--white);
+      border: none; border-radius: 8px; font-size: 15px; font-weight: 700;
+      cursor: pointer; font-family: 'Montserrat', sans-serif; letter-spacing: 0.5px;
+    }
+
+    /* FOOTER */
+    footer { background: var(--black); padding: 48px 24px 28px; }
+    .footer-logo { font-family: 'Montserrat', sans-serif; font-size: 22px; font-weight: 900; color: var(--white); margin-bottom: 8px; }
+    .footer-logo span { color: var(--blue-light); }
+    .footer-sub { font-size: 13px; color: rgba(255,255,255,0.35); margin-bottom: 28px; line-height: 1.6; }
+    .footer-links { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 28px; }
+    .footer-links a { color: rgba(255,255,255,0.5); font-size: 13px; text-decoration: none; }
+    .footer-divider { height: 1px; background: rgba(255,255,255,0.07); margin-bottom: 20px; }
+    .footer-bottom { font-size: 11px; color: rgba(255,255,255,0.2); }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div>
+    <div class="nav-logo">Pesquisa<span>Já</span></div>
+    <div class="nav-badge">Instituto de Pesquisa Eleitoral</div>
+  </div>
+  <a href="#contato" style="background:var(--blue);color:white;padding:9px 18px;border-radius:6px;font-size:13px;font-weight:600;text-decoration:none;">Contato</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-chip"><div class="live-dot"></div>Pesquisas em tempo real</div>
+  <h1>Dados que<br><span>você pode</span><br>confiar</h1>
+  <p>O PesquisaJá é um instituto independente com rigor metodológico, transparência total e resultados que refletem a realidade.</p>
+  <div class="hero-btns">
+    <a href="#pesquisas" class="btn-blue">Ver últimas pesquisas</a>
+    <a href="#metodologia" class="btn-outline-w">Nossa metodologia</a>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat">
+    <div class="stat-num">200+</div>
+    <div class="stat-label">Pesquisas</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">98%</div>
+    <div class="stat-label">Precisão</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">10 anos</div>
+    <div class="stat-label">Experiência</div>
+  </div>
+</div>
+
+<!-- ÚLTIMAS PESQUISAS -->
+<section class="section section-white" id="pesquisas">
+  <div class="tag tag-blue">Resultados</div>
+  <h2 class="section-title">Últimas pesquisas</h2>
+  <div class="divider"></div>
+  <p class="section-sub">Dados atualizados, metodologia registrada no TSE e margem de erro declarada.</p>
+
+  <div style="margin-top: 32px;">
+    <!-- Pesquisa 1 -->
+    <div class="pesquisa-card">
+      <div class="pesquisa-title">Pesquisa Eleitoral — Prefeitura (Exemplo)</div>
+      <div class="pesquisa-meta">📅 Março/2025 &nbsp;|&nbsp; 🎯 Margem de erro: ±3% &nbsp;|&nbsp; 👥 1.200 entrevistados</div>
+      <div class="candidato">
+        <div class="cand-header"><span class="cand-name">Candidato A</span><span class="cand-pct">42%</span></div>
+        <div class="bar-bg"><div class="bar-fill" style="width:42%"></div></div>
+      </div>
+      <div class="candidato">
+        <div class="cand-header"><span class="cand-name">Candidato B</span><span class="cand-pct">31%</span></div>
+        <div class="bar-bg"><div class="bar-fill bar-fill-alt" style="width:31%"></div></div>
+      </div>
+      <div class="candidato">
+        <div class="cand-header"><span class="cand-name">Candidato C</span><span class="cand-pct">18%</span></div>
+        <div class="bar-bg"><div class="bar-fill bar-fill-gray" style="width:18%"></div></div>
+      </div>
+      <div class="candidato">
+        <div class="cand-header"><span class="cand-name">Brancos/Nulos/Indecisos</span><span class="cand-pct">9%</span></div>
+        <div class="bar-bg"><div class="bar-fill bar-fill-gray" style="width:9%;opacity:0.5"></div></div>
+      </div>
+      <div class="pesquisa-footer">Registro TSE: BR-00000/2025 &nbsp;|&nbsp; Contratante: Instituto PesquisaJá &nbsp;|&nbsp; Nível de confiança: 95%</div>
+    </div>
+
+    <!-- Pesquisa 2 -->
+    <div class="pesquisa-card">
+      <div class="pesquisa-title">Pesquisa Eleitoral — Governo do Estado (Exemplo)</div>
+      <div class="pesquisa-meta">📅 Fevereiro/2025 &nbsp;|&nbsp; 🎯 Margem de erro: ±2,5% &nbsp;|&nbsp; 👥 1.500 entrevistados</div>
+      <div class="candidato">
+        <div class="cand-header"><span class="cand-name">Candidato X</span><span class="cand-pct">38%</span></div>
+        <div class="bar-bg"><div class="bar-fill" style="width:38%"></div></div>
+      </div>
+      <div class="candidato">
+        <div class="cand-header"><span class="cand-name">Candidato Y</span><span class="cand-pct">35%</span></div>
+        <div class="bar-bg"><div class="bar-fill bar-fill-alt" style="width:35%"></div></div>
+      </div>
+      <div class="candidato">
+        <div class="cand-header"><span class="cand-name">Candidato Z</span><span class="cand-pct">20%</span></div>
+        <div class="bar-bg"><div class="bar-fill bar-fill-gray" style="width:20%"></div></div>
+      </div>
+      <div class="pesquisa-footer">Registro TSE: BR-00001/2025 &nbsp;|&nbsp; Contratante: Instituto PesquisaJá &nbsp;|&nbsp; Nível de confiança: 95%</div>
+    </div>
+  </div>
+</section>
+
+<!-- METODOLOGIA -->
+<section class="section section-dark" id="metodologia">
+  <div class="tag tag-white">Como fazemos</div>
+  <h2 class="section-title title-white">Nossa metodologia</h2>
+  <div class="divider"></div>
+  <p class="section-sub sub-white">Seguimos rigorosamente as normas do TSE e das principais associações de pesquisa do Brasil.</p>
+  <div class="metodo-cards">
+    <div class="metodo-card">
+      <div class="metodo-num">01</div>
+      <div>
+        <div class="metodo-title">Amostragem Estratificada</div>
+        <div class="metodo-desc">Definimos cotas por gênero, faixa etária, escolaridade e região para garantir representatividade.</div>
+      </div>
+    </div>
+    <div class="metodo-card">
+      <div class="metodo-num">02</div>
+      <div>
+        <div class="metodo-title">Entrevistas Presenciais e Online</div>
+        <div class="metodo-desc">Combinamos coleta presencial (domiciliar e por telefone) com painel online validado, atingindo maior abrangência.</div>
+      </div>
+    </div>
+    <div class="metodo-card">
+      <div class="metodo-num">03</div>
+      <div>
+        <div class="metodo-title">Controle e Validação</div>
+        <div class="metodo-desc">Toda entrevista passa por auditoria interna. 20% das amostras são revalidadas por supervisores independentes.</div>
+      </div>
+    </div>
+    <div class="metodo-card">
+      <div class="metodo-num">04</div>
+      <div>
+        <div class="metodo-title">Registro Obrigatório no TSE</div>
+        <div class="metodo-desc">Todas as pesquisas eleitorais são registradas obrigatoriamente no Tribunal Superior Eleitoral antes da divulgação.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section class="section section-gray">
+  <div class="tag tag-blue">Sobre o instituto</div>
+  <h2 class="section-title">Independência e<br>transparência</h2>
+  <div class="divider"></div>
+  <p class="section-sub" style="margin-bottom: 20px;">O PesquisaJá é um instituto privado, sem vinculação partidária ou ideológica. Nossa única missão é fornecer dados precisos e confiáveis para a sociedade, a mídia e os agentes políticos.</p>
+  <p class="section-sub">Somos registrados no CNPJ, credenciados junto ao TSE e seguimos o Código de Ética da ABEP — Associação Brasileira de Empresas de Pesquisa.</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:36px;">
+    <div style="background:white;border-radius:12px;padding:20px;text-align:center;border:1px solid var(--border);">
+      <div style="font-family:'Montserrat',sans-serif;font-size:32px;font-weight:900;color:var(--blue);">10+</div>
+      <div style="font-size:12px;color:var(--gray-text);margin-top:4px;">Anos de atuação</div>
+    </div>
+    <div style="background:white;border-radius:12px;padding:20px;text-align:center;border:1px solid var(--border);">
+      <div style="font-family:'Montserrat',sans-serif;font-size:32px;font-weight:900;color:var(--blue);">200+</div>
+      <div style="font-size:12px;color:var(--gray-text);margin-top:4px;">Pesquisas registradas</div>
+    </div>
+    <div style="background:white;border-radius:12px;padding:20px;text-align:center;border:1px solid var(--border);">
+      <div style="font-family:'Montserrat',sans-serif;font-size:32px;font-weight:900;color:var(--blue);">50+</div>
+      <div style="font-size:12px;color:var(--gray-text);margin-top:4px;">Municípios atendidos</div>
+    </div>
+    <div style="background:white;border-radius:12px;padding:20px;text-align:center;border:1px solid var(--border);">
+      <div style="font-family:'Montserrat',sans-serif;font-size:32px;font-weight:900;color:var(--blue);">95%</div>
+      <div style="font-size:12px;color:var(--gray-text);margin-top:4px;">Nível de confiança</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section class="contato-section" id="contato">
+  <div class="tag tag-blue">Fale conosco</div>
+  <h2 class="section-title">Entre em contato</h2>
+  <div class="divider"></div>
+  <p class="section-sub" style="margin-bottom: 28px;">Quer contratar uma pesquisa, tirar dúvidas ou falar com nossa equipe? Preencha o formulário.</p>
+  <form onsubmit="enviarContato(event)">
+    <div class="form-group">
+      <label>Nome completo</label>
+      <input type="text" placeholder="Seu nome" required>
+    </div>
+    <div class="form-group">
+      <label>E-mail</label>
+      <input type="email" placeholder="seu@email.com" required>
+    </div>
+    <div class="form-group">
+      <label>WhatsApp</label>
+      <input type="tel" placeholder="(00) 00000-0000">
+    </div>
+    <div class="form-group">
+      <label>Assunto</label>
+      <select>
+        <option>Contratar pesquisa eleitoral</option>
+        <option>Pesquisa de opinião / satisfação</option>
+        <option>Parcerias e imprensa</option>
+        <option>Outros</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Mensagem</label>
+      <textarea placeholder="Descreva sua necessidade..."></textarea>
+    </div>
+    <button type="submit" class="btn-submit">Enviar mensagem</button>
+  </form>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Pesquisa<span>Já</span></div>
+  <p class="footer-sub">Instituto independente de pesquisa eleitoral e de opinião.<br>Transparência, rigor e credibilidade desde 2015.</p>
+  <div class="footer-links">
+    <a href="#pesquisas">Pesquisas</a>
+    <a href="#metodologia">Metodologia</a>
+    <a href="#contato">Contato</a>
+  </div>
+  <div class="footer-divider"></div>
+  <p class="footer-bottom">© 2025 PesquisaJá Instituto de Pesquisa. CNPJ: 00.000.000/0001-00 — Todos os direitos reservados.</p>
+</footer>
+
+<script>
+function enviarContato(e) {
+  e.preventDefault();
+  const form = e.target;
+  const nome = form.querySelector('input[type="text"]').value;
+  const tel = form.querySelector('input[type="tel"]').value;
+  const msg = `Olá! Me chamo ${nome} e gostaria de falar com o PesquisaJá. Meu contato: ${tel}`;
+  window.open(`https://wa.me/5513991312275?text=${encodeURIComponent(msg)}`, '_blank');
+}
+</script>
+
+</body>
+</html>
