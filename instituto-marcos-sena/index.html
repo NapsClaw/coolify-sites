@@ -4,1049 +4,615 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>IMASAS — Instituto Marcos Sena de Assistência Social</title>
-<meta name="description" content="Instituto Marcos Sena de Assistência Social (IMASAS): combatendo a fome e apoiando famílias em vulnerabilidade em Alagoas. 2.954 pessoas atendidas. Faça sua doação via PIX.">
-<meta name="keywords" content="IMASAS, Instituto Marcos Sena, assistência social, doação, ONG, Alagoas, São José da Laje, combate à fome">
-<meta property="og:title" content="IMASAS — Instituto Marcos Sena de Assistência Social">
-<meta property="og:description" content="2.954 famílias atendidas. Doe agora e transforme vidas em Alagoas.">
+<meta name="description" content="Instituto Marcos Sena de Assistência Social (IMASAS): 17 anos transformando vidas em Alagoas. 2.954 pessoas atendidas. Alimentação, saúde, educação, dependência química. Doe via PIX.">
+<meta name="keywords" content="IMASAS, Instituto Marcos Sena, assistência social, doação, ONG, Alagoas, São José da Laje">
+<meta property="og:title" content="IMASAS — 17 anos transformando vidas">
+<meta property="og:description" content="2.954 pessoas atendidas, 2.389 cirurgias realizadas. Doe agora e faça parte desta missão.">
 <meta property="og:image" content="https://www.institutomarcossena.com.br/assets/hero_uploaded-Cv4lZ3B9.jpg">
 <meta property="og:type" content="website">
 <link rel="icon" href="https://www.institutomarcossena.com.br/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --green-deep: #0e1f0c;
-    --green-dark: #152111;
-    --green-mid: #1e3018;
-    --green-accent: #2d5a22;
-    --green-light: #4a8c3a;
-    --gold: #d4a017;
-    --gold-light: #e8b82a;
-    --white: #f8f5f0;
-    --white-soft: #ede9e2;
-    --text-muted: #b8c4b0;
-    --orange: #e07820;
-    --red-warn: #c0392b;
-  }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    background: var(--green-deep);
-    color: var(--white);
-    overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  /* ── NAV ── */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    background: rgba(14,31,12,0.92);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(212,160,23,0.15);
-    padding: 14px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-  }
-
-  .nav-logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-  }
-  .nav-logo img {
-    width: 36px; height: 36px;
-    border-radius: 50%;
-    object-fit: cover;
-  }
-  .nav-logo-text {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--gold);
-    line-height: 1.2;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-  .nav-logo-sub {
-    font-size: 10px;
-    color: var(--text-muted);
-    font-weight: 400;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-  }
-
-  .nav-cta {
-    background: var(--gold);
-    color: var(--green-deep);
-    font-weight: 700;
-    font-size: 13px;
-    padding: 10px 20px;
-    border-radius: 30px;
-    text-decoration: none;
-    white-space: nowrap;
-    transition: background 0.2s, transform 0.2s;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .nav-cta:hover { background: var(--gold-light); transform: scale(1.03); }
-
-  /* ── HERO ── */
-  .hero {
-    position: relative;
-    min-height: 100svh;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    overflow: hidden;
-  }
-
-  .hero-bg {
-    position: absolute;
-    inset: 0;
-    background-image: url('https://www.institutomarcossena.com.br/assets/hero_uploaded-Cv4lZ3B9.jpg');
-    background-size: cover;
-    background-position: center top;
-    transform: scale(1.04);
-    transition: transform 8s ease-out;
-  }
-  .hero-bg.loaded { transform: scale(1); }
-
-  .hero-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      to bottom,
-      rgba(14,31,12,0.3) 0%,
-      rgba(14,31,12,0.1) 40%,
-      rgba(14,31,12,0.85) 75%,
-      rgba(14,31,12,0.98) 100%
-    );
-  }
-
-  .hero-content {
-    position: relative;
-    z-index: 2;
-    padding: 80px 24px 40px;
-    max-width: 680px;
-  }
-
-  .hero-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(212,160,23,0.15);
-    border: 1px solid rgba(212,160,23,0.4);
-    color: var(--gold-light);
-    font-size: 11px;
-    font-weight: 700;
-    padding: 6px 14px;
-    border-radius: 30px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-  }
-
-  .hero-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(36px, 8vw, 68px);
-    font-weight: 900;
-    line-height: 1.05;
-    color: var(--white);
-    margin-bottom: 16px;
-  }
-
-  .hero-title .highlight {
-    color: var(--gold);
-    display: block;
-  }
-
-  .hero-subtitle {
-    font-size: 16px;
-    line-height: 1.6;
-    color: rgba(248,245,240,0.8);
-    margin-bottom: 32px;
-    max-width: 520px;
-  }
-
-  .hero-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    margin-bottom: 40px;
-  }
-
-  .btn-primary {
-    background: var(--gold);
-    color: var(--green-deep);
-    font-weight: 700;
-    font-size: 15px;
-    padding: 14px 28px;
-    border-radius: 40px;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.2s;
-    min-height: 50px;
-  }
-  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(212,160,23,0.4); }
-
-  .btn-secondary {
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.25);
-    color: var(--white);
-    font-weight: 600;
-    font-size: 14px;
-    padding: 14px 24px;
-    border-radius: 40px;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.2s;
-    min-height: 50px;
-  }
-  .btn-secondary:hover { background: rgba(255,255,255,0.18); transform: translateY(-2px); }
-
-  /* ── STATS BAR ── */
-  .stats-bar {
-    background: var(--green-mid);
-    border-top: 1px solid rgba(212,160,23,0.2);
-    border-bottom: 1px solid rgba(212,160,23,0.1);
-    padding: 24px 20px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-  }
-
-  .stat-item {
-    text-align: center;
-    padding: 8px 4px;
-  }
-
-  .stat-number {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(24px, 6vw, 40px);
-    font-weight: 800;
-    color: var(--gold);
-    line-height: 1;
-    margin-bottom: 4px;
-  }
-
-  .stat-label {
-    font-size: 11px;
-    color: var(--text-muted);
-    font-weight: 500;
-    line-height: 1.3;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-  }
-
-  /* ── SECTION COMMON ── */
-  section { padding: 56px 20px; }
-
-  .section-tag {
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--gold);
-    margin-bottom: 10px;
-    display: block;
-  }
-
-  .section-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(26px, 5.5vw, 42px);
-    font-weight: 800;
-    color: var(--white);
-    line-height: 1.15;
-    margin-bottom: 14px;
-  }
-
-  .section-body {
-    font-size: 15px;
-    line-height: 1.7;
-    color: var(--text-muted);
-    max-width: 560px;
-  }
-
-  /* ── MISSION ── */
-  .mission {
-    background: var(--green-dark);
-  }
-
-  .mission-inner {
-    max-width: 720px;
-    margin: 0 auto;
-  }
-
-  .mission-quote {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(18px, 4vw, 26px);
-    font-weight: 700;
-    color: var(--white);
-    line-height: 1.45;
-    font-style: italic;
-    border-left: 3px solid var(--gold);
-    padding-left: 20px;
-    margin: 24px 0;
-  }
-
-  .mission-highlight {
-    background: rgba(212,160,23,0.08);
-    border: 1px solid rgba(212,160,23,0.2);
-    border-radius: 12px;
-    padding: 18px 20px;
-    margin-top: 24px;
-    font-size: 14px;
-    color: rgba(248,245,240,0.85);
-    line-height: 1.6;
-  }
-
-  /* ── AREAS ── */
-  .areas {
-    background: var(--green-deep);
-  }
-
-  .areas-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 14px;
-    margin-top: 32px;
-  }
-
-  .area-card {
-    background: var(--green-mid);
-    border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 16px;
-    padding: 22px 20px;
-    display: flex;
-    align-items: flex-start;
-    gap: 16px;
-    transition: border-color 0.2s, transform 0.2s;
-  }
-  .area-card:hover { border-color: rgba(212,160,23,0.3); transform: translateX(4px); }
-
-  .area-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: 12px;
-    background: rgba(212,160,23,0.12);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 22px;
-    flex-shrink: 0;
-  }
-
-  .area-card h3 {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--white);
-    margin-bottom: 5px;
-  }
-
-  .area-card p {
-    font-size: 13px;
-    color: var(--text-muted);
-    line-height: 1.55;
-  }
-
-  /* ── GALLERY ── */
-  .gallery {
-    background: var(--green-dark);
-    padding-bottom: 0;
-  }
-
-  .gallery-scroll {
-    display: flex;
-    gap: 12px;
-    overflow-x: auto;
-    padding: 24px 20px 32px;
-    margin: 0 -20px;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
-  }
-  .gallery-scroll::-webkit-scrollbar { display: none; }
-
-  .gallery-item {
-    flex-shrink: 0;
-    width: 220px;
-    height: 260px;
-    border-radius: 14px;
-    overflow: hidden;
-    position: relative;
-  }
-
-  .gallery-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.4s ease;
-  }
-  .gallery-item:hover img { transform: scale(1.06); }
-
-  .gallery-item::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(14,31,12,0.5) 0%, transparent 50%);
-    pointer-events: none;
-  }
-
-  /* ── DONATE ── */
-  .donate {
-    background: linear-gradient(135deg, var(--green-deep) 0%, var(--green-mid) 100%);
-    position: relative;
-    overflow: hidden;
-  }
-
-  .donate::before {
-    content: '';
-    position: absolute;
-    top: -60px; right: -60px;
-    width: 300px; height: 300px;
-    background: radial-gradient(circle, rgba(212,160,23,0.08) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .donate-inner {
-    max-width: 560px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 1;
-  }
-
-  .pix-cards {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 12px;
-    margin-top: 28px;
-  }
-
-  .pix-card {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(212,160,23,0.25);
-    border-radius: 16px;
-    padding: 18px 20px;
-  }
-
-  .pix-label {
-    font-size: 10px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--gold);
-    margin-bottom: 6px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .pix-value {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--white);
-    letter-spacing: 0.02em;
-    word-break: break-all;
-  }
-
-  .copy-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    margin-top: 10px;
-    background: rgba(212,160,23,0.12);
-    border: 1px solid rgba(212,160,23,0.3);
-    color: var(--gold-light);
-    font-size: 12px;
-    font-weight: 600;
-    padding: 7px 14px;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: all 0.2s;
-    border: none;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-  }
-  .copy-btn:hover { background: rgba(212,160,23,0.22); }
-  .copy-btn.copied { color: #4caf50; }
-
-  .bank-section {
-    margin-top: 28px;
-  }
-
-  .bank-title {
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: 12px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .bank-title::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: rgba(255,255,255,0.1);
-  }
-
-  .bank-cards {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-
-  .bank-card {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 14px;
-    padding: 16px 18px;
-  }
-
-  .bank-name {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--white);
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .bank-code {
-    background: rgba(255,255,255,0.08);
-    font-size: 11px;
-    padding: 2px 8px;
-    border-radius: 6px;
-    color: var(--text-muted);
-    font-weight: 600;
-  }
-
-  .bank-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 6px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.05);
-    font-size: 13px;
-  }
-  .bank-row:last-child { border-bottom: none; }
-  .bank-row-label { color: var(--text-muted); font-size: 11px; }
-  .bank-row-value { color: var(--white); font-weight: 600; }
-
-  /* ── CNPJ ── */
-  .cnpj-box {
-    margin-top: 24px;
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 12px;
-    padding: 14px 18px;
-    font-size: 13px;
-    color: var(--text-muted);
-    line-height: 1.6;
-  }
-  .cnpj-box strong { color: var(--white); }
-
-  /* ── ABOUT ── */
-  .about {
-    background: var(--green-dark);
-  }
-
-  .about-photo {
-    width: 100%;
-    height: 260px;
-    object-fit: cover;
-    border-radius: 18px;
-    margin-bottom: 28px;
-  }
-
-  /* ── CONTACT ── */
-  .contact {
-    background: var(--green-mid);
-  }
-
-  .contact-items {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    margin-top: 28px;
-  }
-
-  .contact-item {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.07);
-    border-radius: 12px;
-    padding: 14px 16px;
-    text-decoration: none;
-    color: var(--white);
-    transition: border-color 0.2s, transform 0.2s;
-  }
-  .contact-item:hover { border-color: rgba(212,160,23,0.3); transform: translateX(4px); }
-
-  .contact-icon {
-    width: 40px; height: 40px;
-    border-radius: 10px;
-    background: rgba(212,160,23,0.1);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 18px;
-    flex-shrink: 0;
-  }
-
-  .contact-item-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
-  .contact-item-value { font-size: 14px; font-weight: 600; color: var(--white); }
-
-  .whatsapp-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    background: #25D366;
-    color: #fff;
-    font-weight: 700;
-    font-size: 16px;
-    padding: 16px 24px;
-    border-radius: 40px;
-    text-decoration: none;
-    margin-top: 24px;
-    transition: all 0.2s;
-    min-height: 56px;
-  }
-  .whatsapp-btn:hover { background: #1fb859; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,211,102,0.3); }
-
-  /* ── FOOTER ── */
-  footer {
-    background: var(--green-deep);
-    border-top: 1px solid rgba(255,255,255,0.07);
-    padding: 32px 20px;
-    text-align: center;
-  }
-
-  .footer-logo-img {
-    width: 50px; height: 50px;
-    border-radius: 50%;
-    object-fit: cover;
-    margin: 0 auto 14px;
-    display: block;
-  }
-
-  .footer-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--white);
-    margin-bottom: 4px;
-  }
-
-  .footer-sub {
-    font-size: 12px;
-    color: var(--text-muted);
-    margin-bottom: 20px;
-    line-height: 1.5;
-  }
-
-  .footer-links {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 16px;
-    margin-bottom: 20px;
-  }
-
-  .footer-links a {
-    color: var(--text-muted);
-    text-decoration: none;
-    font-size: 13px;
-    transition: color 0.2s;
-  }
-  .footer-links a:hover { color: var(--gold); }
-
-  .footer-copy {
-    font-size: 11px;
-    color: rgba(184,196,176,0.5);
-  }
-
-  /* ── FLOATING CTA ── */
-  .float-donate {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 200;
-    background: var(--gold);
-    color: var(--green-deep);
-    font-weight: 700;
-    font-size: 14px;
-    padding: 14px 22px;
-    border-radius: 40px;
-    text-decoration: none;
-    box-shadow: 0 4px 20px rgba(212,160,23,0.5);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.2s;
-    white-space: nowrap;
-  }
-  .float-donate:hover { background: var(--gold-light); transform: translateY(-3px); box-shadow: 0 8px 28px rgba(212,160,23,0.6); }
-
-  /* ── ANIMATIONS ── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .fade-up {
-    opacity: 0;
-    transform: translateY(24px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
-  }
-  .fade-up.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .hero-content > * {
-    animation: fadeUp 0.7s ease both;
-  }
-  .hero-content .hero-badge { animation-delay: 0.1s; }
-  .hero-content .hero-title { animation-delay: 0.25s; }
-  .hero-content .hero-subtitle { animation-delay: 0.4s; }
-  .hero-content .hero-actions { animation-delay: 0.55s; }
-
-  /* ── DESKTOP ── */
-  @media (min-width: 768px) {
-    section { padding: 72px 32px; }
-    .areas-grid { grid-template-columns: repeat(2, 1fr); }
-    .pix-cards { grid-template-columns: repeat(2, 1fr); }
-    .bank-cards { grid-template-columns: repeat(2, 1fr); }
-    .stats-bar { grid-template-columns: repeat(3, 1fr); gap: 20px; padding: 32px 40px; }
-    .stat-number { font-size: 44px; }
-    nav { padding: 16px 40px; }
-    .hero-content { padding: 100px 40px 60px; }
-  }
-
-  @media (min-width: 1024px) {
-    .areas-grid { grid-template-columns: repeat(3, 1fr); }
-    .about-inner {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 48px;
-      align-items: center;
-      max-width: 960px;
-      margin: 0 auto;
-    }
-    .about-photo { margin-bottom: 0; height: 400px; }
-  }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #0a1a08;
+  --bg2: #0e2010;
+  --bg3: #122614;
+  --bg4: #1a3018;
+  --green: #2d5a22;
+  --green-light: #4a8c3a;
+  --gold: #d4a017;
+  --gold2: #e8b82a;
+  --white: #f5f2ec;
+  --muted: #a8baa0;
+  --orange: #e07820;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--bg);
+  color: var(--white);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(10,26,8,0.95);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(212,160,23,0.18);
+  padding: 13px 20px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.nav-brand img { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; }
+.nav-name { font-size: 12px; font-weight: 800; color: var(--gold); text-transform: uppercase; letter-spacing: .06em; line-height: 1.2; }
+.nav-sub { font-size: 10px; color: var(--muted); font-weight: 400; }
+.nav-btn {
+  background: var(--gold); color: var(--bg); font-weight: 800; font-size: 13px;
+  padding: 10px 20px; border-radius: 30px; text-decoration: none;
+  display: flex; align-items: center; gap: 6px; transition: .2s;
+  white-space: nowrap;
+}
+.nav-btn:hover { background: var(--gold2); transform: scale(1.04); }
+
+/* HERO */
+.hero {
+  position: relative; min-height: 100svh;
+  display: flex; flex-direction: column; justify-content: flex-end; overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background: url('https://www.institutomarcossena.com.br/assets/hero_uploaded-Cv4lZ3B9.jpg') center top / cover no-repeat;
+}
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, rgba(10,26,8,.25) 0%, rgba(10,26,8,.1) 35%, rgba(10,26,8,.88) 72%, rgba(10,26,8,1) 100%);
+}
+.hero-content { position: relative; z-index: 2; padding: 90px 22px 44px; max-width: 700px; }
+.hero-years {
+  display: inline-flex; align-items: center; gap: 7px; margin-bottom: 18px;
+  background: rgba(212,160,23,.12); border: 1px solid rgba(212,160,23,.4);
+  color: var(--gold2); font-size: 11px; font-weight: 700;
+  padding: 6px 14px; border-radius: 30px; letter-spacing: .1em; text-transform: uppercase;
+}
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(38px, 9vw, 72px);
+  font-weight: 900; line-height: 1.04; color: var(--white); margin-bottom: 14px;
+}
+.hero-title em { color: var(--gold); font-style: italic; display: block; }
+.hero-desc {
+  font-size: 15px; line-height: 1.65; color: rgba(245,242,236,.82);
+  margin-bottom: 30px; max-width: 500px;
+}
+.hero-btns { display: flex; flex-wrap: wrap; gap: 11px; }
+.btn-gold {
+  background: var(--gold); color: var(--bg); font-weight: 800; font-size: 15px;
+  padding: 14px 28px; border-radius: 40px; text-decoration: none;
+  display: inline-flex; align-items: center; gap: 8px; transition: .2s; min-height: 50px;
+}
+.btn-gold:hover { background: var(--gold2); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(212,160,23,.45); }
+.btn-ghost {
+  background: rgba(255,255,255,.09); border: 1px solid rgba(255,255,255,.22);
+  color: var(--white); font-weight: 600; font-size: 14px;
+  padding: 14px 24px; border-radius: 40px; text-decoration: none;
+  display: inline-flex; align-items: center; gap: 8px; transition: .2s; min-height: 50px;
+}
+.btn-ghost:hover { background: rgba(255,255,255,.16); transform: translateY(-2px); }
+
+/* STATS */
+.stats {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  background: var(--bg2); border-top: 1px solid rgba(212,160,23,.2); border-bottom: 1px solid rgba(212,160,23,.1);
+}
+.stat { text-align: center; padding: 22px 8px; border-right: 1px solid rgba(255,255,255,.06); }
+.stat:last-child { border-right: none; }
+.stat-n {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(26px, 6.5vw, 44px); font-weight: 900; color: var(--gold); line-height: 1; margin-bottom: 5px;
+}
+.stat-l { font-size: 10px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .07em; line-height: 1.35; }
+
+/* SECTIONS */
+section { padding: 56px 20px; }
+.tag { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; color: var(--gold); margin-bottom: 10px; display: block; }
+.sec-title { font-family: 'Playfair Display', serif; font-size: clamp(26px, 6vw, 42px); font-weight: 800; color: var(--white); line-height: 1.14; margin-bottom: 14px; }
+.sec-body { font-size: 15px; line-height: 1.7; color: var(--muted); max-width: 580px; }
+
+/* MISSION */
+.mission { background: var(--bg2); }
+.mission-inner { max-width: 720px; margin: 0 auto; }
+.quote {
+  font-family: 'Playfair Display', serif; font-style: italic;
+  font-size: clamp(17px, 4vw, 24px); color: var(--white); line-height: 1.5;
+  border-left: 3px solid var(--gold); padding-left: 20px; margin: 26px 0;
+}
+.quote small { display: block; font-size: .65em; color: var(--muted); font-style: normal; font-weight: 700; margin-top: 10px; }
+.mission-box {
+  background: rgba(212,160,23,.07); border: 1px solid rgba(212,160,23,.2);
+  border-radius: 14px; padding: 18px 20px; margin-top: 22px;
+  font-size: 14px; color: rgba(245,242,236,.85); line-height: 1.65;
+}
+
+/* AREAS */
+.areas { background: var(--bg); }
+.areas-grid { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 30px; }
+.area {
+  background: var(--bg3); border: 1px solid rgba(255,255,255,.06);
+  border-radius: 16px; padding: 20px 18px;
+  display: flex; align-items: flex-start; gap: 15px; transition: .2s;
+}
+.area:hover { border-color: rgba(212,160,23,.3); transform: translateX(4px); }
+.area-ico {
+  width: 46px; height: 46px; border-radius: 12px;
+  background: rgba(212,160,23,.1); display: flex; align-items: center; justify-content: center;
+  font-size: 22px; flex-shrink: 0;
+}
+.area h3 { font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 5px; }
+.area p { font-size: 13px; color: var(--muted); line-height: 1.55; }
+.area-new { border-color: rgba(212,160,23,.25) !important; }
+.area-new .area-ico { background: rgba(212,160,23,.18); }
+.area-badge {
+  display: inline-block; background: var(--gold); color: var(--bg);
+  font-size: 9px; font-weight: 800; padding: 2px 8px; border-radius: 20px;
+  text-transform: uppercase; letter-spacing: .08em; margin-left: 8px; vertical-align: middle;
+}
+
+/* TRANSPARENCY — PRESTAÇÃO DE CONTAS */
+.transparency { background: var(--bg2); }
+.transp-inner { max-width: 720px; margin: 0 auto; }
+.transp-grid { display: grid; grid-template-columns: 1fr; gap: 14px; margin-top: 28px; }
+.transp-card {
+  background: var(--bg3); border: 1px solid rgba(255,255,255,.06);
+  border-radius: 16px; padding: 20px 18px;
+  display: flex; align-items: flex-start; gap: 14px;
+}
+.transp-card .ico {
+  width: 44px; height: 44px; border-radius: 12px; flex-shrink: 0;
+  background: rgba(74,140,58,.2); display: flex; align-items: center; justify-content: center; font-size: 20px;
+}
+.transp-card h3 { font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+.transp-card p { font-size: 13px; color: var(--muted); line-height: 1.55; }
+.transp-highlight {
+  background: rgba(74,140,58,.12); border: 1px solid rgba(74,140,58,.3);
+  border-radius: 12px; padding: 16px 18px; margin-top: 24px;
+  font-size: 14px; color: rgba(245,242,236,.9); line-height: 1.65;
+  display: flex; gap: 12px; align-items: flex-start;
+}
+.transp-highlight span { font-size: 22px; flex-shrink: 0; }
+
+/* GALLERY */
+.gallery-sec { background: var(--bg); }
+.gallery-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin: 22px 0 4px; }
+.gtab {
+  background: var(--bg3); border: 1px solid rgba(255,255,255,.1);
+  color: var(--muted); font-size: 12px; font-weight: 600;
+  padding: 7px 16px; border-radius: 30px; cursor: pointer; transition: .2s;
+  border: none; font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.gtab.active, .gtab:hover { background: var(--gold); color: var(--bg); }
+.gallery-scroll {
+  display: flex; gap: 10px; overflow-x: auto;
+  padding: 16px 20px 28px; margin: 0 -20px;
+  scrollbar-width: none; -webkit-overflow-scrolling: touch;
+}
+.gallery-scroll::-webkit-scrollbar { display: none; }
+.gitem {
+  flex-shrink: 0; width: 200px; height: 240px;
+  border-radius: 14px; overflow: hidden; position: relative; cursor: pointer;
+}
+.gitem img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease; display: block; }
+.gitem:hover img { transform: scale(1.07); }
+.gitem::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(10,26,8,.55) 0%, transparent 55%);
+  pointer-events: none;
+}
+.gallery-count {
+  text-align: center; font-size: 13px; color: var(--muted); margin-top: 6px;
+}
+
+/* LIGHTBOX */
+.lightbox {
+  position: fixed; inset: 0; z-index: 999;
+  background: rgba(0,0,0,.93);
+  display: none; align-items: center; justify-content: center; flex-direction: column;
+}
+.lightbox.open { display: flex; }
+.lightbox img { max-width: 94vw; max-height: 80vh; border-radius: 10px; object-fit: contain; }
+.lb-close {
+  position: absolute; top: 18px; right: 18px;
+  background: rgba(255,255,255,.12); border: none; color: var(--white);
+  font-size: 22px; width: 44px; height: 44px; border-radius: 50%;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  font-family: sans-serif; transition: .2s;
+}
+.lb-close:hover { background: rgba(255,255,255,.22); }
+.lb-nav {
+  display: flex; gap: 16px; margin-top: 18px;
+}
+.lb-btn {
+  background: rgba(255,255,255,.1); border: none; color: var(--white);
+  font-size: 20px; width: 48px; height: 48px; border-radius: 50%;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  font-family: sans-serif; transition: .2s;
+}
+.lb-btn:hover { background: rgba(255,255,255,.2); }
+
+/* DONATE */
+.donate-sec { background: var(--bg2); }
+.donate-inner { max-width: 560px; margin: 0 auto; }
+.pix-grid { display: grid; grid-template-columns: 1fr; gap: 11px; margin-top: 26px; }
+.pix-card {
+  background: rgba(255,255,255,.04); border: 1px solid rgba(212,160,23,.25);
+  border-radius: 14px; padding: 16px 18px;
+}
+.pix-lbl { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--gold); margin-bottom: 6px; display: flex; align-items: center; gap: 5px; }
+.pix-val { font-size: 15px; font-weight: 700; color: var(--white); word-break: break-all; }
+.copy-btn {
+  display: inline-flex; align-items: center; gap: 5px; margin-top: 9px;
+  background: rgba(212,160,23,.1); color: var(--gold2); font-size: 12px; font-weight: 600;
+  padding: 6px 14px; border-radius: 20px; cursor: pointer; transition: .2s;
+  border: 1px solid rgba(212,160,23,.25); font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.copy-btn:hover { background: rgba(212,160,23,.2); }
+.copy-btn.ok { color: #4caf50; border-color: #4caf50; }
+
+.bank-sep { font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin: 26px 0 12px; display: flex; align-items: center; gap: 10px; }
+.bank-sep::after { content: ''; flex: 1; height: 1px; background: rgba(255,255,255,.08); }
+.bank-cards { display: grid; grid-template-columns: 1fr; gap: 11px; }
+.bank-card { background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.07); border-radius: 12px; padding: 15px 16px; }
+.bank-nm { font-size: 13px; font-weight: 700; color: var(--white); margin-bottom: 9px; display: flex; justify-content: space-between; align-items: center; }
+.bank-code { background: rgba(255,255,255,.08); font-size: 10px; padding: 2px 7px; border-radius: 5px; color: var(--muted); font-weight: 600; }
+.bank-row { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,.05); font-size: 12px; }
+.bank-row:last-child { border-bottom: none; }
+.brl { color: var(--muted); } .brv { color: var(--white); font-weight: 600; }
+.cnpj-note { margin-top: 20px; background: rgba(255,255,255,.03); border: 1px solid rgba(255,255,255,.06); border-radius: 10px; padding: 12px 15px; font-size: 12px; color: var(--muted); line-height: 1.6; }
+.cnpj-note strong { color: var(--white); }
+
+/* ABOUT */
+.about-sec { background: var(--bg); }
+.about-photo { width: 100%; height: 260px; object-fit: cover; border-radius: 18px; margin-bottom: 26px; }
+.about-p { font-size: 14px; line-height: 1.75; color: var(--muted); margin-bottom: 14px; }
+
+/* WA BUTTON */
+.wa-btn {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  background: #25D366; color: #fff; font-weight: 700; font-size: 16px;
+  padding: 15px 24px; border-radius: 40px; text-decoration: none; margin-top: 22px;
+  transition: .2s; min-height: 54px;
+}
+.wa-btn:hover { background: #1fb859; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,211,102,.3); }
+
+/* CONTACT */
+.contact-sec { background: var(--bg2); }
+.contact-list { display: flex; flex-direction: column; gap: 12px; margin-top: 24px; }
+.contact-item {
+  display: flex; align-items: center; gap: 13px;
+  background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.07);
+  border-radius: 12px; padding: 13px 15px; text-decoration: none; color: var(--white); transition: .2s;
+}
+.contact-item:hover { border-color: rgba(212,160,23,.3); transform: translateX(4px); }
+.c-ico { width: 38px; height: 38px; border-radius: 10px; background: rgba(212,160,23,.1); display: flex; align-items: center; justify-content: center; font-size: 17px; flex-shrink: 0; }
+.c-lbl { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .07em; }
+.c-val { font-size: 13px; font-weight: 600; color: var(--white); }
+
+/* FOOTER */
+footer { background: var(--bg); border-top: 1px solid rgba(255,255,255,.06); padding: 30px 20px; text-align: center; }
+.ft-logo { width: 46px; height: 46px; border-radius: 50%; object-fit: cover; margin: 0 auto 12px; display: block; }
+.ft-name { font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+.ft-sub { font-size: 11px; color: var(--muted); margin-bottom: 18px; line-height: 1.5; }
+.ft-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin-bottom: 16px; }
+.ft-links a { color: var(--muted); text-decoration: none; font-size: 12px; transition: .2s; }
+.ft-links a:hover { color: var(--gold); }
+.ft-copy { font-size: 10px; color: rgba(168,186,160,.4); }
+
+/* FLOAT */
+.float-btn {
+  position: fixed; bottom: 20px; right: 20px; z-index: 200;
+  background: var(--gold); color: var(--bg); font-weight: 800; font-size: 13px;
+  padding: 13px 20px; border-radius: 40px; text-decoration: none;
+  box-shadow: 0 4px 20px rgba(212,160,23,.55);
+  display: flex; align-items: center; gap: 7px; transition: .2s; white-space: nowrap;
+}
+.float-btn:hover { background: var(--gold2); transform: translateY(-3px); box-shadow: 0 8px 28px rgba(212,160,23,.65); }
+
+/* ANIMATE */
+.up { opacity: 0; transform: translateY(22px); transition: opacity .6s ease, transform .6s ease; }
+.up.vis { opacity: 1; transform: none; }
+
+/* RESPONSIVE */
+@media (min-width: 600px) {
+  .pix-grid { grid-template-columns: repeat(2, 1fr); }
+  .bank-cards { grid-template-columns: repeat(2, 1fr); }
+  .transp-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 768px) {
+  section { padding: 72px 32px; }
+  .areas-grid { grid-template-columns: repeat(2, 1fr); }
+  nav { padding: 15px 36px; }
+  .hero-content { padding: 100px 36px 60px; }
+}
+@media (min-width: 1024px) {
+  .areas-grid { grid-template-columns: repeat(3, 1fr); }
+  .about-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; max-width: 960px; margin: 0 auto; }
+  .about-photo { margin-bottom: 0; height: 420px; }
+}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
-  <a href="#top" class="nav-logo">
-    <img src="https://www.institutomarcossena.com.br/logo.png" alt="IMASAS Logo" loading="lazy">
+  <a href="#top" class="nav-brand">
+    <img src="https://www.institutomarcossena.com.br/logo.png" alt="IMASAS">
     <div>
-      <div class="nav-logo-text">IMASAS</div>
-      <div class="nav-logo-sub">Assistência Social</div>
+      <div class="nav-name">IMASAS</div>
+      <div class="nav-sub">Assistência Social · 17 anos</div>
     </div>
   </a>
-  <a href="#doe" class="nav-cta">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/></svg>
-    Doe Agora
-  </a>
+  <a href="#doe" class="nav-btn">❤️ Doe Agora</a>
 </nav>
 
-<!-- HERO -->
 <section class="hero" id="top">
-  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-bg"></div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <span class="hero-badge">
-      <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-      São José da Laje, Alagoas · Desde 2015
-    </span>
+    <div class="hero-years">⭐ 17 anos servindo · São José da Laje, AL</div>
     <h1 class="hero-title">
-      Transformando vidas
-      <span class="highlight">com amor e fé</span>
+      Todo mundo que chega
+      <em>é atendido.</em>
     </h1>
-    <p class="hero-subtitle">
-      O IMASAS combate a fome, cuida da saúde e apoia famílias em vulnerabilidade social — sem vínculo político. Só amor a Deus.
+    <p class="hero-desc">
+      O IMASAS serve a quem precisa — sem exigir filiação política, sem cobrar nada, sem dizer "não". Só fé, trabalho e amor ao próximo.
     </p>
-    <div class="hero-actions">
-      <a href="#doe" class="btn-primary">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/></svg>
-        Faça sua doação
-      </a>
-      <a href="#sobre" class="btn-secondary">
-        Conheça o Instituto
-      </a>
+    <div class="hero-btns">
+      <a href="#doe" class="btn-gold">❤️ Faça sua doação</a>
+      <a href="#transparencia" class="btn-ghost">📸 Ver prestação de contas</a>
     </div>
   </div>
 </section>
 
-<!-- STATS BAR -->
-<div class="stats-bar">
-  <div class="stat-item">
-    <div class="stat-number">2.954</div>
-    <div class="stat-label">Pessoas<br>Atendidas</div>
+<div class="stats">
+  <div class="stat">
+    <div class="stat-n">2.954</div>
+    <div class="stat-l">Pessoas<br>Atendidas</div>
   </div>
-  <div class="stat-item">
-    <div class="stat-number">2.389</div>
-    <div class="stat-label">Cirurgias<br>Realizadas</div>
+  <div class="stat">
+    <div class="stat-n">2.389</div>
+    <div class="stat-l">Cirurgias<br>Realizadas</div>
   </div>
-  <div class="stat-item">
-    <div class="stat-number">38</div>
-    <div class="stat-label">Histórias de<br>Transformação</div>
+  <div class="stat">
+    <div class="stat-n">17</div>
+    <div class="stat-l">Anos de<br>Missão</div>
   </div>
 </div>
 
-
 <!-- MISSION -->
 <section class="mission">
-  <div class="mission-inner fade-up">
-    <span class="section-tag">Nossa Missão</span>
-    <h2 class="section-title">A fome não espera.<br>Nossa ação também não.</h2>
-    <blockquote class="mission-quote">
-      "Não temos vínculo político com ninguém — só amor a Deus, e Deus abre as portas para a gente fazer o bem."
-      <br><small style="font-size:0.7em;color:var(--text-muted);font-style:normal;font-weight:600;margin-top:8px;display:block;">— Marcos Sena, Fundador do IMASAS</small>
+  <div class="mission-inner">
+    <span class="tag up">Nossa Missão</span>
+    <h2 class="sec-title up">A fome não espera.<br>Nossa ação também não.</h2>
+    <blockquote class="quote up">
+      "Político só atende quem votou nele. Eu não trabalho assim. Eu trabalho para Deus — atendendo todo mundo que chega na minha porta."
+      <small>— Marcos Sena, fundador do IMASAS · 17 anos de missão após 3 AVCs</small>
     </blockquote>
-    <p class="section-body">
-      O Instituto Marcos Sena de Assistência Social atua na linha de frente contra a insegurança alimentar e a vulnerabilidade social em Alagoas. Com parceiros como a CONAB, hospitais e médicos voluntários, chegamos onde o Estado não chega.
+    <p class="sec-body up">
+      Com médicos e hospitais parceiros, parceria com a CONAB para alimentos e com a Fazenda Esperança para dependência química, o IMASAS chegou onde o Estado não chegou — sem verba pública, sem vínculo político.
     </p>
-    <div class="mission-highlight">
-      🏥 Já encaminhamos <strong style="color:var(--white)">2.389 cirurgias eletivas</strong> (incluindo cirurgias de catarata) por meio de parcerias — adquiridas com rifas e doações. Graças a Deus, nunca precisamos dizer "não" a quem nos procura.
+    <div class="mission-box up">
+      🏥 Já encaminhamos e realizamos <strong style="color:var(--white)">2.389 cirurgias eletivas</strong> — incluindo cirurgias de catarata — por meio de rifas e doações. <strong style="color:var(--white)">Nunca precisamos dizer "não" a quem nos procurou.</strong>
     </div>
   </div>
 </section>
 
 <!-- AREAS -->
-<section class="areas">
-  <span class="section-tag fade-up">Áreas de Atuação</span>
-  <h2 class="section-title fade-up">Cuidamos de quem<br>mais precisa</h2>
+<section class="areas" id="areas">
+  <span class="tag up">O que fazemos</span>
+  <h2 class="sec-title up">Cuidamos de quem<br>mais precisa</h2>
   <div class="areas-grid">
-    <div class="area-card fade-up">
-      <div class="area-icon">🍽️</div>
+    <div class="area up">
+      <div class="area-ico">🍽️</div>
       <div>
         <h3>Alimentação</h3>
-        <p>Distribuição de cestas básicas em parceria com a CONAB. Garantimos alimento de qualidade para 2.954 pessoas cadastradas.</p>
+        <p>Distribuição de cestas básicas em parceria com a CONAB. Cada entrega é fotografada como prestação de contas.</p>
       </div>
     </div>
-    <div class="area-card fade-up">
-      <div class="area-icon">🏥</div>
+    <div class="area up">
+      <div class="area-ico">🏥</div>
       <div>
-        <h3>Saúde</h3>
-        <p>Atendimento médico, encaminhamento para exames e cirurgias, campanhas de vacinação — com hospitais e médicos parceiros.</p>
+        <h3>Saúde e Cirurgias</h3>
+        <p>Médicos e hospitais amigos que atendem gratuitamente. Já foram 2.389 cirurgias realizadas. Acompanhamos cada paciente.</p>
       </div>
     </div>
-    <div class="area-card fade-up">
-      <div class="area-icon">📚</div>
+    <div class="area up">
+      <div class="area-ico">📚</div>
       <div>
-        <h3>Educação</h3>
-        <p>Apoio educacional para crianças e jovens, formando cidadãos conscientes e preparados para o futuro.</p>
+        <h3>Educação e Reforço</h3>
+        <p>Apoio escolar para crianças. Reforço escolar para que nenhuma criança fique para trás por falta de suporte.</p>
       </div>
     </div>
-    <div class="area-card fade-up">
-      <div class="area-icon">💚</div>
+    <div class="area area-new up">
+      <div class="area-ico">🎸</div>
+      <div>
+        <h3>Escola de Música <span class="area-badge">Novo</span></h3>
+        <p>Aulas de violão para tirar jovens da rua. A música como caminho de dignidade e esperança para nossa juventude.</p>
+      </div>
+    </div>
+    <div class="area up">
+      <div class="area-ico">💚</div>
       <div>
         <h3>Dependência Química</h3>
-        <p>Duas chácaras (feminina e masculina) em parceria com a Fazenda Esperança para recuperação de dependentes químicos.</p>
+        <p>Duas chácaras de recuperação (feminina e masculina) em parceria com a Fazenda Esperança para quem quer recomeçar.</p>
       </div>
     </div>
-    <div class="area-card fade-up">
-      <div class="area-icon">⚖️</div>
+    <div class="area up">
+      <div class="area-ico">⚖️</div>
       <div>
         <h3>Assistência Jurídica</h3>
-        <p>Assistência legal gratuita, orientação sobre direitos e recuperação de documentos para restaurar a cidadania.</p>
-      </div>
-    </div>
-    <div class="area-card fade-up">
-      <div class="area-icon">🤝</div>
-      <div>
-        <h3>Assistência Social</h3>
-        <p>Assistente social e suporte psicológico para fortalecer a base familiar e criar um lar mais harmonioso.</p>
+        <p>Orientação legal gratuita e recuperação de documentos — restaurando a cidadania de quem não tem como pagar.</p>
       </div>
     </div>
   </div>
 </section>
+
+<!-- TRANSPARÊNCIA -->
+<section class="transparency" id="transparencia">
+  <div class="transp-inner">
+    <span class="tag up">Prestação de Contas</span>
+    <h2 class="sec-title up">Tudo documentado<br>com fotos</h2>
+    <p class="sec-body up">Cada ação do IMASAS é registrada. Quando a comida chega, fotografamos a entrega. Quando acompanhamos alguém ao hospital, fotografamos. Transparência total para quem doa.</p>
+    <div class="transp-grid">
+      <div class="transp-card up">
+        <div class="ico">📦</div>
+        <div>
+          <h3>Entrega de Alimentos</h3>
+          <p>Fotos de cada cesta distribuída, mostrando quem recebeu e onde. Nenhuma entrega sem registro.</p>
+        </div>
+      </div>
+      <div class="transp-card up">
+        <div class="ico">🚑</div>
+        <div>
+          <h3>Acompanhamento Médico</h3>
+          <p>Registros do hospital, da cirurgia, da recuperação. Cada paciente encaminhado tem sua história documentada.</p>
+        </div>
+      </div>
+      <div class="transp-card up">
+        <div class="ico">📊</div>
+        <div>
+          <h3>Cadastro das Famílias</h3>
+          <p>2.244 dependentes e 710 titulares cadastrados com respeito e privacidade. Banco de dados atualizado.</p>
+        </div>
+      </div>
+      <div class="transp-card up">
+        <div class="ico">🤝</div>
+        <div>
+          <h3>Parcerias Verificadas</h3>
+          <p>CONAB, Fazenda Esperança, médicos e hospitais parceiros. Tudo com documentação e acordo formal.</p>
+        </div>
+      </div>
+    </div>
+    <div class="transp-highlight up">
+      <span>🚫</span>
+      <div><strong style="color:var(--white)">Sem vínculo político.</strong> O IMASAS nunca recebeu verba pública nem está ligado a nenhum partido. As ações são financiadas exclusivamente por doações e rifas. Sua doação vai direto para quem precisa.</div>
+    </div>
+  </div>
+</section>
+
 
 <!-- GALLERY -->
-<section class="gallery">
-  <span class="section-tag fade-up">Galeria</span>
-  <h2 class="section-title fade-up">38 razões para<br>acreditar</h2>
-  <p class="section-body fade-up">Cada imagem é uma história real de superação, esperança e amor. Veja o impacto do seu apoio na vida de quem mais precisa.</p>
-  <div class="gallery-scroll">
-    <div class="gallery-item">
-      <img src="https://www.institutomarcossena.com.br/assets/1-DN2s6mj-.jpg" alt="Impacto IMASAS" loading="lazy">
-    </div>
-    <div class="gallery-item">
-      <img src="https://www.institutomarcossena.com.br/assets/2-D2mFup5O.jpg" alt="Família atendida" loading="lazy">
-    </div>
-    <div class="gallery-item">
-      <img src="https://www.institutomarcossena.com.br/assets/3-CY8pyswP.jpg" alt="Distribuição de alimentos" loading="lazy">
-    </div>
-    <div class="gallery-item">
-      <img src="https://www.institutomarcossena.com.br/assets/10-C72118_F.jpg" alt="Atendimento social" loading="lazy">
-    </div>
-    <div class="gallery-item">
-      <img src="https://www.institutomarcossena.com.br/assets/11-BiFZDsEo.jpg" alt="Crianças atendidas" loading="lazy">
-    </div>
-    <div class="gallery-item">
-      <img src="https://www.institutomarcossena.com.br/assets/12-DvEZzRsU.jpg" alt="Voluntários" loading="lazy">
-    </div>
-    <div class="gallery-item">
-      <img src="https://www.institutomarcossena.com.br/assets/13-C-_WQRtU.jpg" alt="Ação social" loading="lazy">
-    </div>
-    <div class="gallery-item">
-      <img src="https://www.institutomarcossena.com.br/assets/14-XaOFERSh.jpg" alt="Comunidade" loading="lazy">
-    </div>
-    <div class="gallery-item">
-      <img src="https://www.institutomarcossena.com.br/assets/15-D_81NDVy.jpg" alt="Saúde" loading="lazy">
-    </div>
-    <div class="gallery-item">
-      <img src="https://www.institutomarcossena.com.br/assets/16-D512Fnae.jpg" alt="Educação" loading="lazy">
-    </div>
-    <div class="gallery-item">
-      <img src="https://www.institutomarcossena.com.br/assets/17-CVzHPPU7.jpg" alt="Parceria" loading="lazy">
-    </div>
-    <div class="gallery-item">
-      <img src="https://www.institutomarcossena.com.br/assets/20-DVSoUzwf.jpg" alt="Atendimento" loading="lazy">
-    </div>
+<section class="gallery-sec" id="galeria">
+  <span class="tag up">Galeria</span>
+  <h2 class="sec-title up">38 histórias reais<br>de transformação</h2>
+  <p class="sec-body up">Cada foto é prova do trabalho do IMASAS. Toque para ampliar.</p>
+  <div class="gallery-scroll" id="galleryScroll">
+    <div class="gitem" onclick="openLb(0)"><img src="https://www.institutomarcossena.com.br/assets/1-DN2s6mj-.jpg" alt="Ação 1" loading="lazy"></div>
+    <div class="gitem" onclick="openLb(1)"><img src="https://www.institutomarcossena.com.br/assets/2-D2mFup5O.jpg" alt="Ação 2" loading="lazy"></div>
+    <div class="gitem" onclick="openLb(2)"><img src="https://www.institutomarcossena.com.br/assets/3-CY8pyswP.jpg" alt="Ação 3" loading="lazy"></div>
+    <div class="gitem" onclick="openLb(3)"><img src="https://www.institutomarcossena.com.br/assets/10-C72118_F.jpg" alt="Ação 10" loading="lazy"></div>
+    <div class="gitem" onclick="openLb(4)"><img src="https://www.institutomarcossena.com.br/assets/11-BiFZDsEo.jpg" alt="Ação 11" loading="lazy"></div>
+    <div class="gitem" onclick="openLb(5)"><img src="https://www.institutomarcossena.com.br/assets/12-DvEZzRsU.jpg" alt="Ação 12" loading="lazy"></div>
+    <div class="gitem" onclick="openLb(6)"><img src="https://www.institutomarcossena.com.br/assets/13-C-_WQRtU.jpg" alt="Ação 13" loading="lazy"></div>
+    <div class="gitem" onclick="openLb(7)"><img src="https://www.institutomarcossena.com.br/assets/14-XaOFERSh.jpg" alt="Ação 14" loading="lazy"></div>
+    <div class="gitem" onclick="openLb(8)"><img src="https://www.institutomarcossena.com.br/assets/15-D_81NDVy.jpg" alt="Ação 15" loading="lazy"></div>
+    <div class="gitem" onclick="openLb(9)"><img src="https://www.institutomarcossena.com.br/assets/16-D512Fnae.jpg" alt="Ação 16" loading="lazy"></div>
+    <div class="gitem" onclick="openLb(10)"><img src="https://www.institutomarcossena.com.br/assets/17-CVzHPPU7.jpg" alt="Ação 17" loading="lazy"></div>
+    <div class="gitem" onclick="openLb(11)"><img src="https://www.institutomarcossena.com.br/assets/18-CRzW35g_.jpg" alt="Ação 18" loading="lazy"></div>
+    <div class="gitem" onclick="openLb(12)"><img src="https://www.institutomarcossena.com.br/assets/19-DBaSqB20.jpg" alt="Ação 19" loading="lazy"></div>
+    <div class="gitem" onclick="openLb(13)"><img src="https://www.institutomarcossena.com.br/assets/20-DVSoUzwf.jpg" alt="Ação 20" loading="lazy"></div>
+    <div class="gitem" onclick="openLb(14)"><img src="https://www.institutomarcossena.com.br/assets/21-CowK7rpe.jpg" alt="Ação 21" loading="lazy"></div>
+    <div class="gitem" onclick="openLb(15)"><img src="https://www.institutomarcossena.com.br/assets/22-DWDEBbo6.jpg" alt="Ação 22" loading="lazy"></div>
+    <div class="gitem" onclick="openLb(16)"><img src="https://www.institutomarcossena.com.br/assets/23-BdCXHRJC.jpg" alt="Ação 23" loading="lazy"></div>
+    <div class="gitem" onclick="openLb(17)"><img src="https://www.institutomarcossena.com.br/assets/24-DdYixkO1.jpg" alt="Ação 24" loading="lazy"></div>
+    <div class="gitem" onclick="openLb(18)"><img src="https://www.institutomarcossena.com.br/assets/25-BPiB1WFz.jpg" alt="Ação 25" loading="lazy"></div>
+    <div class="gitem" onclick="openLb(19)"><img src="https://www.institutomarcossena.com.br/assets/26-F2P3IA43.jpg" alt="Ação 26" loading="lazy"></div>
+    <div class="gitem" onclick="openLb(20)"><img src="https://www.institutomarcossena.com.br/assets/27-B-pukGN9.jpg" alt="Ação 27" loading="lazy"></div>
+    <div class="gitem" onclick="openLb(21)"><img src="https://www.institutomarcossena.com.br/assets/28-DOBj4wIP.jpg" alt="Ação 28" loading="lazy"></div>
+    <div class="gitem" onclick="openLb(22)"><img src="https://www.institutomarcossena.com.br/assets/29-CmM-uJok.jpg" alt="Ação 29" loading="lazy"></div>
+    <div class="gitem" onclick="openLb(23)"><img src="https://www.institutomarcossena.com.br/assets/30-B5-zcOvz.jpg" alt="Ação 30" loading="lazy"></div>
   </div>
+  <p class="gallery-count up">↔ Deslize para ver mais · 38 fotos no total</p>
 </section>
 
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLb(event)">
+  <button class="lb-close" onclick="closeLb()">✕</button>
+  <img id="lbImg" src="" alt="Foto IMASAS">
+  <div class="lb-nav">
+    <button class="lb-btn" onclick="lbPrev(event)">‹</button>
+    <button class="lb-btn" onclick="lbNext(event)">›</button>
+  </div>
+</div>
 
 <!-- DONATE -->
-<section class="donate" id="doe">
+<section class="donate-sec" id="doe">
   <div class="donate-inner">
-    <span class="section-tag fade-up">Doe Agora</span>
-    <h2 class="section-title fade-up">Cada doação é<br>um prato de comida</h2>
-    <p class="section-body fade-up">
-      Sua contribuição chega diretamente às 2.954 pessoas que dependem do IMASAS. Escolha a forma que preferir:
-    </p>
+    <span class="tag up">Doe Agora</span>
+    <h2 class="sec-title up">Cada real é<br>um prato de comida</h2>
+    <p class="sec-body up">Sua doação chega diretamente às 2.954 pessoas cadastradas no IMASAS. Escolha a forma mais fácil:</p>
 
-    <div class="pix-cards">
-      <div class="pix-card fade-up">
-        <div class="pix-label">
-          <span>🟢</span> Chave PIX — CPF
-        </div>
-        <div class="pix-value">214.882.904-15</div>
-        <button class="copy-btn" onclick="copyText(this,'214.882.904-15')">
-          📋 Copiar chave
-        </button>
+    <div class="pix-grid">
+      <div class="pix-card up">
+        <div class="pix-lbl">🟢 Chave PIX — CPF</div>
+        <div class="pix-val">214.882.904-15</div>
+        <button class="copy-btn" onclick="cp(this,'214.882.904-15')">📋 Copiar</button>
       </div>
-      <div class="pix-card fade-up">
-        <div class="pix-label">
-          <span>🟢</span> Chave PIX — E-mail
-        </div>
-        <div class="pix-value" style="font-size:13px;">institutoimasascontato@gmail.com</div>
-        <button class="copy-btn" onclick="copyText(this,'institutoimasascontato@gmail.com')">
-          📋 Copiar chave
-        </button>
+      <div class="pix-card up">
+        <div class="pix-lbl">🟢 Chave PIX — E-mail</div>
+        <div class="pix-val" style="font-size:12px;">institutoimasascontato@gmail.com</div>
+        <button class="copy-btn" onclick="cp(this,'institutoimasascontato@gmail.com')">📋 Copiar</button>
       </div>
-      <div class="pix-card fade-up">
-        <div class="pix-label">
-          <span>🟢</span> Chave PIX — Celular
-        </div>
-        <div class="pix-value">(82) 99179-0517</div>
-        <button class="copy-btn" onclick="copyText(this,'82991790517')">
-          📋 Copiar chave
-        </button>
+      <div class="pix-card up">
+        <div class="pix-lbl">🟢 Chave PIX — Celular</div>
+        <div class="pix-val">(82) 99179-0517</div>
+        <button class="copy-btn" onclick="cp(this,'82991790517')">📋 Copiar</button>
       </div>
     </div>
 
-    <div class="bank-section fade-up">
-      <div class="bank-title">Transferência Bancária</div>
-      <div class="bank-cards">
-        <div class="bank-card">
-          <div class="bank-name">
-            Caixa Econômica Federal
-            <span class="bank-code">104</span>
-          </div>
-          <div class="bank-row">
-            <span class="bank-row-label">Favorecido</span>
-            <span class="bank-row-value">José Marcos de Sena Vieira</span>
-          </div>
-          <div class="bank-row">
-            <span class="bank-row-label">Agência</span>
-            <span class="bank-row-value">4321</span>
-          </div>
-          <div class="bank-row">
-            <span class="bank-row-label">Operação</span>
-            <span class="bank-row-value">013</span>
-          </div>
-          <div class="bank-row">
-            <span class="bank-row-label">Conta Poupança</span>
-            <span class="bank-row-value">98765-4</span>
-          </div>
-        </div>
-        <div class="bank-card">
-          <div class="bank-name">
-            RecargaPay
-            <span class="bank-code">323</span>
-          </div>
-          <div class="bank-row">
-            <span class="bank-row-label">Favorecido</span>
-            <span class="bank-row-value" style="font-size:12px;">Instituto Marcos Sena de Assist. Social</span>
-          </div>
-          <div class="bank-row">
-            <span class="bank-row-label">CNPJ</span>
-            <span class="bank-row-value">12.515.450/0001-04</span>
-          </div>
-          <div class="bank-row">
-            <span class="bank-row-label">Agência</span>
-            <span class="bank-row-value">1</span>
-          </div>
-          <div class="bank-row">
-            <span class="bank-row-label">Conta</span>
-            <span class="bank-row-value">3181875229</span>
-          </div>
-        </div>
+    <div class="bank-sep">Transferência Bancária</div>
+    <div class="bank-cards">
+      <div class="bank-card up">
+        <div class="bank-nm">Caixa Econômica Federal <span class="bank-code">104</span></div>
+        <div class="bank-row"><span class="brl">Favorecido</span><span class="brv">José Marcos de Sena Vieira</span></div>
+        <div class="bank-row"><span class="brl">Agência</span><span class="brv">4321</span></div>
+        <div class="bank-row"><span class="brl">Operação</span><span class="brv">013</span></div>
+        <div class="bank-row"><span class="brl">Conta Poupança</span><span class="brv">98765-4</span></div>
+      </div>
+      <div class="bank-card up">
+        <div class="bank-nm">RecargaPay <span class="bank-code">323</span></div>
+        <div class="bank-row"><span class="brl">Favorecido</span><span class="brv" style="font-size:11px;">IMASAS</span></div>
+        <div class="bank-row"><span class="brl">CNPJ</span><span class="brv">12.515.450/0001-04</span></div>
+        <div class="bank-row"><span class="brl">Agência</span><span class="brv">1</span></div>
+        <div class="bank-row"><span class="brl">Conta</span><span class="brv">3181875229</span></div>
       </div>
     </div>
-
-    <div class="cnpj-box fade-up">
-      <strong>CNPJ:</strong> 12.515.450/0001-04 — Instituto Marcos Sena de Assistência Social (IMASAS)<br>
-      <strong>Sem vínculo político.</strong> Suas doações são 100% revertidas para as famílias atendidas.
+    <div class="cnpj-note up">
+      <strong>CNPJ:</strong> 12.515.450/0001-04 · Instituto Marcos Sena de Assistência Social<br>
+      <strong>Sem vínculo político.</strong> 100% das doações são revertidas para as famílias atendidas.
     </div>
   </div>
 </section>
 
 <!-- ABOUT -->
-<section class="about" id="sobre">
+<section class="about-sec" id="sobre">
   <div class="about-inner">
     <div>
       <img src="https://www.institutomarcossena.com.br/assets/about_hero_uploaded-DoKG6f5z.jpg" alt="Instituto Marcos Sena" class="about-photo" loading="lazy">
     </div>
     <div>
-      <span class="section-tag fade-up">Sobre o Instituto</span>
-      <h2 class="section-title fade-up">Lutando por uma<br>igualdade social</h2>
-      <p class="section-body fade-up">
-        O IMASAS foi fundado por Marcos Sena com o propósito simples e poderoso de fazer a diferença. Cadastramos cada família com respeito e privacidade, registrando 2.244 dependentes e 710 titulares — totalizando 2.954 pessoas que encontraram amparo no instituto.
-      </p>
-      <p class="section-body fade-up" style="margin-top:14px;">
-        "Esta quantidade me assusta, pois demonstra a grande necessidade que existe em nossa comunidade — tornando nosso trabalho uma verdadeira missão de Deus."
-      </p>
-      <div style="margin-top:28px;" class="fade-up">
-        <a href="https://wa.me/5582991790517?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20o%20Instituto%20Marcos%20Sena." class="whatsapp-btn" target="_blank" rel="noopener">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+      <span class="tag up">Sobre o Fundador</span>
+      <h2 class="sec-title up">17 anos de missão.<br>3 AVCs. Nunca parou.</h2>
+      <p class="about-p up">Marcos Sena fundou o IMASAS há 17 anos com um propósito simples: atender todo mundo que bater na porta. Mesmo após sofrer 3 AVCs e perder parte dos movimentos, continuou — porque, nas suas palavras, <em>"a missão que Deus me deu"</em>.</p>
+      <p class="about-p up">Hoje o instituto tem 2.954 pessoas cadastradas, realizou 2.389 cirurgias, distribui alimentos via CONAB, mantém duas chácaras de recuperação para dependentes químicos, oferece reforço escolar e está montando uma escola de música para tirar jovens da rua.</p>
+      <p class="about-p up">Tudo isso sem verba pública, sem vínculo político — só com doações, rifas, médicos voluntários e fé.</p>
+      <div class="up">
+        <a href="https://wa.me/5582991790517?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20o%20IMASAS." class="wa-btn" target="_blank" rel="noopener">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
           Falar pelo WhatsApp
         </a>
       </div>
@@ -1055,101 +621,123 @@
 </section>
 
 <!-- CONTACT -->
-<section class="contact" id="contato">
-  <span class="section-tag fade-up">Contato</span>
-  <h2 class="section-title fade-up">Fale conosco</h2>
-  <div class="contact-items">
-    <a href="tel:+5582991790517" class="contact-item fade-up">
-      <div class="contact-icon">📞</div>
-      <div>
-        <div class="contact-item-label">Telefone / WhatsApp</div>
-        <div class="contact-item-value">(82) 99179-0517</div>
-      </div>
+<section class="contact-sec" id="contato">
+  <span class="tag up">Contato</span>
+  <h2 class="sec-title up">Fale conosco</h2>
+  <div class="contact-list">
+    <a href="tel:+5582991790517" class="contact-item up">
+      <div class="c-ico">📞</div>
+      <div><div class="c-lbl">Telefone / WhatsApp</div><div class="c-val">(82) 99179-0517</div></div>
     </a>
-    <a href="mailto:institutoimasascontato@gmail.com" class="contact-item fade-up">
-      <div class="contact-icon">✉️</div>
-      <div>
-        <div class="contact-item-label">E-mail</div>
-        <div class="contact-item-value">institutoimasascontato@gmail.com</div>
-      </div>
+    <a href="mailto:institutoimasascontato@gmail.com" class="contact-item up">
+      <div class="c-ico">✉️</div>
+      <div><div class="c-lbl">E-mail</div><div class="c-val">institutoimasascontato@gmail.com</div></div>
     </a>
-    <div class="contact-item fade-up" style="cursor:default;">
-      <div class="contact-icon">📍</div>
-      <div>
-        <div class="contact-item-label">Localização</div>
-        <div class="contact-item-value">São José da Laje, Alagoas (AL)</div>
-      </div>
-    </div>
-    <div class="contact-item fade-up" style="cursor:default;">
-      <div class="contact-icon">🏢</div>
-      <div>
-        <div class="contact-item-label">CNPJ</div>
-        <div class="contact-item-value">12.515.450/0001-04</div>
-      </div>
+    <div class="contact-item up" style="cursor:default;">
+      <div class="c-ico">📍</div>
+      <div><div class="c-lbl">Localização</div><div class="c-val">São José da Laje, Alagoas (AL)</div></div>
     </div>
   </div>
-  <a href="https://wa.me/5582991790517?text=Olá!%20Gostaria%20de%20falar%20com%20o%20Instituto%20Marcos%20Sena." class="whatsapp-btn fade-up" target="_blank" rel="noopener">
-    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+  <a href="https://wa.me/5582991790517?text=Olá!%20Gostaria%20de%20apoiar%20o%20IMASAS." class="wa-btn up" target="_blank" rel="noopener">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
     Conversar no WhatsApp
   </a>
 </section>
 
-<!-- FOOTER -->
 <footer>
-  <img src="https://www.institutomarcossena.com.br/logo.png" alt="IMASAS" class="footer-logo-img" loading="lazy">
-  <div class="footer-name">Instituto Marcos Sena de Assistência Social</div>
-  <div class="footer-sub">IMASAS · CNPJ 12.515.450/0001-04<br>São José da Laje, Alagoas — Sem vínculo político.</div>
-  <div class="footer-links">
+  <img src="https://www.institutomarcossena.com.br/logo.png" alt="IMASAS" class="ft-logo" loading="lazy">
+  <div class="ft-name">Instituto Marcos Sena de Assistência Social</div>
+  <div class="ft-sub">IMASAS · CNPJ 12.515.450/0001-04 · São José da Laje, AL<br>Sem vínculo político · 17 anos servindo</div>
+  <div class="ft-links">
     <a href="#top">Início</a>
-    <a href="#sobre">Sobre</a>
+    <a href="#areas">O que fazemos</a>
+    <a href="#transparencia">Prestação de Contas</a>
+    <a href="#galeria">Galeria</a>
     <a href="#doe">Doe Agora</a>
+    <a href="#sobre">Sobre</a>
     <a href="#contato">Contato</a>
   </div>
-  <div class="footer-copy">© 2025 IMASAS — Instituto Marcos Sena de Assistência Social. Todos os direitos reservados.</div>
+  <div class="ft-copy">© 2025 IMASAS — Instituto Marcos Sena de Assistência Social. Todos os direitos reservados.</div>
 </footer>
 
-<!-- FLOATING DONATE BUTTON -->
-<a href="#doe" class="float-donate" aria-label="Doe agora">
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402 0-3.791 3.068-5.191 5.281-5.191 1.312 0 4.151.501 5.719 4.457 1.59-3.968 4.464-4.447 5.726-4.447 2.54 0 5.274 1.621 5.274 5.181 0 4.069-5.136 8.625-11 14.402z"/></svg>
-  Doe Agora
-</a>
+<a href="#doe" class="float-btn">❤️ Doe Agora</a>
 
 <script>
-  // Hero BG Ken Burns
-  const heroBg = document.getElementById('heroBg');
-  if (heroBg) { setTimeout(() => heroBg.classList.add('loaded'), 100); }
+// Scroll animations
+const ups = document.querySelectorAll('.up');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('vis'), i * 70);
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.07 });
+ups.forEach(el => obs.observe(el));
 
-  // Scroll animations
-  const fadeEls = document.querySelectorAll('.fade-up');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('visible'), i * 80);
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.08 });
-  fadeEls.forEach(el => observer.observe(el));
+// Copy to clipboard
+function cp(btn, text) {
+  navigator.clipboard.writeText(text).then(() => {
+    const o = btn.innerHTML;
+    btn.innerHTML = '✅ Copiado!';
+    btn.classList.add('ok');
+    setTimeout(() => { btn.innerHTML = o; btn.classList.remove('ok'); }, 2000);
+  }).catch(() => {
+    const ta = document.createElement('textarea');
+    ta.value = text; document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); document.body.removeChild(ta);
+    const o = btn.innerHTML; btn.innerHTML = '✅ Copiado!';
+    setTimeout(() => { btn.innerHTML = o; }, 2000);
+  });
+}
 
-  // Copy to clipboard
-  function copyText(btn, text) {
-    navigator.clipboard.writeText(text).then(() => {
-      const original = btn.innerHTML;
-      btn.innerHTML = '✅ Copiado!';
-      btn.classList.add('copied');
-      setTimeout(() => { btn.innerHTML = original; btn.classList.remove('copied'); }, 2000);
-    }).catch(() => {
-      const ta = document.createElement('textarea');
-      ta.value = text;
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand('copy');
-      document.body.removeChild(ta);
-      const original = btn.innerHTML;
-      btn.innerHTML = '✅ Copiado!';
-      setTimeout(() => { btn.innerHTML = original; }, 2000);
-    });
+// Lightbox
+const photos = [
+  'https://www.institutomarcossena.com.br/assets/1-DN2s6mj-.jpg',
+  'https://www.institutomarcossena.com.br/assets/2-D2mFup5O.jpg',
+  'https://www.institutomarcossena.com.br/assets/3-CY8pyswP.jpg',
+  'https://www.institutomarcossena.com.br/assets/10-C72118_F.jpg',
+  'https://www.institutomarcossena.com.br/assets/11-BiFZDsEo.jpg',
+  'https://www.institutomarcossena.com.br/assets/12-DvEZzRsU.jpg',
+  'https://www.institutomarcossena.com.br/assets/13-C-_WQRtU.jpg',
+  'https://www.institutomarcossena.com.br/assets/14-XaOFERSh.jpg',
+  'https://www.institutomarcossena.com.br/assets/15-D_81NDVy.jpg',
+  'https://www.institutomarcossena.com.br/assets/16-D512Fnae.jpg',
+  'https://www.institutomarcossena.com.br/assets/17-CVzHPPU7.jpg',
+  'https://www.institutomarcossena.com.br/assets/18-CRzW35g_.jpg',
+  'https://www.institutomarcossena.com.br/assets/19-DBaSqB20.jpg',
+  'https://www.institutomarcossena.com.br/assets/20-DVSoUzwf.jpg',
+  'https://www.institutomarcossena.com.br/assets/21-CowK7rpe.jpg',
+  'https://www.institutomarcossena.com.br/assets/22-DWDEBbo6.jpg',
+  'https://www.institutomarcossena.com.br/assets/23-BdCXHRJC.jpg',
+  'https://www.institutomarcossena.com.br/assets/24-DdYixkO1.jpg',
+  'https://www.institutomarcossena.com.br/assets/25-BPiB1WFz.jpg',
+  'https://www.institutomarcossena.com.br/assets/26-F2P3IA43.jpg',
+  'https://www.institutomarcossena.com.br/assets/27-B-pukGN9.jpg',
+  'https://www.institutomarcossena.com.br/assets/28-DOBj4wIP.jpg',
+  'https://www.institutomarcossena.com.br/assets/29-CmM-uJok.jpg',
+  'https://www.institutomarcossena.com.br/assets/30-B5-zcOvz.jpg'
+];
+let lbIdx = 0;
+function openLb(i) {
+  lbIdx = i;
+  document.getElementById('lbImg').src = photos[i];
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLb(e) {
+  if (!e || e.target.id === 'lightbox' || e.currentTarget.classList.contains('lb-close')) {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
   }
+}
+function lbNext(e) { e.stopPropagation(); lbIdx = (lbIdx + 1) % photos.length; document.getElementById('lbImg').src = photos[lbIdx]; }
+function lbPrev(e) { e.stopPropagation(); lbIdx = (lbIdx - 1 + photos.length) % photos.length; document.getElementById('lbImg').src = photos[lbIdx]; }
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeLb({target:{id:'lightbox'}});
+  if (e.key === 'ArrowRight') lbNext({stopPropagation:()=>{}});
+  if (e.key === 'ArrowLeft') lbPrev({stopPropagation:()=>{}});
+});
 </script>
 </body>
 </html>
