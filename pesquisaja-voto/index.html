@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pesquisa Já — Votação Eleitoral</title>
+  <meta name="description" content="Pesquisa Já: participe da votação eleitoral para Deputado Federal. Sua opinião conta!">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --blue: #1a56db;
+      --blue-dark: #0e3d91;
+      --blue-light: #3b82f6;
+      --blue-pale: #eff6ff;
+      --white: #ffffff;
+      --gray: #f4f6fb;
+      --gray-text: #6b7280;
+      --border: #dbeafe;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--gray); color: #111; overflow-x: hidden; min-height: 100vh; }
+
+    /* NAV */
+    nav {
+      background: var(--blue-dark);
+      padding: 16px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 3px solid var(--blue-light);
+    }
+    .nav-logo { font-family: 'Montserrat', sans-serif; font-size: 20px; font-weight: 900; color: var(--white); }
+    .nav-logo span { color: #93c5fd; }
+    .nav-sub { font-size: 10px; color: rgba(255,255,255,0.5); letter-spacing: 1px; text-transform: uppercase; margin-top: 2px; }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue) 100%);
+      padding: 48px 24px 40px;
+      text-align: center;
+      color: var(--white);
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2);
+      padding: 7px 16px; border-radius: 50px; margin-bottom: 20px;
+      font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
+    }
+    .live { width: 7px; height: 7px; background: #4ade80; border-radius: 50%; animation: blink 1.4s infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+    .hero h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(28px, 8vw, 44px); font-weight: 900;
+      line-height: 1.1; margin-bottom: 12px; letter-spacing: -0.5px;
+    }
+    .hero p { font-size: 14px; color: rgba(255,255,255,0.75); line-height: 1.7; max-width: 380px; margin: 0 auto 28px; }
+    .hero-counter {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.1); border-radius: 50px; padding: 10px 20px;
+      font-size: 13px; color: rgba(255,255,255,0.8);
+    }
+    .hero-counter strong { color: var(--white); font-weight: 700; font-size: 16px; }
+
+    /* MAIN CARD */
+    .main-card {
+      background: var(--white);
+      border-radius: 16px; margin: 24px 16px;
+      box-shadow: 0 4px 24px rgba(26,86,219,0.08);
+      overflow: hidden;
+    }
+    .card-header {
+      background: var(--blue-pale); border-bottom: 1px solid var(--border);
+      padding: 18px 20px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .card-header-icon { font-size: 22px; }
+    .card-header-title { font-size: 15px; font-weight: 700; color: var(--blue-dark); }
+    .card-header-sub { font-size: 12px; color: var(--gray-text); margin-top: 2px; }
+    .card-body { padding: 20px; }
+
+    /* CANDIDATOS */
+    .candidato-btn {
+      width: 100%; padding: 0;
+      border: 2px solid var(--border); border-radius: 12px;
+      background: var(--white); cursor: pointer;
+      margin-bottom: 14px; overflow: hidden;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      text-align: left;
+    }
+    .candidato-btn:hover { border-color: var(--blue-light); box-shadow: 0 2px 12px rgba(26,86,219,0.1); }
+    .candidato-btn.selected { border-color: var(--blue); box-shadow: 0 2px 16px rgba(26,86,219,0.2); }
+    .candidato-inner { display: flex; align-items: center; gap: 14px; padding: 16px; }
+    .cand-avatar {
+      width: 52px; height: 52px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Montserrat', sans-serif; font-size: 18px; font-weight: 900;
+      color: var(--white); flex-shrink: 0;
+    }
+    .cand-avatar.green { background: linear-gradient(135deg, #059669 0%, #047857 100%); }
+    .cand-info { flex: 1; }
+    .cand-name { font-size: 15px; font-weight: 700; color: #111; }
+    .cand-cargo { font-size: 12px; color: var(--gray-text); margin-top: 2px; }
+    .cand-num { font-size: 11px; font-weight: 700; color: var(--blue); margin-top: 4px; letter-spacing: 1px; }
+    .cand-check {
+      width: 24px; height: 24px; border-radius: 50%;
+      border: 2px solid var(--border); flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.2s;
+    }
+    .candidato-btn.selected .cand-check {
+      background: var(--blue); border-color: var(--blue);
+    }
+    .candidato-btn.selected .cand-check::after { content: '✓'; color: white; font-size: 13px; font-weight: 700; }
+
+    .divider-or {
+      text-align: center; position: relative; margin: 6px 0 14px;
+    }
+    .divider-or::before {
+      content: ''; position: absolute; top: 50%; left: 0; right: 0;
+      height: 1px; background: var(--border);
+    }
+    .divider-or span {
+      background: var(--white); padding: 0 10px;
+      font-size: 11px; color: var(--gray-text); position: relative;
+    }
+
+    .branco-btn {
+      width: 100%; padding: 14px 16px;
+      border: 2px solid var(--border); border-radius: 12px;
+      background: var(--white); cursor: pointer;
+      font-size: 14px; font-weight: 600; color: var(--gray-text);
+      text-align: center; margin-bottom: 20px;
+      transition: border-color 0.2s;
+    }
+    .branco-btn:hover { border-color: #d1d5db; }
+    .branco-btn.selected { border-color: #6b7280; color: #374151; background: #f9fafb; }
+
+    /* DADOS */
+    .dados-section { border-top: 1px solid var(--border); padding-top: 20px; margin-top: 4px; }
+    .dados-title { font-size: 13px; font-weight: 600; color: var(--gray-text); margin-bottom: 14px; letter-spacing: 0.5px; text-transform: uppercase; }
+    .input-group { margin-bottom: 12px; }
+    .input-group label { display: block; font-size: 11px; font-weight: 600; color: var(--gray-text); margin-bottom: 5px; letter-spacing: 0.5px; text-transform: uppercase; }
+    .input-group input, .input-group select {
+      width: 100%; padding: 12px 14px;
+      border: 1px solid var(--border); border-radius: 8px;
+      font-size: 14px; font-family: 'Inter', sans-serif;
+      color: #111; outline: none; background: var(--white);
+    }
+    .input-group input:focus, .input-group select:focus { border-color: var(--blue); }
+
+    /* SUBMIT */
+    .btn-votar {
+      width: 100%; padding: 18px;
+      background: linear-gradient(135deg, var(--blue) 0%, var(--blue-dark) 100%);
+      color: var(--white); border: none; border-radius: 12px;
+      font-size: 16px; font-weight: 800; cursor: pointer;
+      font-family: 'Montserrat', sans-serif; letter-spacing: 0.5px;
+      margin-top: 8px; box-shadow: 0 4px 16px rgba(26,86,219,0.3);
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .btn-votar:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* AVISO */
+    .aviso {
+      background: var(--blue-pale); border: 1px solid var(--border);
+      border-radius: 10px; padding: 14px 16px; margin: 16px 16px 0;
+      display: flex; gap: 10px; align-items: flex-start;
+    }
+    .aviso-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+    .aviso-text { font-size: 12px; color: var(--blue-dark); line-height: 1.6; }
+
+    /* FOOTER */
+    footer {
+      background: var(--blue-dark); padding: 32px 24px 24px;
+      text-align: center; margin-top: 32px;
+    }
+    .footer-logo { font-family: 'Montserrat', sans-serif; font-size: 18px; font-weight: 900; color: var(--white); margin-bottom: 6px; }
+    .footer-logo span { color: #93c5fd; }
+    .footer-sub { font-size: 12px; color: rgba(255,255,255,0.4); margin-bottom: 16px; }
+    .footer-bottom { font-size: 11px; color: rgba(255,255,255,0.2); }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div>
+    <div class="nav-logo">Pesquisa<span>Já</span></div>
+    <div class="nav-sub">Instituto de Pesquisa Eleitoral</div>
+  </div>
+  <div style="width:8px;height:8px;background:#4ade80;border-radius:50%;animation:blink 1.4s infinite;"></div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge"><div class="live"></div>Votação aberta</div>
+  <h1>Pesquisa Eleitoral<br>Deputado Federal</h1>
+  <p>Participe da pesquisa e registre sua intenção de voto. Dados sigilosos e utilizados apenas para fins estatísticos.</p>
+  <div class="hero-counter">
+    🗳️ <strong id="total-votos">1.247</strong> pessoas já participaram
+  </div>
+</section>
+
+<!-- AVISO -->
+<div class="aviso">
+  <div class="aviso-icon">🔒</div>
+  <div class="aviso-text">Sua participação é <strong>anônima e sigilosa</strong>. Os dados são usados exclusivamente para fins estatísticos pelo Instituto PesquisaJá.</div>
+</div>
+
+<!-- CARD VOTAÇÃO -->
+<div class="main-card">
+  <div class="card-header">
+    <div class="card-header-icon">🗳️</div>
+    <div>
+      <div class="card-header-title">Em quem você votaria?</div>
+      <div class="card-header-sub">Deputado Federal — Eleição 2026</div>
+    </div>
+  </div>
+  <div class="card-body">
+    <!-- Candidato 1 -->
+    <button class="candidato-btn" onclick="selecionarCandidato(this, 'Paulo Corrêa Junior')" id="btn-paulo">
+      <div class="candidato-inner">
+        <div class="cand-avatar">PC</div>
+        <div class="cand-info">
+          <div class="cand-name">Paulo Corrêa Junior</div>
+          <div class="cand-cargo">Candidato a Deputado Federal</div>
+        </div>
+        <div class="cand-check"></div>
+      </div>
+    </button>
+
+    <!-- Candidato 2 -->
+    <button class="candidato-btn" onclick="selecionarCandidato(this, 'Mário Lúcio')" id="btn-mario">
+      <div class="candidato-inner">
+        <div class="cand-avatar green">ML</div>
+        <div class="cand-info">
+          <div class="cand-name">Mário Lúcio</div>
+          <div class="cand-cargo">Candidato a Deputado Federal</div>
+        </div>
+        <div class="cand-check"></div>
+      </div>
+    </button>
+
+    <div class="divider-or"><span>ou</span></div>
+
+    <button class="branco-btn" onclick="selecionarBranco(this)" id="btn-branco">
+      🤷 Branco / Nulo / Indeciso
+    </button>
+
+    <!-- Dados do participante -->
+    <div class="dados-section">
+      <div class="dados-title">Sobre você (opcional)</div>
+      <div class="input-group">
+        <label>Cidade</label>
+        <input type="text" id="cidade" placeholder="Ex: São Paulo - SP">
+      </div>
+      <div class="input-group">
+        <label>Faixa etária</label>
+        <select id="faixa">
+          <option value="">Não informar</option>
+          <option>16 a 24 anos</option>
+          <option>25 a 34 anos</option>
+          <option>35 a 44 anos</option>
+          <option>45 a 59 anos</option>
+          <option>60 anos ou mais</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <label>Gênero</label>
+        <select id="genero">
+          <option value="">Não informar</option>
+          <option>Masculino</option>
+          <option>Feminino</option>
+          <option>Prefiro não dizer</option>
+        </select>
+      </div>
+    </div>
+
+    <button class="btn-votar" id="btn-enviar" onclick="enviarVoto()" disabled>
+      💬 Confirmar voto pelo WhatsApp
+    </button>
+    <p style="font-size:11px;color:var(--gray-text);text-align:center;margin-top:10px;">Ao confirmar, você será direcionado ao WhatsApp para registrar sua participação.</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Pesquisa<span>Já</span></div>
+  <p class="footer-sub">Instituto Independente de Pesquisa Eleitoral</p>
+  <div class="footer-bottom">© 2025 PesquisaJá. Dados sigilosos. Uso exclusivamente estatístico.</div>
+</footer>
+
+<script>
+let candidatoSelecionado = null;
+
+function selecionarCandidato(btn, nome) {
+  document.querySelectorAll('.candidato-btn, .branco-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  candidatoSelecionado = nome;
+  document.getElementById('btn-enviar').disabled = false;
+}
+
+function selecionarBranco(btn) {
+  document.querySelectorAll('.candidato-btn, .branco-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  candidatoSelecionado = 'Branco / Nulo / Indeciso';
+  document.getElementById('btn-enviar').disabled = false;
+}
+
+function enviarVoto() {
+  if (!candidatoSelecionado) return;
+  const cidade = document.getElementById('cidade').value || 'Não informado';
+  const faixa = document.getElementById('faixa').value || 'Não informado';
+  const genero = document.getElementById('genero').value || 'Não informado';
+  const msg = `🗳️ *Participação — Pesquisa PesquisaJá*\n\n` +
+    `*Deputado Federal:* ${candidatoSelecionado}\n` +
+    `*Cidade:* ${cidade}\n` +
+    `*Faixa etária:* ${faixa}\n` +
+    `*Gênero:* ${genero}\n\n` +
+    `_Participação registrada pelo site pesquisaja.sparkz.agency_`;
+  window.open(`https://wa.me/5513991312275?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+// Animação do contador
+let count = 1247;
+setInterval(() => {
+  if (Math.random() > 0.7) {
+    count += Math.floor(Math.random() * 3) + 1;
+    document.getElementById('total-votos').textContent = count.toLocaleString('pt-BR');
+  }
+}, 8000);
+</script>
+
+</body>
+</html>
