@@ -293,26 +293,8 @@
         <label>Nome <span style="color:#dc2626;">*</span></label>
         <input type="text" id="cidade" placeholder="Seu nome completo" required>
       </div>
-      <div class="input-group">
-        <label>Faixa etária <span style="color:#dc2626;">*</span></label>
-        <select id="faixa" required>
-          <option value="">Selecione...</option>
-          <option>16 a 24 anos</option>
-          <option>25 a 34 anos</option>
-          <option>35 a 44 anos</option>
-          <option>45 a 59 anos</option>
-          <option>60 anos ou mais</option>
-        </select>
-      </div>
-      <div class="input-group">
-        <label>Gênero <span style="color:#dc2626;">*</span></label>
-        <select id="genero" required>
-          <option value="">Selecione...</option>
-          <option>Masculino</option>
-          <option>Feminino</option>
-          <option>Prefiro não dizer</option>
-        </select>
-      </div>
+      <select id="faixa" style="display:none"></select>
+      <select id="genero" style="display:none"></select>
     </div>
 
     <button class="btn-votar" id="btn-enviar" onclick="enviarVoto()" disabled>
@@ -482,8 +464,7 @@ function enviarVoto() {
   const faixa = document.getElementById('faixa').value;
   const genero = document.getElementById('genero').value;
   if (!cidade) { alert('Por favor, informe seu nome!'); document.getElementById('cidade').focus(); return; }
-  if (!faixa) { alert('Por favor, selecione sua faixa etária!'); document.getElementById('faixa').focus(); return; }
-  if (!genero) { alert('Por favor, selecione seu gênero!'); document.getElementById('genero').focus(); return; }
+
   const msg = `🗳️ *Participação — Pesquisa PesquisaJá*\n\n` +
     `*Deputado Federal:* ${candidatoSelecionado}\n` +
     `*Nome:* ${cidade}
