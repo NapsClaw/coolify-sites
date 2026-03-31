@@ -337,6 +337,7 @@ footer{background:#0f172a;padding:40px 20px 24px;text-align:center}
               <option value="fds">🗓️ Fim de semana comum</option>
             </optgroup>
             <optgroup label="── Feriados 2 dias ──">
+              <option value="diasdamaes">👩 Dia das Mães — 09/05 a 10/05</option>
               <option value="diasdospais">👨 Dia dos Pais — 08/08 a 09/08</option>
               <option value="proclamacao">🇧🇷 Proclamação — 14/11 a 15/11</option>
             </optgroup>
@@ -453,18 +454,19 @@ footer{background:#0f172a;padding:40px 20px 24px;text-align:center}
 
     <div class="pricing-tabs">
       <button class="ptab active" onclick="showTab('fds')">🗓️ Fim de semana</button>
-      <button class="ptab" onclick="showTab('diasdospais')">👨 Dia dos Pais</button>
-      <button class="ptab" onclick="showTab('proclamacao')">🇧🇷 Proclamação</button>
-      <button class="ptab" onclick="showTab('pascoa')">🐣 Páscoa</button>
-      <button class="ptab" onclick="showTab('trabalhador')">⚒️ Trabalhador</button>
-      <button class="ptab" onclick="showTab('independencia')">🎖️ Independência</button>
-      <button class="ptab" onclick="showTab('criancas')">👶 Crianças</button>
-      <button class="ptab" onclick="showTab('finados')">🕯️ Finados</button>
-      <button class="ptab" onclick="showTab('consciencia')">✊ Consciência</button>
-      <button class="ptab" onclick="showTab('tiradentes')">⚔️ Tiradentes</button>
-      <button class="ptab" onclick="showTab('natal')">🎄 Natal</button>
       <button class="ptab" onclick="showTab('carnaval')">🎭 Carnaval</button>
+      <button class="ptab" onclick="showTab('consciencia')">✊ Consciência Negra</button>
+      <button class="ptab" onclick="showTab('criancas')">👶 Dia das Crianças</button>
+      <button class="ptab" onclick="showTab('diasdamaes')">👩 Dia das Mães</button>
+      <button class="ptab" onclick="showTab('diasdospais')">👨 Dia dos Pais</button>
       <button class="ptab" onclick="showTab('evento')">🎉 Eventos</button>
+      <button class="ptab" onclick="showTab('finados')">🕯️ Finados</button>
+      <button class="ptab" onclick="showTab('independencia')">🎖️ Independência</button>
+      <button class="ptab" onclick="showTab('natal')">🎄 Natal</button>
+      <button class="ptab" onclick="showTab('pascoa')">🐣 Páscoa</button>
+      <button class="ptab" onclick="showTab('proclamacao')">🇧🇷 Proclamação</button>
+      <button class="ptab" onclick="showTab('tiradentes')">⚔️ Tiradentes</button>
+      <button class="ptab" onclick="showTab('trabalhador')">⚒️ Trabalhador</button>
     </div>
 
     <!-- FIM DE SEMANA -->
@@ -510,6 +512,25 @@ footer{background:#0f172a;padding:40px 20px 24px;text-align:center}
       <table class="ptable">
         <thead>
           <tr><th colspan="2">🇧🇷 Proclamação da República — 14/11 a 15/11/2026 (2 dias)</th></tr>
+          <tr><th colspan="2" style="font-weight:400;font-size:12px;color:var(--mid)">Check-in: Sábado 08h · Check-out: Domingo 18h</th></tr>
+          <tr><th>Quantidade de pessoas</th><th>Valor total</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Até 15 pessoas</td><td class="price-val">R$ 2.000</td></tr>
+          <tr><td>Até 20 pessoas</td><td class="price-val">R$ 2.300</td></tr>
+          <tr><td>Até 25 pessoas</td><td class="price-val">R$ 2.800</td></tr>
+          <tr><td>Até 30 pessoas</td><td class="price-val">R$ 3.200</td></tr>
+          <tr><td>Acima de 30 pessoas</td><td class="price-val">Sob consulta</td></tr>
+          <tr style="background:var(--blue-l)"><td colspan="2" style="font-size:12px;color:var(--blue);text-align:center;padding:10px 16px">🎉 Festa com convidados externos: <strong>+ R$ 30 por convidado</strong> (somente festa, sem pernoite)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- DIA DAS MÃES -->
+    <div class="pricing-table" id="tab-diasdamaes">
+      <table class="ptable">
+        <thead>
+          <tr><th colspan="2">👩 Dia das Mães — 09/05 a 10/05/2026 (2 dias)</th></tr>
           <tr><th colspan="2" style="font-weight:400;font-size:12px;color:var(--mid)">Check-in: Sábado 08h · Check-out: Domingo 18h</th></tr>
           <tr><th>Quantidade de pessoas</th><th>Valor total</th></tr>
         </thead>
@@ -1224,6 +1245,7 @@ function closeDetail(){ document.getElementById('detail-modal').classList.remove
 // ===== PRICE CALCULATOR =====
 const PRICE_TABLE = {
   fds:          {15:1700, 20:2000, 25:2500, 30:2800, '30+':'Sob consulta'},
+  diasdamaes:   {15:2000, 20:2300, 25:2800, 30:3200, '30+':'Sob consulta'},
   diasdospais:  {15:2000, 20:2300, 25:2800, 30:3200, '30+':'Sob consulta'},
   proclamacao:  {15:2000, 20:2300, 25:2800, 30:3200, '30+':'Sob consulta'},
   pascoa:       {15:2700, 20:3200, 25:3750, 30:4200, '30+':'Sob consulta'},
@@ -1239,6 +1261,7 @@ const PRICE_TABLE = {
 };
 const PERIOD_LABEL = {
   fds:          'Fim de semana · Check-in sáb 08h · Check-out dom 18h',
+  diasdamaes:   'Dia das Mães · 09/05 a 10/05/2026 (2 dias)',
   diasdospais:  'Dia dos Pais · 08/08 a 09/08/2026 (2 dias)',
   proclamacao:  'Proclamação · 14/11 a 15/11/2026 (2 dias)',
   pascoa:       'Páscoa · 03/04 a 05/04/2026 (3 dias)',
@@ -1258,7 +1281,7 @@ const G_4D   = [{v:'10',l:'Até 10 pessoas'},{v:'15',l:'Até 15 pessoas'},{v:'20
 const G_NATAL= [{v:'20',l:'Até 20 pessoas'},{v:'25',l:'Até 25 pessoas'},{v:'30',l:'Até 30 pessoas'},{v:'30+',l:'Acima de 30 (sob consulta)'}];
 const G_EVT  = [{v:'50',l:'Até 50 pessoas'},{v:'100',l:'51 a 100 pessoas'},{v:'150',l:'101 a 150 pessoas'},{v:'200',l:'151 a 200 pessoas'},{v:'250',l:'201 a 250 pessoas'},{v:'250+',l:'Acima de 250 (a combinar)'}];
 const GUESTS_OPTIONS = {
-  fds:G_STD, diasdospais:G_STD, proclamacao:G_STD,
+  fds:G_STD, diasdamaes:G_STD, diasdospais:G_STD, proclamacao:G_STD,
   pascoa:G_STD, trabalhador:G_STD, independencia:G_STD,
   criancas:G_STD, finados:G_STD, consciencia:G_STD,
   tiradentes:G_4D, natal:G_NATAL, carnaval:G_STD, evento:G_EVT,
