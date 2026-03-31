@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel Admin — Hospeda Temporada</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --cream:#F7F2EB; --terracotta:#AC4747; --dark:#1a1410; --mid:#4a3f35; --white:#fff; --green:#22c55e; --red:#ef4444; --border:#e0d8cc; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: #f0ebe3; color: var(--dark); min-height: 100vh; }
+
+    /* LOGIN */
+    .login-screen { min-height: 100vh; display: flex; align-items: center; justify-content: center; background: var(--dark); }
+    .login-box { background: var(--white); border-radius: 12px; padding: 48px 40px; width: 100%; max-width: 380px; text-align: center; }
+    .login-logo { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--dark); margin-bottom: 8px; }
+    .login-logo span { color: var(--terracotta); }
+    .login-sub { font-size: 13px; color: var(--mid); margin-bottom: 32px; }
+    .login-box input { width: 100%; padding: 14px 16px; border: 1.5px solid var(--border); border-radius: 6px; font-size: 15px; margin-bottom: 12px; font-family: 'Plus Jakarta Sans', sans-serif; background: var(--cream); }
+    .login-box input:focus { outline: none; border-color: var(--terracotta); }
+    .login-btn { width: 100%; background: var(--terracotta); color: var(--white); border: none; padding: 16px; border-radius: 6px; font-size: 15px; font-weight: 600; cursor: pointer; }
+    .login-error { color: var(--red); font-size: 13px; margin-top: 10px; display: none; }
+
+    /* ADMIN LAYOUT */
+    .admin-wrap { display: none; flex-direction: column; min-height: 100vh; }
+    .admin-wrap.visible { display: flex; }
+    header { background: var(--dark); padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; }
+    .header-logo { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--cream); }
+    .header-logo span { color: var(--terracotta); }
+    .header-right { display: flex; gap: 12px; align-items: center; }
+    .header-right a { color: rgba(247,242,235,0.6); text-decoration: none; font-size: 13px; }
+    .logout-btn { background: rgba(172,71,71,0.3); color: #e8b4a0; border: none; padding: 8px 16px; border-radius: 4px; font-size: 13px; cursor: pointer; }
+
+    .admin-content { flex: 1; padding: 32px 24px; max-width: 1100px; margin: 0 auto; width: 100%; }
+    .page-title { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: var(--dark); margin-bottom: 8px; }
+    .page-sub { font-size: 14px; color: var(--mid); margin-bottom: 32px; }
+
+    .tabs { display: flex; gap: 0; border-bottom: 2px solid var(--border); margin-bottom: 32px; }
+    .tab { padding: 12px 24px; font-size: 14px; font-weight: 600; cursor: pointer; color: var(--mid); border-bottom: 2px solid transparent; margin-bottom: -2px; }
+    .tab.active { color: var(--terracotta); border-bottom-color: var(--terracotta); }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* SITIOS LIST */
+    .sitios-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .btn-add { background: var(--terracotta); color: var(--white); border: none; padding: 12px 20px; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; }
+    .sitio-card { background: var(--white); border-radius: 8px; padding: 0; margin-bottom: 16px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+    .sitio-card-inner { display: flex; align-items: stretch; }
+    .sitio-thumb { width: 120px; min-height: 100px; object-fit: cover; flex-shrink: 0; }
+    .sitio-info { flex: 1; padding: 16px 20px; }
+    .sitio-name { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: var(--dark); margin-bottom: 4px; }
+    .sitio-location { font-size: 13px; color: var(--mid); margin-bottom: 8px; }
+    .sitio-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+    .tag-pill { font-size: 11px; padding: 3px 10px; border-radius: 100px; font-weight: 600; }
+    .tag-active { background: rgba(34,197,94,0.12); color: #16a34a; }
+    .tag-inactive { background: rgba(239,68,68,0.12); color: var(--red); }
+    .sitio-actions { display: flex; flex-direction: column; gap: 8px; padding: 16px; justify-content: center; }
+    .btn-edit { background: var(--cream); border: 1px solid var(--border); color: var(--dark); padding: 8px 14px; border-radius: 4px; font-size: 13px; cursor: pointer; }
+    .btn-delete { background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.2); color: var(--red); padding: 8px 14px; border-radius: 4px; font-size: 13px; cursor: pointer; }
+    .btn-toggle { background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.2); color: #16a34a; padding: 8px 14px; border-radius: 4px; font-size: 13px; cursor: pointer; }
+
+    /* FORM */
+    .form-card { background: var(--white); border-radius: 8px; padding: 32px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+    .form-section-title { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: var(--dark); margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+    .form-row { display: grid; grid-template-columns: 1fr; gap: 16px; margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 12px; font-weight: 600; color: var(--dark); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%; padding: 12px 14px; border: 1.5px solid var(--border); border-radius: 6px;
+      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; color: var(--dark); background: var(--cream);
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--terracotta); }
+    .form-group textarea { min-height: 90px; resize: vertical; }
+    .form-hint { font-size: 11px; color: var(--mid); margin-top: 4px; }
+    .fotos-list { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+    .foto-row { display: flex; gap: 8px; }
+    .foto-row input { flex: 1; }
+    .foto-preview { width: 48px; height: 48px; object-fit: cover; border-radius: 4px; border: 1px solid var(--border); flex-shrink: 0; display: none; }
+    .btn-add-foto { background: var(--cream); border: 1.5px dashed var(--border); color: var(--mid); padding: 10px; border-radius: 6px; font-size: 13px; cursor: pointer; width: 100%; margin-top: 4px; }
+    .dias-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; margin-top: 8px; }
+    .dia-btn { padding: 8px 4px; border-radius: 4px; border: 1.5px solid var(--border); font-size: 13px; text-align: center; cursor: pointer; background: var(--cream); color: var(--mid); }
+    .dia-btn.blocked { background: rgba(172,71,71,0.15); border-color: var(--terracotta); color: var(--terracotta); font-weight: 600; }
+    .form-actions { display: flex; gap: 12px; margin-top: 24px; }
+    .btn-save { background: var(--terracotta); color: var(--white); border: none; padding: 14px 28px; border-radius: 6px; font-size: 15px; font-weight: 600; cursor: pointer; }
+    .btn-cancel { background: var(--cream); border: 1.5px solid var(--border); color: var(--mid); padding: 14px 24px; border-radius: 6px; font-size: 15px; cursor: pointer; }
+
+    /* RESERVAS */
+    .reserva-card { background: var(--white); border-radius: 8px; padding: 20px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+    .reserva-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+    .reserva-sitio { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700; }
+    .reserva-status { font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 100px; }
+    .status-confirmada { background: rgba(34,197,94,0.12); color: #16a34a; }
+    .status-pendente { background: rgba(245,158,11,0.12); color: #d97706; }
+    .reserva-info { font-size: 13px; color: var(--mid); line-height: 1.8; }
+
+    .alert { padding: 14px 16px; border-radius: 6px; font-size: 14px; margin-bottom: 20px; }
+    .alert-success { background: rgba(34,197,94,0.1); color: #16a34a; border: 1px solid rgba(34,197,94,0.2); }
+    .alert-info { background: rgba(59,130,246,0.1); color: #2563eb; border: 1px solid rgba(59,130,246,0.2); }
+
+    @media (min-width: 768px) {
+      .form-row { grid-template-columns: 1fr 1fr; }
+      .admin-content { padding: 40px 32px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login-screen" id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">Hospeda<span>Temporada</span></div>
+    <p class="login-sub">Painel de Administração</p>
+    <input type="password" id="login-pwd" placeholder="Senha de acesso" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="login-btn" onclick="doLogin()">Entrar</button>
+    <p class="login-error" id="login-error">Senha incorreta.</p>
+  </div>
+</div>
+
+<!-- ADMIN -->
+<div class="admin-wrap" id="admin-wrap">
+  <header>
+    <div class="header-logo">Hospeda<span>Temporada</span> <span style="font-family:'Plus Jakarta Sans';font-size:12px;color:rgba(247,242,235,0.4);font-weight:400;">Admin</span></div>
+    <div class="header-right">
+      <a href="index.html" target="_blank">Ver site →</a>
+      <button class="logout-btn" onclick="logout()">Sair</button>
+    </div>
+  </header>
+
+  <div class="admin-content">
+    <h1 class="page-title">Painel de Gestão</h1>
+    <p class="page-sub">Gerencie os sítios, reservas e disponibilidade</p>
+
+    <div class="tabs">
+      <div class="tab active" onclick="switchTab('sitios')">🏡 Sítios</div>
+      <div class="tab" onclick="switchTab('novo')">➕ Novo Sítio</div>
+      <div class="tab" onclick="switchTab('reservas')">📅 Reservas</div>
+      <div class="tab" onclick="switchTab('config')">⚙️ Configurações</div>
+    </div>
+
+    <!-- TAB: SÍTIOS -->
+    <div class="tab-panel active" id="panel-sitios">
+      <div class="sitios-header">
+        <h2 style="font-family:'Playfair Display',serif;font-size:20px;">Sítios cadastrados</h2>
+        <button class="btn-add" onclick="switchTab('novo')">+ Adicionar novo sítio</button>
+      </div>
+      <div id="sitios-list"></div>
+    </div>
+
+    <!-- TAB: NOVO SÍTIO -->
+    <div class="tab-panel" id="panel-novo">
+      <div class="form-card">
+        <p class="form-section-title">Informações do Sítio</p>
+        <div class="alert alert-info">💡 Preencha os campos abaixo. Após salvar, o sítio aparece automaticamente na página principal.</div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Nome do sítio *</label>
+            <input type="text" id="f-nome" placeholder="Ex: Sítio Bela Vista">
+          </div>
+          <div class="form-group">
+            <label>Localização *</label>
+            <input type="text" id="f-local" placeholder="Ex: Mogi das Cruzes, SP">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Tipo / Rótulo</label>
+            <input type="text" id="f-tipo" placeholder="Ex: 🌿 Natureza · Eventos · Temporada">
+          </div>
+          <div class="form-group">
+            <label>Capacidade</label>
+            <input type="text" id="f-capacidade" placeholder="Ex: até 30 pessoas">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Preço</label>
+            <input type="text" id="f-preco" placeholder="Ex: R$1.500">
+          </div>
+          <div class="form-group">
+            <label>Detalhe do preço</label>
+            <input type="text" id="f-preco-detalhe" placeholder="Ex: por dia (até 20 pessoas)">
+          </div>
+        </div>
+        <div class="form-row" style="grid-template-columns:1fr;">
+          <div class="form-group">
+            <label>Descrição *</label>
+            <textarea id="f-desc" placeholder="Descreva o sítio: estrutura, diferenciais, o que tem de especial..."></textarea>
+          </div>
+        </div>
+
+        <p class="form-section-title" style="margin-top:24px;">Características</p>
+        <div class="form-group">
+          <label>Features (uma por linha)</label>
+          <textarea id="f-features" placeholder="🛏️ 4 quartos&#10;🏊 Piscina&#10;🔥 Churrasqueira&#10;🚗 Estacionamento" style="min-height:110px;"></textarea>
+          <p class="form-hint">Use emojis no início de cada linha. Ex: 🛏️ 4 quartos</p>
+        </div>
+
+        <p class="form-section-title" style="margin-top:24px;">Fotos</p>
+        <div class="form-group">
+          <label>URL da foto de capa *</label>
+          <div class="foto-row">
+            <input type="url" id="f-capa" placeholder="https://..." oninput="previewImg('f-capa','prev-capa')">
+            <img id="prev-capa" class="foto-preview" src="" alt="preview">
+          </div>
+          <p class="form-hint">Cole a URL de uma foto. Use Unsplash, Google Drive público, ou hospedagem de imagens.</p>
+        </div>
+        <div class="form-group">
+          <label>Galeria de fotos (URLs)</label>
+          <div class="fotos-list" id="fotos-list">
+            <div class="foto-row"><input type="url" class="foto-url" placeholder="https://... (foto 1)"><img class="foto-preview" src="" alt=""></div>
+            <div class="foto-row"><input type="url" class="foto-url" placeholder="https://... (foto 2)"><img class="foto-preview" src="" alt=""></div>
+            <div class="foto-row"><input type="url" class="foto-url" placeholder="https://... (foto 3)"><img class="foto-preview" src="" alt=""></div>
+            <div class="foto-row"><input type="url" class="foto-url" placeholder="https://... (foto 4)"><img class="foto-preview" src="" alt=""></div>
+          </div>
+          <button class="btn-add-foto" onclick="addFotoRow()">+ Adicionar mais foto</button>
+        </div>
+
+        <p class="form-section-title" style="margin-top:24px;">Disponibilidade — Clique para bloquear/liberar dias</p>
+        <div class="form-group">
+          <label>Dias indisponíveis (mês atual)</label>
+          <div class="dias-grid" id="dias-grid"></div>
+          <p class="form-hint" style="margin-top:8px;">Vermelho = bloqueado/reservado. Clique para alternar.</p>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn-save" onclick="saveSitio()">💾 Salvar sítio</button>
+          <button class="btn-cancel" onclick="switchTab('sitios')">Cancelar</button>
+        </div>
+        <div id="save-alert" style="display:none;margin-top:16px;" class="alert alert-success">✅ Sítio salvo! Atualize o arquivo <strong>sitios-data.js</strong> com os dados gerados.</div>
+        <pre id="generated-code" style="display:none;background:#1a1410;color:#e8b4a0;padding:20px;border-radius:6px;font-size:12px;overflow-x:auto;margin-top:16px;white-space:pre-wrap;"></pre>
+      </div>
+    </div>
+
+    <!-- TAB: RESERVAS -->
+    <div class="tab-panel" id="panel-reservas">
+      <div class="alert alert-info">📋 As reservas chegam via WhatsApp. Registre aqui para controle de disponibilidade.</div>
+      <div id="reservas-list">
+        <div class="reserva-card">
+          <div class="reserva-header">
+            <span class="reserva-sitio">Sítio Iluminado</span>
+            <span class="reserva-status status-confirmada">✅ Confirmada</span>
+          </div>
+          <div class="reserva-info">
+            👤 Ana Clara Mendes &nbsp;|&nbsp; 📞 (11) 99999-1234<br>
+            📅 Check-in: 12/04/2026 &nbsp;|&nbsp; Check-out: 14/04/2026<br>
+            👥 8 pessoas &nbsp;|&nbsp; 🎉 Aniversário
+          </div>
+        </div>
+        <div class="reserva-card">
+          <div class="reserva-header">
+            <span class="reserva-sitio">Sítio das Pedras</span>
+            <span class="reserva-status status-pendente">⏳ Pendente</span>
+          </div>
+          <div class="reserva-info">
+            👤 Roberto Silva &nbsp;|&nbsp; 📞 (11) 98888-5678<br>
+            📅 Check-in: 20/04/2026 &nbsp;|&nbsp; Check-out: 21/04/2026<br>
+            👥 25 pessoas &nbsp;|&nbsp; 🎓 Formatura
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:24px;">
+        <h3 style="font-family:'Playfair Display',serif;font-size:18px;margin-bottom:16px;">Registrar nova reserva</h3>
+        <div class="form-card">
+          <div class="form-row">
+            <div class="form-group"><label>Cliente</label><input type="text" id="r-nome" placeholder="Nome do cliente"></div>
+            <div class="form-group"><label>WhatsApp</label><input type="tel" id="r-phone" placeholder="(00) 00000-0000"></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Sítio</label><select id="r-sitio"><option value="">Selecione</option></select></div>
+            <div class="form-group"><label>Nº de pessoas</label><input type="number" id="r-pessoas" min="1" placeholder="Quantas pessoas?"></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group"><label>Check-in</label><input type="date" id="r-checkin"></div>
+            <div class="form-group"><label>Check-out</label><input type="date" id="r-checkout"></div>
+          </div>
+          <div class="form-row" style="grid-template-columns:1fr;">
+            <div class="form-group"><label>Observações</label><textarea id="r-obs" placeholder="Tipo de evento, pedidos especiais..."></textarea></div>
+          </div>
+          <div class="form-actions">
+            <button class="btn-save" onclick="saveReserva()">Registrar reserva</button>
+          </div>
+          <div id="reserva-alert" style="display:none;margin-top:12px;" class="alert alert-success"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: CONFIG -->
+    <div class="tab-panel" id="panel-config">
+      <div class="form-card">
+        <p class="form-section-title">Configurações Gerais</p>
+        <div class="form-row">
+          <div class="form-group"><label>Nome do proprietário</label><input type="text" value="Arlei"></div>
+          <div class="form-group"><label>WhatsApp de contato</label><input type="tel" value="(11) 94194-2210"></div>
+        </div>
+        <div class="form-row" style="grid-template-columns:1fr;">
+          <div class="form-group"><label>Texto de apresentação (hero)</label><textarea>Sítios selecionados para temporada, eventos, festas e formaturas em São Paulo e região.</textarea></div>
+        </div>
+        <div class="form-actions"><button class="btn-save">Salvar configurações</button></div>
+
+        <p class="form-section-title" style="margin-top:32px;">Como editar o site</p>
+        <div class="alert alert-info" style="line-height:1.8;">
+          📁 <strong>Estrutura dos arquivos:</strong><br>
+          • <code>index.html</code> — página principal (lista de sítios)<br>
+          • <code>sitio-iluminado.html</code> — página do Sítio Iluminado<br>
+          • <code>sitio-template.html</code> — template usado pelos outros sítios<br>
+          • <code>sitios-data.js</code> — <strong>arquivo de dados</strong> (edite aqui para alterar nomes, fotos, preços)<br>
+          • <code>admin.html</code> — este painel<br><br>
+          🔧 <strong>Para trocar nomes/fotos dos sítios de exemplo:</strong><br>
+          Abra <code>sitios-data.js</code> em qualquer editor de texto e edite os campos de cada sítio.<br><br>
+          ➕ <strong>Para adicionar novo sítio:</strong><br>
+          Use a aba "Novo Sítio" acima — ela gera o código pronto para copiar no arquivo.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="sitios-data.js"></script>
+<script>
+  const ADMIN_PWD = 'hospeda2026';
+
+  function doLogin() {
+    const pwd = document.getElementById('login-pwd').value;
+    if (pwd === ADMIN_PWD) {
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('admin-wrap').classList.add('visible');
+      initAdmin();
+    } else {
+      document.getElementById('login-error').style.display = 'block';
+    }
+  }
+  function logout() { document.getElementById('login-screen').style.display = 'flex'; document.getElementById('admin-wrap').classList.remove('visible'); }
+
+  function switchTab(id) {
+    document.querySelectorAll('.tab').forEach((t,i) => t.classList.toggle('active', ['sitios','novo','reservas','config'][i]===id));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('panel-'+id).classList.add('active');
+  }
+
+  function initAdmin() {
+    buildSitiosList();
+    buildDiasGrid();
+    populateReservaSelect();
+    // foto preview on input
+    document.querySelectorAll('.foto-url').forEach(inp => {
+      inp.addEventListener('input', function() {
+        const prev = this.nextElementSibling;
+        if (this.value && prev) { prev.style.display='block'; prev.src=this.value; }
+      });
+    });
+  }
+
+  function buildSitiosList() {
+    const list = document.getElementById('sitios-list');
+    list.innerHTML = '';
+    SITIOS.forEach((s, idx) => {
+      list.innerHTML += `
+        <div class="sitio-card">
+          <div class="sitio-card-inner">
+            <img class="sitio-thumb" src="${s.fotoCapa}" alt="${s.nome}">
+            <div class="sitio-info">
+              <div class="sitio-name">${s.nome}</div>
+              <div class="sitio-location">📍 ${s.localizacao}</div>
+              <div class="sitio-tags">
+                <span class="tag-pill ${s.ativo?'tag-active':'tag-inactive'}">${s.ativo?'✅ Ativo':'❌ Inativo'}</span>
+                <span class="tag-pill" style="background:rgba(172,71,71,0.1);color:var(--terracotta);">${s.preco}</span>
+                ${s.id==='sitio-iluminado'?'<span class="tag-pill" style="background:rgba(59,130,246,0.1);color:#2563eb;">⭐ Principal</span>':''}
+              </div>
+            </div>
+            <div class="sitio-actions">
+              <button class="btn-edit" onclick="editSitio(${idx})">✏️ Editar</button>
+              <button class="btn-toggle" onclick="toggleSitio(${idx})">${s.ativo?'🔴 Desativar':'🟢 Ativar'}</button>
+              ${s.id!=='sitio-iluminado'?`<button class="btn-delete" onclick="deleteSitio(${idx})">🗑️ Excluir</button>`:''}
+            </div>
+          </div>
+        </div>`;
+    });
+  }
+
+  function editSitio(idx) {
+    const s = SITIOS[idx];
+    document.getElementById('f-nome').value = s.nome;
+    document.getElementById('f-local').value = s.localizacao;
+    document.getElementById('f-tipo').value = s.tipo;
+    document.getElementById('f-capacidade').value = s.capacidade;
+    document.getElementById('f-preco').value = s.preco;
+    document.getElementById('f-preco-detalhe').value = s.precoDetalhe;
+    document.getElementById('f-desc').value = s.descricao;
+    document.getElementById('f-features').value = s.features.join('\n');
+    document.getElementById('f-capa').value = s.fotoCapa;
+    const prevCapa = document.getElementById('prev-capa');
+    prevCapa.src = s.fotoCapa; prevCapa.style.display = 'block';
+    const fotos = document.querySelectorAll('.foto-url');
+    s.fotos.forEach((url, i) => { if (fotos[i]) { fotos[i].value = url; const p = fotos[i].nextElementSibling; if(p){p.src=url;p.style.display='block';} } });
+    // blocked days
+    document.querySelectorAll('.dia-btn').forEach(btn => {
+      const d = parseInt(btn.dataset.day);
+      btn.classList.toggle('blocked', s.diasIndisponiveis.includes(d));
+    });
+    switchTab('novo');
+    document.querySelector('#panel-novo .form-section-title').textContent = 'Editando: ' + s.nome;
+    window.editingIdx = idx;
+  }
+
+  function toggleSitio(idx) {
+    SITIOS[idx].ativo = !SITIOS[idx].ativo;
+    buildSitiosList();
+    alert(`Sítio ${SITIOS[idx].nome} ${SITIOS[idx].ativo?'ativado':'desativado'}.\n\nLembre de atualizar o arquivo sitios-data.js!`);
+  }
+
+  function deleteSitio(idx) {
+    if (confirm(`Excluir "${SITIOS[idx].nome}"? Esta ação não pode ser desfeita.`)) {
+      SITIOS.splice(idx, 1);
+      buildSitiosList();
+    }
+  }
+
+  function buildDiasGrid() {
+    const grid = document.getElementById('dias-grid');
+    grid.innerHTML = '';
+    for (let d = 1; d <= 31; d++) {
+      const btn = document.createElement('button');
+      btn.className = 'dia-btn';
+      btn.dataset.day = d;
+      btn.textContent = d;
+      btn.onclick = () => btn.classList.toggle('blocked');
+      grid.appendChild(btn);
+    }
+  }
+
+  function addFotoRow() {
+    const list = document.getElementById('fotos-list');
+    const row = document.createElement('div');
+    row.className = 'foto-row';
+    row.innerHTML = `<input type="url" class="foto-url" placeholder="https://..."><img class="foto-preview" src="" alt="" style="display:none;">`;
+    row.querySelector('input').addEventListener('input', function() {
+      const prev = this.nextElementSibling;
+      if (this.value) { prev.style.display='block'; prev.src=this.value; }
+    });
+    list.appendChild(row);
+  }
+
+  function previewImg(inputId, previewId) {
+    const val = document.getElementById(inputId).value;
+    const prev = document.getElementById(previewId);
+    if (val) { prev.style.display='block'; prev.src=val; } else { prev.style.display='none'; }
+  }
+
+  function saveSitio() {
+    const nome = document.getElementById('f-nome').value.trim();
+    const local = document.getElementById('f-local').value.trim();
+    const desc = document.getElementById('f-desc').value.trim();
+    const capa = document.getElementById('f-capa').value.trim();
+    if (!nome||!local||!desc||!capa) { alert('Preencha os campos obrigatórios: Nome, Localização, Descrição e Foto de capa.'); return; }
+
+    const features = document.getElementById('f-features').value.split('\n').map(l=>l.trim()).filter(Boolean);
+    const fotos = [capa, ...Array.from(document.querySelectorAll('.foto-url')).map(i=>i.value.trim()).filter(Boolean)];
+    const diasBlocked = Array.from(document.querySelectorAll('.dia-btn.blocked')).map(b=>parseInt(b.dataset.day));
+    const slug = nome.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'');
+
+    const obj = {
+      id: slug,
+      slug,
+      nome,
+      localizacao: local,
+      descricao: desc,
+      tipo: document.getElementById('f-tipo').value||'🏡 Temporada · Eventos',
+      preco: document.getElementById('f-preco').value||'Consulte valores',
+      precoDetalhe: document.getElementById('f-preco-detalhe').value||'',
+      capacidade: document.getElementById('f-capacidade').value||'Consultar',
+      fotos,
+      fotoCapa: capa,
+      features: features.length ? features : ['🏡 Acomodações','🔥 Churrasqueira','🚗 Estacionamento'],
+      diasIndisponiveis: diasBlocked,
+      ativo: true
+    };
+
+    const code = JSON.stringify(obj, null, 2);
+    document.getElementById('save-alert').style.display='block';
+    document.getElementById('generated-code').style.display='block';
+    document.getElementById('generated-code').textContent =
+      '// Copie e cole este objeto dentro do array SITIOS em sitios-data.js:\n\n' + code;
+
+    // Also update in-memory
+    if (window.editingIdx !== undefined) {
+      SITIOS[window.editingIdx] = obj;
+      window.editingIdx = undefined;
+    } else {
+      SITIOS.push(obj);
+    }
+    buildSitiosList();
+    populateReservaSelect();
+  }
+
+  function populateReservaSelect() {
+    const sel = document.getElementById('r-sitio');
+    sel.innerHTML = '<option value="">Selecione</option>';
+    SITIOS.filter(s=>s.ativo).forEach(s => {
+      const opt = document.createElement('option');
+      opt.value = s.nome; opt.textContent = s.nome;
+      sel.appendChild(opt);
+    });
+  }
+
+  function saveReserva() {
+    const nome = document.getElementById('r-nome').value;
+    const sitio = document.getElementById('r-sitio').value;
+    const checkin = document.getElementById('r-checkin').value;
+    const checkout = document.getElementById('r-checkout').value;
+    if (!nome||!sitio||!checkin||!checkout) { alert('Preencha: cliente, sítio e datas.'); return; }
+    const al = document.getElementById('reserva-alert');
+    al.style.display = 'block';
+    al.textContent = `✅ Reserva registrada! ${nome} — ${sitio} — ${checkin} a ${checkout}`;
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="page-title">Sítio — Hospeda Temporada</title>
+  <meta name="description" id="page-desc" content="Sítio para temporada e eventos — Hospeda Temporada">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { --cream:#F7F2EB; --terracotta:#AC4747; --dark:#1a1410; --mid:#4a3f35; --white:#ffffff; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--cream); color: var(--dark); overflow-x: hidden; }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; background: rgba(247,242,235,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(172,71,71,0.1); }
+    .nav-logo { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--dark); text-decoration: none; }
+    .nav-logo span { color: var(--terracotta); }
+    .nav-back { font-size: 14px; color: var(--terracotta); text-decoration: none; font-weight: 600; }
+    .hero-property { min-height: 70vh; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; padding: 100px 24px 48px; text-align: center; position: relative; overflow: hidden; }
+    .hero-bg { position: absolute; inset: 0; background-size: cover; background-position: center; filter: brightness(0.55); }
+    .hero-content { position: relative; z-index: 1; }
+    .hero-property-tag { display: inline-block; background: rgba(172,71,71,0.3); border: 1px solid rgba(172,71,71,0.5); color: #e8b4a0; font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; padding: 6px 16px; border-radius: 100px; margin-bottom: 16px; }
+    .hero-property h1 { font-family: 'Playfair Display', serif; font-size: clamp(32px,7vw,60px); font-weight: 700; color: var(--cream); line-height: 1.1; margin-bottom: 12px; }
+    .hero-property p { font-size: 16px; color: rgba(247,242,235,0.8); margin-bottom: 28px; }
+    .btn-primary { background: var(--terracotta); color: var(--white); padding: 16px 32px; border-radius: 4px; font-size: 15px; font-weight: 600; text-decoration: none; display: inline-block; border: none; cursor: pointer; }
+    .property-info { padding: 48px 24px; background: var(--white); }
+    .info-grid { display: flex; flex-direction: column; gap: 32px; }
+    .info-sidebar { background: var(--cream); border-radius: 8px; padding: 28px 24px; border: 1px solid rgba(172,71,71,0.15); }
+    .price-tag { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 700; color: var(--terracotta); }
+    .price-tag span { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; color: var(--mid); font-weight: 400; }
+    .property-features-list { display: flex; flex-wrap: wrap; gap: 12px; margin: 24px 0; }
+    .feat-chip { background: rgba(172,71,71,0.08); color: var(--mid); padding: 8px 16px; border-radius: 100px; font-size: 13px; }
+    .section-tag { font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--terracotta); display: block; margin-bottom: 12px; }
+    .section-title { font-family: 'Playfair Display', serif; font-size: clamp(24px,5vw,36px); font-weight: 700; color: var(--dark); line-height: 1.2; margin-bottom: 12px; }
+    .section-subtitle { font-size: 15px; color: var(--mid); line-height: 1.7; font-weight: 300; }
+    .gallery { padding: 48px 24px; background: var(--cream); }
+    .gallery-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 28px; }
+    .gallery-grid img { width: 100%; height: 160px; object-fit: cover; border-radius: 4px; }
+    .gallery-grid img:first-child { grid-column: 1/-1; height: 240px; }
+    .calendar-section { padding: 48px 24px; background: var(--dark); color: var(--cream); }
+    .calendar-section .section-title { color: var(--cream); }
+    .calendar-section .section-subtitle { color: rgba(247,242,235,0.6); }
+    .calendar-demo { margin-top: 32px; background: rgba(247,242,235,0.05); border: 1px solid rgba(247,242,235,0.1); border-radius: 8px; padding: 24px 16px; }
+    .cal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .cal-title { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 600; color: var(--cream); }
+    .cal-nav button { background: rgba(247,242,235,0.1); border: none; color: var(--cream); width: 32px; height: 32px; border-radius: 4px; cursor: pointer; font-size: 16px; margin-left: 6px; }
+    .cal-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 3px; }
+    .cal-day-name { text-align: center; font-size: 10px; font-weight: 600; letter-spacing: 1px; color: rgba(247,242,235,0.4); padding: 6px 2px; text-transform: uppercase; }
+    .cal-day { text-align: center; padding: 9px 2px; border-radius: 4px; font-size: 13px; cursor: pointer; color: rgba(247,242,235,0.8); }
+    .cal-day.empty { opacity: 0; }
+    .cal-day.unavailable { background: rgba(172,71,71,0.25); color: rgba(172,71,71,0.6); text-decoration: line-through; cursor: not-allowed; }
+    .cal-day.available:hover { background: rgba(247,242,235,0.1); }
+    .cal-day.selected { background: var(--terracotta); color: var(--white); font-weight: 600; }
+    .cal-day.range { background: rgba(172,71,71,0.2); color: var(--cream); }
+    .cal-legend { display: flex; gap: 16px; margin-top: 16px; flex-wrap: wrap; }
+    .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: rgba(247,242,235,0.6); }
+    .legend-dot { width: 10px; height: 10px; border-radius: 2px; }
+    .dot-available { background: rgba(247,242,235,0.15); }
+    .dot-unavailable { background: rgba(172,71,71,0.4); }
+    .dot-selected { background: var(--terracotta); }
+    .reserve-form { margin-top: 24px; display: flex; flex-direction: column; gap: 10px; }
+    .reserve-form input { background: rgba(247,242,235,0.08); border: 1px solid rgba(247,242,235,0.15); color: var(--cream); padding: 12px 14px; border-radius: 4px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; width: 100%; }
+    .reserve-form input::placeholder { color: rgba(247,242,235,0.35); }
+    .reserve-form input:focus { outline: none; border-color: var(--terracotta); }
+    .contact-section { padding: 48px 24px; background: var(--terracotta); }
+    .contact-section .section-tag { color: rgba(247,242,235,0.7); }
+    .contact-section .section-title { color: var(--white); }
+    .contact-section .section-subtitle { color: rgba(247,242,235,0.8); }
+    .whatsapp-btn-big { display: flex; align-items: center; justify-content: center; gap: 12px; background: #25D366; color: var(--white); padding: 18px; border-radius: 8px; font-size: 16px; font-weight: 600; text-decoration: none; margin-top: 24px; width: 100%; }
+    footer { background: var(--dark); padding: 40px 24px; text-align: center; }
+    .footer-logo { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--cream); margin-bottom: 12px; }
+    .footer-logo span { color: var(--terracotta); }
+    .footer-copy { font-size: 12px; color: rgba(247,242,235,0.25); margin-top: 24px; border-top: 1px solid rgba(247,242,235,0.08); padding-top: 20px; }
+    .whatsapp-float { position: fixed; bottom: 24px; right: 24px; z-index: 999; background: #25D366; border-radius: 50%; width: 56px; height: 56px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(37,211,102,0.4); text-decoration: none; }
+    .whatsapp-float svg { width: 28px; height: 28px; fill: white; }
+    @media (min-width: 768px) {
+      .info-grid { flex-direction: row; }
+      .info-sidebar { min-width: 280px; }
+      .gallery-grid { grid-template-columns: repeat(3,1fr); }
+      .gallery-grid img { height: 200px; }
+      .gallery-grid img:first-child { grid-column: 1/-1; height: 320px; }
+    }
+  </style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">Hospeda<span>Temporada</span></a>
+  <a href="index.html" class="nav-back">← Todos os sítios</a>
+</nav>
+
+<section class="hero-property">
+  <div class="hero-bg" id="hero-bg"></div>
+  <div class="hero-content">
+    <span class="hero-property-tag" id="hero-tipo"></span>
+    <h1 id="hero-nome"></h1>
+    <p id="hero-local"></p>
+    <a href="#calendário" class="btn-primary">Ver disponibilidade</a>
+  </div>
+</section>
+
+<div class="property-info">
+  <div class="info-grid">
+    <div class="info-main">
+      <span class="section-tag">Sobre o imóvel</span>
+      <h2 class="section-title" id="info-nome"></h2>
+      <p class="section-subtitle" id="info-desc"></p>
+      <div class="property-features-list" id="info-features"></div>
+    </div>
+    <div class="info-sidebar">
+      <div class="price-tag" id="info-preco"></div>
+      <p style="font-size:13px;color:var(--mid);margin:12px 0 20px;" id="info-preco-detalhe"></p>
+      <a href="#calendário" class="btn-primary" style="display:block;text-align:center;margin-bottom:12px;">Verificar datas</a>
+      <a id="btn-whatsapp-sidebar" href="#" target="_blank" style="display:block;text-align:center;background:#25D366;color:white;padding:14px;border-radius:4px;font-weight:600;font-size:14px;text-decoration:none;">WhatsApp</a>
+    </div>
+  </div>
+</div>
+
+<section class="gallery">
+  <span class="section-tag">Fotos</span>
+  <h2 class="section-title">Conheça o espaço</h2>
+  <div class="gallery-grid" id="gallery-grid"></div>
+</section>
+
+<section class="calendar-section" id="calendário">
+  <span class="section-tag">Reserva online</span>
+  <h2 class="section-title">Calendário de disponibilidade</h2>
+  <p class="section-subtitle">Selecione as datas e confirme via WhatsApp</p>
+  <div class="calendar-demo">
+    <div class="cal-header">
+      <span class="cal-title" id="cal-month"></span>
+      <div class="cal-nav">
+        <button onclick="prevMonth()">‹</button>
+        <button onclick="nextMonth()">›</button>
+      </div>
+    </div>
+    <div class="cal-grid" id="cal-grid"></div>
+    <div class="cal-legend">
+      <div class="legend-item"><div class="legend-dot dot-available"></div>Disponível</div>
+      <div class="legend-item"><div class="legend-dot dot-unavailable"></div>Reservado</div>
+      <div class="legend-item"><div class="legend-dot dot-selected"></div>Selecionado</div>
+    </div>
+    <div class="reserve-form">
+      <input type="text" id="checkin-date" placeholder="📅 Check-in" readonly>
+      <input type="text" id="checkout-date" placeholder="📅 Check-out" readonly>
+      <button class="btn-primary" onclick="confirmReserve()" style="width:100%;padding:14px;">Confirmar reserva via WhatsApp</button>
+    </div>
+  </div>
+</section>
+
+<section class="contact-section" id="contato">
+  <span class="section-tag">Contato</span>
+  <h2 class="section-title">Pronto para reservar?</h2>
+  <p class="section-subtitle">Fale direto com o Arlei e garanta suas datas</p>
+  <a id="btn-whatsapp-footer" href="#" target="_blank" class="whatsapp-btn-big">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    <span id="btn-whatsapp-txt">Reservar agora</span>
+  </a>
+</section>
+
+<footer>
+  <div class="footer-logo">Hospeda<span>Temporada</span></div>
+  <p style="font-size:13px;color:rgba(247,242,235,0.4);margin-bottom:16px;" id="footer-sub"></p>
+  <a href="index.html" style="font-size:13px;color:rgba(172,71,71,0.8);text-decoration:none;">← Ver todos os sítios</a>
+  <p class="footer-copy">© 2026 Hospeda Temporada — Todos os direitos reservados</p>
+</footer>
+
+<a id="whatsapp-float" href="#" target="_blank" class="whatsapp-float" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script src="sitios-data.js"></script>
+<script>
+  // Get sitio ID from URL param: sitio.html?id=sitio-das-pedras
+  const params = new URLSearchParams(window.location.search);
+  const sitioId = params.get('id') || 'sitio-das-pedras';
+  const sitio = SITIOS.find(s => s.id === sitioId) || SITIOS[1];
+  const WA = '5511941942210';
+
+  // Populate page
+  document.getElementById('page-title').textContent = sitio.nome + ' — Hospeda Temporada';
+  document.getElementById('page-desc').content = sitio.descricao;
+  document.getElementById('hero-bg').style.backgroundImage = `url('${sitio.fotoCapa}')`;
+  document.getElementById('hero-tipo').textContent = sitio.tipo;
+  document.getElementById('hero-nome').textContent = sitio.nome;
+  document.getElementById('hero-local').textContent = '📍 ' + sitio.localizacao;
+  document.getElementById('info-nome').textContent = sitio.nome;
+  document.getElementById('info-desc').textContent = sitio.descricao;
+  document.getElementById('info-preco').innerHTML = sitio.preco + (sitio.precoDetalhe ? `<span></span>` : '');
+  document.getElementById('info-preco').textContent = sitio.preco;
+  document.getElementById('info-preco-detalhe').textContent = sitio.precoDetalhe;
+  document.getElementById('footer-sub').textContent = sitio.nome + ' — ' + sitio.localizacao;
+  document.getElementById('btn-whatsapp-txt').textContent = 'Reservar ' + sitio.nome;
+
+  // Features
+  const featEl = document.getElementById('info-features');
+  sitio.features.forEach(f => { const el = document.createElement('span'); el.className = 'feat-chip'; el.textContent = f; featEl.appendChild(el); });
+
+  // Gallery
+  const galleryEl = document.getElementById('gallery-grid');
+  sitio.fotos.forEach((src, i) => { const img = document.createElement('img'); img.src = src; img.alt = sitio.nome + ' - foto ' + (i+1); img.loading = 'lazy'; galleryEl.appendChild(img); });
+
+  // WA links
+  const waMsg = encodeURIComponent(`Olá! Tenho interesse no ${sitio.nome}. Pode me passar mais informações?`);
+  const waUrl = `https://wa.me/${WA}?text=${waMsg}`;
+  document.getElementById('btn-whatsapp-sidebar').href = waUrl;
+  document.getElementById('btn-whatsapp-footer').href = `https://wa.me/${WA}?text=${encodeURIComponent(`Olá! Quero reservar o ${sitio.nome}. Pode me ajudar?`)}`;
+  document.getElementById('whatsapp-float').href = waUrl;
+
+  // Calendar
+  let currentDate = new Date(2026, 2, 1);
+  let selectedStart = null, selectedEnd = null;
+  const unavailableDays = sitio.diasIndisponiveis || [];
+  const months = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+  const dayNames = ['DOM','SEG','TER','QUA','QUI','SEX','SÁB'];
+
+  function renderCalendar() {
+    const grid = document.getElementById('cal-grid');
+    document.getElementById('cal-month').textContent = months[currentDate.getMonth()] + ' ' + currentDate.getFullYear();
+    grid.innerHTML = '';
+    dayNames.forEach(d => { const el = document.createElement('div'); el.className = 'cal-day-name'; el.textContent = d; grid.appendChild(el); });
+    const firstDay = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getDay();
+    for (let i = 0; i < firstDay; i++) { const el = document.createElement('div'); el.className = 'cal-day empty'; grid.appendChild(el); }
+    const daysInMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0).getDate();
+    for (let d = 1; d <= daysInMonth; d++) {
+      const el = document.createElement('div');
+      const isUn = unavailableDays.includes(d);
+      const isSel = (selectedStart && d===selectedStart)||(selectedEnd && d===selectedEnd);
+      const isRng = selectedStart && selectedEnd && d>selectedStart && d<selectedEnd;
+      el.className = 'cal-day '+(isUn?'unavailable':isSel?'selected':isRng?'range':'available');
+      el.textContent = d;
+      if (!isUn) el.addEventListener('click', ()=>selectDay(d));
+      grid.appendChild(el);
+    }
+  }
+  function selectDay(d) {
+    if (!selectedStart||(selectedStart&&selectedEnd)){selectedStart=d;selectedEnd=null;}
+    else if(d>selectedStart){
+      selectedEnd=d;
+      const m=currentDate.getMonth()+1,y=currentDate.getFullYear();
+      document.getElementById('checkin-date').value=`${String(selectedStart).padStart(2,'0')}/${String(m).padStart(2,'0')}/${y}`;
+      document.getElementById('checkout-date').value=`${String(selectedEnd).padStart(2,'0')}/${String(m).padStart(2,'0')}/${y}`;
+    }else{selectedStart=d;selectedEnd=null;}
+    renderCalendar();
+  }
+  function prevMonth(){currentDate.setMonth(currentDate.getMonth()-1);selectedStart=null;selectedEnd=null;renderCalendar();}
+  function nextMonth(){currentDate.setMonth(currentDate.getMonth()+1);selectedStart=null;selectedEnd=null;renderCalendar();}
+  function confirmReserve(){
+    const ci=document.getElementById('checkin-date').value;
+    const co=document.getElementById('checkout-date').value;
+    if(!ci||!co){alert('Selecione as datas de entrada e saída!');return;}
+    const msg=encodeURIComponent(`Olá! Quero reservar o ${sitio.nome}.\n\nCheck-in: ${ci}\nCheck-out: ${co}\n\nPode confirmar disponibilidade?`);
+    window.open(`https://wa.me/${WA}?text=${msg}`,'_blank');
+  }
+  renderCalendar();
+</script>
+</body>
+</html>
