@@ -469,12 +469,12 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:#f1f5f9;color:var(--d
               <input type="number" id="nf-total" placeholder="Ex: 2200" min="0" step="0.01" oninput="calcAdminRestante()">
             </div>
             <div class="form-row">
-              <label>✅ Sinal de pagamento (R$)</label>
-              <input type="number" id="nf-sinal" placeholder="Ex: 1100" min="0" step="0.01" oninput="calcAdminRestante()">
+              <label>✅ Sinal — 50% <span style="font-size:12px;color:#6b7280">(automático)</span></label>
+              <input type="number" id="nf-sinal" placeholder="—" min="0" step="0.01" readonly style="background:#f0fdf4;color:#15803d;font-weight:600">
             </div>
             <div class="form-row">
-              <label>⏳ Restante do pagamento (R$)</label>
-              <input type="number" id="nf-restante" placeholder="Calculado automaticamente" min="0" step="0.01" readonly style="background:#f8fafc;color:#6b7280">
+              <label>⏳ Restante — 50% <span style="font-size:12px;color:#6b7280">(automático)</span></label>
+              <input type="number" id="nf-restante" placeholder="—" min="0" step="0.01" readonly style="background:#fef9c3;color:#92400e;font-weight:600">
             </div>
           </div>
           <div class="form-row" style="margin-top:14px">
@@ -1129,9 +1129,8 @@ function downloadCSV(rows, filename){
 // ===== CALC RESTANTE ADMIN =====
 function calcAdminRestante(){
   const total = parseFloat(document.getElementById('nf-total').value) || 0;
-  const sinal = parseFloat(document.getElementById('nf-sinal').value) || 0;
-  const restante = Math.max(0, total - sinal);
-  document.getElementById('nf-restante').value = (total > 0 || sinal > 0) ? restante.toFixed(2) : '';
+  document.getElementById('nf-sinal').value = total > 0 ? (total/2).toFixed(2) : '';
+  document.getElementById('nf-restante').value = total > 0 ? (total/2).toFixed(2) : '';
 }
 
 // ===== NOVA RESERVA =====
