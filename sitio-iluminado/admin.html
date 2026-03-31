@@ -3,629 +3,1490 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Painel Admin — Hospeda Temporada</title>
+<title>Painel Admin — Sítio Iluminado</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#f0ebe3;--cream:#F7F2EB;--terra:#AC4747;--dark:#1a1410;--mid:#4a3f35;
-  --white:#fff;--green:#22c55e;--green-l:rgba(34,197,94,.12);
-  --red:#ef4444;--red-l:rgba(239,68,68,.1);
+  --green:#16a34a;--green-l:rgba(22,163,74,.12);
+  --red:#dc2626;--red-l:rgba(220,38,38,.12);
+  --amber:#d97706;--amber-l:rgba(217,119,6,.12);
   --blue:#2563eb;--blue-l:rgba(37,99,235,.1);
-  --amber:#d97706;--amber-l:rgba(245,158,11,.12);
-  --border:#e0d8cc;
+  --dark:#111827;--mid:#6b7280;--light:#f3f4f6;
+  --white:#fff;--border:#e5e7eb;
+  --accent:#1d4ed8;--accent-h:#1e40af;
+  --wa:#25D366;
+  --sidebar:220px;
 }
-body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--dark);min-height:100vh}
+html{scroll-behavior:smooth}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:#f1f5f9;color:var(--dark);min-height:100vh}
 
-/* LOGIN */
-.login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--dark)}
-.login-box{background:var(--white);border-radius:12px;padding:48px 40px;width:100%;max-width:380px;text-align:center}
-.login-logo{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--dark);margin-bottom:8px}
-.login-logo span{color:var(--terra)}
-.login-sub{font-size:13px;color:var(--mid);margin-bottom:32px}
-.login-box input{width:100%;padding:14px 16px;border:1.5px solid var(--border);border-radius:6px;font-size:15px;margin-bottom:12px;font-family:'Plus Jakarta Sans',sans-serif;background:var(--cream)}
-.login-box input:focus{outline:none;border-color:var(--terra)}
-.login-btn{width:100%;background:var(--terra);color:var(--white);border:none;padding:16px;border-radius:6px;font-size:15px;font-weight:600;cursor:pointer}
-.login-error{color:var(--red);font-size:13px;margin-top:10px;display:none}
+/* ── LOGIN ── */
+#login-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:linear-gradient(135deg,#0f172a,#1e3a8a)}
+.login-box{background:#fff;border-radius:16px;padding:40px 36px;width:100%;max-width:360px;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.login-logo{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;text-align:center;margin-bottom:6px}
+.login-logo span{color:var(--accent)}
+.login-sub{font-size:13px;color:var(--mid);text-align:center;margin-bottom:28px}
+.login-field{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+.login-field label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.login-field input{padding:12px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit}
+.login-field input:focus{outline:none;border-color:var(--accent)}
+.login-btn{width:100%;background:var(--accent);color:#fff;border:none;border-radius:8px;padding:14px;font-size:15px;font-weight:700;cursor:pointer;margin-top:6px}
+.login-btn:hover{background:var(--accent-h)}
+.login-err{color:var(--red);font-size:13px;text-align:center;margin-top:10px;display:none}
 
-/* LAYOUT */
-.admin-wrap{display:none;flex-direction:column;min-height:100vh}
-.admin-wrap.visible{display:flex}
-header{background:var(--dark);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-.header-logo{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--cream)}
-.header-logo span{color:var(--terra)}
-.header-right{display:flex;gap:12px;align-items:center}
-.header-right a{color:rgba(247,242,235,.6);text-decoration:none;font-size:13px}
-.logout-btn{background:rgba(172,71,71,.3);color:#e8b4a0;border:none;padding:8px 16px;border-radius:4px;font-size:13px;cursor:pointer}
+/* ── LAYOUT ── */
+#app{display:none;min-height:100vh}
+.topbar{position:fixed;top:0;left:0;right:0;height:60px;background:#fff;border-bottom:1px solid var(--border);z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 20px;gap:16px}
+.topbar-logo{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;white-space:nowrap}
+.topbar-logo span{color:var(--accent)}
+.topbar-right{display:flex;align-items:center;gap:12px}
+.topbar-badge{background:var(--green-l);color:var(--green);font-size:11px;font-weight:700;padding:4px 10px;border-radius:100px}
+.btn-logout{background:none;border:1.5px solid var(--border);color:var(--mid);font-size:12px;font-weight:600;padding:6px 14px;border-radius:6px;cursor:pointer}
+.btn-logout:hover{border-color:var(--red);color:var(--red)}
 
-.admin-content{flex:1;padding:28px 20px;max-width:1000px;margin:0 auto;width:100%}
-.page-title{font-family:'Playfair Display',serif;font-size:26px;font-weight:700;margin-bottom:4px}
-.page-sub{font-size:14px;color:var(--mid);margin-bottom:28px}
+.main-wrap{padding-top:60px;display:flex;min-height:100vh}
+.sidebar{width:var(--sidebar);background:#fff;border-right:1px solid var(--border);padding:16px 0;position:fixed;top:60px;left:0;bottom:0;overflow-y:auto;z-index:100}
+.sidebar-section{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--mid);padding:16px 20px 6px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 20px;font-size:13px;font-weight:500;color:var(--dark);cursor:pointer;transition:background .15s;text-decoration:none}
+.nav-item:hover{background:var(--light)}
+.nav-item.active{background:var(--blue-l);color:var(--accent);font-weight:700}
+.nav-item .ni-icon{font-size:16px;width:20px;text-align:center}
 
-/* TABS */
-.tabs{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:28px;overflow-x:auto}
-.tab{padding:12px 20px;font-size:14px;font-weight:600;cursor:pointer;color:var(--mid);border-bottom:2px solid transparent;margin-bottom:-2px;white-space:nowrap;flex-shrink:0}
-.tab.active{color:var(--terra);border-bottom-color:var(--terra)}
-.tab-panel{display:none}
-.tab-panel.active{display:block}
+.content{margin-left:var(--sidebar);padding:28px 24px;flex:1}
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%);transition:transform .25s}
+  .sidebar.open{transform:translateX(0)}
+  .content{margin-left:0}
+  .mob-menu-btn{display:flex!important}
+}
+.mob-menu-btn{display:none;background:none;border:none;font-size:22px;cursor:pointer;color:var(--dark)}
 
-/* CARDS */
-.card{background:var(--white);border-radius:10px;padding:24px;box-shadow:0 1px 4px rgba(0,0,0,.06);margin-bottom:16px}
-.sec-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--border)}
+/* ── STATS ── */
+.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-bottom:28px}
+@media(min-width:600px){.stats-grid{grid-template-columns:repeat(4,1fr)}}
+.stat-card{background:#fff;border-radius:12px;border:1px solid var(--border);padding:20px 18px}
+.stat-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mid);margin-bottom:8px}
+.stat-value{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:var(--dark)}
+.stat-sub{font-size:11px;color:var(--mid);margin-top:4px}
+.stat-card.green .stat-value{color:var(--green)}
+.stat-card.red .stat-value{color:var(--red)}
+.stat-card.blue .stat-value{color:var(--blue)}
+.stat-card.amber .stat-value{color:var(--amber)}
 
-/* SITIO LIST */
-.sitio-row{background:var(--white);border-radius:8px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.06);margin-bottom:12px;display:flex;align-items:stretch}
-.sitio-thumb{width:100px;object-fit:cover;flex-shrink:0;background:var(--bg)}
-.sitio-body{flex:1;padding:14px 18px}
+/* ── SECTION HEADER ── */
+.sec-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px}
+.sec-title{font-family:'Playfair Display',serif;font-size:20px;font-weight:700}
+.sec-actions{display:flex;gap:8px;flex-wrap:wrap}
+
+/* ── FILTERS ── */
+.filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.filter-btn{padding:7px 16px;border-radius:100px;border:1.5px solid var(--border);font-size:12px;font-weight:600;cursor:pointer;background:#fff;color:var(--mid);transition:all .15s}
+.filter-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.search-input{flex:1;min-width:180px;padding:8px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;font-family:inherit}
+.search-input:focus{outline:none;border-color:var(--accent)}
+
+/* ── TABLE ── */
+.table-wrap{background:#fff;border-radius:12px;border:1px solid var(--border);overflow:hidden}
+.res-table{width:100%;border-collapse:collapse;font-size:13px}
+.res-table th{background:var(--light);padding:12px 16px;text-align:left;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mid);border-bottom:1px solid var(--border)}
+.res-table td{padding:14px 16px;border-bottom:1px solid var(--border);vertical-align:middle}
+.res-table tr:last-child td{border-bottom:none}
+.res-table tr:hover td{background:#fafafa}
+.res-name-cell{font-weight:600;font-size:13px}
+.res-phone-cell{color:var(--mid);font-size:12px}
+.badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:4px 10px;border-radius:100px;text-transform:uppercase;letter-spacing:.5px;cursor:pointer;border:none;white-space:nowrap}
+.badge-pending{background:var(--amber-l);color:var(--amber)}
+.badge-paid{background:var(--green-l);color:var(--green)}
+.badge-cancelled{background:var(--red-l);color:var(--red)}
+.btn-wa{background:var(--wa);color:#fff;border:none;border-radius:6px;padding:6px 12px;font-size:12px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:5px;text-decoration:none;white-space:nowrap}
+.btn-icon{background:none;border:1.5px solid var(--border);color:var(--mid);border-radius:6px;padding:5px 8px;font-size:13px;cursor:pointer}
+.btn-icon:hover{border-color:var(--red);color:var(--red)}
+.days-badge{display:inline-block;background:var(--blue-l);color:var(--blue);font-size:11px;font-weight:700;padding:3px 8px;border-radius:100px}
+.no-data{text-align:center;padding:48px;color:var(--mid);font-size:14px}
+
+/* ── TABLE SCROLL MOBILE ── */
+.table-scroll{overflow-x:auto}
+
+/* ── CALENDAR VIEW ── */
+.cal-admin-wrap{background:#fff;border-radius:12px;border:1px solid var(--border);padding:20px;margin-bottom:20px}
+.cal-admin-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.cal-month-label{font-family:'Playfair Display',serif;font-size:18px;font-weight:700}
+.cal-nav{display:flex;gap:6px}
+.cal-nav-btn{background:var(--light);border:none;width:34px;height:34px;border-radius:6px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center}
+.cal-nav-btn:hover{background:var(--border)}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.cal-head{text-align:center;font-size:10px;font-weight:700;letter-spacing:.5px;color:var(--mid);padding:8px 2px;text-transform:uppercase}
+.cal-day{text-align:center;padding:0;aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:6px;font-size:12px;cursor:default;position:relative;font-weight:500;gap:2px}
+.cal-day.empty{opacity:0;pointer-events:none}
+.cal-day.today{border:2px solid var(--accent)}
+.cal-day.free{color:var(--dark)}
+.cal-day.reserved-pending{background:var(--amber-l);color:var(--amber);cursor:pointer}
+.cal-day.reserved-paid{background:var(--green-l);color:var(--green);cursor:pointer}
+.cal-day-dot{width:5px;height:5px;border-radius:50%;background:currentColor;margin:0 auto}
+.cal-legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:16px;padding-top:16px;border-top:1px solid var(--border)}
+.leg{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--mid)}
+.leg-box{width:14px;height:14px;border-radius:3px}
+
+/* ── TIMELINE ── */
+.timeline{display:flex;flex-direction:column;gap:0}
+.tl-item{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--border)}
+.tl-item:last-child{border-bottom:none}
+.tl-dot{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;margin-top:2px}
+.tl-dot.paid{background:var(--green-l)}
+.tl-dot.pending{background:var(--amber-l)}
+.tl-body{flex:1}
+.tl-title{font-weight:600;font-size:14px}
+.tl-sub{font-size:12px;color:var(--mid);margin-top:2px}
+.tl-when{font-size:11px;color:var(--mid);margin-top:4px}
+
+/* ── MODAL ── */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:800;align-items:center;justify-content:center;padding:16px}
+.modal-bg.open{display:flex}
+.modal{background:#fff;border-radius:16px;width:100%;max-width:520px;max-height:90vh;overflow-y:auto}
+.modal-header{padding:20px 24px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.modal-header h3{font-family:'Playfair Display',serif;font-size:18px;font-weight:700}
+.modal-close{background:none;border:none;font-size:22px;cursor:pointer;color:var(--mid);line-height:1}
+.modal-body{padding:20px 24px}
+.modal-field{margin-bottom:14px}
+.modal-field label{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mid);margin-bottom:5px}
+.modal-field .val{font-size:14px;font-weight:500;color:var(--dark)}
+.modal-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.modal-footer{padding:16px 24px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap}
+.btn-cancel-res{background:none;border:1.5px solid var(--red);color:var(--red);border-radius:8px;padding:10px 18px;font-size:13px;font-weight:600;cursor:pointer}
+.btn-confirm-res{background:var(--green);color:#fff;border:none;border-radius:8px;padding:10px 18px;font-size:13px;font-weight:600;cursor:pointer}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#111;color:#fff;padding:12px 24px;border-radius:8px;font-size:14px;font-weight:500;z-index:9999;opacity:0;pointer-events:none;transition:opacity .3s;white-space:nowrap}
+.toast.show{opacity:1}
+
+/* ── EXPORT BTN ── */
+.btn-cobrar{background:#f59e0b;color:#fff;border:none;border-radius:6px;padding:5px 10px;font-size:11px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
+.btn-cobrar:hover{background:#d97706}
+.btn-export{background:#fff;border:1.5px solid var(--border);color:var(--dark);border-radius:8px;padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.btn-export:hover{border-color:var(--accent);color:var(--accent)}
+.btn-new{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.btn-new:hover{background:var(--accent-h)}
+
+/* ── TABS ── */
+.page{display:none}
+.page.active{display:block}
+
+/* ── REVENUE CARD ── */
+.rev-card{background:linear-gradient(135deg,#1d4ed8,#2563eb);border-radius:12px;padding:24px;margin-bottom:20px;color:#fff}
+.rev-card h3{font-size:13px;font-weight:600;opacity:.8;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.rev-value{font-family:'Playfair Display',serif;font-size:36px;font-weight:700}
+.rev-sub{font-size:12px;opacity:.7;margin-top:4px}
+
+/* ── SÍTIOS ── */
+.sitio-row{background:#fff;border-radius:10px;border:1px solid var(--border);overflow:hidden;margin-bottom:12px;display:flex;align-items:stretch}
+.sitio-thumb{width:96px;object-fit:cover;flex-shrink:0;background:var(--light)}
+.sitio-body{flex:1;padding:14px 16px}
 .sitio-name{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;margin-bottom:3px}
 .sitio-loc{font-size:12px;color:var(--mid);margin-bottom:8px}
 .sitio-badges{display:flex;gap:6px;flex-wrap:wrap}
-.badge{font-size:11px;padding:3px 9px;border-radius:100px;font-weight:600}
-.badge-green{background:var(--green-l);color:#16a34a}
-.badge-red{background:var(--red-l);color:var(--red)}
-.badge-blue{background:var(--blue-l);color:var(--blue)}
-.badge-amber{background:var(--amber-l);color:var(--amber)}
-.sitio-actions-col{display:flex;flex-direction:column;gap:6px;padding:12px;justify-content:center;flex-shrink:0}
-.btn-sm{padding:7px 12px;border-radius:5px;font-size:12px;font-weight:600;cursor:pointer;border:none;white-space:nowrap}
-.btn-edit{background:var(--cream);border:1px solid var(--border);color:var(--dark)}
-.btn-del{background:var(--red-l);color:var(--red)}
-.btn-view{background:var(--blue-l);color:var(--blue)}
-
-/* FORM */
-.form-grid{display:grid;grid-template-columns:1fr;gap:14px;margin-bottom:14px}
-@media(min-width:600px){.form-grid{grid-template-columns:1fr 1fr}}
-.form-full{grid-column:1/-1}
-.fg{display:flex;flex-direction:column;gap:5px}
-.fg label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--dark)}
-.fg input,.fg select,.fg textarea{padding:11px 13px;border:1.5px solid var(--border);border-radius:7px;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:var(--dark);background:var(--cream);width:100%}
-.fg input:focus,.fg select:focus,.fg textarea:focus{outline:none;border-color:var(--terra)}
-.fg textarea{resize:vertical;min-height:80px}
-.form-hint{font-size:11px;color:var(--mid);margin-top:3px}
-
-/* FOTO */
-.foto-tabs{display:flex;border:1.5px solid var(--border);border-radius:7px;overflow:hidden;margin-bottom:8px}
-.foto-tab{flex:1;padding:9px;font-size:12px;font-weight:700;text-align:center;cursor:pointer;background:var(--cream);color:var(--mid);border:none}
-.foto-tab.active{background:var(--terra);color:#fff}
+.sitio-badge{font-size:11px;padding:3px 9px;border-radius:100px;font-weight:600;background:var(--blue-l);color:var(--blue)}
+.sitio-badge.amber{background:var(--amber-l);color:var(--amber)}
+.sitio-col-actions{display:flex;flex-direction:column;gap:6px;padding:12px;justify-content:center;flex-shrink:0}
+/* Modal sítio */
+.foto-tabs{display:flex;border:1.5px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:8px}
+.foto-tab{flex:1;padding:9px;font-size:12px;font-weight:700;text-align:center;cursor:pointer;background:var(--light);color:var(--mid);border:none}
+.foto-tab.active{background:var(--accent);color:#fff}
 .foto-panel{display:none}.foto-panel.active{display:block}
-.capa-preview{width:100%;height:160px;object-fit:cover;border-radius:8px;margin-top:8px;background:var(--bg);border:1px solid var(--border)}
+.capa-preview-img{width:100%;height:140px;object-fit:cover;border-radius:8px;margin-top:8px;background:var(--light);border:1px solid var(--border);display:none}
+.galeria-url-wrap{display:flex;flex-direction:column;gap:8px}
+.galeria-url-row{display:flex;gap:8px;align-items:center}
+.galeria-url-row input{flex:1}
+.galeria-url-row img{width:44px;height:44px;object-fit:cover;border-radius:5px;border:1px solid var(--border);flex-shrink:0;display:none}
+.galeria-url-row .btn-rm{background:var(--red-l);color:var(--red);border:none;border-radius:5px;padding:6px 10px;font-size:13px;cursor:pointer;flex-shrink:0}
+.btn-add-galeria{background:var(--light);border:1.5px dashed var(--border);color:var(--mid);padding:9px;border-radius:7px;font-size:12px;cursor:pointer;width:100%;margin-top:4px}
+.upload-area{border:2px dashed var(--border);border-radius:8px;padding:20px;text-align:center;cursor:pointer;background:var(--light);position:relative}
+.upload-area:hover{border-color:var(--accent)}
+.upload-area input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.upload-area p{font-size:13px;color:var(--mid);pointer-events:none}
+.upload-thumbs-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.upload-thumb-item{position:relative;width:64px;height:64px}
+.upload-thumb-item img{width:64px;height:64px;object-fit:cover;border-radius:6px;border:1px solid var(--border)}
+.upload-thumb-item .rm-t{position:absolute;top:-5px;right:-5px;background:var(--red);color:#fff;border:none;border-radius:50%;width:17px;height:17px;font-size:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:700;line-height:1}
 
-/* GALERIA */
-.galeria-wrap{display:flex;flex-direction:column;gap:8px;margin-top:6px}
-.galeria-row{display:flex;gap:8px;align-items:center}
-.galeria-row input{flex:1}
-.galeria-row img{width:48px;height:48px;object-fit:cover;border-radius:5px;border:1px solid var(--border);display:none;flex-shrink:0}
-.galeria-row .btn-rm{background:var(--red-l);color:var(--red);border:none;border-radius:5px;padding:6px 10px;font-size:14px;cursor:pointer;flex-shrink:0}
-.btn-add-foto{background:var(--cream);border:1.5px dashed var(--border);color:var(--mid);padding:10px;border-radius:7px;font-size:13px;cursor:pointer;width:100%;margin-top:4px}
+/* ── EMPTY STATE ── */
+.empty-state{text-align:center;padding:48px 24px;color:var(--mid)}
+.empty-icon{font-size:48px;margin-bottom:12px}
+.empty-title{font-size:16px;font-weight:600;color:var(--dark);margin-bottom:6px}
+.empty-sub{font-size:13px;line-height:1.6}
 
-/* UPLOAD FILE */
-.upload-file-area{border:2px dashed var(--border);border-radius:8px;padding:20px;text-align:center;cursor:pointer;background:var(--cream);position:relative}
-.upload-file-area:hover{border-color:var(--terra)}
-.upload-file-area input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
-.upload-label{font-size:13px;color:var(--mid);pointer-events:none}
-.upload-thumbs{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
-.upload-thumb-wrap{position:relative;width:70px;height:70px}
-.upload-thumb-wrap img{width:70px;height:70px;object-fit:cover;border-radius:6px;border:1px solid var(--border)}
-.upload-thumb-wrap .rm-thumb{position:absolute;top:-5px;right:-5px;background:var(--red);color:#fff;border:none;border-radius:50%;width:18px;height:18px;font-size:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:700}
-
-/* RESERVAS */
-.res-card{background:var(--white);border-radius:8px;padding:16px 20px;margin-bottom:10px;box-shadow:0 1px 4px rgba(0,0,0,.06);position:relative}
-.res-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap;margin-bottom:8px}
-.res-name{font-weight:700;font-size:15px}
-.res-sitio{font-size:12px;color:var(--mid)}
-.status-badge{font-size:11px;font-weight:700;padding:4px 10px;border-radius:100px;border:none;cursor:pointer}
-.st-paid{background:var(--green-l);color:#16a34a}
-.st-pending{background:var(--amber-l);color:var(--amber)}
-.res-info{font-size:12px;color:var(--mid);line-height:1.8}
-.res-del{position:absolute;top:10px;right:10px;background:none;border:none;color:var(--mid);cursor:pointer;font-size:15px}
-
-/* BUTTONS */
-.btn-primary{background:var(--terra);color:#fff;border:none;padding:13px 24px;border-radius:7px;font-size:14px;font-weight:700;cursor:pointer}
-.btn-secondary{background:var(--cream);border:1.5px solid var(--border);color:var(--mid);padding:13px 20px;border-radius:7px;font-size:14px;cursor:pointer}
-.btn-actions{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
-
-/* TOAST */
-.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--dark);color:#fff;padding:12px 24px;border-radius:8px;font-size:14px;font-weight:500;z-index:600;display:none;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,.3)}
-.toast.show{display:block}
-.toast.green{background:#16a34a}
-
-/* EMPTY */
-.empty-state{text-align:center;padding:48px 20px;color:var(--mid)}
-.empty-state .icon{font-size:48px;margin-bottom:12px}
-
-/* ALERT */
-.alert{padding:12px 16px;border-radius:6px;font-size:13px;margin-bottom:16px;line-height:1.6}
-.alert-info{background:var(--blue-l);color:var(--blue)}
-.alert-success{background:var(--green-l);color:#16a34a}
-
-@media(min-width:768px){.admin-content{padding:36px 32px}}
+/* ── ADD RESERVATION FORM ── */
+.add-form{background:#fff;border-radius:12px;border:1px solid var(--border);padding:24px;margin-bottom:20px}
+.add-form h3{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;margin-bottom:20px}
+.form-grid-2{display:grid;gap:14px}
+@media(min-width:540px){.form-grid-2{grid-template-columns:1fr 1fr}}
+.form-row{display:flex;flex-direction:column;gap:6px}
+.form-row label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--dark)}
+.form-row input,.form-row select,.form-row textarea{padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:var(--dark);background:#fff;width:100%}
+.form-row input:focus,.form-row select:focus,.form-row textarea:focus{outline:none;border-color:var(--accent)}
+.form-row textarea{resize:vertical;min-height:70px}
 </style>
 </head>
 <body>
 
 <!-- LOGIN -->
-<div class="login-screen" id="login-screen">
+<div id="login-screen">
   <div class="login-box">
-    <div class="login-logo">Hospeda<span>Temporada</span></div>
-    <p class="login-sub">Painel de Administração</p>
-    <input type="password" id="login-pwd" placeholder="Senha de acesso" onkeydown="if(event.key==='Enter')doLogin()">
+    <div class="login-logo">Sítio <span>Iluminado</span></div>
+    <div class="login-sub">Painel Administrativo</div>
+    <div class="login-field">
+      <label>Usuário</label>
+      <input type="text" id="l-user" placeholder="admin" autocomplete="username">
+    </div>
+    <div class="login-field">
+      <label>Senha</label>
+      <input type="password" id="l-pass" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
     <button class="login-btn" onclick="doLogin()">Entrar</button>
-    <p class="login-error" id="login-error">Senha incorreta.</p>
+    <div class="login-err" id="login-err">Usuário ou senha incorretos.</div>
   </div>
 </div>
 
-<!-- ADMIN -->
-<div class="admin-wrap" id="admin-wrap">
-  <header>
-    <div class="header-logo">Hospeda<span>Temporada</span> <span style="font-family:'Plus Jakarta Sans';font-size:11px;color:rgba(247,242,235,.4);font-weight:400">Admin</span></div>
-    <div class="header-right">
-      <a href="index.html" target="_blank">Ver site →</a>
-      <button class="logout-btn" onclick="logout()">Sair</button>
+<!-- APP -->
+<div id="app">
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:12px">
+      <button class="mob-menu-btn" onclick="toggleSidebar()">☰</button>
+      <div class="topbar-logo">Sítio <span>Iluminado</span> · Admin</div>
     </div>
-  </header>
+    <div class="topbar-right">
+      <span class="topbar-badge" id="tb-pending-count"></span>
+      <a href="index.html" target="_blank" style="font-size:12px;color:var(--accent);text-decoration:none;font-weight:600">🔗 Ver site</a>
+      <button class="btn-logout" onclick="doLogout()">Sair</button>
+    </div>
+  </div>
 
-  <div class="admin-content">
-    <h1 class="page-title">Painel de Gestão</h1>
-    <p class="page-sub">Gerencie os sítios, fotos, preços e reservas</p>
-
-    <div class="tabs">
-      <div class="tab active" onclick="goTab('sitios')">🏡 Sítios</div>
-      <div class="tab" onclick="goTab('reservas')">📅 Reservas</div>
+  <div class="main-wrap">
+    <!-- SIDEBAR -->
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-section">Menu</div>
+      <div class="nav-item active" onclick="goPage('dashboard')"><span class="ni-icon">📊</span> Dashboard</div>
+      <div class="nav-item" onclick="goPage('reservas')"><span class="ni-icon">📋</span> Reservas</div>
+      <div class="nav-item" onclick="goPage('calendario')"><span class="ni-icon">🗓️</span> Calendário</div>
+      <div class="nav-item" onclick="goPage('leads')"><span class="ni-icon">👥</span> Leads</div>
+      <div class="nav-item" onclick="goPage('nova')"><span class="ni-icon">➕</span> Nova reserva</div>
+      <div class="nav-item" onclick="goPage('sitios')"><span class="ni-icon">🏡</span> Gerenciar sítios</div>
+      <div class="sidebar-section">Acesso rápido</div>
+      <a class="nav-item" href="https://wa.me/5511941942210" target="_blank"><span class="ni-icon">📲</span> Meu WhatsApp</a>
+      <a class="nav-item" href="index.html" target="_blank"><span class="ni-icon">🌐</span> Ver site público</a>
     </div>
 
-    <!-- ── TAB: SÍTIOS ── -->
-    <div class="tab-panel active" id="panel-sitios">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px">
-        <h2 style="font-family:'Playfair Display',serif;font-size:20px">Sítios cadastrados</h2>
-        <button class="btn-primary" onclick="abrirForm(null)">+ Novo sítio</button>
+    <!-- CONTENT -->
+    <div class="content">
+
+      <!-- PAGE: DASHBOARD -->
+      <div class="page active" id="page-dashboard">
+        <div class="sec-header">
+          <div class="sec-title">📊 Visão geral</div>
+          <div style="font-size:12px;color:var(--mid)" id="dash-updated"></div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card blue">
+            <div class="stat-label">Total de reservas</div>
+            <div class="stat-value" id="stat-total">0</div>
+            <div class="stat-sub">desde o início</div>
+          </div>
+          <div class="stat-card amber">
+            <div class="stat-label">Pendentes (pagto)</div>
+            <div class="stat-value" id="stat-pending">0</div>
+            <div class="stat-sub">aguardando confirmação</div>
+          </div>
+          <div class="stat-card green">
+            <div class="stat-label">Confirmadas (pagas)</div>
+            <div class="stat-value" id="stat-paid">0</div>
+            <div class="stat-sub">pagamento confirmado</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Próxima reserva</div>
+            <div class="stat-value" id="stat-next" style="font-size:18px">—</div>
+            <div class="stat-sub" id="stat-next-name"></div>
+          </div>
+        </div>
+
+        <div class="rev-card">
+          <h3>💰 Receita estimada (confirmadas)</h3>
+          <div class="rev-value" id="stat-revenue">R$ 0</div>
+          <div class="rev-sub">Soma dos valores das reservas com status "Pago"</div>
+        </div>
+
+        <!-- COBRANÇAS PENDENTES -->
+        <div id="cobrancas-box" style="display:none;background:var(--amber-l);border:1.5px solid var(--amber);border-radius:12px;padding:20px;margin-bottom:20px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px">
+            <div style="font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--amber)">⏳ Pagamentos pendentes</div>
+            <span style="font-size:12px;color:var(--amber);font-weight:600" id="cobrancas-count"></span>
+          </div>
+          <div id="cobrancas-list"></div>
+        </div>
+
+        <div style="background:#fff;border-radius:12px;border:1px solid var(--border);padding:20px;margin-bottom:20px">
+          <div class="sec-title" style="font-size:16px;margin-bottom:16px">📅 Próximas reservas</div>
+          <div id="upcoming-list"></div>
+        </div>
+
+        <div style="background:#fff;border-radius:12px;border:1px solid var(--border);padding:20px">
+          <div class="sec-title" style="font-size:16px;margin-bottom:16px">🕐 Atividade recente</div>
+          <div class="timeline" id="timeline-list"></div>
+        </div>
       </div>
-      <div id="sitios-list"></div>
-    </div>
 
-    <!-- ── TAB: RESERVAS ── -->
-    <div class="tab-panel" id="panel-reservas">
-      <div class="alert alert-info">📋 Reservas chegam via WhatsApp. Cadastre aqui para controle de disponibilidade e apareçam no calendário do site.</div>
+      <!-- PAGE: RESERVAS -->
+      <div class="page" id="page-reservas">
+        <div class="sec-header">
+          <div class="sec-title">📋 Todas as reservas</div>
+          <div class="sec-actions">
+            <button class="btn-export" onclick="exportCSV()">📥 Exportar CSV</button>
+            <button class="btn-new" onclick="goPage('nova')">➕ Nova reserva</button>
+          </div>
+        </div>
 
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px">
-        <h2 style="font-family:'Playfair Display',serif;font-size:20px">Reservas</h2>
-        <button class="btn-primary" onclick="abrirFormReserva()">+ Nova reserva</button>
+        <div class="filter-bar">
+          <button class="filter-btn active" onclick="filterRes('all',this)">Todas</button>
+          <button class="filter-btn" onclick="filterRes('pending',this)">⏳ Pendentes</button>
+          <button class="filter-btn" onclick="filterRes('paid',this)">✅ Pagas</button>
+          <button class="filter-btn" onclick="filterRes('upcoming',this)">📅 Futuras</button>
+          <input class="search-input" id="search-input" placeholder="🔍 Buscar por nome, telefone..." oninput="renderResTable()">
+        </div>
+
+        <div class="table-scroll">
+          <div class="table-wrap">
+            <table class="res-table">
+              <thead>
+                <tr>
+                  <th>Hóspede</th>
+                  <th>Check-in</th>
+                  <th>Check-out</th>
+                  <th>Dias</th>
+                  <th>Pessoas</th>
+                  <th>Ocasião</th>
+                  <th>Status</th>
+                  <th>Contato</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="res-table-body"></tbody>
+            </table>
+          </div>
+        </div>
       </div>
-      <div id="reservas-list"></div>
+
+      <!-- PAGE: CALENDÁRIO -->
+      <div class="page" id="page-calendario">
+        <div class="sec-header">
+          <div class="sec-title">🗓️ Calendário de reservas</div>
+        </div>
+        <div class="cal-admin-wrap">
+          <div class="cal-admin-top">
+            <div class="cal-month-label" id="admin-cal-label"></div>
+            <div class="cal-nav">
+              <button class="cal-nav-btn" onclick="adminCalPrev()">‹</button>
+              <button class="cal-nav-btn" onclick="adminCalNext()">›</button>
+            </div>
+          </div>
+          <div class="cal-grid">
+            <div class="cal-head">Dom</div><div class="cal-head">Seg</div><div class="cal-head">Ter</div>
+            <div class="cal-head">Qua</div><div class="cal-head">Qui</div><div class="cal-head">Sex</div><div class="cal-head">Sáb</div>
+          </div>
+          <div class="cal-grid" id="admin-cal-grid" style="margin-top:4px"></div>
+          <div class="cal-legend">
+            <div class="leg"><div class="leg-box" style="background:var(--amber-l);border:1px solid var(--amber)"></div>Reserva pendente</div>
+            <div class="leg"><div class="leg-box" style="background:var(--green-l);border:1px solid var(--green)"></div>Reserva paga</div>
+            <div class="leg"><div class="leg-box" style="background:var(--blue-l);border:1px solid var(--blue)"></div>Hoje</div>
+          </div>
+        </div>
+        <div style="background:#fff;border-radius:12px;border:1px solid var(--border);padding:20px">
+          <div class="sec-title" style="font-size:16px;margin-bottom:16px" id="cal-detail-title">Clique em uma data para ver detalhes</div>
+          <div id="cal-detail-content"><div class="empty-state"><div class="empty-icon">📅</div><div class="empty-sub">Selecione uma data no calendário acima</div></div></div>
+        </div>
+      </div>
+
+      <!-- PAGE: LEADS -->
+      <div class="page" id="page-leads">
+        <div class="sec-header">
+          <div class="sec-title">👥 Leads & Contatos</div>
+          <button class="btn-export" onclick="exportLeadsCSV()">📥 Exportar CSV</button>
+        </div>
+        <div class="filter-bar">
+          <input class="search-input" id="leads-search" placeholder="🔍 Buscar por nome, e-mail, telefone..." oninput="renderLeads()" style="max-width:400px">
+        </div>
+        <div class="table-scroll">
+          <div class="table-wrap">
+            <table class="res-table">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Telefone</th>
+                  <th>E-mail</th>
+                  <th>Reservas</th>
+                  <th>Última reserva</th>
+                  <th>Contato rápido</th>
+                </tr>
+              </thead>
+              <tbody id="leads-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- PAGE: NOVA RESERVA -->
+      <div class="page" id="page-nova">
+        <div class="sec-header">
+          <div class="sec-title">➕ Lançar nova reserva</div>
+        </div>
+        <div class="add-form">
+          <h3>📝 Dados da reserva</h3>
+          <div class="form-grid-2">
+            <div class="form-row">
+              <label>Nome completo *</label>
+              <input type="text" id="nf-name" placeholder="João Silva">
+            </div>
+            <div class="form-row">
+              <label>Telefone / WhatsApp *</label>
+              <input type="tel" id="nf-phone" placeholder="(11) 99999-0000">
+            </div>
+            <div class="form-row">
+              <label>E-mail</label>
+              <input type="email" id="nf-email" placeholder="joao@email.com">
+            </div>
+            <div class="form-row">
+              <label>Quantidade de pessoas *</label>
+              <select id="nf-guests">
+                <option value="">Selecione</option>
+                <option>até 15</option><option>até 20</option><option>até 25</option>
+                <option>até 30</option><option>acima de 30</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label>Check-in *</label>
+              <input type="date" id="nf-checkin">
+            </div>
+            <div class="form-row">
+              <label>Check-out *</label>
+              <input type="date" id="nf-checkout">
+            </div>
+            <div class="form-row">
+              <label>Ocasião</label>
+              <select id="nf-occasion">
+                <option value="">Selecione o período</option>
+                <option>FIM DE SEMANA COMUM</option>
+                <option>DIA DAS MÃES (2 DIAS) - 09/05 A 10/05/2026</option>
+                <option>DIA DOS PAIS (2 DIAS) - 08/08 A 09/08/2026</option>
+                <option>PROCLAMAÇÃO (2 DIAS) - 14/11 A 15/11/2026</option>
+                <option>PÁSCOA (3 DIAS) - 03/04 A 05/04/2026</option>
+                <option>TRABALHADOR (3 DIAS) - 01/05 A 03/05/2026</option>
+                <option>INDEPENDÊNCIA (3 DIAS) - 05/09 A 07/09/2026</option>
+                <option>CRIANÇAS (3 DIAS) - 10/10 A 12/10/2026</option>
+                <option>FINADOS (3 DIAS) - 30/10 A 02/11/2026</option>
+                <option>CONSCIÊNCIA (3 DIAS) - 20/11 A 22/11/2026</option>
+                <option>TIRADENTES (4 DIAS) - 18/04 A 21/04/2026</option>
+                <option>NATAL 2026 (4 DIAS) - 22/12 A 26/12/2026</option>
+                <option>CARNAVAL 2027 (4 DIAS) - 05/02 A 09/02/2027</option>
+                <option>DIÁRIA PARA EVENTOS</option>
+                <option>CASAMENTO</option>
+                <option>FORMATURA</option>
+                <option>BAILE DEBUTANTE</option>
+                <option>FESTA DE EMPRESA</option>
+                <option>EVENTOS DIVERSOS</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label>Status inicial</label>
+              <select id="nf-status">
+                <option value="pending">⏳ Pendente</option>
+                <option value="paid">✅ Pago</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label>🎉 Convidados externos (sem pernoite) <span style="font-size:12px;color:#6b7280">+R$30/pessoa</span></label>
+              <select id="nf-externos">
+                <option value="">Nenhum</option>
+                <option value="10">10 (+R$ 300)</option>
+                <option value="20">20 (+R$ 600)</option>
+                <option value="30">30 (+R$ 900)</option>
+                <option value="40">40 (+R$ 1.200)</option>
+                <option value="50">50 (+R$ 1.500)</option>
+                <option value="60">60 (+R$ 1.800)</option>
+                <option value="70">70 (+R$ 2.100)</option>
+                <option value="80">80 (+R$ 2.400)</option>
+                <option value="90">90 (+R$ 2.700)</option>
+                <option value="100">100 (+R$ 3.000)</option>
+                <option value="120">120 (+R$ 3.600)</option>
+                <option value="150">150 (+R$ 4.500)</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label>💰 Valor total da locação (R$)</label>
+              <input type="number" id="nf-total" placeholder="Ex: 2200" min="0" step="0.01" oninput="calcAdminRestante()">
+            </div>
+            <div class="form-row">
+              <label>✅ Sinal de pagamento (R$)</label>
+              <input type="number" id="nf-sinal" placeholder="Ex: 1100" min="0" step="0.01">
+            </div>
+            <div class="form-row">
+              <label>⏳ Restante do pagamento (R$)</label>
+              <input type="number" id="nf-restante" placeholder="Ex: 1100" min="0" step="0.01">
+            </div>
+          </div>
+          <div class="form-row" style="margin-top:14px">
+            <label>Observações</label>
+            <textarea id="nf-obs" placeholder="Informações adicionais, valor combinado, etc."></textarea>
+          </div>
+          <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap">
+            <button class="btn-new" onclick="saveNewReservation()" style="padding:12px 28px;font-size:14px">💾 Salvar reserva</button>
+            <button class="btn-export" onclick="goPage('reservas')" style="padding:12px 20px">Cancelar</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE: SÍTIOS -->
+      <div class="page" id="page-sitios">
+        <div class="sec-header">
+          <div class="sec-title">🏡 Outros sítios</div>
+          <div class="sec-actions">
+            <button class="btn-new" onclick="openSitioModal(null)">➕ Novo sítio</button>
+          </div>
+        </div>
+        <div class="alert-info" style="background:var(--blue-l);border:1px solid rgba(37,99,235,.2);color:var(--blue);border-radius:8px;padding:12px 16px;font-size:13px;margin-bottom:20px;line-height:1.6">
+          💡 Os sítios cadastrados aqui aparecem automaticamente na seção "Outros sítios disponíveis" no site, com página completa de reserva para cada um.
+        </div>
+        <div id="sitios-list"></div>
+      </div>
+
+    </div><!-- /content -->
+  </div><!-- /main-wrap -->
+</div><!-- /app -->
+
+<!-- MODAL: Sítio -->
+<div class="modal-bg" id="sitio-modal-bg" onclick="if(event.target===this)closeSitioModal()">
+  <div class="modal" style="max-width:580px">
+    <div class="modal-header">
+      <h3 id="sitio-modal-title">Novo sítio</h3>
+      <button class="modal-close" onclick="closeSitioModal()">✕</button>
+    </div>
+    <div class="modal-body" style="padding-bottom:8px">
+      <input type="hidden" id="sm-idx" value="">
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+        <div class="modal-field" style="grid-column:1/-1">
+          <label>Nome do sítio *</label>
+          <input type="text" id="sm-nome" placeholder="Ex: Sítio Bela Vista" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit">
+        </div>
+        <div class="modal-field">
+          <label>Localização *</label>
+          <input type="text" id="sm-local" placeholder="Ex: Guararema, SP" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit">
+        </div>
+        <div class="modal-field">
+          <label>Tipo / Rótulo</label>
+          <input type="text" id="sm-tipo" placeholder="Ex: 🌿 Natureza · Eventos" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit">
+        </div>
+        <div class="modal-field">
+          <label>Preço</label>
+          <input type="text" id="sm-preco" placeholder="Ex: R$1.500" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit">
+        </div>
+        <div class="modal-field">
+          <label>Detalhe do preço</label>
+          <input type="text" id="sm-detalhe" placeholder="Ex: / dia (até 20 pessoas)" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit">
+        </div>
+        <div class="modal-field" style="grid-column:1/-1">
+          <label>Mensagem WhatsApp</label>
+          <input type="text" id="sm-wa" placeholder="Olá Arlei! Tenho interesse no..." style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit">
+        </div>
+        <div class="modal-field" style="grid-column:1/-1">
+          <label>Características (uma por linha, com emojis)</label>
+          <textarea id="sm-feats" rows="4" placeholder="🛏️ 4 quartos&#10;🏊 Piscina&#10;🔥 Churrasqueira&#10;🚗 Estacionamento" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit;resize:vertical"></textarea>
+        </div>
+      </div>
+
+      <div class="modal-field">
+        <label>Foto de capa *</label>
+        <div class="foto-tabs" id="capa-tabs">
+          <button class="foto-tab active" onclick="switchCapaTab('url')">🔗 URL</button>
+          <button class="foto-tab" onclick="switchCapaTab('file')">📁 Upload do celular/PC</button>
+        </div>
+        <div class="foto-panel active" id="capa-panel-url">
+          <input type="url" id="sm-capa-url" placeholder="https://..." oninput="previewCapa(this.value)" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit">
+          <p style="font-size:11px;color:var(--mid);margin-top:4px">Cole qualquer URL de imagem pública</p>
+        </div>
+        <div class="foto-panel" id="capa-panel-file">
+          <div class="upload-area"><input type="file" accept="image/*" onchange="uploadCapaSitio(this)"><p>📷 Clique ou arraste uma foto aqui</p></div>
+        </div>
+        <img id="sm-capa-preview" class="capa-preview-img" src="" alt="">
+        <input type="hidden" id="sm-capa" value="">
+      </div>
+
+      <div class="modal-field" style="margin-top:12px">
+        <label>Galeria de fotos</label>
+        <div class="foto-tabs" id="gal-tabs">
+          <button class="foto-tab active" onclick="switchGalTab('url')">🔗 URLs</button>
+          <button class="foto-tab" onclick="switchGalTab('file')">📁 Upload de arquivos</button>
+        </div>
+        <div class="foto-panel active" id="gal-panel-url">
+          <div class="galeria-url-wrap" id="sm-gal-urls"></div>
+          <button class="btn-add-galeria" onclick="addGalRow()">+ Adicionar foto</button>
+        </div>
+        <div class="foto-panel" id="gal-panel-file">
+          <div class="upload-area"><input type="file" accept="image/*" multiple onchange="uploadGalSitio(this)"><p>📷 Selecione uma ou várias fotos de uma vez</p></div>
+          <div class="upload-thumbs-row" id="sm-gal-thumbs"></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel-res" onclick="closeSitioModal()">Cancelar</button>
+      <button class="btn-confirm-res" onclick="salvarSitio()">💾 Salvar sítio</button>
     </div>
   </div>
 </div>
 
-<!-- ── DRAWER: FORM SÍTIO ── -->
-<div id="form-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:400" onclick="if(event.target===this)fecharForm()"></div>
-<div id="form-drawer" style="display:none;position:fixed;top:0;right:0;width:100%;max-width:560px;height:100vh;background:#fff;z-index:500;overflow-y:auto;box-shadow:-4px 0 24px rgba(0,0,0,.15)">
-  <div style="padding:24px 24px 0;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:#fff;border-bottom:1px solid var(--border);padding-bottom:16px;z-index:10">
-    <h2 style="font-family:'Playfair Display',serif;font-size:20px" id="form-title">Novo sítio</h2>
-    <button onclick="fecharForm()" style="background:none;border:none;font-size:24px;cursor:pointer;color:var(--mid)">✕</button>
-  </div>
-  <div style="padding:24px">
-    <input type="hidden" id="f-idx" value="">
-
-    <p class="sec-title">Informações básicas</p>
-    <div class="form-grid">
-      <div class="fg form-full"><label>Nome do sítio *</label><input type="text" id="f-nome" placeholder="Ex: Sítio Bela Vista"></div>
-      <div class="fg"><label>Localização *</label><input type="text" id="f-local" placeholder="Ex: Guararema, SP"></div>
-      <div class="fg"><label>Tipo / Rótulo</label><input type="text" id="f-tipo" placeholder="Ex: 🌿 Natureza · Eventos"></div>
-      <div class="fg"><label>Preço</label><input type="text" id="f-preco" placeholder="Ex: R$1.500"></div>
-      <div class="fg"><label>Detalhe do preço</label><input type="text" id="f-detalhe" placeholder="Ex: / dia (até 20 pessoas)"></div>
-      <div class="fg form-full"><label>Mensagem WhatsApp</label><input type="text" id="f-wa" placeholder="Olá Arlei! Tenho interesse no..."></div>
-    </div>
-
-    <p class="sec-title" style="margin-top:20px">Características</p>
-    <div class="fg">
-      <label>Uma por linha (use emojis)</label>
-      <textarea id="f-feats" rows="5" placeholder="🛏️ 4 quartos&#10;🏊 Piscina&#10;🔥 Churrasqueira&#10;🚗 Estacionamento&#10;🌿 Área verde"></textarea>
-    </div>
-
-    <p class="sec-title" style="margin-top:20px">Foto de capa *</p>
-    <div class="foto-tabs" id="capa-tabs">
-      <button class="foto-tab active" onclick="trocarTabCapa('url')">🔗 Link (URL)</button>
-      <button class="foto-tab" onclick="trocarTabCapa('file')">📁 Upload do celular/PC</button>
-    </div>
-    <div class="foto-panel active" id="capa-panel-url">
-      <div class="fg">
-        <input type="url" id="f-capa-url" placeholder="https://..." oninput="atualizarCapa(this.value)">
-        <p class="form-hint">Cole qualquer URL de imagem pública</p>
+<!-- MODAL: Detalhes da reserva -->
+<div class="modal-bg" id="modal-bg" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="md-title">📋 Detalhes da reserva</h3>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button class="btn-export" onclick="toggleEditMode()" id="md-edit-btn" style="padding:6px 14px;font-size:12px">✏️ Editar</button>
+        <button class="modal-close" onclick="closeModal()">✕</button>
       </div>
     </div>
-    <div class="foto-panel" id="capa-panel-file">
-      <div class="upload-file-area" id="capa-drop">
-        <input type="file" accept="image/*" onchange="uploadCapaFile(this)">
-        <p class="upload-label">📷 Clique ou arraste uma foto aqui</p>
-      </div>
-    </div>
-    <img id="capa-preview" class="capa-preview" src="" alt="" style="display:none">
-    <input type="hidden" id="f-capa" value="">
 
-    <p class="sec-title" style="margin-top:20px">Galeria de fotos</p>
-    <div class="foto-tabs" id="gal-tabs">
-      <button class="foto-tab active" onclick="trocarTabGal('url')">🔗 Links (URLs)</button>
-      <button class="foto-tab" onclick="trocarTabGal('file')">📁 Upload de arquivos</button>
-    </div>
-    <div class="foto-panel active" id="gal-panel-url">
-      <div class="galeria-wrap" id="galeria-urls"></div>
-      <button class="btn-add-foto" onclick="addUrlRow()">+ Adicionar mais foto</button>
-    </div>
-    <div class="foto-panel" id="gal-panel-file">
-      <div class="upload-file-area">
-        <input type="file" accept="image/*" multiple onchange="uploadGalFiles(this)">
-        <p class="upload-label">📷 Selecione uma ou várias fotos de uma vez</p>
+    <!-- VIEW MODE -->
+    <div id="md-view-mode">
+      <div class="modal-body">
+        <div class="modal-row">
+          <div class="modal-field"><label>Nome</label><div class="val" id="md-name"></div></div>
+          <div class="modal-field"><label>Telefone</label><div class="val" id="md-phone"></div></div>
+        </div>
+        <div class="modal-row">
+          <div class="modal-field"><label>E-mail</label><div class="val" id="md-email"></div></div>
+          <div class="modal-field"><label>Pessoas</label><div class="val" id="md-guests"></div></div>
+        </div>
+        <div class="modal-row">
+          <div class="modal-field"><label>Check-in</label><div class="val" id="md-checkin"></div></div>
+          <div class="modal-field"><label>Check-out</label><div class="val" id="md-checkout"></div></div>
+        </div>
+        <div class="modal-row">
+          <div class="modal-field"><label>Ocasião</label><div class="val" id="md-occasion"></div></div>
+          <div class="modal-field"><label>Status</label><div class="val" id="md-status"></div></div>
+        </div>
+        <div class="modal-field"><label>🎉 Convidados externos</label><div class="val" id="md-externos"></div></div>
+        <div class="modal-row">
+          <div class="modal-field"><label>💰 Valor total</label><div class="val" id="md-total"></div></div>
+          <div class="modal-field"><label>✅ Sinal pago</label><div class="val" id="md-sinal"></div></div>
+        </div>
+        <div class="modal-field"><label>⏳ Restante</label><div class="val" id="md-restante"></div></div>
+        <div class="modal-field"><label>Observações</label><div class="val" id="md-obs"></div></div>
+        <div class="modal-field"><label>Registrado em</label><div class="val" id="md-created"></div></div>
       </div>
-      <div class="upload-thumbs" id="gal-thumbs"></div>
+      <div class="modal-footer">
+        <button class="btn-cancel-res" onclick="cancelReservation()">🗑️ Excluir</button>
+        <button class="btn-confirm-res" onclick="toggleResStatus()" id="md-toggle-btn">✅ Marcar como pago</button>
+        <a class="btn-wa" id="md-wa-link" href="#" target="_blank">📲 WhatsApp</a>
+      </div>
     </div>
-    <p class="form-hint" style="margin-top:8px">Fotos da galeria aparecem na página do sítio com lightbox</p>
 
-    <div class="btn-actions">
-      <button class="btn-primary" onclick="salvarSitio()">💾 Salvar sítio</button>
-      <button class="btn-secondary" onclick="fecharForm()">Cancelar</button>
+    <!-- EDIT MODE -->
+    <div id="md-edit-mode" style="display:none">
+      <div class="modal-body">
+        <div class="modal-row">
+          <div class="modal-field">
+            <label>Nome completo</label>
+            <input type="text" id="ed-name" class="form-row input" style="padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;width:100%">
+          </div>
+          <div class="modal-field">
+            <label>Telefone / WhatsApp</label>
+            <input type="tel" id="ed-phone" style="padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;width:100%">
+          </div>
+        </div>
+        <div class="modal-row">
+          <div class="modal-field">
+            <label>E-mail</label>
+            <input type="email" id="ed-email" style="padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;width:100%">
+          </div>
+          <div class="modal-field">
+            <label>Quantidade de pessoas</label>
+            <select id="ed-guests" style="padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;width:100%">
+              <option>até 15</option><option>até 20</option><option>até 25</option>
+              <option>até 30</option><option>acima de 30</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-row">
+          <div class="modal-field">
+            <label>Check-in</label>
+            <input type="date" id="ed-checkin" style="padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;width:100%">
+          </div>
+          <div class="modal-field">
+            <label>Check-out</label>
+            <input type="date" id="ed-checkout" style="padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;width:100%">
+          </div>
+        </div>
+        <div class="modal-row">
+          <div class="modal-field">
+            <label>Ocasião</label>
+            <select id="ed-occasion" style="padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;width:100%">
+              <option>FIM DE SEMANA COMUM</option>
+              <option>DIA DAS MÃES (2 DIAS) - 09/05 A 10/05/2026</option>
+              <option>DIA DOS PAIS (2 DIAS) - 08/08 A 09/08/2026</option>
+              <option>PROCLAMAÇÃO (2 DIAS) - 14/11 A 15/11/2026</option>
+              <option>PÁSCOA (3 DIAS) - 03/04 A 05/04/2026</option>
+              <option>TRABALHADOR (3 DIAS) - 01/05 A 03/05/2026</option>
+              <option>INDEPENDÊNCIA (3 DIAS) - 05/09 A 07/09/2026</option>
+              <option>CRIANÇAS (3 DIAS) - 10/10 A 12/10/2026</option>
+              <option>FINADOS (3 DIAS) - 30/10 A 02/11/2026</option>
+              <option>CONSCIÊNCIA (3 DIAS) - 20/11 A 22/11/2026</option>
+              <option>TIRADENTES (4 DIAS) - 18/04 A 21/04/2026</option>
+              <option>NATAL 2026 (4 DIAS) - 22/12 A 26/12/2026</option>
+              <option>CARNAVAL 2027 (4 DIAS) - 05/02 A 09/02/2027</option>
+              <option>DIÁRIA PARA EVENTOS</option>
+              <option>CASAMENTO</option>
+              <option>FORMATURA</option>
+              <option>BAILE DEBUTANTE</option>
+              <option>FESTA DE EMPRESA</option>
+              <option>EVENTOS DIVERSOS</option>
+            </select>
+          </div>
+          <div class="modal-field">
+            <label>Status</label>
+            <select id="ed-status" style="padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;width:100%">
+              <option value="pending">⏳ Pendente</option>
+              <option value="paid">✅ Pago</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-field">
+          <label>Observações</label>
+          <textarea id="ed-obs" style="padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;width:100%;min-height:70px;resize:vertical;font-family:inherit"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancel-res" onclick="toggleEditMode()">✕ Cancelar</button>
+        <button class="btn-confirm-res" onclick="saveEdit()" style="background:var(--green)">💾 Salvar alterações</button>
+      </div>
     </div>
-  </div>
-</div>
 
-<!-- ── DRAWER: FORM RESERVA ── -->
-<div id="res-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:400" onclick="if(event.target===this)fecharFormReserva()"></div>
-<div id="res-drawer" style="display:none;position:fixed;top:0;right:0;width:100%;max-width:480px;height:100vh;background:#fff;z-index:500;overflow-y:auto;box-shadow:-4px 0 24px rgba(0,0,0,.15)">
-  <div style="padding:24px 24px 0;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;background:#fff;border-bottom:1px solid var(--border);padding-bottom:16px;z-index:10">
-    <h2 style="font-family:'Playfair Display',serif;font-size:20px">Nova reserva</h2>
-    <button onclick="fecharFormReserva()" style="background:none;border:none;font-size:24px;cursor:pointer;color:var(--mid)">✕</button>
-  </div>
-  <div style="padding:24px">
-    <div class="form-grid">
-      <div class="fg form-full"><label>Cliente *</label><input type="text" id="r-nome" placeholder="Nome completo"></div>
-      <div class="fg"><label>WhatsApp *</label><input type="tel" id="r-phone" placeholder="(11) 99999-9999"></div>
-      <div class="fg"><label>E-mail</label><input type="email" id="r-email" placeholder="email@exemplo.com"></div>
-      <div class="fg form-full"><label>Sítio *</label><select id="r-sitio"><option value="">Selecione o sítio</option></select></div>
-      <div class="fg"><label>Check-in *</label><input type="date" id="r-checkin"></div>
-      <div class="fg"><label>Check-out *</label><input type="date" id="r-checkout"></div>
-      <div class="fg"><label>Nº de pessoas</label><input type="number" id="r-pessoas" min="1" placeholder="Quantas?"></div>
-      <div class="fg"><label>Tipo de ocasião</label>
-        <select id="r-ocasiao">
-          <option value="">Selecione</option>
-          <option>Fim de semana</option><option>Feriado</option>
-          <option>Festa / Aniversário</option><option>Casamento</option>
-          <option>Formatura</option><option>Evento corporativo</option>
-          <option>Temporada / Férias</option><option>Outro</option>
-        </select>
-      </div>
-      <div class="fg form-full"><label>Status</label>
-        <select id="r-status">
-          <option value="pending">⏳ Pendente</option>
-          <option value="paid">✅ Confirmada / Pago</option>
-        </select>
-      </div>
-      <div class="fg form-full"><label>Observações</label><textarea id="r-obs" placeholder="Pedidos especiais, informações adicionais..."></textarea></div>
-    </div>
-    <div class="btn-actions">
-      <button class="btn-primary" onclick="salvarReserva()">💾 Salvar reserva</button>
-      <button class="btn-secondary" onclick="fecharFormReserva()">Cancelar</button>
-    </div>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-// ── CONSTANTES ──
-const ADMIN_PWD = 'hospeda2026';
+// ===== AUTH =====
+const ADMIN_USER = 'arlei';
+const ADMIN_PASS = 'sitio2025';
+const SESSION_KEY = 'sitio_admin_session';
+
+function doLogin(){
+  const u = document.getElementById('l-user').value.trim().toLowerCase();
+  const p = document.getElementById('l-pass').value;
+  if(u === ADMIN_USER && p === ADMIN_PASS){
+    sessionStorage.setItem(SESSION_KEY, '1');
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    init();
+  } else {
+    document.getElementById('login-err').style.display = 'block';
+  }
+}
+function doLogout(){
+  sessionStorage.removeItem(SESSION_KEY);
+  location.reload();
+}
+if(sessionStorage.getItem(SESSION_KEY)){
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+}
+
+// ===== STORAGE (shared with main site) =====
+const STORAGE_KEY = 'sitio_reservations';
+function getRes(){ try{return JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');}catch{return[];} }
+function saveRes(a){ localStorage.setItem(STORAGE_KEY, JSON.stringify(a)); }
+function genId(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
+
+// ===== UTILS =====
+function fmtDate(s){
+  if(!s) return '—';
+  const [y,m,d] = s.split('-');
+  return `${d}/${m}/${y}`;
+}
+function fmtMoney(n){ return n ? 'R$ '+Number(n).toLocaleString('pt-BR') : '—'; }
+function diffDays(a,b){ return Math.round((new Date(b)-new Date(a))/(1000*60*60*24)); }
+function todayStr(){ return new Date().toISOString().split('T')[0]; }
+function isUpcoming(r){ return r.checkin >= todayStr(); }
+function isFuture(r){ return r.checkout > todayStr(); }
+
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2800);
+}
+
+// ===== NAVIGATION =====
+let currentPage = 'dashboard';
+let currentFilter = 'all';
+
+function goPage(p){
+  document.querySelectorAll('.page').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));
+  document.getElementById('page-'+p).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(el=>{
+    if(el.textContent.toLowerCase().includes(p==='nova'?'nova':p==='reservas'?'reservas':p==='calendario'?'calend':p==='leads'?'leads':'dashboard')) el.classList.add('active');
+  });
+  currentPage = p;
+  if(p==='dashboard') renderDashboard();
+  if(p==='reservas') renderResTable();
+  if(p==='calendario') renderAdminCal();
+  if(p==='leads') renderLeads();
+  if(p==='sitios') renderSitios();
+  // close sidebar on mobile
+  document.getElementById('sidebar').classList.remove('open');
+}
+
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+}
+
+// ===== DASHBOARD =====
+function renderDashboard(){
+  const all = getRes();
+  const pending = all.filter(r=>r.status==='pending');
+  const paid = all.filter(r=>r.status==='paid');
+  document.getElementById('stat-total').textContent = all.length;
+  document.getElementById('stat-pending').textContent = pending.length;
+  document.getElementById('stat-paid').textContent = paid.length;
+
+  // Pending badge in topbar
+  const pb = document.getElementById('tb-pending-count');
+  if(pending.length > 0){ pb.textContent = pending.length+' pendente'+(pending.length>1?'s':''); pb.style.display=''; }
+  else { pb.style.display='none'; }
+
+  // Revenue (estimated from occasion/guests rough mapping)
+  document.getElementById('stat-revenue').textContent = '—';
+
+  // Next reservation
+  const upcoming = all.filter(r=>r.checkin >= todayStr()).sort((a,b)=>a.checkin.localeCompare(b.checkin));
+  if(upcoming.length){
+    document.getElementById('stat-next').textContent = fmtDate(upcoming[0].checkin);
+    document.getElementById('stat-next-name').textContent = upcoming[0].name;
+  }
+
+  // Cobranças pendentes
+  const pendingFuture = all.filter(r=>r.status==='pending' && isFuture(r)).sort((a,b)=>a.checkin.localeCompare(b.checkin));
+  const cobBox = document.getElementById('cobrancas-box');
+  const cobList = document.getElementById('cobrancas-list');
+  const cobCount = document.getElementById('cobrancas-count');
+  if(pendingFuture.length > 0){
+    cobBox.style.display = 'block';
+    cobCount.textContent = pendingFuture.length + ' reserva(s) aguardando pagamento';
+    cobList.innerHTML = pendingFuture.map(r=>{
+      const faltam = diasParaCheckin(r.checkin);
+      const urgTag = faltam <= 1 ? `<span style="background:#dc2626;color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:100px;margin-left:8px">🚨 HOJE/AMANHÃ</span>`
+        : faltam <= 3 ? `<span style="background:#d97706;color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:100px;margin-left:8px">⚠️ ${faltam} dias</span>`
+        : faltam <= 7 ? `<span style="background:#2563eb;color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:100px;margin-left:8px">📅 ${faltam} dias</span>`
+        : '';
+      return `
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;background:rgba(255,255,255,.7);border-radius:8px;padding:12px 16px;margin-bottom:8px;flex-wrap:wrap;${faltam<=3?'border:1.5px solid #dc2626':''}">
+        <div>
+          <div style="font-weight:700;font-size:14px;color:var(--dark);display:flex;align-items:center">${r.name}${urgTag}</div>
+          <div style="font-size:12px;color:var(--mid);margin-top:3px">
+            📅 ${fmtDate(r.checkin)} → ${fmtDate(r.checkout)} · 👥 ${r.guests||'?'} pessoas · 📲 ${r.phone||'sem telefone'}
+          </div>
+          ${r.occasion ? `<div style="font-size:11px;color:var(--mid);margin-top:2px">🎯 ${r.occasion}</div>` : ''}
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;flex-shrink:0;flex-wrap:wrap">
+          ${r.phone ? `<button class="btn-cobrar" onclick="cobrarCliente('${r.id}')" style="font-size:13px;padding:9px 18px">💰 Enviar PIX no WhatsApp</button>` : '<span style="font-size:12px;color:var(--mid)">Sem telefone</span>'}
+          <button class="btn-confirm-res" onclick="toggleStatusDirect('${r.id}');renderDashboard()" style="font-size:12px;padding:9px 14px">✅ Marcar pago</button>
+        </div>
+      </div>`;
+    }).join('');
+  } else {
+    cobBox.style.display = 'none';
+  }
+
+  // Upcoming list
+  const ul = document.getElementById('upcoming-list');
+  const next5 = upcoming.slice(0,5);
+  if(!next5.length){ ul.innerHTML = '<div class="empty-state"><div class="empty-icon">🗓️</div><div class="empty-sub">Nenhuma reserva futura registrada</div></div>'; return; }
+  ul.innerHTML = next5.map(r=>`
+    <div class="tl-item" onclick="openModal('${r.id}')" style="cursor:pointer">
+      <div class="tl-dot ${r.status}">${r.status==='paid'?'✅':'⏳'}</div>
+      <div class="tl-body">
+        <div class="tl-title">${r.name} <span class="days-badge">${diffDays(r.checkin,r.checkout)} dias</span></div>
+        <div class="tl-sub">${fmtDate(r.checkin)} → ${fmtDate(r.checkout)} · ${r.guests||'?'} pessoas · ${r.occasion||'—'}</div>
+        <div class="tl-when">${r.phone||''}</div>
+      </div>
+      <button class="btn-wa" onclick="event.stopPropagation();waContact('${r.phone||''}')" style="align-self:center">📲</button>
+    </div>`).join('');
+
+  // Timeline (recent)
+  const recent = [...all].sort((a,b)=>new Date(b.createdAt||0)-new Date(a.createdAt||0)).slice(0,6);
+  const tl = document.getElementById('timeline-list');
+  if(!recent.length){ tl.innerHTML='<div class="empty-state"><div class="empty-sub">Nenhuma reserva ainda</div></div>'; return; }
+  tl.innerHTML = recent.map(r=>`
+    <div class="tl-item">
+      <div class="tl-dot ${r.status}">${r.status==='paid'?'✅':'⏳'}</div>
+      <div class="tl-body">
+        <div class="tl-title">${r.name}</div>
+        <div class="tl-sub">${fmtDate(r.checkin)} → ${fmtDate(r.checkout)} · ${r.occasion||'—'}</div>
+        <div class="tl-when">${r.createdAt ? new Date(r.createdAt).toLocaleString('pt-BR') : ''}</div>
+      </div>
+    </div>`).join('');
+
+  document.getElementById('dash-updated').textContent = 'Atualizado: '+new Date().toLocaleTimeString('pt-BR');
+}
+
+// ===== RESERVAS TABLE =====
+function filterRes(f, btn){
+  currentFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderResTable();
+}
+
+function renderResTable(){
+  let all = getRes();
+  const search = (document.getElementById('search-input')||{}).value?.toLowerCase()||'';
+  if(currentFilter==='pending') all = all.filter(r=>r.status==='pending');
+  if(currentFilter==='paid') all = all.filter(r=>r.status==='paid');
+  if(currentFilter==='upcoming') all = all.filter(r=>isFuture(r));
+  if(search) all = all.filter(r=>(r.name||'').toLowerCase().includes(search)||(r.phone||'').includes(search)||(r.email||'').toLowerCase().includes(search));
+  all.sort((a,b)=>a.checkin.localeCompare(b.checkin));
+
+  const tbody = document.getElementById('res-table-body');
+  if(!all.length){
+    tbody.innerHTML = `<tr><td colspan="9"><div class="no-data">Nenhuma reserva encontrada</div></td></tr>`;
+    return;
+  }
+  tbody.innerHTML = all.map(r=>`
+    <tr>
+      <td>
+        <div class="res-name-cell">${r.name}</div>
+        <div class="res-phone-cell">${r.phone||'—'}</div>
+      </td>
+      <td>${fmtDate(r.checkin)}</td>
+      <td>${fmtDate(r.checkout)}</td>
+      <td><span class="days-badge">${diffDays(r.checkin,r.checkout)}d</span></td>
+      <td>${r.guests||'—'}</td>
+      <td>${r.occasion||'—'}</td>
+      <td>
+        <button class="badge badge-${r.status}" onclick="toggleStatusDirect('${r.id}')">
+          ${r.status==='paid'?'✅ Pago':'⏳ Pendente'}
+        </button>
+      </td>
+      <td style="display:flex;flex-direction:column;gap:6px;align-items:flex-start">
+        ${r.phone ? `<a class="btn-wa" href="https://wa.me/55${r.phone.replace(/\D/g,'')}" target="_blank">📲 WA</a>` : '—'}
+        ${r.status==='pending' && r.phone ? `<button class="btn-cobrar" onclick="cobrarCliente('${r.id}')">💰 Cobrar</button>` : ''}
+      </td>
+      <td style="display:flex;gap:6px;align-items:center">
+        <button class="btn-icon" onclick="openModal('${r.id}')" title="Ver detalhes">🔍</button>
+        <button class="btn-icon" onclick="deleteRes('${r.id}')" title="Excluir">🗑️</button>
+      </td>
+    </tr>`).join('');
+}
+
+function toggleStatusDirect(id){
+  const all = getRes();
+  const r = all.find(x=>x.id===id);
+  if(!r) return;
+  r.status = r.status==='paid' ? 'pending' : 'paid';
+  saveRes(all);
+  renderResTable();
+  showToast(r.status==='paid' ? '✅ Marcado como pago!' : '⏳ Marcado como pendente');
+}
+
+function deleteRes(id){
+  if(!confirm('Excluir esta reserva?')) return;
+  saveRes(getRes().filter(r=>r.id!==id));
+  renderResTable();
+  showToast('🗑️ Reserva excluída');
+}
+
+// ===== MODAL =====
+let modalResId = null;
+function openModal(id){
+  const r = getRes().find(x=>x.id===id);
+  if(!r) return;
+  modalResId = id;
+  document.getElementById('md-name').textContent = r.name||'—';
+  document.getElementById('md-phone').textContent = r.phone||'—';
+  document.getElementById('md-email').textContent = r.email||'—';
+  document.getElementById('md-guests').textContent = r.guests||'—';
+  document.getElementById('md-checkin').textContent = fmtDate(r.checkin)+' (08h)';
+  document.getElementById('md-checkout').textContent = fmtDate(r.checkout)+' (18h)';
+  document.getElementById('md-occasion').textContent = r.occasion||'—';
+  document.getElementById('md-obs').textContent = r.obs||'—';
+  document.getElementById('md-created').textContent = r.createdAt ? new Date(r.createdAt).toLocaleString('pt-BR') : '—';
+  const fmtR = v => v > 0 ? `R$ ${Number(v).toLocaleString('pt-BR',{minimumFractionDigits:2})}` : '—';
+  document.getElementById('md-externos').textContent = r.externos ? `${r.externos} pessoas (+ R$ ${(parseInt(r.externos)*30).toLocaleString('pt-BR')})` : '—';
+  document.getElementById('md-total').textContent = fmtR(r.totalVal);
+  document.getElementById('md-sinal').textContent = fmtR(r.sinalVal);
+  document.getElementById('md-restante').textContent = fmtR(r.restanteVal);
+  const badge = r.status==='paid'
+    ? '<span class="badge badge-paid">✅ Pago</span>'
+    : '<span class="badge badge-pending">⏳ Pendente</span>';
+  document.getElementById('md-status').innerHTML = badge;
+  document.getElementById('md-toggle-btn').textContent = r.status==='paid' ? '⏳ Marcar pendente' : '✅ Marcar como pago';
+  const waNum = (r.phone||'').replace(/\D/g,'');
+  const waMsg = encodeURIComponent(`Olá ${r.name}! Confirmando sua reserva no Sítio Iluminado: check-in ${fmtDate(r.checkin)}, check-out ${fmtDate(r.checkout)}. Qualquer dúvida é só falar! 😊`);
+  document.getElementById('md-wa-link').href = `https://wa.me/55${waNum}?text=${waMsg}`;
+  document.getElementById('modal-bg').classList.add('open');
+}
+function closeModal(){
+  document.getElementById('modal-bg').classList.remove('open');
+  modalResId=null;
+  // reset to view mode
+  document.getElementById('md-view-mode').style.display='';
+  document.getElementById('md-edit-mode').style.display='none';
+  document.getElementById('md-edit-btn').textContent='✏️ Editar';
+  document.getElementById('md-title').textContent='📋 Detalhes da reserva';
+}
+
+function toggleEditMode(){
+  const editMode = document.getElementById('md-edit-mode');
+  const viewMode = document.getElementById('md-view-mode');
+  const isEditing = editMode.style.display !== 'none';
+  if(isEditing){
+    // switch back to view
+    editMode.style.display='none';
+    viewMode.style.display='';
+    document.getElementById('md-edit-btn').textContent='✏️ Editar';
+    document.getElementById('md-title').textContent='📋 Detalhes da reserva';
+  } else {
+    // switch to edit — pre-fill fields
+    const r = getRes().find(x=>x.id===modalResId);
+    if(!r) return;
+    document.getElementById('ed-name').value = r.name||'';
+    document.getElementById('ed-phone').value = r.phone||'';
+    document.getElementById('ed-email').value = r.email||'';
+    document.getElementById('ed-guests').value = r.guests||'até 20';
+    document.getElementById('ed-checkin').value = r.checkin||'';
+    document.getElementById('ed-checkout').value = r.checkout||'';
+    document.getElementById('ed-occasion').value = r.occasion||'FIM DE SEMANA COMUM';
+    document.getElementById('ed-status').value = r.status||'pending';
+    document.getElementById('ed-obs').value = r.obs||'';
+    viewMode.style.display='none';
+    editMode.style.display='';
+    document.getElementById('md-edit-btn').textContent='← Ver';
+    document.getElementById('md-title').textContent='✏️ Editar reserva';
+  }
+}
+
+function saveEdit(){
+  if(!modalResId) return;
+  const name = document.getElementById('ed-name').value.trim();
+  const phone = document.getElementById('ed-phone').value.trim();
+  const checkin = document.getElementById('ed-checkin').value;
+  const checkout = document.getElementById('ed-checkout').value;
+  if(!name){ showToast('⚠️ Nome obrigatório'); return; }
+  if(!checkin || !checkout){ showToast('⚠️ Datas obrigatórias'); return; }
+  if(checkin >= checkout){ showToast('⚠️ Check-out deve ser depois do check-in'); return; }
+
+  const all = getRes();
+  const idx = all.findIndex(x=>x.id===modalResId);
+  if(idx === -1) return;
+  all[idx] = {
+    ...all[idx],
+    name,
+    phone,
+    email: document.getElementById('ed-email').value.trim(),
+    guests: document.getElementById('ed-guests').value,
+    checkin,
+    checkout,
+    occasion: document.getElementById('ed-occasion').value,
+    status: document.getElementById('ed-status').value,
+    obs: document.getElementById('ed-obs').value.trim(),
+    updatedAt: new Date().toISOString(),
+  };
+  saveRes(all);
+  closeModal();
+  if(currentPage==='dashboard') renderDashboard();
+  if(currentPage==='reservas') renderResTable();
+  if(currentPage==='calendario') renderAdminCal();
+  showToast('✅ Reserva atualizada com sucesso!');
+}
+function toggleResStatus(){
+  if(!modalResId) return;
+  const all = getRes();
+  const r = all.find(x=>x.id===modalResId);
+  if(!r) return;
+  r.status = r.status==='paid' ? 'pending' : 'paid';
+  saveRes(all);
+  closeModal();
+  if(currentPage==='dashboard') renderDashboard();
+  if(currentPage==='reservas') renderResTable();
+  showToast(r.status==='paid' ? '✅ Pago!' : '⏳ Pendente');
+}
+function cancelReservation(){
+  if(!modalResId) return;
+  if(!confirm('Excluir esta reserva?')) return;
+  saveRes(getRes().filter(r=>r.id!==modalResId));
+  closeModal();
+  renderDashboard();
+  renderResTable();
+  showToast('🗑️ Reserva excluída');
+}
+function waContact(phone){
+  const n = phone.replace(/\D/g,'');
+  if(!n) return;
+  window.open(`https://wa.me/55${n}`,'_blank');
+}
+
+// ===== PIX CONFIG =====
+const PIX = {
+  nome: 'ARISLAN CIARALLO',
+  chave: '37451949850',
+  tipo: 'CPF'
+};
+
+function diasParaCheckin(checkin){
+  const hoje = new Date(); hoje.setHours(0,0,0,0);
+  const ci = new Date(checkin); ci.setHours(0,0,0,0);
+  return Math.round((ci - hoje)/(1000*60*60*24));
+}
+
+function cobrarCliente(id){
+  const r = getRes().find(x=>x.id===id);
+  if(!r || !r.phone) return;
+  const n = r.phone.replace(/\D/g,'');
+  const faltam = diasParaCheckin(r.checkin);
+  const urgencia = faltam <= 3 ? `⚠️ *Seu check-in é em ${faltam} dia(s)!*\n\n` : '';
+  const msg = encodeURIComponent(
+    `Olá, *${r.name}*! 😊\n\n` +
+    urgencia +
+    `Sua reserva no *Sítio Iluminado* está aguardando confirmação de pagamento.\n\n` +
+    `📅 *Check-in:* ${fmtDate(r.checkin)} às 08h\n` +
+    `📅 *Check-out:* ${fmtDate(r.checkout)} às 18h\n` +
+    `👥 *Pessoas:* ${r.guests||'não informado'}\n` +
+    `🎯 *Ocasião:* ${r.occasion||'não informada'}\n\n` +
+    `💰 *Dados para pagamento via PIX:*\n` +
+    `• Chave PIX (${PIX.tipo}): *${PIX.chave}*\n` +
+    `• Nome: *${PIX.nome}*\n\n` +
+    `Após o pagamento, envie o comprovante aqui no WhatsApp para confirmarmos sua reserva! ✅\n\n` +
+    `Qualquer dúvida é só me chamar. 🌿`
+  );
+  window.open(`https://wa.me/55${n}?text=${msg}`, '_blank');
+  showToast('📲 WhatsApp aberto com dados do PIX!');
+}
+
+// ===== ADMIN CALENDAR =====
+let adminCalYear = new Date().getFullYear();
+let adminCalMonth = new Date().getMonth();
+const MONTHS = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+
+function renderAdminCal(){
+  const all = getRes();
+  const today = todayStr();
+  const firstDay = new Date(adminCalYear, adminCalMonth, 1).getDay();
+  const daysInMonth = new Date(adminCalYear, adminCalMonth+1, 0).getDate();
+  document.getElementById('admin-cal-label').textContent = MONTHS[adminCalMonth]+' '+adminCalYear;
+
+  function dateStr(d){ return `${adminCalYear}-${String(adminCalMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`; }
+  function getResForDate(ds){ return all.find(r=>r.checkin<=ds && r.checkout>ds); }
+
+  let html = '';
+  for(let i=0;i<firstDay;i++) html += '<div class="cal-day empty"></div>';
+  for(let d=1;d<=daysInMonth;d++){
+    const ds = dateStr(d);
+    const res = getResForDate(ds);
+    const isToday = ds===today;
+    let cls = 'cal-day free';
+    if(isToday) cls += ' today';
+    if(res) cls = 'cal-day '+(res.status==='paid'?'reserved-paid':'reserved-pending');
+    const onclick = res ? `onclick="showCalDetail('${ds}')"` : '';
+    html += `<div class="${cls}" ${onclick}><span>${d}</span>${res?'<div class="cal-day-dot"></div>':''}</div>`;
+  }
+  document.getElementById('admin-cal-grid').innerHTML = html;
+}
+function adminCalPrev(){ adminCalMonth--; if(adminCalMonth<0){adminCalMonth=11;adminCalYear--;} renderAdminCal(); }
+function adminCalNext(){ adminCalMonth++; if(adminCalMonth>11){adminCalMonth=0;adminCalYear++;} renderAdminCal(); }
+
+function showCalDetail(ds){
+  const all = getRes();
+  const res = all.filter(r=>r.checkin<=ds && r.checkout>ds);
+  document.getElementById('cal-detail-title').textContent = '📋 Reservas em '+fmtDate(ds);
+  if(!res.length){ document.getElementById('cal-detail-content').innerHTML='<div class="empty-state"><div class="empty-sub">Nenhuma reserva nesta data</div></div>'; return; }
+  document.getElementById('cal-detail-content').innerHTML = res.map(r=>`
+    <div class="tl-item" onclick="openModal('${r.id}')" style="cursor:pointer">
+      <div class="tl-dot ${r.status}">${r.status==='paid'?'✅':'⏳'}</div>
+      <div class="tl-body">
+        <div class="tl-title">${r.name} · ${r.guests||'?'} pessoas</div>
+        <div class="tl-sub">${fmtDate(r.checkin)} → ${fmtDate(r.checkout)} · ${r.occasion||'—'}</div>
+        <div class="tl-when">${r.phone||''} ${r.email||''}</div>
+      </div>
+      <button class="btn-wa" onclick="event.stopPropagation();waContact('${r.phone||''}')" style="align-self:center">📲</button>
+    </div>`).join('');
+}
+
+// ===== LEADS =====
+function renderLeads(){
+  let all = getRes();
+  const search = (document.getElementById('leads-search')||{}).value?.toLowerCase()||'';
+  // Group by phone
+  const map = {};
+  all.forEach(r=>{
+    const key = (r.phone||r.email||r.name||'').replace(/\D/g,'').slice(-8) || r.name;
+    if(!map[key]) map[key] = {name:r.name,phone:r.phone||'—',email:r.email||'—',reservas:[],last:r.checkin};
+    map[key].reservas.push(r);
+    if(r.checkin > map[key].last) map[key].last = r.checkin;
+  });
+  let leads = Object.values(map);
+  if(search) leads = leads.filter(l=>(l.name||'').toLowerCase().includes(search)||(l.phone||'').includes(search)||(l.email||'').toLowerCase().includes(search));
+
+  const tbody = document.getElementById('leads-table-body');
+  if(!leads.length){ tbody.innerHTML=`<tr><td colspan="6"><div class="no-data">Nenhum lead encontrado</div></td></tr>`; return; }
+  tbody.innerHTML = leads.map(l=>`
+    <tr>
+      <td><div class="res-name-cell">${l.name}</div></td>
+      <td>${l.phone}</td>
+      <td>${l.email}</td>
+      <td><span class="days-badge">${l.reservas.length}</span></td>
+      <td>${fmtDate(l.last)}</td>
+      <td>${l.phone!=='—'?`<a class="btn-wa" href="https://wa.me/55${l.phone.replace(/\D/g,'')}" target="_blank">📲 WA</a>`:'—'}</td>
+    </tr>`).join('');
+}
+
+// ===== EXPORT CSV =====
+function exportCSV(){
+  const all = getRes();
+  const header = ['Nome','Telefone','Email','Check-in','Check-out','Dias','Pessoas','Ocasião','Status','Observações','Registrado em'];
+  const rows = all.map(r=>[
+    r.name, r.phone||'', r.email||'',
+    fmtDate(r.checkin), fmtDate(r.checkout),
+    diffDays(r.checkin,r.checkout),
+    r.guests||'', r.occasion||'',
+    r.status==='paid'?'Pago':'Pendente',
+    r.obs||'',
+    r.createdAt ? new Date(r.createdAt).toLocaleString('pt-BR') : ''
+  ]);
+  downloadCSV([header,...rows], 'reservas-sitio-iluminado.csv');
+}
+function exportLeadsCSV(){
+  const all = getRes();
+  const header = ['Nome','Telefone','Email','Total reservas'];
+  const map = {};
+  all.forEach(r=>{
+    const key = (r.phone||r.name);
+    if(!map[key]) map[key]={name:r.name,phone:r.phone||'',email:r.email||'',count:0};
+    map[key].count++;
+  });
+  const rows = Object.values(map).map(l=>[l.name,l.phone,l.email,l.count]);
+  downloadCSV([header,...rows], 'leads-sitio-iluminado.csv');
+}
+function downloadCSV(rows, filename){
+  const csv = rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n');
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,\uFEFF'+encodeURIComponent(csv);
+  a.download = filename;
+  a.click();
+  showToast('📥 CSV exportado!');
+}
+
+// ===== CALC RESTANTE ADMIN (manual) =====
+function calcAdminRestante(){ /* campos manuais — sem cálculo automático */ }
+
+// ===== NOVA RESERVA =====
+function saveNewReservation(){
+  const name = document.getElementById('nf-name').value.trim();
+  const phone = document.getElementById('nf-phone').value.trim();
+  const email = document.getElementById('nf-email').value.trim();
+  const guests = document.getElementById('nf-guests').value;
+  const checkin = document.getElementById('nf-checkin').value;
+  const checkout = document.getElementById('nf-checkout').value;
+  const occasion = document.getElementById('nf-occasion').value;
+  const status = document.getElementById('nf-status').value;
+  const obs = document.getElementById('nf-obs').value.trim();
+  const externos = document.getElementById('nf-externos').value || '';
+  const totalVal = parseFloat(document.getElementById('nf-total').value) || 0;
+  const sinalVal = parseFloat(document.getElementById('nf-sinal').value) || 0;
+  const restanteVal = parseFloat(document.getElementById('nf-restante').value) || 0;
+
+  if(!name||!phone||!checkin||!checkout||!guests){ showToast('⚠️ Preencha os campos obrigatórios'); return; }
+  if(checkin >= checkout){ showToast('⚠️ Check-out deve ser depois do check-in'); return; }
+
+  const all = getRes();
+  all.push({ id:genId(), name, phone, email, guests, checkin, checkout, occasion, status, obs, externos, totalVal, sinalVal, restanteVal, createdAt:new Date().toISOString() });
+  saveRes(all);
+
+  // reset
+  ['nf-name','nf-phone','nf-email','nf-checkin','nf-checkout','nf-obs','nf-total','nf-sinal','nf-restante'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('nf-guests').value='';
+  document.getElementById('nf-externos').value='';
+  document.getElementById('nf-occasion').value='';
+  document.getElementById('nf-status').value='pending';
+
+  showToast('✅ Reserva salva com sucesso!');
+  goPage('reservas');
+}
+
+// ===== SÍTIOS =====
 const OS_KEY = 'hospeda_outros_sitios';
 const OS_DEFAULT = [
-  {nome:"Sítio das Pedras",local:"Guararema, SP",tipo:"🪨 Campo · Casamentos · Retiros",preco:"R$1.800",precoDetalhe:"/ dia (até 30 pessoas)",capa:"https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",features:["🛏️ 4 quartos","🔥 Churrasqueira","🌿 Área verde","💒 Casamentos"],wa:"Olá Arlei! Tenho interesse no Sítio das Pedras em Guararema.",fotos:[]},
-  {nome:"Sítio Beira Rio",local:"Salesópolis, SP",tipo:"🌊 Rio · Pesca · Família",preco:"R$1.200",precoDetalhe:"/ dia (até 20 pessoas)",capa:"https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800&q=80",features:["🛏️ 3 quartos","🎣 Deck para pesca","🌊 Beira do rio","🌲 Trilhas"],wa:"Olá Arlei! Tenho interesse no Sítio Beira Rio em Salesópolis.",fotos:[]},
-  {nome:"Sítio Alto da Serra",local:"Paraibuna, SP",tipo:"⛰️ Serra · Vista panorâmica",preco:"R$2.200",precoDetalhe:"/ dia (até 40 pessoas)",capa:"https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",features:["🛏️ 6 quartos","⛰️ Vista panorâmica","🔥 Lareira","🧘 Retiros"],wa:"Olá Arlei! Tenho interesse no Sítio Alto da Serra em Paraibuna.",fotos:[]}
+  {nome:"Sítio das Pedras",local:"Guararema, SP",tipo:"🪨 Campo · Casamentos · Retiros",preco:"R$1.800",precoDetalhe:"/ dia (até 30 pessoas)",capa:"https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",features:["🛏️ 4 quartos","🔥 Churrasqueira","🌿 Área verde","💒 Casamentos"],wa:"Olá Arlei! Tenho interesse no Sítio das Pedras.",fotos:[]},
+  {nome:"Sítio Beira Rio",local:"Salesópolis, SP",tipo:"🌊 Rio · Pesca · Família",preco:"R$1.200",precoDetalhe:"/ dia (até 20 pessoas)",capa:"https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800&q=80",features:["🛏️ 3 quartos","🎣 Deck para pesca","🌊 Beira do rio","🌲 Trilhas"],wa:"Olá Arlei! Tenho interesse no Sítio Beira Rio.",fotos:[]},
+  {nome:"Sítio Alto da Serra",local:"Paraibuna, SP",tipo:"⛰️ Serra · Vista panorâmica",preco:"R$2.200",precoDetalhe:"/ dia (até 40 pessoas)",capa:"https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",features:["🛏️ 6 quartos","⛰️ Vista panorâmica","🔥 Lareira","🧘 Retiros"],wa:"Olá Arlei! Tenho interesse no Sítio Alto da Serra.",fotos:[]}
 ];
-
-// Per-sitio reservations use key: sitio_res_<slug>
 function slugify(s){return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'');}
 function getSitios(){try{const d=localStorage.getItem(OS_KEY);return d?JSON.parse(d):OS_DEFAULT;}catch(e){return OS_DEFAULT;}}
 function saveSitios(arr){localStorage.setItem(OS_KEY,JSON.stringify(arr));}
-function getResKey(nome){return 'sitio_res_'+slugify(nome);}
-function getRes(nome){try{return JSON.parse(localStorage.getItem(getResKey(nome)))||[];}catch(e){return[];}}
-function saveRes(nome,arr){localStorage.setItem(getResKey(nome),JSON.stringify(arr));}
-function genId(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
 
-// ── LOGIN ──
-function doLogin(){
-  if(document.getElementById('login-pwd').value===ADMIN_PWD){
-    document.getElementById('login-screen').style.display='none';
-    document.getElementById('admin-wrap').classList.add('visible');
-    init();
-  } else {
-    document.getElementById('login-error').style.display='block';
-  }
-}
-function logout(){location.reload();}
+let galUploadUrls = [];
+let capaTabAtual = 'url';
+let galTabAtual = 'url';
 
-// ── TABS ──
-function goTab(id){
-  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',['sitios','reservas'][i]===id));
-  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
-  document.getElementById('panel-'+id).classList.add('active');
-  if(id==='sitios') renderSitios();
-  if(id==='reservas') renderReservas();
-}
-
-// ── INIT ──
-function init(){
-  renderSitios();
-  populateSitioSelect();
-}
-
-// ── RENDER SÍTIOS ──
 function renderSitios(){
-  const list=document.getElementById('sitios-list');
-  const data=getSitios();
-  if(!data.length){list.innerHTML='<div class="empty-state"><div class="icon">🏡</div><p>Nenhum sítio cadastrado ainda.<br>Clique em "+ Novo sítio" para começar.</p></div>';return;}
-  list.innerHTML=data.map((s,i)=>`
+  const list = document.getElementById('sitios-list');
+  const data = getSitios();
+  if(!data.length){
+    list.innerHTML = '<div class="empty-state"><div class="empty-icon" style="font-size:48px">🏡</div><div class="empty-title">Nenhum sítio cadastrado</div><div class="empty-sub">Clique em "+ Novo sítio" para começar.</div></div>';
+    return;
+  }
+  list.innerHTML = data.map((s,i)=>`
     <div class="sitio-row">
-      <img class="sitio-thumb" src="${s.capa}" alt="${s.nome}" onerror="this.style.display='none'">
+      <img class="sitio-thumb" src="${s.capa}" alt="${s.nome}" onerror="this.style.opacity='.3'">
       <div class="sitio-body">
         <div class="sitio-name">${s.nome}</div>
         <div class="sitio-loc">📍 ${s.local}</div>
         <div class="sitio-badges">
-          <span class="badge badge-amber">${s.preco||'Consulte'}</span>
-          ${(s.features||[]).slice(0,2).map(f=>`<span class="badge badge-blue">${f}</span>`).join('')}
+          <span class="sitio-badge amber">${s.preco||'Consulte'}</span>
+          ${(s.features||[]).slice(0,2).map(f=>`<span class="sitio-badge">${f}</span>`).join('')}
         </div>
       </div>
-      <div class="sitio-actions-col">
-        <button class="btn-sm btn-view" onclick="window.open('sitio.html?id=${slugify(s.nome)}','_blank')">👁️ Ver</button>
-        <button class="btn-sm btn-edit" onclick="abrirForm(${i})">✏️ Editar</button>
-        <button class="btn-sm btn-del" onclick="excluirSitio(${i})">🗑️ Excluir</button>
+      <div class="sitio-col-actions">
+        <button class="btn-new" style="font-size:12px;padding:7px 12px" onclick="window.open('sitio.html?id=${slugify(s.nome)}','_blank')">👁️ Ver</button>
+        <button class="btn-export" style="font-size:12px;padding:7px 12px" onclick="openSitioModal(${i})">✏️ Editar</button>
+        <button class="btn-icon" style="color:var(--red);border-color:rgba(220,38,38,.3)" onclick="excluirSitio(${i})">🗑️</button>
       </div>
     </div>`).join('');
 }
 
-// ── FORM SÍTIO ──
-let galUrls = []; // base64 ou URLs da galeria via upload
-let capaTabAtual = 'url';
-let galTabAtual = 'url';
-
-function abrirForm(idx){
-  const data=getSitios();
-  const s=idx!=null?data[idx]:{};
-  document.getElementById('f-idx').value=idx!=null?idx:'';
-  document.getElementById('form-title').textContent=idx!=null?'Editar sítio':'Novo sítio';
-  document.getElementById('f-nome').value=s.nome||'';
-  document.getElementById('f-local').value=s.local||'';
-  document.getElementById('f-tipo').value=s.tipo||'';
-  document.getElementById('f-preco').value=s.preco||'';
-  document.getElementById('f-detalhe').value=s.precoDetalhe||'';
-  document.getElementById('f-wa').value=s.wa||'';
-  document.getElementById('f-feats').value=(s.features||[]).join('\n');
-  // capa
-  document.getElementById('f-capa').value=s.capa||'';
-  document.getElementById('f-capa-url').value=s.capa||'';
-  const prev=document.getElementById('capa-preview');
-  if(s.capa){prev.src=s.capa;prev.style.display='block';}else{prev.style.display='none';}
-  // galeria urls
-  galUrls=[];
-  buildUrlRows(s.fotos||[]);
+function openSitioModal(idx){
+  galUploadUrls = [];
+  capaTabAtual = 'url';
+  galTabAtual = 'url';
+  const data = getSitios();
+  const s = idx != null ? data[idx] : {};
+  document.getElementById('sm-idx').value = idx != null ? idx : '';
+  document.getElementById('sitio-modal-title').textContent = idx != null ? 'Editar sítio' : 'Novo sítio';
+  document.getElementById('sm-nome').value = s.nome||'';
+  document.getElementById('sm-local').value = s.local||'';
+  document.getElementById('sm-tipo').value = s.tipo||'';
+  document.getElementById('sm-preco').value = s.preco||'';
+  document.getElementById('sm-detalhe').value = s.precoDetalhe||'';
+  document.getElementById('sm-wa').value = s.wa||'';
+  document.getElementById('sm-feats').value = (s.features||[]).join('\n');
+  document.getElementById('sm-capa-url').value = s.capa||'';
+  document.getElementById('sm-capa').value = s.capa||'';
+  const prev = document.getElementById('sm-capa-preview');
+  if(s.capa){prev.src=s.capa;prev.style.display='block';}else prev.style.display='none';
+  // reset tabs to URL
+  switchCapaTab('url');
+  switchGalTab('url');
+  buildGalRows(s.fotos||[]);
   buildGalThumbs([]);
-  // abrir drawer
-  document.getElementById('form-overlay').style.display='block';
-  document.getElementById('form-drawer').style.display='block';
-  document.body.style.overflow='hidden';
+  document.getElementById('sitio-modal-bg').classList.add('open');
+}
+function closeSitioModal(){
+  document.getElementById('sitio-modal-bg').classList.remove('open');
 }
 
-function fecharForm(){
-  document.getElementById('form-overlay').style.display='none';
-  document.getElementById('form-drawer').style.display='none';
-  document.body.style.overflow='';
-}
-
-// capa
-function trocarTabCapa(tab){
-  capaTabAtual=tab;
+function switchCapaTab(tab){
+  capaTabAtual = tab;
   document.querySelectorAll('#capa-tabs .foto-tab').forEach((t,i)=>t.classList.toggle('active',i===(tab==='url'?0:1)));
   document.getElementById('capa-panel-url').classList.toggle('active',tab==='url');
   document.getElementById('capa-panel-file').classList.toggle('active',tab==='file');
 }
-function atualizarCapa(val){
-  document.getElementById('f-capa').value=val;
-  const prev=document.getElementById('capa-preview');
-  if(val){prev.src=val;prev.style.display='block';}else prev.style.display='none';
-}
-function uploadCapaFile(input){
-  const file=input.files[0];if(!file)return;
-  const reader=new FileReader();
-  reader.onload=e=>{atualizarCapa(e.target.result);};
-  reader.readAsDataURL(file);
-}
-
-// galeria url rows
-function buildUrlRows(fotos){
-  const wrap=document.getElementById('galeria-urls');
-  wrap.innerHTML='';
-  const list=(fotos&&fotos.length)?fotos:['','',''];
-  list.forEach(url=>addUrlRow(url));
-}
-function addUrlRow(val=''){
-  const wrap=document.getElementById('galeria-urls');
-  const row=document.createElement('div');
-  row.className='galeria-row';
-  row.innerHTML=`<input type="url" placeholder="https://..." value="${val||''}"><img src="${val||''}" style="${val?'display:block':'display:none'}"><button class="btn-rm" onclick="this.parentNode.remove()">×</button>`;
-  row.querySelector('input').addEventListener('input',function(){
-    const img=this.nextElementSibling;
-    img.src=this.value;img.style.display=this.value?'block':'none';
-  });
-  wrap.appendChild(row);
-}
-
-// galeria upload
-function trocarTabGal(tab){
-  galTabAtual=tab;
+function switchGalTab(tab){
+  galTabAtual = tab;
   document.querySelectorAll('#gal-tabs .foto-tab').forEach((t,i)=>t.classList.toggle('active',i===(tab==='url'?0:1)));
   document.getElementById('gal-panel-url').classList.toggle('active',tab==='url');
   document.getElementById('gal-panel-file').classList.toggle('active',tab==='file');
 }
-function uploadGalFiles(input){
-  const files=Array.from(input.files);
-  files.forEach(file=>{
+
+function previewCapa(val){
+  document.getElementById('sm-capa').value=val;
+  const p=document.getElementById('sm-capa-preview');
+  if(val){p.src=val;p.style.display='block';}else p.style.display='none';
+}
+function uploadCapaSitio(input){
+  const file=input.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{previewCapa(e.target.result);};
+  reader.readAsDataURL(file);
+}
+
+function buildGalRows(fotos){
+  const wrap=document.getElementById('sm-gal-urls');
+  wrap.innerHTML='';
+  (fotos.length?fotos:['','']).forEach(url=>addGalRow(url));
+}
+function addGalRow(val=''){
+  const wrap=document.getElementById('sm-gal-urls');
+  const row=document.createElement('div');
+  row.className='galeria-url-row';
+  row.innerHTML=`<input type="url" placeholder="https://..." value="${val||''}"><img src="${val||''}" style="${val?'display:block':'display:none'}"><button class="btn-rm" onclick="this.parentNode.remove()">×</button>`;
+  row.querySelector('input').addEventListener('input',function(){
+    const img=this.nextElementSibling;img.src=this.value;img.style.display=this.value?'block':'none';
+  });
+  wrap.appendChild(row);
+}
+
+function uploadGalSitio(input){
+  Array.from(input.files).forEach(file=>{
     const reader=new FileReader();
-    reader.onload=e=>{
-      galUrls.push(e.target.result);
-      buildGalThumbs(galUrls);
-    };
+    reader.onload=e=>{galUploadUrls.push(e.target.result);buildGalThumbs(galUploadUrls);};
     reader.readAsDataURL(file);
   });
 }
 function buildGalThumbs(list){
-  const wrap=document.getElementById('gal-thumbs');
-  wrap.innerHTML=list.map((src,i)=>`
-    <div class="upload-thumb-wrap">
-      <img src="${src}" alt="foto ${i+1}">
-      <button class="rm-thumb" onclick="removeGalThumb(${i})">×</button>
+  document.getElementById('sm-gal-thumbs').innerHTML=list.map((src,i)=>`
+    <div class="upload-thumb-item">
+      <img src="${src}">
+      <button class="rm-t" onclick="removeGalThumb(${i})">×</button>
     </div>`).join('');
 }
-function removeGalThumb(i){galUrls.splice(i,1);buildGalThumbs(galUrls);}
+function removeGalThumb(i){galUploadUrls.splice(i,1);buildGalThumbs(galUploadUrls);}
 
-// ── SALVAR SÍTIO ──
 function salvarSitio(){
-  const nome=document.getElementById('f-nome').value.trim();
-  const local=document.getElementById('f-local').value.trim();
-  const capa=document.getElementById('f-capa').value.trim();
-  if(!nome||!local){toast('Preencha Nome e Localização!');return;}
-  if(!capa){toast('Adicione uma foto de capa!');return;}
-
-  // galeria: juntar URLs (de ambas as abas)
-  const urlRows=Array.from(document.querySelectorAll('#galeria-urls input')).map(i=>i.value.trim()).filter(Boolean);
-  const fotos=[...urlRows,...galUrls].filter(Boolean);
-
+  const nome=document.getElementById('sm-nome').value.trim();
+  const local=document.getElementById('sm-local').value.trim();
+  const capa=document.getElementById('sm-capa').value.trim();
+  if(!nome||!local){showToast('⚠️ Preencha Nome e Localização');return;}
+  if(!capa){showToast('⚠️ Adicione uma foto de capa');return;}
+  const urlRows=Array.from(document.querySelectorAll('#sm-gal-urls input')).map(i=>i.value.trim()).filter(Boolean);
+  const fotos=[...urlRows,...galUploadUrls].filter(Boolean);
   const s={
     nome,local,
-    tipo:document.getElementById('f-tipo').value.trim()||'🏡 Temporada · Eventos',
-    preco:document.getElementById('f-preco').value.trim()||'Consulte',
-    precoDetalhe:document.getElementById('f-detalhe').value.trim(),
-    wa:document.getElementById('f-wa').value.trim()||`Olá Arlei! Tenho interesse no ${nome}.`,
-    features:document.getElementById('f-feats').value.split('\n').map(l=>l.trim()).filter(Boolean),
+    tipo:document.getElementById('sm-tipo').value.trim()||'🏡 Temporada · Eventos',
+    preco:document.getElementById('sm-preco').value.trim()||'Consulte',
+    precoDetalhe:document.getElementById('sm-detalhe').value.trim(),
+    wa:document.getElementById('sm-wa').value.trim()||`Olá Arlei! Tenho interesse no ${nome}.`,
+    features:document.getElementById('sm-feats').value.split('\n').map(l=>l.trim()).filter(Boolean),
     capa,
-    fotos: fotos.length?fotos:[capa]
+    fotos:fotos.length?fotos:[capa]
   };
-
   const data=getSitios();
-  const idx=document.getElementById('f-idx').value;
+  const idx=document.getElementById('sm-idx').value;
   if(idx!=='') data[parseInt(idx)]=s; else data.push(s);
   saveSitios(data);
-  populateSitioSelect();
+  closeSitioModal();
   renderSitios();
-  fecharForm();
-  toast('✅ Sítio salvo com sucesso!',true);
+  showToast('✅ Sítio salvo!');
 }
 
 function excluirSitio(i){
-  if(!confirm('Excluir este sítio?')) return;
+  if(!confirm('Excluir este sítio?'))return;
   const data=getSitios();data.splice(i,1);saveSitios(data);
-  renderSitios();populateSitioSelect();
-  toast('Sítio excluído.');
+  renderSitios();showToast('🗑️ Sítio excluído');
 }
 
-// ── RESERVAS ──
-function renderReservas(){
-  const sitios=getSitios();
-  const list=document.getElementById('reservas-list');
-  let all=[];
-  sitios.forEach(s=>{
-    getRes(s.nome).forEach(r=>all.push({...r,sitioNome:s.nome}));
-  });
-  all.sort((a,b)=>b.createdAt?.localeCompare(a.createdAt)||0);
-  if(!all.length){list.innerHTML='<div class="empty-state"><div class="icon">📅</div><p>Nenhuma reserva registrada ainda.</p></div>';return;}
-  list.innerHTML=all.map(r=>`
-    <div class="res-card">
-      <div class="res-top">
-        <div>
-          <div class="res-name">${r.name}</div>
-          <div class="res-sitio">🏡 ${r.sitioNome} &nbsp;·&nbsp; 📅 ${fmtDate(r.checkin)} → ${fmtDate(r.checkout)}</div>
-        </div>
-        <button class="status-badge ${r.status==='paid'?'st-paid':'st-pending'}" onclick="toggleRes('${r.sitioNome}','${r.id}')">
-          ${r.status==='paid'?'✅ Confirmada':'⏳ Pendente'}
-        </button>
-      </div>
-      <div class="res-info">
-        📞 ${r.phone}${r.email?'  ·  📧 '+r.email:''}${r.guests?'  ·  👥 '+r.guests:''}${r.occasion?'  ·  🎉 '+r.occasion:''}
-        ${r.obs?'<br>💬 '+r.obs:''}
-      </div>
-      <button class="res-del" onclick="deletarRes('${r.sitioNome}','${r.id}')">🗑</button>
-    </div>`).join('');
+// ===== INIT =====
+function init(){
+  renderDashboard();
 }
-
-function populateSitioSelect(){
-  const sel=document.getElementById('r-sitio');
-  const val=sel.value;
-  sel.innerHTML='<option value="">Selecione o sítio</option>';
-  getSitios().forEach(s=>{
-    const opt=document.createElement('option');
-    opt.value=s.nome;opt.textContent=s.nome;
-    sel.appendChild(opt);
-  });
-  // Add Sítio Iluminado always
-  if(!getSitios().find(s=>s.nome==='Sítio Iluminado')){
-    const opt=document.createElement('option');
-    opt.value='Sítio Iluminado';opt.textContent='Sítio Iluminado';
-    sel.insertBefore(opt,sel.children[1]);
-  }
-  sel.value=val;
-}
-
-function toggleRes(sitioNome,id){
-  const arr=getRes(sitioNome);
-  const r=arr.find(x=>x.id===id);if(!r)return;
-  r.status=r.status==='paid'?'pending':'paid';
-  saveRes(sitioNome,arr);renderReservas();
-  toast(r.status==='paid'?'✅ Confirmada!':'⏳ Marcado como pendente',r.status==='paid');
-}
-function deletarRes(sitioNome,id){
-  if(!confirm('Excluir esta reserva?'))return;
-  saveRes(sitioNome,getRes(sitioNome).filter(x=>x.id!==id));
-  renderReservas();toast('Reserva excluída.');
-}
-
-function abrirFormReserva(){
-  populateSitioSelect();
-  document.getElementById('res-overlay').style.display='block';
-  document.getElementById('res-drawer').style.display='block';
-  document.body.style.overflow='hidden';
-}
-function fecharFormReserva(){
-  document.getElementById('res-overlay').style.display='none';
-  document.getElementById('res-drawer').style.display='none';
-  document.body.style.overflow='';
-}
-function salvarReserva(){
-  const nome=document.getElementById('r-nome').value.trim();
-  const phone=document.getElementById('r-phone').value.trim();
-  const sitio=document.getElementById('r-sitio').value;
-  const checkin=document.getElementById('r-checkin').value;
-  const checkout=document.getElementById('r-checkout').value;
-  if(!nome||!phone||!sitio||!checkin||!checkout){toast('Preencha os campos obrigatórios!');return;}
-  const r={
-    id:genId(),name:nome,phone,
-    email:document.getElementById('r-email').value.trim(),
-    guests:document.getElementById('r-pessoas').value,
-    occasion:document.getElementById('r-ocasiao').value,
-    obs:document.getElementById('r-obs').value.trim(),
-    checkin,checkout,
-    status:document.getElementById('r-status').value,
-    createdAt:new Date().toISOString()
-  };
-  const arr=getRes(sitio);arr.push(r);saveRes(sitio,arr);
-  fecharFormReserva();renderReservas();
-  toast('✅ Reserva salva!',true);
-  // limpar campos
-  ['r-nome','r-phone','r-email','r-pessoas','r-obs'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('r-sitio').value='';
-  document.getElementById('r-checkin').value='';
-  document.getElementById('r-checkout').value='';
-}
-
-function fmtDate(ds){if(!ds)return'—';const[y,m,d]=ds.split('-');return`${d}/${m}/${y}`;}
-
-function toast(msg,green=false){
-  const t=document.getElementById('toast');
-  t.textContent=msg;t.className='toast show'+(green?' green':'');
-  setTimeout(()=>t.className='toast',3000);
-}
+if(sessionStorage.getItem(SESSION_KEY)) init();
 </script>
 </body>
 </html>
