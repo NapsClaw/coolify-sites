@@ -59,13 +59,20 @@ nav{position:fixed;top:0;left:0;right:0;z-index:500;background:rgba(255,255,255,
 
 /* ── RESERVE SECTION ── */
 .reserve-section{padding:48px 20px;background:#f9fafb}
-.reserve-inner{max-width:900px;margin:0 auto}
+.reserve-inner{max-width:1100px;margin:0 auto}
+/* Top split: photos left + calendar right */
+.reserve-top{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:32px;align-items:start}
+@media(max-width:700px){.reserve-top{grid-template-columns:1fr}}
+.mini-gallery{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.mini-gallery img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px;cursor:pointer;transition:transform .2s}
+.mini-gallery img:first-child{grid-column:1/-1;aspect-ratio:16/9}
+.mini-gallery img:hover{transform:scale(1.03)}
 .sec-label{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:10px}
 .sec-h2{font-family:'Playfair Display',serif;font-size:clamp(24px,5vw,36px);font-weight:700;color:var(--dark);line-height:1.2;margin-bottom:8px}
 .sec-sub{font-size:15px;color:var(--mid);line-height:1.7;margin-bottom:32px}
 
 /* Calendar */
-.cal-card{background:#fff;border-radius:12px;border:1px solid var(--border);padding:16px;margin-bottom:20px;max-width:480px}
+.cal-card{background:#fff;border-radius:12px;border:1px solid var(--border);padding:16px;margin-bottom:20px}
 .cal-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
 .cal-month-label{font-family:'Playfair Display',serif;font-size:18px;font-weight:700}
 .cal-nav{display:flex;gap:6px}
@@ -307,7 +314,21 @@ footer{background:#0f172a;padding:40px 20px 24px;text-align:center}
     <h2 class="sec-h2">Verifique disponibilidade e reserve</h2>
     <p class="sec-sub">Datas em vermelho = reservadas. Selecione as datas desejadas e preencha o formulário.</p>
 
-    <!-- CALENDAR -->
+    <!-- TOP SPLIT: PHOTOS + CALENDAR -->
+    <div class="reserve-top">
+      <!-- Mini gallery left -->
+      <div>
+        <div class="mini-gallery" id="mini-gallery">
+          <img src="fotos/piscina-principal.jpg" alt="Piscina" onclick="document.getElementById('galeria').scrollIntoView({behavior:'smooth'})">
+          <img src="fotos/churrasqueira.jpg" alt="Churrasqueira" onclick="document.getElementById('galeria').scrollIntoView({behavior:'smooth'})">
+          <img src="fotos/salao-festas.jpg" alt="Salão de festas" onclick="document.getElementById('galeria').scrollIntoView({behavior:'smooth'})">
+          <img src="fotos/campo-futebol.jpg" alt="Campo de futebol" onclick="document.getElementById('galeria').scrollIntoView({behavior:'smooth'})">
+          <img src="fotos/piscina-hidromassagem.jpg" alt="Hidromassagem" onclick="document.getElementById('galeria').scrollIntoView({behavior:'smooth'})">
+        </div>
+        <p style="font-size:12px;color:var(--mid);margin-top:8px;text-align:center;cursor:pointer" onclick="document.getElementById('galeria').scrollIntoView({behavior:'smooth'})">📸 Ver todas as fotos →</p>
+      </div>
+      <!-- Calendar right -->
+      <div>
     <div class="cal-card">
       <div class="cal-top">
         <span class="cal-month-label" id="cal-label">Março 2026</span>
@@ -323,6 +344,8 @@ footer{background:#0f172a;padding:40px 20px 24px;text-align:center}
         <div class="leg"><div class="leg-box" style="background:var(--accent)"></div>📅 Selecionado</div>
       </div>
     </div>
+      </div><!-- /col calendar -->
+    </div><!-- /reserve-top -->
 
     <!-- PRICE CALCULATOR -->
     <div class="price-calc" id="price-calc-box">
