@@ -78,8 +78,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:500;background:rgba(255,255,255,
 .cal-day.past{opacity:.3;pointer-events:none;text-decoration:line-through}
 .cal-day.free{background:rgba(22,163,74,.08);color:#15803d;font-weight:600}
 .cal-day.free:hover{background:rgba(22,163,74,.22);color:#15803d;border:1.5px solid var(--green)}
-.cal-day.reserved-pending{background:var(--red-l);color:var(--red);cursor:pointer;font-weight:600}
-.cal-day.reserved-paid{background:var(--red-l);color:var(--red);cursor:pointer;font-weight:600}
+.cal-day.reserved-pending{background:#fecaca;color:#b91c1c;cursor:pointer;font-weight:700;border:1.5px solid #f87171}
+.cal-day.reserved-paid{background:#fecaca;color:#b91c1c;cursor:pointer;font-weight:700;border:1.5px solid #f87171}
 .cal-day.sel-start,.cal-day.sel-end{background:var(--accent);color:#fff;font-weight:700}
 .cal-day.sel-range{background:var(--blue-l);color:var(--blue)}
 .cal-day-dot{position:absolute;bottom:3px;left:50%;transform:translateX(-50%);width:5px;height:5px;border-radius:50%}
@@ -319,7 +319,7 @@ footer{background:#0f172a;padding:40px 20px 24px;text-align:center}
       <div class="cal-grid" id="cal-grid"></div>
       <div class="cal-legend">
         <div class="leg"><div class="leg-box" style="background:rgba(22,163,74,.08);border:1.5px solid var(--green)"></div>✅ Disponível</div>
-        <div class="leg"><div class="leg-box" style="background:var(--red-l);border:1.5px solid var(--red)"></div>🔴 Reservado / Indisponível</div>
+        <div class="leg"><div class="leg-box" style="background:#fecaca;border:1.5px solid #f87171"></div>🔴 Reservado / Indisponível</div>
         <div class="leg"><div class="leg-box" style="background:var(--accent)"></div>📅 Selecionado</div>
       </div>
     </div>
@@ -1053,8 +1053,8 @@ function renderCal(){
     let click = '';
     if(isPast){ cls += 'past'; }
     else if(res){
-      cls += res.status === 'paid' ? 'reserved-paid' : 'reserved-pending';
-      dot = `<div class="cal-day-dot" style="background:${res.status==='paid'?'var(--green)':'var(--red)'}"></div>`;
+      cls += 'reserved-paid';
+      dot = `<div class="cal-day-dot" style="background:var(--red)"></div>`;
       click = `onclick="openDetailById('${res.id}')"`;
     } else {
       cls += 'free';
