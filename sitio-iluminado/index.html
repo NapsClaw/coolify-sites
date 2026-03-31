@@ -415,6 +415,7 @@ footer{background:#0f172a;padding:40px 20px 24px;text-align:center}
 </div>
 
 <script>
+function slugify(s){return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'');}
 // ── STORAGE DOS OUTROS SÍTIOS (editável pelo admin via painel) ──
 const OS_KEY = 'hospeda_outros_sitios';
 const OS_DEFAULT = [
@@ -435,7 +436,7 @@ function buildOutroCard(s){
     <div class="outro-local">📍 ${s.local}</div>
     <div class="outro-feats">${(s.features||[]).map(f=>`<span class="outro-feat">${f}</span>`).join('')}</div>
     <div class="outro-price">${s.preco||'Consulte'}<span> ${s.precoDetalhe||''}</span></div>
-    <a href="https://wa.me/5511941942210?text=${encodeURIComponent(s.wa||'Olá Arlei! Gostaria de informações sobre o '+s.nome)}" target="_blank" class="outro-btn">Ver disponibilidade</a>
+    <a href="sitio.html?id=${slugify(s.nome)}" class="outro-btn">Ver disponibilidade</a>
   </div>`;
   return c;
 }

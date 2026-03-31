@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title id="page-title">Sítio — Hospeda Temporada | Reserva Online</title>
+<meta name="description" id="page-desc" content="Sítio para temporada e eventos. Reserve online com calendário integrado.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green:#16a34a;--green-l:rgba(22,163,74,.12);
+  --red:#dc2626;--red-l:rgba(220,38,38,.12);
+  --amber:#d97706;--amber-l:rgba(217,119,6,.12);
+  --blue:#2563eb;--blue-l:rgba(37,99,235,.1);
+  --dark:#111827;--mid:#6b7280;--light:#f3f4f6;
+  --white:#fff;--border:#e5e7eb;
+  --accent:#1d4ed8;--accent-h:#1e40af;
+  --wa:#25D366;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:#f9fafb;color:var(--dark);overflow-x:hidden;font-size:15px}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;background:rgba(255,255,255,.97);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:0 20px;height:60px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{text-decoration:none;font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--dark)}
+.nav-logo span{color:var(--accent)}
+.nav-back{font-size:13px;color:var(--accent);text-decoration:none;font-weight:600;display:flex;align-items:center;gap:4px}
+.nav-actions{display:flex;gap:8px;align-items:center}
+.btn-wa-nav{background:var(--wa);color:#fff;padding:8px 14px;border-radius:6px;font-size:13px;font-weight:600;text-decoration:none;display:flex;align-items:center;gap:6px}
+.btn-reserve-nav{background:var(--accent);color:#fff;padding:8px 14px;border-radius:6px;font-size:13px;font-weight:600;border:none;cursor:pointer}
+@media(min-width:768px){nav{padding:0 40px}}
+
+/* HERO */
+.hero{margin-top:60px;background:#0f172a;min-height:92vh;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:1}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(15,23,42,.75) 0%,rgba(15,23,42,.15) 60%,rgba(0,0,0,0) 100%)}
+.hero-content{position:relative;z-index:1;padding:40px 20px 48px}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(37,99,235,.25);border:1px solid rgba(37,99,235,.4);color:#93c5fd;font-size:13px;font-weight:600;letter-spacing:1px;padding:8px 18px;border-radius:100px;margin-bottom:24px;text-transform:uppercase}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(36px,9vw,72px);font-weight:700;color:#fff;line-height:1.05;margin-bottom:18px;text-shadow:0 2px 12px rgba(0,0,0,.6)}
+.hero h1 span{color:#60a5fa}
+.hero-sub{font-size:clamp(15px,3vw,20px);color:#fff;line-height:1.7;margin-bottom:32px;max-width:600px;font-weight:600;text-shadow:0 2px 10px rgba(0,0,0,.8);background:rgba(0,0,0,.28);display:inline-block;padding:12px 18px;border-radius:10px;border-left:4px solid #60a5fa}
+.hero-pill-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:32px}
+.hero-pill{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.9);font-size:13px;font-weight:500;padding:8px 16px;border-radius:100px}
+.hero-cta-row{display:flex;flex-wrap:wrap;gap:12px}
+.btn-primary{background:var(--accent);color:#fff;padding:14px 28px;border-radius:8px;font-size:15px;font-weight:600;text-decoration:none;display:inline-block;border:none;cursor:pointer}
+.btn-outline{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.5);padding:14px 28px;border-radius:8px;font-size:15px;font-weight:600;text-decoration:none;display:inline-block}
+.hero-stats{position:relative;z-index:1;display:flex;border-top:1px solid rgba(255,255,255,.12);padding:24px 20px;gap:0;background:rgba(15,23,42,.6);backdrop-filter:blur(8px)}
+.hstat{flex:1;text-align:center;padding:0 12px;border-right:1px solid rgba(255,255,255,.12)}
+.hstat:last-child{border-right:none}
+.hstat-n{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:#fff;display:block}
+.hstat-l{font-size:11px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:1px;display:block;margin-top:2px}
+
+/* RESERVE SECTION */
+.reserve-section{padding:48px 20px;background:#f9fafb}
+.reserve-inner{max-width:1100px;margin:0 auto}
+.reserve-top{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:32px;align-items:start}
+@media(max-width:700px){.reserve-top{grid-template-columns:1fr}}
+.mini-gallery{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.mini-gallery img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px;cursor:pointer;transition:transform .2s}
+.mini-gallery img:first-child{grid-column:1/-1;aspect-ratio:16/9}
+.mini-gallery img:hover{transform:scale(1.03)}
+.sec-label{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:10px}
+.sec-h2{font-family:'Playfair Display',serif;font-size:clamp(24px,5vw,36px);font-weight:700;color:var(--dark);line-height:1.2;margin-bottom:8px}
+.sec-sub{font-size:15px;color:var(--mid);line-height:1.7;margin-bottom:32px}
+
+/* Calendar */
+.cal-card{background:#fff;border-radius:12px;border:1px solid var(--border);padding:16px;margin-bottom:20px}
+.cal-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.cal-month-label{font-family:'Playfair Display',serif;font-size:18px;font-weight:700}
+.cal-nav{display:flex;gap:6px}
+.cal-nav-btn{background:var(--light);border:none;width:34px;height:34px;border-radius:6px;cursor:pointer;font-size:16px;color:var(--dark);display:flex;align-items:center;justify-content:center}
+.cal-nav-btn:hover{background:var(--border)}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.cal-head{text-align:center;font-size:10px;font-weight:700;letter-spacing:.5px;color:var(--mid);padding:8px 2px;text-transform:uppercase}
+.cal-day{text-align:center;padding:4px 2px;min-height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;border-radius:6px;font-size:14px;cursor:pointer;color:var(--dark);position:relative;font-weight:600;transition:background .15s}
+.cal-day.empty{opacity:0;pointer-events:none}
+.cal-day.past{opacity:.3;pointer-events:none;text-decoration:line-through}
+.cal-day.free{background:rgba(22,163,74,.08);color:#15803d;font-weight:600}
+.cal-day.free:hover{background:rgba(22,163,74,.22);border:1.5px solid var(--green)}
+.cal-day.reserved-paid{background:#fecaca;color:#b91c1c;cursor:pointer;font-weight:700;border:1.5px solid #f87171}
+.cal-day.sel-start,.cal-day.sel-end{background:var(--accent);color:#fff;font-weight:700}
+.cal-day.sel-range{background:var(--blue-l);color:var(--blue)}
+.cal-day-dot{position:absolute;bottom:3px;left:50%;transform:translateX(-50%);width:5px;height:5px;border-radius:50%}
+.cal-hday-label{font-size:8px;font-weight:700;line-height:1.2;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.cal-legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:16px;padding-top:16px;border-top:1px solid var(--border)}
+.leg{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--mid)}
+.leg-box{width:14px;height:14px;border-radius:3px}
+
+/* PRICE CALC */
+.price-calc{background:linear-gradient(135deg,#1d4ed8,#2563eb);border-radius:12px;padding:20px;margin-bottom:20px;color:#fff}
+.price-calc h3{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;margin-bottom:16px;color:#fff}
+.price-calc-row{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;margin-bottom:16px}
+.price-calc-field{display:flex;flex-direction:column;gap:6px;flex:1;min-width:120px}
+.price-calc-field label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.7)}
+.price-calc-field select{padding:10px 12px;border-radius:8px;border:1.5px solid rgba(255,255,255,.25);background:rgba(255,255,255,.12);color:#fff;font-size:14px;font-weight:500;font-family:'Plus Jakarta Sans',sans-serif}
+.price-calc-field select option{background:#1d4ed8}
+.price-result{background:rgba(255,255,255,.15);border-radius:10px;padding:16px;text-align:center}
+.price-result-label{font-size:12px;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.price-result-value{font-family:'Playfair Display',serif;font-size:36px;font-weight:700;color:#fff}
+.price-result-detail{font-size:12px;color:rgba(255,255,255,.6);margin-top:4px}
+.price-result-note{font-size:12px;color:rgba(255,255,255,.75);margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.15)}
+
+/* FORM */
+.form-section{background:#fff;border-radius:12px;border:1px solid var(--border);padding:24px;margin-bottom:20px}
+.form-section h3{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;margin-bottom:20px}
+.form-grid{display:grid;gap:14px}
+.form-row{display:flex;flex-direction:column;gap:6px}
+.form-row label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--dark)}
+.form-row input,.form-row select,.form-row textarea{padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:var(--dark);background:#fff;width:100%;transition:border-color .2s}
+.form-row input:focus,.form-row select:focus,.form-row textarea:focus{outline:none;border-color:var(--accent)}
+.form-row textarea{resize:vertical;min-height:80px}
+.dates-row{display:flex;gap:10px}
+.date-chip{flex:1;background:var(--light);border-radius:8px;padding:12px;text-align:center}
+.date-chip-l{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mid)}
+.date-chip-v{font-size:15px;font-weight:700;color:var(--dark);margin-top:2px}
+.date-chip-v.empty{color:var(--mid);font-weight:400;font-size:13px}
+.btn-submit{width:100%;background:var(--accent);color:#fff;border:none;border-radius:8px;padding:16px;font-size:15px;font-weight:700;cursor:pointer;margin-top:6px}
+.btn-submit:hover{background:var(--accent-h)}
+
+/* RESERVATIONS */
+.reservations-panel{background:#fff;border-radius:12px;border:1px solid var(--border);padding:24px;margin-bottom:20px}
+.reservations-panel h3{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center}
+.res-item{border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:12px;position:relative}
+.res-item-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.res-name{font-weight:700;font-size:15px}
+.res-dates{font-size:13px;color:var(--mid);margin-top:2px}
+.res-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:4px 10px;border-radius:100px;text-transform:uppercase;letter-spacing:.5px;cursor:pointer;border:none;white-space:nowrap}
+.badge-pending{background:var(--amber-l);color:var(--amber)}
+.badge-paid{background:var(--green-l);color:var(--green)}
+.res-info{display:flex;flex-wrap:wrap;gap:12px;margin-top:10px}
+.res-info-item{font-size:12px;color:var(--mid)}
+.res-info-item strong{color:var(--dark)}
+.res-delete{position:absolute;top:12px;right:12px;background:none;border:none;color:var(--mid);cursor:pointer;font-size:16px}
+.no-reservations{text-align:center;padding:32px;color:var(--mid);font-size:14px}
+
+/* GALLERY */
+.gallery-section{padding:48px 20px;background:#fff}
+.gallery-inner{max-width:900px;margin:0 auto}
+.gallery-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:28px}
+.gallery-item{position:relative;cursor:pointer;border-radius:8px;overflow:hidden}
+.gallery-img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;transition:transform .3s}
+.gallery-item:hover .gallery-img{transform:scale(1.04)}
+.gallery-overlay{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.7));padding:20px 10px 10px;opacity:0;transition:opacity .25s}
+.gallery-item:hover .gallery-overlay{opacity:1}
+.gallery-overlay span{color:#fff;font-size:11px;font-weight:600}
+@media(min-width:600px){.gallery-grid{grid-template-columns:repeat(3,1fr)}}
+
+/* LIGHTBOX */
+.lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:900;flex-direction:column;align-items:center;justify-content:center}
+.lightbox.open{display:flex}
+.lb-close{position:absolute;top:16px;right:16px;background:rgba(255,255,255,.15);border:none;color:#fff;width:40px;height:40px;border-radius:50%;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.lb-img-wrap{position:relative;max-width:95vw;max-height:70vh;display:flex;align-items:center;justify-content:center}
+.lb-img-wrap img{max-width:95vw;max-height:70vh;object-fit:contain;border-radius:8px}
+.lb-arrow{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.15);border:none;color:#fff;width:44px;height:44px;border-radius:50%;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.lb-arrow-prev{left:-22px}
+.lb-arrow-next{right:-22px}
+.lb-info{text-align:center;padding:16px 20px;max-width:600px}
+.lb-label{color:#fff;font-size:16px;font-weight:700;margin-bottom:4px}
+.lb-desc{color:rgba(255,255,255,.65);font-size:13px;line-height:1.6}
+.lb-counter{color:rgba(255,255,255,.4);font-size:12px;margin-top:6px}
+
+/* AMENITIES */
+.amenities-section{padding:48px 20px;background:var(--light)}
+.amenities-inner{max-width:900px;margin:0 auto}
+.amenity-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:28px}
+.amenity-item{background:#fff;border-radius:10px;padding:16px;display:flex;align-items:center;gap:12px;border:1px solid var(--border)}
+.amenity-icon{width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;background:var(--blue-l)}
+.amenity-name{font-size:13px;font-weight:600}
+@media(min-width:600px){.amenity-grid{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:900px){.amenity-grid{grid-template-columns:repeat(4,1fr)}}
+
+/* ABOUT */
+.about-section{padding:48px 20px;background:var(--dark)}
+.about-inner{max-width:900px;margin:0 auto}
+.about-section .sec-label{color:#60a5fa}
+.about-section .sec-h2{color:#fff}
+.about-section .sec-sub{color:rgba(255,255,255,.65)}
+
+/* CONTACT */
+.contact-section{padding:48px 20px;background:var(--accent)}
+.contact-inner{max-width:900px;margin:0 auto;text-align:center}
+.contact-section .sec-label{color:rgba(255,255,255,.65)}
+.contact-section .sec-h2{color:#fff;margin-bottom:8px}
+.contact-section .sec-sub{color:rgba(255,255,255,.75);margin-bottom:32px}
+.wa-btn-big{display:inline-flex;align-items:center;gap:12px;background:#25D366;color:#fff;padding:18px 36px;border-radius:12px;font-size:16px;font-weight:700;text-decoration:none}
+
+/* FOOTER */
+footer{background:#0f172a;padding:40px 20px 24px;text-align:center}
+.foot-sub{font-size:13px;color:rgba(255,255,255,.35);margin-bottom:24px}
+.foot-links{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;margin-bottom:24px}
+.foot-links a{color:rgba(255,255,255,.4);text-decoration:none;font-size:12px}
+.foot-copy{font-size:11px;color:rgba(255,255,255,.2);border-top:1px solid rgba(255,255,255,.08);padding-top:20px}
+
+/* FLOAT WA */
+.wa-float{position:fixed;bottom:20px;right:20px;z-index:400;background:#25D366;border-radius:50%;width:56px;height:56px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(37,211,102,.4);text-decoration:none}
+
+/* TOAST */
+.toast{position:fixed;bottom:88px;left:50%;transform:translateX(-50%);background:var(--dark);color:#fff;padding:12px 24px;border-radius:8px;font-size:14px;font-weight:500;z-index:600;display:none;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,.3)}
+.toast.show{display:block}
+.toast.green{background:var(--green)}
+
+/* DETAIL MODAL */
+.detail-modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:550;align-items:center;justify-content:center;padding:20px}
+.detail-modal-bg.open{display:flex}
+.detail-modal{background:#fff;border-radius:16px;padding:28px 24px;width:100%;max-width:480px;max-height:80vh;overflow-y:auto}
+.detail-modal h3{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center}
+.detail-close{background:none;border:none;font-size:22px;cursor:pointer;color:var(--mid)}
+.detail-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:14px}
+.detail-row:last-child{border-bottom:none}
+.detail-row strong{color:var(--mid);font-weight:500}
+.detail-row span{font-weight:600;text-align:right;max-width:60%}
+.detail-actions{display:flex;gap:10px;margin-top:20px}
+.btn-pay-toggle{flex:1;padding:12px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;border:none}
+.btn-mark-paid{background:var(--green-l);color:var(--green)}
+.btn-mark-pending{background:var(--amber-l);color:var(--amber)}
+.btn-del-res{background:var(--red-l);color:var(--red);padding:12px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;border:none}
+
+@media(min-width:600px){
+  .form-grid{grid-template-columns:repeat(2,1fr)}
+  .form-full{grid-column:1/-1}
+}
+@media(min-width:768px){
+  .reserve-section,.gallery-section,.amenities-section,.about-section,.contact-section{padding:72px 40px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-back">← Todos os sítios</a>
+  <a href="index.html" class="nav-logo">Hospeda<span>Temporada</span></a>
+  <div class="nav-actions">
+    <a id="nav-wa" href="#" target="_blank" class="btn-wa-nav">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      WhatsApp
+    </a>
+    <button class="btn-reserve-nav" onclick="scrollTo('reservar')">Reservar</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg" id="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="hero-badge" id="hero-badge"></span>
+    <h1 id="hero-h1"></h1>
+    <p class="hero-sub" id="hero-sub"></p>
+    <div class="hero-pill-row" id="hero-pills"></div>
+    <div class="hero-cta-row">
+      <button class="btn-primary" onclick="scrollTo('reservar')">📅 Reservar agora</button>
+      <a id="hero-wa" href="#" target="_blank" class="btn-outline">Falar com Arlei</a>
+    </div>
+  </div>
+  <div class="hero-stats" id="hero-stats"></div>
+</section>
+
+<!-- RESERVE -->
+<section class="reserve-section" id="reservar">
+  <div class="reserve-inner">
+    <span class="sec-label">Calendário & Reservas</span>
+    <h2 class="sec-h2">Verifique disponibilidade e reserve</h2>
+    <p class="sec-sub">Datas em vermelho = reservadas. Selecione as datas desejadas e preencha o formulário.</p>
+    <div class="reserve-top">
+      <div>
+        <div class="mini-gallery" id="mini-gallery"></div>
+        <p style="font-size:12px;color:var(--mid);margin-top:8px;text-align:center;cursor:pointer" onclick="document.getElementById('galeria').scrollIntoView({behavior:'smooth'})">📸 Ver todas as fotos →</p>
+      </div>
+      <div>
+        <div class="cal-card">
+          <div class="cal-top">
+            <span class="cal-month-label" id="cal-label"></span>
+            <div class="cal-nav">
+              <button class="cal-nav-btn" onclick="calPrev()">‹</button>
+              <button class="cal-nav-btn" onclick="calNext()">›</button>
+            </div>
+          </div>
+          <div class="cal-grid" id="cal-grid"></div>
+          <div class="cal-legend">
+            <div class="leg"><div class="leg-box" style="background:rgba(22,163,74,.08);border:1.5px solid var(--green)"></div>✅ Disponível</div>
+            <div class="leg"><div class="leg-box" style="background:#fecaca;border:1.5px solid #f87171"></div>🔴 Reservado</div>
+            <div class="leg"><div class="leg-box" style="background:var(--accent)"></div>📅 Selecionado</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRICE CALC -->
+    <div class="price-calc" id="price-calc-box">
+      <h3>💰 Calcule o valor da sua reserva</h3>
+      <div class="price-calc-row">
+        <div class="price-calc-field">
+          <label>Tipo de período</label>
+          <select id="calc-period" onchange="calcPrice()">
+            <option value="">Selecione o período</option>
+            <option value="fds">🗓️ Fim de semana</option>
+            <option value="feriado2">🎉 Feriado 2 dias</option>
+            <option value="feriado3">🎉 Feriado 3 dias</option>
+            <option value="feriado4">🎉 Feriado 4 dias</option>
+            <option value="evento">🎊 Festa / Evento</option>
+          </select>
+        </div>
+        <div class="price-calc-field">
+          <label>Pessoas</label>
+          <select id="calc-guests" onchange="calcPrice()">
+            <option value="">Selecione</option>
+            <option value="ate15">Até 15 pessoas</option>
+            <option value="ate20">Até 20 pessoas</option>
+            <option value="ate25">Até 25 pessoas</option>
+            <option value="ate30">Até 30 pessoas</option>
+            <option value="mais30">Acima de 30 (consultar)</option>
+          </select>
+        </div>
+      </div>
+      <div class="price-result">
+        <div class="price-result-label">Selecione as opções acima para ver o valor</div>
+        <div class="price-result-value" id="price-value" style="display:none"></div>
+        <div class="price-result-detail" id="price-detail" style="display:none"></div>
+        <div class="price-result-note" id="price-note" style="display:none">+ Taxa de limpeza: R$300 (não inclusa) · Pagamento via PIX · Confirme disponibilidade pelo WhatsApp antes de pagar</div>
+      </div>
+    </div>
+
+    <!-- FORM -->
+    <div class="form-section">
+      <h3>📝 Solicitar reserva</h3>
+      <div class="dates-row" style="margin-bottom:20px">
+        <div class="date-chip"><div class="date-chip-l">Check-in</div><div class="date-chip-v empty" id="disp-ci">Selecione no calendário</div></div>
+        <div class="date-chip"><div class="date-chip-l">Check-out</div><div class="date-chip-v empty" id="disp-co">Selecione no calendário</div></div>
+      </div>
+      <div class="form-grid">
+        <div class="form-row form-full"><label>Nome completo *</label><input type="text" id="f-name" placeholder="Seu nome completo"></div>
+        <div class="form-row"><label>Telefone / WhatsApp *</label><input type="tel" id="f-phone" placeholder="(11) 99999-9999"></div>
+        <div class="form-row"><label>E-mail</label><input type="email" id="f-email" placeholder="seu@email.com"></div>
+        <div class="form-row"><label>Quantidade de pessoas *</label>
+          <select id="f-guests">
+            <option value="">Selecione</option>
+            <option>Até 15 pessoas</option><option>Até 20 pessoas</option>
+            <option>Até 25 pessoas</option><option>Até 30 pessoas</option>
+            <option>Acima de 30 (consultar)</option>
+          </select>
+        </div>
+        <div class="form-row"><label>Tipo de ocasião</label>
+          <select id="f-occasion">
+            <option value="">Selecione</option>
+            <option>Fim de semana</option><option>Feriado</option>
+            <option>Festa / Aniversário</option><option>Casamento</option>
+            <option>Formatura</option><option>Evento corporativo</option>
+            <option>Temporada / Férias</option><option>Retiro</option><option>Outro</option>
+          </select>
+        </div>
+        <div class="form-row form-full"><label>Observações (opcional)</label><textarea id="f-obs" placeholder="Informações adicionais, dúvidas, necessidades especiais..."></textarea></div>
+      </div>
+      <button class="btn-submit" onclick="submitReserve()">📲 Enviar solicitação via WhatsApp</button>
+    </div>
+
+    <!-- RESERVATIONS -->
+    <div class="reservations-panel">
+      <h3>
+        <span>Reservas registradas</span>
+        <button onclick="togglePanel()" style="background:none;border:none;font-size:13px;color:var(--mid);cursor:pointer" id="toggle-btn">▼ Ver</button>
+      </h3>
+      <div id="reservations-list" style="display:none"></div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery-section" id="galeria">
+  <div class="gallery-inner">
+    <span class="sec-label">Fotos</span>
+    <h2 class="sec-h2">Conheça o espaço</h2>
+    <p class="sec-sub">Galeria de fotos do sítio</p>
+    <div class="gallery-grid" id="gallery-grid"></div>
+  </div>
+</section>
+
+<!-- AMENITIES -->
+<section class="amenities-section" id="estrutura">
+  <div class="amenities-inner">
+    <span class="sec-label">Estrutura</span>
+    <h2 class="sec-h2">O que tem no sítio</h2>
+    <p class="sec-sub">Tudo que você precisa para um evento ou temporada perfeita</p>
+    <div class="amenity-grid" id="amenity-grid"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section">
+  <div class="about-inner">
+    <span class="sec-label">Sobre o sítio</span>
+    <h2 class="sec-h2" id="about-title"></h2>
+    <p class="sec-sub" id="about-desc"></p>
+    <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap">
+      <a id="about-wa" href="#" target="_blank" style="display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;padding:12px 20px;border-radius:8px;font-size:14px;font-weight:500;text-decoration:none">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        (11) 94194-2210
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section" id="contato">
+  <div class="contact-inner">
+    <span class="sec-label">Contato</span>
+    <h2 class="sec-h2">Pronto para reservar?</h2>
+    <p class="sec-sub">Fale diretamente com Arlei pelo WhatsApp!</p>
+    <a id="contact-wa" href="#" target="_blank" class="wa-btn-big">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Reservar pelo WhatsApp
+    </a>
+    <p style="margin-top:20px"><a href="index.html" style="color:rgba(255,255,255,.7);font-size:14px;text-decoration:none">← Ver todos os sítios</a></p>
+  </div>
+</section>
+
+<footer>
+  <p class="foot-logo" style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:#fff;margin-bottom:8px">Hospeda<span style="color:var(--accent)">Temporada</span></p>
+  <p class="foot-sub" id="foot-sub"></p>
+  <div class="foot-links">
+    <a href="#reservar">Reservar</a>
+    <a href="#galeria">Fotos</a>
+    <a href="#estrutura">Estrutura</a>
+    <a href="#contato">Contato</a>
+    <a href="index.html">Todos os sítios</a>
+  </div>
+  <p class="foot-copy">© 2026 Hospeda Temporada · Proprietário: Arlei</p>
+</footer>
+
+<a id="float-wa" href="#" target="_blank" class="wa-float">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<div class="toast" id="toast"></div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="if(event.target===this)closeLightbox()">
+  <button class="lb-close" onclick="closeLightbox()">✕</button>
+  <div class="lb-img-wrap">
+    <button class="lb-arrow lb-arrow-prev" onclick="lbPrev()">‹</button>
+    <img id="lb-img" src="" alt="">
+    <button class="lb-arrow lb-arrow-next" onclick="lbNext()">›</button>
+  </div>
+  <div class="lb-info">
+    <div class="lb-label" id="lb-label"></div>
+    <div class="lb-desc" id="lb-desc"></div>
+    <div class="lb-counter" id="lb-counter"></div>
+  </div>
+</div>
+
+<!-- DETAIL MODAL -->
+<div class="detail-modal-bg" id="detail-modal" onclick="if(event.target===this)closeDetail()">
+  <div class="detail-modal">
+    <h3>Detalhes da reserva <button class="detail-close" onclick="closeDetail()">✕</button></h3>
+    <div id="detail-content"></div>
+  </div>
+</div>
+
+<script>
+// ── CARREGAR DADOS DO SÍTIO ──
+const OS_KEY = 'hospeda_outros_sitios';
+const OS_DEFAULT = [
+  {nome:"Sítio das Pedras",local:"Guararema, SP",tipo:"🪨 Campo · Casamentos · Retiros",preco:"R$1.800",precoDetalhe:"/ dia (até 30 pessoas)",capa:"https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",features:["🛏️ 4 quartos","🔥 Churrasqueira","🌿 Área verde","💒 Casamentos"],wa:"Olá Arlei! Tenho interesse no Sítio das Pedras em Guararema. Pode me passar informações?",fotos:["https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80","https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80","https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=800&q=80","https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=800&q=80","https://images.unsplash.com/photo-1475924156734-496f6cac6ec1?w=800&q=80"]},
+  {nome:"Sítio Beira Rio",local:"Salesópolis, SP",tipo:"🌊 Rio · Pesca · Família",preco:"R$1.200",precoDetalhe:"/ dia (até 20 pessoas)",capa:"https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800&q=80",features:["🛏️ 3 quartos","🎣 Deck para pesca","🌊 Beira do rio","🌲 Trilhas"],wa:"Olá Arlei! Tenho interesse no Sítio Beira Rio em Salesópolis. Pode me passar informações?",fotos:["https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800&q=80","https://images.unsplash.com/photo-1559827291-72ee739d0d9a?w=800&q=80","https://images.unsplash.com/photo-1439066290691-debb18599def?w=800&q=80","https://images.unsplash.com/photo-1499678329028-101435549a4e?w=800&q=80"]},
+  {nome:"Sítio Alto da Serra",local:"Paraibuna, SP",tipo:"⛰️ Serra · Vista panorâmica · Retiros",preco:"R$2.200",precoDetalhe:"/ dia (até 40 pessoas)",capa:"https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",features:["🛏️ 6 quartos","⛰️ Vista panorâmica","🔥 Lareira","🧘 Retiros"],wa:"Olá Arlei! Tenho interesse no Sítio Alto da Serra em Paraibuna. Pode me passar informações?",fotos:["https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80","https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=800&q=80","https://images.unsplash.com/photo-1516912481808-3406841bd33c?w=800&q=80","https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=800&q=80"]}
+];
+
+function getOutros(){try{const d=localStorage.getItem(OS_KEY);return d?JSON.parse(d):OS_DEFAULT;}catch(e){return OS_DEFAULT;}}
+
+// Get sitio ID from URL
+const params = new URLSearchParams(window.location.search);
+const sitioId = params.get('id') || '';
+const SITIOS = getOutros();
+const SITIO = SITIOS.find(s => slugify(s.nome) === sitioId) || SITIOS[0];
+const WA_NUMBER = '5511941942210';
+const WA_URL = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(SITIO.wa || `Olá Arlei! Tenho interesse no ${SITIO.nome}.`)}`;
+
+function slugify(s){return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'');}
+
+// ── POPULAR PÁGINA ──
+document.getElementById('page-title').textContent = SITIO.nome + ' — Reserva Online';
+document.getElementById('page-desc').content = 'Reserve o ' + SITIO.nome + ' em ' + SITIO.local + '. Calendário integrado.';
+document.getElementById('hero-bg').style.background = `url('${SITIO.capa}') center/cover`;
+document.getElementById('hero-badge').textContent = '📍 ' + SITIO.local;
+document.getElementById('hero-h1').innerHTML = SITIO.nome.replace(/Sítio\s+/, 'Sítio <span>') + '</span>';
+document.getElementById('hero-sub').textContent = SITIO.precoDetalhe ? SITIO.preco + ' ' + SITIO.precoDetalhe : SITIO.tipo;
+document.getElementById('about-title').textContent = SITIO.nome;
+document.getElementById('about-desc').textContent = SITIO.local + ' · ' + (SITIO.tipo || '') + (SITIO.precoDetalhe ? ' · ' + SITIO.preco + ' ' + SITIO.precoDetalhe : '');
+document.getElementById('foot-sub').textContent = SITIO.nome + ' · ' + SITIO.local;
+
+// WA links
+[document.getElementById('nav-wa'), document.getElementById('hero-wa'), document.getElementById('about-wa'), document.getElementById('contact-wa'), document.getElementById('float-wa')].forEach(el => { if(el) el.href = WA_URL; });
+
+// Hero pills (features)
+const pillRow = document.getElementById('hero-pills');
+(SITIO.features || []).forEach(f => { const s = document.createElement('span'); s.className = 'hero-pill'; s.textContent = f; pillRow.appendChild(s); });
+
+// Hero stats
+const stats = document.getElementById('hero-stats');
+const statsData = [{n: SITIO.preco || '—', l: 'diária'}, {n: (SITIO.features || []).length + '+', l: 'comodidades'}, {n: SITIO.local.split(',')[1]?.trim() || 'SP', l: 'estado'}];
+stats.innerHTML = statsData.map(s => `<div class="hstat"><span class="hstat-n">${s.n}</span><span class="hstat-l">${s.l}</span></div>`).join('');
+
+// Mini gallery (first 5 fotos)
+const fotos = SITIO.fotos && SITIO.fotos.length ? SITIO.fotos : [SITIO.capa, SITIO.capa, SITIO.capa, SITIO.capa];
+const miniGallery = document.getElementById('mini-gallery');
+fotos.slice(0, 5).forEach((src, i) => {
+  const img = document.createElement('img');
+  img.src = src; img.alt = SITIO.nome + ' foto ' + (i+1); img.loading = 'lazy';
+  img.onclick = () => document.getElementById('galeria').scrollIntoView({behavior:'smooth'});
+  miniGallery.appendChild(img);
+});
+
+// Gallery full
+const galleryGrid = document.getElementById('gallery-grid');
+fotos.forEach((src, i) => {
+  galleryGrid.innerHTML += `<div class="gallery-item" onclick="openLightbox(${i})">
+    <img class="gallery-img" src="${src}" alt="${SITIO.nome} foto ${i+1}" loading="lazy">
+    <div class="gallery-overlay"><span>${SITIO.nome} · ${SITIO.local}</span></div>
+  </div>`;
+});
+
+// Amenities from features
+const amenGrid = document.getElementById('amenity-grid');
+(SITIO.features || []).forEach(f => {
+  amenGrid.innerHTML += `<div class="amenity-item"><div class="amenity-icon">${f.split(' ')[0]||'🏡'}</div><div class="amenity-name">${f.replace(/^(\S+\s)/,'')}</div></div>`;
+});
+
+// Lightbox
+const LB_IMGS = fotos;
+let lbIdx = 0;
+function openLightbox(idx){ lbIdx = idx; showLb(); }
+function showLb(){
+  document.getElementById('lb-img').src = LB_IMGS[lbIdx];
+  document.getElementById('lb-label').textContent = SITIO.nome + ' — foto ' + (lbIdx+1);
+  document.getElementById('lb-desc').textContent = SITIO.local;
+  document.getElementById('lb-counter').textContent = `${lbIdx+1} / ${LB_IMGS.length}`;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox(){ document.getElementById('lightbox').classList.remove('open'); document.body.style.overflow = ''; }
+function lbPrev(){ lbIdx = (lbIdx-1+LB_IMGS.length)%LB_IMGS.length; showLb(); }
+function lbNext(){ lbIdx = (lbIdx+1)%LB_IMGS.length; showLb(); }
+document.addEventListener('keydown', e => {
+  if(!document.getElementById('lightbox').classList.contains('open')) return;
+  if(e.key==='ArrowLeft') lbPrev();
+  if(e.key==='ArrowRight') lbNext();
+  if(e.key==='Escape') closeLightbox();
+});
+
+// ── RESERVATIONS (per-sitio key) ──
+const SK = 'sitio_res_' + (sitioId || 'outro');
+function getRes(){try{return JSON.parse(localStorage.getItem(SK))||[];}catch(e){return[];}}
+function saveRes(arr){localStorage.setItem(SK,JSON.stringify(arr));}
+function genId(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
+
+// ── CALENDAR ──
+let calDate = new Date();
+let selStart = null, selEnd = null;
+const MONTHS = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+const DAYS_SH = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+
+function getReservedDates(){
+  const res = getRes(); const map = {};
+  res.forEach(r => {
+    let cur = new Date(r.checkin); const end = new Date(r.checkout);
+    while(cur <= end){ const ds = cur.toISOString().split('T')[0]; map[ds]={id:r.id,status:r.status}; cur.setDate(cur.getDate()+1); }
+  });
+  return map;
+}
+
+function renderCal(){
+  const today = new Date(); today.setHours(0,0,0,0);
+  document.getElementById('cal-label').textContent = MONTHS[calDate.getMonth()] + ' ' + calDate.getFullYear();
+  const resMap = getReservedDates();
+  const grid = document.getElementById('cal-grid');
+  grid.innerHTML = DAYS_SH.map(d=>`<div class="cal-head">${d}</div>`).join('');
+  const firstDay = new Date(calDate.getFullYear(), calDate.getMonth(), 1).getDay();
+  for(let i=0;i<firstDay;i++) grid.innerHTML += `<div class="cal-day empty"></div>`;
+  const daysInMonth = new Date(calDate.getFullYear(), calDate.getMonth()+1, 0).getDate();
+  for(let d=1;d<=daysInMonth;d++){
+    const dt = new Date(calDate.getFullYear(), calDate.getMonth(), d);
+    const ds = dt.toISOString().split('T')[0];
+    const isPast = dt < today;
+    const res = resMap[ds];
+    let cls = 'cal-day ';
+    let dot = '', click = '';
+    if(isPast){ cls += 'past'; }
+    else if(res){
+      cls += 'reserved-paid';
+      dot = `<div class="cal-day-dot" style="background:var(--red)"></div>`;
+      click = `onclick="openDetailById('${res.id}')"`;
+    } else {
+      cls += 'free';
+      if(selStart && ds===selStart) cls += ' sel-start';
+      else if(selEnd && ds===selEnd) cls += ' sel-end';
+      else if(selStart && selEnd && ds>selStart && ds<selEnd) cls += ' sel-range';
+      click = `onclick="selectDay('${ds}')"`;
+    }
+    grid.innerHTML += `<div class="${cls}" ${click}>${d}${dot}</div>`;
+  }
+}
+
+function selectDay(ds){
+  if(!selStart||(selStart&&selEnd)){ selStart=ds; selEnd=null; }
+  else if(ds>selStart){
+    selEnd=ds;
+    document.getElementById('disp-ci').textContent=fmtDate(selStart); document.getElementById('disp-ci').classList.remove('empty');
+    document.getElementById('disp-co').textContent=fmtDate(selEnd); document.getElementById('disp-co').classList.remove('empty');
+  } else { selStart=ds; selEnd=null; document.getElementById('disp-ci').textContent=fmtDate(selStart); document.getElementById('disp-ci').classList.remove('empty'); document.getElementById('disp-co').textContent='Selecione no calendário'; document.getElementById('disp-co').classList.add('empty'); }
+  renderCal();
+}
+
+function fmtDate(ds){ if(!ds)return'—'; const[y,m,d]=ds.split('-'); return`${d}/${m}/${y}`; }
+function calPrev(){ calDate.setMonth(calDate.getMonth()-1); renderCal(); }
+function calNext(){ calDate.setMonth(calDate.getMonth()+1); renderCal(); }
+
+// ── PRICE CALC (genérico) ──
+const PRICES = {
+  fds:{ate15:800,ate20:1000,ate25:1200,ate30:1400,mais30:null},
+  feriado2:{ate15:1200,ate20:1500,ate25:1800,ate30:2100,mais30:null},
+  feriado3:{ate15:1600,ate20:2000,ate25:2400,ate30:2800,mais30:null},
+  feriado4:{ate15:2000,ate20:2500,ate25:3000,ate30:3500,mais30:null},
+  evento:{ate15:1500,ate20:1800,ate25:2100,ate30:2400,mais30:null}
+};
+function calcPrice(){
+  const p=document.getElementById('calc-period').value;
+  const g=document.getElementById('calc-guests').value;
+  const pv=document.getElementById('price-value');
+  const pd=document.getElementById('price-detail');
+  const pn=document.getElementById('price-note');
+  const pl=document.querySelector('.price-result-label');
+  if(!p||!g){pv.style.display='none';pd.style.display='none';pn.style.display='none';pl.style.display='block';return;}
+  const v=PRICES[p]&&PRICES[p][g];
+  if(v===null){pv.style.display='none';pd.style.display='none';pn.style.display='none';pl.style.display='block';pl.textContent='Consulte pelo WhatsApp para grupos acima de 30 pessoas';return;}
+  pl.style.display='none';
+  pv.textContent='R$'+v.toLocaleString('pt-BR');pv.style.display='block';
+  pd.textContent='Valores de referência · Confirmar disponibilidade pelo WhatsApp';pd.style.display='block';
+  pn.textContent='+ Taxa de limpeza: R$300 (não inclusa) · Pagamento via PIX';pn.style.display='block';
+}
+
+// ── SUBMIT ──
+function submitReserve(){
+  const name=document.getElementById('f-name').value.trim();
+  const phone=document.getElementById('f-phone').value.trim();
+  const guests=document.getElementById('f-guests').value;
+  const occasion=document.getElementById('f-occasion').value;
+  const obs=document.getElementById('f-obs').value.trim();
+  const email=document.getElementById('f-email').value.trim();
+  if(!name){showToast('Por favor, informe o nome completo.');return;}
+  if(!phone){showToast('Por favor, informe o WhatsApp.');return;}
+  if(!guests){showToast('Por favor, selecione a quantidade de pessoas.');return;}
+  if(!selStart||!selEnd){showToast('Selecione as datas de check-in e check-out no calendário.');return;}
+  const resMap=getReservedDates();
+  let cur=new Date(selStart); const end=new Date(selEnd);
+  while(cur<=end){ const ds=cur.toISOString().split('T')[0]; if(resMap[ds]){showToast('⚠️ Algumas datas já estão reservadas!');return;} cur.setDate(cur.getDate()+1); }
+  const newRes={id:genId(),name,phone,email,guests,occasion,obs,checkin:selStart,checkout:selEnd,status:'pending',createdAt:new Date().toISOString()};
+  const arr=getRes(); arr.push(newRes); saveRes(arr);
+  const msg=encodeURIComponent(`🏡 *Solicitação de Reserva — ${SITIO.nome}*\n\n*Nome:* ${name}\n*WhatsApp:* ${phone}\n*E-mail:* ${email||'Não informado'}\n*Check-in:* ${fmtDate(selStart)}\n*Check-out:* ${fmtDate(selEnd)}\n*Pessoas:* ${guests}\n*Ocasião:* ${occasion}\n*Obs:* ${obs||'—'}\n\nAguardo confirmação! 😊`);
+  window.open(`https://wa.me/${WA_NUMBER}?text=${msg}`,'_blank');
+  selStart=null;selEnd=null;
+  ['f-name','f-phone','f-email','f-obs'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('f-guests').value='';
+  document.getElementById('disp-ci').textContent='Selecione no calendário';document.getElementById('disp-ci').classList.add('empty');
+  document.getElementById('disp-co').textContent='Selecione no calendário';document.getElementById('disp-co').classList.add('empty');
+  renderCal();renderResList();
+  showToast('✅ Solicitação enviada! Aguarde confirmação pelo WhatsApp.',true);
+}
+
+// ── RESERVATIONS LIST ──
+let panelOpen=false;
+function togglePanel(){
+  panelOpen=!panelOpen;
+  document.getElementById('reservations-list').style.display=panelOpen?'block':'none';
+  document.getElementById('toggle-btn').textContent=panelOpen?'▲ Fechar':'▼ Ver';
+  if(panelOpen)renderResList();
+}
+function renderResList(){
+  const arr=getRes(); const el=document.getElementById('reservations-list');
+  if(!arr.length){el.innerHTML=`<div class="no-reservations">Nenhuma reserva registrada ainda.</div>`;return;}
+  el.innerHTML=arr.slice().reverse().map(r=>`
+    <div class="res-item" id="ri-${r.id}">
+      <div class="res-item-top">
+        <div><div class="res-name">${r.name}</div><div class="res-dates">📅 ${fmtDate(r.checkin)} → ${fmtDate(r.checkout)} · ${r.guests}</div></div>
+        <button class="res-badge ${r.status==='paid'?'badge-paid':'badge-pending'}" onclick="toggleStatus('${r.id}')">${r.status==='paid'?'✅ Pago':'⏳ Pendente'}</button>
+      </div>
+      <div class="res-info"><span class="res-info-item">📞 <strong>${r.phone}</strong></span>${r.email?`<span class="res-info-item">📧 <strong>${r.email}</strong></span>`:''}<span class="res-info-item">🎉 <strong>${r.occasion}</strong></span></div>
+      ${r.obs?`<div style="margin-top:8px;font-size:12px;color:var(--mid)">💬 ${r.obs}</div>`:''}
+      <button class="res-delete" onclick="deleteRes('${r.id}')">🗑</button>
+    </div>`).join('');
+}
+function toggleStatus(id){ const arr=getRes(); const r=arr.find(x=>x.id===id); if(!r)return; r.status=r.status==='paid'?'pending':'paid'; saveRes(arr); renderResList(); renderCal(); showToast(r.status==='paid'?'✅ Marcado como Pago':'⏳ Marcado como Pendente',r.status==='paid'); }
+function deleteRes(id){ if(!confirm('Excluir esta reserva?'))return; saveRes(getRes().filter(x=>x.id!==id)); renderResList(); renderCal(); showToast('Reserva excluída.'); }
+
+function openDetailById(id){ const r=getRes().find(x=>x.id===id); if(!r)return; document.getElementById('detail-content').innerHTML=`<div class="detail-row"><strong>Nome</strong><span>${r.name}</span></div><div class="detail-row"><strong>WhatsApp</strong><span>${r.phone}</span></div><div class="detail-row"><strong>Check-in</strong><span>${fmtDate(r.checkin)}</span></div><div class="detail-row"><strong>Check-out</strong><span>${fmtDate(r.checkout)}</span></div><div class="detail-row"><strong>Pessoas</strong><span>${r.guests}</span></div><div class="detail-row"><strong>Ocasião</strong><span>${r.occasion||'—'}</span></div>${r.obs?`<div class="detail-row"><strong>Obs</strong><span>${r.obs}</span></div>`:''}<div class="detail-actions"><button class="btn-pay-toggle ${r.status==='paid'?'btn-mark-pending':'btn-mark-paid'}" onclick="toggleStatus('${r.id}');closeDetail()">${r.status==='paid'?'Marcar como Pendente':'✅ Marcar como Pago'}</button><button class="btn-del-res" onclick="deleteRes('${r.id}');closeDetail()">🗑️ Excluir</button></div>`; document.getElementById('detail-modal').classList.add('open'); document.body.style.overflow='hidden'; }
+function closeDetail(){ document.getElementById('detail-modal').classList.remove('open'); document.body.style.overflow=''; }
+
+function showToast(msg,green=false){ const t=document.getElementById('toast'); t.textContent=msg; t.className='toast show'+(green?' green':''); setTimeout(()=>t.className='toast',3000); }
+function scrollTo(id){ document.getElementById(id)?.scrollIntoView({behavior:'smooth'}); }
+
+renderCal();
+</script>
+</body>
+</html>
