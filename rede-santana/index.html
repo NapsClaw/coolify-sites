@@ -3,1308 +3,567 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rede Santana Combustíveis | 90+ Postos em MG, BA e ES</title>
-  <meta name="description" content="Rede Santana Combustíveis – mais de 90 postos em Minas Gerais, Bahia e Espírito Santo. Gasolina, Diesel S-10 e S-500, atendimento 24h, faturamento para empresas, Wi-Fi grátis.">
+  <title>Rede Santana Combustíveis | +90 Postos em MG, BA e ES</title>
+  <meta name="description" content="Rede Santana Combustíveis – mais de 90 postos em Minas Gerais, Bahia e Espírito Santo. Gasolina, Diesel S-10 e S-500, atendimento 24h, faturamento para empresas.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --navy: #0d1f4e;
-      --navy-dark: #091535;
-      --navy-mid: #132b68;
+      --navy: #0b1e4e;
+      --navy2: #091438;
       --yellow: #f5c400;
-      --yellow-hover: #e0b200;
-      --white: #ffffff;
-      --off-white: #f8f8f6;
-      --gray-light: #e8ecf5;
-      --gray: #6b7280;
-      --text-dark: #111827;
-      --section-pad: 80px 20px;
+      --yellow2: #d9ac00;
+      --white: #fff;
+      --offwhite: #f6f7fb;
+      --gray: #64748b;
+      --lightgray: #e8ecf5;
     }
-
     html { scroll-behavior: smooth; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; color: #1e293b; background: #fff; overflow-x: hidden; }
+    h1,h2,h3,h4 { font-family: 'Sora', sans-serif; line-height: 1.15; }
 
-    body {
-      font-family: 'Plus Jakarta Sans', sans-serif;
-      color: var(--text-dark);
-      background: var(--white);
-      overflow-x: hidden;
+    /* NAV */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: var(--navy2);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 24px; height: 64px;
+      box-shadow: 0 2px 16px rgba(0,0,0,.35);
     }
-
-    h1, h2, h3, h4 {
-      font-family: 'Sora', sans-serif;
-      line-height: 1.2;
+    .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .nav-badge {
+      width: 42px; height: 42px; background: var(--yellow); border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Sora', sans-serif; font-weight: 900; font-size: 17px; color: var(--navy2);
     }
-
-    /* ===== NAVBAR ===== */
-    .navbar {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 1000;
-      background: var(--navy-dark);
-      padding: 0 24px;
-      height: 68px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      box-shadow: 0 2px 20px rgba(0,0,0,0.3);
+    .nav-name { font-family: 'Sora', sans-serif; font-weight: 700; font-size: 15px; color: #fff; line-height: 1.1; }
+    .nav-sub { font-size: 11px; color: var(--yellow); font-weight: 500; }
+    .nav-btn {
+      background: var(--yellow); color: var(--navy2); font-family: 'Sora', sans-serif;
+      font-weight: 700; font-size: 13px; padding: 10px 18px; border-radius: 6px;
+      text-decoration: none; white-space: nowrap; transition: background .2s;
     }
+    .nav-btn:hover { background: var(--yellow2); }
 
-    .navbar-logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      text-decoration: none;
-    }
-
-    .navbar-logo-icon {
-      width: 44px;
-      height: 44px;
-      background: var(--yellow);
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Sora', sans-serif;
-      font-weight: 800;
-      font-size: 18px;
-      color: var(--navy-dark);
-      flex-shrink: 0;
-    }
-
-    .navbar-logo-text {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .navbar-logo-name {
-      font-family: 'Sora', sans-serif;
-      font-weight: 700;
-      font-size: 15px;
-      color: var(--white);
-      line-height: 1.1;
-    }
-
-    .navbar-logo-sub {
-      font-size: 11px;
-      color: var(--yellow);
-      font-weight: 500;
-      letter-spacing: 0.5px;
-    }
-
-    .navbar-cta {
-      background: var(--yellow);
-      color: var(--navy-dark);
-      font-family: 'Sora', sans-serif;
-      font-weight: 700;
-      font-size: 13px;
-      padding: 10px 20px;
-      border-radius: 6px;
-      text-decoration: none;
-      white-space: nowrap;
-      transition: background 0.2s;
-    }
-
-    .navbar-cta:hover { background: var(--yellow-hover); }
-
-    /* ===== HERO ===== */
+    /* HERO */
     .hero {
       min-height: 100vh;
-      background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 50%, #1a3380 100%);
-      display: flex;
-      align-items: center;
-      padding: 100px 20px 60px;
-      position: relative;
-      overflow: hidden;
+      background: var(--navy2);
+      position: relative; overflow: hidden;
+      display: flex; align-items: center;
+      padding: 80px 24px 60px;
     }
-
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: -100px; right: -100px;
-      width: 500px; height: 500px;
-      background: radial-gradient(circle, rgba(245,196,0,0.12) 0%, transparent 70%);
-      pointer-events: none;
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1400&q=80') center/cover no-repeat;
+      opacity: .18;
     }
-
-    .hero::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0;
-      width: 100%; height: 4px;
-      background: var(--yellow);
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(9,20,56,.97) 0%, rgba(11,30,78,.88) 60%, rgba(11,30,78,.7) 100%);
     }
-
-    .hero-pattern {
-      position: absolute;
-      inset: 0;
-      background-image: radial-gradient(rgba(255,255,255,0.03) 1px, transparent 1px);
-      background-size: 32px 32px;
-      pointer-events: none;
+    .hero-bottom-stripe {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 5px; background: var(--yellow);
     }
-
-    .hero-inner {
-      max-width: 700px;
-      margin: 0 auto;
-      text-align: center;
-      position: relative;
-      z-index: 1;
+    .hero-content {
+      position: relative; z-index: 1; max-width: 700px; margin: 0 auto; text-align: center;
     }
-
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(245,196,0,0.15);
-      border: 1px solid rgba(245,196,0,0.3);
-      color: var(--yellow);
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      padding: 8px 16px;
-      border-radius: 100px;
-      margin-bottom: 28px;
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(245,196,0,.12); border: 1px solid rgba(245,196,0,.28);
+      color: var(--yellow); font-size: 12px; font-weight: 700; letter-spacing: 1px;
+      text-transform: uppercase; padding: 7px 16px; border-radius: 100px; margin-bottom: 28px;
     }
-
     .hero-title {
-      font-size: clamp(36px, 8vw, 68px);
-      font-weight: 800;
-      color: var(--white);
-      margin-bottom: 20px;
-      line-height: 1.1;
-    }
-
-    .hero-title span {
-      color: var(--yellow);
-    }
-
-    .hero-subtitle {
-      font-size: clamp(16px, 3vw, 19px);
-      color: rgba(255,255,255,0.75);
-      margin-bottom: 40px;
-      line-height: 1.6;
-      max-width: 560px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .hero-buttons {
-      display: flex;
-      gap: 16px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 56px;
-    }
-
-    .btn-primary {
-      background: var(--yellow);
-      color: var(--navy-dark);
-      font-family: 'Sora', sans-serif;
-      font-weight: 700;
-      font-size: 16px;
-      padding: 16px 32px;
-      border-radius: 8px;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: all 0.2s;
-      min-height: 52px;
-    }
-
-    .btn-primary:hover {
-      background: var(--yellow-hover);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(245,196,0,0.35);
-    }
-
-    .btn-secondary {
-      background: transparent;
-      color: var(--white);
-      font-family: 'Sora', sans-serif;
-      font-weight: 600;
-      font-size: 16px;
-      padding: 16px 32px;
-      border-radius: 8px;
-      text-decoration: none;
-      border: 2px solid rgba(255,255,255,0.3);
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: all 0.2s;
-      min-height: 52px;
-    }
-
-    .btn-secondary:hover {
-      border-color: var(--yellow);
-      color: var(--yellow);
-    }
-
-    .hero-stats {
-      display: flex;
-      justify-content: center;
-      gap: 40px;
-      flex-wrap: wrap;
-    }
-
-    .hero-stat {
-      text-align: center;
-    }
-
-    .hero-stat-number {
-      font-family: 'Sora', sans-serif;
-      font-size: 36px;
-      font-weight: 800;
-      color: var(--yellow);
-      line-height: 1;
-    }
-
-    .hero-stat-label {
-      font-size: 13px;
-      color: rgba(255,255,255,0.6);
-      margin-top: 4px;
-    }
-
-    .hero-stat-divider {
-      width: 1px;
-      background: rgba(255,255,255,0.15);
-      align-self: stretch;
-    }
-
-    /* ===== SECTION GLOBALS ===== */
-    .section-header {
-      text-align: center;
-      margin-bottom: 56px;
-    }
-
-    .section-tag {
-      display: inline-block;
-      background: rgba(13,31,78,0.08);
-      color: var(--navy);
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      padding: 6px 14px;
-      border-radius: 100px;
-      margin-bottom: 16px;
-    }
-
-    .section-tag.yellow {
-      background: rgba(245,196,0,0.15);
-      color: #8a6f00;
-    }
-
-    .section-title {
-      font-size: clamp(28px, 5vw, 42px);
-      font-weight: 800;
-      color: var(--navy-dark);
-      margin-bottom: 16px;
-    }
-
-    .section-subtitle {
-      font-size: 17px;
-      color: var(--gray);
-      max-width: 540px;
-      margin: 0 auto;
-      line-height: 1.7;
-    }
-
-    /* ===== DIFERENCIAIS ===== */
-    .diferenciais {
-      padding: var(--section-pad);
-      background: var(--off-white);
-    }
-
-    .diferenciais-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 24px;
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-
-    .diferencial-card {
-      background: var(--white);
-      border-radius: 16px;
-      padding: 32px 28px;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 4px 16px rgba(0,0,0,0.06);
-      transition: transform 0.2s, box-shadow 0.2s;
-      border-top: 3px solid var(--yellow);
-    }
-
-    .diferencial-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 32px rgba(13,31,78,0.12);
-    }
-
-    .diferencial-icon {
-      width: 52px;
-      height: 52px;
-      background: var(--navy);
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 20px;
-      font-size: 24px;
-    }
-
-    .diferencial-title {
-      font-family: 'Sora', sans-serif;
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--navy-dark);
-      margin-bottom: 10px;
-    }
-
-    .diferencial-desc {
-      font-size: 14px;
-      color: var(--gray);
-      line-height: 1.7;
-    }
-
-    /* ===== SOBRE ===== */
-    .sobre {
-      padding: var(--section-pad);
-      background: var(--white);
-    }
-
-    .sobre-inner {
-      max-width: 900px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
-      align-items: center;
-    }
-
-    .sobre-visual {
-      position: relative;
-    }
-
-    .sobre-visual-card {
-      background: var(--navy);
-      border-radius: 20px;
-      padding: 40px 32px;
-      color: var(--white);
-      text-align: center;
-    }
-
-    .sobre-visual-big {
-      font-family: 'Sora', sans-serif;
-      font-size: 72px;
-      font-weight: 800;
-      color: var(--yellow);
-      line-height: 1;
-    }
-
-    .sobre-visual-label {
-      font-size: 16px;
-      color: rgba(255,255,255,0.7);
-      margin-top: 8px;
-    }
-
-    .sobre-visual-divider {
-      border: none;
-      border-top: 1px solid rgba(255,255,255,0.15);
-      margin: 24px 0;
-    }
-
-    .sobre-visual-stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-
-    .sobre-visual-stat {
-      text-align: center;
-    }
-
-    .sobre-visual-stat-num {
-      font-family: 'Sora', sans-serif;
-      font-size: 28px;
-      font-weight: 800;
-      color: var(--yellow);
-    }
-
-    .sobre-visual-stat-lbl {
-      font-size: 12px;
-      color: rgba(255,255,255,0.6);
-      margin-top: 4px;
-    }
-
-    .sobre-text h2 {
-      font-size: 36px;
-      color: var(--navy-dark);
-      margin-bottom: 20px;
-    }
-
-    .sobre-text p {
-      font-size: 16px;
-      color: #4b5563;
-      line-height: 1.8;
-      margin-bottom: 16px;
-    }
-
-    .sobre-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 24px;
-    }
-
-    .sobre-tag {
-      background: var(--gray-light);
-      color: var(--navy);
-      font-size: 13px;
-      font-weight: 600;
-      padding: 8px 16px;
-      border-radius: 100px;
-    }
-
-    /* ===== COMBUSTÍVEIS ===== */
-    .combustiveis {
-      padding: var(--section-pad);
-      background: var(--navy-dark);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .combustiveis::before {
-      content: '';
-      position: absolute;
-      top: -50%; right: -10%;
-      width: 600px; height: 600px;
-      background: radial-gradient(circle, rgba(245,196,0,0.06) 0%, transparent 70%);
-      pointer-events: none;
-    }
-
-    .combustiveis .section-title { color: var(--white); }
-    .combustiveis .section-subtitle { color: rgba(255,255,255,0.6); }
-    .combustiveis .section-tag { background: rgba(245,196,0,0.15); color: var(--yellow); }
-
-    .combustiveis-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 20px;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .combustivel-card {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 16px;
-      padding: 32px 24px;
-      text-align: center;
-      transition: all 0.2s;
-    }
-
-    .combustivel-card:hover {
-      background: rgba(255,255,255,0.08);
-      border-color: var(--yellow);
-      transform: translateY(-4px);
-    }
-
-    .combustivel-icon {
-      font-size: 40px;
-      margin-bottom: 16px;
-      display: block;
-    }
-
-    .combustivel-name {
-      font-family: 'Sora', sans-serif;
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--white);
-      margin-bottom: 8px;
-    }
-
-    .combustivel-desc {
-      font-size: 13px;
-      color: rgba(255,255,255,0.55);
-      line-height: 1.6;
-    }
-
-    /* ===== SERVIÇOS / ESTRUTURA ===== */
-    .estrutura {
-      padding: var(--section-pad);
-      background: var(--off-white);
-    }
-
-    .estrutura-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-      gap: 16px;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .estrutura-item {
-      background: var(--white);
-      border-radius: 12px;
-      padding: 24px 16px;
-      text-align: center;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.06);
-      transition: transform 0.2s;
-    }
-
-    .estrutura-item:hover { transform: translateY(-3px); }
-
-    .estrutura-item-icon {
-      font-size: 32px;
-      margin-bottom: 12px;
-    }
-
-    .estrutura-item-label {
-      font-family: 'Sora', sans-serif;
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--navy-dark);
-    }
-
-    /* ===== COBERTURA ===== */
-    .cobertura {
-      padding: var(--section-pad);
-      background: var(--white);
-    }
-
-    .estados-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 24px;
-      max-width: 900px;
-      margin: 0 auto 48px;
-    }
-
-    .estado-card {
-      border-radius: 16px;
-      padding: 32px 24px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .estado-card.primary {
-      background: var(--navy);
-      color: var(--white);
-    }
-
-    .estado-card.secondary {
-      background: var(--gray-light);
-      color: var(--navy-dark);
-    }
-
-    .estado-sigla {
-      font-family: 'Sora', sans-serif;
-      font-size: 48px;
-      font-weight: 800;
-      color: var(--yellow);
-      line-height: 1;
-      margin-bottom: 8px;
-    }
-
-    .estado-card.secondary .estado-sigla { color: var(--navy); }
-
-    .estado-nome {
-      font-size: 14px;
-      color: rgba(255,255,255,0.65);
-      margin-bottom: 16px;
-    }
-
-    .estado-card.secondary .estado-nome { color: var(--gray); }
-
-    .estado-count {
-      font-family: 'Sora', sans-serif;
-      font-size: 24px;
-      font-weight: 700;
-      color: var(--white);
-    }
-
-    .estado-card.secondary .estado-count { color: var(--navy-dark); }
-
-    .estado-label {
-      font-size: 12px;
-      color: rgba(255,255,255,0.55);
-    }
-
-    .estado-card.secondary .estado-label { color: var(--gray); }
-
-    /* ===== FATURAMENTO ===== */
-    .faturamento {
-      padding: var(--section-pad);
-      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
-    }
-
-    .faturamento .section-title { color: var(--white); }
-    .faturamento .section-subtitle { color: rgba(255,255,255,0.65); }
-
-    .faturamento-box {
-      max-width: 720px;
-      margin: 0 auto;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 20px;
-      padding: 40px 36px;
-    }
-
-    .faturamento-items {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      margin-bottom: 36px;
-    }
-
-    .faturamento-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 14px;
-    }
-
-    .fat-check {
-      width: 28px;
-      height: 28px;
-      background: var(--yellow);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      flex-shrink: 0;
-      margin-top: 2px;
-    }
-
-    .fat-text strong {
-      font-family: 'Sora', sans-serif;
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--white);
-      display: block;
-      margin-bottom: 2px;
-    }
-
-    .fat-text span {
-      font-size: 13px;
-      color: rgba(255,255,255,0.55);
-    }
-
-    .faturamento-cta {
-      text-align: center;
-    }
-
-    /* ===== CONTATO ===== */
-    .contato {
-      padding: var(--section-pad);
-      background: var(--off-white);
-    }
-
-    .contato-inner {
-      max-width: 700px;
-      margin: 0 auto;
-      text-align: center;
-    }
-
-    .contato-card {
-      background: var(--white);
-      border-radius: 20px;
-      padding: 48px 40px;
-      box-shadow: 0 4px 32px rgba(13,31,78,0.10);
-      margin-top: 40px;
-    }
-
-    .contato-wpp {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 16px;
-      background: #25D366;
-      color: var(--white);
-      font-family: 'Sora', sans-serif;
-      font-weight: 700;
-      font-size: 18px;
-      padding: 20px 40px;
-      border-radius: 12px;
-      text-decoration: none;
+      font-size: clamp(40px, 9vw, 76px); font-weight: 900; color: #fff;
+      margin-bottom: 8px; letter-spacing: -1px;
+    }
+    .hero-title2 {
+      font-size: clamp(28px, 6vw, 52px); font-weight: 700; color: var(--yellow);
       margin-bottom: 24px;
-      transition: all 0.2s;
-      min-height: 64px;
-      width: 100%;
-      justify-content: center;
     }
-
-    .contato-wpp:hover {
-      background: #1ebe5b;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(37,211,102,0.35);
+    .hero-desc {
+      font-size: clamp(15px, 2.5vw, 18px); color: rgba(255,255,255,.72);
+      line-height: 1.7; margin-bottom: 40px; max-width: 580px; margin-left: auto; margin-right: auto;
     }
+    .hero-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 52px; }
+    .btn-hero {
+      background: var(--yellow); color: var(--navy2); font-family: 'Sora', sans-serif;
+      font-weight: 700; font-size: 16px; padding: 16px 32px; border-radius: 8px;
+      text-decoration: none; display: inline-flex; align-items: center; gap: 9px;
+      transition: all .2s; min-height: 52px;
+    }
+    .btn-hero:hover { background: var(--yellow2); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(245,196,0,.3); }
+    .btn-outline {
+      background: transparent; color: #fff; font-family: 'Sora', sans-serif;
+      font-weight: 600; font-size: 15px; padding: 16px 28px; border-radius: 8px;
+      border: 2px solid rgba(255,255,255,.3); text-decoration: none;
+      display: inline-flex; align-items: center; gap: 8px; transition: all .2s; min-height: 52px;
+    }
+    .btn-outline:hover { border-color: var(--yellow); color: var(--yellow); }
+    .hero-stats { display: flex; justify-content: center; gap: 36px; flex-wrap: wrap; }
+    .hstat { text-align: center; }
+    .hstat-n { font-family: 'Sora', sans-serif; font-size: 38px; font-weight: 900; color: var(--yellow); line-height: 1; }
+    .hstat-l { font-size: 12px; color: rgba(255,255,255,.55); margin-top: 4px; letter-spacing: .5px; }
+    .hstat-div { width: 1px; background: rgba(255,255,255,.12); align-self: stretch; }
 
-    .contato-info {
-      display: flex;
-      flex-direction: column;
+    /* SECTIONS */
+    .sec { padding: 80px 24px; }
+    .sec-alt { background: var(--offwhite); }
+    .sec-dark { background: var(--navy2); }
+    .sec-header { text-align: center; margin-bottom: 52px; }
+    .sec-tag {
+      display: inline-block; background: rgba(11,30,78,.08); color: var(--navy);
+      font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+      padding: 6px 14px; border-radius: 100px; margin-bottom: 14px;
+    }
+    .sec-tag-y { background: rgba(245,196,0,.15); color: #7a6000; }
+    .sec-title { font-size: clamp(26px, 5vw, 40px); font-weight: 800; color: var(--navy2); margin-bottom: 14px; }
+    .sec-title-w { color: #fff; }
+    .sec-sub { font-size: 16px; color: var(--gray); max-width: 520px; margin: 0 auto; line-height: 1.7; }
+    .sec-sub-w { color: rgba(255,255,255,.6); }
+
+    /* DIFERENCIAIS */
+    .cards3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 22px; max-width: 960px; margin: 0 auto; }
+    .card {
+      background: #fff; border-radius: 16px; padding: 30px 26px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.06), 0 4px 16px rgba(0,0,0,.07);
+      border-top: 3px solid var(--yellow); transition: transform .2s, box-shadow .2s;
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(11,30,78,.13); }
+    .card-icon {
+      width: 50px; height: 50px; background: var(--navy); border-radius: 12px;
+      display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 18px;
+    }
+    .card-title { font-family: 'Sora', sans-serif; font-size: 17px; font-weight: 700; color: var(--navy2); margin-bottom: 8px; }
+    .card-desc { font-size: 14px; color: var(--gray); line-height: 1.7; }
+
+    /* SOBRE */
+    .sobre-wrap { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+    .sobre-visual {
+      background: var(--navy); border-radius: 20px; padding: 40px 32px; text-align: center; color: #fff;
+    }
+    .sob-big { font-family: 'Sora', sans-serif; font-size: 80px; font-weight: 900; color: var(--yellow); line-height: 1; }
+    .sob-lbl { font-size: 15px; color: rgba(255,255,255,.65); margin-top: 6px; }
+    .sob-hr { border: none; border-top: 1px solid rgba(255,255,255,.12); margin: 24px 0; }
+    .sob-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .sob-stat-n { font-family: 'Sora', sans-serif; font-size: 28px; font-weight: 800; color: var(--yellow); }
+    .sob-stat-l { font-size: 11px; color: rgba(255,255,255,.55); margin-top: 2px; }
+    .sobre-text .sec-tag { margin-bottom: 12px; }
+    .sobre-text h2 { font-size: 34px; font-weight: 800; color: var(--navy2); margin-bottom: 18px; }
+    .sobre-text p { font-size: 15px; color: #475569; line-height: 1.8; margin-bottom: 14px; }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+    .tag { background: var(--lightgray); color: var(--navy); font-size: 12px; font-weight: 600; padding: 6px 14px; border-radius: 100px; }
+
+    /* FOTOS GALERIA */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
       gap: 12px;
-      margin-top: 24px;
-    }
-
-    .contato-info-item {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      font-size: 15px;
-      color: var(--gray);
-    }
-
-    .contato-info-item span { color: var(--navy); font-weight: 600; }
-
-    /* ===== FOOTER ===== */
-    .footer {
-      background: var(--navy-dark);
-      color: rgba(255,255,255,0.5);
-      padding: 40px 24px;
-      text-align: center;
-    }
-
-    .footer-logo {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      margin-bottom: 20px;
-    }
-
-    .footer-logo-badge {
-      width: 40px; height: 40px;
-      background: var(--yellow);
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Sora', sans-serif;
-      font-weight: 800;
-      font-size: 16px;
-      color: var(--navy-dark);
-    }
-
-    .footer-logo-name {
-      font-family: 'Sora', sans-serif;
-      font-weight: 700;
-      font-size: 16px;
-      color: var(--white);
-    }
-
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      gap: 24px;
-      flex-wrap: wrap;
-      margin-bottom: 20px;
-      font-size: 13px;
-    }
-
-    .footer-links a {
-      color: rgba(255,255,255,0.5);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
-    .footer-links a:hover { color: var(--yellow); }
-
-    .footer-copy { font-size: 12px; }
-
-    /* ===== GALERIA ===== */
-    .galeria {
-      padding: var(--section-pad);
-      background: var(--white);
-    }
-
-    .galeria-scroll {
-      display: flex;
-      gap: 16px;
-      overflow-x: auto;
-      padding-bottom: 12px;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-      max-width: 1000px;
+      max-width: 960px;
       margin: 0 auto;
     }
-
-    .galeria-scroll::-webkit-scrollbar { height: 4px; }
-    .galeria-scroll::-webkit-scrollbar-track { background: var(--gray-light); border-radius: 4px; }
-    .galeria-scroll::-webkit-scrollbar-thumb { background: var(--navy); border-radius: 4px; }
-
-    .galeria-item {
-      flex: 0 0 280px;
-      height: 200px;
-      border-radius: 12px;
-      overflow: hidden;
-      scroll-snap-align: start;
+    .gallery-item {
+      border-radius: 12px; overflow: hidden;
+      aspect-ratio: 4/3; background: var(--lightgray);
       position: relative;
-      background: var(--gray-light);
     }
-
-    .galeria-item img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.3s;
+    .gallery-item img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform .35s;
     }
+    .gallery-item:hover img { transform: scale(1.06); }
+    .gallery-item.tall { grid-row: span 2; aspect-ratio: auto; }
 
-    .galeria-item:hover img { transform: scale(1.05); }
+    /* COMBUSTÍVEIS */
+    .fuel-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px,1fr)); gap: 18px; max-width: 900px; margin: 0 auto; }
+    .fuel-card {
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
+      border-radius: 16px; padding: 28px 22px; text-align: center; transition: all .2s;
+    }
+    .fuel-card:hover { background: rgba(255,255,255,.1); border-color: var(--yellow); transform: translateY(-4px); }
+    .fuel-icon { font-size: 38px; margin-bottom: 14px; display: block; }
+    .fuel-name { font-family: 'Sora', sans-serif; font-size: 19px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+    .fuel-desc { font-size: 13px; color: rgba(255,255,255,.52); line-height: 1.6; }
 
+    /* ESTRUTURA */
+    .infra-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px,1fr)); gap: 14px; max-width: 900px; margin: 0 auto; }
+    .infra-item {
+      background: #fff; border-radius: 12px; padding: 22px 14px; text-align: center;
+      box-shadow: 0 1px 4px rgba(0,0,0,.06); transition: transform .2s;
+    }
+    .infra-item:hover { transform: translateY(-3px); }
+    .infra-icon { font-size: 30px; margin-bottom: 10px; }
+    .infra-lbl { font-family: 'Sora', sans-serif; font-size: 13px; font-weight: 600; color: var(--navy2); }
+
+    /* ESTADOS */
+    .estados { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px,1fr)); gap: 20px; max-width: 900px; margin: 0 auto 44px; }
+    .estado-card { border-radius: 16px; padding: 30px 22px; text-align: center; }
+    .ec-primary { background: var(--navy); color: #fff; }
+    .ec-secondary { background: var(--lightgray); color: var(--navy2); }
+    .ec-sigla { font-family: 'Sora', sans-serif; font-size: 52px; font-weight: 900; color: var(--yellow); line-height: 1; margin-bottom: 6px; }
+    .ec-secondary .ec-sigla { color: var(--navy); }
+    .ec-nome { font-size: 13px; margin-bottom: 14px; }
+    .ec-primary .ec-nome { color: rgba(255,255,255,.6); }
+    .ec-secondary .ec-nome { color: var(--gray); }
+    .ec-cidades { font-family: 'Sora', sans-serif; font-size: 13px; font-weight: 600; }
+    .ec-primary .ec-cidades { color: #fff; }
+    .ec-secondary .ec-cidades { color: var(--navy2); }
+
+    /* FATURAMENTO */
+    .fat-box {
+      max-width: 720px; margin: 0 auto;
+      background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12);
+      border-radius: 20px; padding: 40px 36px;
+    }
+    .fat-items { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 32px; }
+    .fat-item { display: flex; align-items: flex-start; gap: 12px; }
+    .fat-check { width: 26px; height: 26px; background: var(--yellow); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; flex-shrink: 0; margin-top: 2px; }
+    .fat-strong { font-family: 'Sora', sans-serif; font-size: 14px; font-weight: 700; color: #fff; display: block; margin-bottom: 2px; }
+    .fat-small { font-size: 12px; color: rgba(255,255,255,.5); }
+
+    /* CONTATO */
+    .contato-box { max-width: 640px; margin: 0 auto; }
+    .contato-card { background: #fff; border-radius: 20px; padding: 44px 36px; box-shadow: 0 4px 32px rgba(11,30,78,.1); margin-top: 36px; }
+    .wpp-btn {
+      display: flex; align-items: center; justify-content: center; gap: 14px;
+      background: #25D366; color: #fff; font-family: 'Sora', sans-serif;
+      font-weight: 700; font-size: 17px; padding: 18px 36px; border-radius: 12px;
+      text-decoration: none; width: 100%; min-height: 62px; margin-bottom: 20px;
+      transition: all .2s;
+    }
+    .wpp-btn:hover { background: #1ebe5b; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,211,102,.35); }
+    .contato-info { display: flex; flex-direction: column; gap: 10px; }
+    .ci { display: flex; align-items: center; justify-content: center; gap: 9px; font-size: 14px; color: var(--gray); }
+    .ci strong { color: var(--navy); }
+
+    /* FOOTER */
+    footer { background: var(--navy2); padding: 36px 24px; text-align: center; }
+    .ft-brand { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 16px; }
+    .ft-badge { width: 38px; height: 38px; background: var(--yellow); border-radius: 7px; display: flex; align-items: center; justify-content: center; font-family: 'Sora', sans-serif; font-weight: 900; font-size: 15px; color: var(--navy2); }
+    .ft-name { font-family: 'Sora', sans-serif; font-weight: 700; font-size: 15px; color: #fff; }
+    .ft-slogan { font-size: 13px; font-style: italic; color: rgba(255,255,255,.35); margin-bottom: 14px; }
+    .ft-links { display: flex; justify-content: center; gap: 22px; flex-wrap: wrap; margin-bottom: 16px; }
+    .ft-links a { color: rgba(255,255,255,.45); font-size: 13px; text-decoration: none; transition: color .2s; }
+    .ft-links a:hover { color: var(--yellow); }
+    .ft-copy { font-size: 11px; color: rgba(255,255,255,.25); }
+
+    /* FLOAT WPP */
+    .wpp-float {
+      position: fixed; bottom: 22px; right: 20px; z-index: 9999;
+      background: #25D366; border-radius: 50%; width: 60px; height: 60px;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,.5); text-decoration: none;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .wpp-float:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(37,211,102,.65); }
+    .wpp-float svg { width: 30px; height: 30px; fill: white; }
+
+    /* RESPONSIVE */
     @media (max-width: 768px) {
-      .galeria-item { flex: 0 0 240px; height: 170px; }
+      .sec { padding: 60px 20px; }
+      .nav-name, .nav-sub { display: none; }
+      .sobre-wrap { grid-template-columns: 1fr; gap: 32px; }
+      .sobre-text h2 { font-size: 26px; }
+      .fat-items { grid-template-columns: 1fr; }
+      .fat-box { padding: 28px 22px; }
+      .contato-card { padding: 28px 22px; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      .gallery-item.tall { grid-row: span 1; aspect-ratio: 4/3; }
+      .btn-hero, .btn-outline { width: 100%; justify-content: center; }
+      .hstat-div { display: none; }
+      .hero-stats { gap: 20px; }
     }
-
-    /* ===== FLOATING WHATSAPP ===== */
-    .whatsapp-float {
-      position: fixed;
-      bottom: 24px; right: 20px;
-      z-index: 9999;
-      background: #25D366;
-      border-radius: 50%;
-      width: 60px; height: 60px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 20px rgba(37,211,102,0.45);
-      text-decoration: none;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    .whatsapp-float:hover {
-      transform: scale(1.1);
-      box-shadow: 0 6px 28px rgba(37,211,102,0.6);
-    }
-
-    .whatsapp-float svg {
-      width: 32px; height: 32px;
-      fill: white;
-    }
-
-    /* ===== RESPONSIVE ===== */
-    @media (max-width: 768px) {
-      :root { --section-pad: 60px 20px; }
-
-      .navbar-logo-text { display: none; }
-      .navbar-logo-icon { width: 40px; height: 40px; font-size: 16px; }
-
-      .hero { padding: 88px 20px 48px; min-height: auto; }
-      .hero-stat-divider { display: none; }
-      .hero-stats { gap: 24px; }
-      .hero-stat-number { font-size: 28px; }
-
-      .sobre-inner {
-        grid-template-columns: 1fr;
-        gap: 36px;
-      }
-
-      .sobre-text h2 { font-size: 28px; }
-
-      .faturamento-items { grid-template-columns: 1fr; }
-      .faturamento-box { padding: 28px 24px; }
-
-      .contato-card { padding: 32px 24px; }
-      .contato-wpp { font-size: 16px; padding: 18px 24px; }
-
-      .diferenciais-grid { grid-template-columns: 1fr; }
-      .estrutura-grid { grid-template-columns: repeat(2, 1fr); }
-      .estados-grid { grid-template-columns: 1fr; }
-
-      .btn-primary, .btn-secondary {
-        width: 100%;
-        justify-content: center;
-      }
-    }
-
     @media (max-width: 480px) {
-      .hero-title { font-size: 32px; }
-      .hero-subtitle { font-size: 15px; }
-      .estrutura-grid { grid-template-columns: repeat(2, 1fr); }
+      .gallery-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+      .infra-grid { grid-template-columns: repeat(2,1fr); }
     }
   </style>
 </head>
 <body>
 
-  <!-- NAVBAR -->
-  <nav class="navbar">
-    <a href="#" class="navbar-logo">
-      <div class="navbar-logo-icon">RS</div>
-      <div class="navbar-logo-text">
-        <span class="navbar-logo-name">Rede Santana</span>
-        <span class="navbar-logo-sub">Combustíveis</span>
+<nav class="nav">
+  <a href="#" class="nav-brand">
+    <div class="nav-badge">RS</div>
+    <div>
+      <div class="nav-name">Rede Santana</div>
+      <div class="nav-sub">Combustíveis</div>
+    </div>
+  </a>
+  <a href="https://wa.me/5531998402667" target="_blank" rel="noopener" class="nav-btn">📍 Encontrar Posto</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-bottom-stripe"></div>
+  <div class="hero-content">
+    <div class="hero-tag">⛽ +90 postos · MG · BA · ES</div>
+    <h1 class="hero-title">Abasteça</h1>
+    <h2 class="hero-title2">Confiança.</h2>
+    <p class="hero-desc">
+      A Rede Santana Combustíveis é uma rede em expansão, com mais de 90 unidades estrategicamente localizadas nas principais rodovias do Brasil. Presença forte, estrutura completa e atendimento 24 horas.
+    </p>
+    <div class="hero-btns">
+      <a href="https://wa.me/5531998402667" target="_blank" rel="noopener" class="btn-hero">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Falar com a Rede
+      </a>
+      <a href="#postos" class="btn-outline">📍 Ver Postos</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hstat"><div class="hstat-n">90+</div><div class="hstat-l">Postos</div></div>
+      <div class="hstat-div"></div>
+      <div class="hstat"><div class="hstat-n">24h</div><div class="hstat-l">Atendimento</div></div>
+      <div class="hstat-div"></div>
+      <div class="hstat"><div class="hstat-n">3</div><div class="hstat-l">Estados</div></div>
+      <div class="hstat-div"></div>
+      <div class="hstat"><div class="hstat-n">NF</div><div class="hstat-l">Faturamento</div></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- DIFERENCIAIS -->
+<section class="sec sec-alt">
+  <div class="sec-header">
+    <div class="sec-tag">Por que a Rede Santana</div>
+    <h2 class="sec-title">Qualidade em cada parada</h2>
+    <p class="sec-sub">Estrutura completa para motoristas, caminhoneiros e frotas em toda a rede.</p>
+  </div>
+  <div class="cards3">
+    <div class="card">
+      <div class="card-icon">🕐</div>
+      <div class="card-title">Atendimento 24 Horas</div>
+      <p class="card-desc">Todos os postos da rede funcionam 24 horas por dia, todos os dias — porque sua jornada não para, nós também não.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">📄</div>
+      <div class="card-title">Faturamento para Empresa</div>
+      <p class="card-desc">Emissão de nota fiscal em todos os postos. Controle e praticidade para transportadoras e frotas de qualquer porte.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">📶</div>
+      <div class="card-title">Wi-Fi Gratuito</div>
+      <p class="card-desc">Internet gratuita em todas as unidades. Conectividade real enquanto você abastece ou descansa na estrada.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🚗</div>
+      <div class="card-title">Estacionamento</div>
+      <p class="card-desc">Ampla área de estacionamento para veículos leves e pesados. Conforto e segurança em toda a rede.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🚻</div>
+      <div class="card-title">Sanitários</div>
+      <p class="card-desc">Banheiros limpos e bem cuidados em todas as unidades. Porque uma boa parada vai muito além do combustível.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">⚙️</div>
+      <div class="card-title">Calibrador</div>
+      <p class="card-desc">Serviço de calibragem disponível nos postos da rede. Segurança nas estradas começa com os pneus certos.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section class="sec">
+  <div class="sobre-wrap">
+    <div class="sobre-visual">
+      <div class="sob-big">90+</div>
+      <div class="sob-lbl">postos em operação</div>
+      <hr class="sob-hr">
+      <div class="sob-grid">
+        <div><div class="sob-stat-n">3</div><div class="sob-stat-l">estados</div></div>
+        <div><div class="sob-stat-n">24h</div><div class="sob-stat-l">operação</div></div>
+        <div><div class="sob-stat-n">NF</div><div class="sob-stat-l">faturamento</div></div>
+        <div><div class="sob-stat-n">4</div><div class="sob-stat-l">combustíveis</div></div>
       </div>
+    </div>
+    <div class="sobre-text">
+      <div class="sec-tag">Sobre a Rede</div>
+      <h2>Uma rede construída na estrada</h2>
+      <p>A Rede Santana Combustíveis é uma rede em expansão, com identidade forte e crescimento contínuo. Com mais de 90 unidades estrategicamente localizadas nas principais rodovias do Brasil, nos consolidamos como referência no setor.</p>
+      <p>Destaca-se pela presença estratégica, estrutura completa e compromisso com qualidade, confiança e atendimento em Minas Gerais, Bahia e Espírito Santo.</p>
+      <div class="tags">
+        <span class="tag">Gasolina</span>
+        <span class="tag">Diesel S-10</span>
+        <span class="tag">Diesel S-500</span>
+        <span class="tag">Etanol</span>
+        <span class="tag">Faturamento NF</span>
+        <span class="tag">Frotas</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALERIA DE FOTOS -->
+<section class="sec sec-alt">
+  <div class="sec-header">
+    <div class="sec-tag">Nossas Unidades</div>
+    <h2 class="sec-title">Postos em todo o caminho</h2>
+    <p class="sec-sub">Estrutura moderna e completa — de rodovias federais a centros urbanos em 3 estados.</p>
+  </div>
+  <div class="gallery-grid">
+    <div class="gallery-item tall">
+      <img src="https://images.unsplash.com/photo-1609205807107-2b5cc87c68b9?w=600&q=80" alt="Posto de combustível Rede Santana" loading="lazy">
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Abastecimento Rede Santana" loading="lazy">
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1545260022-5a7c7eca4f38?w=600&q=80" alt="Pista de abastecimento" loading="lazy">
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&q=80" alt="Rodovia Rede Santana" loading="lazy">
+    </div>
+    <div class="gallery-item">
+      <img src="https://images.unsplash.com/photo-1631549916768-4119b2e5f926?w=600&q=80" alt="Caminhão abastecendo" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<!-- COMBUSTÍVEIS -->
+<section class="sec sec-dark">
+  <div class="sec-header">
+    <div class="sec-tag sec-tag-y">Nossos Produtos</div>
+    <h2 class="sec-title sec-title-w">Combustíveis para cada necessidade</h2>
+    <p class="sec-sub sec-sub-w">Da gasolina ao diesel de alta performance — atendemos veículos leves, pesados e frotas.</p>
+  </div>
+  <div class="fuel-grid">
+    <div class="fuel-card">
+      <span class="fuel-icon">⛽</span>
+      <div class="fuel-name">Gasolina</div>
+      <p class="fuel-desc">Combustível de qualidade para veículos leves. Disponível em todos os postos da rede.</p>
+    </div>
+    <div class="fuel-card">
+      <span class="fuel-icon">🚛</span>
+      <div class="fuel-name">Diesel S-10</div>
+      <p class="fuel-desc">Diesel de baixo enxofre para veículos pesados modernos. Mais potência, menos emissões.</p>
+    </div>
+    <div class="fuel-card">
+      <span class="fuel-icon">🏭</span>
+      <div class="fuel-name">Diesel S-500</div>
+      <p class="fuel-desc">Para máquinas agrícolas e veículos mais antigos. Confiabilidade testada na estrada.</p>
+    </div>
+    <div class="fuel-card">
+      <span class="fuel-icon">🌿</span>
+      <div class="fuel-name">Etanol</div>
+      <p class="fuel-desc">Disponível em unidades selecionadas. Combustível renovável e mais sustentável.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ESTRUTURA -->
+<section class="sec sec-alt">
+  <div class="sec-header">
+    <div class="sec-tag">Estrutura</div>
+    <h2 class="sec-title">Tudo que você precisa em uma parada</h2>
+    <p class="sec-sub">Infraestrutura completa em toda a rede para tornar sua parada mais cômoda e segura.</p>
+  </div>
+  <div class="infra-grid">
+    <div class="infra-item"><div class="infra-icon">🕐</div><div class="infra-lbl">Aberto 24h</div></div>
+    <div class="infra-item"><div class="infra-icon">📄</div><div class="infra-lbl">Faturamento NF</div></div>
+    <div class="infra-item"><div class="infra-icon">📶</div><div class="infra-lbl">Wi-Fi Grátis</div></div>
+    <div class="infra-item"><div class="infra-icon">🚗</div><div class="infra-lbl">Estacionamento</div></div>
+    <div class="infra-item"><div class="infra-icon">🚻</div><div class="infra-lbl">Banheiro</div></div>
+    <div class="infra-item"><div class="infra-icon">⚙️</div><div class="infra-lbl">Calibrador</div></div>
+  </div>
+</section>
+
+<!-- POSTOS / COBERTURA -->
+<section class="sec" id="postos">
+  <div class="sec-header">
+    <div class="sec-tag">Cobertura</div>
+    <h2 class="sec-title">Presença em 3 estados</h2>
+    <p class="sec-sub">Com +90 postos em MG, BA e ES — nas rodovias federais e nas cidades.</p>
+  </div>
+  <div class="estados">
+    <div class="estado-card ec-primary">
+      <div class="ec-sigla">MG</div>
+      <div class="ec-nome">Minas Gerais</div>
+      <div class="ec-cidades">80+ postos<br>Principal estado da rede</div>
+    </div>
+    <div class="estado-card ec-secondary">
+      <div class="ec-sigla">BA</div>
+      <div class="ec-nome">Bahia</div>
+      <div class="ec-cidades">Eunápolis · Irajuba<br>Mucuri · Planalto · Poções</div>
+    </div>
+    <div class="estado-card ec-secondary">
+      <div class="ec-sigla">ES</div>
+      <div class="ec-nome">Espírito Santo</div>
+      <div class="ec-cidades">Serra · São Mateus<br>João Neiva · BR-101</div>
+    </div>
+  </div>
+  <div style="text-align:center">
+    <a href="https://wa.me/5531998402667" target="_blank" rel="noopener" class="btn-hero" style="display:inline-flex">
+      📍 Localizar o posto mais próximo
     </a>
-    <a href="https://wa.me/5531998402667" target="_blank" rel="noopener" class="navbar-cta">
-      📍 Encontrar Posto
-    </a>
-  </nav>
+  </div>
+</section>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-pattern"></div>
-    <div class="hero-inner">
-      <div class="hero-badge">
-        <span>⛽</span>
-        <span>+90 postos em MG, BA e ES</span>
-      </div>
-      <h1 class="hero-title">
-        Abasteça<br><span>Confiança.</span>
-      </h1>
-      <p class="hero-subtitle">
-        A Rede Santana Combustíveis é uma rede em expansão, com mais de 90 unidades presentes em Minas Gerais, Bahia e Espírito Santo — estrategicamente localizadas nas principais rodovias do Brasil.
-      </p>
-      <div class="hero-buttons">
-        <a href="https://wa.me/5531998402667" target="_blank" rel="noopener" class="btn-primary">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          Falar com a Rede
-        </a>
-        <a href="#cobertura" class="btn-secondary">
-          📍 Ver Postos
-        </a>
-      </div>
-      <div class="hero-stats">
-        <div class="hero-stat">
-          <div class="hero-stat-number">90+</div>
-          <div class="hero-stat-label">Postos</div>
-        </div>
-        <div class="hero-stat-divider"></div>
-        <div class="hero-stat">
-          <div class="hero-stat-number">24h</div>
-          <div class="hero-stat-label">Atendimento</div>
-        </div>
-        <div class="hero-stat-divider"></div>
-        <div class="hero-stat">
-          <div class="hero-stat-number">3</div>
-          <div class="hero-stat-label">Estados</div>
-        </div>
-        <div class="hero-stat-divider"></div>
-        <div class="hero-stat">
-          <div class="hero-stat-number">NF</div>
-          <div class="hero-stat-label">Faturamento</div>
-        </div>
-      </div>
+<!-- FATURAMENTO -->
+<section class="sec sec-dark">
+  <div class="sec-header">
+    <div class="sec-tag sec-tag-y">Para Empresas</div>
+    <h2 class="sec-title sec-title-w">Sua frota abastecida com nota fiscal</h2>
+    <p class="sec-sub sec-sub-w">Faturamento disponível em todos os postos. Controle real para transportadoras e frotas corporativas.</p>
+  </div>
+  <div class="fat-box">
+    <div class="fat-items">
+      <div class="fat-item"><div class="fat-check">✓</div><div><strong class="fat-strong">Nota Fiscal garantida</strong><span class="fat-small">Em todos os postos da rede</span></div></div>
+      <div class="fat-item"><div class="fat-check">✓</div><div><strong class="fat-strong">Atendimento 24h</strong><span class="fat-small">Para frotas que não param</span></div></div>
+      <div class="fat-item"><div class="fat-check">✓</div><div><strong class="fat-strong">Rede ampla</strong><span class="fat-small">90+ postos em 3 estados</span></div></div>
+      <div class="fat-item"><div class="fat-check">✓</div><div><strong class="fat-strong">Diesel de qualidade</strong><span class="fat-small">S-10 e S-500 disponíveis</span></div></div>
     </div>
-  </section>
-
-
-  <!-- DIFERENCIAIS -->
-  <section class="diferenciais">
-    <div class="section-header">
-      <div class="section-tag">Por que a Rede Santana</div>
-      <h2 class="section-title">Qualidade em cada parada</h2>
-      <p class="section-subtitle">Estrutura completa para motoristas e transportadoras em mais de 90 postos pelo Brasil.</p>
-    </div>
-    <div class="diferenciais-grid">
-      <div class="diferencial-card">
-        <div class="diferencial-icon">🕐</div>
-        <div class="diferencial-title">Atendimento 24 Horas</div>
-        <p class="diferencial-desc">Todos os postos da rede funcionam 24 horas por dia, todos os dias da semana. Sua jornada não para — nós também não.</p>
-      </div>
-      <div class="diferencial-card">
-        <div class="diferencial-icon">📄</div>
-        <div class="diferencial-title">Faturamento para Empresa</div>
-        <p class="diferencial-desc">Emissão de nota fiscal em todos os postos. Facilidade e controle para frotas, transportadoras e empresas de qualquer porte.</p>
-      </div>
-      <div class="diferencial-card">
-        <div class="diferencial-icon">📶</div>
-        <div class="diferencial-title">Wi-Fi Gratuito</div>
-        <p class="diferencial-desc">Internet gratuita disponível enquanto você abastece ou descansa. Conectividade real em todas as unidades da rede.</p>
-      </div>
-      <div class="diferencial-card">
-        <div class="diferencial-icon">🚗</div>
-        <div class="diferencial-title">Estacionamento</div>
-        <p class="diferencial-desc">Ampla área de estacionamento para veículos de passeio e pesados. Conforto e segurança em toda a rede.</p>
-      </div>
-      <div class="diferencial-card">
-        <div class="diferencial-icon">🚻</div>
-        <div class="diferencial-title">Sanitários</div>
-        <p class="diferencial-desc">Banheiros limpos e bem cuidados em todas as unidades. Porque uma boa parada vai além do combustível.</p>
-      </div>
-      <div class="diferencial-card">
-        <div class="diferencial-icon">⚙️</div>
-        <div class="diferencial-title">Calibrador</div>
-        <p class="diferencial-desc">Serviço de calibragem disponível nos postos da rede. Sua segurança nas estradas começa aqui.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- SOBRE -->
-  <section class="sobre">
-    <div class="sobre-inner">
-      <div class="sobre-visual">
-        <div class="sobre-visual-card">
-          <div class="sobre-visual-big">90+</div>
-          <div class="sobre-visual-label">postos ativos</div>
-          <hr class="sobre-visual-divider">
-          <div class="sobre-visual-stats">
-            <div class="sobre-visual-stat">
-              <div class="sobre-visual-stat-num">3</div>
-              <div class="sobre-visual-stat-lbl">estados</div>
-            </div>
-            <div class="sobre-visual-stat">
-              <div class="sobre-visual-stat-num">24h</div>
-              <div class="sobre-visual-stat-lbl">operação</div>
-            </div>
-            <div class="sobre-visual-stat">
-              <div class="sobre-visual-stat-num">NF</div>
-              <div class="sobre-visual-stat-lbl">faturamento</div>
-            </div>
-            <div class="sobre-visual-stat">
-              <div class="sobre-visual-stat-num">4</div>
-              <div class="sobre-visual-stat-lbl">combustíveis</div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="sobre-text">
-        <div class="section-tag">Sobre a Rede</div>
-        <h2>Uma rede construída na estrada</h2>
-        <p>A Rede Santana Combustíveis é uma rede em expansão, com identidade forte e crescimento contínuo. Com mais de 90 unidades estrategicamente localizadas nas principais rodovias do Brasil, nos consolidamos como referência no setor de combustíveis.</p>
-        <p>Destaca-se pela presença estratégica, estrutura completa e compromisso com qualidade, confiança e atendimento em MG, BA e ES.</p>
-        <div class="sobre-tags">
-          <span class="sobre-tag">Gasolina</span>
-          <span class="sobre-tag">Diesel S-10</span>
-          <span class="sobre-tag">Diesel S-500</span>
-          <span class="sobre-tag">Etanol</span>
-          <span class="sobre-tag">Faturamento NF</span>
-          <span class="sobre-tag">Frota</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- COMBUSTÍVEIS -->
-  <section class="combustiveis">
-    <div class="section-header">
-      <div class="section-tag">Nossos Produtos</div>
-      <h2 class="section-title">Combustíveis para cada necessidade</h2>
-      <p class="section-subtitle">Da gasolina comum ao diesel de alta performance — atendemos veículos leves, pesados e frotas.</p>
-    </div>
-    <div class="combustiveis-grid">
-      <div class="combustivel-card">
-        <span class="combustivel-icon">⛽</span>
-        <div class="combustivel-name">Gasolina</div>
-        <p class="combustivel-desc">Combustível de qualidade para veículos leves. Disponível em todos os postos da rede.</p>
-      </div>
-      <div class="combustivel-card">
-        <span class="combustivel-icon">🚛</span>
-        <div class="combustivel-name">Diesel S-10</div>
-        <p class="combustivel-desc">Diesel de baixo teor de enxofre para veículos pesados modernos. Mais potência e menos emissões.</p>
-      </div>
-      <div class="combustivel-card">
-        <span class="combustivel-icon">🏭</span>
-        <div class="combustivel-name">Diesel S-500</div>
-        <p class="combustivel-desc">Diesel S-500 para máquinas agrícolas e veículos mais antigos. Confiabilidade testada.</p>
-      </div>
-      <div class="combustivel-card">
-        <span class="combustivel-icon">🌿</span>
-        <div class="combustivel-name">Etanol</div>
-        <p class="combustivel-desc">Disponível em unidades selecionadas da rede. Combustível renovável e sustentável.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ESTRUTURA -->
-  <section class="estrutura">
-    <div class="section-header">
-      <div class="section-tag">Estrutura</div>
-      <h2 class="section-title">Tudo que você precisa em uma parada</h2>
-      <p class="section-subtitle">Infraestrutura completa em toda a rede para tornar sua parada mais cômoda e segura.</p>
-    </div>
-    <div class="estrutura-grid">
-      <div class="estrutura-item">
-        <div class="estrutura-item-icon">🕐</div>
-        <div class="estrutura-item-label">Aberto 24h</div>
-      </div>
-      <div class="estrutura-item">
-        <div class="estrutura-item-icon">📄</div>
-        <div class="estrutura-item-label">Faturamento NF</div>
-      </div>
-      <div class="estrutura-item">
-        <div class="estrutura-item-icon">📶</div>
-        <div class="estrutura-item-label">Wi-Fi Grátis</div>
-      </div>
-      <div class="estrutura-item">
-        <div class="estrutura-item-icon">🚗</div>
-        <div class="estrutura-item-label">Estacionamento</div>
-      </div>
-      <div class="estrutura-item">
-        <div class="estrutura-item-icon">🚻</div>
-        <div class="estrutura-item-label">Banheiro</div>
-      </div>
-      <div class="estrutura-item">
-        <div class="estrutura-item-icon">⚙️</div>
-        <div class="estrutura-item-label">Calibrador</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- GALERIA -->
-  <section class="galeria">
-    <div class="section-header">
-      <div class="section-tag">Nossas Unidades</div>
-      <h2 class="section-title">Postos em todo o caminho</h2>
-      <p class="section-subtitle">Estrutura moderna e completa em todas as unidades da rede, de rodovias a centros urbanos.</p>
-    </div>
-    <div class="galeria-scroll">
-      <div class="galeria-item">
-        <img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AL_Y2X40CXCS6pP5w6fWISgE3XELRif2KGE1V9QdheRXliZOXg51-SCvx9KLvABORaaetppR23ws7j2Q9RbxOfdvLEaxh50Kc1Xr-Gp-jlRhmuWw_rCmEJkNcH5K_SXnarAWqx2R4iTSDkrpZyMccOmxNb1GPUmfmKu_9koLpeNVL6JxzD_RrnxY6PyjfWLjKxEnIHXjkfW3Gy6fLKd6dUKPWdazKAwwL2ZFVQ0P2GBN4h_c3miFzdsk9NZKbfE?authuser=0&fife=s16383" alt="Posto Rede Santana" loading="lazy">
-      </div>
-      <div class="galeria-item">
-        <img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AL_Y2X40xLxDkx9IBXSMq1ca6HOOzv4ZltD84J7sDF1gltghzMEHLG8Vdau9Uo_Yc-U4Whc5tY523zQufwfRyuOfx3VBAFkxR-lGa-SyWxheCcfm6fXB_XwF4W2YIZMYIqCnq0_U1evRVHn4QG2OfIx8mbBj4Qh7x-X6XibNQ0SwBT7BQafVLQIsHj33W4SROBNG5xtOu7yzLnoNAA65zm_UGum3grbsEYnBHu_lix8yYCSLY3BaY6CCyn9ch6A?authuser=0&fife=s16383" alt="Posto Rede Santana" loading="lazy">
-      </div>
-      <div class="galeria-item">
-        <img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AL_Y2X41-XOkICcagkdQnnJKhfKy04stJ1aElO4tQBEljWsNmV_fwSu43SiOS0fJv_GhSUxArb2LM_jAc3h5zPBj_79ZFIsFmGT4ltgHb_a4_B5lI44PghjXzLZYW-fKFFK_TQBHbf2cHBT1B92TXjCNEy1tNwvakjTJVueb8202nCxvtmZ5cV5ujZ-og3VxmiwO9nepHL6qOZ83FqeciwUg76QIdZ9BGfuaMlzBQEpu84_OG39da7Fmcx_ZgII?authuser=0&fife=s16383" alt="Posto Rede Santana" loading="lazy">
-      </div>
-      <div class="galeria-item">
-        <img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AL_Y2X43R96FK6ChM2Fo4i7_8Nj0Z61e-0mR57cYXFmVmH6KLbAXG4PfC9la7XC1qalvWBr8U4CqXI5dj-A5qDEjej6Yt4mHXHW6EqN0XMggT0z0XdXGK78jeC2ruzFktcAs6UufizP0RemdIEdxtgDDROdLCvMnW1HbKkob-BYMXICSOQJ3CS0MfnmngiD5PKN49U2z_bU6uxSE57xk6qekPpPgJM56EL3yjtUHO-cTACB9QY8DqRVmS3XzYGc?authuser=0&fife=s16383" alt="Posto Rede Santana" loading="lazy">
-      </div>
-      <div class="galeria-item">
-        <img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AL_Y2X495wIDfY3xdnBv_hIcsHmNWG4TsqQBVucaIT5HUA_rgCz3pal1pGJgpuXSS45Kdq9I_VGZ4jSq82-FbGP1pP99rRQQXJowRbEDRH8L0gaR_xnou3vJRWaQDboiEhHmRgP58oiFm2wZjx6i11AD9R_cokGstToltF8EDuIFEljEc5aOK24oVCzNsWuU2mFFCyNwdiJ06FJITpVIl3DMspfKpUnZtV7cRMVPOjaQ9Wka6aU6-koczoZkJvc?authuser=0&fife=s16383" alt="Posto Rede Santana" loading="lazy">
-      </div>
-      <div class="galeria-item">
-        <img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AL_Y2X4BcW3LeHR8VKVgaSlfch3d8L0PQ0rIw-J8X1bn-lCCYyNXo_R9YujesDk81RblWtGbcn_UNGmmBRRnv8YsbiuIc0ol_07k2yk5DhlAvVoXMSc_FtRfaq3jmkVhVstnwfG4q0kQ8u-sXJ_at8hjDg03k9wnytj-L1krj7VZlog9vPkE-mqBIvG8tafPC0lZsQiGk6pq0RLGVaLOziBlY550Pe-z7D0Ik-uXhXTtV9wks8r92V7-9tyfH3g?authuser=0&fife=s16383" alt="Posto Rede Santana" loading="lazy">
-      </div>
-      <div class="galeria-item">
-        <img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AL_Y2X4IM8anGyNFwQxnw__yPX53mw0-_-kZSm7Ai9ccLxc4DqgITsJkdV_GFv-FLzh9xGd_5AEUnXY1ZUuNuQWtjPK5XO_lMXKrdE_vNEDqBPnEH-bX8r51J_iB2SazZBb-b7QfSvEc1vPfogSKBM9LkJCsII6PcA90kqTn5IOA8QP0Z3BsiRbbv2GxwLjvoL-q3jmFOsOUNRdOfz3Qxn31RcUwyLQbQKGuOsarBCq5OAYU81T-J6x6uZHfsfY?authuser=0&fife=s16383" alt="Posto Rede Santana" loading="lazy">
-      </div>
-      <div class="galeria-item">
-        <img src="https://mymaps.usercontent.google.com/hostedimage/m/*/3AL_Y2X4OHae72f3-MB56MUEUSXGyyRQrP2Uwyc_bq8Gl8CHo968X1D5AA7TESp1qTg-vhYmrDR9dobnzdDSLMaa4iGKIVnHrTSPvZ5l2jCQ5FJPRvOlOZDhY3DIsebm4gUvccof9lKICaXm_Kdt-HcXAA3U8FVKInSp1cYCRVGdz_L6KS6MhR935soM60_yTsb7D8pTyosp6k1RJ_TVo-c38lrkStx4fEUaaTkjvAe3s0Fi-70P8DgwHnTEI6M4?authuser=0&fife=s16383" alt="Posto Rede Santana" loading="lazy">
-      </div>
-    </div>
-  </section>
-
-  <!-- COBERTURA -->
-  <section class="cobertura" id="cobertura">
-    <div class="section-header">
-      <div class="section-tag">Cobertura</div>
-      <h2 class="section-title">Presença em 3 estados</h2>
-      <p class="section-subtitle">Com mais de 90 postos distribuídos entre Minas Gerais, Bahia e Espírito Santo, temos uma unidade perto de você.</p>
-    </div>
-    <div class="estados-grid">
-      <div class="estado-card primary">
-        <div class="estado-sigla">MG</div>
-        <div class="estado-nome">Minas Gerais</div>
-        <div class="estado-count">80+ postos</div>
-        <div class="estado-label">estado principal da rede</div>
-      </div>
-      <div class="estado-card secondary">
-        <div class="estado-sigla">BA</div>
-        <div class="estado-nome">Bahia</div>
-        <div class="estado-count">Eunápolis · Irajuba</div>
-        <div class="estado-label">Mucuri · Planalto · Poções</div>
-      </div>
-      <div class="estado-card secondary">
-        <div class="estado-sigla">ES</div>
-        <div class="estado-nome">Espírito Santo</div>
-        <div class="estado-count">Serra · São Mateus</div>
-        <div class="estado-label">João Neiva · BR-101</div>
-      </div>
-    </div>
-    <div style="text-align:center;">
-      <a href="https://wa.me/5531998402667" target="_blank" rel="noopener" class="btn-primary" style="display:inline-flex;">
-        📍 Localizar o posto mais próximo
+    <div style="text-align:center">
+      <a href="https://wa.me/5531998402667" target="_blank" rel="noopener" class="btn-hero" style="display:inline-flex">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Falar sobre faturamento
       </a>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- FATURAMENTO -->
-  <section class="faturamento">
-    <div class="section-header">
-      <div class="section-tag">Para Empresas</div>
-      <h2 class="section-title">Sua frota abastecida com nota fiscal</h2>
-      <p class="section-subtitle">Faturamento disponível em todos os postos da rede. Controle financeiro real para transportadoras e frotas corporativas.</p>
-    </div>
-    <div class="faturamento-box">
-      <div class="faturamento-items">
-        <div class="faturamento-item">
-          <div class="fat-check">✓</div>
-          <div class="fat-text">
-            <strong>Nota Fiscal garantida</strong>
-            <span>Em todos os postos da rede</span>
-          </div>
-        </div>
-        <div class="faturamento-item">
-          <div class="fat-check">✓</div>
-          <div class="fat-text">
-            <strong>Atendimento 24h</strong>
-            <span>Para frotas que não param</span>
-          </div>
-        </div>
-        <div class="faturamento-item">
-          <div class="fat-check">✓</div>
-          <div class="fat-text">
-            <strong>Rede ampla</strong>
-            <span>90+ postos em 3 estados</span>
-          </div>
-        </div>
-        <div class="faturamento-item">
-          <div class="fat-check">✓</div>
-          <div class="fat-text">
-            <strong>Diesel de qualidade</strong>
-            <span>S-10 e S-500 disponíveis</span>
-          </div>
-        </div>
-      </div>
-      <div class="faturamento-cta">
-        <a href="https://wa.me/5531998402667" target="_blank" rel="noopener" class="btn-primary" style="display:inline-flex;">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          Falar sobre faturamento
-        </a>
+<!-- CONTATO -->
+<section class="sec sec-alt">
+  <div class="contato-box" style="text-align:center">
+    <div class="sec-tag">Contato</div>
+    <h2 class="sec-title" style="margin-top:10px">Fale com a Rede Santana</h2>
+    <p class="sec-sub">Localize o posto mais próximo, tire dúvidas ou solicite faturamento.</p>
+    <div class="contato-card">
+      <a href="https://wa.me/5531998402667" target="_blank" rel="noopener" class="wpp-btn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        (31) 9 9840-2667
+      </a>
+      <div class="contato-info">
+        <div class="ci">🕐 Atendimento: <strong>24 horas, todos os dias</strong></div>
+        <div class="ci">📍 Cobertura: <strong>MG · BA · ES</strong></div>
+        <div class="ci">⛽ <strong>90+ postos</strong> em operação</div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- CONTATO -->
-  <section class="contato">
-    <div class="contato-inner">
-      <div class="section-tag">Contato</div>
-      <h2 class="section-title">Fale com a Rede Santana</h2>
-      <p class="section-subtitle">Encontre o posto mais próximo, tire suas dúvidas ou solicite faturamento para empresa.</p>
-      <div class="contato-card">
-        <a href="https://wa.me/5531998402667" target="_blank" rel="noopener" class="contato-wpp">
-          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          Chamar no WhatsApp
-        </a>
-        <div class="contato-info">
-          <div class="contato-info-item">
-            <span>🕐</span> Atendimento: <span>24 horas, todos os dias</span>
-          </div>
-          <div class="contato-info-item">
-            <span>📍</span> Cobertura: <span>MG, BA e ES</span>
-          </div>
-          <div class="contato-info-item">
-            <span>⛽</span> <span>90+ postos</span> em operação
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+<!-- FOOTER -->
+<footer>
+  <div class="ft-brand">
+    <div class="ft-badge">RS</div>
+    <span class="ft-name">Rede Santana Combustíveis</span>
+  </div>
+  <p class="ft-slogan">Abasteça confiança. Abasteça Rede Santana.</p>
+  <div class="ft-links">
+    <a href="#postos">Postos</a>
+    <a href="https://wa.me/5531998402667" target="_blank">Contato</a>
+  </div>
+  <p class="ft-copy">© 2025 Rede Santana Combustíveis. Todos os direitos reservados.</p>
+</footer>
 
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer-logo">
-      <div class="footer-logo-badge">RS</div>
-      <span class="footer-logo-name">Rede Santana Combustíveis</span>
-    </div>
-    <div class="footer-links">
-      <a href="#cobertura">Postos</a>
-      <a href="#diferenciais">Estrutura</a>
-      <a href="https://wa.me/5531998402667" target="_blank">Contato</a>
-    </div>
-    <p style="color:rgba(255,255,255,0.35);font-style:italic;font-size:13px;margin-bottom:8px;">Abasteça confiança. Abasteça Rede Santana.</p>
-    <p class="footer-copy">© 2025 Rede Santana Combustíveis. Todos os direitos reservados.</p>
-  </footer>
-
-  <!-- FLOATING WHATSAPP -->
-  <a href="https://wa.me/5531998402667" target="_blank" rel="noopener" class="whatsapp-float" aria-label="WhatsApp Rede Santana">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-  </a>
+<!-- FLOAT WPP -->
+<a href="https://wa.me/5531998402667" target="_blank" rel="noopener" class="wpp-float" aria-label="WhatsApp">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
 
 </body>
 </html>
