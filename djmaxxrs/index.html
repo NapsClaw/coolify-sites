@@ -3561,5 +3561,35 @@ document.head.appendChild(s);
 
 <!-- efeitos removidos -->
 
+
+<!-- VINHETA DJ MAXX RS -->
+<div id="vinheta-player" style="position:fixed;bottom:20px;right:20px;z-index:9999;display:flex;align-items:center;gap:10px;background:rgba(0,0,0,0.85);border:1px solid rgba(0,102,255,0.5);border-radius:50px;padding:10px 18px;box-shadow:0 0 20px rgba(0,102,255,0.25);cursor:pointer;" onclick="toggleVinheta()" title="Ouvir vinheta DJ Maxx RS">
+  <span id="vinheta-icon" style="font-size:20px;">🔊</span>
+  <span style="font-family:'Bebas Neue',sans-serif;font-size:13px;color:#fff;letter-spacing:2px;white-space:nowrap;">VINHETA DJ MAXX</span>
+</div>
+<audio id="vinheta-audio-maxx" src="vinheta-djmaxxrs.mp3" preload="auto"></audio>
+<script>
+var vinhetaMaxxPlaying = false;
+function toggleVinheta() {
+  var audio = document.getElementById('vinheta-audio-maxx');
+  var icon = document.getElementById('vinheta-icon');
+  if (vinhetaMaxxPlaying) {
+    audio.pause();
+    audio.currentTime = 0;
+    icon.textContent = '🔊';
+    vinhetaMaxxPlaying = false;
+  } else {
+    audio.play();
+    icon.textContent = '⏹️';
+    vinhetaMaxxPlaying = true;
+  }
+  audio.onended = function() {
+    icon.textContent = '🔊';
+    vinhetaMaxxPlaying = false;
+  };
+}
+</script>
+
 </body>
+
 </html>
