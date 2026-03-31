@@ -561,6 +561,60 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:#f1f5f9;color:var(--d
   </div><!-- /main-wrap -->
 </div><!-- /app -->
 
+<!-- MODAL: Sítio Iluminado (principal) -->
+<div class="modal-bg" id="si-modal-bg" onclick="if(event.target===this)closeSIModal()">
+  <div class="modal" style="max-width:600px">
+    <div class="modal-header">
+      <h3>✏️ Editar Sítio Iluminado</h3>
+      <button class="modal-close" onclick="closeSIModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="background:var(--blue-l);border:1px solid rgba(37,99,235,.2);color:var(--blue);border-radius:8px;padding:10px 14px;font-size:12px;margin-bottom:16px;line-height:1.6">
+        ⭐ Este é o sítio principal do site. As alterações aqui atualizam o hero, badge, subtítulo, pills, estatísticas, descrição e contato da página principal.
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div class="modal-field" style="grid-column:1/-1">
+          <label>Nome</label>
+          <input type="text" id="si-nome" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit">
+        </div>
+        <div class="modal-field" style="grid-column:1/-1">
+          <label>Badge do Hero (localização)</label>
+          <input type="text" id="si-badge" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit" placeholder="🌳 Mogi das Cruzes · Biritiba Mirim — 1h de SP">
+        </div>
+        <div class="modal-field" style="grid-column:1/-1">
+          <label>Subtítulo do Hero</label>
+          <textarea id="si-subtitulo" rows="2" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit;resize:vertical" placeholder="Descrição curta exibida no hero..."></textarea>
+        </div>
+        <div class="modal-field" style="grid-column:1/-1">
+          <label>Pills do Hero (um por linha)</label>
+          <textarea id="si-pills" rows="4" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit;resize:vertical" placeholder="🏊 Piscina + Hidromassagem&#10;🍕 Forno de Pizza&#10;⚽ Campo de Futebol"></textarea>
+          <p style="font-size:11px;color:var(--mid);margin-top:3px">Aparecem como chips coloridos no hero</p>
+        </div>
+        <div class="modal-field" style="grid-column:1/-1">
+          <label>Estatísticas do Hero (formato: número|rótulo — uma por linha)</label>
+          <textarea id="si-stats" rows="4" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit;resize:vertical" placeholder="22|Pessoas&#10;4|Quartos&#10;100|Vagas&#10;1h|de SP"></textarea>
+        </div>
+        <div class="modal-field" style="grid-column:1/-1">
+          <label>Descrição completa (seção "Sobre o sítio")</label>
+          <textarea id="si-descricao" rows="6" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit;resize:vertical"></textarea>
+        </div>
+        <div class="modal-field">
+          <label>WhatsApp (com DDI, sem +)</label>
+          <input type="text" id="si-whatsapp" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit" placeholder="5511941942210">
+        </div>
+        <div class="modal-field">
+          <label>Instagram (URL completa)</label>
+          <input type="url" id="si-instagram" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit" placeholder="https://www.instagram.com/...">
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel-res" onclick="closeSIModal()">Cancelar</button>
+      <button class="btn-confirm-res" onclick="salvarSI()">💾 Salvar alterações</button>
+    </div>
+  </div>
+</div>
+
 <!-- MODAL: Sítio -->
 <div class="modal-bg" id="sitio-modal-bg" onclick="if(event.target===this)closeSitioModal()">
   <div class="modal" style="max-width:580px">
@@ -1322,6 +1376,21 @@ function saveNewReservation(){
 }
 
 // ===== SÍTIOS =====
+// ── CONFIG SÍTIO ILUMINADO ──
+const SI_KEY = 'sitio_iluminado_config';
+const SI_DEFAULT = {
+  nome: 'Sítio Iluminado',
+  badge: '🌳 Mogi das Cruzes · Biritiba Mirim — 1h de SP',
+  subtitulo: 'Piscina com hidromassagem e cascata, churrasqueira, forno de pizza, campo de futebol e muito mais. Acomoda até 22 pessoas.',
+  pills: ['🏊 Piscina + Hidromassagem','🍕 Forno de Pizza','⚽ Campo de Futebol','🏐 Quadra de Vôlei','💒 Capela'],
+  stats: [{n:'22',l:'Pessoas'},{n:'4',l:'Quartos'},{n:'100',l:'Vagas'},{n:'1h',l:'de SP'}],
+  descricao: '🌿 Localizado em Biritiba Mirim / Mogi das Cruzes – SP, a apenas 1 hora de São Paulo e 20 minutos do Shopping Mogi. Estrada totalmente asfaltada até a porta.\n\n💦 Piscina com cascata, hidromassagem e tratamento em ozônio. Água filtrada em todo o sítio. Acomoda até 22 pessoas em camas (4 quartos, 4 banheiros) e até 100 pessoas trazendo colchões.\n\n🍖 Churrasqueira coberta, forno de pizza a lenha, salão de festas com sinuca e ping-pong, lareira, campo de futebol, quadra de vôlei, capela e 100 vagas de estacionamento.',
+  whatsapp: '5511941942210',
+  instagram: 'https://www.instagram.com/sitioiluminadotemporada/'
+};
+function getSI(){try{const d=localStorage.getItem(SI_KEY);return d?JSON.parse(d):SI_DEFAULT;}catch(e){return SI_DEFAULT;}}
+function saveSI(obj){localStorage.setItem(SI_KEY,JSON.stringify(obj));}
+
 const OS_KEY = 'hospeda_outros_sitios';
 const OS_DEFAULT = [
   {nome:"Sítio das Pedras",local:"Guararema, SP",tipo:"🪨 Campo · Casamentos · Retiros",preco:"R$1.800",precoDetalhe:"/ dia (até 30 pessoas)",capa:"https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",features:["🛏️ 4 quartos","🔥 Churrasqueira","🌿 Área verde","💒 Casamentos"],wa:"Olá Arlei! Tenho interesse no Sítio das Pedras.",fotos:[]},
@@ -1332,18 +1401,64 @@ function slugify(s){return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u0
 function getSitios(){try{const d=localStorage.getItem(OS_KEY);return d?JSON.parse(d):OS_DEFAULT;}catch(e){return OS_DEFAULT;}}
 function saveSitios(arr){localStorage.setItem(OS_KEY,JSON.stringify(arr));}
 
+// ── MODAL SÍTIO ILUMINADO ──
+function openSIModal(){
+  const si = getSI();
+  document.getElementById('si-nome').value = si.nome||'Sítio Iluminado';
+  document.getElementById('si-badge').value = si.badge||'';
+  document.getElementById('si-subtitulo').value = si.subtitulo||'';
+  document.getElementById('si-pills').value = (si.pills||[]).join('\n');
+  document.getElementById('si-stats').value = (si.stats||[]).map(s=>s.n+'|'+s.l).join('\n');
+  document.getElementById('si-descricao').value = si.descricao||'';
+  document.getElementById('si-whatsapp').value = si.whatsapp||'5511941942210';
+  document.getElementById('si-instagram').value = si.instagram||'';
+  document.getElementById('si-modal-bg').classList.add('open');
+}
+function closeSIModal(){ document.getElementById('si-modal-bg').classList.remove('open'); }
+function salvarSI(){
+  const obj = {
+    nome: document.getElementById('si-nome').value.trim()||'Sítio Iluminado',
+    badge: document.getElementById('si-badge').value.trim(),
+    subtitulo: document.getElementById('si-subtitulo').value.trim(),
+    pills: document.getElementById('si-pills').value.split('\n').map(l=>l.trim()).filter(Boolean),
+    stats: document.getElementById('si-stats').value.split('\n').map(l=>l.trim()).filter(Boolean).map(l=>{const[n,lab]=l.split('|');return{n:n||'',l:lab||''};}),
+    descricao: document.getElementById('si-descricao').value.trim(),
+    whatsapp: document.getElementById('si-whatsapp').value.trim()||'5511941942210',
+    instagram: document.getElementById('si-instagram').value.trim()
+  };
+  saveSI(obj);
+  closeSIModal();
+  renderSitios();
+  showToast('✅ Sítio Iluminado atualizado! Atualize a página do site para ver.');
+}
+
 let galUploadUrls = [];
 let capaTabAtual = 'url';
 let galTabAtual = 'url';
 
 function renderSitios(){
   const list = document.getElementById('sitios-list');
+  const si = getSI();
   const data = getSitios();
-  if(!data.length){
-    list.innerHTML = '<div class="empty-state"><div class="empty-icon" style="font-size:48px">🏡</div><div class="empty-title">Nenhum sítio cadastrado</div><div class="empty-sub">Clique em "+ Novo sítio" para começar.</div></div>';
-    return;
-  }
-  list.innerHTML = data.map((s,i)=>`
+
+  // Sítio Iluminado — item principal (sem excluir)
+  const siRow = `
+    <div class="sitio-row" style="border:2px solid var(--accent);background:rgba(37,99,235,.03)">
+      <img class="sitio-thumb" src="fotos/piscina-principal.jpg" alt="Sítio Iluminado" onerror="this.style.opacity='.3'">
+      <div class="sitio-body">
+        <div class="sitio-name">${si.nome} <span style="font-size:11px;background:var(--blue-l);color:var(--blue);padding:2px 8px;border-radius:100px;font-weight:700;vertical-align:middle">⭐ Principal</span></div>
+        <div class="sitio-loc">📍 Biritiba Mirim / Mogi das Cruzes, SP</div>
+        <div class="sitio-badges">
+          ${(si.pills||[]).slice(0,3).map(p=>`<span class="sitio-badge">${p}</span>`).join('')}
+        </div>
+      </div>
+      <div class="sitio-col-actions">
+        <button class="btn-new" style="font-size:12px;padding:7px 12px" onclick="window.open('index.html','_blank')">👁️ Ver</button>
+        <button class="btn-export" style="font-size:12px;padding:7px 12px" onclick="openSIModal()">✏️ Editar</button>
+      </div>
+    </div>`;
+
+  const outrosRows = data.length ? data.map((s,i)=>`
     <div class="sitio-row">
       <img class="sitio-thumb" src="${s.capa}" alt="${s.nome}" onerror="this.style.opacity='.3'">
       <div class="sitio-body">
@@ -1359,7 +1474,9 @@ function renderSitios(){
         <button class="btn-export" style="font-size:12px;padding:7px 12px" onclick="openSitioModal(${i})">✏️ Editar</button>
         <button class="btn-icon" style="color:var(--red);border-color:rgba(220,38,38,.3)" onclick="excluirSitio(${i})">🗑️</button>
       </div>
-    </div>`).join('');
+    </div>`).join('') : '<div style="text-align:center;padding:24px;color:var(--mid);font-size:13px">Nenhum outro sítio cadastrado. Clique em "+ Novo sítio" para adicionar.</div>';
+
+  list.innerHTML = siRow + outrosRows;
 }
 
 function openSitioModal(idx){

@@ -580,6 +580,41 @@ function saveOutro(){
 }
 
 renderOutros();
+
+// ── APLICAR CONFIG DO SÍTIO ILUMINADO (editável via admin) ──
+(function applySIConfig(){
+  const SI_KEY = 'sitio_iluminado_config';
+  let si; try{si=JSON.parse(localStorage.getItem(SI_KEY));}catch(e){si=null;}
+  if(!si) return;
+  const badge = document.querySelector('.hero-badge');
+  if(badge && si.badge) badge.textContent = si.badge;
+  const sub = document.querySelector('.hero-sub');
+  if(sub && si.subtitulo) sub.innerHTML = si.subtitulo;
+  if(si.pills && si.pills.length){
+    const pillRow = document.querySelector('.hero-pill-row');
+    if(pillRow) pillRow.innerHTML = si.pills.map(p=>`<span class="hero-pill">${p}</span>`).join('');
+  }
+  if(si.stats && si.stats.length){
+    const statsEl = document.querySelector('.hero-stats');
+    if(statsEl) statsEl.innerHTML = si.stats.map(s=>`<div class="hstat"><span class="hstat-n">${s.n}</span><span class="hstat-l">${s.l}</span></div>`).join('');
+  }
+  if(si.descricao){
+    const aboutInner = document.querySelector('.about-inner');
+    if(aboutInner){
+      const paras = aboutInner.querySelectorAll('p.sec-sub');
+      const lines = si.descricao.split('\n\n').filter(Boolean);
+      paras.forEach((p,i)=>{ if(lines[i]) p.innerHTML = lines[i]; });
+    }
+  }
+  if(si.whatsapp){
+    document.querySelectorAll('a[href*="wa.me"]').forEach(a=>{
+      a.href = a.href.replace(/wa\.me\/\d+/, 'wa.me/'+si.whatsapp);
+    });
+  }
+  if(si.instagram){
+    document.querySelectorAll('a[href*="instagram"]').forEach(a=>{ a.href=si.instagram; });
+  }
+})();
 </script>
 
 <!-- RESERVE SECTION -->
