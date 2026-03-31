@@ -25,7 +25,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:#f9fafb;color:var(--d
 /* ── NAV ── */
 nav{position:fixed;top:0;left:0;right:0;z-index:500;background:rgba(255,255,255,.97);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:0 20px;height:60px;display:flex;align-items:center;justify-content:space-between}
 .nav-logo{text-decoration:none;display:flex;align-items:center}
-.nav-logo img{height:52px;width:auto;object-fit:contain}
+.nav-logo img{height:80px;width:auto;object-fit:contain}
 .nav-links{display:none;gap:24px}
 .nav-links a{font-size:13px;font-weight:500;color:var(--mid);text-decoration:none}
 .nav-links a:hover{color:var(--dark)}
@@ -271,7 +271,6 @@ footer{background:#0f172a;padding:40px 20px 24px;text-align:center}
     <a href="#precos">Preços</a>
     <a href="#estrutura">Estrutura</a>
     <a href="#galeria">Galeria</a>
-    <a href="#outros-sitios">Outros sítios</a>
     <a href="#contato">Contato</a>
   </div>
   <div class="nav-actions">
@@ -310,230 +309,6 @@ footer{background:#0f172a;padding:40px 20px 24px;text-align:center}
     <div class="hstat"><span class="hstat-n">1h</span><span class="hstat-l">de SP</span></div>
   </div>
 </section>
-
-<!-- OUTROS SÍTIOS -->
-<style>
-/* Cards */
-.outro-card{background:#fff;border-radius:12px;border:1px solid var(--border);overflow:hidden;display:flex;flex-direction:column;box-shadow:0 1px 4px rgba(0,0,0,.06);transition:transform .2s,box-shadow .2s;flex-shrink:0}
-.outro-card:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,.1)}
-.outro-img{width:100%;height:200px;object-fit:cover;display:block}
-.outro-body{padding:20px;flex:1;display:flex;flex-direction:column}
-.outro-tag{display:inline-block;background:var(--blue-l);color:var(--accent);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:4px 12px;border-radius:100px;margin-bottom:10px}
-.outro-name{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--dark);margin-bottom:6px}
-.outro-local{font-size:13px;color:var(--mid);margin-bottom:12px}
-.outro-feats{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
-.outro-feat{font-size:12px;color:var(--mid);background:var(--light);padding:5px 12px;border-radius:100px}
-.outro-price{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--accent);margin-bottom:14px;margin-top:auto}
-.outro-price span{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;color:var(--mid);font-weight:400}
-.outro-btn{display:block;width:100%;text-align:center;background:var(--accent);color:#fff;padding:13px;border-radius:8px;font-weight:700;font-size:14px;text-decoration:none;border:none;cursor:pointer}
-/* Desktop grid */
-.outros-desktop{display:none;grid-template-columns:repeat(3,1fr);gap:20px}
-/* Mobile carousel */
-.outros-carousel-wrap{position:relative}
-.outros-carousel{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:4px}
-.outros-carousel::-webkit-scrollbar{display:none}
-.outros-carousel .outro-card{width:82vw;max-width:300px;scroll-snap-align:start}
-.carousel-dots{display:flex;justify-content:center;gap:7px;margin-top:16px}
-.cdot{width:8px;height:8px;border-radius:50%;background:var(--border);transition:background .2s,transform .2s;cursor:pointer}
-.cdot.active{background:var(--accent);transform:scale(1.2)}
-@media(min-width:700px){
-  .outros-carousel-wrap{display:none}
-  .outros-desktop{display:grid}
-}
-/* Admin panel - outros sítios */
-.outros-admin{margin-top:24px;border-top:1px solid var(--border);padding-top:20px;display:none}
-.outros-admin.open{display:block}
-.outros-admin-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center}
-.outros-list-admin{}
-.outros-item-admin{border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:10px;display:flex;gap:12px;align-items:center}
-.outros-item-admin img{width:60px;height:50px;object-fit:cover;border-radius:6px;flex-shrink:0}
-.outros-item-admin-info{flex:1;min-width:0}
-.outros-item-admin-name{font-weight:700;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.outros-item-admin-local{font-size:12px;color:var(--mid)}
-.outros-item-admin-actions{display:flex;gap:6px;flex-shrink:0}
-.btn-edit-outro{background:var(--light);border:1px solid var(--border);color:var(--dark);padding:6px 12px;border-radius:6px;font-size:12px;cursor:pointer}
-.btn-del-outro{background:rgba(220,38,38,.08);border:1px solid rgba(220,38,38,.2);color:var(--red);padding:6px 12px;border-radius:6px;font-size:12px;cursor:pointer}
-.btn-add-outro{background:var(--accent);color:#fff;border:none;padding:10px 18px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;width:100%;margin-top:8px}
-/* Outro edit modal */
-.outro-modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:600;align-items:flex-end;justify-content:center;padding:0}
-.outro-modal-bg.open{display:flex}
-.outro-modal{background:#fff;border-radius:16px 16px 0 0;padding:28px 20px 40px;width:100%;max-width:540px;max-height:90vh;overflow-y:auto}
-.outro-modal h3{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center}
-.outro-modal .form-row{margin-bottom:14px}
-.outro-modal .form-row label{display:block;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--dark);margin-bottom:6px}
-.outro-modal .form-row input,.outro-modal .form-row textarea{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:var(--dark);background:#fff}
-.outro-modal .form-row input:focus,.outro-modal .form-row textarea:focus{outline:none;border-color:var(--accent)}
-.outro-modal .form-hint{font-size:11px;color:var(--mid);margin-top:4px}
-.outro-modal-save{width:100%;background:var(--accent);color:#fff;border:none;padding:15px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;margin-top:6px}
-</style>
-
-<section id="outros-sitios" style="padding:48px 20px;background:#fff;border-top:1px solid var(--border)">
-  <div style="max-width:900px;margin:0 auto">
-    <span class="sec-label">Portfólio Hospeda Temporada</span>
-    <h2 class="sec-h2">Outros sítios disponíveis</h2>
-    <p class="sec-sub" style="margin-bottom:28px">Além do Sítio Iluminado, Arlei conta com outros espaços para temporada, eventos e festas.</p>
-
-    <!-- MOBILE: Carrossel -->
-    <div class="outros-carousel-wrap">
-      <div class="outros-carousel" id="outros-carousel"></div>
-      <div class="carousel-dots" id="carousel-dots"></div>
-    </div>
-
-    <!-- DESKTOP: Grid -->
-    <div class="outros-desktop" id="outros-desktop"></div>
-
-    <p style="font-size:13px;color:var(--mid);margin-top:24px;text-align:center">
-      Dúvidas ou quer conhecer? <a href="https://wa.me/5511941942210?text=Olá Arlei! Gostaria de conhecer os outros sítios disponíveis." target="_blank" style="color:var(--accent);font-weight:600">Fale no WhatsApp →</a>
-    </p>
-  </div>
-</section>
-
-<!-- OUTRO EDIT MODAL -->
-<div class="outro-modal-bg" id="outro-modal-bg" onclick="if(event.target===this)closeOutroModal()">
-  <div class="outro-modal">
-    <h3><span id="outro-modal-title">Novo sítio</span><button onclick="closeOutroModal()" style="background:none;border:none;font-size:22px;cursor:pointer;color:var(--mid)">✕</button></h3>
-    <input type="hidden" id="outro-edit-idx" value="">
-    <div class="form-row"><label>Nome do sítio *</label><input type="text" id="oe-nome" placeholder="Ex: Sítio Bela Vista"></div>
-    <div class="form-row"><label>Localização *</label><input type="text" id="oe-local" placeholder="Ex: Guararema, SP"></div>
-    <div class="form-row"><label>Tipo / Rótulo</label><input type="text" id="oe-tipo" placeholder="Ex: 🌿 Natureza · Eventos"></div>
-    <div class="form-row"><label>Preço</label><input type="text" id="oe-preco" placeholder="Ex: R$1.500"></div>
-    <div class="form-row"><label>Detalhe do preço</label><input type="text" id="oe-detalhe" placeholder="Ex: / dia (até 20 pessoas)"></div>
-    <div class="form-row">
-      <label>URL da foto de capa *</label>
-      <input type="url" id="oe-capa" placeholder="https://..." oninput="document.getElementById('oe-preview').src=this.value">
-      <img id="oe-preview" src="" alt="" style="width:100%;height:120px;object-fit:cover;border-radius:8px;margin-top:8px;display:block;background:var(--light)">
-      <p class="form-hint">Cole a URL de uma imagem (Unsplash, Google Drive público, etc.)</p>
-    </div>
-    <div class="form-row">
-      <label>Características (uma por linha)</label>
-      <textarea id="oe-feats" rows="4" placeholder="🛏️ 4 quartos&#10;🔥 Churrasqueira&#10;🌿 Área verde&#10;🚗 Estacionamento"></textarea>
-      <p class="form-hint">Use emojis no início. Ex: 🛏️ 4 quartos</p>
-    </div>
-    <div class="form-row"><label>Mensagem WhatsApp</label><input type="text" id="oe-wa" placeholder="Olá Arlei! Tenho interesse no Sítio X..."></div>
-    <button class="outro-modal-save" onclick="saveOutro()">💾 Salvar sítio</button>
-  </div>
-</div>
-
-<script>
-function slugify(s){return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'');}
-// ── STORAGE DOS OUTROS SÍTIOS (editável pelo admin via painel) ──
-const OS_KEY = 'hospeda_outros_sitios';
-const OS_DEFAULT = [
-  {nome:"Sítio das Pedras",local:"Guararema, SP",tipo:"🪨 Campo · Casamentos · Retiros",preco:"R$1.800",precoDetalhe:"/ dia (até 30 pessoas)",capa:"https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",features:["🛏️ 4 quartos","🔥 Churrasqueira","🌿 Área verde","💒 Casamentos"],wa:"Olá Arlei! Tenho interesse no Sítio das Pedras em Guararema. Pode me passar informações?"},
-  {nome:"Sítio Beira Rio",local:"Salesópolis, SP",tipo:"🌊 Rio · Pesca · Família",preco:"R$1.200",precoDetalhe:"/ dia (até 20 pessoas)",capa:"https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800&q=80",features:["🛏️ 3 quartos","🎣 Deck para pesca","🌊 Beira do rio","🌲 Trilhas"],wa:"Olá Arlei! Tenho interesse no Sítio Beira Rio em Salesópolis. Pode me passar informações?"},
-  {nome:"Sítio Alto da Serra",local:"Paraibuna, SP",tipo:"⛰️ Serra · Vista panorâmica · Retiros",preco:"R$2.200",precoDetalhe:"/ dia (até 40 pessoas)",capa:"https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",features:["🛏️ 6 quartos","⛰️ Vista panorâmica","🔥 Lareira","🧘 Retiros"],wa:"Olá Arlei! Tenho interesse no Sítio Alto da Serra em Paraibuna. Pode me passar informações?"}
-];
-function getOutros(){try{const d=localStorage.getItem(OS_KEY);return d?JSON.parse(d):OS_DEFAULT;}catch(e){return OS_DEFAULT;}}
-function saveOutros(arr){localStorage.setItem(OS_KEY,JSON.stringify(arr));}
-
-function buildOutroCard(s){
-  const c=document.createElement('div');
-  c.className='outro-card';
-  c.innerHTML=`<img class="outro-img" src="${s.capa}" alt="${s.nome}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400&q=60'">
-  <div class="outro-body">
-    <span class="outro-tag">${s.tipo||'🏡 Sítio'}</span>
-    <div class="outro-name">${s.nome}</div>
-    <div class="outro-local">📍 ${s.local}</div>
-    <div class="outro-feats">${(s.features||[]).map(f=>`<span class="outro-feat">${f}</span>`).join('')}</div>
-    <div class="outro-price">${s.preco||'Consulte'}<span> ${s.precoDetalhe||''}</span></div>
-    <a href="sitio.html?id=${slugify(s.nome)}" class="outro-btn">Ver disponibilidade</a>
-  </div>`;
-  return c;
-}
-
-function renderOutros(){
-  const data=getOutros();
-  const car=document.getElementById('outros-carousel');
-  const desk=document.getElementById('outros-desktop');
-  const dots=document.getElementById('carousel-dots');
-  car.innerHTML=''; desk.innerHTML=''; dots.innerHTML='';
-  data.forEach((s,i)=>{
-    car.appendChild(buildOutroCard(s));
-    desk.appendChild(buildOutroCard(s));
-    const dot=document.createElement('div');
-    dot.className='cdot'+(i===0?' active':'');
-    dot.onclick=()=>scrollCarousel(i);
-    dots.appendChild(dot);
-  });
-  // Update dots on scroll
-  car.onscroll=()=>{
-    const idx=Math.round(car.scrollLeft/(car.offsetWidth*0.82+16));
-    document.querySelectorAll('.cdot').forEach((d,i)=>d.classList.toggle('active',i===idx));
-  };
-  renderOutrosAdmin();
-}
-
-function scrollCarousel(idx){
-  const car=document.getElementById('outros-carousel');
-  const cardW=car.offsetWidth*0.82+16;
-  car.scrollTo({left:idx*cardW,behavior:'smooth'});
-}
-
-// ── ADMIN PANEL ──
-function renderOutrosAdmin(){
-  const panel=document.getElementById('outros-admin-list');
-  if(!panel)return;
-  const data=getOutros();
-  panel.innerHTML='';
-  data.forEach((s,i)=>{
-    const el=document.createElement('div');
-    el.className='outros-item-admin';
-    el.innerHTML=`<img src="${s.capa}" alt="${s.nome}" onerror="this.style.display='none'">
-    <div class="outros-item-admin-info"><div class="outros-item-admin-name">${s.nome}</div><div class="outros-item-admin-local">📍 ${s.local}</div></div>
-    <div class="outros-item-admin-actions">
-      <button class="btn-edit-outro" onclick="editOutro(${i})">✏️</button>
-      <button class="btn-del-outro" onclick="delOutro(${i})">🗑️</button>
-    </div>`;
-    panel.appendChild(el);
-  });
-}
-
-function openOutroModal(idx){
-  const data=getOutros();
-  const editing=idx!=null;
-  document.getElementById('outro-modal-title').textContent=editing?'Editar sítio':'Novo sítio';
-  document.getElementById('outro-edit-idx').value=editing?idx:'';
-  const s=editing?data[idx]:{};
-  document.getElementById('oe-nome').value=s.nome||'';
-  document.getElementById('oe-local').value=s.local||'';
-  document.getElementById('oe-tipo').value=s.tipo||'';
-  document.getElementById('oe-preco').value=s.preco||'';
-  document.getElementById('oe-detalhe').value=s.precoDetalhe||'';
-  document.getElementById('oe-capa').value=s.capa||'';
-  document.getElementById('oe-preview').src=s.capa||'';
-  document.getElementById('oe-feats').value=(s.features||[]).join('\n');
-  document.getElementById('oe-wa').value=s.wa||'';
-  document.getElementById('outro-modal-bg').classList.add('open');
-  document.body.style.overflow='hidden';
-}
-function closeOutroModal(){document.getElementById('outro-modal-bg').classList.remove('open');document.body.style.overflow='';}
-function editOutro(i){openOutroModal(i);}
-function delOutro(i){
-  if(!confirm('Excluir este sítio?'))return;
-  const data=getOutros();data.splice(i,1);saveOutros(data);renderOutros();
-}
-function saveOutro(){
-  const nome=document.getElementById('oe-nome').value.trim();
-  const capa=document.getElementById('oe-capa').value.trim();
-  if(!nome||!capa){alert('Nome e foto são obrigatórios!');return;}
-  const s={
-    nome,
-    local:document.getElementById('oe-local').value.trim(),
-    tipo:document.getElementById('oe-tipo').value.trim()||'🏡 Temporada · Eventos',
-    preco:document.getElementById('oe-preco').value.trim()||'Consulte',
-    precoDetalhe:document.getElementById('oe-detalhe').value.trim(),
-    capa,
-    features:document.getElementById('oe-feats').value.split('\n').map(l=>l.trim()).filter(Boolean),
-    wa:document.getElementById('oe-wa').value.trim()||`Olá Arlei! Tenho interesse no ${nome}. Pode me passar informações?`
-  };
-  const data=getOutros();
-  const idx=document.getElementById('outro-edit-idx').value;
-  if(idx!=='')data[parseInt(idx)]=s; else data.push(s);
-  saveOutros(data);renderOutros();closeOutroModal();
-}
-
-renderOutros();
-</script>
 
 <!-- RESERVE SECTION -->
 <section class="reserve-section" id="reservar">
@@ -681,7 +456,42 @@ renderOutros();
             <option>NATAL 2026 (4 DIAS) - 22/12 A 26/12/2026</option>
             <option>CARNAVAL 2027 (4 DIAS) - 05/02 A 09/02/2027</option>
             <option>DIÁRIA PARA EVENTOS</option>
+            <option>CASAMENTO</option>
+            <option>FORMATURA</option>
+            <option>BAILE DEBUTANTE</option>
+            <option>FESTA DE EMPRESA</option>
+            <option>EVENTOS DIVERSOS</option>
           </select>
+        </div>
+        <div class="form-row form-full">
+          <label>🎉 Convidados externos (sem pernoite) <span style="font-size:12px;color:var(--mid)">+R$30 por pessoa</span></label>
+          <select id="f-externos">
+            <option value="">Nenhum</option>
+            <option value="10">10 convidados (+R$ 300)</option>
+            <option value="20">20 convidados (+R$ 600)</option>
+            <option value="30">30 convidados (+R$ 900)</option>
+            <option value="40">40 convidados (+R$ 1.200)</option>
+            <option value="50">50 convidados (+R$ 1.500)</option>
+            <option value="60">60 convidados (+R$ 1.800)</option>
+            <option value="70">70 convidados (+R$ 2.100)</option>
+            <option value="80">80 convidados (+R$ 2.400)</option>
+            <option value="90">90 convidados (+R$ 2.700)</option>
+            <option value="100">100 convidados (+R$ 3.000)</option>
+            <option value="120">120 convidados (+R$ 3.600)</option>
+            <option value="150">150 convidados (+R$ 4.500)</option>
+          </select>
+        </div>
+        <div class="form-row form-full">
+          <label>💰 Valor total da locação (R$)</label>
+          <input type="number" id="f-total" placeholder="Ex: 2200" min="0" step="0.01" oninput="calcRestante()">
+        </div>
+        <div class="form-row">
+          <label>✅ Sinal de pagamento (R$)</label>
+          <input type="number" id="f-sinal" placeholder="Ex: 1100" min="0" step="0.01">
+        </div>
+        <div class="form-row">
+          <label>⏳ Restante do pagamento (R$)</label>
+          <input type="number" id="f-restante" placeholder="Ex: 1100" min="0" step="0.01">
         </div>
         <div class="form-row form-full">
           <label>Observações (opcional)</label>
@@ -698,16 +508,6 @@ renderOutros();
         <button onclick="togglePanel()" style="background:none;border:none;font-size:13px;color:var(--mid);cursor:pointer" id="toggle-btn">▼ Ver</button>
       </h3>
       <div id="reservations-list" style="display:none"></div>
-
-      <!-- ADMIN: OUTROS SÍTIOS -->
-      <div class="outros-admin" id="outros-admin-panel">
-        <div class="outros-admin-title">
-          <span>🏡 Gerenciar outros sítios</span>
-          <button onclick="document.getElementById('outros-admin-panel').classList.remove('open')" style="background:none;border:none;font-size:18px;cursor:pointer;color:var(--mid)">✕</button>
-        </div>
-        <div class="outros-list-admin" id="outros-admin-list"></div>
-        <button class="btn-add-outro" onclick="openOutroModal(null)">+ Adicionar novo sítio</button>
-      </div>
     </div>
   </div>
 </section>
@@ -1104,22 +904,22 @@ renderOutros();
 
 <!-- VIDEO -->
 <section style="padding:48px 20px;background:#0f172a;text-align:center" id="video">
-  <div style="max-width:480px;margin:0 auto">
+  <div style="max-width:800px;margin:0 auto">
     <span class="sec-label" style="color:#4ade80">Vídeo</span>
     <h2 class="sec-h2" style="color:#fff;margin-bottom:8px">Veja o sítio em vídeo</h2>
     <p style="color:rgba(255,255,255,.6);font-size:15px;margin-bottom:28px">Um passeio real pelo Sítio Iluminado 🌿</p>
-    <div style="position:relative;width:100%;max-width:340px;margin:0 auto;border-radius:16px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.5)">
+    <div style="position:relative;width:100%;border-radius:16px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.5)">
       <iframe
-        src="https://www.youtube.com/embed/ZM-ybTJY4qA"
-        title="Sítio Iluminado — vídeo"
+        src="https://www.youtube.com/embed/2T9NbCLjYIg"
+        title="Sítio Iluminado — vídeo completo"
         frameborder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen
-        style="width:100%;aspect-ratio:9/16;display:block">
+        style="width:100%;aspect-ratio:16/9;display:block">
       </iframe>
     </div>
-    <p style="margin-top:20px">
-      <a href="https://www.youtube.com/shorts/ZM-ybTJY4qA" target="_blank" style="color:#4ade80;font-size:14px;text-decoration:none">▶ Assistir no YouTube</a>
+    <p style="margin-top:16px">
+      <a href="https://www.youtube.com/watch?v=2T9NbCLjYIg" target="_blank" style="color:#4ade80;font-size:14px;text-decoration:none">▶ Assistir no YouTube</a>
     </p>
   </div>
 </section>
@@ -1443,6 +1243,9 @@ function fmtDate(ds){
 function calPrev(){ calDate.setMonth(calDate.getMonth()-1); renderCal(); }
 function calNext(){ calDate.setMonth(calDate.getMonth()+1); renderCal(); }
 
+// ===== PAYMENT CALC (manual) =====
+function calcRestante(){ /* campos manuais — sem cálculo automático */ }
+
 // ===== SUBMIT =====
 function submitReserve(){
   const name = document.getElementById('f-name').value.trim();
@@ -1451,6 +1254,10 @@ function submitReserve(){
   const guests = document.getElementById('f-guests').value;
   const occasion = document.getElementById('f-occasion').value;
   const obs = document.getElementById('f-obs').value.trim();
+  const totalVal = parseFloat(document.getElementById('f-total').value) || 0;
+  const sinalVal = parseFloat(document.getElementById('f-sinal').value) || 0;
+  const restanteVal = Math.max(0, totalVal - sinalVal);
+  const externos = document.getElementById('f-externos').value || '';
 
   if(!name){ showToast('Por favor, informe o nome completo.'); return; }
   if(!phone){ showToast('Por favor, informe o WhatsApp.'); return; }
@@ -1475,6 +1282,7 @@ function submitReserve(){
     checkin: selStart,
     checkout: selEnd,
     status: 'pending',
+    totalVal, sinalVal, restanteVal, externos,
     createdAt: new Date().toISOString()
   };
   const arr = getRes();
@@ -1482,6 +1290,7 @@ function submitReserve(){
   saveRes(arr);
 
   // WhatsApp
+  const fmtMoney = v => v > 0 ? `R$ ${v.toLocaleString('pt-BR',{minimumFractionDigits:2})}` : '—';
   const msg = encodeURIComponent(
     `🏡 *Solicitação de Reserva — Sítio Iluminado*\n\n` +
     `*Nome:* ${name}\n` +
@@ -1491,6 +1300,10 @@ function submitReserve(){
     `*Check-out:* ${fmtDate(selEnd)}\n` +
     `*Pessoas:* ${guests}\n` +
     `*Ocasião:* ${occasion}\n` +
+    (externos ? `*Convidados externos:* ${externos} pessoas (+ R$ ${(parseInt(externos)*30).toLocaleString('pt-BR')})\n` : '') +
+    (totalVal > 0 ? `*Valor total:* ${fmtMoney(totalVal)}\n` : '') +
+    (sinalVal > 0 ? `*Sinal (50%):* ${fmtMoney(sinalVal)}\n` : '') +
+    (restanteVal > 0 ? `*Restante (50%):* ${fmtMoney(restanteVal)}\n` : '') +
     `*Obs:* ${obs||'—'}\n\n` +
     `Aguardo confirmação! 😊`
   );
@@ -1503,6 +1316,11 @@ function submitReserve(){
   document.getElementById('f-email').value = '';
   document.getElementById('f-guests').value = '';
   document.getElementById('f-obs').value = '';
+  document.getElementById('f-externos').value = '';
+  document.getElementById('f-total').value = '';
+  document.getElementById('f-sinal').value = '';
+  document.getElementById('f-restante').value = '';
+
   document.getElementById('disp-ci').textContent = 'Selecione no calendário';
   document.getElementById('disp-ci').classList.add('empty');
   document.getElementById('disp-co').textContent = 'Selecione no calendário';
@@ -1519,22 +1337,7 @@ function togglePanel(){
   panelOpen = !panelOpen;
   document.getElementById('reservations-list').style.display = panelOpen ? 'block' : 'none';
   document.getElementById('toggle-btn').textContent = panelOpen ? '▲ Fechar' : '▼ Ver';
-  if(panelOpen){renderResList();showOutrosAdminBtn();}
-  else{document.getElementById('outros-admin-panel').classList.remove('open');};
-}
-
-function showOutrosAdminBtn(){
-  // Show a small button to manage outros sítios within the admin panel
-  const rl = document.getElementById('reservations-list');
-  if(!rl) return;
-  if(!document.getElementById('btn-manage-outros')){
-    const btn = document.createElement('button');
-    btn.id = 'btn-manage-outros';
-    btn.textContent = '🏡 Gerenciar outros sítios';
-    btn.style.cssText = 'display:block;width:100%;background:var(--blue-l);color:var(--accent);border:1px solid rgba(37,99,235,.2);border-radius:8px;padding:11px;font-size:13px;font-weight:700;cursor:pointer;margin-top:16px';
-    btn.onclick = () => document.getElementById('outros-admin-panel').classList.toggle('open');
-    rl.parentNode.appendChild(btn);
-  }
+  if(panelOpen) renderResList();
 }
 
 function renderResList(){
