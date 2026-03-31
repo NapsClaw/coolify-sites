@@ -80,7 +80,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:500;background:rgba(255,255,255,
 .cal-nav-btn:hover{background:var(--border)}
 .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
 .cal-head{text-align:center;font-size:9px;font-weight:700;letter-spacing:.5px;color:var(--mid);padding:6px 2px;text-transform:uppercase}
-.cal-day{text-align:center;padding:0;aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:5px;font-size:11px;cursor:pointer;color:var(--dark);position:relative;font-weight:500;transition:background .15s}
+.cal-day{text-align:center;padding:2px 1px;min-height:44px;aspect-ratio:unset;display:flex;align-items:center;justify-content:center;border-radius:5px;font-size:11px;cursor:pointer;color:var(--dark);position:relative;font-weight:500;transition:background .15s}
 .cal-day.empty{opacity:0;pointer-events:none}
 .cal-day.past{opacity:.3;pointer-events:none;text-decoration:line-through}
 .cal-day.free{background:rgba(22,163,74,.08);color:#15803d;font-weight:600}
@@ -91,6 +91,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:500;background:rgba(255,255,255,
 .cal-day.sel-range{background:var(--blue-l);color:var(--blue)}
 .cal-day-dot{position:absolute;bottom:3px;left:50%;transform:translateX(-50%);width:5px;height:5px;border-radius:50%}
 .cal-legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:16px;padding-top:16px;border-top:1px solid var(--border)}
+.cal-day.has-holiday{background:rgba(0,0,0,.03)}
+.cal-hday-label{font-size:7px;font-weight:700;line-height:1.1;text-align:center;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.cal-day{flex-direction:column;gap:0}
 .leg{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--mid)}
 .leg-box{width:14px;height:14px;border-radius:3px}
 
@@ -1040,6 +1043,49 @@ let selStart = null, selEnd = null;
 const MONTHS = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
 const DAYS_SH = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
 
+// Feriados: data de início → {label, cor}
+const HOLIDAYS = {
+  '2026-04-03': {label:'🐣 Páscoa',       color:'#7c3aed'},
+  '2026-04-04': {label:'🐣 Páscoa',       color:'#7c3aed'},
+  '2026-04-05': {label:'🐣 Páscoa',       color:'#7c3aed'},
+  '2026-04-18': {label:'⚔️ Tiradentes',   color:'#b45309'},
+  '2026-04-19': {label:'⚔️ Tiradentes',   color:'#b45309'},
+  '2026-04-20': {label:'⚔️ Tiradentes',   color:'#b45309'},
+  '2026-04-21': {label:'⚔️ Tiradentes',   color:'#b45309'},
+  '2026-05-01': {label:'⚒️ Trabalhador',  color:'#0369a1'},
+  '2026-05-02': {label:'⚒️ Trabalhador',  color:'#0369a1'},
+  '2026-05-03': {label:'⚒️ Trabalhador',  color:'#0369a1'},
+  '2026-05-09': {label:'👩 Dia das Mães', color:'#be185d'},
+  '2026-05-10': {label:'👩 Dia das Mães', color:'#be185d'},
+  '2026-08-08': {label:'👨 Dia dos Pais', color:'#1d4ed8'},
+  '2026-08-09': {label:'👨 Dia dos Pais', color:'#1d4ed8'},
+  '2026-09-05': {label:'🎖️ Independência',color:'#15803d'},
+  '2026-09-06': {label:'🎖️ Independência',color:'#15803d'},
+  '2026-09-07': {label:'🎖️ Independência',color:'#15803d'},
+  '2026-10-10': {label:'👶 Crianças',     color:'#ea580c'},
+  '2026-10-11': {label:'👶 Crianças',     color:'#ea580c'},
+  '2026-10-12': {label:'👶 Crianças',     color:'#ea580c'},
+  '2026-10-30': {label:'🕯️ Finados',      color:'#6b21a8'},
+  '2026-10-31': {label:'🕯️ Finados',      color:'#6b21a8'},
+  '2026-11-01': {label:'🕯️ Finados',      color:'#6b21a8'},
+  '2026-11-02': {label:'🕯️ Finados',      color:'#6b21a8'},
+  '2026-11-14': {label:'🇧🇷 Proclamação', color:'#15803d'},
+  '2026-11-15': {label:'🇧🇷 Proclamação', color:'#15803d'},
+  '2026-11-20': {label:'✊ Consciência',  color:'#92400e'},
+  '2026-11-21': {label:'✊ Consciência',  color:'#92400e'},
+  '2026-11-22': {label:'✊ Consciência',  color:'#92400e'},
+  '2026-12-22': {label:'🎄 Natal',        color:'#dc2626'},
+  '2026-12-23': {label:'🎄 Natal',        color:'#dc2626'},
+  '2026-12-24': {label:'🎄 Natal',        color:'#dc2626'},
+  '2026-12-25': {label:'🎄 Natal',        color:'#dc2626'},
+  '2026-12-26': {label:'🎄 Natal',        color:'#dc2626'},
+  '2027-02-05': {label:'🎭 Carnaval',     color:'#7c3aed'},
+  '2027-02-06': {label:'🎭 Carnaval',     color:'#7c3aed'},
+  '2027-02-07': {label:'🎭 Carnaval',     color:'#7c3aed'},
+  '2027-02-08': {label:'🎭 Carnaval',     color:'#7c3aed'},
+  '2027-02-09': {label:'🎭 Carnaval',     color:'#7c3aed'},
+};
+
 function getReservedDates(){
   const res = getRes();
   const map = {}; // dateStr -> {id, status}
@@ -1074,6 +1120,7 @@ function renderCal(){
     let cls = 'cal-day ';
     let dot = '';
     let click = '';
+    const holiday = HOLIDAYS[ds];
     if(isPast){ cls += 'past'; }
     else if(res){
       cls += 'reserved-paid';
@@ -1086,7 +1133,13 @@ function renderCal(){
       else if(selStart && selEnd && ds > selStart && ds < selEnd) cls += ' sel-range';
       click = `onclick="selectDay('${ds}')"`;
     }
-    grid.innerHTML += `<div class="${cls}" ${click}>${d}${dot}</div>`;
+    // Holiday badge below day number
+    let holidayTag = '';
+    if(holiday && !res){
+      holidayTag = `<div class="cal-hday-label" style="color:${holiday.color}">${holiday.label}</div>`;
+      if(!cls.includes('sel-') && !cls.includes('past')) cls += ' has-holiday';
+    }
+    grid.innerHTML += `<div class="${cls}" ${click} style="${holiday && !res ? `border-bottom:2px solid ${holiday.color}` : ''}">${d}${dot}${holidayTag}</div>`;
   }
 }
 
