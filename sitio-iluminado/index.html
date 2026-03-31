@@ -271,6 +271,7 @@ footer{background:#0f172a;padding:40px 20px 24px;text-align:center}
     <a href="#precos">Preços</a>
     <a href="#estrutura">Estrutura</a>
     <a href="#galeria">Galeria</a>
+    <a href="#outros-sitios">Outros sítios</a>
     <a href="#contato">Contato</a>
   </div>
   <div class="nav-actions">
@@ -921,6 +922,104 @@ footer{background:#0f172a;padding:40px 20px 24px;text-align:center}
     </div>
   </div>
 </section>
+
+<!-- OUTROS SÍTIOS -->
+<section id="outros-sitios" style="padding:48px 20px;background:#f9fafb">
+  <div style="max-width:900px;margin:0 auto">
+    <span class="sec-label">Portfólio Hospeda Temporada</span>
+    <h2 class="sec-h2">Outros sítios disponíveis</h2>
+    <p class="sec-sub" style="margin-bottom:36px">Além do Sítio Iluminado, Arlei conta com outros espaços para temporada, eventos e festas. Clique para ver fotos, estrutura e disponibilidade de cada um.</p>
+    <div id="outros-grid" style="display:grid;grid-template-columns:1fr;gap:20px"></div>
+    <p style="font-size:13px;color:var(--mid);margin-top:24px;text-align:center">
+      Quer conhecer pessoalmente ou tirar dúvidas? <a href="https://wa.me/5511941942210?text=Olá Arlei! Gostaria de conhecer os outros sítios disponíveis." target="_blank" style="color:var(--accent);font-weight:600">Fale no WhatsApp →</a>
+    </p>
+  </div>
+</section>
+
+<style>
+.outro-card{background:#fff;border-radius:12px;border:1px solid var(--border);overflow:hidden;display:flex;flex-direction:column;box-shadow:0 1px 4px rgba(0,0,0,.06);transition:transform .2s,box-shadow .2s}
+.outro-card:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,.1)}
+.outro-img{width:100%;height:200px;object-fit:cover;display:block}
+.outro-body{padding:20px}
+.outro-tag{display:inline-block;background:var(--blue-l);color:var(--accent);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:4px 12px;border-radius:100px;margin-bottom:10px}
+.outro-name{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--dark);margin-bottom:6px}
+.outro-local{font-size:13px;color:var(--mid);margin-bottom:12px}
+.outro-feats{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.outro-feat{font-size:12px;color:var(--mid);background:var(--light);padding:5px 12px;border-radius:100px}
+.outro-price{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--accent);margin-bottom:14px}
+.outro-price span{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;color:var(--mid);font-weight:400}
+.outro-btn{display:block;width:100%;text-align:center;background:var(--accent);color:#fff;padding:13px;border-radius:8px;font-weight:700;font-size:14px;text-decoration:none;border:none;cursor:pointer}
+@media(min-width:600px){#outros-grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:900px){#outros-grid{grid-template-columns:repeat(3,1fr)}}
+</style>
+
+<script>
+// ── DADOS DOS OUTROS SÍTIOS ──
+// Para adicionar/editar sítios: altere o array abaixo
+const OUTROS_SITIOS = [
+  {
+    nome: "Sítio das Pedras",
+    local: "Guararema, SP",
+    tipo: "🪨 Campo · Casamentos · Retiros",
+    preco: "R$1.800",
+    precoDetalhe: "/ dia (até 30 pessoas)",
+    capa: "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",
+    features: ["🛏️ 4 quartos", "🔥 Churrasqueira", "🌿 Área verde", "💒 Casamentos"],
+    wa: "Olá Arlei! Tenho interesse no Sítio das Pedras em Guararema. Pode me passar informações?"
+  },
+  {
+    nome: "Sítio Beira Rio",
+    local: "Salesópolis, SP",
+    tipo: "🌊 Rio · Pesca · Família",
+    preco: "R$1.200",
+    precoDetalhe: "/ dia (até 20 pessoas)",
+    capa: "https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800&q=80",
+    features: ["🛏️ 3 quartos", "🎣 Deck para pesca", "🌊 Beira do rio", "🌲 Trilhas"],
+    wa: "Olá Arlei! Tenho interesse no Sítio Beira Rio em Salesópolis. Pode me passar informações?"
+  },
+  {
+    nome: "Sítio Alto da Serra",
+    local: "Paraibuna, SP",
+    tipo: "⛰️ Serra · Vista panorâmica · Retiros",
+    preco: "R$2.200",
+    precoDetalhe: "/ dia (até 40 pessoas)",
+    capa: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",
+    features: ["🛏️ 6 quartos", "⛰️ Vista panorâmica", "🔥 Lareira", "🧘 Retiros"],
+    wa: "Olá Arlei! Tenho interesse no Sítio Alto da Serra em Paraibuna. Pode me passar informações?"
+  }
+  // ── ADICIONE NOVOS SÍTIOS AQUI ──
+  // {
+  //   nome: "Nome do Sítio",
+  //   local: "Cidade, Estado",
+  //   tipo: "Emoji · Tipo · Ocasião",
+  //   preco: "R$X.XXX",
+  //   precoDetalhe: "/ dia (até XX pessoas)",
+  //   capa: "https://url-da-foto-capa.jpg",
+  //   features: ["Característica 1", "Característica 2", "Característica 3"],
+  //   wa: "Mensagem de interesse para WhatsApp"
+  // }
+];
+
+(function buildOutrosGrid(){
+  const grid = document.getElementById('outros-grid');
+  if(!grid) return;
+  OUTROS_SITIOS.forEach(s => {
+    const card = document.createElement('div');
+    card.className = 'outro-card';
+    card.innerHTML = `
+      <img class="outro-img" src="${s.capa}" alt="${s.nome}" loading="lazy">
+      <div class="outro-body">
+        <span class="outro-tag">${s.tipo}</span>
+        <div class="outro-name">${s.nome}</div>
+        <div class="outro-local">📍 ${s.local}</div>
+        <div class="outro-feats">${s.features.map(f=>`<span class="outro-feat">${f}</span>`).join('')}</div>
+        <div class="outro-price">${s.preco}<span> ${s.precoDetalhe}</span></div>
+        <a href="https://wa.me/5511941942210?text=${encodeURIComponent(s.wa)}" target="_blank" class="outro-btn">Ver disponibilidade</a>
+      </div>`;
+    grid.appendChild(card);
+  });
+})();
+</script>
 
 <!-- CONTACT -->
 <section class="contact-section" id="contato">
