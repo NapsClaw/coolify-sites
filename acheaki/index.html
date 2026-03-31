@@ -663,144 +663,13 @@
 <!-- RADIO BAR -->
 
 <!-- WELCOME MODAL -->
-<div class="welcome-overlay" id="welcome-overlay">
-  <div class="welcome-modal">
-    <div class="logo"><span style="color:#D4AF37;">ACHE</span><span style="color:#C0392B;">AKI</span></div>
-    <p>Encontre profissionais qualificados e ouça nossa rádio ao vivo!</p>
-    <div class="radio-info">
-      <span style="font-size:18px;">🎵</span>
-      <span><strong>Rádio & TV Web Show</strong> — ao vivo agora</span>
-    </div>
-    <button class="welcome-enter-btn" onclick="entrarNoSite()">
-      ▶ Entrar e Ouvir a Rádio
-    </button>
-    <button class="welcome-skip" onclick="entrarSemRadio()">Entrar sem som</button>
-  </div>
-</div>
-
-<script>
-  function entrarNoSite() {
-    document.getElementById('welcome-overlay').style.display = 'none';
-    var audio = document.getElementById('radio-audio');
-    var btn = document.getElementById('radio-toggle');
-    var status = document.getElementById('radio-status');
-    if (audio) {
-      audio.play().then(function() {
-        if (btn) btn.textContent = '⏸ Pausar';
-        if (status) status.textContent = 'Tocando ao vivo';
-      }).catch(function() {
-        if (btn) btn.textContent = '▶ Ouvir Rádio';
-        if (status) status.textContent = 'Clique para ouvir';
-      });
-    }
-  }
-  function entrarSemRadio() {
-    document.getElementById('welcome-overlay').style.display = 'none';
-    var btn = document.getElementById('radio-toggle');
-    var status = document.getElementById('radio-status');
-    if (btn) btn.textContent = '▶ Ouvir Rádio';
-    if (status) status.textContent = 'Clique para ouvir';
-  }
-</script>
-
-<div class="radio-bar" id="radio-bar">
-  <div class="radio-live"><span class="radio-dot"></span> Ao vivo</div>
-  <span class="radio-name">🎵 Rádio & TV Web Show</span>
-  <div style="display:flex;align-items:center;gap:10px;">
-    <button id="radio-toggle" onclick="toggleRadio()"
-      style="background:#D4AF37;color:#0D0802;font-weight:700;font-size:13px;padding:8px 20px;border-radius:50px;border:none;cursor:pointer;transition:all 0.2s;white-space:nowrap;">
-      ⏸ Pausar
-    </button>
-    <span id="radio-status" style="font-size:12px;color:rgba(255,255,255,0.5);">Carregando...</span>
-  </div>
-  <audio id="radio-audio" preload="none">
-    <source src="https://stm19.voxhd.com.br:10164/;" type="audio/mpeg">
-  </audio>
-</div>
-<script>
-  var audio = document.getElementById('radio-audio');
-  var btn = document.getElementById('radio-toggle');
-  var status = document.getElementById('radio-status');
-  var playing = false;
-
-  function tryAutoplay() {
-    audio.play().then(function() {
-      playing = true;
-      btn.textContent = '⏸ Pausar';
-      status.textContent = 'Tocando ao vivo';
-    }).catch(function() {
-      playing = false;
-      btn.textContent = '▶ Ouvir Rádio';
-      status.textContent = 'Clique para ouvir';
-    });
-  }
-
-  function toggleRadio() {
-    if (playing) {
-      audio.pause();
-      playing = false;
-      btn.textContent = '▶ Ouvir Rádio';
-      status.textContent = 'Pausado';
-    } else {
-      audio.play().then(function() {
-        playing = true;
-        btn.textContent = '⏸ Pausar';
-        status.textContent = 'Tocando ao vivo';
-      });
-    }
-  }
-
-  // Try autoplay on load
-  window.addEventListener('load', function() {
-    tryAutoplay();
-  });
-
-  // Also try on first user interaction (fallback for browsers that block autoplay)
-  document.addEventListener('click', function handler() {
-    if (!playing) {
-      tryAutoplay();
-    }
-    document.removeEventListener('click', handler);
-  }, { once: true });
-</script>
-
-<!-- NAV -->
-<nav style="top: 56px;">
-  <a href="#" class="nav-logo"><span style="color:#D4AF37;">ACHE</span><span style="color:#C0392B;">AKI</span></a>
-  <a href="https://wa.me/5561982242096?text=Olá! Quero encontrar um profissional pelo Acheaki" class="nav-cta" target="_blank">Falar no WhatsApp</a>
-</nav>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-bg-img"></div>
-  <div class="hero-inner">
-    <div class="hero-badge">Plataforma de Indicação de Profissionais</div>
-    <div style="font-family:'Space Grotesk',sans-serif;font-size:clamp(64px,16vw,120px);font-weight:900;line-height:0.9;letter-spacing:-4px;margin-bottom:16px;">
-  <span style="color:#D4AF37;">ACHE</span><span style="color:#C0392B;">AKI</span>
-</div>
-<h1 style="font-size:clamp(22px,4vw,36px);font-weight:700;line-height:1.2;letter-spacing:-0.5px;margin-bottom:16px;">
-  O profissional que você precisa,<br><em>onde você está.</em>
-</h1>
-    <p>Da saúde à beleza, da construção à tecnologia — encontre o especialista ideal na sua região em segundos.</p>
-    <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:8px;">
-      <span style="display:inline-flex;align-items:center;gap:6px;background:rgba(212,175,55,0.1);border:1px solid rgba(212,175,55,0.25);padding:7px 14px;border-radius:50px;font-size:13px;font-weight:600;color:#D4AF37;">
-        📍 Brasília e Entorno
-      </span>
-      <span style="display:inline-flex;align-items:center;gap:6px;background:rgba(212,175,55,0.1);border:1px solid rgba(212,175,55,0.25);padding:7px 14px;border-radius:50px;font-size:13px;font-weight:600;color:#D4AF37;">
-        💻 Atendimento Online
-      </span>
-      <span style="display:inline-flex;align-items:center;gap:6px;background:rgba(212,175,55,0.1);border:1px solid rgba(212,175,55,0.25);padding:7px 14px;border-radius:50px;font-size:13px;font-weight:600;color:#D4AF37;">
-        🤝 Presencial
-      </span>
-    </div>
-
-    <!-- Category photo circles - grouped -->
+<!-- Category photo circles - grouped -->
     <div class="hero-categories">
 
       <!-- SAÚDE -->
       <div class="hero-cat-group">
         <span class="hero-cat-group-title">🩺 Saúde</span>
-        <div class="hero-cat-row">
+        <div class="hero-cat-row" style="display:grid!important;grid-template-columns:repeat(4,1fr)!important;gap:10px!important;">
 <a href="javascript:void(0)" onclick="openProPopup('Psicólogo')" style="text-decoration:none;">
             <img class="hero-cat-img" src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=200&q=80&auto=format&fit=crop" crossorigin="anonymous" alt="Psicólogo">
             <span class="hero-cat-label">Psicólogo</span>
@@ -839,7 +708,7 @@
       <!-- BELEZA E ESTÉTICA -->
       <div class="hero-cat-group">
         <span class="hero-cat-group-title">💅 Beleza e Estética</span>
-        <div class="hero-cat-row">
+        <div class="hero-cat-row" style="display:grid!important;grid-template-columns:repeat(4,1fr)!important;gap:10px!important;">
 <a href="javascript:void(0)" onclick="openProPopup('Cabeleireiro')" style="text-decoration:none;">
             <img class="hero-cat-img" src="https://images.unsplash.com/photo-1562322140-8baeececf3df?w=200&q=80&auto=format&fit=crop" crossorigin="anonymous" alt="Cabeleireiro">
             <span class="hero-cat-label">Cabeleireiro</span>
@@ -862,7 +731,7 @@
       <!-- EDUCAÇÃO -->
       <div class="hero-cat-group">
         <span class="hero-cat-group-title">📚 Educação</span>
-        <div class="hero-cat-row">
+        <div class="hero-cat-row" style="display:grid!important;grid-template-columns:repeat(4,1fr)!important;gap:10px!important;">
 <a href="javascript:void(0)" onclick="openProPopup('Pedagogo')" style="text-decoration:none;">
             <img class="hero-cat-img" src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=200&q=80&auto=format&fit=crop" crossorigin="anonymous" alt="Pedagogo">
             <span class="hero-cat-label">Pedagogo</span>
@@ -885,7 +754,7 @@
       <!-- SERVIÇOS DIVERSOS -->
       <div class="hero-cat-group">
         <span class="hero-cat-group-title">🔧 Serviços Diversos</span>
-        <div class="hero-cat-row">
+        <div class="hero-cat-row" style="display:grid!important;grid-template-columns:repeat(4,1fr)!important;gap:10px!important;">
 <a href="javascript:void(0)" onclick="openProPopup('Eletricista')" style="text-decoration:none;">
             <img class="hero-cat-img" src="https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=200&q=80&auto=format&fit=crop" crossorigin="anonymous" alt="Eletricista">
             <span class="hero-cat-label">Eletricista</span>
