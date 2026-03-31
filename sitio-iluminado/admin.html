@@ -484,34 +484,117 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:#f1f5f9;color:var(--d
 <div class="modal-bg" id="modal-bg" onclick="if(event.target===this)closeModal()">
   <div class="modal">
     <div class="modal-header">
-      <h3>📋 Detalhes da reserva</h3>
-      <button class="modal-close" onclick="closeModal()">✕</button>
+      <h3 id="md-title">📋 Detalhes da reserva</h3>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button class="btn-export" onclick="toggleEditMode()" id="md-edit-btn" style="padding:6px 14px;font-size:12px">✏️ Editar</button>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
     </div>
-    <div class="modal-body">
-      <div class="modal-row">
-        <div class="modal-field"><label>Nome</label><div class="val" id="md-name"></div></div>
-        <div class="modal-field"><label>Telefone</label><div class="val" id="md-phone"></div></div>
+
+    <!-- VIEW MODE -->
+    <div id="md-view-mode">
+      <div class="modal-body">
+        <div class="modal-row">
+          <div class="modal-field"><label>Nome</label><div class="val" id="md-name"></div></div>
+          <div class="modal-field"><label>Telefone</label><div class="val" id="md-phone"></div></div>
+        </div>
+        <div class="modal-row">
+          <div class="modal-field"><label>E-mail</label><div class="val" id="md-email"></div></div>
+          <div class="modal-field"><label>Pessoas</label><div class="val" id="md-guests"></div></div>
+        </div>
+        <div class="modal-row">
+          <div class="modal-field"><label>Check-in</label><div class="val" id="md-checkin"></div></div>
+          <div class="modal-field"><label>Check-out</label><div class="val" id="md-checkout"></div></div>
+        </div>
+        <div class="modal-row">
+          <div class="modal-field"><label>Ocasião</label><div class="val" id="md-occasion"></div></div>
+          <div class="modal-field"><label>Status</label><div class="val" id="md-status"></div></div>
+        </div>
+        <div class="modal-field"><label>Observações</label><div class="val" id="md-obs"></div></div>
+        <div class="modal-field"><label>Registrado em</label><div class="val" id="md-created"></div></div>
       </div>
-      <div class="modal-row">
-        <div class="modal-field"><label>E-mail</label><div class="val" id="md-email"></div></div>
-        <div class="modal-field"><label>Pessoas</label><div class="val" id="md-guests"></div></div>
+      <div class="modal-footer">
+        <button class="btn-cancel-res" onclick="cancelReservation()">🗑️ Excluir</button>
+        <button class="btn-confirm-res" onclick="toggleResStatus()" id="md-toggle-btn">✅ Marcar como pago</button>
+        <a class="btn-wa" id="md-wa-link" href="#" target="_blank">📲 WhatsApp</a>
       </div>
-      <div class="modal-row">
-        <div class="modal-field"><label>Check-in</label><div class="val" id="md-checkin"></div></div>
-        <div class="modal-field"><label>Check-out</label><div class="val" id="md-checkout"></div></div>
-      </div>
-      <div class="modal-row">
-        <div class="modal-field"><label>Ocasião</label><div class="val" id="md-occasion"></div></div>
-        <div class="modal-field"><label>Status</label><div class="val" id="md-status"></div></div>
-      </div>
-      <div class="modal-field"><label>Observações</label><div class="val" id="md-obs"></div></div>
-      <div class="modal-field"><label>Registrado em</label><div class="val" id="md-created"></div></div>
     </div>
-    <div class="modal-footer">
-      <button class="btn-cancel-res" onclick="cancelReservation()" id="md-cancel-btn">🗑️ Excluir</button>
-      <button class="btn-confirm-res" onclick="toggleResStatus()" id="md-toggle-btn">✅ Marcar como pago</button>
-      <a class="btn-wa" id="md-wa-link" href="#" target="_blank">📲 WhatsApp</a>
+
+    <!-- EDIT MODE -->
+    <div id="md-edit-mode" style="display:none">
+      <div class="modal-body">
+        <div class="modal-row">
+          <div class="modal-field">
+            <label>Nome completo</label>
+            <input type="text" id="ed-name" class="form-row input" style="padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;width:100%">
+          </div>
+          <div class="modal-field">
+            <label>Telefone / WhatsApp</label>
+            <input type="tel" id="ed-phone" style="padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;width:100%">
+          </div>
+        </div>
+        <div class="modal-row">
+          <div class="modal-field">
+            <label>E-mail</label>
+            <input type="email" id="ed-email" style="padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;width:100%">
+          </div>
+          <div class="modal-field">
+            <label>Quantidade de pessoas</label>
+            <select id="ed-guests" style="padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;width:100%">
+              <option>até 15</option><option>até 20</option><option>até 25</option>
+              <option>até 30</option><option>acima de 30</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-row">
+          <div class="modal-field">
+            <label>Check-in</label>
+            <input type="date" id="ed-checkin" style="padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;width:100%">
+          </div>
+          <div class="modal-field">
+            <label>Check-out</label>
+            <input type="date" id="ed-checkout" style="padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;width:100%">
+          </div>
+        </div>
+        <div class="modal-row">
+          <div class="modal-field">
+            <label>Ocasião</label>
+            <select id="ed-occasion" style="padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;width:100%">
+              <option>FIM DE SEMANA COMUM</option>
+              <option>DIA DAS MÃES (2 DIAS) - 09/05 A 10/05/2026</option>
+              <option>DIA DOS PAIS (2 DIAS) - 08/08 A 09/08/2026</option>
+              <option>PROCLAMAÇÃO (2 DIAS) - 14/11 A 15/11/2026</option>
+              <option>PÁSCOA (3 DIAS) - 03/04 A 05/04/2026</option>
+              <option>TRABALHADOR (3 DIAS) - 01/05 A 03/05/2026</option>
+              <option>INDEPENDÊNCIA (3 DIAS) - 05/09 A 07/09/2026</option>
+              <option>CRIANÇAS (3 DIAS) - 10/10 A 12/10/2026</option>
+              <option>FINADOS (3 DIAS) - 30/10 A 02/11/2026</option>
+              <option>CONSCIÊNCIA (3 DIAS) - 20/11 A 22/11/2026</option>
+              <option>TIRADENTES (4 DIAS) - 18/04 A 21/04/2026</option>
+              <option>NATAL 2026 (4 DIAS) - 22/12 A 26/12/2026</option>
+              <option>CARNAVAL 2027 (4 DIAS) - 05/02 A 09/02/2027</option>
+              <option>DIÁRIA PARA EVENTOS</option>
+            </select>
+          </div>
+          <div class="modal-field">
+            <label>Status</label>
+            <select id="ed-status" style="padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;width:100%">
+              <option value="pending">⏳ Pendente</option>
+              <option value="paid">✅ Pago</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-field">
+          <label>Observações</label>
+          <textarea id="ed-obs" style="padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;width:100%;min-height:70px;resize:vertical;font-family:inherit"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-cancel-res" onclick="toggleEditMode()">✕ Cancelar</button>
+        <button class="btn-confirm-res" onclick="saveEdit()" style="background:var(--green)">💾 Salvar alterações</button>
+      </div>
     </div>
+
   </div>
 </div>
 
@@ -772,7 +855,79 @@ function openModal(id){
   document.getElementById('md-wa-link').href = `https://wa.me/55${waNum}?text=${waMsg}`;
   document.getElementById('modal-bg').classList.add('open');
 }
-function closeModal(){ document.getElementById('modal-bg').classList.remove('open'); modalResId=null; }
+function closeModal(){
+  document.getElementById('modal-bg').classList.remove('open');
+  modalResId=null;
+  // reset to view mode
+  document.getElementById('md-view-mode').style.display='';
+  document.getElementById('md-edit-mode').style.display='none';
+  document.getElementById('md-edit-btn').textContent='✏️ Editar';
+  document.getElementById('md-title').textContent='📋 Detalhes da reserva';
+}
+
+function toggleEditMode(){
+  const editMode = document.getElementById('md-edit-mode');
+  const viewMode = document.getElementById('md-view-mode');
+  const isEditing = editMode.style.display !== 'none';
+  if(isEditing){
+    // switch back to view
+    editMode.style.display='none';
+    viewMode.style.display='';
+    document.getElementById('md-edit-btn').textContent='✏️ Editar';
+    document.getElementById('md-title').textContent='📋 Detalhes da reserva';
+  } else {
+    // switch to edit — pre-fill fields
+    const r = getRes().find(x=>x.id===modalResId);
+    if(!r) return;
+    document.getElementById('ed-name').value = r.name||'';
+    document.getElementById('ed-phone').value = r.phone||'';
+    document.getElementById('ed-email').value = r.email||'';
+    document.getElementById('ed-guests').value = r.guests||'até 20';
+    document.getElementById('ed-checkin').value = r.checkin||'';
+    document.getElementById('ed-checkout').value = r.checkout||'';
+    document.getElementById('ed-occasion').value = r.occasion||'FIM DE SEMANA COMUM';
+    document.getElementById('ed-status').value = r.status||'pending';
+    document.getElementById('ed-obs').value = r.obs||'';
+    viewMode.style.display='none';
+    editMode.style.display='';
+    document.getElementById('md-edit-btn').textContent='← Ver';
+    document.getElementById('md-title').textContent='✏️ Editar reserva';
+  }
+}
+
+function saveEdit(){
+  if(!modalResId) return;
+  const name = document.getElementById('ed-name').value.trim();
+  const phone = document.getElementById('ed-phone').value.trim();
+  const checkin = document.getElementById('ed-checkin').value;
+  const checkout = document.getElementById('ed-checkout').value;
+  if(!name){ showToast('⚠️ Nome obrigatório'); return; }
+  if(!checkin || !checkout){ showToast('⚠️ Datas obrigatórias'); return; }
+  if(checkin >= checkout){ showToast('⚠️ Check-out deve ser depois do check-in'); return; }
+
+  const all = getRes();
+  const idx = all.findIndex(x=>x.id===modalResId);
+  if(idx === -1) return;
+  all[idx] = {
+    ...all[idx],
+    name,
+    phone,
+    email: document.getElementById('ed-email').value.trim(),
+    guests: document.getElementById('ed-guests').value,
+    checkin,
+    checkout,
+    occasion: document.getElementById('ed-occasion').value,
+    status: document.getElementById('ed-status').value,
+    obs: document.getElementById('ed-obs').value.trim(),
+    updatedAt: new Date().toISOString(),
+  };
+  saveRes(all);
+  closeModal();
+  if(currentPage==='dashboard') renderDashboard();
+  if(currentPage==='reservas') renderResTable();
+  if(currentPage==='calendario') renderAdminCal();
+  showToast('✅ Reserva atualizada com sucesso!');
+}
 function toggleResStatus(){
   if(!modalResId) return;
   const all = getRes();
