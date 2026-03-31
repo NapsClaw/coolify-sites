@@ -11,272 +11,253 @@
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --teal: #1a5c6b;
-    --teal-dark: #0e3d48;
-    --teal-light: #2a7a8c;
-    --gold: #c9a227;
-    --gold-light: #e8c44a;
+    --primary: #2a727c;
+    --primary-light: #418c9d;
+    --primary-dark: #1e5560;
+    --accent: #FF5151;
     --white: #ffffff;
-    --off-white: #f8f6f2;
-    --gray-light: #f0eeea;
-    --gray: #6b7280;
-    --dark: #1a1a1a;
+    --off-white: #FAFAFA;
+    --light-gray: #F1F1F1;
+    --border: #DDDDDD;
+    --text: #424242;
+    --text-light: #4b4b4b;
+    --text-muted: #575757;
     --font-serif: 'Playfair Display', serif;
     --font-sans: 'Inter', sans-serif;
+    --radius: 17px;
   }
   html { scroll-behavior: smooth; }
-  body { font-family: var(--font-sans); color: var(--dark); background: var(--white); overflow-x: hidden; }
+  body { font-family: var(--font-sans); color: var(--text); background: var(--off-white); overflow-x: hidden; }
   img { max-width: 100%; display: block; }
 
   /* NAV */
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    background: rgba(26,92,107,0.96); backdrop-filter: blur(8px);
+    background: rgba(255,255,255,0.97); backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
     padding: 14px 20px;
     display: flex; align-items: center; justify-content: space-between;
   }
   .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
   .nav-logo-icon {
-    width: 40px; height: 40px;
-    background: var(--gold); border-radius: 8px;
+    width: 40px; height: 40px; background: var(--primary); border-radius: 10px;
     display: flex; align-items: center; justify-content: center;
   }
-  .nav-logo-icon svg { width: 24px; height: 24px; fill: white; }
-  .nav-logo-text { color: white; font-family: var(--font-serif); font-size: 18px; font-weight: 700; letter-spacing: 0.5px; }
-  .nav-logo-creci { color: rgba(255,255,255,0.65); font-size: 10px; font-weight: 400; }
+  .nav-logo-icon svg { width: 22px; height: 22px; fill: white; }
+  .nav-logo-name { font-family: var(--font-serif); font-size: 17px; font-weight: 700; color: var(--primary-dark); }
+  .nav-logo-creci { color: var(--text-muted); font-size: 10px; }
   .nav-cta {
-    background: var(--gold); color: white; text-decoration: none;
-    padding: 9px 18px; border-radius: 6px; font-size: 13px; font-weight: 600;
+    background: var(--primary); color: white; text-decoration: none;
+    padding: 9px 18px; border-radius: 30px; font-size: 13px; font-weight: 600;
     transition: background 0.2s;
   }
-  .nav-cta:hover { background: var(--gold-light); }
+  .nav-cta:hover { background: var(--primary-light); }
 
   /* HERO */
   .hero {
     min-height: 100svh;
-    background: linear-gradient(160deg, #0e3d48 0%, #1a5c6b 50%, #1a4a55 100%);
+    background: linear-gradient(160deg, var(--primary-dark) 0%, var(--primary) 60%, var(--primary-light) 100%);
     display: flex; flex-direction: column; justify-content: center;
-    padding: 100px 20px 60px;
-    position: relative; overflow: hidden;
+    padding: 100px 20px 60px; position: relative; overflow: hidden;
   }
   .hero::before {
-    content: '';
-    position: absolute; inset: 0;
+    content: ''; position: absolute; inset: 0;
     background: url('https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200&q=80') center/cover no-repeat;
-    opacity: 0.12;
+    opacity: 0.10;
   }
-  .hero-content { position: relative; z-index: 1; max-width: 600px; }
+  .hero-content { position: relative; z-index: 1; }
   .hero-badge {
     display: inline-flex; align-items: center; gap: 6px;
-    background: rgba(201,162,39,0.2); border: 1px solid rgba(201,162,39,0.4);
-    color: var(--gold-light); font-size: 12px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase;
-    padding: 6px 14px; border-radius: 50px; margin-bottom: 20px;
+    background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+    color: white; font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
+    padding: 6px 14px; border-radius: 30px; margin-bottom: 20px;
   }
-  .hero-badge::before { content: '★'; font-size: 11px; }
   .hero h1 {
-    font-family: var(--font-serif); font-size: clamp(32px, 8vw, 54px); font-weight: 700;
-    color: white; line-height: 1.15; margin-bottom: 18px;
+    font-family: var(--font-serif); font-size: clamp(30px, 8vw, 52px); font-weight: 700;
+    color: white; line-height: 1.15; margin-bottom: 16px;
   }
-  .hero h1 span { color: var(--gold-light); }
-  .hero p {
-    color: rgba(255,255,255,0.80); font-size: 16px; line-height: 1.65;
-    margin-bottom: 32px; max-width: 480px;
-  }
+  .hero h1 span { color: #a8d8df; }
+  .hero p { color: rgba(255,255,255,0.82); font-size: 15px; line-height: 1.7; margin-bottom: 30px; }
   .hero-ctas { display: flex; flex-direction: column; gap: 12px; }
-  .btn-primary {
+  .btn-wa {
     display: flex; align-items: center; justify-content: center; gap: 10px;
     background: #25D366; color: white; text-decoration: none;
-    padding: 16px 24px; border-radius: 10px; font-size: 16px; font-weight: 600;
-    box-shadow: 0 4px 20px rgba(37,211,102,0.4);
-    transition: transform 0.2s, box-shadow 0.2s;
+    padding: 16px 24px; border-radius: 30px; font-size: 15px; font-weight: 600;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.35); transition: transform 0.2s;
   }
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(37,211,102,0.5); }
-  .btn-secondary {
+  .btn-wa:hover { transform: translateY(-2px); }
+  .btn-outline {
     display: flex; align-items: center; justify-content: center;
-    border: 1.5px solid rgba(255,255,255,0.35); color: white; text-decoration: none;
-    padding: 15px 24px; border-radius: 10px; font-size: 15px; font-weight: 500;
+    border: 1.5px solid rgba(255,255,255,0.4); color: white; text-decoration: none;
+    padding: 15px 24px; border-radius: 30px; font-size: 14px; font-weight: 500;
     transition: background 0.2s;
   }
-  .btn-secondary:hover { background: rgba(255,255,255,0.1); }
+  .btn-outline:hover { background: rgba(255,255,255,0.1); }
   .hero-stats {
     display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 1px; background: rgba(255,255,255,0.1);
-    border-radius: 12px; overflow: hidden; margin-top: 40px;
+    gap: 1px; background: rgba(255,255,255,0.15); border-radius: var(--radius);
+    overflow: hidden; margin-top: 40px;
   }
-  .hero-stat {
-    background: rgba(255,255,255,0.06);
-    padding: 18px 12px; text-align: center;
-  }
-  .hero-stat-num {
-    font-family: var(--font-serif); font-size: 26px; font-weight: 700;
-    color: var(--gold-light); line-height: 1;
-  }
-  .hero-stat-label { color: rgba(255,255,255,0.65); font-size: 11px; margin-top: 4px; line-height: 1.3; }
+  .hero-stat { background: rgba(255,255,255,0.07); padding: 18px 10px; text-align: center; }
+  .hero-stat-num { font-family: var(--font-serif); font-size: 24px; font-weight: 700; color: white; line-height: 1; }
+  .hero-stat-label { color: rgba(255,255,255,0.65); font-size: 10px; margin-top: 4px; line-height: 1.3; }
 
-  /* SECTION BASE */
-  section { padding: 64px 20px; }
+  /* SECTIONS */
+  section { padding: 60px 20px; }
   .section-label {
-    display: inline-block; color: var(--teal); font-size: 11px; font-weight: 600;
-    letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px;
+    display: inline-block; color: var(--primary); font-size: 11px; font-weight: 600;
+    letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px;
   }
   .section-title {
-    font-family: var(--font-serif); font-size: clamp(26px, 6vw, 40px);
-    font-weight: 700; color: var(--dark); line-height: 1.2; margin-bottom: 16px;
+    font-family: var(--font-serif); font-size: clamp(24px, 6vw, 38px);
+    font-weight: 700; color: var(--text); line-height: 1.2; margin-bottom: 14px;
   }
-  .section-title span { color: var(--teal); }
-  .section-sub { color: var(--gray); font-size: 15px; line-height: 1.7; max-width: 520px; }
-  .divider { width: 48px; height: 3px; background: var(--gold); border-radius: 2px; margin: 16px 0; }
+  .section-title span { color: var(--primary); }
+  .divider { width: 40px; height: 3px; background: var(--primary-light); border-radius: 2px; margin: 14px 0; }
+  .section-sub { color: var(--text-muted); font-size: 14px; line-height: 1.7; }
 
   /* ABOUT */
-  .about { background: var(--off-white); }
-  .about-inner { max-width: 640px; }
+  .about { background: var(--white); }
   .about-photo-wrap {
-    width: 100%; aspect-ratio: 4/3; border-radius: 16px; overflow: hidden;
-    margin-top: 28px; position: relative;
+    width: 100%; aspect-ratio: 4/3; border-radius: var(--radius); overflow: hidden;
+    margin-top: 24px; position: relative;
   }
   .about-photo-wrap img { width: 100%; height: 100%; object-fit: cover; }
-  .about-badge-overlay {
-    position: absolute; bottom: 16px; left: 16px; right: 16px;
-    background: rgba(14,61,72,0.92); backdrop-filter: blur(6px);
-    border-radius: 10px; padding: 12px 16px;
-    display: flex; align-items: center; gap: 12px;
+  .about-overlay {
+    position: absolute; bottom: 14px; left: 14px; right: 14px;
+    background: rgba(26,85,96,0.92); backdrop-filter: blur(6px);
+    border-radius: 12px; padding: 12px 14px;
+    display: flex; align-items: center; gap: 10px;
   }
-  .about-badge-icon { font-size: 28px; }
-  .about-badge-text { color: white; font-size: 13px; line-height: 1.4; }
-  .about-badge-text strong { color: var(--gold-light); display: block; font-size: 15px; }
-  .about-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+  .about-overlay-icon { font-size: 26px; }
+  .about-overlay-text { color: white; font-size: 12px; line-height: 1.4; }
+  .about-overlay-text strong { color: #a8d8df; display: block; font-size: 14px; }
+  .about-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
   .tag {
-    background: var(--teal); color: white;
-    font-size: 12px; font-weight: 500; padding: 6px 14px; border-radius: 50px;
+    background: var(--primary); color: white;
+    font-size: 12px; font-weight: 500; padding: 5px 12px; border-radius: 30px;
   }
 
   /* DIFERENCIAIS */
-  .diferenciais { background: var(--teal-dark); }
-  .diferenciais .section-label { color: var(--gold-light); }
+  .diferenciais { background: var(--primary-dark); }
+  .diferenciais .section-label { color: #a8d8df; }
   .diferenciais .section-title { color: white; }
-  .diferenciais .section-title span { color: var(--gold-light); }
-  .diferenciais .section-sub { color: rgba(255,255,255,0.7); }
-  .diferenciais .divider { background: var(--gold); }
-  .dif-grid { display: flex; flex-direction: column; gap: 16px; margin-top: 32px; }
+  .diferenciais .section-title span { color: #a8d8df; }
+  .diferenciais .section-sub { color: rgba(255,255,255,0.65); }
+  .diferenciais .divider { background: var(--primary-light); }
+  .dif-grid { display: flex; flex-direction: column; gap: 14px; margin-top: 28px; }
   .dif-card {
-    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 14px; padding: 22px 20px;
-    display: flex; align-items: flex-start; gap: 16px;
+    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: var(--radius); padding: 20px 18px;
+    display: flex; align-items: flex-start; gap: 14px;
   }
   .dif-icon {
-    width: 48px; height: 48px; min-width: 48px;
-    background: var(--gold); border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 22px;
+    width: 46px; height: 46px; min-width: 46px;
+    background: var(--primary-light); border-radius: 12px;
+    display: flex; align-items: center; justify-content: center; font-size: 20px;
   }
-  .dif-title { color: white; font-weight: 600; font-size: 15px; margin-bottom: 4px; }
-  .dif-desc { color: rgba(255,255,255,0.65); font-size: 13px; line-height: 1.6; }
+  .dif-title { color: white; font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+  .dif-desc { color: rgba(255,255,255,0.62); font-size: 12px; line-height: 1.6; }
 
-  /* SOBRADOS */
-  .imoveis { background: var(--white); }
-  .imoveis-grid { display: flex; flex-direction: column; gap: 20px; margin-top: 32px; }
+  /* IMOVEIS */
+  .imoveis { background: var(--off-white); }
+  .imoveis-grid { display: flex; flex-direction: column; gap: 18px; margin-top: 28px; }
   .imovel-card {
-    border-radius: 16px; overflow: hidden;
-    box-shadow: 0 2px 20px rgba(0,0,0,0.08);
-    border: 1px solid var(--gray-light);
+    background: white; border-radius: var(--radius); overflow: hidden;
+    box-shadow: 0 1px 12px rgba(0,0,0,0.07); border: 1px solid var(--border);
     transition: transform 0.2s, box-shadow 0.2s;
   }
-  .imovel-card:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(0,0,0,0.12); }
+  .imovel-card:hover { transform: translateY(-3px); box-shadow: 0 6px 24px rgba(42,114,124,0.15); }
   .imovel-img { width: 100%; aspect-ratio: 16/10; object-fit: cover; }
-  .imovel-tag {
-    display: inline-block; background: var(--gold); color: white;
-    font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 4px;
+  .imovel-badge {
+    display: inline-block; background: var(--accent); color: white;
+    font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 30px;
     margin-bottom: 8px;
   }
-  .imovel-info { padding: 18px 16px; }
-  .imovel-title { font-family: var(--font-serif); font-size: 18px; font-weight: 700; color: var(--dark); margin-bottom: 6px; }
-  .imovel-location { color: var(--gray); font-size: 13px; margin-bottom: 12px; display: flex; align-items: center; gap: 4px; }
-  .imovel-features { display: flex; gap: 16px; margin-bottom: 14px; }
-  .imovel-feat { display: flex; align-items: center; gap: 4px; color: var(--gray); font-size: 13px; }
-  .imovel-price { font-family: var(--font-serif); font-size: 22px; font-weight: 700; color: var(--teal); }
+  .imovel-info { padding: 16px; }
+  .imovel-title { font-family: var(--font-serif); font-size: 17px; font-weight: 700; color: var(--text); margin-bottom: 5px; }
+  .imovel-loc { color: var(--text-muted); font-size: 12px; margin-bottom: 10px; }
+  .imovel-feats { display: flex; gap: 14px; margin-bottom: 12px; }
+  .imovel-feat { color: var(--text-muted); font-size: 12px; display: flex; align-items: center; gap: 3px; }
+  .imovel-price { font-family: var(--font-serif); font-size: 20px; font-weight: 700; color: var(--primary); }
   .imovel-cta {
-    display: block; text-align: center; background: var(--teal); color: white;
-    text-decoration: none; padding: 12px; font-size: 14px; font-weight: 600;
-    border-radius: 8px; margin-top: 14px; transition: background 0.2s;
+    display: block; text-align: center; background: var(--primary); color: white;
+    text-decoration: none; padding: 11px; font-size: 13px; font-weight: 600;
+    border-radius: 10px; margin-top: 12px; transition: background 0.2s;
   }
-  .imovel-cta:hover { background: var(--teal-light); }
+  .imovel-cta:hover { background: var(--primary-light); }
 
   /* DEPOIMENTOS */
-  .depoimentos { background: var(--off-white); }
-  .dep-grid { display: flex; flex-direction: column; gap: 16px; margin-top: 32px; }
+  .depoimentos { background: var(--white); }
+  .dep-grid { display: flex; flex-direction: column; gap: 14px; margin-top: 28px; }
   .dep-card {
-    background: white; border-radius: 16px; padding: 22px 20px;
-    box-shadow: 0 2px 16px rgba(0,0,0,0.06);
-    border-left: 4px solid var(--teal);
+    background: var(--off-white); border-radius: var(--radius); padding: 20px 18px;
+    border: 1px solid var(--border); border-left: 4px solid var(--primary-light);
   }
-  .dep-stars { color: #f59e0b; font-size: 18px; margin-bottom: 10px; }
-  .dep-text { color: var(--dark); font-size: 14px; line-height: 1.7; margin-bottom: 14px; font-style: italic; }
+  .dep-stars { color: #f59e0b; font-size: 16px; margin-bottom: 8px; }
+  .dep-text { color: var(--text-light); font-size: 13px; line-height: 1.7; margin-bottom: 12px; font-style: italic; }
   .dep-author { display: flex; align-items: center; gap: 10px; }
   .dep-avatar {
-    width: 40px; height: 40px; border-radius: 50%;
-    background: var(--teal); color: white;
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--primary); color: white;
     display: flex; align-items: center; justify-content: center;
-    font-size: 16px; font-weight: 700;
+    font-size: 14px; font-weight: 700;
   }
-  .dep-name { font-weight: 600; font-size: 14px; color: var(--dark); }
-  .dep-source { font-size: 11px; color: var(--gray); }
-  .dep-source-google { color: #4285f4; }
-  .dep-source-insta { color: #e1306c; }
+  .dep-name { font-weight: 600; font-size: 13px; color: var(--text); }
+  .dep-source { font-size: 11px; color: var(--text-muted); }
+  .dep-google { color: #4285f4; }
+  .dep-insta { color: #e1306c; }
 
   /* INSTAGRAM */
-  .instagram { background: var(--white); }
-  .insta-banner {
+  .instagram { background: var(--off-white); }
+  .insta-card {
     background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
-    border-radius: 16px; padding: 32px 24px; text-align: center; margin-top: 28px;
+    border-radius: var(--radius); padding: 28px 20px; text-align: center; margin-top: 24px;
   }
-  .insta-banner svg { width: 48px; height: 48px; fill: white; margin: 0 auto 12px; }
-  .insta-banner h3 { color: white; font-family: var(--font-serif); font-size: 24px; margin-bottom: 8px; }
-  .insta-banner p { color: rgba(255,255,255,0.85); font-size: 14px; margin-bottom: 20px; line-height: 1.6; }
-  .insta-stats { display: flex; justify-content: center; gap: 32px; margin-bottom: 24px; }
-  .insta-stat { text-align: center; }
-  .insta-stat-num { color: white; font-size: 22px; font-weight: 700; font-family: var(--font-serif); }
-  .insta-stat-label { color: rgba(255,255,255,0.75); font-size: 12px; }
+  .insta-card svg { width: 44px; height: 44px; fill: white; margin: 0 auto 10px; }
+  .insta-card h3 { color: white; font-family: var(--font-serif); font-size: 22px; margin-bottom: 8px; }
+  .insta-card p { color: rgba(255,255,255,0.82); font-size: 13px; line-height: 1.6; margin-bottom: 18px; }
+  .insta-nums { display: flex; justify-content: center; gap: 28px; margin-bottom: 20px; }
+  .insta-num-val { color: white; font-size: 20px; font-weight: 700; font-family: var(--font-serif); }
+  .insta-num-label { color: rgba(255,255,255,0.7); font-size: 11px; }
   .insta-btn {
-    display: inline-flex; align-items: center; gap: 8px;
+    display: inline-flex; align-items: center; gap: 6px;
     background: white; color: #833ab4;
-    text-decoration: none; padding: 13px 28px; border-radius: 50px;
-    font-size: 15px; font-weight: 700; transition: transform 0.2s;
+    text-decoration: none; padding: 12px 26px; border-radius: 30px;
+    font-size: 14px; font-weight: 700; transition: transform 0.2s;
   }
-  .insta-btn:hover { transform: scale(1.04); }
+  .insta-btn:hover { transform: scale(1.03); }
 
-  /* CTA FINAL */
+  /* CTA */
   .cta-section {
-    background: linear-gradient(160deg, var(--teal-dark) 0%, var(--teal) 100%);
-    text-align: center; padding: 72px 20px;
+    background: linear-gradient(160deg, var(--primary-dark) 0%, var(--primary) 100%);
+    text-align: center; padding: 64px 20px;
   }
-  .cta-section h2 { font-family: var(--font-serif); font-size: clamp(28px, 7vw, 44px); color: white; margin-bottom: 14px; }
-  .cta-section p { color: rgba(255,255,255,0.75); font-size: 15px; line-height: 1.65; margin-bottom: 32px; max-width: 480px; margin-left: auto; margin-right: auto; }
-  .cta-group { display: flex; flex-direction: column; gap: 12px; max-width: 340px; margin: 0 auto; }
+  .cta-section h2 { font-family: var(--font-serif); font-size: clamp(26px, 7vw, 40px); color: white; margin-bottom: 12px; }
+  .cta-section p { color: rgba(255,255,255,0.75); font-size: 14px; line-height: 1.65; margin-bottom: 28px; }
+  .cta-wrap { display: flex; flex-direction: column; gap: 12px; max-width: 320px; margin: 0 auto; }
 
   /* FOOTER */
-  footer {
-    background: var(--dark); padding: 36px 20px;
-    text-align: center;
-  }
-  .footer-logo { font-family: var(--font-serif); font-size: 22px; color: white; margin-bottom: 6px; }
-  .footer-creci { color: var(--gold-light); font-size: 12px; margin-bottom: 16px; }
-  .footer-links { display: flex; flex-direction: column; gap: 6px; margin-bottom: 20px; }
-  .footer-links a { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 13px; }
-  .footer-copy { color: rgba(255,255,255,0.35); font-size: 11px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 16px; margin-top: 16px; }
+  footer { background: var(--text); padding: 32px 20px; text-align: center; }
+  .footer-logo { font-family: var(--font-serif); font-size: 20px; color: white; margin-bottom: 4px; }
+  .footer-creci { color: var(--primary-light); font-size: 11px; margin-bottom: 14px; }
+  .footer-info { color: rgba(255,255,255,0.55); font-size: 12px; line-height: 1.8; margin-bottom: 14px; }
+  .footer-info a { color: rgba(255,255,255,0.55); text-decoration: none; }
+  .footer-copy { color: rgba(255,255,255,0.3); font-size: 10px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 14px; margin-top: 14px; }
 
   /* FLOAT WA */
   .float-wa {
     position: fixed; bottom: 20px; right: 20px; z-index: 999;
-    background: #25D366; border-radius: 50%; width: 60px; height: 60px;
+    background: #25D366; border-radius: 50%; width: 58px; height: 58px;
     display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 4px 20px rgba(37,211,102,0.45); text-decoration: none;
-    animation: pulse 2.5s infinite;
+    box-shadow: 0 4px 18px rgba(37,211,102,0.4); text-decoration: none;
+    animation: wapulse 2.5s infinite;
   }
-  @keyframes pulse {
-    0%, 100% { box-shadow: 0 4px 20px rgba(37,211,102,0.45); }
-    50% { box-shadow: 0 4px 30px rgba(37,211,102,0.7), 0 0 0 8px rgba(37,211,102,0.1); }
+  @keyframes wapulse {
+    0%, 100% { box-shadow: 0 4px 18px rgba(37,211,102,0.4); }
+    50% { box-shadow: 0 4px 28px rgba(37,211,102,0.65), 0 0 0 7px rgba(37,211,102,0.1); }
   }
-  .float-wa svg { width: 30px; height: 30px; fill: white; }
+  .float-wa svg { width: 28px; height: 28px; fill: white; }
 </style>
 </head>
 <body>
@@ -285,68 +266,57 @@
 <nav>
   <a class="nav-logo" href="#">
     <div class="nav-logo-icon">
-      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22" stroke="white" stroke-width="1.5" fill="none"/></svg>
     </div>
     <div>
-      <div class="nav-logo-text">LR Imóveis</div>
+      <div class="nav-logo-name">LR Imóveis</div>
       <div class="nav-logo-creci">CRECI 27.318-J</div>
     </div>
   </a>
-  <a class="nav-cta" href="https://wa.me/5511995145000?text=Oi%20Renato%2C%20quero%20conhecer%20sobrados%20na%20zona%20norte!">Falar agora</a>
+  <a class="nav-cta" href="https://wa.me/5511913260072?text=Oi%20Renato%2C%20quero%20conhecer%20sobrados%20na%20zona%20norte!">Falar agora</a>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
   <div class="hero-content">
-    <div class="hero-badge">Zona Norte de São Paulo</div>
-    <h1>O corretor <span>especialista</span> em sobrados que você precisava</h1>
-    <p>18 anos encontrando o imóvel certo para cada família. Com o maior portfólio de sobrados da zona norte de SP.</p>
+    <div class="hero-badge">★ Especialista · Zona Norte de São Paulo</div>
+    <h1>O corretor <span>referência</span> em sobrados na zona norte</h1>
+    <p>18 anos encontrando o imóvel certo para cada família. Maior portfólio de sobrados da zona norte de SP.</p>
     <div class="hero-ctas">
-      <a class="btn-primary" href="https://wa.me/5511995145000?text=Oi%20Renato%2C%20quero%20ver%20sobrados%20na%20zona%20norte!">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.136.563 4.14 1.543 5.877L.054 23.077c-.1.37.007.764.27 1.028.263.263.657.37 1.028.27l5.197-1.49C8.135 23.592 10.02 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
-        Quero ver sobrados disponíveis
+      <a class="btn-wa" href="https://wa.me/5511913260072?text=Oi%20Renato%2C%20quero%20ver%20sobrados%20na%20zona%20norte!">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.136.563 4.14 1.543 5.877L.054 23.077c-.1.37.007.764.27 1.028.263.263.657.37 1.028.27l5.197-1.49C8.135 23.592 10.02 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
+        Ver sobrados disponíveis
       </a>
-      <a class="btn-secondary" href="#imoveis">Ver portfólio de imóveis</a>
+      <a class="btn-outline" href="#imoveis">Ver portfólio</a>
     </div>
     <div class="hero-stats">
-      <div class="hero-stat">
-        <div class="hero-stat-num">18+</div>
-        <div class="hero-stat-label">anos de experiência</div>
-      </div>
-      <div class="hero-stat">
-        <div class="hero-stat-num">63k</div>
-        <div class="hero-stat-label">seguidores no Instagram</div>
-      </div>
-      <div class="hero-stat">
-        <div class="hero-stat-num">+500</div>
-        <div class="hero-stat-label">famílias atendidas</div>
-      </div>
+      <div class="hero-stat"><div class="hero-stat-num">18+</div><div class="hero-stat-label">anos de experiência</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">63k</div><div class="hero-stat-label">seguidores Instagram</div></div>
+      <div class="hero-stat"><div class="hero-stat-num">+500</div><div class="hero-stat-label">famílias atendidas</div></div>
     </div>
   </div>
 </section>
 
 <!-- ABOUT -->
 <section class="about">
-  <div class="about-inner">
-    <span class="section-label">Sobre o corretor</span>
-    <h2 class="section-title">Renato Vieira — <span>referência</span> em zona norte</h2>
-    <div class="divider"></div>
-    <p class="section-sub">Sou corretor de imóveis com CRECI 27.318-J e mais de 18 anos dedicados exclusivamente à zona norte de São Paulo. Conheço cada bairro, cada rua, cada detalhe que faz diferença na hora de escolher seu sobrado.</p>
-    <div class="about-tags">
-      <span class="tag">CRECI 27.318-J</span>
-      <span class="tag">18 anos de experiência</span>
-      <span class="tag">Especialista em sobrados</span>
-      <span class="tag">Zona Norte SP</span>
-      <span class="tag">+63k seguidores</span>
-    </div>
-    <div class="about-photo-wrap">
-      <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80" alt="Sobrado zona norte São Paulo" loading="lazy">
-      <div class="about-badge-overlay">
-        <div class="about-badge-icon">🏆</div>
-        <div class="about-badge-text">
-          <strong>Maior expositor de imóveis</strong>
-          da zona norte de São Paulo
-        </div>
+  <span class="section-label">Sobre o corretor</span>
+  <h2 class="section-title">Renato Vieira — <span>referência</span> na zona norte</h2>
+  <div class="divider"></div>
+  <p class="section-sub">Corretor com CRECI 27.318-J e mais de 18 anos dedicados exclusivamente à zona norte de São Paulo. Conheço cada bairro, cada rua e cada detalhe que faz diferença na hora de escolher seu sobrado.</p>
+  <div class="about-tags">
+    <span class="tag">CRECI 27.318-J</span>
+    <span class="tag">18 anos de experiência</span>
+    <span class="tag">Especialista em sobrados</span>
+    <span class="tag">Zona Norte SP</span>
+    <span class="tag">63k seguidores</span>
+  </div>
+  <div class="about-photo-wrap">
+    <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80" alt="Sobrados zona norte São Paulo" loading="lazy">
+    <div class="about-overlay">
+      <div class="about-overlay-icon">🏆</div>
+      <div class="about-overlay-text">
+        <strong>Maior expositor de imóveis</strong>
+        da zona norte de São Paulo
       </div>
     </div>
   </div>
@@ -354,37 +324,37 @@
 
 <!-- DIFERENCIAIS -->
 <section class="diferenciais">
-  <span class="section-label">Por que escolher o Renato</span>
+  <span class="section-label">Por que escolher</span>
   <h2 class="section-title">Diferenciais que <span>fazem a diferença</span></h2>
   <div class="divider"></div>
-  <p class="section-sub">Não é só sobre vender imóveis. É sobre encontrar o lugar certo para você e sua família.</p>
+  <p class="section-sub">Mais do que um corretor — um especialista que conhece cada detalhe da zona norte.</p>
   <div class="dif-grid">
     <div class="dif-card">
       <div class="dif-icon">🗺️</div>
       <div>
         <div class="dif-title">Especialista exclusivo da zona norte</div>
-        <div class="dif-desc">Conheço cada bairro, cada rua, os melhores blocos e a valorização de cada região. Ninguém tem esse conhecimento mais profundo.</div>
+        <div class="dif-desc">Conheço cada bairro, cada rua e os melhores condomínios. Ninguém tem esse nível de conhecimento regional.</div>
       </div>
     </div>
     <div class="dif-card">
       <div class="dif-icon">📱</div>
       <div>
         <div class="dif-title">+63 mil seguidores no Instagram</div>
-        <div class="dif-desc">Milhões de visualizações mensais. Seu imóvel ganha exposição máxima. Vendo mais rápido porque apareço para mais pessoas.</div>
+        <div class="dif-desc">Milhões de visualizações mensais. Seu imóvel ganha exposição máxima e vende muito mais rápido.</div>
       </div>
     </div>
     <div class="dif-card">
       <div class="dif-icon">📅</div>
       <div>
         <div class="dif-title">18 anos de mercado imobiliário</div>
-        <div class="dif-desc">Já acompanhei o mercado subir, descer e se transformar. Essa experiência me dá clareza para orientar você na melhor negociação.</div>
+        <div class="dif-desc">Experiência para orientar você na melhor negociação, seja comprando ou vendendo seu imóvel.</div>
       </div>
     </div>
     <div class="dif-card">
       <div class="dif-icon">🤝</div>
       <div>
-        <div class="dif-title">Atendimento personalizado e honesto</div>
-        <div class="dif-desc">Não empurro imóvel. Escuto o que você precisa e busco o que realmente faz sentido pra sua família e seu bolso.</div>
+        <div class="dif-title">Atendimento honesto e personalizado</div>
+        <div class="dif-desc">Escuto o que você precisa e busco o que faz sentido pra sua família. Sem empurrar imóvel.</div>
       </div>
     </div>
   </div>
@@ -395,51 +365,51 @@
   <span class="section-label">Portfólio</span>
   <h2 class="section-title">Sobrados em <span>destaque</span></h2>
   <div class="divider"></div>
-  <p class="section-sub">Condomínios e ruas exclusivas na zona norte. Clique para conversar sobre qualquer imóvel.</p>
+  <p class="section-sub">Imóveis selecionados na zona norte. Fale com o Renato para conhecer qualquer um deles.</p>
   <div class="imoveis-grid">
     <div class="imovel-card">
       <img class="imovel-img" src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800&q=80" alt="Sobrado Tucuruvi" loading="lazy">
       <div class="imovel-info">
-        <span class="imovel-tag">Destaque</span>
+        <span class="imovel-badge">Destaque</span>
         <div class="imovel-title">Sobrado em Condomínio — Tucuruvi</div>
-        <div class="imovel-location">📍 Tucuruvi, Zona Norte SP</div>
-        <div class="imovel-features">
+        <div class="imovel-loc">📍 Tucuruvi, Zona Norte SP</div>
+        <div class="imovel-feats">
           <span class="imovel-feat">🛏 3 quartos</span>
           <span class="imovel-feat">🚗 2 vagas</span>
           <span class="imovel-feat">📐 180m²</span>
         </div>
         <div class="imovel-price">Consulte o valor</div>
-        <a class="imovel-cta" href="https://wa.me/5511995145000?text=Oi%20Renato%2C%20tenho%20interesse%20no%20sobrado%20em%20Tucuruvi!">Quero saber mais</a>
+        <a class="imovel-cta" href="https://wa.me/5511913260072?text=Oi%20Renato%2C%20tenho%20interesse%20no%20sobrado%20em%20Tucuruvi!">Quero saber mais</a>
       </div>
     </div>
     <div class="imovel-card">
       <img class="imovel-img" src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&q=80" alt="Sobrado Santana" loading="lazy">
       <div class="imovel-info">
-        <span class="imovel-tag">Novo</span>
+        <span class="imovel-badge">Novo</span>
         <div class="imovel-title">Sobrado com Quintal — Santana</div>
-        <div class="imovel-location">📍 Santana, Zona Norte SP</div>
-        <div class="imovel-features">
+        <div class="imovel-loc">📍 Santana, Zona Norte SP</div>
+        <div class="imovel-feats">
           <span class="imovel-feat">🛏 4 quartos</span>
           <span class="imovel-feat">🚗 3 vagas</span>
           <span class="imovel-feat">📐 220m²</span>
         </div>
         <div class="imovel-price">Consulte o valor</div>
-        <a class="imovel-cta" href="https://wa.me/5511995145000?text=Oi%20Renato%2C%20tenho%20interesse%20no%20sobrado%20em%20Santana!">Quero saber mais</a>
+        <a class="imovel-cta" href="https://wa.me/5511913260072?text=Oi%20Renato%2C%20tenho%20interesse%20no%20sobrado%20em%20Santana!">Quero saber mais</a>
       </div>
     </div>
     <div class="imovel-card">
       <img class="imovel-img" src="https://images.unsplash.com/photo-1523217582562-09d0def993a6?w=800&q=80" alt="Sobrado Casa Verde" loading="lazy">
       <div class="imovel-info">
-        <span class="imovel-tag">Oportunidade</span>
+        <span class="imovel-badge" style="background:#418c9d">Oportunidade</span>
         <div class="imovel-title">Sobrado Gourmet — Casa Verde</div>
-        <div class="imovel-location">📍 Casa Verde, Zona Norte SP</div>
-        <div class="imovel-features">
+        <div class="imovel-loc">📍 Casa Verde, Zona Norte SP</div>
+        <div class="imovel-feats">
           <span class="imovel-feat">🛏 3 quartos</span>
           <span class="imovel-feat">🚗 2 vagas</span>
           <span class="imovel-feat">📐 160m²</span>
         </div>
         <div class="imovel-price">Consulte o valor</div>
-        <a class="imovel-cta" href="https://wa.me/5511995145000?text=Oi%20Renato%2C%20tenho%20interesse%20no%20sobrado%20em%20Casa%20Verde!">Quero saber mais</a>
+        <a class="imovel-cta" href="https://wa.me/5511913260072?text=Oi%20Renato%2C%20tenho%20interesse%20no%20sobrado%20em%20Casa%20Verde!">Quero saber mais</a>
       </div>
     </div>
   </div>
@@ -459,7 +429,7 @@
         <div class="dep-avatar">M</div>
         <div>
           <div class="dep-name">Mariana Souza</div>
-          <div class="dep-source dep-source-google">⭐ Google Meu Negócio</div>
+          <div class="dep-source dep-google">⭐ Google Meu Negócio</div>
         </div>
       </div>
     </div>
@@ -470,40 +440,40 @@
         <div class="dep-avatar">C</div>
         <div>
           <div class="dep-name">Carlos Eduardo</div>
-          <div class="dep-source dep-source-google">⭐ Google Meu Negócio</div>
+          <div class="dep-source dep-google">⭐ Google Meu Negócio</div>
         </div>
       </div>
     </div>
     <div class="dep-card">
       <div class="dep-stars">★★★★★</div>
-      <p class="dep-text">"Sigo o @renato.vieira.corretor há anos e quando resolvi comprar não tive dúvida. Ele entendeu exatamente o que eu queria, negociou muito bem e o processo foi tranquilo do começo ao fim!"</p>
+      <p class="dep-text">"Sigo o @renato.vieira.corretor há anos e quando resolvi comprar não tive dúvida. Entendeu exatamente o que eu queria, negociou muito bem e o processo foi tranquilo do começo ao fim!"</p>
       <div class="dep-author">
         <div class="dep-avatar">F</div>
         <div>
           <div class="dep-name">Fernanda Lima</div>
-          <div class="dep-source dep-source-insta">📸 Instagram</div>
+          <div class="dep-source dep-insta">📸 Instagram</div>
         </div>
       </div>
     </div>
     <div class="dep-card">
       <div class="dep-stars">★★★★★</div>
-      <p class="dep-text">"Comprei meu sobrado através do Renato e foi a melhor decisão. Ele conhece cada cantinho da zona norte, me alertou sobre valorizações futuras e ainda me ajudou na parte burocrática. Nota 10!"</p>
+      <p class="dep-text">"Comprei meu sobrado através do Renato e foi a melhor decisão. Ele conhece cada cantinho da zona norte, me alertou sobre valorizações futuras e ainda ajudou na parte burocrática. Nota 10!"</p>
       <div class="dep-author">
         <div class="dep-avatar">R</div>
         <div>
           <div class="dep-name">Roberto Almeida</div>
-          <div class="dep-source dep-source-google">⭐ Google Meu Negócio</div>
+          <div class="dep-source dep-google">⭐ Google Meu Negócio</div>
         </div>
       </div>
     </div>
     <div class="dep-card">
       <div class="dep-stars">★★★★★</div>
-      <p class="dep-text">"Vi um vídeo do Renato sobre sobrados em Santana e me apaixonei. Entrei em contato e ele foi super atencioso. Em um mês fechamos negócio! Equipe muito profissional. Recomendo demais! 🙌"</p>
+      <p class="dep-text">"Vi um vídeo do Renato sobre sobrados em Santana e me apaixonei. Em um mês fechamos negócio! Muito profissional e atencioso em todas as etapas. Recomendo demais! 🙌"</p>
       <div class="dep-author">
         <div class="dep-avatar">P</div>
         <div>
           <div class="dep-name">Patricia Mendes</div>
-          <div class="dep-source dep-source-insta">📸 Instagram</div>
+          <div class="dep-source dep-insta">📸 Instagram</div>
         </div>
       </div>
     </div>
@@ -515,34 +485,26 @@
   <span class="section-label">Redes sociais</span>
   <h2 class="section-title">Acompanhe no <span>Instagram</span></h2>
   <div class="divider"></div>
-  <p class="section-sub">Novos sobrados todos os dias, dicas do mercado e muito conteúdo sobre zona norte.</p>
-  <div class="insta-banner">
-    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+  <p class="section-sub">Novos sobrados todos os dias, dicas do mercado e conteúdo sobre a zona norte.</p>
+  <div class="insta-card">
+    <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
     <h3>@renato.vieira.corretor</h3>
     <p>Conteúdo diário sobre o mercado imobiliário da zona norte. Sobrados, dicas de compra e tudo que você precisa saber antes de fechar negócio.</p>
-    <div class="insta-stats">
-      <div class="insta-stat">
-        <div class="insta-stat-num">63k+</div>
-        <div class="insta-stat-label">seguidores</div>
-      </div>
-      <div class="insta-stat">
-        <div class="insta-stat-num">M+</div>
-        <div class="insta-stat-label">views/mês</div>
-      </div>
+    <div class="insta-nums">
+      <div><div class="insta-num-val">63k+</div><div class="insta-num-label">seguidores</div></div>
+      <div><div class="insta-num-val">Milhões</div><div class="insta-num-label">de views/mês</div></div>
     </div>
-    <a class="insta-btn" href="https://instagram.com/renato.vieira.corretor" target="_blank">
-      Seguir no Instagram
-    </a>
+    <a class="insta-btn" href="https://instagram.com/renato.vieira.corretor" target="_blank">Seguir no Instagram</a>
   </div>
 </section>
 
 <!-- CTA FINAL -->
 <section class="cta-section">
   <h2>Pronto para encontrar seu sobrado?</h2>
-  <p>Fale agora com o Renato e receba uma lista personalizada de sobrados na zona norte dentro de algumas horas.</p>
-  <div class="cta-group">
-    <a class="btn-primary" href="https://wa.me/5511995145000?text=Oi%20Renato%2C%20quero%20encontrar%20meu%20sobrado%20na%20zona%20norte!">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.136.563 4.14 1.543 5.877L.054 23.077c-.1.37.007.764.27 1.028.263.263.657.37 1.028.27l5.197-1.49C8.135 23.592 10.02 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
+  <p>Fale agora com o Renato e receba uma lista personalizada de sobrados na zona norte.</p>
+  <div class="cta-wrap">
+    <a class="btn-wa" href="https://wa.me/5511913260072?text=Oi%20Renato%2C%20quero%20encontrar%20meu%20sobrado%20na%20zona%20norte!">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.136.563 4.14 1.543 5.877L.054 23.077c-.1.37.007.764.27 1.028.263.263.657.37 1.028.27l5.197-1.49C8.135 23.592 10.02 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
       Falar com o Renato agora
     </a>
   </div>
@@ -552,16 +514,16 @@
 <footer>
   <div class="footer-logo">LR Imóveis</div>
   <div class="footer-creci">CRECI 27.318-J · Renato Vieira Corretor</div>
-  <div class="footer-links">
-    <a href="https://wa.me/5511995145000">WhatsApp: (11) 99514-5000</a>
-    <a href="https://instagram.com/renato.vieira.corretor">Instagram: @renato.vieira.corretor</a>
-    <a href="#">Zona Norte de São Paulo</a>
+  <div class="footer-info">
+    <a href="https://wa.me/5511913260072">(11) 91326-0072</a><br>
+    <a href="https://instagram.com/renato.vieira.corretor">@renato.vieira.corretor</a><br>
+    Zona Norte de São Paulo
   </div>
-  <div class="footer-copy">© 2025 LR Imóveis · Renato Vieira Corretor · Todos os direitos reservados</div>
+  <div class="footer-copy">© 2025 LR Imóveis · Todos os direitos reservados</div>
 </footer>
 
-<!-- FLOATING WHATSAPP -->
-<a class="float-wa" href="https://wa.me/5511995145000?text=Oi%20Renato%2C%20quero%20saber%20mais%20sobre%20sobrados!" target="_blank" title="Falar com Renato no WhatsApp">
+<!-- FLOATING WA -->
+<a class="float-wa" href="https://wa.me/5511913260072?text=Oi%20Renato%2C%20quero%20saber%20mais!" target="_blank" title="WhatsApp">
   <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.136.563 4.14 1.543 5.877L.054 23.077c-.1.37.007.764.27 1.028.263.263.657.37 1.028.27l5.197-1.49C8.135 23.592 10.02 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>
 </a>
 
