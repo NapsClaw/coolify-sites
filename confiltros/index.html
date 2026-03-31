@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ConFiltros - Autopeças e serviços automotivos direto da indústria. Produtos importados originais, preços imbatíveis. Troca de óleo, pneus, filtros e muito mais.">
+  <title>ConFiltros | Autopeças e Serviços Automotivos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0d0d;
+      --bg2: #141414;
+      --bg3: #1c1c1c;
+      --card: #1e1e1e;
+      --border: #2a2a2a;
+      --text: #f0f0f0;
+      --text2: #a0a0a0;
+      --accent: #ff6a00;
+      --accent2: #ff8c2e;
+      --white: #ffffff;
+      --ff-head: 'Barlow Condensed', sans-serif;
+      --ff-body: 'Barlow', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--ff-body);
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    img { max-width: 100%; display: block; }
+    a { text-decoration: none; color: inherit; }
+
+    /* HEADER */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(13,13,13,0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 20px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-family: var(--ff-head);
+      font-size: 28px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+      color: var(--white);
+    }
+    .logo span { color: var(--accent); }
+
+    nav { display: flex; gap: 8px; }
+    nav a {
+      font-family: var(--ff-head);
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      color: var(--text2);
+      padding: 8px 12px;
+      border-radius: 6px;
+      transition: color 0.2s, background 0.2s;
+    }
+    nav a:hover { color: var(--white); background: var(--bg3); }
+
+    .nav-cta {
+      background: var(--accent) !important;
+      color: var(--white) !important;
+      padding: 8px 18px !important;
+      border-radius: 6px;
+    }
+    .nav-cta:hover { background: var(--accent2) !important; }
+
+    @media (max-width: 600px) {
+      nav { display: none; }
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 100px 20px 60px;
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(135deg, rgba(255,106,0,0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 50%, rgba(255,106,0,0.05) 0%, transparent 60%),
+        var(--bg);
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; right: -100px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(255,106,0,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Grid pattern */
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 900px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,106,0,0.12);
+      border: 1px solid rgba(255,106,0,0.3);
+      color: var(--accent2);
+      font-family: var(--ff-head);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 100px;
+      margin-bottom: 28px;
+      animation: fadeInUp 0.6s ease both;
+    }
+
+    .hero-title {
+      font-family: var(--ff-head);
+      font-size: clamp(48px, 10vw, 100px);
+      font-weight: 900;
+      line-height: 0.95;
+      letter-spacing: -2px;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 24px;
+      animation: fadeInUp 0.6s ease 0.1s both;
+    }
+
+    .hero-title em {
+      font-style: normal;
+      color: var(--accent);
+      display: block;
+    }
+
+    .hero-sub {
+      font-size: 17px;
+      color: var(--text2);
+      max-width: 520px;
+      margin-bottom: 40px;
+      line-height: 1.7;
+      animation: fadeInUp 0.6s ease 0.2s both;
+    }
+
+    .hero-sub strong { color: var(--text); }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      animation: fadeInUp 0.6s ease 0.3s both;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--accent);
+      color: var(--white);
+      font-family: var(--ff-head);
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      padding: 16px 32px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      min-height: 54px;
+    }
+    .btn-primary:hover { background: var(--accent2); transform: translateY(-1px); }
+    .btn-primary:active { transform: translateY(0); }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: transparent;
+      color: var(--text);
+      font-family: var(--ff-head);
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      padding: 16px 28px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+      min-height: 54px;
+    }
+    .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+    .hero-stats {
+      display: flex;
+      gap: 40px;
+      margin-top: 60px;
+      padding-top: 40px;
+      border-top: 1px solid var(--border);
+      animation: fadeInUp 0.6s ease 0.4s both;
+      flex-wrap: wrap;
+    }
+
+    .stat-item { flex: 1; min-width: 120px; }
+    .stat-num {
+      font-family: var(--ff-head);
+      font-size: 40px;
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 13px;
+      color: var(--text2);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 4px;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .hero-title { letter-spacing: -1px; }
+      .hero-actions { flex-direction: column; }
+      .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
+      .hero-stats { gap: 24px; }
+      .stat-num { font-size: 32px; }
+    }
+
+    /* SECTION BASE */
+    section {
+      padding: 80px 20px;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .section-tag {
+      font-family: var(--ff-head);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: var(--ff-head);
+      font-size: clamp(32px, 6vw, 56px);
+      font-weight: 900;
+      line-height: 1.05;
+      color: var(--white);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .section-sub {
+      font-size: 16px;
+      color: var(--text2);
+      max-width: 600px;
+      line-height: 1.7;
+    }
+
+    /* DIFERENCIAIS */
+    .diferenciais { background: var(--bg2); }
+
+    .diff-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 48px;
+    }
+
+    .diff-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 24px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .diff-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+
+    .diff-icon {
+      width: 52px; height: 52px;
+      background: rgba(255,106,0,0.12);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+
+    .diff-title {
+      font-family: var(--ff-head);
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--white);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      letter-spacing: 0.3px;
+    }
+
+    .diff-text { font-size: 14px; color: var(--text2); line-height: 1.7; }
+
+    @media (max-width: 768px) {
+      .diff-grid { grid-template-columns: 1fr; }
+    }
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .diff-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">CON<span>FILTROS</span></div>
+  <nav>
+    <a href="#servicos">Serviços</a>
+    <a href="#precos">Preços</a>
+    <a href="#contato">Contato</a>
+    <a href="https://wa.me/556284383781" class="nav-cta" target="_blank">WhatsApp</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <svg width="10" height="10" viewBox="0 0 10 10" fill="var(--accent)"><circle cx="5" cy="5" r="5"/></svg>
+      Direto da Indústria
+    </div>
+    <h1 class="hero-title">
+      Autopeças<br>
+      <em>Originais</em><br>
+      Preço Justo
+    </h1>
+    <p class="hero-sub">
+      <strong>Produtos 100% importados e originais</strong>, sem falsificação. Troca de óleo, pneus, filtros e muito mais — <strong>preços bem abaixo do mercado</strong> porque vendemos direto da indústria.
+    </p>
+    <div class="hero-actions">
+      <a href="https://wa.me/556284383781?text=Olá! Quero fazer um orçamento na ConFiltros." class="btn-primary" target="_blank">
+        <svg width="20" height="20" fill="white" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.136.562 4.14 1.544 5.877L.057 23.386a.5.5 0 00.611.61l5.588-1.466A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.8 9.8 0 01-5.031-1.384l-.36-.214-3.732.979.997-3.645-.235-.374A9.797 9.797 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
+        Pedir Orçamento
+      </a>
+      <a href="#servicos" class="btn-secondary">
+        Ver Serviços
+        <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Produto Original</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">Até 30%</div>
+        <div class="stat-label">Mais Barato</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">Importado</div>
+        <div class="stat-label">Direto da Indústria</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIFERENCIAIS -->
+<section class="diferenciais" id="sobre">
+  <div class="container">
+    <div class="section-tag">Por que a ConFiltros?</div>
+    <h2 class="section-title">Nossos Diferenciais</h2>
+    <p class="section-sub">A ConFiltros trabalha direto com a indústria, sem intermediários. Isso significa produto original e preço justo pra você.</p>
+    <div class="diff-grid">
+      <div class="diff-card">
+        <div class="diff-icon">🏭</div>
+        <div class="diff-title">Direto da Indústria</div>
+        <div class="diff-text">Compramos direto de fabricantes e importadores, sem atravessador. O resultado é preço muito abaixo do mercado sem abrir mão da qualidade.</div>
+      </div>
+      <div class="diff-card">
+        <div class="diff-icon">✅</div>
+        <div class="diff-title">100% Original</div>
+        <div class="diff-text">Só trabalhamos com produtos importados legítimos. Nunca falsificado, nunca genérico desconhecido. Sua segurança e do seu veículo em primeiro lugar.</div>
+      </div>
+      <div class="diff-card">
+        <div class="diff-icon">🔧</div>
+        <div class="diff-title">Preço Imbatível</div>
+        <div class="diff-text">Troca de óleo sintético por R$160 enquanto a concorrência cobra R$200+. Sem taxas escondidas, sem enrolação.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* SERVIÇOS */
+  .servicos { background: var(--bg); }
+
+  .servicos-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 48px;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .servicos-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .servico-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 24px;
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    transition: border-color 0.2s;
+  }
+  .servico-card:hover { border-color: rgba(255,106,0,0.4); }
+
+  .servico-card.destaque {
+    border-color: var(--accent);
+    background: rgba(255,106,0,0.05);
+    grid-column: span 2;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .servico-icon {
+    font-size: 32px;
+    flex-shrink: 0;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg3);
+    border-radius: 10px;
+  }
+
+  .servico-info { flex: 1; }
+  .servico-name {
+    font-family: var(--ff-head);
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--white);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .servico-desc { font-size: 14px; color: var(--text2); line-height: 1.6; margin-bottom: 10px; }
+
+  .servico-price {
+    font-family: var(--ff-head);
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--accent);
+  }
+  .servico-price small {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text2);
+  }
+
+  .badge-popular {
+    display: inline-flex;
+    background: var(--accent);
+    color: white;
+    font-family: var(--ff-head);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 4px;
+    margin-bottom: 8px;
+  }
+
+  @media (max-width: 768px) {
+    .servicos-grid { grid-template-columns: 1fr; }
+    .servico-card.destaque { grid-column: span 1; flex-direction: column; }
+  }
+
+  /* PREÇOS */
+  .precos { background: var(--bg2); }
+
+  .precos-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 48px;
+  }
+
+  .preco-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 32px 24px;
+    text-align: center;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .preco-card:hover { transform: translateY(-4px); border-color: rgba(255,106,0,0.3); }
+  .preco-card.destaque {
+    border-color: var(--accent);
+    background: rgba(255,106,0,0.07);
+    position: relative;
+    overflow: hidden;
+  }
+  .preco-card.destaque::before {
+    content: 'MAIS PEDIDO';
+    position: absolute;
+    top: 16px; right: -24px;
+    background: var(--accent);
+    color: white;
+    font-family: var(--ff-head);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding: 4px 36px;
+    transform: rotate(30deg);
+  }
+
+  .preco-nome {
+    font-family: var(--ff-head);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text2);
+    margin-bottom: 16px;
+  }
+
+  .preco-val {
+    font-family: var(--ff-head);
+    font-size: 52px;
+    font-weight: 900;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .preco-val sup {
+    font-size: 24px;
+    vertical-align: super;
+  }
+
+  .preco-desc {
+    font-size: 14px;
+    color: var(--text2);
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+
+  .preco-itens {
+    list-style: none;
+    text-align: left;
+    margin-bottom: 28px;
+  }
+  .preco-itens li {
+    font-size: 14px;
+    color: var(--text2);
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .preco-itens li:last-child { border-bottom: none; }
+  .preco-itens li::before {
+    content: '✓';
+    color: var(--accent);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .preco-cta {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    border-radius: 8px;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-family: var(--ff-head);
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 0.5px;
+    transition: background 0.2s, color 0.2s;
+    min-height: 48px;
+  }
+  .preco-cta:hover, .destaque .preco-cta {
+    background: var(--accent);
+    color: white;
+  }
+
+  @media (max-width: 768px) {
+    .precos-grid { grid-template-columns: 1fr; }
+  }
+  @media (min-width: 769px) and (max-width: 900px) {
+    .precos-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* SOBRE */
+  .sobre { background: var(--bg); }
+  .sobre-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+  .sobre-visual {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .sobre-visual::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(255,106,0,0.15) 0%, transparent 70%);
+  }
+  .sobre-big-num {
+    font-family: var(--ff-head);
+    font-size: 80px;
+    font-weight: 900;
+    color: var(--accent);
+    line-height: 1;
+    position: relative;
+    z-index: 1;
+  }
+  .sobre-big-label {
+    font-family: var(--ff-head);
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text2);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 8px;
+    position: relative;
+    z-index: 1;
+  }
+  .sobre-list { list-style: none; margin-top: 24px; }
+  .sobre-list li {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 15px;
+    color: var(--text2);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .sobre-list li:last-child { border-bottom: none; }
+  .sobre-list li strong { color: var(--white); }
+
+  @media (max-width: 768px) {
+    .sobre-inner { grid-template-columns: 1fr; gap: 32px; }
+  }
+</style>
+
+<!-- SERVIÇOS -->
+<section class="servicos" id="servicos">
+  <div class="container">
+    <div class="servicos-header">
+      <div>
+        <div class="section-tag">O que oferecemos</div>
+        <h2 class="section-title">Nossos Serviços</h2>
+      </div>
+      <a href="https://wa.me/556284383781?text=Quero um orçamento de serviço na ConFiltros!" class="btn-primary" target="_blank" style="flex-shrink:0;">
+        Pedir Orçamento
+      </a>
+    </div>
+
+    <div class="servicos-grid">
+      <!-- Card destaque -->
+      <div class="servico-card destaque">
+        <div class="servico-icon">🛢️</div>
+        <div class="servico-info">
+          <div class="badge-popular">⚡ Mais Popular</div>
+          <div class="servico-name">Troca de Óleo Sintético</div>
+          <div class="servico-desc">Óleo sintético 100% importado + filtro de óleo incluso. A qualidade que seu motor merece com o melhor preço da região. Concorrência cobra R$200+, aqui você paga menos.</div>
+          <div class="servico-price">R$160 <small>— Uno Fire (3L + filtro)</small></div>
+        </div>
+      </div>
+
+      <div class="servico-card">
+        <div class="servico-icon">🔵</div>
+        <div class="servico-info">
+          <div class="servico-name">Filtros</div>
+          <div class="servico-desc">Filtros de óleo, ar, combustível e cabine. Marcas importadas originais, não falsificadas.</div>
+        </div>
+      </div>
+
+      <div class="servico-card">
+        <div class="servico-icon">🔧</div>
+        <div class="servico-info">
+          <div class="servico-name">Autopeças</div>
+          <div class="servico-desc">Peças importadas originais para diversas marcas e modelos. Consulte disponibilidade.</div>
+        </div>
+      </div>
+
+      <div class="servico-card">
+        <div class="servico-icon">🚗</div>
+        <div class="servico-info">
+          <div class="servico-name">Pneus</div>
+          <div class="servico-desc">Pneus para carros, SUVs e utilitários. Consulte modelos e preços disponíveis.</div>
+        </div>
+      </div>
+
+      <div class="servico-card">
+        <div class="servico-icon">💨</div>
+        <div class="servico-info">
+          <div class="servico-name">Cama de Ar</div>
+          <div class="servico-desc">Suspensão a ar para veículos. Qualidade importada com instalação disponível.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PREÇOS -->
+<section class="precos" id="precos">
+  <div class="container">
+    <div class="section-tag">Tabela de Preços</div>
+    <h2 class="section-title">Preço Transparente</h2>
+    <p class="section-sub">Sem pegadinha, sem taxa escondida. O que você vê é o que você paga. Compare com a concorrência!</p>
+
+    <div class="precos-grid">
+      <div class="preco-card">
+        <div class="preco-nome">ConFiltros</div>
+        <div class="preco-val"><sup>R$</sup>160</div>
+        <div class="preco-desc">Troca de óleo sintético — Uno Fire</div>
+        <ul class="preco-itens">
+          <li>3 litros óleo sintético importado</li>
+          <li>Filtro de óleo incluso</li>
+          <li>Mão de obra inclusa</li>
+          <li>Produto original garantido</li>
+        </ul>
+        <a href="https://wa.me/556284383781?text=Quero agendar troca de óleo!" class="preco-cta" target="_blank">Agendar Agora</a>
+      </div>
+
+      <div class="preco-card destaque">
+        <div class="preco-nome">Filtragem Completa</div>
+        <div class="preco-val"><sup>R$</sup>?</div>
+        <div class="preco-desc">Troca de óleo + filtros ar e combustível</div>
+        <ul class="preco-itens">
+          <li>Óleo sintético importado</li>
+          <li>Filtro de óleo + ar + combustível</li>
+          <li>Mão de obra inclusa</li>
+          <li>Produtos 100% originais</li>
+        </ul>
+        <a href="https://wa.me/556284383781?text=Quero um orçamento do pacote completo!" class="preco-cta" target="_blank">Consultar Preço</a>
+      </div>
+
+      <div class="preco-card">
+        <div class="preco-nome">Veículos Maiores</div>
+        <div class="preco-val"><sup></sup>Consulte</div>
+        <div class="preco-desc">Ônibus, caminhões e frotas</div>
+        <ul class="preco-itens">
+          <li>Atendimento especial frota</li>
+          <li>Preço diferenciado por volume</li>
+          <li>Agendamento prioritário</li>
+          <li>Produtos importados originais</li>
+        </ul>
+        <a href="https://wa.me/556284383781?text=Quero orçamento para frota/veículo pesado!" class="preco-cta" target="_blank">Falar Agora</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section class="sobre" id="sobre-nos">
+  <div class="container">
+    <div class="sobre-inner">
+      <div>
+        <div class="section-tag">Sobre a ConFiltros</div>
+        <h2 class="section-title">Qualidade que Você Pode Confiar</h2>
+        <p style="font-size:16px;color:var(--text2);line-height:1.8;margin-bottom:24px;">
+          A ConFiltros nasceu com um propósito claro: oferecer produtos automotivos importados de verdade, originais, sem falsificação — e com preços que fazem sentido para o bolso do motorista.
+        </p>
+        <p style="font-size:16px;color:var(--text2);line-height:1.8;margin-bottom:32px;">
+          Trabalhamos direto da indústria, sem atravessador, o que nos permite praticar preços muito abaixo do mercado sem abrir mão da qualidade. Simples assim.
+        </p>
+        <ul class="sobre-list">
+          <li>🏭 <span><strong>Direto da fábrica</strong> — sem intermediários, sem margem extra</span></li>
+          <li>✅ <span><strong>Só produto original</strong> — nunca falsificado, nunca genérico duvidoso</span></li>
+          <li>💰 <span><strong>Preço justo</strong> — você economiza até 30% vs. concorrência</span></li>
+          <li>🔒 <span><strong>Segurança</strong> — produto certo = motor protegido</span></li>
+        </ul>
+      </div>
+      <div class="sobre-visual">
+        <div class="sobre-big-num">30%</div>
+        <div class="sobre-big-label">Mais Barato que a<br>Concorrência</div>
+        <div style="margin-top:24px;padding-top:24px;border-top:1px solid var(--border);">
+          <div style="font-family:var(--ff-head);font-size:14px;color:var(--text2);text-transform:uppercase;letter-spacing:1.5px;">Em média nos nossos serviços</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* CONTATO */
+  .contato { background: var(--bg2); }
+
+  .contato-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+    margin-top: 48px;
+  }
+
+  .contato-info { }
+  .contato-item {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .contato-item:last-child { border-bottom: none; }
+  .contato-ico {
+    width: 44px; height: 44px;
+    background: rgba(255,106,0,0.1);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+  .contato-item-title {
+    font-family: var(--ff-head);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text2);
+    margin-bottom: 4px;
+  }
+  .contato-item-val {
+    font-size: 15px;
+    color: var(--white);
+    font-weight: 500;
+  }
+
+  .contato-cta-box {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 40px 32px;
+    text-align: center;
+  }
+  .contato-cta-box h3 {
+    font-family: var(--ff-head);
+    font-size: 32px;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: 12px;
+  }
+  .contato-cta-box p {
+    font-size: 15px;
+    color: var(--text2);
+    line-height: 1.7;
+    margin-bottom: 28px;
+  }
+  .contato-cta-box .btn-primary {
+    width: 100%;
+    justify-content: center;
+    font-size: 18px;
+    padding: 18px;
+  }
+
+  @media (max-width: 768px) {
+    .contato-inner { grid-template-columns: 1fr; gap: 32px; }
+  }
+
+  /* FOOTER */
+  footer {
+    background: #080808;
+    border-top: 1px solid var(--border);
+    padding: 48px 20px 32px;
+  }
+  .footer-inner {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+  .footer-logo {
+    font-family: var(--ff-head);
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--white);
+  }
+  .footer-logo span { color: var(--accent); }
+  .footer-tagline {
+    font-size: 13px;
+    color: var(--text2);
+    margin-top: 4px;
+  }
+  .footer-links {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .footer-links a {
+    font-size: 14px;
+    color: var(--text2);
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--accent); }
+  .footer-bottom {
+    max-width: 1000px;
+    margin: 28px auto 0;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+    font-size: 13px;
+    color: var(--text2);
+  }
+
+  /* WHATSAPP FLOAT */
+  .wa-float {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 999;
+    width: 60px;
+    height: 60px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .wa-float:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 28px rgba(37,211,102,0.5);
+  }
+
+  /* CTA BANNER */
+  .cta-banner {
+    background: linear-gradient(135deg, var(--accent) 0%, #ff8c00 100%);
+    padding: 64px 20px;
+    text-align: center;
+  }
+  .cta-banner h2 {
+    font-family: var(--ff-head);
+    font-size: clamp(32px, 6vw, 56px);
+    font-weight: 900;
+    color: white;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    line-height: 1.05;
+  }
+  .cta-banner p {
+    font-size: 17px;
+    color: rgba(255,255,255,0.85);
+    max-width: 500px;
+    margin: 0 auto 32px;
+    line-height: 1.7;
+  }
+  .cta-banner .btn-white {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: white;
+    color: var(--accent);
+    font-family: var(--ff-head);
+    font-size: 18px;
+    font-weight: 800;
+    padding: 16px 36px;
+    border-radius: 8px;
+    letter-spacing: 0.5px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    min-height: 54px;
+  }
+  .cta-banner .btn-white:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  }
+</style>
+
+<!-- CONTATO -->
+<section class="contato" id="contato">
+  <div class="container">
+    <div class="section-tag">Fale Conosco</div>
+    <h2 class="section-title">Entre em Contato</h2>
+    <div class="contato-inner">
+      <div class="contato-info">
+        <div class="contato-item">
+          <div class="contato-ico">📱</div>
+          <div>
+            <div class="contato-item-title">WhatsApp</div>
+            <div class="contato-item-val">(62) 8438-3781</div>
+          </div>
+        </div>
+        <div class="contato-item">
+          <div class="contato-ico">🏪</div>
+          <div>
+            <div class="contato-item-title">Empresa</div>
+            <div class="contato-item-val">ConFiltros</div>
+          </div>
+        </div>
+        <div class="contato-item">
+          <div class="contato-ico">⏰</div>
+          <div>
+            <div class="contato-item-title">Horário</div>
+            <div class="contato-item-val">Seg–Sex: 8h–18h<br>Sáb: 8h–13h</div>
+          </div>
+        </div>
+        <div class="contato-item">
+          <div class="contato-ico">🛢️</div>
+          <div>
+            <div class="contato-item-title">Especialidade</div>
+            <div class="contato-item-val">Autopeças importadas originais<br>Troca de óleo · Pneus · Filtros</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contato-cta-box">
+        <h3>Quer um Orçamento?</h3>
+        <p>Manda mensagem no WhatsApp e a gente responde na hora. Sem enrolação, preço direto.</p>
+        <a href="https://wa.me/556284383781?text=Olá ConFiltros! Quero um orçamento." class="btn-primary" target="_blank">
+          <svg width="22" height="22" fill="white" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.136.562 4.14 1.544 5.877L.057 23.386a.5.5 0 00.611.61l5.588-1.466A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.8 9.8 0 01-5.031-1.384l-.36-.214-3.732.979.997-3.645-.235-.374A9.797 9.797 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
+          Chamar no WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section class="cta-banner">
+  <div class="container">
+    <h2>Produto Original.<br>Preço Justo.</h2>
+    <p>Sem falsificação, sem enrolação. Venha conhecer a ConFiltros e tire o seu veículo de boas.</p>
+    <a href="https://wa.me/556284383781?text=Olá! Vi o site da ConFiltros e quero um orçamento." class="btn-white" target="_blank">
+      <svg width="20" height="20" fill="var(--accent)" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.136.562 4.14 1.544 5.877L.057 23.386a.5.5 0 00.611.61l5.588-1.466A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.8 9.8 0 01-5.031-1.384l-.36-.214-3.732.979.997-3.645-.235-.374A9.797 9.797 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
+      Chamar no WhatsApp
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">CON<span>FILTROS</span></div>
+      <div class="footer-tagline">Autopeças Importadas Originais</div>
+    </div>
+    <div class="footer-links">
+      <a href="#servicos">Serviços</a>
+      <a href="#precos">Preços</a>
+      <a href="#sobre-nos">Sobre</a>
+      <a href="#contato">Contato</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2025 ConFiltros · Todos os direitos reservados · Autopeças Importadas Originais
+  </div>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/556284383781?text=Olá ConFiltros! Quero um orçamento." class="wa-float" target="_blank" aria-label="WhatsApp">
+  <svg width="30" height="30" fill="white" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.136.562 4.14 1.544 5.877L.057 23.386a.5.5 0 00.611.61l5.588-1.466A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.8 9.8 0 01-5.031-1.384l-.36-.214-3.732.979.997-3.645-.235-.374A9.797 9.797 0 012.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
+</a>
+
+</body>
+</html>
