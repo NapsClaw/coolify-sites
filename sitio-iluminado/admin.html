@@ -161,6 +161,8 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:#f1f5f9;color:var(--d
 .toast.show{opacity:1}
 
 /* ── EXPORT BTN ── */
+.btn-cobrar{background:#f59e0b;color:#fff;border:none;border-radius:6px;padding:5px 10px;font-size:11px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
+.btn-cobrar:hover{background:#d97706}
 .btn-export{background:#fff;border:1.5px solid var(--border);color:var(--dark);border-radius:8px;padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
 .btn-export:hover{border-color:var(--accent);color:var(--accent)}
 .btn-new{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
@@ -280,6 +282,15 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:#f1f5f9;color:var(--d
           <h3>💰 Receita estimada (confirmadas)</h3>
           <div class="rev-value" id="stat-revenue">R$ 0</div>
           <div class="rev-sub">Soma dos valores das reservas com status "Pago"</div>
+        </div>
+
+        <!-- COBRANÇAS PENDENTES -->
+        <div id="cobrancas-box" style="display:none;background:var(--amber-l);border:1.5px solid var(--amber);border-radius:12px;padding:20px;margin-bottom:20px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px">
+            <div style="font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--amber)">⏳ Pagamentos pendentes</div>
+            <span style="font-size:12px;color:var(--amber);font-weight:600" id="cobrancas-count"></span>
+          </div>
+          <div id="cobrancas-list"></div>
         </div>
 
         <div style="background:#fff;border-radius:12px;border:1px solid var(--border);padding:20px;margin-bottom:20px">
@@ -599,6 +610,29 @@ function renderDashboard(){
     document.getElementById('stat-next-name').textContent = upcoming[0].name;
   }
 
+  // Cobranças pendentes
+  const pendingFuture = all.filter(r=>r.status==='pending' && isFuture(r)).sort((a,b)=>a.checkin.localeCompare(b.checkin));
+  const cobBox = document.getElementById('cobrancas-box');
+  const cobList = document.getElementById('cobrancas-list');
+  const cobCount = document.getElementById('cobrancas-count');
+  if(pendingFuture.length > 0){
+    cobBox.style.display = 'block';
+    cobCount.textContent = pendingFuture.length + ' reserva(s) aguardando pagamento';
+    cobList.innerHTML = pendingFuture.map(r=>`
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;background:rgba(255,255,255,.6);border-radius:8px;padding:12px 16px;margin-bottom:8px;flex-wrap:wrap">
+        <div>
+          <div style="font-weight:700;font-size:14px;color:var(--dark)">${r.name}</div>
+          <div style="font-size:12px;color:var(--mid);margin-top:2px">${fmtDate(r.checkin)} → ${fmtDate(r.checkout)} · ${r.guests||'?'} pessoas · ${r.phone||''}</div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;flex-shrink:0">
+          ${r.phone ? `<button class="btn-cobrar" onclick="cobrarCliente('${r.id}')" style="font-size:13px;padding:8px 16px">💰 Enviar cobrança no WhatsApp</button>` : '<span style="font-size:12px;color:var(--mid)">Sem telefone</span>'}
+          <button class="btn-confirm-res" onclick="toggleStatusDirect('${r.id}');renderDashboard()" style="font-size:12px;padding:8px 14px">✅ Marcar pago</button>
+        </div>
+      </div>`).join('');
+  } else {
+    cobBox.style.display = 'none';
+  }
+
   // Upcoming list
   const ul = document.getElementById('upcoming-list');
   const next5 = upcoming.slice(0,5);
@@ -669,8 +703,9 @@ function renderResTable(){
           ${r.status==='paid'?'✅ Pago':'⏳ Pendente'}
         </button>
       </td>
-      <td>
+      <td style="display:flex;flex-direction:column;gap:6px;align-items:flex-start">
         ${r.phone ? `<a class="btn-wa" href="https://wa.me/55${r.phone.replace(/\D/g,'')}" target="_blank">📲 WA</a>` : '—'}
+        ${r.status==='pending' && r.phone ? `<button class="btn-cobrar" onclick="cobrarCliente('${r.id}')">💰 Cobrar</button>` : ''}
       </td>
       <td style="display:flex;gap:6px;align-items:center">
         <button class="btn-icon" onclick="openModal('${r.id}')" title="Ver detalhes">🔍</button>
@@ -747,6 +782,25 @@ function waContact(phone){
   const n = phone.replace(/\D/g,'');
   if(!n) return;
   window.open(`https://wa.me/55${n}`,'_blank');
+}
+
+function cobrarCliente(id){
+  const r = getRes().find(x=>x.id===id);
+  if(!r || !r.phone) return;
+  const n = r.phone.replace(/\D/g,'');
+  const dias = diffDays(r.checkin, r.checkout);
+  const msg = encodeURIComponent(
+    `Olá ${r.name}! 😊\n\n` +
+    `Passando para lembrar que sua reserva no *Sítio Iluminado* está com pagamento pendente.\n\n` +
+    `📅 *Check-in:* ${fmtDate(r.checkin)} às 08h\n` +
+    `📅 *Check-out:* ${fmtDate(r.checkout)} às 18h\n` +
+    `👥 *Pessoas:* ${r.guests||'não informado'}\n` +
+    `🎯 *Ocasião:* ${r.occasion||'não informada'}\n\n` +
+    `Para confirmar sua reserva, efetue o pagamento via PIX e envie o comprovante.\n\n` +
+    `Qualquer dúvida é só me chamar! 🌿`
+  );
+  window.open(`https://wa.me/55${n}?text=${msg}`, '_blank');
+  showToast('📲 WhatsApp aberto com mensagem de cobrança!');
 }
 
 // ===== ADMIN CALENDAR =====
