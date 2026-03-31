@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>São Francisco Centro Médico Veterinário | Curitiba</title>
+  <meta name="description" content="São Francisco Centro Médico Veterinário - Cuidado especializado para o seu pet em Curitiba. Consultas, cirurgias, vacinas e muito mais.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green-deep: #0d4f3c;
+      --green-mid: #1a7a5a;
+      --green-light: #2aaa7a;
+      --green-pale: #e8f5f0;
+      --cream: #faf8f4;
+      --warm-white: #ffffff;
+      --text-dark: #1a2e27;
+      --text-body: #3d5247;
+      --text-muted: #6b8679;
+      --accent-gold: #c9a227;
+      --shadow-soft: 0 4px 24px rgba(13,79,60,0.10);
+      --shadow-card: 0 2px 12px rgba(13,79,60,0.08);
+      --radius-lg: 16px;
+      --radius-md: 10px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--cream);
+      color: var(--text-body);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(250, 248, 244, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(13,79,60,0.08);
+      padding: 0 24px;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .nav-logo-icon {
+      width: 38px;
+      height: 38px;
+      background: var(--green-deep);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav-logo-icon svg { width: 22px; height: 22px; fill: white; }
+
+    .nav-logo-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .nav-logo-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--green-deep);
+      line-height: 1.2;
+    }
+
+    .nav-logo-sub {
+      font-size: 10px;
+      color: var(--text-muted);
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--green-deep);
+      color: white;
+      padding: 10px 18px;
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .nav-cta:hover { background: var(--green-mid); }
+    .nav-cta svg { width: 16px; height: 16px; }
+
+    /* HERO */
+    .hero {
+      margin-top: 68px;
+      position: relative;
+      min-height: 92vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      background: var(--green-deep);
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=1400&q=80');
+      background-size: cover;
+      background-position: center 30%;
+      opacity: 0.22;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(13,79,60,0.92) 0%, rgba(26,122,90,0.75) 60%, rgba(13,79,60,0.6) 100%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 60px 24px;
+      max-width: 680px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.25);
+      color: rgba(255,255,255,0.9);
+      padding: 6px 14px;
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+
+    .hero-badge-dot {
+      width: 6px;
+      height: 6px;
+      background: #4ade80;
+      border-radius: 50%;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(36px, 7vw, 58px);
+      font-weight: 700;
+      color: white;
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: #86efac;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(15px, 3vw, 18px);
+      color: rgba(255,255,255,0.78);
+      margin-bottom: 40px;
+      line-height: 1.65;
+      font-weight: 300;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: white;
+      color: var(--green-deep);
+      padding: 16px 32px;
+      border-radius: 50px;
+      font-size: 15px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      width: 100%;
+      justify-content: center;
+      max-width: 320px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,0.25); }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255,255,255,0.85);
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      padding: 8px 16px;
+    }
+
+    .btn-secondary:hover { color: white; }
+
+    .hero-stats {
+      margin-top: 56px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(255,255,255,0.15);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    .hero-stat {
+      background: rgba(255,255,255,0.08);
+      padding: 20px 12px;
+      text-align: center;
+    }
+
+    .hero-stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: white;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .hero-stat-label {
+      font-size: 11px;
+      color: rgba(255,255,255,0.6);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* SERVIÇOS */
+    .section {
+      padding: 72px 24px;
+    }
+
+    .section-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--green-mid);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 12px;
+    }
+
+    .section-tag::before {
+      content: '';
+      width: 24px;
+      height: 2px;
+      background: var(--green-light);
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 6vw, 40px);
+      font-weight: 700;
+      color: var(--text-dark);
+      line-height: 1.2;
+      margin-bottom: 14px;
+    }
+
+    .section-subtitle {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      max-width: 540px;
+      margin-bottom: 44px;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .service-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 28px 24px;
+      box-shadow: var(--shadow-card);
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: 1px solid rgba(13,79,60,0.06);
+    }
+
+    .service-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-soft); }
+
+    .service-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 24px;
+    }
+
+    .service-icon.green { background: var(--green-pale); }
+    .service-icon.gold { background: #fdf5e0; }
+    .service-icon.blue { background: #e8f0fd; }
+
+    .service-name {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 6px;
+    }
+
+    .service-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    @media (min-width: 640px) {
+      .services-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-icon">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M4.5 11a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zm15 0a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zM12 5.5A2.5 2.5 0 1 0 12 .5a2.5 2.5 0 0 0 0 5zm0 7c-3.59 0-6.5 2.91-6.5 6.5H18.5c0-3.59-2.91-6.5-6.5-6.5z"/></svg>
+    </div>
+    <div class="nav-logo-text">
+      <span class="nav-logo-name">São Francisco</span>
+      <span class="nav-logo-sub">Centro Médico Vet.</span>
+    </div>
+  </a>
+  <a href="https://wa.me/554197227669" class="nav-cta" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.004 2C6.477 2 2 6.477 2 12.004c0 1.771.464 3.432 1.274 4.876L2.05 21.898l5.143-1.199A9.959 9.959 0 0 0 12.004 22C17.53 22 22 17.523 22 12.004 22 6.477 17.53 2 12.004 2zm0 18.16a8.136 8.136 0 0 1-4.159-1.138l-.299-.177-3.053.711.727-2.976-.194-.307A8.16 8.16 0 1 1 12.004 20.16z"/></svg>
+    Agendar consulta
+  </a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="hero-badge-dot"></span>
+      Atendimento com hora marcada
+    </div>
+    <h1 class="hero-title">
+      Cuidado especializado<br>para quem você <em>ama</em>
+    </h1>
+    <p class="hero-subtitle">
+      São Francisco Centro Médico Veterinário — medicina veterinária completa, com carinho e responsabilidade no cuidado do seu pet.
+    </p>
+    <div class="hero-actions">
+      <a href="https://wa.me/554197227669?text=Olá!%20Gostaria%20de%20agendar%20uma%20consulta." class="btn-primary" target="_blank" rel="noopener">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.004 2C6.477 2 2 6.477 2 12.004c0 1.771.464 3.432 1.274 4.876L2.05 21.898l5.143-1.199A9.959 9.959 0 0 0 12.004 22C17.53 22 22 17.523 22 12.004 22 6.477 17.53 2 12.004 2zm0 18.16a8.136 8.136 0 0 1-4.159-1.138l-.299-.177-3.053.711.727-2.976-.194-.307A8.16 8.16 0 1 1 12.004 20.16z"/></svg>
+        Agendar via WhatsApp
+      </a>
+      <a href="#servicos" class="btn-secondary">
+        Ver nossos serviços ↓
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-number">+10</div>
+        <div class="hero-stat-label">Anos de exp.</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-number">+5k</div>
+        <div class="hero-stat-label">Pets atendidos</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-number">6x</div>
+        <div class="hero-stat-label">Dias por semana</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVIÇOS -->
+<section class="section" id="servicos" style="background: var(--cream);">
+  <div style="max-width: 680px; margin: 0 auto;">
+    <span class="section-tag">O que fazemos</span>
+    <h2 class="section-title">Serviços completos para o seu pet</h2>
+    <p class="section-subtitle">Da consulta de rotina às cirurgias mais complexas, temos estrutura e equipe especializada para cuidar bem.</p>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon green">🩺</div>
+        <div>
+          <div class="service-name">Clínica Geral</div>
+          <div class="service-desc">Consultas de rotina, check-up e diagnóstico clínico completo para cães, gatos e pequenos animais.</div>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon green">💉</div>
+        <div>
+          <div class="service-name">Vacinas & Vermífugos</div>
+          <div class="service-desc">Calendário vacinal completo e antiparasitários para proteger seu pet durante todas as fases da vida.</div>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon gold">🔬</div>
+        <div>
+          <div class="service-name">Exames & Diagnóstico</div>
+          <div class="service-desc">Hemograma, bioquímica, ultrassonografia e raio-X com resultados rápidos e laudos precisos.</div>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon gold">🏥</div>
+        <div>
+          <div class="service-name">Cirurgias</div>
+          <div class="service-desc">Centro cirúrgico equipado para procedimentos eletivos e de emergência com anestesiologia segura.</div>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon blue">🦷</div>
+        <div>
+          <div class="service-name">Odontologia Veterinária</div>
+          <div class="service-desc">Limpeza dental, extração e tratamento de doenças periodontais para saúde bucal completa.</div>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-icon blue">🏠</div>
+        <div>
+          <div class="service-name">Internação</div>
+          <div class="service-desc">Ambiente seguro com monitoramento 24h para recuperação e tratamentos que necessitam de acompanhamento intensivo.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section class="section" id="sobre" style="background: var(--green-deep); padding: 72px 24px;">
+  <div style="max-width: 680px; margin: 0 auto;">
+    <span class="section-tag" style="color: #86efac;">Nossa história</span>
+    <h2 class="section-title" style="color: white;">Medicina veterinária com propósito</h2>
+    <p style="font-size: 16px; color: rgba(255,255,255,0.75); line-height: 1.75; margin-bottom: 32px;">
+      O São Francisco Centro Médico Veterinário nasceu da crença de que todo animal merece atenção médica de qualidade. Com uma equipe dedicada e estrutura moderna, oferecemos um atendimento que combina ciência, tecnologia e o cuidado que os nossos pacientes merecem.
+    </p>
+    <p style="font-size: 16px; color: rgba(255,255,255,0.75); line-height: 1.75; margin-bottom: 40px;">
+      Cada consulta é uma oportunidade de fazer a diferença na vida do seu pet — e também na sua. Porque sabemos que cuidar bem do seu animal é cuidar da sua paz de espírito.
+    </p>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+      <div style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; padding: 20px 18px;">
+        <div style="font-size: 13px; color: rgba(255,255,255,0.6); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.06em;">Equipe</div>
+        <div style="font-family: 'Playfair Display', serif; font-size: 22px; color: white; font-weight: 700;">Médicos vet.</div>
+        <div style="font-size: 12px; color: rgba(255,255,255,0.55); margin-top: 4px;">especializados</div>
+      </div>
+      <div style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; padding: 20px 18px;">
+        <div style="font-size: 13px; color: rgba(255,255,255,0.6); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.06em;">Estrutura</div>
+        <div style="font-family: 'Playfair Display', serif; font-size: 22px; color: white; font-weight: 700;">Moderna</div>
+        <div style="font-size: 12px; color: rgba(255,255,255,0.55); margin-top: 4px;">e completa</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIFERENCIAIS -->
+<section class="section" style="background: white;">
+  <div style="max-width: 680px; margin: 0 auto;">
+    <span class="section-tag">Por que escolher</span>
+    <h2 class="section-title">O que nos diferencia</h2>
+    <div style="display: flex; flex-direction: column; gap: 20px;">
+      <div style="display: flex; gap: 18px; align-items: flex-start; padding: 24px; background: var(--green-pale); border-radius: var(--radius-lg);">
+        <div style="font-size: 28px; flex-shrink: 0;">⚡</div>
+        <div>
+          <div style="font-size: 16px; font-weight: 700; color: var(--text-dark); margin-bottom: 6px;">Atendimento ágil com hora marcada</div>
+          <div style="font-size: 13px; color: var(--text-muted);">Sem longas esperas. Agendamento fácil pelo WhatsApp, com horário respeitado para você e seu pet.</div>
+        </div>
+      </div>
+      <div style="display: flex; gap: 18px; align-items: flex-start; padding: 24px; background: var(--cream); border-radius: var(--radius-lg);">
+        <div style="font-size: 28px; flex-shrink: 0;">🏆</div>
+        <div>
+          <div style="font-size: 16px; font-weight: 700; color: var(--text-dark); margin-bottom: 6px;">Equipe especializada e atualizada</div>
+          <div style="font-size: 13px; color: var(--text-muted);">Médicos veterinários com formação contínua e especialidades variadas para diagnósticos precisos.</div>
+        </div>
+      </div>
+      <div style="display: flex; gap: 18px; align-items: flex-start; padding: 24px; background: var(--green-pale); border-radius: var(--radius-lg);">
+        <div style="font-size: 28px; flex-shrink: 0;">🔬</div>
+        <div>
+          <div style="font-size: 16px; font-weight: 700; color: var(--text-dark); margin-bottom: 6px;">Exames rápidos, laudos precisos</div>
+          <div style="font-size: 13px; color: var(--text-muted);">Laboratório e equipamentos de imagem no local. Resultados com agilidade para não perder tempo no diagnóstico.</div>
+        </div>
+      </div>
+      <div style="display: flex; gap: 18px; align-items: flex-start; padding: 24px; background: var(--cream); border-radius: var(--radius-lg);">
+        <div style="font-size: 28px; flex-shrink: 0;">❤️</div>
+        <div>
+          <div style="font-size: 16px; font-weight: 700; color: var(--text-dark); margin-bottom: 6px;">Ambiente acolhedor para os pets</div>
+          <div style="font-size: 13px; color: var(--text-muted);">Clínica projetada para reduzir o estresse dos animais, com espaços separados para gatos e cães.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALERIA -->
+<section class="section" id="galeria" style="background: var(--cream);">
+  <div style="max-width: 680px; margin: 0 auto;">
+    <span class="section-tag">Nosso espaço</span>
+    <h2 class="section-title">Estrutura para cuidar bem</h2>
+    <p class="section-subtitle">Conheça nossa clínica — moderna, limpa e pensada no conforto dos pacientes e dos tutores.</p>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+      <div style="grid-column: 1 / -1; border-radius: 16px; overflow: hidden; height: 220px;">
+        <img src="https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=800&q=80" alt="Clínica veterinária" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy">
+      </div>
+      <div style="border-radius: 12px; overflow: hidden; height: 150px;">
+        <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=600&q=80" alt="Veterinário atendendo pet" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy">
+      </div>
+      <div style="border-radius: 12px; overflow: hidden; height: 150px;">
+        <img src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=600&q=80" alt="Pet saudável" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy">
+      </div>
+      <div style="border-radius: 12px; overflow: hidden; height: 150px;">
+        <img src="https://images.unsplash.com/photo-1606425271394-c3ca9aa1fc06?w=600&q=80" alt="Veterinário com gato" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy">
+      </div>
+      <div style="border-radius: 12px; overflow: hidden; height: 150px;">
+        <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?w=600&q=80" alt="Cachorros felizes" style="width: 100%; height: 100%; object-fit: cover;" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section class="section" style="background: white;">
+  <div style="max-width: 680px; margin: 0 auto;">
+    <span class="section-tag">O que dizem os tutores</span>
+    <h2 class="section-title">Quem cuida, confia</h2>
+    <div style="display: flex; flex-direction: column; gap: 16px;">
+      <div style="background: var(--cream); border-radius: var(--radius-lg); padding: 24px; border-left: 4px solid var(--green-light);">
+        <div style="display: flex; gap: 2px; margin-bottom: 12px;">
+          <span style="color: #f59e0b; font-size: 16px;">★★★★★</span>
+        </div>
+        <p style="font-size: 14px; color: var(--text-body); line-height: 1.7; margin-bottom: 16px; font-style: italic;">"Atendimento incrível! O veterinário explicou tudo com clareza e meu cachorro ficou bem mais calmo do que eu esperava. Recomendo a todos os tutores!"</p>
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="width: 38px; height: 38px; background: var(--green-pale); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px;">👩</div>
+          <div>
+            <div style="font-size: 13px; font-weight: 700; color: var(--text-dark);">Ana Carolina S.</div>
+            <div style="font-size: 11px; color: var(--text-muted);">Tutora do Bob</div>
+          </div>
+        </div>
+      </div>
+      <div style="background: var(--cream); border-radius: var(--radius-lg); padding: 24px; border-left: 4px solid var(--green-light);">
+        <div style="display: flex; gap: 2px; margin-bottom: 12px;">
+          <span style="color: #f59e0b; font-size: 16px;">★★★★★</span>
+        </div>
+        <p style="font-size: 14px; color: var(--text-body); line-height: 1.7; margin-bottom: 16px; font-style: italic;">"Profissionais super atenciosos. Minha gata precisou de cirurgia e ficamos super seguros com o acompanhamento antes, durante e depois. Obrigada!"</p>
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="width: 38px; height: 38px; background: var(--green-pale); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px;">👨</div>
+          <div>
+            <div style="font-size: 13px; font-weight: 700; color: var(--text-dark);">Ricardo M.</div>
+            <div style="font-size: 11px; color: var(--text-muted);">Tutor da Luna</div>
+          </div>
+        </div>
+      </div>
+      <div style="background: var(--cream); border-radius: var(--radius-lg); padding: 24px; border-left: 4px solid var(--green-light);">
+        <div style="display: flex; gap: 2px; margin-bottom: 12px;">
+          <span style="color: #f59e0b; font-size: 16px;">★★★★★</span>
+        </div>
+        <p style="font-size: 14px; color: var(--text-body); line-height: 1.7; margin-bottom: 16px; font-style: italic;">"Clínica bem estruturada, limpa e organizada. Fiz exames do meu cão aqui e os resultados vieram rápido. Já agendei retorno sem hesitar!"</p>
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <div style="width: 38px; height: 38px; background: var(--green-pale); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 16px;">👩</div>
+          <div>
+            <div style="font-size: 13px; font-weight: 700; color: var(--text-dark);">Fernanda L.</div>
+            <div style="font-size: 11px; color: var(--text-muted);">Tutora do Thor</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section class="section" id="contato" style="background: var(--green-deep);">
+  <div style="max-width: 680px; margin: 0 auto; text-align: center;">
+    <span class="section-tag" style="color: #86efac; justify-content: center;">Fale conosco</span>
+    <h2 class="section-title" style="color: white;">Agende a consulta<br>do seu pet</h2>
+    <p style="font-size: 15px; color: rgba(255,255,255,0.7); margin-bottom: 36px; line-height: 1.7;">
+      A forma mais rápida de agendar é pelo WhatsApp. Envie uma mensagem e nossa equipe responde em minutos!
+    </p>
+    <a href="https://wa.me/554197227669?text=Olá!%20Gostaria%20de%20agendar%20uma%20consulta%20para%20meu%20pet." 
+       target="_blank" rel="noopener"
+       style="display: inline-flex; align-items: center; gap: 12px; background: #25D366; color: white; padding: 18px 36px; border-radius: 50px; font-size: 16px; font-weight: 700; text-decoration: none; margin-bottom: 48px; box-shadow: 0 4px 20px rgba(37,211,102,0.35); transition: transform 0.2s;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.004 2C6.477 2 2 6.477 2 12.004c0 1.771.464 3.432 1.274 4.876L2.05 21.898l5.143-1.199A9.959 9.959 0 0 0 12.004 22C17.53 22 22 17.523 22 12.004 22 6.477 17.53 2 12.004 2zm0 18.16a8.136 8.136 0 0 1-4.159-1.138l-.299-.177-3.053.711.727-2.976-.194-.307A8.16 8.16 0 1 1 12.004 20.16z"/></svg>
+      Agendar pelo WhatsApp
+    </a>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; text-align: left;">
+      <div style="background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 20px;">
+        <div style="font-size: 20px; margin-bottom: 10px;">📍</div>
+        <div style="font-size: 13px; font-weight: 700; color: white; margin-bottom: 4px;">Endereço</div>
+        <div style="font-size: 12px; color: rgba(255,255,255,0.55); line-height: 1.6;">Curitiba, PR<br>Brasil</div>
+      </div>
+      <div style="background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 20px;">
+        <div style="font-size: 20px; margin-bottom: 10px;">🕐</div>
+        <div style="font-size: 13px; font-weight: 700; color: white; margin-bottom: 4px;">Horários</div>
+        <div style="font-size: 12px; color: rgba(255,255,255,0.55); line-height: 1.6;">Seg–Sex: 8h–18h<br>Sábado: 8h–13h</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer style="background: #071f18; padding: 32px 24px; text-align: center;">
+  <div style="max-width: 680px; margin: 0 auto;">
+    <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 16px;">
+      <div style="width: 32px; height: 32px; background: var(--green-mid); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px;">🐾</div>
+      <div style="font-family: 'Playfair Display', serif; font-size: 15px; font-weight: 700; color: white;">São Francisco CMV</div>
+    </div>
+    <p style="font-size: 12px; color: rgba(255,255,255,0.35); line-height: 1.6;">
+      © 2025 São Francisco Centro Médico Veterinário. Todos os direitos reservados.
+    </p>
+  </div>
+</footer>
+
+<!-- FLOATING WHATSAPP -->
+<a href="https://wa.me/554197227669?text=Olá!%20Gostaria%20de%20agendar%20uma%20consulta%20para%20meu%20pet." 
+   target="_blank" rel="noopener"
+   style="position:fixed;bottom:20px;right:20px;z-index:999;background:#25D366;border-radius:50%;width:60px;height:60px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(37,211,102,0.45);transition:transform 0.2s;"
+   onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.004 2C6.477 2 2 6.477 2 12.004c0 1.771.464 3.432 1.274 4.876L2.05 21.898l5.143-1.199A9.959 9.959 0 0 0 12.004 22C17.53 22 22 17.523 22 12.004 22 6.477 17.53 2 12.004 2zm0 18.16a8.136 8.136 0 0 1-4.159-1.138l-.299-.177-3.053.711.727-2.976-.194-.307A8.16 8.16 0 1 1 12.004 20.16z"/></svg>
+</a>
+
+</body>
+</html>
