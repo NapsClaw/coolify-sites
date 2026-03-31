@@ -458,6 +458,18 @@ footer{background:#0f172a;padding:40px 20px 24px;text-align:center}
             <option>DIÁRIA PARA EVENTOS</option>
           </select>
         </div>
+        <div class="form-row">
+          <label>💰 Valor total da locação (R$)</label>
+          <input type="number" id="f-total" placeholder="Ex: 2200" min="0" step="0.01" oninput="calcRestante()">
+        </div>
+        <div class="form-row">
+          <label>✅ Sinal de pagamento (R$)</label>
+          <input type="number" id="f-sinal" placeholder="Ex: 1100" min="0" step="0.01" oninput="calcRestante()">
+        </div>
+        <div class="form-row form-full" id="f-restante-row" style="display:none">
+          <label>⏳ Restante do pagamento (R$)</label>
+          <input type="number" id="f-restante" placeholder="Calculado automaticamente" min="0" step="0.01" readonly style="background:#f8fafc;color:var(--mid)">
+        </div>
         <div class="form-row form-full">
           <label>Observações (opcional)</label>
           <textarea id="f-obs" placeholder="Informações adicionais, dúvidas, necessidades especiais..."></textarea>
@@ -1208,6 +1220,22 @@ function fmtDate(ds){
 function calPrev(){ calDate.setMonth(calDate.getMonth()-1); renderCal(); }
 function calNext(){ calDate.setMonth(calDate.getMonth()+1); renderCal(); }
 
+// ===== PAYMENT CALC =====
+function calcRestante(){
+  const total = parseFloat(document.getElementById('f-total').value) || 0;
+  const sinal = parseFloat(document.getElementById('f-sinal').value) || 0;
+  const restante = Math.max(0, total - sinal);
+  const row = document.getElementById('f-restante-row');
+  const inp = document.getElementById('f-restante');
+  if(total > 0 || sinal > 0){
+    row.style.display = '';
+    inp.value = restante > 0 ? restante.toFixed(2) : '0.00';
+  } else {
+    row.style.display = 'none';
+    inp.value = '';
+  }
+}
+
 // ===== SUBMIT =====
 function submitReserve(){
   const name = document.getElementById('f-name').value.trim();
@@ -1216,6 +1244,9 @@ function submitReserve(){
   const guests = document.getElementById('f-guests').value;
   const occasion = document.getElementById('f-occasion').value;
   const obs = document.getElementById('f-obs').value.trim();
+  const totalVal = parseFloat(document.getElementById('f-total').value) || 0;
+  const sinalVal = parseFloat(document.getElementById('f-sinal').value) || 0;
+  const restanteVal = Math.max(0, totalVal - sinalVal);
 
   if(!name){ showToast('Por favor, informe o nome completo.'); return; }
   if(!phone){ showToast('Por favor, informe o WhatsApp.'); return; }
@@ -1240,6 +1271,7 @@ function submitReserve(){
     checkin: selStart,
     checkout: selEnd,
     status: 'pending',
+    totalVal, sinalVal, restanteVal,
     createdAt: new Date().toISOString()
   };
   const arr = getRes();
@@ -1247,6 +1279,7 @@ function submitReserve(){
   saveRes(arr);
 
   // WhatsApp
+  const fmtMoney = v => v > 0 ? `R$ ${v.toLocaleString('pt-BR',{minimumFractionDigits:2})}` : '—';
   const msg = encodeURIComponent(
     `🏡 *Solicitação de Reserva — Sítio Iluminado*\n\n` +
     `*Nome:* ${name}\n` +
@@ -1256,6 +1289,9 @@ function submitReserve(){
     `*Check-out:* ${fmtDate(selEnd)}\n` +
     `*Pessoas:* ${guests}\n` +
     `*Ocasião:* ${occasion}\n` +
+    (totalVal > 0 ? `*Valor total:* ${fmtMoney(totalVal)}\n` : '') +
+    (sinalVal > 0 ? `*Sinal:* ${fmtMoney(sinalVal)}\n` : '') +
+    (restanteVal > 0 ? `*Restante:* ${fmtMoney(restanteVal)}\n` : '') +
     `*Obs:* ${obs||'—'}\n\n` +
     `Aguardo confirmação! 😊`
   );
@@ -1268,6 +1304,10 @@ function submitReserve(){
   document.getElementById('f-email').value = '';
   document.getElementById('f-guests').value = '';
   document.getElementById('f-obs').value = '';
+  document.getElementById('f-total').value = '';
+  document.getElementById('f-sinal').value = '';
+  document.getElementById('f-restante').value = '';
+  document.getElementById('f-restante-row').style.display = 'none';
   document.getElementById('disp-ci').textContent = 'Selecione no calendário';
   document.getElementById('disp-ci').classList.add('empty');
   document.getElementById('disp-co').textContent = 'Selecione no calendário';

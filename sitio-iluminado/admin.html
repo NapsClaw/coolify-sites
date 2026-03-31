@@ -464,6 +464,18 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:#f1f5f9;color:var(--d
                 <option value="paid">✅ Pago</option>
               </select>
             </div>
+            <div class="form-row">
+              <label>💰 Valor total da locação (R$)</label>
+              <input type="number" id="nf-total" placeholder="Ex: 2200" min="0" step="0.01" oninput="calcAdminRestante()">
+            </div>
+            <div class="form-row">
+              <label>✅ Sinal de pagamento (R$)</label>
+              <input type="number" id="nf-sinal" placeholder="Ex: 1100" min="0" step="0.01" oninput="calcAdminRestante()">
+            </div>
+            <div class="form-row">
+              <label>⏳ Restante do pagamento (R$)</label>
+              <input type="number" id="nf-restante" placeholder="Calculado automaticamente" min="0" step="0.01" readonly style="background:#f8fafc;color:#6b7280">
+            </div>
           </div>
           <div class="form-row" style="margin-top:14px">
             <label>Observações</label>
@@ -510,6 +522,11 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:#f1f5f9;color:var(--d
           <div class="modal-field"><label>Ocasião</label><div class="val" id="md-occasion"></div></div>
           <div class="modal-field"><label>Status</label><div class="val" id="md-status"></div></div>
         </div>
+        <div class="modal-row">
+          <div class="modal-field"><label>💰 Valor total</label><div class="val" id="md-total"></div></div>
+          <div class="modal-field"><label>✅ Sinal pago</label><div class="val" id="md-sinal"></div></div>
+        </div>
+        <div class="modal-field"><label>⏳ Restante</label><div class="val" id="md-restante"></div></div>
         <div class="modal-field"><label>Observações</label><div class="val" id="md-obs"></div></div>
         <div class="modal-field"><label>Registrado em</label><div class="val" id="md-created"></div></div>
       </div>
@@ -845,6 +862,10 @@ function openModal(id){
   document.getElementById('md-occasion').textContent = r.occasion||'—';
   document.getElementById('md-obs').textContent = r.obs||'—';
   document.getElementById('md-created').textContent = r.createdAt ? new Date(r.createdAt).toLocaleString('pt-BR') : '—';
+  const fmtR = v => v > 0 ? `R$ ${Number(v).toLocaleString('pt-BR',{minimumFractionDigits:2})}` : '—';
+  document.getElementById('md-total').textContent = fmtR(r.totalVal);
+  document.getElementById('md-sinal').textContent = fmtR(r.sinalVal);
+  document.getElementById('md-restante').textContent = fmtR(r.restanteVal);
   const badge = r.status==='paid'
     ? '<span class="badge badge-paid">✅ Pago</span>'
     : '<span class="badge badge-pending">⏳ Pendente</span>';
@@ -1105,6 +1126,14 @@ function downloadCSV(rows, filename){
   showToast('📥 CSV exportado!');
 }
 
+// ===== CALC RESTANTE ADMIN =====
+function calcAdminRestante(){
+  const total = parseFloat(document.getElementById('nf-total').value) || 0;
+  const sinal = parseFloat(document.getElementById('nf-sinal').value) || 0;
+  const restante = Math.max(0, total - sinal);
+  document.getElementById('nf-restante').value = (total > 0 || sinal > 0) ? restante.toFixed(2) : '';
+}
+
 // ===== NOVA RESERVA =====
 function saveNewReservation(){
   const name = document.getElementById('nf-name').value.trim();
@@ -1116,16 +1145,19 @@ function saveNewReservation(){
   const occasion = document.getElementById('nf-occasion').value;
   const status = document.getElementById('nf-status').value;
   const obs = document.getElementById('nf-obs').value.trim();
+  const totalVal = parseFloat(document.getElementById('nf-total').value) || 0;
+  const sinalVal = parseFloat(document.getElementById('nf-sinal').value) || 0;
+  const restanteVal = Math.max(0, totalVal - sinalVal);
 
   if(!name||!phone||!checkin||!checkout||!guests){ showToast('⚠️ Preencha os campos obrigatórios'); return; }
   if(checkin >= checkout){ showToast('⚠️ Check-out deve ser depois do check-in'); return; }
 
   const all = getRes();
-  all.push({ id:genId(), name, phone, email, guests, checkin, checkout, occasion, status, obs, createdAt:new Date().toISOString() });
+  all.push({ id:genId(), name, phone, email, guests, checkin, checkout, occasion, status, obs, totalVal, sinalVal, restanteVal, createdAt:new Date().toISOString() });
   saveRes(all);
 
   // reset
-  ['nf-name','nf-phone','nf-email','nf-checkin','nf-checkout','nf-obs'].forEach(id=>document.getElementById(id).value='');
+  ['nf-name','nf-phone','nf-email','nf-checkin','nf-checkout','nf-obs','nf-total','nf-sinal','nf-restante'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('nf-guests').value='';
   document.getElementById('nf-occasion').value='';
   document.getElementById('nf-status').value='pending';
