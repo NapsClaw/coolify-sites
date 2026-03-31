@@ -478,21 +478,40 @@ function verificarVotoAnterior() {
   // bloqueio desativado
 }
 
-function enviarVoto() {
+async function enviarVoto() {
   if (!candidatoSelecionado) return;
-  if (jaVotou()) { alert('Você já participou desta pesquisa!'); return; }
   const nome = document.getElementById('cidade').value.trim();
   if (!nome) { alert('Por favor, informe seu nome!'); document.getElementById('cidade').focus(); return; }
 
-  marcarVotado();
-  setTimeout(() => verificarVotoAnterior(), 300);
-
-  // Mostrar confirmação visual
   const btnEnviar = document.getElementById('btn-enviar');
-  btnEnviar.textContent = '✅ Voto registrado! Obrigado pela participação!';
-  btnEnviar.style.background = '#059669';
-  btnEnviar.style.boxShadow = '0 4px 16px rgba(5,150,105,0.3)';
+  btnEnviar.textContent = '⏳ Enviando...';
   btnEnviar.disabled = true;
+
+  try {
+    const res = await fetch('https://pesquisaja-voto-backend.sparkz.agency/api/votar', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ candidato: candidatoSelecionado, nome })
+    });
+    const data = await res.json();
+    if (data.success) {
+      btnEnviar.textContent = '✅ Voto registrado! Obrigado pela participação!';
+      btnEnviar.style.background = '#059669';
+      btnEnviar.style.boxShadow = '0 4px 16px rgba(5,150,105,0.3)';
+    } else if (data.error === 'ja_votou') {
+      btnEnviar.textContent = 'ℹ️ Você já participou desta pesquisa';
+      btnEnviar.style.background = '#6b7280';
+      btnEnviar.style.boxShadow = 'none';
+    } else {
+      btnEnviar.textContent = '🗳️ Confirmar voto';
+      btnEnviar.disabled = false;
+      alert('Erro ao registrar voto. Tente novamente.');
+    }
+  } catch(e) {
+    btnEnviar.textContent = '🗳️ Confirmar voto';
+    btnEnviar.disabled = false;
+    alert('Erro de conexão. Tente novamente.');
+  }
 }
 
 // Verificar ao carregar a página
