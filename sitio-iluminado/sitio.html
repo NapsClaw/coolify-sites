@@ -616,14 +616,17 @@ function fmtDate(ds){ if(!ds)return'—'; const[y,m,d]=ds.split('-'); return`${d
 function calPrev(){ calDate.setMonth(calDate.getMonth()-1); renderCal(); }
 function calNext(){ calDate.setMonth(calDate.getMonth()+1); renderCal(); }
 
-// ── PRICE CALC (genérico) ──
-const PRICES = {
-  fds:{ate15:800,ate20:1000,ate25:1200,ate30:1400,mais30:null},
-  feriado2:{ate15:1200,ate20:1500,ate25:1800,ate30:2100,mais30:null},
-  feriado3:{ate15:1600,ate20:2000,ate25:2400,ate30:2800,mais30:null},
-  feriado4:{ate15:2000,ate20:2500,ate25:3000,ate30:3500,mais30:null},
-  evento:{ate15:1500,ate20:1800,ate25:2100,ate30:2400,mais30:null}
+// ── PRICE CALC — usa tabela do sítio se existir, senão padrão ──
+const PRICES_DEFAULT = {
+  fds:{ate15:800,ate20:1000,ate25:1200,ate30:1400},
+  feriado2:{ate15:1200,ate20:1500,ate25:1800,ate30:2100},
+  feriado3:{ate15:1600,ate20:2000,ate25:2400,ate30:2800},
+  feriado4:{ate15:2000,ate20:2500,ate25:3000,ate30:3500},
+  evento:{ate15:1500,ate20:1800,ate25:2100,ate30:2400}
 };
+// Carrega tabela de preços do sítio (definida pelo admin) ou usa padrão
+const PRICES = (SITIO.prices && Object.keys(SITIO.prices).length) ? SITIO.prices : PRICES_DEFAULT;
+
 function calcPrice(){
   const p=document.getElementById('calc-period').value;
   const g=document.getElementById('calc-guests').value;
@@ -631,13 +634,20 @@ function calcPrice(){
   const pd=document.getElementById('price-detail');
   const pn=document.getElementById('price-note');
   const pl=document.querySelector('.price-result-label');
-  if(!p||!g){pv.style.display='none';pd.style.display='none';pn.style.display='none';pl.style.display='block';return;}
+  if(!p||!g){pv.style.display='none';pd.style.display='none';pn.style.display='none';pl.style.display='block';pl.textContent='Selecione as opções acima para ver o valor';return;}
+  if(g==='mais30'){
+    pl.style.display='block';pl.textContent='Para grupos acima de 30 pessoas, consulte pelo WhatsApp!';
+    pv.style.display='none';pd.style.display='none';pn.style.display='none';return;
+  }
   const v=PRICES[p]&&PRICES[p][g];
-  if(v===null){pv.style.display='none';pd.style.display='none';pn.style.display='none';pl.style.display='block';pl.textContent='Consulte pelo WhatsApp para grupos acima de 30 pessoas';return;}
+  if(!v){
+    pl.style.display='block';pl.textContent='Consulte disponibilidade e valores pelo WhatsApp!';
+    pv.style.display='none';pd.style.display='none';pn.style.display='none';return;
+  }
   pl.style.display='none';
-  pv.textContent='R$'+v.toLocaleString('pt-BR');pv.style.display='block';
-  pd.textContent='Valores de referência · Confirmar disponibilidade pelo WhatsApp';pd.style.display='block';
-  pn.textContent='+ Taxa de limpeza: R$300 (não inclusa) · Pagamento via PIX';pn.style.display='block';
+  pv.textContent='R$ '+v.toLocaleString('pt-BR');pv.style.display='block';
+  pd.textContent='Valor de referência · Confirme disponibilidade pelo WhatsApp';pd.style.display='block';
+  pn.textContent='Pagamento via PIX · Após confirmação pelo WhatsApp';pn.style.display='block';
 }
 
 // ── SUBMIT ──

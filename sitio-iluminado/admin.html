@@ -654,6 +654,24 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:#f1f5f9;color:var(--d
           <label>Características (uma por linha, com emojis)</label>
           <textarea id="sm-feats" rows="4" placeholder="🛏️ 4 quartos&#10;🏊 Piscina&#10;🔥 Churrasqueira&#10;🚗 Estacionamento" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:14px;font-family:inherit;resize:vertical"></textarea>
         </div>
+        <div class="modal-field" style="grid-column:1/-1">
+          <label style="margin-bottom:8px;display:block">💰 Tabela de Preços — R$ por período / faixa de pessoas (0 = Sob consulta)</label>
+          <div style="overflow-x:auto">
+            <table style="width:100%;border-collapse:collapse;font-size:12px">
+              <thead>
+                <tr style="background:var(--light)">
+                  <th style="padding:8px 6px;text-align:left;border:1px solid var(--border);color:var(--mid);font-weight:700;white-space:nowrap">Período</th>
+                  <th style="padding:8px 6px;text-align:center;border:1px solid var(--border);color:var(--mid);font-weight:700">≤15 pess.</th>
+                  <th style="padding:8px 6px;text-align:center;border:1px solid var(--border);color:var(--mid);font-weight:700">≤20 pess.</th>
+                  <th style="padding:8px 6px;text-align:center;border:1px solid var(--border);color:var(--mid);font-weight:700">≤25 pess.</th>
+                  <th style="padding:8px 6px;text-align:center;border:1px solid var(--border);color:var(--mid);font-weight:700">≤30 pess.</th>
+                </tr>
+              </thead>
+              <tbody id="sm-price-rows"></tbody>
+            </table>
+          </div>
+          <p style="font-size:11px;color:var(--mid);margin-top:5px">Acima de 30 pessoas sempre exibe "Sob consulta". Deixe 0 para ocultar faixa.</p>
+        </div>
       </div>
 
       <div class="modal-field">
@@ -1401,6 +1419,43 @@ function slugify(s){return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u0
 function getSitios(){try{const d=localStorage.getItem(OS_KEY);return d?JSON.parse(d):OS_DEFAULT;}catch(e){return OS_DEFAULT;}}
 function saveSitios(arr){localStorage.setItem(OS_KEY,JSON.stringify(arr));}
 
+// ── TABELA DE PREÇOS DOS SÍTIOS ──
+const PRICE_PERIODS = [
+  {key:'fds',     label:'🗓️ Fim de semana'},
+  {key:'feriado2',label:'🎉 Feriado 2 dias'},
+  {key:'feriado3',label:'🎉 Feriado 3 dias'},
+  {key:'feriado4',label:'🎉 Feriado 4 dias'},
+  {key:'evento',  label:'🎊 Festa / Evento'},
+];
+const PRICE_FAIXAS = ['ate15','ate20','ate25','ate30'];
+
+function buildPriceRows(prices){
+  const tbody = document.getElementById('sm-price-rows');
+  tbody.innerHTML = PRICE_PERIODS.map(p=>`
+    <tr>
+      <td style="padding:6px 8px;border:1px solid var(--border);font-size:12px;font-weight:600;white-space:nowrap">${p.label}</td>
+      ${PRICE_FAIXAS.map(f=>`
+        <td style="padding:4px 6px;border:1px solid var(--border)">
+          <input type="number" min="0" step="50"
+            id="pr-${p.key}-${f}"
+            value="${prices&&prices[p.key]&&prices[p.key][f]!=null?prices[p.key][f]:0}"
+            style="width:70px;padding:5px 7px;border:1.5px solid var(--border);border-radius:5px;font-size:12px;text-align:center;font-family:inherit">
+        </td>`).join('')}
+    </tr>`).join('');
+}
+
+function readPriceTable(){
+  const prices = {};
+  PRICE_PERIODS.forEach(p=>{
+    prices[p.key]={};
+    PRICE_FAIXAS.forEach(f=>{
+      const el=document.getElementById(`pr-${p.key}-${f}`);
+      prices[p.key][f] = el ? parseFloat(el.value)||0 : 0;
+    });
+  });
+  return prices;
+}
+
 // ── MODAL SÍTIO ILUMINADO ──
 function openSIModal(){
   const si = getSI();
@@ -1498,6 +1553,8 @@ function openSitioModal(idx){
   document.getElementById('sm-capa').value = s.capa||'';
   const prev = document.getElementById('sm-capa-preview');
   if(s.capa){prev.src=s.capa;prev.style.display='block';}else prev.style.display='none';
+  // preços
+  buildPriceRows(s.prices||{});
   // reset tabs to URL
   switchCapaTab('url');
   switchGalTab('url');
@@ -1581,6 +1638,7 @@ function salvarSitio(){
     precoDetalhe:document.getElementById('sm-detalhe').value.trim(),
     wa:document.getElementById('sm-wa').value.trim()||`Olá Arlei! Tenho interesse no ${nome}.`,
     features:document.getElementById('sm-feats').value.split('\n').map(l=>l.trim()).filter(Boolean),
+    prices:readPriceTable(),
     capa,
     fotos:fotos.length?fotos:[capa]
   };
