@@ -724,32 +724,16 @@ var pros={
 
 function openP(k){
   var p=pros[k];if(!p)return;
+  // Multiple pros in category → show list to pick
   if(p._list){openLst(k);return;}
+  // Available slot → redirect to register
   if(p._slot){
-    document.getElementById('popup-img').src=p.img;
-    document.getElementById('popup-name').textContent='Vaga disponível!';
-    document.getElementById('popup-role').textContent=p.role;
-    document.getElementById('popup-desc').textContent='Esta vaga ainda está disponível. Seja o primeiro profissional desta categoria no Acheaki!';
-    document.getElementById('popup-city').textContent=p.city||'Brasília e região';
-    document.getElementById('popup-mode').textContent=p.mode||'Online e presencial';
-    document.getElementById('popup-phone-label').textContent='Via plataforma';
-    document.getElementById('popup-wa-label').textContent='Quero ocupar essa vaga';
-    document.getElementById('popup-wa').href='https://wa.me/5561982242096?text='+encodeURIComponent('Olá! Vi no Acheaki e gostaria de me cadastrar como profissional.');
-    document.getElementById('popup-overlay').classList.add('active');
+    window.open('https://wa.me/5561982242096?text='+encodeURIComponent('Olá! Vi no Acheaki e gostaria de me cadastrar como profissional.'),'_blank');
     return;
   }
-  document.getElementById('popup-img').src=p.img;
-  document.getElementById('popup-name').textContent=p.name;
-  document.getElementById('popup-role').textContent=p.role;
-  document.getElementById('popup-desc').textContent=p.desc;
-  document.getElementById('popup-city').textContent=p.city||'Brasília e região';
-  document.getElementById('popup-mode').textContent=p.mode||'Online e presencial';
+  // Single pro → go directly to their WhatsApp
   var phone=p.phone||'5561982242096';
-  var label=p.phone?'('+p.phone.slice(2,4)+') '+p.phone.slice(4,9)+'-'+p.phone.slice(9):'Via plataforma';
-  document.getElementById('popup-phone-label').textContent=label;
-  document.getElementById('popup-wa-label').textContent=p.phone?'Falar com '+p.name.split(' ')[0]:'Quero agendar agora';
-  document.getElementById('popup-wa').href='https://wa.me/'+phone+'?text='+encodeURIComponent(p.wa);
-  document.getElementById('popup-overlay').classList.add('active');
+  window.open('https://wa.me/'+phone+'?text='+encodeURIComponent(p.wa),'_blank');
 }
 function openLst(k){
   var p=pros[k];if(!p||!p._list)return;
