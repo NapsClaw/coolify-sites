@@ -264,7 +264,7 @@ footer p{font-size:13px;color:var(--muted);margin-bottom:8px}
 <nav>
   <a href="#" class="nav-logo"><span class="a1">ACHE</span><span class="a2">AKI</span></a>
   <ul class="nav-links">
-    <li><a href="#" onclick="event.preventDefault();abrirProfissionais()" style="color:#D4AF37;font-weight:700;">Profissionais</a></li>
+    <li><a href="#lista-profissionais">Profissionais</a></li>
     <li><a href="#como-funciona">Como Funciona</a></li>
     <li><a href="#seja-profissional">Para Profissionais</a></li>
     <li><a href="#radiotv">TV & Rádio</a></li>
@@ -488,6 +488,110 @@ footer p{font-size:13px;color:var(--muted);margin-bottom:8px}
   </div>
 </div>
 </section>
+
+<!-- SEÇÃO PROFISSIONAIS POR CATEGORIA -->
+<section class="section" id="lista-profissionais" style="background:var(--primary);">
+<div class="section-inner">
+  <span class="section-label">Todos os Profissionais</span>
+  <h2 class="section-title">Encontre o profissional certo</h2>
+  <p class="section-subtitle" style="margin-bottom:32px;">Clique em qualquer profissional para falar direto no WhatsApp.</p>
+
+  <!-- Filtro por categoria -->
+  <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:36px;">
+    <button onclick="filtrarLista('todos',this)" class="lista-cat-btn" style="background:rgba(212,175,55,0.15);border:1px solid rgba(212,175,55,0.35);color:#D4AF37;font-size:12px;font-weight:700;padding:8px 16px;border-radius:50px;cursor:pointer;font-family:inherit;">Todos</button>
+    <button onclick="filtrarLista('saude',this)" class="lista-cat-btn" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.65);font-size:12px;font-weight:600;padding:8px 16px;border-radius:50px;cursor:pointer;font-family:inherit;">🩺 Saúde</button>
+    <button onclick="filtrarLista('beleza',this)" class="lista-cat-btn" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.65);font-size:12px;font-weight:600;padding:8px 16px;border-radius:50px;cursor:pointer;font-family:inherit;">💅 Beleza</button>
+    <button onclick="filtrarLista('educacao',this)" class="lista-cat-btn" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.65);font-size:12px;font-weight:600;padding:8px 16px;border-radius:50px;cursor:pointer;font-family:inherit;">📚 Educação</button>
+    <button onclick="filtrarLista('servicos',this)" class="lista-cat-btn" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.65);font-size:12px;font-weight:600;padding:8px 16px;border-radius:50px;cursor:pointer;font-family:inherit;">🏠 Serviços</button>
+    <button onclick="filtrarLista('tecnicos',this)" class="lista-cat-btn" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.65);font-size:12px;font-weight:600;padding:8px 16px;border-radius:50px;cursor:pointer;font-family:inherit;">🔧 Técnicos</button>
+  </div>
+
+  <!-- Grid de profissionais -->
+  <div id="lista-pros-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;"></div>
+</div>
+</section>
+
+<script>
+var listaPros = [
+  {nome:'Psicanalista',prof:'Psicanálise',img:'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=120&q=80',cat:'saude',cidade:'Brasília-DF',modo:'Online e presencial',phone:'5561982242096'},
+  {nome:'Fisioterapeuta',prof:'Fisioterapia',img:'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=120&q=80',cat:'saude',cidade:'Brasília-DF',modo:'Presencial',phone:'5561982242096'},
+  {nome:'Massagista',prof:'Massoterapia',img:'https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=120&q=80',cat:'saude',cidade:'Brasília-DF',modo:'A domicílio',phone:'5561982242096'},
+  {nome:'Nutricionista',prof:'Nutrição',img:'https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=120&q=80',cat:'saude',cidade:'Brasília-DF',modo:'Online e presencial',phone:'5561982242096'},
+  {nome:'Psicólogo(a)',prof:'Psicologia',img:'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=120&q=80',cat:'saude',cidade:'Brasília-DF',modo:'Online e presencial',phone:'5561982242096'},
+  {nome:'Cardiologista',prof:'Cardiologia',img:'https://images.unsplash.com/photo-1628348068343-c6a848d2b6dd?w=120&q=80',cat:'saude',cidade:'Brasília-DF',modo:'Presencial',phone:'5561982242096'},
+  {nome:'Pediatra',prof:'Pediatria',img:'https://images.unsplash.com/photo-1504439468489-c8920d796a29?w=120&q=80',cat:'saude',cidade:'Brasília-DF',modo:'Presencial',phone:'5561982242096'},
+  {nome:'Dentista',prof:'Odontologia',img:'https://images.unsplash.com/photo-1606811971618-4486d14f3f99?w=120&q=80',cat:'saude',cidade:'Brasília-DF',modo:'Presencial',phone:'5561982242096'},
+  {nome:'Dermatologista',prof:'Dermatologia',img:'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=120&q=80',cat:'saude',cidade:'Brasília-DF',modo:'Presencial',phone:'5561982242096'},
+  {nome:'Ortopedista',prof:'Ortopedia',img:'https://images.unsplash.com/photo-1530026405186-ed1f139313f8?w=120&q=80',cat:'saude',cidade:'Brasília-DF',modo:'Presencial',phone:'5561982242096'},
+  {nome:'Ginecologista',prof:'Ginecologia',img:'https://images.unsplash.com/photo-1651008376811-b90baee60c1f?w=120&q=80',cat:'saude',cidade:'Brasília-DF',modo:'Presencial',phone:'5561982242096'},
+  {nome:'Podólogo(a)',prof:'Podologia',img:'https://images.unsplash.com/photo-1612776572997-76cc42e058c3?w=120&q=80',cat:'saude',cidade:'Brasília-DF',modo:'Presencial',phone:'5561982242096'},
+  {nome:'Cuidador de Idosos',prof:'Cuidados',img:'https://images.unsplash.com/photo-1584515933487-779824d29309?w=120&q=80',cat:'saude',cidade:'Brasília-DF',modo:'Presencial',phone:'5561982242096'},
+  {nome:'Instrutor de Pilates',prof:'Pilates',img:'https://images.unsplash.com/photo-1599058917765-a780eda07a3e?w=120&q=80',cat:'saude',cidade:'Brasília-DF',modo:'Presencial',phone:'5561982242096'},
+  {nome:'Cabeleireiro(a)',prof:'Cabelo & Beleza',img:'https://images.unsplash.com/photo-1560066984-138dadb4c035?w=120&q=80',cat:'beleza',cidade:'Brasília-DF',modo:'Presencial',phone:'5561982242096'},
+  {nome:'Esteticista',prof:'Estética',img:'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=120&q=80',cat:'beleza',cidade:'Brasília-DF',modo:'Presencial',phone:'5561982242096'},
+  {nome:'Manicure / Pedicure',prof:'Beleza',img:'https://images.unsplash.com/photo-1604654894610-df63bc536371?w=120&q=80',cat:'beleza',cidade:'Brasília-DF',modo:'Presencial',phone:'5561982242096'},
+  {nome:'Maquiador(a)',prof:'Maquiagem',img:'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=120&q=80',cat:'beleza',cidade:'Brasília-DF',modo:'A domicílio',phone:'5561982242096'},
+  {nome:'Pedagogo(a)',prof:'Educação',img:'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=120&q=80',cat:'educacao',cidade:'Brasília-DF',modo:'Online e presencial',phone:'5561982242096'},
+  {nome:'Professor(a)',prof:'Aulas Particulares',img:'https://images.unsplash.com/photo-1544717305149-0b3cb1c5e1b4?w=120&q=80',cat:'educacao',cidade:'Brasília-DF',modo:'Online e presencial',phone:'5561982242096'},
+  {nome:'Eletricista',prof:'Elétrica',img:'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=120&q=80',cat:'servicos',cidade:'Brasília-DF',modo:'Presencial',phone:'5561982242096'},
+  {nome:'Encanador',prof:'Hidráulica',img:'https://images.unsplash.com/photo-1585704032915-c3400ca199e7?w=120&q=80',cat:'servicos',cidade:'Brasília-DF',modo:'Presencial',phone:'5561982242096'},
+  {nome:'Pintor',prof:'Pintura',img:'https://images.unsplash.com/photo-1562259949-e8e7689d7828?w=120&q=80',cat:'servicos',cidade:'Brasília-DF',modo:'Presencial',phone:'5561982242096'},
+  {nome:'Pedreiro',prof:'Construção',img:'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=120&q=80',cat:'servicos',cidade:'Brasília-DF',modo:'Presencial',phone:'5561982242096'},
+  {nome:'Jardineiro',prof:'Jardinagem',img:'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=120&q=80',cat:'servicos',cidade:'Brasília-DF',modo:'Presencial',phone:'5561982242096'},
+  {nome:'Diarista',prof:'Limpeza',img:'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=120&q=80',cat:'servicos',cidade:'Brasília-DF',modo:'Presencial',phone:'5561982242096'},
+  {nome:'Designer de Interiores',prof:'Decoração',img:'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=120&q=80',cat:'servicos',cidade:'Brasília-DF',modo:'Online e presencial',phone:'5561982242096'},
+  {nome:'Técnico em TI',prof:'Tecnologia',img:'https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?w=120&q=80',cat:'tecnicos',cidade:'Brasília-DF',modo:'Presencial',phone:'5561982242096'},
+  {nome:'Técnico em Refrigeração',prof:'Refrigeração',img:'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=120&q=80',cat:'tecnicos',cidade:'Brasília-DF',modo:'Presencial',phone:'5561982242096'},
+  {nome:'Advogado(a)',prof:'Jurídico',img:'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=120&q=80',cat:'tecnicos',cidade:'Brasília-DF',modo:'Online e presencial',phone:'5561982242096'}
+];
+
+var listaFiltroAtual = 'todos';
+
+function filtrarLista(cat, btn) {
+  listaFiltroAtual = cat;
+  document.querySelectorAll('.lista-cat-btn').forEach(function(b) {
+    b.style.background='rgba(255,255,255,0.05)';
+    b.style.borderColor='rgba(255,255,255,0.1)';
+    b.style.color='rgba(255,255,255,0.65)';
+  });
+  btn.style.background='rgba(212,175,55,0.15)';
+  btn.style.borderColor='rgba(212,175,55,0.35)';
+  btn.style.color='#D4AF37';
+  renderLista();
+}
+
+function renderLista() {
+  var grid = document.getElementById('lista-pros-grid');
+  if(!grid) return;
+  var filtered = listaFiltroAtual==='todos' ? listaPros : listaPros.filter(function(p){return p.cat===listaFiltroAtual;});
+  grid.innerHTML = filtered.map(function(p) {
+    var fmtPhone = '('+p.phone.slice(2,4)+') '+p.phone.slice(4,9)+'-'+p.phone.slice(9);
+    return '<div style="background:linear-gradient(145deg,#1A1008,#130B04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;overflow:hidden;transition:border-color .2s;" onmouseover="this.style.borderColor='rgba(212,175,55,0.3)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'">'
+      +'<div style="display:flex;align-items:center;gap:12px;padding:16px 16px 12px;">'
+        +'<img src="'+p.img+'" style="width:54px;height:54px;border-radius:50%;object-fit:cover;object-position:top;border:2px solid rgba(212,175,55,0.35);flex-shrink:0;">'
+        +'<div>'
+          +'<div style="font-size:15px;font-weight:700;margin-bottom:2px;">'+p.nome+'</div>'
+          +'<div style="font-size:12px;color:rgba(255,255,255,0.45);">'+p.prof+' · '+p.cidade+'</div>'
+          +'<div style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:2px;">'+p.modo+'</div>'
+        +'</div>'
+      +'</div>'
+      +'<div style="margin:0 16px 12px;background:rgba(37,211,102,0.07);border:1px solid rgba(37,211,102,0.15);border-radius:10px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;">'
+        +'<div>'
+          +'<div style="font-size:9px;color:rgba(255,255,255,0.3);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:2px;">WhatsApp</div>'
+          +'<div style="font-size:14px;font-weight:700;color:#25D366;">'+fmtPhone+'</div>'
+        +'</div>'
+        +'<span style="font-size:10px;background:rgba(37,211,102,0.1);border:1px solid rgba(37,211,102,0.2);color:#25D366;padding:3px 8px;border-radius:50px;font-weight:700;">✅ Disponível</span>'
+      +'</div>'
+      +'<div style="padding:0 16px 16px;">'
+        +'<a href="https://wa.me/'+p.phone+'?text='+encodeURIComponent('Olá! Vi o perfil de '+p.prof+' no Acheaki e gostaria de mais informações. 😊')+'" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:8px;background:#25D366;color:white;font-size:13px;font-weight:700;padding:12px;border-radius:50px;text-decoration:none;">📲 Chamar no WhatsApp</a>'
+      +'</div>'
+    +'</div>';
+  }).join('');
+}
+
+// Render on page load
+document.addEventListener('DOMContentLoaded', function(){ renderLista(); });
+</script>
 
 <section class="section" id="como-funciona">
 <div class="section-inner">
