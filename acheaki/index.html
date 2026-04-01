@@ -463,9 +463,11 @@ section[style*="#EDE6D6"] .section-label{color:var(--green)}
     <p class="section-sub">Clique em qualquer profissional para entrar em contato direto pelo WhatsApp.</p>
 
     <div class="search-bar">
-      <input id="busca-input" type="text" placeholder="Buscar profissional ou área..." oninput="renderLista()">
-      <button onclick="renderLista()">🔍 Buscar</button>
+      <input id="busca-input" type="text" placeholder="Ex: psicólogo, eletricista, dentista..." oninput="buscaRapida(this.value)" autocomplete="off">
+      <button onclick="buscaRapida(document.getElementById('busca-input').value)">🔍 Buscar</button>
     </div>
+    <!-- Dropdown de resultados rápidos -->
+    <div id="busca-dropdown" style="display:none;background:rgba(255,255,255,0.97);border:1px solid rgba(26,107,60,0.2);border-radius:16px;box-shadow:0 8px 32px rgba(0,0,0,0.15);max-width:560px;max-height:400px;overflow-y:auto;margin-top:-20px;margin-bottom:24px;z-index:50;position:relative;"></div>
 
     <div class="cat-filter-btns">
       <button class="cat-filter-btn active" onclick="filtrarLista('todos',this)">Todos</button>
@@ -720,6 +722,46 @@ var listaPros = [
 
 var listaFiltroAtual='todos';
 
+function buscaRapida(q){
+  var dropdown=document.getElementById('busca-dropdown');
+  if(!q||q.length<2){dropdown.style.display='none';return;}
+  var q2=q.toLowerCase();
+  var results=listaPros.filter(function(p){
+    return (p.nome+p.prof+p.cat).toLowerCase().indexOf(q2)!==-1;
+  }).slice(0,8);
+  if(results.length===0){
+    dropdown.style.display='none';
+    // Still filter the main grid
+    document.getElementById('busca-input').dispatchEvent(new Event('grid-update'));
+    renderLista();
+    return;
+  }
+  dropdown.style.display='block';
+  dropdown.innerHTML=results.map(function(p){
+    var fmtPhone='('+p.phone.slice(2,4)+') '+p.phone.slice(4,9)+'-'+p.phone.slice(9);
+    return '<div style="display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid rgba(26,60,36,0.06);cursor:pointer;" onmouseover="this.style.background='rgba(26,107,60,0.06)'" onmouseout="this.style.background='transparent'">'
+      +'<img src="'+p.img+'" style="width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid rgba(26,107,60,0.2);flex-shrink:0;">'
+      +'<div style="flex:1;min-width:0;">'
+        +'<div style="font-size:14px;font-weight:700;color:#1A3C24;">'+p.nome+'</div>'
+        +'<div style="font-size:12px;color:rgba(26,60,36,0.55);">'+p.prof+' · '+p.cidade+'</div>'
+      +'</div>'
+      +'<a href="https://wa.me/'+p.phone+'?text='+encodeURIComponent('Olá! Vi no Ache Aki e gostaria de falar com um(a) '+p.nome+'. 😊')+'" target="_blank" rel="noopener" onclick="event.stopPropagation();fecharDropdown()" style="background:#25D366;color:white;font-size:12px;font-weight:700;padding:8px 14px;border-radius:50px;text-decoration:none;white-space:nowrap;flex-shrink:0;">📲 Chamar</a>'
+    +'</div>';
+  }).join('')
+  +'<div style="padding:12px 18px;text-align:center;border-top:1px solid rgba(26,60,36,0.06);">'
+    +'<span onclick="fecharDropdown();listaFiltroAtual='todos';renderLista();document.getElementById('lista-profissionais').scrollIntoView({behavior:'smooth'})" style="font-size:12px;color:rgba(26,60,36,0.5);cursor:pointer;text-decoration:underline;">Ver todos os resultados ↓</span>'
+  +'</div>';
+  // Also update main grid
+  renderLista();
+}
+function fecharDropdown(){
+  var d=document.getElementById('busca-dropdown');
+  if(d)d.style.display='none';
+}
+document.addEventListener('click',function(e){
+  if(!e.target.closest('#busca-dropdown')&&!e.target.closest('.search-bar'))fecharDropdown();
+});
+
 function filtrarLista(cat,btn){
   listaFiltroAtual=cat;
   document.querySelectorAll('.cat-filter-btn').forEach(function(b){b.classList.remove('active');});
@@ -735,7 +777,7 @@ function filtrarLista(cat,btn){
 function renderLista(){
   var grid=document.getElementById('lista-pros-grid');
   if(!grid)return;
-  var busca=(document.getElementById('busca-input')||{}).value||'';
+  var busca=(document.getElementById('busca-input')||{value:''}).value||'';
   busca=busca.toLowerCase();
   var filtered=listaPros.filter(function(p){
     var matchCat=listaFiltroAtual==='todos'||p.cat===listaFiltroAtual;
