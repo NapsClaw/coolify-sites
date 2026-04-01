@@ -597,6 +597,17 @@ footer p{font-size:13px;color:var(--muted);margin-bottom:8px}
   </div>
 </div>
 
+<!-- LIST POPUP: multiple pros in same category -->
+<div class="popup-overlay" id="list-overlay" onclick="closeLst(event)">
+  <div class="popup-modal" style="max-width:460px;">
+    <button class="popup-close" onclick="document.getElementById('list-overlay').classList.remove('active')">✕</button>
+    <div style="font-size:22px;margin-bottom:6px;" id="list-icon">👥</div>
+    <div class="popup-name" id="list-title" style="margin-bottom:4px;"></div>
+    <div class="popup-role" id="list-subtitle" style="margin-bottom:20px;font-size:13px;"></div>
+    <div id="list-cards" style="display:flex;flex-direction:column;gap:12px;"></div>
+  </div>
+</div>
+
 <script>
 (function(){var e=document.getElementById('cnt'),t=47,c=0;var ti=setInterval(function(){c+=2;if(c>=t){c=t;clearInterval(ti);}e.textContent=c+'+';},40);})();
 
@@ -605,7 +616,9 @@ function scrollCar(btn,dir){var t=btn.closest('.carousel-track-wrap').querySelec
 function filterCats(cat,btn){document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('.cat-block').forEach(function(b){b.style.display=(cat==='all'||b.dataset.cat===cat)?'':'none';});}
 
 var pros={
-'Psicólogo':{img:'https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=300&q=80',name:'Anderson Pacheco',role:'Psicólogo • CRP Registrado',desc:'Atendimento psicológico individual, online e presencial, para adultos e crianças.',wa:'Olá, Anderson! Vi seu perfil no Acheaki e gostaria de agendar uma consulta. 😊',phone:'5561994226868',city:'Brasília-DF',mode:'Online e presencial'},
+'Psicólogo':{_list:true,label:'Psicólogos',icon:'🧠',subs:['Anderson Pacheco','Psicólogo 2']},
+'Anderson Pacheco':{img:'https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=300&q=80',name:'Anderson Pacheco',role:'Psicólogo • CRP Registrado',desc:'Atendimento psicológico individual, online e presencial, para adultos e crianças.',wa:'Olá, Anderson! Vi seu perfil no Acheaki e gostaria de agendar uma consulta. 😊',phone:'5561994226868',city:'Brasília-DF',mode:'Online e presencial'},
+'Psicólogo 2':{img:'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=300&q=80',name:'Novo Psicólogo',role:'Psicólogo(a)',desc:'Aguardando cadastro. Quer ocupar essa vaga? Fale com a gente!',wa:'Olá! Vi no Acheaki e gostaria de me cadastrar como Psicólogo(a).',city:'Brasília-DF',mode:'Online e presencial',_slot:true},
 'Psicanalista':{img:'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=300&q=80',name:'Neide Pereira',role:'Psicanalista Clínica e Forense • Terapeuta',desc:'Atendimento online e presencial. Escuta qualificada e acolhedora para cuidar da sua saúde mental.',wa:'Olá, Neide! Vi seu perfil no Acheaki e gostaria de agendar meu horário. 😊',phone:'5561982895994',city:'Brasília-DF',mode:'Online e presencial'},
 'Neuropsicólogo':{img:'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=300&q=80',name:'Neuropsicólogo(a)',role:'Especializado',desc:'Avaliação e reabilitação neuropsicológica — memória, atenção e funções cognitivas.',wa:'Olá! Vi no Acheaki e gostaria de agendar com um(a) Neuropsicólogo(a).'},
 'Fisioterapeuta':{img:'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=300&q=80',name:'Fisioterapeuta',role:'Reabilitação • Saúde',desc:'Reabilitação física, tratamento de dores, lesões e recuperação pós-cirúrgica.',wa:'Olá! Vi no Acheaki e gostaria de agendar fisioterapia.'},
@@ -638,7 +651,22 @@ var pros={
 'Advogado':{img:'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=300&q=80',name:'Advogado(a)',role:'Jurídico',desc:'Consultoria jurídica nas áreas cível, trabalhista, criminal e mais.',wa:'Olá! Vi no Acheaki e preciso falar com um(a) Advogado(a).'}
 };
 
-function openP(k){var p=pros[k];if(!p)return;
+function openP(k){
+  var p=pros[k];if(!p)return;
+  if(p._list){openLst(k);return;}
+  if(p._slot){
+    document.getElementById('popup-img').src=p.img;
+    document.getElementById('popup-name').textContent='Vaga disponível!';
+    document.getElementById('popup-role').textContent=p.role;
+    document.getElementById('popup-desc').textContent='Esta vaga ainda está disponível. Seja o primeiro profissional desta categoria no Acheaki!';
+    document.getElementById('popup-city').textContent=p.city||'Brasília e região';
+    document.getElementById('popup-mode').textContent=p.mode||'Online e presencial';
+    document.getElementById('popup-phone-label').textContent='Via plataforma';
+    document.getElementById('popup-wa-label').textContent='Quero ocupar essa vaga';
+    document.getElementById('popup-wa').href='https://wa.me/5561982242096?text='+encodeURIComponent('Olá! Vi no Acheaki e gostaria de me cadastrar como profissional.');
+    document.getElementById('popup-overlay').classList.add('active');
+    return;
+  }
   document.getElementById('popup-img').src=p.img;
   document.getElementById('popup-name').textContent=p.name;
   document.getElementById('popup-role').textContent=p.role;
@@ -652,6 +680,30 @@ function openP(k){var p=pros[k];if(!p)return;
   document.getElementById('popup-wa').href='https://wa.me/'+phone+'?text='+encodeURIComponent(p.wa);
   document.getElementById('popup-overlay').classList.add('active');
 }
+function openLst(k){
+  var p=pros[k];if(!p||!p._list)return;
+  document.getElementById('list-title').textContent=p.label||k;
+  document.getElementById('list-subtitle').textContent='Escolha um profissional para contatar';
+  document.getElementById('list-icon').textContent=p.icon||'👥';
+  var html='';
+  (p.subs||[]).forEach(function(sk){
+    var s=pros[sk];if(!s)return;
+    var isSlot=s._slot;
+    html+='<div onclick="closeLst2();openP(''+sk+'')" style="display:flex;align-items:center;gap:14px;background:'+(isSlot?'rgba(212,175,55,0.05)':'rgba(255,255,255,0.04)')+';border:1px solid '+(isSlot?'rgba(212,175,55,0.2)':'rgba(255,255,255,0.08)')+';border-radius:14px;padding:14px;cursor:pointer;transition:border-color .2s;" onmouseover="this.style.borderColor='rgba(212,175,55,0.35)'" onmouseout="this.style.borderColor=''+(isSlot?'rgba(212,175,55,0.2)':'rgba(255,255,255,0.08)')+''">'+
+      '<img src="'+s.img+'" style="width:54px;height:54px;border-radius:50%;object-fit:cover;object-position:top;border:2px solid rgba(212,175,55,0.3);flex-shrink:0;">'+
+      '<div style="text-align:left;flex:1;">'+
+        '<div style="font-size:14px;font-weight:700;margin-bottom:2px;color:'+(isSlot?'rgba(212,175,55,0.7)':'white')+'">'+(isSlot?'+ Vaga disponível':s.name)+'</div>'+
+        '<div style="font-size:12px;color:rgba(255,255,255,0.5);">'+s.role+'</div>'+
+        (s.city?'<div style="font-size:11px;color:rgba(255,255,255,0.35);margin-top:3px;">📍 '+s.city+'</div>':'')+
+      '</div>'+
+      '<div style="font-size:18px;">›</div>'+
+    '</div>';
+  });
+  document.getElementById('list-cards').innerHTML=html;
+  document.getElementById('list-overlay').classList.add('active');
+}
+function closeLst2(){document.getElementById('list-overlay').classList.remove('active');}
+function closeLst(e){if(e.target===document.getElementById('list-overlay'))document.getElementById('list-overlay').classList.remove('active');}
 function closeP(e){if(e.target===document.getElementById('popup-overlay'))document.getElementById('popup-overlay').classList.remove('active');}
 
 function enviarCadastro(e){e.preventDefault();var n=document.getElementById('f-nome').value,w=document.getElementById('f-whats').value,a=document.getElementById('f-area').value,c=document.getElementById('f-cidade').value,d=document.getElementById('f-desc').value;var msg='Olá! Quero me cadastrar no Acheaki:\n\n👤 Nome: '+n+'\n📱 WhatsApp: '+w+'\n💼 Área: '+a+'\n📍 Cidade: '+c+(d?'\n📝 Sobre mim: '+d:'');window.open('https://wa.me/5561982242096?text='+encodeURIComponent(msg),'_blank');}
