@@ -885,34 +885,35 @@ var listaFiltroAtual='todos';
 
 function buscaRapida(q){
   var dropdown=document.getElementById('busca-dropdown');
-  if(!q||q.length<2){dropdown.style.display='none';return;}
+  if(!dropdown)return;
+  if(!q||q.length<2){dropdown.style.display='none';renderLista();return;}
   var q2=q.toLowerCase();
   var results=listaPros.filter(function(p){
-    return (p.nome+p.prof+p.cat).toLowerCase().indexOf(q2)!==-1;
+    return (p.nome+' '+p.prof+' '+p.cat).toLowerCase().indexOf(q2)!==-1;
   }).slice(0,8);
   if(results.length===0){
-    dropdown.style.display='none';
-    // Still filter the main grid
-    document.getElementById('busca-input').dispatchEvent(new Event('grid-update'));
+    dropdown.innerHTML='<div style="padding:20px;text-align:center;color:rgba(26,60,36,0.5);font-size:13px;">Nenhum profissional encontrado para <strong>'+q+'</strong>.<br>Tente outra palavra-chave.</div>';
+    dropdown.style.display='block';
     renderLista();
     return;
   }
+  var html='';
+  results.forEach(function(p){
+    var waUrl='https://wa.me/'+p.phone+'?text='+encodeURIComponent('Olá! Vi no Ache Aki e gostaria de falar com um(a) '+p.nome+'. Pode me ajudar? 😊');
+    html+='<div style="display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid rgba(26,60,36,0.06);">';
+    html+='<img src="'+p.img+'" style="width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid rgba(26,107,60,0.2);flex-shrink:0;" loading="lazy">';
+    html+='<div style="flex:1;min-width:0;">';
+    html+='<div style="font-size:14px;font-weight:700;color:#1A3C24;">'+p.nome+'</div>';
+    html+='<div style="font-size:12px;color:rgba(26,60,36,0.55);">'+p.prof+' &bull; '+p.cidade+'</div>';
+    html+='</div>';
+    html+='<a href="'+waUrl+'" target="_blank" rel="noopener" style="background:#25D366;color:white;font-size:12px;font-weight:700;padding:8px 16px;border-radius:50px;text-decoration:none;white-space:nowrap;flex-shrink:0;display:inline-block;">&#128242; Chamar</a>';
+    html+='</div>';
+  });
+  html+='<div style="padding:12px 18px;text-align:center;border-top:1px solid rgba(26,60,36,0.06);">';
+  html+='<button onclick="fecharDropdown();listaFiltroAtual=\'todos\';renderLista();setTimeout(function(){document.getElementById(\'lista-profissionais\').scrollIntoView({behavior:\'smooth\'});},100)" style="background:none;border:none;font-size:12px;color:rgba(26,60,36,0.5);cursor:pointer;text-decoration:underline;font-family:inherit;">Ver todos os resultados abaixo &#8595;</button>';
+  html+='</div>';
+  dropdown.innerHTML=html;
   dropdown.style.display='block';
-  dropdown.innerHTML=results.map(function(p){
-    var fmtPhone='('+p.phone.slice(2,4)+') '+p.phone.slice(4,9)+'-'+p.phone.slice(9);
-    return '<div style="display:flex;align-items:center;gap:12px;padding:14px 18px;border-bottom:1px solid rgba(26,60,36,0.06);cursor:pointer;" onmouseover="this.style.background='rgba(26,107,60,0.06)'" onmouseout="this.style.background='transparent'">'
-      +'<img src="'+p.img+'" style="width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid rgba(26,107,60,0.2);flex-shrink:0;">'
-      +'<div style="flex:1;min-width:0;">'
-        +'<div style="font-size:14px;font-weight:700;color:#1A3C24;">'+p.nome+'</div>'
-        +'<div style="font-size:12px;color:rgba(26,60,36,0.55);">'+p.prof+' · '+p.cidade+'</div>'
-      +'</div>'
-      +'<a href="https://wa.me/'+p.phone+'?text='+encodeURIComponent('Olá! Vi no Ache Aki e gostaria de falar com um(a) '+p.nome+'. 😊')+'" target="_blank" rel="noopener" onclick="event.stopPropagation();fecharDropdown()" style="background:#25D366;color:white;font-size:12px;font-weight:700;padding:8px 14px;border-radius:50px;text-decoration:none;white-space:nowrap;flex-shrink:0;">📲 Chamar</a>'
-    +'</div>';
-  }).join('')
-  +'<div style="padding:12px 18px;text-align:center;border-top:1px solid rgba(26,60,36,0.06);">'
-    +'<span onclick="fecharDropdown();listaFiltroAtual='todos';renderLista();document.getElementById('lista-profissionais').scrollIntoView({behavior:'smooth'})" style="font-size:12px;color:rgba(26,60,36,0.5);cursor:pointer;text-decoration:underline;">Ver todos os resultados ↓</span>'
-  +'</div>';
-  // Also update main grid
   renderLista();
 }
 function fecharDropdown(){
