@@ -657,6 +657,53 @@
     .advertise-grid { grid-template-columns: 1fr; }
     .testimonials-grid { grid-template-columns: 1fr; }
   }
+
+  /* SEARCH & FILTER */
+  .search-bar-wrapper {
+    max-width: 600px; margin: 0 auto 32px;
+    position: relative;
+  }
+  .search-bar {
+    width: 100%; padding: 16px 56px 16px 20px;
+    background: rgba(255,255,255,0.07);
+    border: 1.5px solid rgba(255,255,255,0.12);
+    border-radius: 50px; color: white;
+    font-size: 15px; font-family: inherit;
+    outline: none; transition: border-color 0.2s;
+  }
+  .search-bar::placeholder { color: rgba(255,255,255,0.4); }
+  .search-bar:focus { border-color: rgba(212,175,55,0.5); }
+  .search-icon {
+    position: absolute; right: 18px; top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255,255,255,0.4); pointer-events: none;
+    font-size: 18px;
+  }
+  .filter-tabs {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin-bottom: 32px; justify-content: center;
+  }
+  .filter-tab {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.7);
+    font-size: 13px; font-weight: 600;
+    padding: 8px 18px; border-radius: 50px;
+    cursor: pointer; transition: all 0.2s;
+    font-family: inherit;
+  }
+  .filter-tab:hover { border-color: rgba(212,175,55,0.3); color: #D4AF37; }
+  .filter-tab.active {
+    background: rgba(212,175,55,0.15);
+    border-color: rgba(212,175,55,0.4);
+    color: #D4AF37;
+  }
+  .pro-card.hidden { display: none; }
+  .no-results {
+    text-align: center; padding: 48px 24px;
+    color: var(--text-muted); display: none;
+  }
+  .no-results.visible { display: block; }
 </style>
 </head>
 <body>
@@ -885,7 +932,7 @@
       <div class="pro-category-title" id="sec-saude"><span>🧠</span> Saúde e Terapias</div>
       <div class="professionals-grid">
 
-        <div class="pro-card" onclick="openProPopup('Psicólogo')">
+        <div class="pro-card" data-name="psicólogo(a)" onclick="openProPopup('Psicólogo')">
           <div class="pro-img-wrapper">
             <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=400&q=80" alt="Psicóloga" loading="lazy">
             <span class="pro-badge">Disponível</span>
@@ -897,7 +944,7 @@
           </div>
         </div>
 
-        <div class="pro-card" onclick="openProPopup('Psicanalista')">
+        <div class="pro-card" data-name="psicanalista" onclick="openProPopup('Psicanalista')">
           <div class="pro-img-wrapper">
             <img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=400&q=80" alt="Psicanalista" loading="lazy">
             <span class="pro-badge">Disponível</span>
@@ -909,7 +956,7 @@
           </div>
         </div>
 
-        <div class="pro-card" onclick="openProPopup('Neuropsicólogo(a)')">
+        <div class="pro-card" data-name="neuropsicólogo(a)" onclick="openProPopup('Neuropsicólogo(a)')">
           <div class="pro-img-wrapper">
             <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&q=80" alt="Neuropsicólogo" loading="lazy">
             <span class="pro-badge">Disponível</span>
@@ -921,7 +968,7 @@
           </div>
         </div>
 
-        <div class="pro-card" onclick="openProPopup('Fisioterapeuta')">
+        <div class="pro-card" data-name="fisioterapeuta" onclick="openProPopup('Fisioterapeuta')">
           <div class="pro-img-wrapper">
             <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400&q=80" alt="Fisioterapeuta" loading="lazy">
             <span class="pro-badge">Disponível</span>
@@ -933,7 +980,7 @@
           </div>
         </div>
 
-        <div class="pro-card" onclick="openProPopup('Pedagogo(a)')">
+        <div class="pro-card" data-name="pedagogo(a)" onclick="openProPopup('Pedagogo(a)')">
           <div class="pro-img-wrapper">
             <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?w=400&q=80" alt="Pedagogo" loading="lazy">
             <span class="pro-badge">Disponível</span>
@@ -948,7 +995,7 @@
       </div>
     </div>
 
-        <div class="pro-card" onclick="openProPopup('Reforço Escolar')">
+        <div class="pro-card" data-name="reforço escolar" onclick="openProPopup('Reforço Escolar')">
           <div class="pro-img-wrapper">
             <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=400&q=80" alt="Reforço Escolar" loading="lazy">
             <span class="pro-badge">Disponível</span>
@@ -960,7 +1007,7 @@
           </div>
         </div>
 
-        <div class="pro-card" onclick="openProPopup('Cuidador de Idosos')">
+        <div class="pro-card" data-name="cuidador de idosos" onclick="openProPopup('Cuidador de Idosos')">
           <div class="pro-img-wrapper">
             <img src="https://images.unsplash.com/photo-1576765607924-3f7b8410a787?w=400&q=80" alt="Cuidador de Idosos" loading="lazy">
             <span class="pro-badge">Disponível</span>
@@ -972,7 +1019,7 @@
           </div>
         </div>
 
-        <div class="pro-card" onclick="openProPopup('Massagista')">
+        <div class="pro-card" data-name="massagista" onclick="openProPopup('Massagista')">
           <div class="pro-img-wrapper">
             <img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=400&q=80" alt="Massagista" loading="lazy">
             <span class="pro-badge">Disponível</span>
@@ -984,7 +1031,7 @@
           </div>
         </div>
 
-        <div class="pro-card" onclick="openProPopup('Pilates')">
+        <div class="pro-card" data-name="pilates" onclick="openProPopup('Pilates')">
           <div class="pro-img-wrapper">
             <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=400&q=80" alt="Pilates" loading="lazy">
             <span class="pro-badge">Disponível</span>
@@ -997,7 +1044,7 @@
         </div>
 
 
-        <div class="pro-card" onclick="openProPopup('Cardiologista')">
+        <div class="pro-card" data-name="clínico geral" onclick="openProPopup('Cardiologista')">
           <div class="pro-img-wrapper">
             <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&q=80" alt="Médico Clínico Geral" loading="lazy">
             <span class="pro-badge">Disponível</span>
@@ -1009,7 +1056,7 @@
           </div>
         </div>
 
-        <div class="pro-card" onclick="openProPopup('Cardiologista')">
+        <div class="pro-card" data-name="cardiologista" onclick="openProPopup('Cardiologista')">
           <div class="pro-img-wrapper">
             <img src="https://images.unsplash.com/photo-1628348068343-c6a848d2b6dd?w=400&q=80" alt="Cardiologista" loading="lazy">
             <span class="pro-badge">Disponível</span>
@@ -1021,7 +1068,7 @@
           </div>
         </div>
 
-        <div class="pro-card" onclick="openProPopup('Pediatra')">
+        <div class="pro-card" data-name="pediatra" onclick="openProPopup('Pediatra')">
           <div class="pro-img-wrapper">
             <img src="https://images.unsplash.com/photo-1581056771107-24ca5f033842?w=400&q=80" alt="Pediatra" loading="lazy">
             <span class="pro-badge">Disponível</span>
@@ -1033,7 +1080,7 @@
           </div>
         </div>
 
-        <div class="pro-card" onclick="openProPopup('Cardiologista')">
+        <div class="pro-card" data-name="dermatologista" onclick="openProPopup('Cardiologista')">
           <div class="pro-img-wrapper">
             <img src="https://images.unsplash.com/photo-1606811842993-874d8cd7fe55?w=400&q=80" alt="Dermatologista" loading="lazy">
             <span class="pro-badge">Disponível</span>
@@ -1045,7 +1092,7 @@
           </div>
         </div>
 
-        <div class="pro-card" onclick="openProPopup('Fisioterapeuta')">
+        <div class="pro-card" data-name="ortopedista" onclick="openProPopup('Fisioterapeuta')">
           <div class="pro-img-wrapper">
             <img src="https://images.unsplash.com/photo-1530026405186-ed1f139313f8?w=400&q=80" alt="Ortopedista" loading="lazy">
             <span class="pro-badge">Disponível</span>
@@ -1057,7 +1104,7 @@
           </div>
         </div>
 
-        <div class="pro-card" onclick="openProPopup('Cardiologista')">
+        <div class="pro-card" data-name="ginecologista" onclick="openProPopup('Cardiologista')">
           <div class="pro-img-wrapper">
             <img src="https://images.unsplash.com/photo-1607346256330-bee7af42cfb9?w=400&q=80" alt="Ginecologista" loading="lazy">
             <span class="pro-badge">Disponível</span>
@@ -1069,7 +1116,7 @@
           </div>
         </div>
 
-        <div class="pro-card" onclick="openProPopup('Dentista / Odontologista')">
+        <div class="pro-card" data-name="dentista / odontologista" onclick="openProPopup('Dentista / Odontologista')">
           <div class="pro-img-wrapper">
             <img src="https://images.unsplash.com/photo-1609840114035-3c981b782dfe?w=400&q=80" alt="Dentista" loading="lazy">
             <span class="pro-badge">Disponível</span>
@@ -1081,7 +1128,7 @@
           </div>
         </div>
 
-        <div class="pro-card" onclick="openProPopup('Cardiologista')">
+        <div class="pro-card" data-name="nutricionista" onclick="openProPopup('Cardiologista')">
           <div class="pro-img-wrapper">
             <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&q=80" alt="Nutricionista" loading="lazy">
             <span class="pro-badge">Disponível</span>
@@ -1093,7 +1140,7 @@
           </div>
         </div>
 
-        <div class="pro-card" onclick="openProPopup('Fisioterapeuta')">
+        <div class="pro-card" data-name="podólogo" onclick="openProPopup('Fisioterapeuta')">
           <div class="pro-img-wrapper">
             <img src="https://images.unsplash.com/photo-1527613426441-4da17471b66d?w=400&q=80" alt="Podólogo" loading="lazy">
             <span class="pro-badge">Disponível</span>
@@ -1110,7 +1157,7 @@
       <div class="pro-category-title" id="sec-beleza"><span>💅</span> Estética e Beleza</div>
       <div class="professionals-grid">
 
-        <div class="pro-card" onclick="openProPopup('Cabeleireiro')">
+        <div class="pro-card" data-name="cabeleireiro(a)" onclick="openProPopup('Cabeleireiro')">
           <div class="pro-img-wrapper">
             <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?w=400&q=80" alt="Cabeleireiro" loading="lazy">
             <span class="pro-badge">Disponível</span>
@@ -1122,7 +1169,7 @@
           </div>
         </div>
 
-        <div class="pro-card" onclick="openProPopup('Esteticista')">
+        <div class="pro-card" data-name="esteticista" onclick="openProPopup('Esteticista')">
           <div class="pro-img-wrapper">
             <img src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=400&q=80" alt="Esteticista" loading="lazy">
             <span class="pro-badge">Disponível</span>
@@ -1134,7 +1181,7 @@
           </div>
         </div>
 
-        <div class="pro-card" onclick="openProPopup('Manicure')">
+        <div class="pro-card" data-name="manicure / pedicure" onclick="openProPopup('Manicure')">
           <div class="pro-img-wrapper">
             <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=400&q=80" alt="Manicure" loading="lazy">
             <span class="pro-badge">Disponível</span>
@@ -1146,7 +1193,7 @@
           </div>
         </div>
 
-        <div class="pro-card" onclick="openProPopup('Maquiadora')">
+        <div class="pro-card" data-name="maquiador(a)" onclick="openProPopup('Maquiadora')">
           <div class="pro-img-wrapper">
             <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=400&q=80" alt="Maquiador" loading="lazy">
             <span class="pro-badge">Disponível</span>
@@ -1166,7 +1213,7 @@
       <div class="pro-category-title" id="sec-residencial"><span>🏠</span> Serviços Residenciais</div>
       <div class="professionals-grid">
 
-        <div class="pro-card" onclick="openProPopup('Eletricista')">
+        <div class="pro-card" data-name="eletricista" onclick="openProPopup('Eletricista')">
           <div class="pro-img-wrapper">
             <img src="https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&q=80" alt="Eletricista" loading="lazy">
             <span class="pro-badge">Disponível</span>
@@ -1178,7 +1225,7 @@
           </div>
         </div>
 
-        <div class="pro-card" onclick="openProPopup('Encanador')">
+        <div class="pro-card" data-name="encanador" onclick="openProPopup('Encanador')">
           <div class="pro-img-wrapper">
             <img src="https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=400&q=80" alt="Encanador" loading="lazy">
             <span class="pro-badge">Disponível</span>
@@ -1190,7 +1237,7 @@
           </div>
         </div>
 
-        <div class="pro-card" onclick="openProPopup('Encanador')">
+        <div class="pro-card" data-name="pintor" onclick="openProPopup('Encanador')">
           <div class="pro-img-wrapper">
             <img src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=400&q=80" alt="Pintor" loading="lazy">
             <span class="pro-badge">Disponível</span>
@@ -1202,7 +1249,7 @@
           </div>
         </div>
 
-        <div class="pro-card" onclick="openProPopup('Pedreiro / Construção')">
+        <div class="pro-card" data-name="pedreiro / construção" onclick="openProPopup('Pedreiro / Construção')">
           <div class="pro-img-wrapper">
             <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=400&q=80" alt="Pedreiro" loading="lazy">
             <span class="pro-badge">Disponível</span>
@@ -1214,7 +1261,7 @@
           </div>
         </div>
 
-        <div class="pro-card" onclick="openProPopup('Paisagista / Jardineiro')">
+        <div class="pro-card" data-name="paisagista / jardineiro" onclick="openProPopup('Paisagista / Jardineiro')">
           <div class="pro-img-wrapper">
             <img src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=400&q=80" alt="Jardineiro" loading="lazy">
             <span class="pro-badge">Disponível</span>
@@ -1226,7 +1273,7 @@
           </div>
         </div>
 
-        <div class="pro-card" onclick="openProPopup('Encanador')">
+        <div class="pro-card" data-name="designer de interiores" onclick="openProPopup('Encanador')">
           <div class="pro-img-wrapper">
             <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=400&q=80" alt="Designer de Interiores" loading="lazy">
             <span class="pro-badge">Disponível</span>
@@ -1246,7 +1293,7 @@
       <div class="pro-category-title" id="sec-tecnicos"><span>🔧</span> Serviços Técnicos</div>
       <div class="professionals-grid">
 
-        <div class="pro-card" onclick="openProPopup('Técnico TI')">
+        <div class="pro-card" data-name="técnico em ti" onclick="openProPopup('Técnico TI')">
           <div class="pro-img-wrapper">
             <img src="https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?w=400&q=80" alt="Técnico em TI" loading="lazy">
             <span class="pro-badge">Disponível</span>
@@ -1258,7 +1305,7 @@
           </div>
         </div>
 
-        <div class="pro-card" onclick="openProPopup('Refrigeração')">
+        <div class="pro-card" data-name="técnico em refrigeração" onclick="openProPopup('Refrigeração')">
           <div class="pro-img-wrapper">
             <img src="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=400&q=80" alt="Técnico em Refrigeração" loading="lazy">
             <span class="pro-badge">Disponível</span>
@@ -1270,7 +1317,7 @@
           </div>
         </div>
 
-        <div class="pro-card" onclick="openProPopup('Advogado')">
+        <div class="pro-card" data-name="assistente administrativo" onclick="openProPopup('Advogado')">
           <div class="pro-img-wrapper">
             <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&q=80" alt="Assistente Administrativo" loading="lazy">
             <span class="pro-badge">Disponível</span>
@@ -1906,6 +1953,48 @@ function closeProPopup(e) {
   if (e.target === document.getElementById('pro-popup-overlay')) {
     document.getElementById('pro-popup-overlay').classList.remove('active');
   }
+}
+</script>
+
+<script>
+var currentFilter = 'todos';
+
+function setFilter(cat, btn) {
+  currentFilter = cat;
+  document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  filterPros();
+}
+
+function filterPros() {
+  var query = document.getElementById('pro-search').value.toLowerCase().trim();
+  var blocks = document.querySelectorAll('.pro-category-block');
+  var totalVisible = 0;
+
+  blocks.forEach(function(block) {
+    var cat = block.getAttribute('data-category') || '';
+    var catMatch = currentFilter === 'todos' || cat === currentFilter;
+    var cards = block.querySelectorAll('.pro-card');
+    var blockVisible = 0;
+
+    cards.forEach(function(card) {
+      var name = card.getAttribute('data-name') || '';
+      var text = card.innerText.toLowerCase();
+      var searchMatch = !query || name.includes(query) || text.includes(query);
+      if (catMatch && searchMatch) {
+        card.classList.remove('hidden');
+        blockVisible++;
+        totalVisible++;
+      } else {
+        card.classList.add('hidden');
+      }
+    });
+
+    // Hide entire block title if no cards visible
+    block.style.display = blockVisible > 0 ? '' : 'none';
+  });
+
+  document.getElementById('no-results').classList.toggle('visible', totalVisible === 0);
 }
 </script>
 </body>
