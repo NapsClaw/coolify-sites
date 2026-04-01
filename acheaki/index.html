@@ -264,7 +264,7 @@ footer p{font-size:13px;color:var(--muted);margin-bottom:8px}
 <nav>
   <a href="#" class="nav-logo"><span class="a1">ACHE</span><span class="a2">AKI</span></a>
   <ul class="nav-links">
-    <li><a href="#profissionais">Profissionais</a></li>
+    <li><a href="#" onclick="event.preventDefault();abrirProfissionais()" style="color:#D4AF37;font-weight:700;">Profissionais</a></li>
     <li><a href="#como-funciona">Como Funciona</a></li>
     <li><a href="#seja-profissional">Para Profissionais</a></li>
     <li><a href="#radiotv">TV & Rádio</a></li>
@@ -952,17 +952,31 @@ function renderTodos(){
   document.getElementById('all-pros-count').textContent=filtered.length+' profissional'+(filtered.length!==1?'is':'');
   list.innerHTML=filtered.map(function(item){
     var p=item.p, i=item.i;
-    return '<div style="display:flex;align-items:center;gap:14px;background:linear-gradient(145deg,#1A1008,#130B04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:16px;cursor:pointer;" onclick="irParaWA('+i+')">'
-      +'<img src="'+p.img+'" style="width:56px;height:56px;border-radius:50%;object-fit:cover;object-position:top;border:2px solid rgba(212,175,55,0.3);flex-shrink:0;" loading="lazy">'
-      +'<div style="flex:1;min-width:0;">'
-        +'<div style="font-size:14px;font-weight:700;margin-bottom:2px;">'+p.name+'</div>'
-        +'<div style="font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:6px;">'+p.role+'</div>'
-        +'<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">'
-          +'<span style="font-size:10px;color:rgba(255,255,255,0.35);">📍 '+p.city+'</span>'
-          +'<span style="font-size:10px;color:rgba(255,255,255,0.35);">'+p.mode+'</span>'
+    var phone=p.phone||'5561982242096';
+    var phoneFormatted=p.phone
+      ?'('+p.phone.slice(2,4)+') '+p.phone.slice(4,9)+'-'+p.phone.slice(9)
+      :'(61) 98224-2096';
+    var isOwn=!!p.phone;
+    return '<div style="background:linear-gradient(145deg,#1A1008,#130B04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:16px;cursor:pointer;transition:border-color .2s;" onclick="irParaWA('+i+')" onmouseover="this.style.borderColor='rgba(212,175,55,0.3)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'">'
+      +'<div style="display:flex;align-items:center;gap:14px;margin-bottom:12px;">'
+        +'<img src="'+p.img+'" style="width:56px;height:56px;border-radius:50%;object-fit:cover;object-position:top;border:2px solid rgba(212,175,55,0.3);flex-shrink:0;" loading="lazy">'
+        +'<div style="flex:1;min-width:0;">'
+          +'<div style="font-size:15px;font-weight:700;margin-bottom:2px;">'+p.name+'</div>'
+          +'<div style="font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:4px;">'+p.role+'</div>'
+          +'<div style="display:flex;gap:8px;flex-wrap:wrap;">'
+            +'<span style="font-size:11px;color:rgba(255,255,255,0.4);">📍 '+p.city+'</span>'
+            +'<span style="font-size:11px;color:rgba(255,255,255,0.4);">'+p.mode+'</span>'
+          +'</div>'
         +'</div>'
-        +'<a href="https://wa.me/'+(p.phone||'5561982242096')+'" target="_blank" onclick="event.stopPropagation()" style="display:inline-flex;align-items:center;gap:6px;background:#25D366;color:white;font-size:12px;font-weight:700;padding:8px 16px;border-radius:50px;text-decoration:none;">📲 Chamar no WhatsApp</a>'
       +'</div>'
+      +'<div style="background:rgba(37,211,102,0.07);border:1px solid rgba(37,211,102,0.15);border-radius:10px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;">'
+        +'<div>'
+          +'<div style="font-size:10px;color:rgba(255,255,255,0.35);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:2px;">📱 WhatsApp</div>'
+          +'<div style="font-size:14px;font-weight:700;color:#25D366;">'+phoneFormatted+'</div>'
+        +'</div>'
+        +'<span style="font-size:10px;color:'+(isOwn?'#25D366':'rgba(255,255,255,0.3)')+';font-weight:700;">'+(isOwn?'✅ Direto':'Via plataforma')+'</span>'
+      +'</div>'
+      +'<a href="https://wa.me/'+phone+'" target="_blank" onclick="event.stopPropagation()" style="display:flex;align-items:center;justify-content:center;gap:8px;background:#25D366;color:white;font-size:13px;font-weight:700;padding:11px;border-radius:50px;text-decoration:none;width:100%;box-sizing:border-box;">📲 Chamar no WhatsApp</a>'
     +'</div>';
   }).join('');
 }
