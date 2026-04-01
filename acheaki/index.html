@@ -11,7 +11,7 @@
 :root{--primary:#0D0802;--secondary:#130B04;--accent:#C0392B;--gold:#D4AF37;--text:#F8FAFC;--muted:#94A3B8;--surface:#1A1008;--surface2:#221508;--radius:20px;--radius-sm:12px}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--primary);color:var(--text);line-height:1.6;overflow-x:hidden}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--primary);color:var(--text);line-height:1.6;overflow-x:hidden}@media(max-width:768px){body{padding-bottom:72px}}
 nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(13,8,2,.97);backdrop-filter:blur(20px);border-bottom:1px solid rgba(212,175,55,.15);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 24px}
 .nav-logo{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;text-decoration:none;letter-spacing:-.5px}
 .nav-logo .a1{color:var(--gold)}.nav-logo .a2{color:var(--accent)}
@@ -73,6 +73,15 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(13,8,2,.97);
 .pro-info h3{font-size:15px;font-weight:700;margin-bottom:5px;line-height:1.3}
 .pro-info p{font-size:12px;color:var(--muted);margin-bottom:12px;line-height:1.6}
 .pro-tag{display:inline-block;background:rgba(212,175,55,.1);color:var(--gold);font-size:10px;font-weight:700;padding:4px 10px;border-radius:50px;border:1px solid rgba(212,175,55,.2)}
+.pro-stars{color:#D4AF37;font-size:11px;letter-spacing:1px;margin-bottom:4px}
+.pro-meta{display:flex;flex-wrap:wrap;gap:5px;margin:6px 0 10px}
+.pro-meta-item{font-size:11px;color:rgba(255,255,255,0.45);display:flex;align-items:center;gap:3px}
+.pro-seal{display:inline-flex;align-items:center;gap:3px;font-size:9px;font-weight:700;padding:2px 7px;border-radius:50px}
+.pro-seal.hot{background:rgba(192,57,43,0.14);color:#E07060;border:1px solid rgba(192,57,43,0.18)}
+.pro-seal.verified{background:rgba(37,211,102,0.1);color:#25D366;border:1px solid rgba(37,211,102,0.18)}
+.pro-seal.today{background:rgba(212,175,55,0.1);color:#D4AF37;border:1px solid rgba(212,175,55,0.18)}
+.pro-wa-btn{display:flex;align-items:center;justify-content:center;gap:7px;background:#25D366;color:white;font-weight:700;font-size:12px;padding:10px;border-radius:50px;cursor:pointer;border:none;font-family:inherit;width:100%;transition:background .2s;margin-top:10px}
+.pro-wa-btn:hover{background:#1ea855}
 .carousel-arrow{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;background:rgba(13,8,2,.88);border:1px solid rgba(255,255,255,.15);color:white;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10;transition:all .2s;user-select:none;backdrop-filter:blur(8px)}
 .carousel-arrow:hover{background:var(--accent);border-color:var(--accent)}
 .carousel-arrow.left{left:-18px}.carousel-arrow.right{right:-18px}
@@ -281,8 +290,8 @@ footer p{font-size:13px;color:var(--muted);margin-bottom:8px}
       </div>
 
       <div class="hero-badge">✦ Brasília · Entorno · Online</div>
-      <h1>Encontre profissionais <em>confiáveis</em> perto de você</h1>
-      <p class="hero-sub">Saúde, beleza, educação, construção e muito mais — atendimento rápido, direto pelo WhatsApp.</p>
+      <h1>Encontre profissionais <em>confiáveis</em> em Brasília, rápido e sem complicação</h1>
+      <p class="hero-sub">Saúde, beleza, serviços residenciais, educação e técnicos em um só lugar. Fale direto no WhatsApp e <strong style="color:white;">resolva hoje</strong>.</p>
 
       <!-- Trust checklist -->
       <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:32px;">
@@ -312,7 +321,8 @@ footer p{font-size:13px;color:var(--muted);margin-bottom:8px}
       <div style="display:flex;gap:28px;flex-wrap:wrap;padding-top:28px;border-top:1px solid rgba(255,255,255,0.07);">
         <div><span class="hero-stat-num">47+</span><span class="hero-stat-label">Profissionais</span></div>
         <div><span class="hero-stat-num">20+</span><span class="hero-stat-label">Áreas atendidas</span></div>
-        <div><span class="hero-stat-num">100%</span><span class="hero-stat-label">Grátis para clientes</span></div>
+        <div><span class="hero-stat-num">30+</span><span class="hero-stat-label">Bairros atendidos</span></div>
+        <div><span class="hero-stat-num">100%</span><span class="hero-stat-label">Grátis p/ clientes</span></div>
       </div>
     </div>
 
@@ -402,15 +412,15 @@ footer p{font-size:13px;color:var(--muted);margin-bottom:8px}
     <div class="carousel-track-wrap">
       <button class="carousel-arrow left" onclick="scrollCar(this,-1)">‹</button>
       <div class="carousel-track">
-        <div class="pro-card" onclick="openP('Psicólogo')"><div class="pro-img-wrap"><img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=400&q=80" alt="" loading="lazy"><span class="pro-badge">Disponível</span></div><div class="pro-info"><h3>Anderson Pacheco</h3><p>Psicólogo · Atendimento online e presencial para adultos e crianças.</p><span class="pro-tag">Saúde Mental</span></div></div>
-        <div class="pro-card" onclick="openP('Psicanalista')"><div class="pro-img-wrap"><img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=400&q=80" alt="" loading="lazy"><span class="pro-badge">Disponível</span></div><div class="pro-info"><h3>Psicanalista</h3><p>Escuta qualificada para autoconhecimento e saúde emocional.</p><span class="pro-tag">Saúde Mental</span></div></div>
+        <div class="pro-card" onclick="openP('Psicólogo')"><div class="pro-img-wrap"><img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=400&q=80" alt="" loading="lazy"><span class="pro-badge" style="background:rgba(192,57,43,.9);">🔥 Mais Procurado</span></div><div class="pro-info"><div class="pro-stars">★★★★★</div><h3>Anderson Pacheco</h3><div class="pro-meta"><span class="pro-meta-item">📍 Brasília-DF</span><span class="pro-meta-item">💻 Online</span></div><p style="font-size:12px;color:rgba(255,255,255,0.6);margin-bottom:8px;line-height:1.5;">Atendimento online e presencial para adultos e crianças.</p><div style="margin-bottom:8px;"><span class="pro-seal verified">✅ Verificado</span><span class="pro-seal today">⚡ Atende hoje</span></div><button class="pro-wa-btn" onclick="event.stopPropagation();openP('Psicólogo')">📲 Chamar no WhatsApp</button></div></div>
+        <div class="pro-card" onclick="openP('Psicanalista')"><div class="pro-img-wrap"><img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=400&q=80" alt="" loading="lazy"><span class="pro-badge" style="background:rgba(212,175,55,.85);color:#0D0802;">⭐ Destaque</span></div><div class="pro-info"><div class="pro-stars">★★★★★</div><h3>Neide Pereira</h3><div class="pro-meta"><span class="pro-meta-item">📍 Brasília-DF</span><span class="pro-meta-item">💻 Online</span></div><p style="font-size:12px;color:rgba(255,255,255,0.6);margin-bottom:8px;line-height:1.5;">Psicanalista Clínica e Forense. Escuta acolhedora para saúde emocional.</p><div style="margin-bottom:8px;"><span class="pro-seal verified">✅ Verificado</span><span class="pro-seal today">⚡ Atende hoje</span></div><button class="pro-wa-btn" onclick="event.stopPropagation();openP('Psicanalista')">📲 Chamar no WhatsApp</button></div></div>
         <div class="pro-card" onclick="openP('Fisioterapeuta')"><div class="pro-img-wrap"><img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400&q=80" alt="" loading="lazy"><span class="pro-badge">Disponível</span></div><div class="pro-info"><h3>Fisioterapeuta</h3><p>Reabilitação física, dores e recuperação pós-cirúrgica.</p><span class="pro-tag">Saúde</span></div></div>
         <div class="pro-card" onclick="openP('Massagista')"><div class="pro-img-wrap"><img src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=400&q=80" alt="" loading="lazy"><span class="pro-badge">Disponível</span></div><div class="pro-info"><h3>Massagista</h3><p>Massagem relaxante, terapêutica e drenagem linfática. A domicílio.</p><span class="pro-tag">Bem-estar</span></div></div>
         <div class="pro-card" onclick="openP('Pilates')"><div class="pro-img-wrap"><img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=400&q=80" alt="" loading="lazy"><span class="pro-badge">Disponível</span></div><div class="pro-info"><h3>Pilates</h3><p>Fortalecimento, postura e reabilitação. Aulas individuais e em grupo.</p><span class="pro-tag">Saúde & Movimento</span></div></div>
         <div class="pro-card" onclick="openP('Cardiologista')"><div class="pro-img-wrap"><img src="https://images.unsplash.com/photo-1628348068343-c6a848d2b6dd?w=400&q=80" alt="" loading="lazy"><span class="pro-badge">Disponível</span></div><div class="pro-info"><h3>Cardiologista</h3><p>Saúde do coração — prevenção, diagnóstico e tratamento.</p><span class="pro-tag">Medicina</span></div></div>
         <div class="pro-card" onclick="openP('Pediatra')"><div class="pro-img-wrap"><img src="https://images.unsplash.com/photo-1581056771107-24ca5f033842?w=400&q=80" alt="" loading="lazy"><span class="pro-badge">Disponível</span></div><div class="pro-info"><h3>Pediatra</h3><p>Cuidados especializados para bebês, crianças e adolescentes.</p><span class="pro-tag">Medicina</span></div></div>
         <div class="pro-card" onclick="openP('Dentista')"><div class="pro-img-wrap"><img src="https://images.unsplash.com/photo-1609840114035-3c981b782dfe?w=400&q=80" alt="" loading="lazy"><span class="pro-badge">Disponível</span></div><div class="pro-info"><h3>Dentista</h3><p>Limpeza, restaurações, ortodontia e estética dental.</p><span class="pro-tag">Odontologia</span></div></div>
-        <div class="pro-card" onclick="openP('Nutricionista')"><div class="pro-img-wrap"><img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&q=80" alt="" loading="lazy"><span class="pro-badge">Disponível</span></div><div class="pro-info"><h3>Dani Xisto</h3><p>Nutricionista · Planos alimentares personalizados para sua saúde.</p><span class="pro-tag">Nutrição</span></div></div>
+        <div class="pro-card" onclick="openP('Nutricionista')"><div class="pro-img-wrap"><img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&q=80" alt="" loading="lazy"><span class="pro-badge" style="background:rgba(37,211,102,.85);">✅ Verificada</span></div><div class="pro-info"><div class="pro-stars">★★★★★</div><h3>Dani Xisto</h3><div class="pro-meta"><span class="pro-meta-item">📍 Brasília-DF</span><span class="pro-meta-item">💻 Online</span></div><p style="font-size:12px;color:rgba(255,255,255,0.6);margin-bottom:8px;line-height:1.5;">Planos alimentares para emagrecimento, saúde e performance.</p><div style="margin-bottom:8px;"><span class="pro-seal verified">✅ Verificada</span><span class="pro-seal today">⚡ Atende hoje</span></div><button class="pro-wa-btn" onclick="event.stopPropagation();openP('Nutricionista')">📲 Chamar no WhatsApp</button></div></div>
         <div class="pro-card" onclick="openP('Dermatologista')"><div class="pro-img-wrap"><img src="https://images.unsplash.com/photo-1606811842993-874d8cd7fe55?w=400&q=80" alt="" loading="lazy"><span class="pro-badge">Disponível</span></div><div class="pro-info"><h3>Dermatologista</h3><p>Acne, manchas, envelhecimento e tratamentos de pele.</p><span class="pro-tag">Medicina</span></div></div>
         <div class="pro-card" onclick="openP('Ortopedista')"><div class="pro-img-wrap"><img src="https://images.unsplash.com/photo-1530026405186-ed1f139313f8?w=400&q=80" alt="" loading="lazy"><span class="pro-badge">Disponível</span></div><div class="pro-info"><h3>Ortopedista</h3><p>Ossos, articulações, músculos e lesões do aparelho locomotor.</p><span class="pro-tag">Medicina</span></div></div>
         <div class="pro-card" onclick="openP('Ginecologista')"><div class="pro-img-wrap"><img src="https://images.unsplash.com/photo-1607346256330-bee7af42cfb9?w=400&q=80" alt="" loading="lazy"><span class="pro-badge">Disponível</span></div><div class="pro-info"><h3>Ginecologista</h3><p>Saúde da mulher — consultas e exames preventivos.</p><span class="pro-tag">Medicina</span></div></div>
@@ -600,23 +610,66 @@ footer p{font-size:13px;color:var(--muted);margin-bottom:8px}
 </section>
 
 <section class="section" id="anuncie" style="background:var(--secondary);position:relative;overflow:hidden;">
-<div style="position:absolute;inset:0;background:radial-gradient(ellipse at 70% 50%,rgba(192,57,43,.12) 0%,transparent 65%);"></div>
+<div style="position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(192,57,43,.1) 0%,transparent 60%);pointer-events:none;"></div>
 <div class="section-inner" style="position:relative;z-index:1;">
-<div style="max-width:720px;margin:0 auto;text-align:center;">
-  <span class="section-label">Para Empresas</span>
-  <h2 class="section-title">Anuncie seu negócio no Acheaki</h2>
-  <p class="section-sub" style="margin:0 auto 40px;">Alcance clientes da sua cidade que já estão buscando o que você oferece.</p>
-  <div class="advertise-grid">
-    <div class="adv-card"><span class="adv-card-icon">📣</span><h4>Visibilidade real</h4><p>Sua marca aparece para centenas de pessoas da sua região todos os dias.</p></div>
-    <div class="adv-card"><span class="adv-card-icon">🎯</span><h4>Público qualificado</h4><p>Quem acessa o Acheaki já está buscando serviços — audiência quente.</p></div>
-    <div class="adv-card"><span class="adv-card-icon">💬</span><h4>Contato direto</h4><p>Seu card inclui botão de WhatsApp — o cliente fala direto com você.</p></div>
+  <div style="text-align:center;margin-bottom:48px;">
+    <span class="section-label">Para Empresas</span>
+    <h2 class="section-title">Anuncie seu negócio no Acheaki</h2>
+    <p class="section-subtitle">Alcance clientes da sua cidade que já estão buscando o que você oferece.</p>
   </div>
-  <div class="adv-price"><div class="adv-price-label">Investimento mensal</div><div class="adv-price-val">R$49<span style="font-size:24px;">,90</span></div><div class="adv-price-period">/ mês · Cancele quando quiser</div></div>
-  <a href="https://wa.me/5561982242096?text=Olá! Quero anunciar meu negócio no Acheaki." class="btn-primary" target="_blank" style="display:inline-flex;margin:0 auto;">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.533 5.853L.057 23.535a.998.998 0 001.08 1.354l5.844-1.529A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.86 0-3.601-.5-5.109-1.371l-.363-.214-3.767.986.995-3.683-.235-.377A9.954 9.954 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
-    Quero anunciar meu negócio
-  </a>
-</div>
+
+  <!-- 3 planos -->
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px;max-width:900px;margin:0 auto 48px;">
+
+    <!-- START -->
+    <div style="background:linear-gradient(145deg,#1A1008,#130B04);border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:28px 24px;text-align:center;">
+      <div style="font-size:13px;font-weight:700;color:rgba(255,255,255,0.4);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:16px;">Start</div>
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:38px;font-weight:700;color:white;margin-bottom:4px;">R$29<span style="font-size:18px;font-weight:400;color:rgba(255,255,255,0.5);">,90/mês</span></div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.35);margin-bottom:24px;">Ideal para começar</div>
+      <div style="display:flex;flex-direction:column;gap:10px;text-align:left;margin-bottom:28px;">
+        <div style="font-size:13px;color:rgba(255,255,255,0.7);display:flex;gap:8px;"><span style="color:#25D366;">✓</span> Card com foto no site</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.7);display:flex;gap:8px;"><span style="color:#25D366;">✓</span> Botão direto WhatsApp</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.7);display:flex;gap:8px;"><span style="color:#25D366;">✓</span> Aparece nas buscas</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.3);display:flex;gap:8px;"><span>✗</span> Destaque na home</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.3);display:flex;gap:8px;"><span>✗</span> Divulgação na Rádio/TV</div>
+      </div>
+      <a href="https://wa.me/5561982242096?text=Olá! Quero o plano Start do Acheaki." target="_blank" style="display:block;text-align:center;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);color:white;font-weight:700;font-size:14px;padding:13px;border-radius:50px;text-decoration:none;">Começar agora</a>
+    </div>
+
+    <!-- DESTAQUE — mais vendido -->
+    <div style="background:linear-gradient(145deg,#1E0C05,#2A1008);border:2px solid rgba(212,175,55,0.5);border-radius:20px;padding:28px 24px;text-align:center;position:relative;transform:scale(1.03);">
+      <div style="position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:linear-gradient(90deg,#D4AF37,#C0392B);color:white;font-size:11px;font-weight:800;padding:5px 18px;border-radius:50px;white-space:nowrap;letter-spacing:.5px;">⭐ MAIS VENDIDO</div>
+      <div style="font-size:13px;font-weight:700;color:#D4AF37;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:16px;">Destaque</div>
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:38px;font-weight:700;color:white;margin-bottom:4px;">R$49<span style="font-size:18px;font-weight:400;color:rgba(255,255,255,0.5);">,90/mês</span></div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.35);margin-bottom:24px;">O mais escolhido</div>
+      <div style="display:flex;flex-direction:column;gap:10px;text-align:left;margin-bottom:28px;">
+        <div style="font-size:13px;color:rgba(255,255,255,0.85);display:flex;gap:8px;"><span style="color:#25D366;">✓</span> Card com foto no site</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.85);display:flex;gap:8px;"><span style="color:#25D366;">✓</span> Botão direto WhatsApp</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.85);display:flex;gap:8px;"><span style="color:#25D366;">✓</span> Destaque na home</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.85);display:flex;gap:8px;"><span style="color:#25D366;">✓</span> Divulgação na Rádio Web Show</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.3);display:flex;gap:8px;"><span>✗</span> Divulgação na TV Web Show</div>
+      </div>
+      <a href="https://wa.me/5561982242096?text=Olá! Quero o plano Destaque do Acheaki." target="_blank" class="btn-primary" style="display:block;text-align:center;justify-content:center;">Quero o Destaque</a>
+    </div>
+
+    <!-- PREMIUM -->
+    <div style="background:linear-gradient(145deg,#1A1008,#130B04);border:1px solid rgba(192,57,43,0.25);border-radius:20px;padding:28px 24px;text-align:center;">
+      <div style="font-size:13px;font-weight:700;color:#C0392B;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:16px;">Premium</div>
+      <div style="font-family:'Space Grotesk',sans-serif;font-size:38px;font-weight:700;color:white;margin-bottom:4px;">R$89<span style="font-size:18px;font-weight:400;color:rgba(255,255,255,0.5);">,90/mês</span></div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.35);margin-bottom:24px;">Máxima visibilidade</div>
+      <div style="display:flex;flex-direction:column;gap:10px;text-align:left;margin-bottom:28px;">
+        <div style="font-size:13px;color:rgba(255,255,255,0.7);display:flex;gap:8px;"><span style="color:#25D366;">✓</span> Tudo do plano Destaque</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.7);display:flex;gap:8px;"><span style="color:#25D366;">✓</span> Divulgação na TV Web Show</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.7);display:flex;gap:8px;"><span style="color:#25D366;">✓</span> Card em posição prioritária</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.7);display:flex;gap:8px;"><span style="color:#25D366;">✓</span> 30 dias de bônus no início</div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.7);display:flex;gap:8px;"><span style="color:#25D366;">✓</span> Suporte prioritário</div>
+      </div>
+      <a href="https://wa.me/5561982242096?text=Olá! Quero o plano Premium do Acheaki." target="_blank" style="display:block;text-align:center;background:linear-gradient(135deg,#C0392B,#9B1C1C);color:white;font-weight:700;font-size:14px;padding:13px;border-radius:50px;text-decoration:none;">Quero o Premium</a>
+    </div>
+
+  </div>
+
+  <p style="text-align:center;font-size:13px;color:rgba(255,255,255,0.3);">Cancele quando quiser · Sem fidelidade · Preços por tempo limitado</p>
 </div>
 </section>
 
@@ -626,6 +679,27 @@ footer p{font-size:13px;color:var(--muted);margin-bottom:8px}
   <a href="https://wa.me/5561982242096" target="_blank" style="color:#25D366;text-decoration:none;font-weight:600;font-size:14px;">📲 (61) 98224-2096</a>
   <p class="footer-disc">O Acheaki é uma plataforma de <strong>indicação de profissionais</strong> e não possui qualquer vínculo empregatício, societário ou de responsabilidade com os profissionais listados. Não nos responsabilizamos pela execução, qualidade ou resultado dos serviços prestados. A relação contratual é estabelecida exclusivamente entre cliente e profissional.</p>
 </footer>
+
+<!-- STICKY MOBILE BAR -->
+<div id="mobile-bar" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:199;background:rgba(13,8,2,0.97);border-top:1px solid rgba(212,175,55,0.2);padding:10px 16px;backdrop-filter:blur(10px);">
+  <div style="display:flex;gap:10px;max-width:500px;margin:0 auto;">
+    <a href="#profissionais" style="flex:1;text-align:center;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);color:white;font-weight:700;font-size:13px;padding:12px 8px;border-radius:50px;text-decoration:none;" onclick="document.getElementById('mobile-bar').style.display='none'">🔍 Ver Profissionais</a>
+    <a href="#cadastro" style="flex:1;text-align:center;background:linear-gradient(135deg,#C0392B,#9B1C1C);color:white;font-weight:700;font-size:13px;padding:12px 8px;border-radius:50px;text-decoration:none;" onclick="document.getElementById('mobile-bar').style.display='none'">💼 Me Cadastrar</a>
+  </div>
+</div>
+<script>
+(function(){
+  var bar=document.getElementById('mobile-bar');
+  function checkMobile(){if(window.innerWidth<=768){bar.style.display='block';}else{bar.style.display='none';}}
+  checkMobile();
+  window.addEventListener('resize',checkMobile);
+  // Hide bar when user scrolls past hero
+  window.addEventListener('scroll',function(){
+    var hero=document.getElementById('inicio');
+    if(hero&&window.scrollY>hero.offsetHeight){bar.style.paddingBottom=(parseInt(getComputedStyle(document.body).paddingBottom)||0)+'px';}
+  });
+})();
+</script>
 
 <a href="https://wa.me/5561982242096?text=Olá! Preciso de um profissional" class="wa-float" target="_blank">
   <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.533 5.853L.057 23.535a.998.998 0 001.08 1.354l5.844-1.529A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.86 0-3.601-.5-5.109-1.371l-.363-.214-3.767.986.995-3.683-.235-.377A9.954 9.954 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
