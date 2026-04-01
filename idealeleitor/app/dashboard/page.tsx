@@ -12,6 +12,8 @@ interface Voter {
   neighborhood: string
   zone: string
   section: string
+  school: string
+  has_voted: boolean
   created_at: string
 }
 
@@ -25,6 +27,12 @@ interface Session {
   role: string
 }
 
+const emptyForm = {
+  full_name: '', cpf: '', birth_date: '', phone: '',
+  street: '', number: '', neighborhood: '', city: '', state: '', zip_code: '',
+  zone: '', section: '', school: '', has_voted: false, notes: ''
+}
+
 export default function DashboardPage() {
   const router = useRouter()
   const [session, setSession] = useState<Session | null>(null)
@@ -36,12 +44,7 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
 
-  // Form state
-  const [form, setForm] = useState({
-    full_name: '', cpf: '', birth_date: '', phone: '',
-    street: '', number: '', neighborhood: '', city: '',
-    zone: '', section: '', notes: ''
-  })
+  const [form, setForm] = useState(emptyForm)
   const [submitting, setSubmitting] = useState(false)
   const [formError, setFormError] = useState('')
   const [formSuccess, setFormSuccess] = useState(false)
@@ -95,7 +98,7 @@ export default function DashboardPage() {
       const data = await res.json()
       if (!res.ok) { setFormError(data.error || 'Erro ao cadastrar'); return }
       setFormSuccess(true)
-      setForm({ full_name: '', cpf: '', birth_date: '', phone: '', street: '', number: '', neighborhood: '', city: '', zone: '', section: '', notes: '' })
+      setForm(emptyForm)
       loadVoters()
       loadStats()
       setTimeout(() => { setFormSuccess(false); setShowForm(false) }, 2000)
@@ -113,6 +116,9 @@ export default function DashboardPage() {
     loadStats()
   }
 
+  const setField = (key: string, value: string | boolean) =>
+    setForm(f => ({ ...f, [key]: value }))
+
   const totalPages = Math.ceil(total / 20)
 
   if (loading) {
@@ -129,7 +135,7 @@ export default function DashboardPage() {
       <header className="bg-blue-900 text-white px-4 py-4 flex items-center justify-between sticky top-0 z-50 shadow-lg">
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-full bg-yellow-400 flex items-center justify-center text-blue-900 font-bold text-sm">
-            JF
+            IE
           </div>
           <div>
             <p className="font-bold leading-tight text-sm">Idealeleitor</p>
@@ -179,56 +185,96 @@ export default function DashboardPage() {
             )}
 
             <form onSubmit={handleSubmitVoter} className="flex flex-col gap-4">
+              {/* Nome */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Nome completo *</label>
-                <input className="input-field" value={form.full_name} onChange={e => setForm(f => ({ ...f, full_name: e.target.value }))} required />
+                <input className="input-field" value={form.full_name} onChange={e => setField('full_name', e.target.value)} required />
               </div>
+
+              {/* CPF + Nascimento */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">CPF</label>
-                  <input className="input-field" value={form.cpf} onChange={e => setForm(f => ({ ...f, cpf: e.target.value }))} placeholder="000.000.000-00" />
+                  <input className="input-field" value={form.cpf} onChange={e => setField('cpf', e.target.value)} placeholder="000.000.000-00" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Nascimento</label>
-                  <input type="date" className="input-field" value={form.birth_date} onChange={e => setForm(f => ({ ...f, birth_date: e.target.value }))} />
+                  <input type="date" className="input-field" value={form.birth_date} onChange={e => setField('birth_date', e.target.value)} />
                 </div>
               </div>
+
+              {/* WhatsApp */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">WhatsApp / Telefone</label>
-                <input className="input-field" value={form.phone} onChange={e => setForm(f => ({ ...f, phone: e.target.value }))} placeholder="(00) 00000-0000" />
+                <input className="input-field" value={form.phone} onChange={e => setField('phone', e.target.value)} placeholder="(00) 00000-0000" />
               </div>
+
+              {/* Escola */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Rua</label>
-                <input className="input-field" value={form.street} onChange={e => setForm(f => ({ ...f, street: e.target.value }))} />
+                <label className="block text-sm font-medium text-gray-700 mb-1">Escola (local de votação)</label>
+                <input className="input-field" value={form.school} onChange={e => setField('school', e.target.value)} placeholder="Ex: E.E. Tiradentes" />
+              </div>
+
+              {/* Zona + Seção */}
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Zona eleitoral</label>
+                  <input className="input-field" value={form.zone} onChange={e => setField('zone', e.target.value)} placeholder="Ex: 10" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Seção</label>
+                  <input className="input-field" value={form.section} onChange={e => setField('section', e.target.value)} placeholder="Ex: 31" />
+                </div>
+              </div>
+
+              {/* Endereço */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Logradouro</label>
+                <input className="input-field" value={form.street} onChange={e => setField('street', e.target.value)} placeholder="Ex: Avenida Alegre" />
               </div>
               <div className="grid grid-cols-3 gap-3">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Nº</label>
-                  <input className="input-field" value={form.number} onChange={e => setForm(f => ({ ...f, number: e.target.value }))} />
+                  <input className="input-field" value={form.number} onChange={e => setField('number', e.target.value)} />
                 </div>
                 <div className="col-span-2">
                   <label className="block text-sm font-medium text-gray-700 mb-1">Bairro</label>
-                  <input className="input-field" value={form.neighborhood} onChange={e => setForm(f => ({ ...f, neighborhood: e.target.value }))} />
+                  <input className="input-field" value={form.neighborhood} onChange={e => setField('neighborhood', e.target.value)} />
                 </div>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Cidade</label>
-                <input className="input-field" value={form.city} onChange={e => setForm(f => ({ ...f, city: e.target.value }))} />
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Zona eleitoral</label>
-                  <input className="input-field" value={form.zone} onChange={e => setForm(f => ({ ...f, zone: e.target.value }))} placeholder="Ex: 001" />
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Cidade</label>
+                  <input className="input-field" value={form.city} onChange={e => setField('city', e.target.value)} />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Seção</label>
-                  <input className="input-field" value={form.section} onChange={e => setForm(f => ({ ...f, section: e.target.value }))} placeholder="Ex: 0025" />
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Estado</label>
+                  <input className="input-field" value={form.state} onChange={e => setField('state', e.target.value)} placeholder="Ex: AP" maxLength={2} />
                 </div>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Observações</label>
-                <textarea className="input-field resize-none" rows={3} value={form.notes} onChange={e => setForm(f => ({ ...f, notes: e.target.value }))} />
+                <label className="block text-sm font-medium text-gray-700 mb-1">CEP</label>
+                <input className="input-field" value={form.zip_code} onChange={e => setField('zip_code', e.target.value)} placeholder="00000-000" />
               </div>
+
+              {/* Já votou */}
+              <div className="flex items-center gap-3 py-2">
+                <input
+                  type="checkbox"
+                  id="has_voted"
+                  checked={form.has_voted}
+                  onChange={e => setField('has_voted', e.target.checked)}
+                  className="w-5 h-5 rounded"
+                />
+                <label htmlFor="has_voted" className="text-sm font-medium text-gray-700">Já votou no candidato antes</label>
+              </div>
+
+              {/* Observações */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Observações</label>
+                <textarea className="input-field resize-none" rows={3} value={form.notes} onChange={e => setField('notes', e.target.value)} />
+              </div>
+
               <button type="submit" disabled={submitting} className="btn-primary disabled:opacity-60">
                 {submitting ? 'Salvando...' : 'Salvar Eleitor'}
               </button>
@@ -256,10 +302,16 @@ export default function DashboardPage() {
             voters.map((v) => (
               <div key={v.id} className="card flex items-start justify-between gap-4">
                 <div className="min-w-0 flex-1">
-                  <p className="font-semibold text-blue-900 truncate">{v.full_name}</p>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <p className="font-semibold text-blue-900 truncate">{v.full_name}</p>
+                    {v.has_voted && (
+                      <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-medium">✓ Já votou</span>
+                    )}
+                  </div>
                   <div className="flex flex-wrap gap-2 mt-1">
                     {v.phone && <span className="text-xs text-gray-500">{v.phone}</span>}
                     {v.city && <span className="text-xs text-gray-400">📍 {v.city}</span>}
+                    {v.school && <span className="text-xs text-gray-400">🏫 {v.school}</span>}
                     {v.zone && <span className="text-xs text-gray-400">Z{v.zone} S{v.section}</span>}
                   </div>
                   <p className="text-xs text-gray-400 mt-1">

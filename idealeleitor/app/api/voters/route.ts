@@ -89,8 +89,8 @@ export async function POST(req: NextRequest) {
     const body = await req.json()
     const {
       full_name, cpf, birth_date, phone,
-      street, number, neighborhood, city,
-      zone, section, notes,
+      street, number, neighborhood, city, state, zip_code,
+      zone, section, school, has_voted, notes,
     } = body
 
     if (!full_name) {
@@ -104,11 +104,14 @@ export async function POST(req: NextRequest) {
     const result = await sql`
       INSERT INTO idealeleitor.voters (
         coordinator_id, full_name, cpf, birth_date, phone,
-        street, number, neighborhood, city, zone, section, notes
+        street, number, neighborhood, city, state, zip_code,
+        zone, section, school, has_voted, notes
       ) VALUES (
         ${coordinatorId}, ${full_name}, ${cpf || null}, ${birth_date || null}, ${phone || null},
         ${street || null}, ${number || null}, ${neighborhood || null}, ${city || null},
-        ${zone || null}, ${section || null}, ${notes || null}
+        ${state || null}, ${zip_code || null},
+        ${zone || null}, ${section || null}, ${school || null},
+        ${has_voted === true}, ${notes || null}
       )
       RETURNING *
     `
