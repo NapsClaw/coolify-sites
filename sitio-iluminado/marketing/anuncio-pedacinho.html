@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anúncio — Chácara Pedacinho do Céu</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f4f8;color:#1a1a2e;line-height:1.6}
+.page{max-width:860px;margin:0 auto;background:#fff;box-shadow:0 4px 32px rgba(0,0,0,.1)}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#0f172a 0%,#134e2a 100%);color:#fff;padding:48px 40px 40px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-60px;right:-60px;width:300px;height:300px;border-radius:50%;background:rgba(22,163,74,.15)}
+.hero::after{content:'';position:absolute;bottom:-40px;left:-40px;width:200px;height:200px;border-radius:50%;background:rgba(37,99,235,.1)}
+.hero-tag{display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#86efac;font-size:12px;font-weight:700;letter-spacing:1px;padding:5px 14px;border-radius:20px;margin-bottom:16px;text-transform:uppercase}
+.hero h1{font-size:32px;font-weight:800;line-height:1.2;margin-bottom:12px;position:relative;z-index:1}
+.hero h1 span{color:#86efac}
+.hero-sub{font-size:16px;color:rgba(255,255,255,.8);margin-bottom:20px;position:relative;z-index:1;max-width:600px}
+.hero-badges{display:flex;flex-wrap:wrap;gap:10px;position:relative;z-index:1}
+.badge{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;padding:7px 14px;border-radius:8px;font-size:13px;font-weight:500}
+
+/* SECTIONS */
+section{padding:32px 40px;border-bottom:1px solid #f0f0f0}
+.sec-title{font-size:16px;font-weight:800;color:#0f172a;margin-bottom:16px;display:flex;align-items:center;gap:8px;text-transform:uppercase;letter-spacing:.5px}
+.sec-title::after{content:'';flex:1;height:2px;background:linear-gradient(to right,#16a34a,transparent)}
+
+/* HIGHLIGHTS GRID */
+.highlights-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.hl-item{display:flex;align-items:center;gap:8px;font-size:14px;color:#374151;padding:8px 12px;background:#f8fafb;border-radius:8px;border-left:3px solid #16a34a}
+.hl-item .icon{font-size:16px}
+
+/* AMENITY GROUPS */
+.amen-groups{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.amen-group{background:#f8fafb;border-radius:12px;padding:16px}
+.amen-group-title{font-size:13px;font-weight:700;color:#0f172a;margin-bottom:10px;display:flex;gap:6px;align-items:center}
+.amen-group ul{list-style:none;font-size:13px;color:#4b5563;line-height:1.9}
+.amen-group ul li::before{content:"✔ ";color:#16a34a;font-weight:700}
+
+/* ROOMS */
+.rooms-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px}
+.room-card{background:#0f172a;color:#fff;border-radius:12px;padding:16px;text-align:center}
+.room-icon{font-size:28px;margin-bottom:8px}
+.room-name{font-size:13px;font-weight:700;margin-bottom:4px}
+.room-desc{font-size:12px;opacity:.7}
+
+/* PRICING */
+.pricing-note{background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:12px 16px;font-size:13px;color:#92400e;margin-bottom:16px}
+.price-period{margin-bottom:20px}
+.period-title{font-size:14px;font-weight:700;color:#0f172a;margin-bottom:8px;padding-bottom:6px;border-bottom:2px solid #e5e7eb;display:flex;align-items:center;gap:6px}
+.price-table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:4px}
+.price-table th{background:#0f172a;color:#fff;padding:8px 12px;text-align:left;font-size:12px}
+.price-table td{padding:8px 12px;border-bottom:1px solid #f0f0f0}
+.price-table tr:last-child td{border-bottom:none}
+.price-table .val{font-weight:700;color:#16a34a}
+.checkin-info{font-size:12px;color:#6b7280;margin-top:4px;margin-bottom:8px}
+
+/* RULES */
+.rules-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.rule-item{display:flex;gap:10px;align-items:flex-start;padding:10px;background:#fef2f2;border-radius:8px;border-left:3px solid #ef4444;font-size:13px}
+.rule-item.ok{background:#f0fdf4;border-left-color:#16a34a}
+.rule-icon{font-size:16px;flex-shrink:0;margin-top:1px}
+
+/* CTA */
+.cta-section{background:linear-gradient(135deg,#0f172a,#134e2a);padding:40px;text-align:center;color:#fff}
+.cta-section h2{font-size:24px;font-weight:800;margin-bottom:8px}
+.cta-section p{color:rgba(255,255,255,.7);font-size:14px;margin-bottom:28px;max-width:480px;margin-left:auto;margin-right:auto}
+.wa-btn{display:inline-flex;align-items:center;gap:10px;background:#25d366;color:#fff;padding:16px 32px;border-radius:12px;font-size:17px;font-weight:700;text-decoration:none;box-shadow:0 6px 20px rgba(37,211,102,.35)}
+.pix-box{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:10px;padding:16px;margin-top:20px;font-size:13px;color:rgba(255,255,255,.8);display:inline-block;text-align:left;min-width:260px}
+
+/* SIDE BY SIDE CARD */
+.compare{padding:40px;background:#f8fafc}
+.compare-title{text-align:center;font-size:20px;font-weight:800;color:#0f172a;margin-bottom:8px}
+.compare-sub{text-align:center;font-size:14px;color:#6b7280;margin-bottom:28px}
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.prop-card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.08);border:2px solid transparent}
+.prop-card.featured{border-color:#16a34a}
+.prop-hero{height:180px;overflow:hidden;position:relative}
+.prop-hero img{width:100%;height:100%;object-fit:cover}
+.prop-hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,transparent 40%,rgba(0,0,0,.6) 100%)}
+.prop-hero-name{position:absolute;bottom:12px;left:14px;color:#fff;font-size:15px;font-weight:700}
+.prop-body{padding:16px}
+.prop-badge-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.prop-badge{background:#f0fdf4;color:#15803d;border:1px solid #bbf7d0;font-size:11px;padding:3px 8px;border-radius:12px;font-weight:600}
+.prop-price-row{display:flex;justify-content:space-between;font-size:13px;padding:4px 0;border-bottom:1px solid #f0f0f0}
+.prop-price-row:last-child{border-bottom:none}
+.prop-price-val{font-weight:700;color:#16a34a}
+.prop-cta{display:block;text-align:center;background:#25d366;color:#fff;padding:10px;border-radius:8px;font-weight:700;font-size:13px;text-decoration:none;margin-top:14px}
+
+@media(max-width:600px){
+  .hero{padding:32px 20px}
+  section{padding:24px 20px}
+  .highlights-grid,.amen-groups,.rules-grid,.compare-grid{grid-template-columns:1fr}
+  .compare{padding:24px 16px}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">🌴 Mogi das Cruzes · SP · A 1h de São Paulo</div>
+  <h1>Chácara <span>Pedacinho do Céu</span><br>com Piscina & Hidromassagem</h1>
+  <p class="hero-sub">Privacidade total para seu grupo. Piscina adulta com cascata, hidromassagem, espaço gourmet completo, salão de jogos e lareira. Tudo isso a 20 minutos do Shopping Mogi das Cruzes.</p>
+  <div class="hero-badges">
+    <div class="badge">🛏️ Até 25 pessoas em camas</div>
+    <div class="badge">🏊 2 piscinas</div>
+    <div class="badge">🐾 Pet friendly</div>
+    <div class="badge">🔒 100% privativo</div>
+    <div class="badge">🚗 23 vagas</div>
+    <div class="badge">📶 Wi-Fi incluso</div>
+  </div>
+</div>
+
+<!-- DESTAQUES -->
+<section>
+  <div class="sec-title">⭐ Destaques do imóvel</div>
+  <div class="highlights-grid">
+    <div class="hl-item"><span class="icon">🏠</span> Uso 100% exclusivo — nada compartilhado</div>
+    <div class="hl-item"><span class="icon">🛏️</span> Acomoda até 25 pessoas em camas</div>
+    <div class="hl-item"><span class="icon">🚿</span> 4 dormitórios sendo 2 suítes</div>
+    <div class="hl-item"><span class="icon">🏊</span> Piscina adulta com cascata</div>
+    <div class="hl-item"><span class="icon">💆</span> Piscina infantil com hidromassagem</div>
+    <div class="hl-item"><span class="icon">🍖</span> Espaço gourmet completo</div>
+    <div class="hl-item"><span class="icon">📶</span> Wi-Fi em toda a propriedade</div>
+    <div class="hl-item"><span class="icon">🐾</span> Pet friendly</div>
+    <div class="hl-item"><span class="icon">💧</span> Água filtrada em toda a chácara</div>
+    <div class="hl-item"><span class="icon">🚗</span> Estacionamento para 23 carros</div>
+  </div>
+</section>
+
+<!-- ESTRUTURA -->
+<section>
+  <div class="sec-title">🏗️ Estrutura completa</div>
+  <div class="amen-groups">
+    <div class="amen-group">
+      <div class="amen-group-title">🏊 Lazer & Piscinas</div>
+      <ul>
+        <li>Piscina adulta com cascata</li>
+        <li>Piscina infantil com hidromassagem</li>
+        <li>Campo aberto para futebol</li>
+      </ul>
+    </div>
+    <div class="amen-group">
+      <div class="amen-group-title">🍖 Espaço Gourmet</div>
+      <ul>
+        <li>Churrasqueira completa</li>
+        <li>Forno de pizza</li>
+        <li>Fogão a lenha</li>
+        <li>Salão de festas integrado</li>
+      </ul>
+    </div>
+    <div class="amen-group">
+      <div class="amen-group-title">🎮 Entretenimento</div>
+      <ul>
+        <li>Salão de jogos com lareira</li>
+        <li>Mesa de bilhar</li>
+        <li>Fut mesa · Pingue Pongue</li>
+        <li>TV via Sky · Jogos de carteado</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ACOMODAÇÃO -->
+<section>
+  <div class="sec-title">🛏️ Acomodação</div>
+  <div class="rooms-grid">
+    <div class="room-card">
+      <div class="room-icon">👑</div>
+      <div class="room-name">Suíte Master</div>
+      <div class="room-desc">Cama de casal + banheiro privativo</div>
+    </div>
+    <div class="room-card">
+      <div class="room-icon">🌿</div>
+      <div class="room-name">Suíte Standard</div>
+      <div class="room-desc">Cama de casal + banheiro privativo</div>
+    </div>
+    <div class="room-card">
+      <div class="room-icon">🛏️</div>
+      <div class="room-name">Dormitório 3</div>
+      <div class="room-desc">Camas para grupo</div>
+    </div>
+    <div class="room-card">
+      <div class="room-icon">🛏️</div>
+      <div class="room-name">Dormitório 4</div>
+      <div class="room-desc">Camas para grupo</div>
+    </div>
+    <div class="room-card" style="background:#16a34a">
+      <div class="room-icon">👥</div>
+      <div class="room-name">Capacidade Total</div>
+      <div class="room-desc">Até 25 pessoas em camas</div>
+    </div>
+  </div>
+</section>
+
+<!-- PREÇOS -->
+<section id="precos">
+  <div class="sec-title">💰 Tabela de Preços</div>
+  <div class="pricing-note">⚠️ <strong>Taxa de limpeza: R$ 300 — NÃO inclusa</strong> em nenhum dos valores abaixo. Pagamento via PIX. Confirme disponibilidade pelo WhatsApp antes de pagar.</div>
+
+  <div class="price-period">
+    <div class="period-title">🗓️ Fim de Semana Comum — Sáb/Dom</div>
+    <div class="checkin-info">Check-in: Sábado 08h · Check-out: Domingo 18h</div>
+    <table class="price-table"><thead><tr><th>Pessoas</th><th>Valor total</th></tr></thead><tbody>
+      <tr><td>Até 15 pessoas</td><td class="val">R$ 1.700,00</td></tr>
+      <tr><td>Até 20 pessoas</td><td class="val">R$ 2.000,00</td></tr>
+      <tr><td>Até 25 pessoas</td><td class="val">R$ 2.500,00</td></tr>
+      <tr><td>Até 30 pessoas</td><td class="val">R$ 2.800,00</td></tr>
+      <tr><td>Acima de 30</td><td class="val">Sob consulta</td></tr>
+    </tbody></table>
+  </div>
+
+  <div class="price-period">
+    <div class="period-title">👩 Dia das Mães — 09/05 a 10/05/2026</div>
+    <div class="checkin-info">Check-in: Sábado 08h · Check-out: Domingo 18h</div>
+    <table class="price-table"><thead><tr><th>Pessoas</th><th>Valor total</th></tr></thead><tbody>
+      <tr><td>Até 15 pessoas</td><td class="val">R$ 2.000,00</td></tr>
+      <tr><td>Até 20 pessoas</td><td class="val">R$ 2.300,00</td></tr>
+      <tr><td>Até 25 pessoas</td><td class="val">R$ 2.800,00</td></tr>
+      <tr><td>Até 30 pessoas</td><td class="val">R$ 3.200,00</td></tr>
+    </tbody></table>
+  </div>
+
+  <div class="price-period">
+    <div class="period-title">👨 Dia dos Pais — 08/08 a 09/08/2026</div>
+    <div class="checkin-info">Check-in: Sábado 08h · Check-out: Domingo 18h</div>
+    <table class="price-table"><thead><tr><th>Pessoas</th><th>Valor total</th></tr></thead><tbody>
+      <tr><td>Até 15 pessoas</td><td class="val">R$ 2.000,00</td></tr>
+      <tr><td>Até 20 pessoas</td><td class="val">R$ 2.300,00</td></tr>
+      <tr><td>Até 25 pessoas</td><td class="val">R$ 2.800,00</td></tr>
+      <tr><td>Até 30 pessoas</td><td class="val">R$ 3.200,00</td></tr>
+    </tbody></table>
+  </div>
+
+  <div class="price-period">
+    <div class="period-title">🐣 Páscoa — 03/04 a 05/04/2026 (3 dias)</div>
+    <div class="checkin-info">Check-in: Sábado 08h · Check-out: Domingo 18h</div>
+    <table class="price-table"><thead><tr><th>Pessoas</th><th>Valor total</th></tr></thead><tbody>
+      <tr><td>Até 15 pessoas</td><td class="val">R$ 2.700,00</td></tr>
+      <tr><td>Até 20 pessoas</td><td class="val">R$ 3.200,00</td></tr>
+      <tr><td>Até 25 pessoas</td><td class="val">R$ 3.750,00</td></tr>
+      <tr><td>Até 30 pessoas</td><td class="val">R$ 4.200,00</td></tr>
+    </tbody></table>
+  </div>
+
+  <div class="price-period">
+    <div class="period-title">⚔️ Tiradentes — 18/04 a 21/04/2026 (4 dias)</div>
+    <div class="checkin-info">Check-in: Sábado 08h (18/04) · Check-out: Terça 18h (21/04)</div>
+    <table class="price-table"><thead><tr><th>Pessoas</th><th>Valor total</th></tr></thead><tbody>
+      <tr><td>Até 10 pessoas</td><td class="val">R$ 2.800,00</td></tr>
+      <tr><td>Até 15 pessoas</td><td class="val">R$ 3.600,00</td></tr>
+      <tr><td>Até 20 pessoas</td><td class="val">R$ 4.000,00</td></tr>
+      <tr><td>Até 25 pessoas</td><td class="val">R$ 4.500,00</td></tr>
+      <tr><td>Até 30 pessoas</td><td class="val">R$ 4.800,00</td></tr>
+    </tbody></table>
+  </div>
+
+  <div class="price-period">
+    <div class="period-title">⚒️ Trabalhador — 01/05 a 03/05/2026 (3 dias)</div>
+    <div class="checkin-info">Check-in: Sexta 08h · Check-out: Domingo 18h</div>
+    <table class="price-table"><thead><tr><th>Pessoas</th><th>Valor total</th></tr></thead><tbody>
+      <tr><td>Até 15 pessoas</td><td class="val">R$ 2.700,00</td></tr>
+      <tr><td>Até 20 pessoas</td><td class="val">R$ 3.200,00</td></tr>
+      <tr><td>Até 25 pessoas</td><td class="val">R$ 3.750,00</td></tr>
+      <tr><td>Até 30 pessoas</td><td class="val">R$ 4.200,00</td></tr>
+    </tbody></table>
+  </div>
+
+  <div class="price-period">
+    <div class="period-title">🎖️ Independência — 05/09 a 07/09/2026 (3 dias)</div>
+    <div class="checkin-info">Check-in: Sexta 08h · Check-out: Segunda 18h</div>
+    <table class="price-table"><thead><tr><th>Pessoas</th><th>Valor total</th></tr></thead><tbody>
+      <tr><td>Até 15 pessoas</td><td class="val">R$ 2.700,00</td></tr>
+      <tr><td>Até 20 pessoas</td><td class="val">R$ 3.200,00</td></tr>
+      <tr><td>Até 25 pessoas</td><td class="val">R$ 3.750,00</td></tr>
+      <tr><td>Até 30 pessoas</td><td class="val">R$ 4.200,00</td></tr>
+    </tbody></table>
+  </div>
+
+  <div class="price-period">
+    <div class="period-title">👶 Crianças — 10/10 a 12/10/2026 (3 dias)</div>
+    <div class="checkin-info">Check-in: Sexta 08h · Check-out: Segunda 18h</div>
+    <table class="price-table"><thead><tr><th>Pessoas</th><th>Valor total</th></tr></thead><tbody>
+      <tr><td>Até 15 pessoas</td><td class="val">R$ 2.700,00</td></tr>
+      <tr><td>Até 20 pessoas</td><td class="val">R$ 3.200,00</td></tr>
+      <tr><td>Até 25 pessoas</td><td class="val">R$ 3.750,00</td></tr>
+      <tr><td>Até 30 pessoas</td><td class="val">R$ 4.200,00</td></tr>
+    </tbody></table>
+  </div>
+
+  <div class="price-period">
+    <div class="period-title">🕯️ Finados — 30/10 a 02/11/2026 (3 dias)</div>
+    <div class="checkin-info">Check-in: Sábado 08h · Check-out: Segunda 18h</div>
+    <table class="price-table"><thead><tr><th>Pessoas</th><th>Valor total</th></tr></thead><tbody>
+      <tr><td>Até 15 pessoas</td><td class="val">R$ 2.700,00</td></tr>
+      <tr><td>Até 20 pessoas</td><td class="val">R$ 3.200,00</td></tr>
+      <tr><td>Até 25 pessoas</td><td class="val">R$ 3.750,00</td></tr>
+      <tr><td>Até 30 pessoas</td><td class="val">R$ 4.200,00</td></tr>
+    </tbody></table>
+  </div>
+
+  <div class="price-period">
+    <div class="period-title">🇧🇷 Proclamação — 14/11 a 15/11/2026</div>
+    <div class="checkin-info">Check-in: Sábado 08h · Check-out: Domingo 18h</div>
+    <table class="price-table"><thead><tr><th>Pessoas</th><th>Valor total</th></tr></thead><tbody>
+      <tr><td>Até 15 pessoas</td><td class="val">R$ 2.000,00</td></tr>
+      <tr><td>Até 20 pessoas</td><td class="val">R$ 2.300,00</td></tr>
+      <tr><td>Até 25 pessoas</td><td class="val">R$ 2.800,00</td></tr>
+      <tr><td>Até 30 pessoas</td><td class="val">R$ 3.200,00</td></tr>
+    </tbody></table>
+  </div>
+
+  <div class="price-period">
+    <div class="period-title">✊ Consciência Negra — 20/11 a 22/11/2026 (3 dias)</div>
+    <div class="checkin-info">Check-in: Sexta 08h · Check-out: Segunda 18h</div>
+    <table class="price-table"><thead><tr><th>Pessoas</th><th>Valor total</th></tr></thead><tbody>
+      <tr><td>Até 15 pessoas</td><td class="val">R$ 2.700,00</td></tr>
+      <tr><td>Até 20 pessoas</td><td class="val">R$ 3.200,00</td></tr>
+      <tr><td>Até 25 pessoas</td><td class="val">R$ 3.750,00</td></tr>
+      <tr><td>Até 30 pessoas</td><td class="val">R$ 4.200,00</td></tr>
+    </tbody></table>
+  </div>
+
+  <div class="price-period">
+    <div class="period-title">🎄 Natal 2026 — 22/12 a 26/12/2026 (4 dias)</div>
+    <div class="checkin-info">Check-in: Terça 18h (22/12) · Check-out: Sábado 18h (26/12)</div>
+    <table class="price-table"><thead><tr><th>Pessoas</th><th>Valor total</th></tr></thead><tbody>
+      <tr><td>Até 20 pessoas</td><td class="val">R$ 20.000,00</td></tr>
+      <tr><td>Até 25 pessoas</td><td class="val">R$ 25.000,00</td></tr>
+      <tr><td>Até 30 pessoas</td><td class="val">R$ 30.000,00</td></tr>
+      <tr><td>Acima de 30</td><td class="val">Sob consulta</td></tr>
+    </tbody></table>
+  </div>
+
+  <div class="price-period">
+    <div class="period-title">🎭 Carnaval 2027 — 05/02 a 09/02/2027 (4 dias)</div>
+    <div class="checkin-info">Check-in: Sexta 18h (05/02) · Check-out: Terça 18h (09/02)</div>
+    <table class="price-table"><thead><tr><th>Pessoas</th><th>Valor total</th></tr></thead><tbody>
+      <tr><td>Até 15 pessoas</td><td class="val">R$ 12.000,00</td></tr>
+      <tr><td>Até 20 pessoas</td><td class="val">R$ 14.000,00</td></tr>
+      <tr><td>Até 25 pessoas</td><td class="val">R$ 17.500,00</td></tr>
+      <tr><td>Até 30 pessoas</td><td class="val">R$ 20.000,00</td></tr>
+    </tbody></table>
+  </div>
+
+  <div class="price-period">
+    <div class="period-title">🎉 Diária para Eventos — Festas · Casamentos · Debutantes</div>
+    <div class="checkin-info">Horário flexível — não ultrapassa 00h00</div>
+    <table class="price-table"><thead><tr><th>Pessoas</th><th>Valor total</th></tr></thead><tbody>
+      <tr><td>Até 50 pessoas</td><td class="val">R$ 2.000,00</td></tr>
+      <tr><td>51 a 100 pessoas</td><td class="val">R$ 2.700,00</td></tr>
+      <tr><td>101 a 150 pessoas</td><td class="val">R$ 3.500,00</td></tr>
+      <tr><td>151 a 200 pessoas</td><td class="val">R$ 4.500,00</td></tr>
+      <tr><td>201 a 250 pessoas</td><td class="val">R$ 6.000,00</td></tr>
+      <tr><td>Acima de 250</td><td class="val">Sob consulta</td></tr>
+    </tbody></table>
+  </div>
+</section>
+
+<!-- REGRAS -->
+<section>
+  <div class="sec-title">📋 Regras do imóvel</div>
+  <div class="rules-grid">
+    <div class="rule-item ok"><span class="rule-icon">✅</span><span>Check-in a partir das <strong>08h00</strong></span></div>
+    <div class="rule-item ok"><span class="rule-icon">✅</span><span>Check-out até as <strong>18h00</strong></span></div>
+    <div class="rule-item ok"><span class="rule-icon">✅</span><span>Pet friendly — animais de estimação bem-vindos</span></div>
+    <div class="rule-item ok"><span class="rule-icon">✅</span><span>Uso 100% exclusivo da propriedade</span></div>
+    <div class="rule-item"><span class="rule-icon">🔊</span><span>Som até meia-noite — <strong>00h00</strong> máximo</span></div>
+    <div class="rule-item"><span class="rule-icon">👥</span><span>Capacidade máxima de <strong>25 pessoas em camas</strong> (eventos até 250)</span></div>
+    <div class="rule-item"><span class="rule-icon">🧹</span><span>Taxa de limpeza: <strong>R$ 300</strong> — NÃO inclusa no valor da diária</span></div>
+    <div class="rule-item"><span class="rule-icon">💳</span><span>Pagamento via <strong>PIX</strong> — somente após confirmar disponibilidade</span></div>
+  </div>
+</section>
+
+<!-- COMPARATIVO LADO A LADO -->
+<div class="compare">
+  <div class="compare-title">🌿 Temos duas opções para você!</div>
+  <div class="compare-sub">Escolha o sítio ideal para o seu grupo</div>
+  <div class="compare-grid">
+
+    <div class="prop-card">
+      <div class="prop-hero">
+        <img src="../fotos/piscina-principal.jpg" alt="Sítio Iluminado">
+        <div class="prop-hero-overlay"></div>
+        <div class="prop-hero-name">🌿 Sítio Iluminado — Biritiba Mirim</div>
+      </div>
+      <div class="prop-body">
+        <div class="prop-badge-row">
+          <span class="prop-badge">Até 22 pessoas</span>
+          <span class="prop-badge">🐾 Pet</span>
+          <span class="prop-badge">2 piscinas</span>
+        </div>
+        <div class="prop-price-row"><span>Fim de semana (10p)</span><span class="prop-price-val">R$ 1.600</span></div>
+        <div class="prop-price-row"><span>Fim de semana (20p)</span><span class="prop-price-val">R$ 2.200</span></div>
+        <div class="prop-price-row"><span>Fim de semana (30p)</span><span class="prop-price-val">R$ 3.000</span></div>
+        <a class="prop-cta" href="https://wa.me/5511941942210?text=Quero o Sítio Iluminado!" target="_blank">💬 Reservar Sítio Iluminado</a>
+      </div>
+    </div>
+
+    <div class="prop-card featured">
+      <div class="prop-hero">
+        <img src="../fotos/pedacinho-01.jpg" alt="Pedacinho do Céu">
+        <div class="prop-hero-overlay"></div>
+        <div class="prop-hero-name">🌴 Pedacinho do Céu — Mogi das Cruzes</div>
+      </div>
+      <div class="prop-body">
+        <div class="prop-badge-row">
+          <span class="prop-badge">Até 25 pessoas</span>
+          <span class="prop-badge">🐾 Pet</span>
+          <span class="prop-badge">Hidromassagem</span>
+        </div>
+        <div class="prop-price-row"><span>Fim de semana (15p)</span><span class="prop-price-val">R$ 1.700</span></div>
+        <div class="prop-price-row"><span>Fim de semana (20p)</span><span class="prop-price-val">R$ 2.000</span></div>
+        <div class="prop-price-row"><span>Fim de semana (30p)</span><span class="prop-price-val">R$ 2.800</span></div>
+        <a class="prop-cta" href="https://wa.me/5511941942210?text=Quero o Pedacinho do Céu!" target="_blank">💬 Reservar Pedacinho do Céu</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <h2>🌴 Garanta sua data agora!</h2>
+  <p>Datas disputadas nos feriados. Entre em contato pelo WhatsApp para verificar disponibilidade e confirmar sua reserva.</p>
+  <a href="https://wa.me/5511941942210?text=Olá! Vi o anúncio da Chácara Pedacinho do Céu e quero saber a disponibilidade!" class="wa-btn" target="_blank">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Falar no WhatsApp agora
+  </a>
+  <div class="pix-box">
+    <strong>💳 Pagamento via PIX</strong><br>
+    Chave CPF: <strong>37451949850</strong><br>
+    Favorecido: <strong>ARISLAN CIARALLO</strong>
+  </div>
+</div>
+
+</div>
+</body>
+</html>
