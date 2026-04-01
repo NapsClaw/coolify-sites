@@ -6,20 +6,26 @@ import { useRouter } from 'next/navigation'
 interface Voter {
   id: string
   full_name: string
-  cpf: string
   phone: string
-  city: string
-  neighborhood: string
+  school: string
   zone: string
   section: string
-  school: string
   has_voted: boolean
+  coordinator_name?: string
   created_at: string
+  // optional
+  cpf?: string
+  birth_date?: string
+  street?: string
+  number?: string
+  neighborhood?: string
+  city?: string
 }
 
 interface Stats {
   total_voters: number
   today_voters: number
+  voted_count: number
 }
 
 interface Session {
@@ -28,21 +34,24 @@ interface Session {
 }
 
 const emptyForm = {
-  full_name: '', cpf: '', birth_date: '', phone: '',
-  street: '', number: '', neighborhood: '', city: '', state: '', zip_code: '',
-  zone: '', section: '', school: '', has_voted: false, notes: ''
+  full_name: '', phone: '', school: '', zone: '', section: '',
+  // optional
+  cpf: '', birth_date: '', street: '', number: '', neighborhood: '', city: '',
+  notes: ''
 }
 
 export default function DashboardPage() {
   const router = useRouter()
   const [session, setSession] = useState<Session | null>(null)
   const [voters, setVoters] = useState<Voter[]>([])
-  const [stats, setStats] = useState<Stats>({ total_voters: 0, today_voters: 0 })
+  const [stats, setStats] = useState<Stats>({ total_voters: 0, today_voters: 0, voted_count: 0 })
   const [search, setSearch] = useState('')
+  const [filterVoted, setFilterVoted] = useState<'all' | 'voted' | 'not_voted'>('all')
   const [page, setPage] = useState(1)
   const [total, setTotal] = useState(0)
   const [loading, setLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
+  const [showOptional, setShowOptional] = useState(false)
 
   const [form, setForm] = useState(emptyForm)
   const [submitting, setSubmitting] = useState(false)
@@ -58,14 +67,17 @@ export default function DashboardPage() {
   }, [router])
 
   const loadVoters = useCallback(async () => {
-    const res = await fetch(`/api/voters?search=${encodeURIComponent(search)}&page=${page}`)
+    const params = new URLSearchParams({ search, page: String(page) })
+    if (filterVoted === 'voted') params.set('has_voted', 'true')
+    if (filterVoted === 'not_voted') params.set('has_voted', 'false')
+    const res = await fetch(`/api/voters?${params}`)
     const data = await res.json()
     if (data.success) {
       setVoters(data.data)
       setTotal(data.total)
     }
     setLoading(false)
-  }, [search, page])
+  }, [search, page, filterVoted])
 
   const loadStats = useCallback(async () => {
     const res = await fetch('/api/stats')
@@ -74,10 +86,7 @@ export default function DashboardPage() {
   }, [])
 
   useEffect(() => {
-    if (session) {
-      loadVoters()
-      loadStats()
-    }
+    if (session) { loadVoters(); loadStats() }
   }, [session, loadVoters, loadStats])
 
   async function handleLogout() {
@@ -99,6 +108,7 @@ export default function DashboardPage() {
       if (!res.ok) { setFormError(data.error || 'Erro ao cadastrar'); return }
       setFormSuccess(true)
       setForm(emptyForm)
+      setShowOptional(false)
       loadVoters()
       loadStats()
       setTimeout(() => { setFormSuccess(false); setShowForm(false) }, 2000)
@@ -123,12 +133,16 @@ export default function DashboardPage() {
       body: JSON.stringify({ has_voted: !current }),
     })
     loadVoters()
+    loadStats()
   }
 
-  const setField = (key: string, value: string | boolean) =>
+  const setField = (key: string, value: string) =>
     setForm(f => ({ ...f, [key]: value }))
 
   const totalPages = Math.ceil(total / 20)
+  const votedPct = stats.total_voters > 0
+    ? Math.round((stats.voted_count / stats.total_voters) * 100)
+    : 0
 
   if (loading) {
     return (
@@ -151,29 +165,48 @@ export default function DashboardPage() {
             <p className="text-blue-200 text-xs">{session?.name}</p>
           </div>
         </div>
-        <button onClick={handleLogout} className="text-blue-200 text-sm hover:text-white">
-          Sair
-        </button>
+        <button onClick={handleLogout} className="text-blue-200 text-sm hover:text-white">Sair</button>
       </header>
 
       <div className="max-w-2xl mx-auto px-4 py-6">
+
         {/* Stats */}
-        <div className="grid grid-cols-2 gap-4 mb-6">
-          <div className="card text-center">
-            <p className="text-3xl font-bold text-blue-800">{stats.total_voters}</p>
-            <p className="text-sm text-gray-500 mt-1">Total de eleitores</p>
+        <div className="grid grid-cols-3 gap-3 mb-4">
+          <div className="card text-center py-4">
+            <p className="text-2xl font-bold text-blue-800">{stats.total_voters}</p>
+            <p className="text-xs text-gray-500 mt-1">Total</p>
           </div>
-          <div className="card text-center">
-            <p className="text-3xl font-bold text-green-600">{stats.today_voters}</p>
-            <p className="text-sm text-gray-500 mt-1">Cadastrados hoje</p>
+          <div className="card text-center py-4">
+            <p className="text-2xl font-bold text-green-600">{stats.voted_count}</p>
+            <p className="text-xs text-gray-500 mt-1">Votaram</p>
+          </div>
+          <div className="card text-center py-4">
+            <p className="text-2xl font-bold text-blue-600">{stats.today_voters}</p>
+            <p className="text-xs text-gray-500 mt-1">Hoje</p>
           </div>
         </div>
 
+        {/* Progress bar */}
+        {stats.total_voters > 0 && (
+          <div className="card mb-4">
+            <div className="flex justify-between text-sm font-medium mb-2">
+              <span className="text-gray-700">Progresso de votos</span>
+              <span className="text-green-600 font-bold">{votedPct}%</span>
+            </div>
+            <div className="w-full bg-gray-200 rounded-full h-4">
+              <div
+                className="bg-green-500 h-4 rounded-full transition-all duration-500"
+                style={{ width: `${votedPct}%` }}
+              />
+            </div>
+            <p className="text-xs text-gray-500 mt-2 text-center">
+              {stats.voted_count} de {stats.total_voters} eleitores votaram
+            </p>
+          </div>
+        )}
+
         {/* Add voter button */}
-        <button
-          onClick={() => setShowForm(!showForm)}
-          className="btn-secondary mb-6"
-        >
+        <button onClick={() => setShowForm(!showForm)} className="btn-secondary mb-4">
           {showForm ? '✕ Cancelar' : '+ Cadastrar Eleitor'}
         </button>
 
@@ -184,7 +217,7 @@ export default function DashboardPage() {
 
             {formSuccess && (
               <div className="bg-green-50 border border-green-200 text-green-700 rounded-lg px-4 py-3 mb-4 text-sm">
-                ✓ Eleitor cadastrado com sucesso!
+                ✓ Eleitor cadastrado!
               </div>
             )}
             {formError && (
@@ -194,40 +227,24 @@ export default function DashboardPage() {
             )}
 
             <form onSubmit={handleSubmitVoter} className="flex flex-col gap-4">
-              {/* Nome */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Nome completo *</label>
                 <input className="input-field" value={form.full_name} onChange={e => setField('full_name', e.target.value)} required />
               </div>
 
-              {/* CPF + Nascimento */}
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">CPF</label>
-                  <input className="input-field" value={form.cpf} onChange={e => setField('cpf', e.target.value)} placeholder="000.000.000-00" />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Nascimento</label>
-                  <input type="date" className="input-field" value={form.birth_date} onChange={e => setField('birth_date', e.target.value)} />
-                </div>
-              </div>
-
-              {/* WhatsApp */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">WhatsApp / Telefone</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">WhatsApp</label>
                 <input className="input-field" value={form.phone} onChange={e => setField('phone', e.target.value)} placeholder="(00) 00000-0000" />
               </div>
 
-              {/* Escola */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1">Escola (local de votação)</label>
                 <input className="input-field" value={form.school} onChange={e => setField('school', e.target.value)} placeholder="Ex: E.E. Tiradentes" />
               </div>
 
-              {/* Zona + Seção */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Zona eleitoral</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Zona</label>
                   <input className="input-field" value={form.zone} onChange={e => setField('zone', e.target.value)} placeholder="Ex: 10" />
                 </div>
                 <div>
@@ -236,53 +253,37 @@ export default function DashboardPage() {
                 </div>
               </div>
 
-              {/* Endereço */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Logradouro</label>
-                <input className="input-field" value={form.street} onChange={e => setField('street', e.target.value)} placeholder="Ex: Avenida Alegre" />
-              </div>
-              <div className="grid grid-cols-3 gap-3">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Nº</label>
-                  <input className="input-field" value={form.number} onChange={e => setField('number', e.target.value)} />
-                </div>
-                <div className="col-span-2">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Bairro</label>
-                  <input className="input-field" value={form.neighborhood} onChange={e => setField('neighborhood', e.target.value)} />
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Cidade</label>
-                  <input className="input-field" value={form.city} onChange={e => setField('city', e.target.value)} />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Estado</label>
-                  <input className="input-field" value={form.state} onChange={e => setField('state', e.target.value)} placeholder="Ex: AP" maxLength={2} />
-                </div>
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">CEP</label>
-                <input className="input-field" value={form.zip_code} onChange={e => setField('zip_code', e.target.value)} placeholder="00000-000" />
-              </div>
+              {/* Optional fields toggle */}
+              <button
+                type="button"
+                onClick={() => setShowOptional(!showOptional)}
+                className="text-blue-600 text-sm font-medium text-left"
+              >
+                {showOptional ? '▲ Ocultar campos opcionais' : '▼ Adicionar mais informações (opcional)'}
+              </button>
 
-              {/* Já votou */}
-              <div className="flex items-center gap-3 py-2">
-                <input
-                  type="checkbox"
-                  id="has_voted"
-                  checked={form.has_voted}
-                  onChange={e => setField('has_voted', e.target.checked)}
-                  className="w-5 h-5 rounded"
-                />
-                <label htmlFor="has_voted" className="text-sm font-medium text-gray-700">Já votou no candidato antes</label>
-              </div>
-
-              {/* Observações */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Observações</label>
-                <textarea className="input-field resize-none" rows={3} value={form.notes} onChange={e => setField('notes', e.target.value)} />
-              </div>
+              {showOptional && (
+                <>
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">CPF</label>
+                      <input className="input-field" value={form.cpf} onChange={e => setField('cpf', e.target.value)} placeholder="000.000.000-00" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Nascimento</label>
+                      <input type="date" className="input-field" value={form.birth_date} onChange={e => setField('birth_date', e.target.value)} />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Endereço</label>
+                    <input className="input-field" value={form.street} onChange={e => setField('street', e.target.value)} placeholder="Rua, Bairro, Cidade" />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Observações</label>
+                    <textarea className="input-field resize-none" rows={2} value={form.notes} onChange={e => setField('notes', e.target.value)} />
+                  </div>
+                </>
+              )}
 
               <button type="submit" disabled={submitting} className="btn-primary disabled:opacity-60">
                 {submitting ? 'Salvando...' : 'Salvar Eleitor'}
@@ -291,54 +292,71 @@ export default function DashboardPage() {
           </div>
         )}
 
-        {/* Search */}
-        <div className="mb-4">
+        {/* Search + Filter */}
+        <div className="flex flex-col gap-2 mb-4">
           <input
             className="input-field"
-            placeholder="Buscar por nome, CPF ou telefone..."
+            placeholder="Buscar por nome ou telefone..."
             value={search}
             onChange={e => { setSearch(e.target.value); setPage(1) }}
           />
+          <div className="flex gap-2">
+            {(['all', 'not_voted', 'voted'] as const).map(f => (
+              <button
+                key={f}
+                onClick={() => { setFilterVoted(f); setPage(1) }}
+                className={`flex-1 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  filterVoted === f
+                    ? f === 'voted' ? 'bg-green-500 text-white'
+                      : f === 'not_voted' ? 'bg-red-500 text-white'
+                      : 'bg-blue-700 text-white'
+                    : 'bg-white border text-gray-600'
+                }`}
+              >
+                {f === 'all' ? 'Todos' : f === 'voted' ? 'Votaram' : 'Não votaram'}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* List */}
         <div className="space-y-3">
           {voters.length === 0 ? (
-            <div className="card text-center text-gray-500">
+            <div className="card text-center text-gray-500 py-8">
               {search ? 'Nenhum eleitor encontrado.' : 'Nenhum eleitor cadastrado ainda.'}
             </div>
           ) : (
             voters.map((v) => (
               <div key={v.id} className="card">
-                <div className="flex items-start justify-between gap-4 mb-3">
+                <div className="flex items-start justify-between gap-3 mb-3">
                   <div className="min-w-0 flex-1">
                     <p className="font-semibold text-blue-900">{v.full_name}</p>
                     <div className="flex flex-wrap gap-2 mt-1">
-                      {v.phone && <span className="text-xs text-gray-500">{v.phone}</span>}
-                      {v.city && <span className="text-xs text-gray-400">📍 {v.city}</span>}
-                      {v.school && <span className="text-xs text-gray-400">🏫 {v.school}</span>}
-                      {v.zone && <span className="text-xs text-gray-400">Z{v.zone} S{v.section}</span>}
+                      {v.phone && <span className="text-xs text-gray-500">📱 {v.phone}</span>}
+                      {v.school && <span className="text-xs text-gray-500">🏫 {v.school}</span>}
+                      {(v.zone || v.section) && (
+                        <span className="text-xs bg-blue-50 text-blue-600 px-2 py-0.5 rounded">
+                          Z{v.zone} S{v.section}
+                        </span>
+                      )}
                     </div>
-                    <p className="text-xs text-gray-400 mt-1">
-                      {new Date(v.created_at).toLocaleDateString('pt-BR')}
-                    </p>
                   </div>
                   <button
                     onClick={() => handleDelete(v.id)}
-                    className="text-red-400 hover:text-red-600 text-sm shrink-0"
+                    className="text-red-400 hover:text-red-600 text-xs shrink-0"
                   >
                     Excluir
                   </button>
                 </div>
                 <button
                   onClick={() => handleToggleVoted(v.id, v.has_voted)}
-                  className={`w-full py-2.5 rounded-lg text-sm font-bold transition-colors ${
+                  className={`w-full py-3 rounded-lg text-sm font-bold transition-colors ${
                     v.has_voted
                       ? 'bg-green-500 hover:bg-green-600 text-white'
                       : 'bg-red-500 hover:bg-red-600 text-white'
                   }`}
                 >
-                  {v.has_voted ? 'Já votou' : 'Não votou'}
+                  {v.has_voted ? '✓ Já Votou' : '✗ Não Votou'}
                 </button>
               </div>
             ))
@@ -348,19 +366,13 @@ export default function DashboardPage() {
         {/* Pagination */}
         {totalPages > 1 && (
           <div className="flex items-center justify-center gap-4 mt-6">
-            <button
-              onClick={() => setPage(p => Math.max(1, p - 1))}
-              disabled={page === 1}
-              className="px-4 py-2 rounded-lg bg-white border text-sm font-medium disabled:opacity-40"
-            >
+            <button onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1}
+              className="px-4 py-2 rounded-lg bg-white border text-sm font-medium disabled:opacity-40">
               ← Anterior
             </button>
             <span className="text-sm text-gray-600">{page} / {totalPages}</span>
-            <button
-              onClick={() => setPage(p => Math.min(totalPages, p + 1))}
-              disabled={page === totalPages}
-              className="px-4 py-2 rounded-lg bg-white border text-sm font-medium disabled:opacity-40"
-            >
+            <button onClick={() => setPage(p => Math.min(totalPages, p + 1))} disabled={page === totalPages}
+              className="px-4 py-2 rounded-lg bg-white border text-sm font-medium disabled:opacity-40">
               Próxima →
             </button>
           </div>
