@@ -937,28 +937,35 @@ function filtrarCatTodos(cat,btn){
   renderTodos();
 }
 
+function irParaWA(idx){
+  var p=allProsData[idx];if(!p)return;
+  var phone=p.phone||'5561982242096';
+  var waText=p.phone?'Olá, '+p.name.split(' ')[0]+'! Vi seu perfil no Acheaki e gostaria de falar com você. 😊':'Olá! Vi no Acheaki e gostaria de falar com um(a) '+p.role+'.';
+  window.open('https://wa.me/'+phone+'?text='+encodeURIComponent(waText),'_blank');
+}
+
 function renderTodos(){
   var list=document.getElementById('all-pros-list');
-  var filtered=allProsData.filter(function(p){
+  var filtered=[];
+  allProsData.forEach(function(p,i){
     var matchCat=(allCatFilter==='all'||p.cat===allCatFilter||p.cat.includes(allCatFilter));
     var matchSearch=!allSearchTerm||(p.name+p.role+p.cat).toLowerCase().includes(allSearchTerm);
-    return matchCat&&matchSearch;
+    if(matchCat&&matchSearch) filtered.push({p:p,i:i});
   });
   document.getElementById('all-pros-count').textContent=filtered.length+' profissional'+(filtered.length!==1?'is':'');
-  list.innerHTML=filtered.map(function(p){
-    var phone=p.phone||'5561982242096';
-    var waText=p.phone?'Olá, '+p.name.split(' ')[0]+'! Vi seu perfil no Acheaki e gostaria de falar com você. 😊':'Olá! Vi no Acheaki e gostaria de falar com um(a) '+p.role+'.';
-    return '<div style="display:flex;align-items:center;gap:14px;background:linear-gradient(145deg,#1A1008,#130B04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:16px;cursor:pointer;transition:border-color .2s;" onclick="window.open('https://wa.me/'+phone+'?text='+encodeURIComponent(''+waText.replace(/'/g,"\'")+'')+'','_blank')" onmouseover="this.style.borderColor='rgba(212,175,55,0.3)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'">'
-      +'<img src="'+p.img+'" style="width:56px;height:56px;border-radius:50%;object-fit:cover;object-position:top;border:2px solid rgba(212,175,55,0.3);flex-shrink:0;">'
+  list.innerHTML=filtered.map(function(item){
+    var p=item.p, i=item.i;
+    return '<div style="display:flex;align-items:center;gap:14px;background:linear-gradient(145deg,#1A1008,#130B04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:16px;cursor:pointer;" onclick="irParaWA('+i+')">'
+      +'<img src="'+p.img+'" style="width:56px;height:56px;border-radius:50%;object-fit:cover;object-position:top;border:2px solid rgba(212,175,55,0.3);flex-shrink:0;" loading="lazy">'
       +'<div style="flex:1;min-width:0;">'
-        +'<div style="font-size:14px;font-weight:700;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+p.name+'</div>'
-        +'<div style="font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:4px;">'+p.role+'</div>'
-        +'<div style="display:flex;gap:8px;flex-wrap:wrap;">'
+        +'<div style="font-size:14px;font-weight:700;margin-bottom:2px;">'+p.name+'</div>'
+        +'<div style="font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:6px;">'+p.role+'</div>'
+        +'<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;">'
           +'<span style="font-size:10px;color:rgba(255,255,255,0.35);">📍 '+p.city+'</span>'
           +'<span style="font-size:10px;color:rgba(255,255,255,0.35);">'+p.mode+'</span>'
         +'</div>'
+        +'<a href="https://wa.me/'+(p.phone||'5561982242096')+'" target="_blank" onclick="event.stopPropagation()" style="display:inline-flex;align-items:center;gap:6px;background:#25D366;color:white;font-size:12px;font-weight:700;padding:8px 16px;border-radius:50px;text-decoration:none;">📲 Chamar no WhatsApp</a>'
       +'</div>'
-      +'<div style="background:#25D366;border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px;">📲</div>'
     +'</div>';
   }).join('');
 }
