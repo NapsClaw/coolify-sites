@@ -310,7 +310,7 @@ footer p{font-size:13px;color:var(--muted);margin-bottom:8px}
       </div>
 
       <div class="hero-btns">
-        <a href="#profissionais" class="btn-primary">
+        <a href="#" onclick="event.preventDefault();abrirProfissionais()" class="btn-primary">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.122 1.533 5.853L.057 23.535a.998.998 0 001.08 1.354l5.844-1.529A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.86 0-3.601-.5-5.109-1.371l-.363-.214-3.767.986.995-3.683-.235-.377A9.954 9.954 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
           Encontrar Profissional
         </a>
@@ -683,7 +683,7 @@ footer p{font-size:13px;color:var(--muted);margin-bottom:8px}
 <!-- STICKY MOBILE BAR -->
 <div id="mobile-bar" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:199;background:rgba(13,8,2,0.97);border-top:1px solid rgba(212,175,55,0.2);padding:10px 16px;backdrop-filter:blur(10px);">
   <div style="display:flex;gap:10px;max-width:500px;margin:0 auto;">
-    <a href="#profissionais" style="flex:1;text-align:center;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);color:white;font-weight:700;font-size:13px;padding:12px 8px;border-radius:50px;text-decoration:none;" onclick="document.getElementById('mobile-bar').style.display='none'">🔍 Ver Profissionais</a>
+    <a href="#" onclick="event.preventDefault();document.getElementById('mobile-bar').style.display='none';abrirProfissionais()" style="flex:1;text-align:center;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);color:white;font-weight:700;font-size:13px;padding:12px 8px;border-radius:50px;text-decoration:none;">🔍 Ver Profissionais</a>
     <a href="#cadastro" style="flex:1;text-align:center;background:linear-gradient(135deg,#C0392B,#9B1C1C);color:white;font-weight:700;font-size:13px;padding:12px 8px;border-radius:50px;text-decoration:none;" onclick="document.getElementById('mobile-bar').style.display='none'">💼 Me Cadastrar</a>
   </div>
 </div>
@@ -836,6 +836,137 @@ function closeLst(e){if(e.target===document.getElementById('list-overlay'))docum
 function closeP(e){if(e.target===document.getElementById('popup-overlay'))document.getElementById('popup-overlay').classList.remove('active');}
 
 function enviarCadastro(e){e.preventDefault();var n=document.getElementById('f-nome').value,w=document.getElementById('f-whats').value,a=document.getElementById('f-area').value,c=document.getElementById('f-cidade').value,d=document.getElementById('f-desc').value;var msg='Olá! Quero me cadastrar no Acheaki:\n\n👤 Nome: '+n+'\n📱 WhatsApp: '+w+'\n💼 Área: '+a+'\n📍 Cidade: '+c+(d?'\n📝 Sobre mim: '+d:'');window.open('https://wa.me/5561982242096?text='+encodeURIComponent(msg),'_blank');}
+</script>
+
+<!-- MODAL: TODOS OS PROFISSIONAIS -->
+<div id="all-pros-modal" style="display:none;position:fixed;inset:0;z-index:9998;background:#0D0802;overflow-y:auto;">
+  <div style="position:sticky;top:0;z-index:2;background:rgba(13,8,2,0.97);border-bottom:1px solid rgba(212,175,55,0.15);padding:14px 20px;display:flex;align-items:center;gap:12px;backdrop-filter:blur(10px);">
+    <button onclick="fecharProfissionais()" style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);color:white;border-radius:50px;padding:8px 18px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;">← Voltar</button>
+    <span style="font-family:'Space Grotesk',sans-serif;font-size:16px;font-weight:700;">Todos os Profissionais</span>
+    <span id="all-pros-count" style="background:rgba(212,175,55,0.12);color:#D4AF37;font-size:11px;font-weight:700;padding:3px 10px;border-radius:50px;border:1px solid rgba(212,175,55,0.2);margin-left:auto;"></span>
+  </div>
+
+  <!-- Search + filter -->
+  <div style="padding:16px 20px;background:rgba(13,8,2,0.6);border-bottom:1px solid rgba(255,255,255,0.06);">
+    <input id="all-pros-search" type="text" placeholder="🔍  Buscar profissional ou área..." oninput="filtrarTodos()" style="width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:white;padding:12px 18px;border-radius:50px;font-size:14px;font-family:inherit;outline:none;box-sizing:border-box;margin-bottom:12px;">
+    <div style="display:flex;flex-wrap:wrap;gap:8px;" id="all-cats-filter">
+      <button class="all-cat-btn active" onclick="filtrarCatTodos('all',this)" style="background:rgba(212,175,55,0.15);border:1px solid rgba(212,175,55,0.35);color:#D4AF37;font-size:12px;font-weight:700;padding:6px 14px;border-radius:50px;cursor:pointer;font-family:inherit;">Todos</button>
+      <button class="all-cat-btn" onclick="filtrarCatTodos('Saúde',this)" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.65);font-size:12px;font-weight:600;padding:6px 14px;border-radius:50px;cursor:pointer;font-family:inherit;">🩺 Saúde</button>
+      <button class="all-cat-btn" onclick="filtrarCatTodos('Beleza',this)" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.65);font-size:12px;font-weight:600;padding:6px 14px;border-radius:50px;cursor:pointer;font-family:inherit;">💅 Beleza</button>
+      <button class="all-cat-btn" onclick="filtrarCatTodos('Educação',this)" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.65);font-size:12px;font-weight:600;padding:6px 14px;border-radius:50px;cursor:pointer;font-family:inherit;">📚 Educação</button>
+      <button class="all-cat-btn" onclick="filtrarCatTodos('Serviços',this)" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.65);font-size:12px;font-weight:600;padding:6px 14px;border-radius:50px;cursor:pointer;font-family:inherit;">🏠 Serviços</button>
+      <button class="all-cat-btn" onclick="filtrarCatTodos('Técnico',this)" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.65);font-size:12px;font-weight:600;padding:6px 14px;border-radius:50px;cursor:pointer;font-family:inherit;">🔧 Técnicos</button>
+    </div>
+  </div>
+
+  <!-- Pro list -->
+  <div id="all-pros-list" style="padding:20px;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;max-width:1100px;margin:0 auto;"></div>
+</div>
+
+<script>
+var allProsData = [
+  {key:'Psicólogo',name:'Anderson Pacheco',role:'Psicólogo',img:'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=120&q=80',cat:'Saúde',city:'Brasília-DF',mode:'Online e presencial',phone:'5561994226868'},
+  {key:'Psicanalista',name:'Neide Pereira',role:'Psicanalista Clínica e Forense',img:'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=120&q=80',cat:'Saúde',city:'Brasília-DF',mode:'Online e presencial',phone:'5561982895994'},
+  {key:'Nutricionista',name:'Dani Xisto',role:'Nutricionista',img:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=120&q=80',cat:'Saúde',city:'Brasília-DF',mode:'Online e presencial'},
+  {key:'Fisioterapeuta',name:'Fisioterapeuta',role:'Fisioterapia & Reabilitação',img:'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=120&q=80',cat:'Saúde',city:'Brasília-DF',mode:'Presencial'},
+  {key:'Massagista',name:'Massagista',role:'Massoterapia',img:'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=120&q=80',cat:'Saúde',city:'Brasília-DF',mode:'A domicílio'},
+  {key:'Cardiologista',name:'Cardiologista',role:'Medicina Cardíaca',img:'https://images.unsplash.com/photo-1628348068343-c6a848d2b6dd?w=120&q=80',cat:'Saúde',city:'Brasília-DF',mode:'Presencial'},
+  {key:'Pediatra',name:'Pediatra',role:'Pediatria',img:'https://images.unsplash.com/photo-1581056771107-24ca5f033842?w=120&q=80',cat:'Saúde',city:'Brasília-DF',mode:'Presencial'},
+  {key:'Dentista',name:'Dentista',role:'Odontologia',img:'https://images.unsplash.com/photo-1609840114035-3c981b782dfe?w=120&q=80',cat:'Saúde',city:'Brasília-DF',mode:'Presencial'},
+  {key:'Dermatologista',name:'Dermatologista',role:'Dermatologia',img:'https://images.unsplash.com/photo-1606811842993-874d8cd7fe55?w=120&q=80',cat:'Saúde',city:'Brasília-DF',mode:'Presencial'},
+  {key:'Ortopedista',name:'Ortopedista',role:'Ortopedia',img:'https://images.unsplash.com/photo-1530026405186-ed1f139313f8?w=120&q=80',cat:'Saúde',city:'Brasília-DF',mode:'Presencial'},
+  {key:'Ginecologista',name:'Ginecologista',role:'Ginecologia',img:'https://images.unsplash.com/photo-1607346256330-bee7af42cfb9?w=120&q=80',cat:'Saúde',city:'Brasília-DF',mode:'Presencial'},
+  {key:'Podólogo',name:'Podólogo(a)',role:'Podologia',img:'https://images.unsplash.com/photo-1527613426441-4da17471b66d?w=120&q=80',cat:'Saúde',city:'Brasília-DF',mode:'Presencial'},
+  {key:'Cuidador',name:'Cuidador de Idosos',role:'Cuidados Especializados',img:'https://images.unsplash.com/photo-1576765607924-3f7b8410a787?w=120&q=80',cat:'Saúde',city:'Brasília-DF',mode:'Presencial'},
+  {key:'Pilates',name:'Instrutor(a) de Pilates',role:'Saúde & Movimento',img:'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=120&q=80',cat:'Saúde',city:'Brasília-DF',mode:'Presencial'},
+  {key:'Cabeleireiro',name:'Cabeleireiro(a)',role:'Cabelo & Estética',img:'https://images.unsplash.com/photo-1562322140-8baeececf3df?w=120&q=80',cat:'Beleza',city:'Brasília-DF',mode:'Presencial'},
+  {key:'Esteticista',name:'Esteticista',role:'Estética',img:'https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=120&q=80',cat:'Beleza',city:'Brasília-DF',mode:'Presencial'},
+  {key:'Manicure',name:'Manicure / Pedicure',role:'Beleza',img:'https://images.unsplash.com/photo-1604654894610-df63bc536371?w=120&q=80',cat:'Beleza',city:'Brasília-DF',mode:'Presencial'},
+  {key:'Maquiadora',name:'Maquiador(a)',role:'Maquiagem Artística',img:'https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=120&q=80',cat:'Beleza',city:'Brasília-DF',mode:'A domicílio'},
+  {key:'Pedagogo',name:'Pedagogo(a)',role:'Educação',img:'https://images.unsplash.com/photo-1509062522246-3755977927d7?w=120&q=80',cat:'Educação',city:'Brasília-DF',mode:'Online e presencial'},
+  {key:'Professor',name:'Professor(a)',role:'Aulas Particulares',img:'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=120&q=80',cat:'Educação',city:'Brasília-DF',mode:'Online e presencial'},
+  {key:'Eletricista',name:'Eletricista',role:'Serviços Elétricos',img:'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=120&q=80',cat:'Serviços',city:'Brasília-DF',mode:'Presencial'},
+  {key:'Encanador',name:'Encanador',role:'Hidráulica',img:'https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=120&q=80',cat:'Serviços',city:'Brasília-DF',mode:'Presencial'},
+  {key:'Pintor',name:'Pintor',role:'Pintura & Acabamento',img:'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=120&q=80',cat:'Serviços',city:'Brasília-DF',mode:'Presencial'},
+  {key:'Pedreiro',name:'Pedreiro',role:'Construção Civil',img:'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=120&q=80',cat:'Serviços',city:'Brasília-DF',mode:'Presencial'},
+  {key:'Jardineiro',name:'Jardineiro',role:'Jardinagem',img:'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=120&q=80',cat:'Serviços',city:'Brasília-DF',mode:'Presencial'},
+  {key:'Diarista',name:'Diarista / Faxineira',role:'Limpeza Residencial',img:'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=120&q=80',cat:'Serviços',city:'Brasília-DF',mode:'Presencial'},
+  {key:'Designer',name:'Designer de Interiores',role:'Decoração',img:'https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=120&q=80',cat:'Serviços',city:'Brasília-DF',mode:'Online e presencial'},
+  {key:'TecTI',name:'Técnico em TI',role:'Tecnologia',img:'https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?w=120&q=80',cat:'Técnico',city:'Brasília-DF',mode:'Presencial'},
+  {key:'Refrigeração',name:'Técnico em Refrigeração',role:'Ar-condicionado & Refrigeração',img:'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=120&q=80',cat:'Técnico',city:'Brasília-DF',mode:'Presencial'},
+  {key:'Advogado',name:'Advogado(a)',role:'Jurídico',img:'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=120&q=80',cat:'Técnico',city:'Brasília-DF',mode:'Online e presencial'}
+];
+
+var allCatFilter='all', allSearchTerm='';
+
+function abrirProfissionais(){
+  document.getElementById('all-pros-modal').style.display='block';
+  document.body.style.overflow='hidden';
+  document.getElementById('all-pros-search').value='';
+  allCatFilter='all'; allSearchTerm='';
+  document.querySelectorAll('.all-cat-btn').forEach(function(b){
+    b.style.background='rgba(255,255,255,0.05)';
+    b.style.borderColor='rgba(255,255,255,0.1)';
+    b.style.color='rgba(255,255,255,0.65)';
+  });
+  var first=document.querySelector('.all-cat-btn');
+  if(first){first.style.background='rgba(212,175,55,0.15)';first.style.borderColor='rgba(212,175,55,0.35)';first.style.color='#D4AF37';}
+  renderTodos();
+}
+
+function fecharProfissionais(){
+  document.getElementById('all-pros-modal').style.display='none';
+  document.body.style.overflow='';
+}
+
+function filtrarTodos(){
+  allSearchTerm=document.getElementById('all-pros-search').value.toLowerCase();
+  renderTodos();
+}
+
+function filtrarCatTodos(cat,btn){
+  allCatFilter=cat;
+  document.querySelectorAll('.all-cat-btn').forEach(function(b){
+    b.style.background='rgba(255,255,255,0.05)';
+    b.style.borderColor='rgba(255,255,255,0.1)';
+    b.style.color='rgba(255,255,255,0.65)';
+  });
+  btn.style.background='rgba(212,175,55,0.15)';
+  btn.style.borderColor='rgba(212,175,55,0.35)';
+  btn.style.color='#D4AF37';
+  renderTodos();
+}
+
+function renderTodos(){
+  var list=document.getElementById('all-pros-list');
+  var filtered=allProsData.filter(function(p){
+    var matchCat=(allCatFilter==='all'||p.cat===allCatFilter||p.cat.includes(allCatFilter));
+    var matchSearch=!allSearchTerm||(p.name+p.role+p.cat).toLowerCase().includes(allSearchTerm);
+    return matchCat&&matchSearch;
+  });
+  document.getElementById('all-pros-count').textContent=filtered.length+' profissional'+(filtered.length!==1?'is':'');
+  list.innerHTML=filtered.map(function(p){
+    var phone=p.phone||'5561982242096';
+    var waText=p.phone?'Olá, '+p.name.split(' ')[0]+'! Vi seu perfil no Acheaki e gostaria de falar com você. 😊':'Olá! Vi no Acheaki e gostaria de falar com um(a) '+p.role+'.';
+    return '<div style="display:flex;align-items:center;gap:14px;background:linear-gradient(145deg,#1A1008,#130B04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:16px;cursor:pointer;transition:border-color .2s;" onclick="window.open('https://wa.me/'+phone+'?text='+encodeURIComponent(''+waText.replace(/'/g,"\'")+'')+'','_blank')" onmouseover="this.style.borderColor='rgba(212,175,55,0.3)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'">'
+      +'<img src="'+p.img+'" style="width:56px;height:56px;border-radius:50%;object-fit:cover;object-position:top;border:2px solid rgba(212,175,55,0.3);flex-shrink:0;">'
+      +'<div style="flex:1;min-width:0;">'
+        +'<div style="font-size:14px;font-weight:700;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">'+p.name+'</div>'
+        +'<div style="font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:4px;">'+p.role+'</div>'
+        +'<div style="display:flex;gap:8px;flex-wrap:wrap;">'
+          +'<span style="font-size:10px;color:rgba(255,255,255,0.35);">📍 '+p.city+'</span>'
+          +'<span style="font-size:10px;color:rgba(255,255,255,0.35);">'+p.mode+'</span>'
+        +'</div>'
+      +'</div>'
+      +'<div style="background:#25D366;border-radius:50%;width:36px;height:36px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px;">📲</div>'
+    +'</div>';
+  }).join('');
+}
+
+// Close on back button (Android)
+window.addEventListener('popstate',function(){
+  if(document.getElementById('all-pros-modal').style.display!=='none'){fecharProfissionais();}
+});
 </script>
 </body>
 </html>
