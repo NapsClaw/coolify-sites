@@ -13,6 +13,7 @@ interface Voter {
   zone: string
   section: string
   coordinator_name: string
+  has_voted: boolean
   created_at: string
 }
 
@@ -102,6 +103,15 @@ export default function AdminPage() {
     await fetch(`/api/voters/${id}`, { method: 'DELETE' })
     loadVoters()
     loadStats()
+  }
+
+  async function handleToggleVoted(id: string, current: boolean) {
+    await fetch(`/api/voters/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ has_voted: !current }),
+    })
+    loadVoters()
   }
 
   async function handleToggleCoordinator(id: string, active: boolean) {
@@ -260,7 +270,7 @@ export default function AdminPage() {
               ) : (
                 voters.map(v => (
                   <div key={v.id} className="card">
-                    <div className="flex items-start justify-between gap-2">
+                    <div className="flex items-start justify-between gap-2 mb-3">
                       <div className="min-w-0 flex-1">
                         <p className="font-semibold text-blue-900 truncate">{v.full_name}</p>
                         <div className="flex flex-wrap gap-2 mt-1">
@@ -279,6 +289,16 @@ export default function AdminPage() {
                         Excluir
                       </button>
                     </div>
+                    <button
+                      onClick={() => handleToggleVoted(v.id, v.has_voted)}
+                      className={`w-full py-2 rounded-lg text-sm font-bold transition-colors ${
+                        v.has_voted
+                          ? 'bg-green-500 hover:bg-green-600 text-white'
+                          : 'bg-red-500 hover:bg-red-600 text-white'
+                      }`}
+                    >
+                      {v.has_voted ? 'Já votou' : 'Não votou'}
+                    </button>
                   </div>
                 ))
               )}

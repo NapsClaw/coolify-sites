@@ -116,6 +116,15 @@ export default function DashboardPage() {
     loadStats()
   }
 
+  async function handleToggleVoted(id: string, current: boolean) {
+    await fetch(`/api/voters/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ has_voted: !current }),
+    })
+    loadVoters()
+  }
+
   const setField = (key: string, value: string | boolean) =>
     setForm(f => ({ ...f, [key]: value }))
 
@@ -300,29 +309,36 @@ export default function DashboardPage() {
             </div>
           ) : (
             voters.map((v) => (
-              <div key={v.id} className="card flex items-start justify-between gap-4">
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <p className="font-semibold text-blue-900 truncate">{v.full_name}</p>
-                    {v.has_voted && (
-                      <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full font-medium">✓ Já votou</span>
-                    )}
+              <div key={v.id} className="card">
+                <div className="flex items-start justify-between gap-4 mb-3">
+                  <div className="min-w-0 flex-1">
+                    <p className="font-semibold text-blue-900">{v.full_name}</p>
+                    <div className="flex flex-wrap gap-2 mt-1">
+                      {v.phone && <span className="text-xs text-gray-500">{v.phone}</span>}
+                      {v.city && <span className="text-xs text-gray-400">📍 {v.city}</span>}
+                      {v.school && <span className="text-xs text-gray-400">🏫 {v.school}</span>}
+                      {v.zone && <span className="text-xs text-gray-400">Z{v.zone} S{v.section}</span>}
+                    </div>
+                    <p className="text-xs text-gray-400 mt-1">
+                      {new Date(v.created_at).toLocaleDateString('pt-BR')}
+                    </p>
                   </div>
-                  <div className="flex flex-wrap gap-2 mt-1">
-                    {v.phone && <span className="text-xs text-gray-500">{v.phone}</span>}
-                    {v.city && <span className="text-xs text-gray-400">📍 {v.city}</span>}
-                    {v.school && <span className="text-xs text-gray-400">🏫 {v.school}</span>}
-                    {v.zone && <span className="text-xs text-gray-400">Z{v.zone} S{v.section}</span>}
-                  </div>
-                  <p className="text-xs text-gray-400 mt-1">
-                    {new Date(v.created_at).toLocaleDateString('pt-BR')}
-                  </p>
+                  <button
+                    onClick={() => handleDelete(v.id)}
+                    className="text-red-400 hover:text-red-600 text-sm shrink-0"
+                  >
+                    Excluir
+                  </button>
                 </div>
                 <button
-                  onClick={() => handleDelete(v.id)}
-                  className="text-red-400 hover:text-red-600 text-sm shrink-0 mt-1"
+                  onClick={() => handleToggleVoted(v.id, v.has_voted)}
+                  className={`w-full py-2.5 rounded-lg text-sm font-bold transition-colors ${
+                    v.has_voted
+                      ? 'bg-green-500 hover:bg-green-600 text-white'
+                      : 'bg-red-500 hover:bg-red-600 text-white'
+                  }`}
                 >
-                  Excluir
+                  {v.has_voted ? 'Já votou' : 'Não votou'}
                 </button>
               </div>
             ))
