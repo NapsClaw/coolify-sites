@@ -508,7 +508,7 @@ function atualizarProfNow() {
 }
 
 // ============================================================
-// AUTO-CHAMADA nos horários exatos
+// AUTO-CHAMADA nos horários exatos — chama TODOS em sequência
 // ============================================================
 var autoKeys = new Set();
 function verificarAuto() {
@@ -520,13 +520,12 @@ function verificarAuto() {
     const grupos = getGrupos(ginId, periodo);
     if (!grupos.includes(h)) return;
     const pacs = getPacientes(ginId, h);
-    const chamados = getChamados(ginId);
-    const idx = pacs.findIndex((_, i) => !chamados[h+'_'+i]);
-    if (idx === -1) return;
-    const key = ginId+'_'+h+'_auto_'+idx;
+    if (!pacs.length) return;
+    const key = ginId+'_'+h+'_auto_todos';
     if (autoKeys.has(key)) return;
     autoKeys.add(key);
-    chamarPac(ginId, h, idx);
+    // Chamar todos em sequência automática
+    chamarTodosSequencia(ginId, h);
   });
 }
 
