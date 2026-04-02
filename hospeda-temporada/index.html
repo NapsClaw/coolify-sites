@@ -1,299 +1,1891 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hospeda Temporada — Imóveis para Temporada, Eventos e Festas</title>
-  <meta name="description" content="Encontre o imóvel perfeito para temporada, eventos, festas e formaturas. Reserve online com calendário integrado.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root { --cream:#F7F2EB; --terracotta:#AC4747; --terracotta-dark:#8a3636; --dark:#1a1410; --mid:#4a3f35; --light:#c8bfb0; --white:#ffffff; }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--cream); color: var(--dark); overflow-x: hidden; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sítio Iluminado — Mogi das Cruzes | Reserva Online</title>
+<meta name="description" content="Sítio Iluminado em Mogi das Cruzes, SP. Piscina com hidromassagem e cascata, churrasqueira, forno de pizza, campo de futebol. Reserve online.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --green:#16a34a;--green-l:rgba(22,163,74,.12);
+  --red:#dc2626;--red-l:rgba(220,38,38,.12);
+  --amber:#d97706;--amber-l:rgba(217,119,6,.12);
+  --blue:#2563eb;--blue-l:rgba(37,99,235,.1);
+  --dark:#111827;--mid:#6b7280;--light:#f3f4f6;
+  --white:#fff;--border:#e5e7eb;
+  --accent:#1d4ed8;--accent-h:#1e40af;
+  --wa:#25D366;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:#f9fafb;color:var(--dark);overflow-x:hidden;font-size:15px}
 
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; background: rgba(247,242,235,0.95); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(172,71,71,0.1); }
-    .nav-logo { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--dark); text-decoration: none; }
-    .nav-logo span { color: var(--terracotta); }
-    .nav-cta { background: var(--terracotta); color: var(--white); border: none; padding: 12px 24px; border-radius: 4px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block; }
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;background:rgba(255,255,255,.97);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:0 20px;height:60px;display:flex;align-items:center;justify-content:space-between}
+.nav-logo{text-decoration:none;display:flex;align-items:center}
+.nav-logo img{height:52px;width:auto;object-fit:contain}
+.nav-links{display:none;gap:24px}
+.nav-links a{font-size:13px;font-weight:500;color:var(--mid);text-decoration:none}
+.nav-links a:hover{color:var(--dark)}
+.nav-actions{display:flex;gap:8px;align-items:center}
+.btn-wa-nav{background:var(--wa);color:#fff;padding:8px 16px;border-radius:6px;font-size:13px;font-weight:600;text-decoration:none;display:flex;align-items:center;gap:6px}
+.btn-reserve-nav{background:var(--accent);color:#fff;padding:8px 16px;border-radius:6px;font-size:13px;font-weight:600;border:none;cursor:pointer}
+@media(min-width:768px){.nav-links{display:flex};nav{padding:0 40px}}
 
-    .hero { min-height: 100vh; background: linear-gradient(135deg, #1a1410 0%, #2d1f1a 50%, #3d2820 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 100px 24px 60px; position: relative; overflow: hidden; }
-    .hero::before { content: ''; position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1600&q=80') center/cover no-repeat; opacity: 0.25; }
-    .hero-content { position: relative; z-index: 1; max-width: 700px; }
-    .hero-tag { display: inline-block; background: rgba(172,71,71,0.3); border: 1px solid rgba(172,71,71,0.5); color: #e8b4a0; font-size: 12px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; padding: 8px 20px; border-radius: 100px; margin-bottom: 28px; }
-    .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(36px,8vw,72px); font-weight: 700; color: var(--cream); line-height: 1.1; margin-bottom: 24px; }
-    .hero h1 em { color: var(--terracotta); font-style: italic; }
-    .hero p { font-size: clamp(15px,3vw,18px); color: rgba(247,242,235,0.75); line-height: 1.7; margin-bottom: 40px; font-weight: 300; }
-    .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-    .btn-primary { background: var(--terracotta); color: var(--white); padding: 16px 32px; border-radius: 4px; font-size: 15px; font-weight: 600; text-decoration: none; display: inline-block; min-width: 200px; text-align: center; border: none; cursor: pointer; }
-    .btn-secondary { background: transparent; color: var(--cream); border: 1px solid rgba(247,242,235,0.4); padding: 16px 32px; border-radius: 4px; font-size: 15px; font-weight: 500; text-decoration: none; display: inline-block; min-width: 200px; text-align: center; }
-    .hero-stats { position: relative; z-index: 1; display: flex; gap: 0; margin-top: 60px; border-top: 1px solid rgba(247,242,235,0.15); padding-top: 40px; width: 100%; max-width: 500px; justify-content: center; }
-    .stat { flex: 1; text-align: center; padding: 0 20px; border-right: 1px solid rgba(247,242,235,0.15); }
-    .stat:last-child { border-right: none; }
-    .stat-number { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 700; color: var(--cream); display: block; }
-    .stat-label { font-size: 12px; color: rgba(247,242,235,0.5); text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; display: block; }
+/* ── HERO ── */
+.hero{margin-top:60px;background:#0f172a;min-height:92vh;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:url('fotos/piscina-principal.jpg')center/cover;opacity:1}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(15,23,42,.75) 0%,rgba(15,23,42,.15) 60%,rgba(0,0,0,0) 100%)}
+.hero-content{position:relative;z-index:1;padding:40px 20px 48px}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(37,99,235,.25);border:1px solid rgba(37,99,235,.4);color:#93c5fd;font-size:13px;font-weight:600;letter-spacing:1px;padding:8px 18px;border-radius:100px;margin-bottom:24px;text-transform:uppercase}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(42px,10vw,80px);font-weight:700;color:#fff;line-height:1.05;margin-bottom:18px;text-shadow:0 2px 12px rgba(0,0,0,.6)}
+.hero h1 span{color:#60a5fa}
+.hero-sub{font-size:clamp(17px,3.5vw,22px);color:#fff;line-height:1.7;margin-bottom:32px;max-width:600px;font-weight:600;text-shadow:0 2px 10px rgba(0,0,0,.8),0 1px 4px rgba(0,0,0,.9);background:rgba(0,0,0,.28);display:inline-block;padding:12px 18px;border-radius:10px;border-left:4px solid #60a5fa}
+.hero-pill-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:32px}
+.hero-pill{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.9);font-size:13px;font-weight:500;padding:8px 16px;border-radius:100px}
+.hero-cta-row{display:flex;flex-wrap:wrap;gap:12px}
+.btn-primary{background:var(--accent);color:#fff;padding:14px 28px;border-radius:8px;font-size:15px;font-weight:600;text-decoration:none;display:inline-block;border:none;cursor:pointer}
+.btn-outline{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.5);padding:14px 28px;border-radius:8px;font-size:15px;font-weight:600;text-decoration:none;display:inline-block}
+.hero-stats{position:relative;z-index:1;display:flex;border-top:1px solid rgba(255,255,255,.12);padding:24px 20px;gap:0;background:rgba(15,23,42,.6);backdrop-filter:blur(8px)}
+.hstat{flex:1;text-align:center;padding:0 12px;border-right:1px solid rgba(255,255,255,.12)}
+.hstat:last-child{border-right:none}
+.hstat-n{font-family:'Playfair Display',serif;font-size:28px;font-weight:700;color:#fff;display:block}
+.hstat-l{font-size:11px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:1px;display:block;margin-top:2px}
 
-    section { padding: 80px 24px; }
-    .section-tag { font-size: 11px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--terracotta); display: block; margin-bottom: 16px; }
-    .section-title { font-family: 'Playfair Display', serif; font-size: clamp(28px,5vw,44px); font-weight: 700; color: var(--dark); line-height: 1.2; margin-bottom: 16px; }
-    .section-subtitle { font-size: 16px; color: var(--mid); line-height: 1.7; font-weight: 300; }
+/* ── CARD ── */
+.card{background:#fff;border-radius:12px;border:1px solid var(--border);overflow:hidden}
 
-    .search-section { padding: 48px 24px; background: var(--white); }
-    .search-box { max-width: 700px; margin: 0 auto; text-align: center; }
-    .search-box h2 { font-family: 'Playfair Display', serif; font-size: 24px; margin-bottom: 24px; color: var(--dark); }
-    .search-form { display: flex; flex-direction: column; gap: 12px; }
-    .search-form input, .search-form select { padding: 16px 20px; border: 1.5px solid #e0d8cc; border-radius: 4px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; color: var(--dark); background: var(--cream); width: 100%; }
-    .search-form input:focus, .search-form select:focus { outline: none; border-color: var(--terracotta); }
+/* ── RESERVE SECTION ── */
+.reserve-section{padding:48px 20px;background:#f9fafb}
+.reserve-inner{max-width:1100px;margin:0 auto}
+/* Top split: photos left + calendar right */
+.reserve-top{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:32px;align-items:start}
+@media(max-width:700px){.reserve-top{grid-template-columns:1fr}}
+.mini-gallery{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.mini-gallery img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:8px;cursor:pointer;transition:transform .2s}
+.mini-gallery img:first-child{grid-column:1/-1;aspect-ratio:16/9}
+.mini-gallery img:hover{transform:scale(1.03)}
+.sec-label{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:10px}
+.sec-h2{font-family:'Playfair Display',serif;font-size:clamp(24px,5vw,36px);font-weight:700;color:var(--dark);line-height:1.2;margin-bottom:8px}
+.sec-sub{font-size:15px;color:var(--mid);line-height:1.7;margin-bottom:32px}
 
-    .properties-section { background: var(--cream); }
-    .properties-header { margin-bottom: 40px; }
-    .properties-grid { display: flex; flex-direction: column; gap: 24px; }
+/* Calendar */
+.cal-card{background:#fff;border-radius:12px;border:1px solid var(--border);padding:16px;margin-bottom:20px}
+.cal-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.cal-month-label{font-family:'Playfair Display',serif;font-size:18px;font-weight:700}
+.cal-nav{display:flex;gap:6px}
+.cal-nav-btn{background:var(--light);border:none;width:34px;height:34px;border-radius:6px;cursor:pointer;font-size:16px;color:var(--dark);display:flex;align-items:center;justify-content:center}
+.cal-nav-btn:hover{background:var(--border)}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.cal-head{text-align:center;font-size:10px;font-weight:700;letter-spacing:.5px;color:var(--mid);padding:8px 2px;text-transform:uppercase}
+.cal-day{text-align:center;padding:4px 2px;min-height:64px;aspect-ratio:unset;display:flex;align-items:center;justify-content:center;border-radius:6px;font-size:15px;cursor:pointer;color:var(--dark);position:relative;font-weight:600;transition:background .15s}
+.cal-day.empty{opacity:0;pointer-events:none}
+.cal-day.past{opacity:.3;pointer-events:none;text-decoration:line-through}
+.cal-day.free{background:rgba(22,163,74,.08);color:#15803d;font-weight:600}
+.cal-day.free:hover{background:rgba(22,163,74,.22);color:#15803d;border:1.5px solid var(--green)}
+.cal-day.reserved-pending{background:#fecaca;color:#b91c1c;cursor:pointer;font-weight:700;border:1.5px solid #f87171}
+.cal-day.reserved-paid{background:#fecaca;color:#b91c1c;cursor:pointer;font-weight:700;border:1.5px solid #f87171}
+.cal-day.sel-start,.cal-day.sel-end{background:var(--accent);color:#fff;font-weight:700}
+.cal-day.sel-range{background:var(--blue-l);color:var(--blue)}
+.cal-day-dot{position:absolute;bottom:3px;left:50%;transform:translateX(-50%);width:5px;height:5px;border-radius:50%}
+.cal-legend{display:flex;flex-wrap:wrap;gap:16px;margin-top:16px;padding-top:16px;border-top:1px solid var(--border)}
+.cal-day.has-holiday{background:rgba(0,0,0,.03)}
+.cal-hday-label{font-size:9px;font-weight:700;line-height:1.2;text-align:center;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.cal-day{flex-direction:column;gap:0}
+.leg{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--mid)}
+.leg-box{width:14px;height:14px;border-radius:3px}
 
-    .property-card { background: var(--white); border-radius: 8px; overflow: hidden; box-shadow: 0 2px 12px rgba(26,20,16,0.06); transition: transform 0.2s, box-shadow 0.2s; }
-    .property-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(26,20,16,0.12); }
-    .property-img { width: 100%; height: 240px; object-fit: cover; display: block; }
-    .property-body { padding: 24px; }
-    .property-tag { display: inline-block; background: rgba(172,71,71,0.1); color: var(--terracotta); font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; padding: 4px 12px; border-radius: 100px; margin-bottom: 12px; }
-    .property-name { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--dark); margin-bottom: 8px; }
-    .property-location { font-size: 13px; color: var(--mid); margin-bottom: 16px; }
-    .property-features { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 20px; }
-    .property-feature { font-size: 13px; color: var(--mid); }
-    .property-price { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; color: var(--terracotta); margin-bottom: 16px; }
-    .property-price span { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 400; color: var(--mid); }
-    .property-btn { display: block; width: 100%; text-align: center; background: var(--terracotta); color: var(--white); padding: 14px; border-radius: 4px; font-weight: 600; font-size: 15px; text-decoration: none; }
+/* ── PRICE CALCULATOR ── */
+.price-calc{background:linear-gradient(135deg,#1d4ed8,#2563eb);border-radius:12px;padding:20px;margin-bottom:20px;color:#fff}
+.price-calc h3{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;margin-bottom:16px;color:#fff}
+.price-calc-row{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap;margin-bottom:16px}
+.price-calc-field{display:flex;flex-direction:column;gap:6px;flex:1;min-width:120px}
+.price-calc-field label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:rgba(255,255,255,.7)}
+.price-calc-field select{padding:10px 12px;border-radius:8px;border:1.5px solid rgba(255,255,255,.25);background:rgba(255,255,255,.12);color:#fff;font-size:14px;font-weight:500;font-family:'Plus Jakarta Sans',sans-serif}
+.price-calc-field select option{background:#1d4ed8;color:#fff}
+.price-result{background:rgba(255,255,255,.15);border-radius:10px;padding:16px;text-align:center}
+.price-result-label{font-size:12px;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.price-result-value{font-family:'Playfair Display',serif;font-size:36px;font-weight:700;color:#fff}
+.price-result-detail{font-size:12px;color:rgba(255,255,255,.6);margin-top:4px}
+.price-result-note{font-size:12px;color:rgba(255,255,255,.75);margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.15)}
 
-    .how-section { background: var(--white); }
-    .steps { display: flex; flex-direction: column; gap: 32px; margin-top: 40px; }
-    .step { display: flex; gap: 20px; align-items: flex-start; }
-    .step-number { flex-shrink: 0; width: 52px; height: 52px; background: var(--terracotta); color: var(--white); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; }
-    .step-content h3 { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: var(--dark); margin-bottom: 8px; }
-    .step-content p { font-size: 15px; color: var(--mid); line-height: 1.7; font-weight: 300; }
+/* ── FORM ── */
+.form-section{background:#fff;border-radius:12px;border:1px solid var(--border);padding:24px;margin-bottom:20px}
+.form-section h3{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;margin-bottom:20px;color:var(--dark)}
+.form-grid{display:grid;gap:14px}
+.form-row{display:flex;flex-direction:column;gap:6px}
+.form-row label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--dark)}
+.form-row input,.form-row select,.form-row textarea{padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:var(--dark);background:#fff;width:100%;transition:border-color .2s}
+.form-row input:focus,.form-row select:focus,.form-row textarea:focus{outline:none;border-color:var(--accent)}
+.form-row textarea{resize:vertical;min-height:80px}
+.dates-row{display:flex;gap:10px}
+.date-chip{flex:1;background:var(--light);border-radius:8px;padding:12px;text-align:center}
+.date-chip-l{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mid)}
+.date-chip-v{font-size:15px;font-weight:700;color:var(--dark);margin-top:2px}
+.date-chip-v.empty{color:var(--mid);font-weight:400;font-size:13px}
+.btn-submit{width:100%;background:var(--accent);color:#fff;border:none;border-radius:8px;padding:16px;font-size:15px;font-weight:700;cursor:pointer;margin-top:6px;transition:background .2s}
+.btn-submit:hover{background:var(--accent-h)}
+.btn-submit:disabled{opacity:.5;cursor:not-allowed}
 
-    .testimonials-section { background: var(--cream); }
-    .testimonials-list { display: flex; flex-direction: column; gap: 20px; margin-top: 40px; }
-    .testimonial { background: var(--white); border-radius: 8px; padding: 28px 24px; }
-    .testimonial-stars { color: var(--terracotta); font-size: 18px; margin-bottom: 12px; letter-spacing: 2px; }
-    .testimonial-text { font-size: 15px; line-height: 1.7; color: var(--mid); font-weight: 300; margin-bottom: 16px; font-style: italic; }
-    .testimonial-author { font-weight: 600; font-size: 14px; color: var(--dark); }
+/* ── RESERVATIONS LIST ── */
+.reservations-panel{background:#fff;border-radius:12px;border:1px solid var(--border);padding:24px;margin-bottom:20px}
+.reservations-panel h3{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center}
+.res-item{border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:12px;position:relative}
+.res-item-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap}
+.res-name{font-weight:700;font-size:15px}
+.res-dates{font-size:13px;color:var(--mid);margin-top:2px}
+.res-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:4px 10px;border-radius:100px;text-transform:uppercase;letter-spacing:.5px;cursor:pointer;border:none;white-space:nowrap}
+.badge-pending{background:var(--amber-l);color:var(--amber)}
+.badge-paid{background:var(--green-l);color:var(--green)}
+.res-info{display:flex;flex-wrap:wrap;gap:12px;margin-top:10px}
+.res-info-item{font-size:12px;color:var(--mid)}
+.res-info-item strong{color:var(--dark)}
+.res-delete{position:absolute;top:12px;right:12px;background:none;border:none;color:var(--mid);cursor:pointer;font-size:16px;padding:4px}
+.res-delete:hover{color:var(--red)}
+.no-reservations{text-align:center;padding:32px;color:var(--mid);font-size:14px}
 
-    .contact-section { background: var(--terracotta); }
-    .contact-section .section-tag { color: rgba(247,242,235,0.7); }
-    .contact-section .section-title { color: var(--white); }
-    .contact-section .section-subtitle { color: rgba(247,242,235,0.8); }
-    .contact-options { display: flex; flex-direction: column; gap: 16px; margin-top: 40px; }
-    .contact-option { display: flex; align-items: center; gap: 16px; background: rgba(247,242,235,0.15); border-radius: 8px; padding: 20px; text-decoration: none; color: var(--white); }
-    .contact-icon { width: 48px; height: 48px; background: rgba(247,242,235,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
-    .contact-option-text strong { display: block; font-size: 16px; margin-bottom: 2px; }
-    .contact-option-text span { font-size: 13px; opacity: 0.75; }
-    .whatsapp-btn-big { display: flex; align-items: center; justify-content: center; gap: 12px; background: #25D366; color: var(--white); padding: 20px; border-radius: 8px; font-size: 17px; font-weight: 600; text-decoration: none; margin-top: 20px; width: 100%; }
+/* ── PRICING ── */
+.pricing-section{padding:48px 20px;background:#fff}
+.pricing-inner{max-width:900px;margin:0 auto}
+.pricing-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px}
+.ptab{padding:8px 20px;border-radius:100px;border:1.5px solid var(--border);font-size:13px;font-weight:600;cursor:pointer;background:#fff;color:var(--mid);transition:all .2s}
+.ptab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.pricing-table{display:none}
+.pricing-table.active{display:block}
+.ptable{width:100%;border-collapse:collapse;font-size:14px}
+.ptable th{background:var(--dark);color:#fff;padding:12px 16px;text-align:left;font-weight:600;font-size:13px}
+.ptable th:last-child,.ptable td:last-child{text-align:right}
+.ptable td{padding:12px 16px;border-bottom:1px solid var(--border)}
+.ptable tr:last-child td{border-bottom:none}
+.ptable tr:nth-child(even) td{background:var(--light)}
+.ptable .price-val{font-weight:700;color:var(--accent);font-size:15px}
+.price-note{background:var(--amber-l);border:1px solid rgba(217,119,6,.2);border-radius:8px;padding:14px 16px;font-size:13px;color:var(--amber);margin-top:16px;display:flex;gap:8px;align-items:flex-start}
 
-    footer { background: var(--dark); padding: 48px 24px 32px; text-align: center; }
-    .footer-logo { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; color: var(--cream); margin-bottom: 16px; }
-    .footer-logo span { color: var(--terracotta); }
-    .footer-tagline { font-size: 14px; color: rgba(247,242,235,0.4); margin-bottom: 32px; line-height: 1.6; }
-    .footer-links { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; margin-bottom: 32px; }
-    .footer-links a { color: rgba(247,242,235,0.5); text-decoration: none; font-size: 13px; }
-    .footer-copy { font-size: 12px; color: rgba(247,242,235,0.25); border-top: 1px solid rgba(247,242,235,0.08); padding-top: 24px; }
+/* ── AMENITIES ── */
+.amenities-section{padding:48px 20px;background:var(--light)}
+.amenities-inner{max-width:900px;margin:0 auto}
+.amenity-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:28px}
+.amenity-item{background:#fff;border-radius:10px;padding:16px;display:flex;align-items:center;gap:12px;border:1px solid var(--border)}
+.amenity-icon{width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;background:var(--blue-l)}
+.amenity-name{font-size:13px;font-weight:600;color:var(--dark)}
+@media(min-width:600px){.amenity-grid{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:900px){.amenity-grid{grid-template-columns:repeat(4,1fr)}}
 
-    .whatsapp-float { position: fixed; bottom: 24px; right: 24px; z-index: 999; background: #25D366; border-radius: 50%; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(37,211,102,0.4); text-decoration: none; }
-    .whatsapp-float svg { width: 32px; height: 32px; fill: white; }
+/* ── GALLERY ── */
+.gallery-section{padding:48px 20px;background:#fff}
+.gallery-inner{max-width:900px;margin:0 auto}
+.gallery-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:28px}
+.gallery-item{position:relative;cursor:pointer;border-radius:8px;overflow:hidden}
+.gallery-img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;transition:transform .3s}
+.gallery-item:hover .gallery-img{transform:scale(1.04)}
+.gallery-overlay{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.7));padding:20px 10px 10px;opacity:0;transition:opacity .25s}
+.gallery-item:hover .gallery-overlay{opacity:1}
+.gallery-overlay span{color:#fff;font-size:11px;font-weight:600;line-height:1.3;display:block}
+@media(min-width:600px){.gallery-grid{grid-template-columns:repeat(3,1fr)}}
 
-    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(26,20,16,0.7); z-index: 200; align-items: flex-end; justify-content: center; }
-    .modal-overlay.active { display: flex; }
-    .modal { background: var(--white); border-radius: 16px 16px 0 0; padding: 32px 24px 48px; width: 100%; max-width: 500px; max-height: 90vh; overflow-y: auto; }
-    .modal-title { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700; color: var(--dark); margin-bottom: 24px; }
-    .modal-close { float: right; background: none; border: none; font-size: 24px; cursor: pointer; color: var(--mid); margin-top: -4px; }
-    .form-group { margin-bottom: 16px; }
-    .form-group label { display: block; font-size: 13px; font-weight: 600; color: var(--dark); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
-    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 14px 16px; border: 1.5px solid #e0d8cc; border-radius: 4px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; color: var(--dark); background: var(--cream); }
-    .form-group input:focus, .form-group select:focus { outline: none; border-color: var(--terracotta); }
-    .form-submit { display: block; width: 100%; text-align: center; background: var(--terracotta); color: var(--white); padding: 18px; border-radius: 4px; font-weight: 600; font-size: 16px; border: none; cursor: pointer; margin-top: 8px; }
+/* LIGHTBOX */
+.lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:900;flex-direction:column;align-items:center;justify-content:center}
+.lightbox.open{display:flex}
+.lb-close{position:absolute;top:16px;right:16px;background:rgba(255,255,255,.15);border:none;color:#fff;width:40px;height:40px;border-radius:50%;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:10}
+.lb-img-wrap{position:relative;max-width:95vw;max-height:70vh;display:flex;align-items:center;justify-content:center}
+.lb-img-wrap img{max-width:95vw;max-height:70vh;object-fit:contain;border-radius:8px;display:block}
+.lb-arrow{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.15);border:none;color:#fff;width:44px;height:44px;border-radius:50%;font-size:22px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.lb-arrow:hover{background:rgba(255,255,255,.3)}
+.lb-arrow-prev{left:-22px}
+.lb-arrow-next{right:-22px}
+.lb-info{text-align:center;padding:16px 20px;max-width:600px}
+.lb-label{color:#fff;font-size:16px;font-weight:700;margin-bottom:6px}
+.lb-desc{color:rgba(255,255,255,.65);font-size:13px;line-height:1.6}
+.lb-counter{color:rgba(255,255,255,.4);font-size:12px;margin-top:8px}
 
-    @media (min-width: 768px) {
-      .properties-grid { display: grid; grid-template-columns: repeat(2,1fr); }
-      .steps { display: grid; grid-template-columns: repeat(2,1fr); }
-      .testimonials-list { display: grid; grid-template-columns: repeat(2,1fr); }
-    }
-    @media (min-width: 1024px) {
-      .properties-grid { grid-template-columns: repeat(2,1fr); }
-      .steps { grid-template-columns: repeat(4,1fr); }
-      section { padding: 100px 48px; }
-      nav { padding: 20px 48px; }
-    }
-  </style>
+/* ── ABOUT ── */
+.about-section{padding:48px 20px;background:var(--dark)}
+.about-inner{max-width:900px;margin:0 auto}
+.about-section .sec-label{color:#60a5fa}
+.about-section .sec-h2{color:#fff}
+.about-section .sec-sub{color:rgba(255,255,255,.65)}
+.about-social{display:flex;gap:12px;margin-top:24px;flex-wrap:wrap}
+.social-btn{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;padding:12px 20px;border-radius:8px;font-size:14px;font-weight:500;text-decoration:none}
+.social-btn:hover{background:rgba(255,255,255,.15)}
+
+/* ── CONTACT ── */
+.contact-section{padding:48px 20px;background:var(--accent)}
+.contact-inner{max-width:900px;margin:0 auto;text-align:center}
+.contact-section .sec-label{color:rgba(255,255,255,.65)}
+.contact-section .sec-h2{color:#fff;margin-bottom:8px}
+.contact-section .sec-sub{color:rgba(255,255,255,.75);margin-bottom:32px}
+.wa-btn-big{display:inline-flex;align-items:center;gap:12px;background:#25D366;color:#fff;padding:18px 36px;border-radius:12px;font-size:16px;font-weight:700;text-decoration:none;transition:transform .2s}
+.wa-btn-big:hover{transform:scale(1.02)}
+
+/* ── FOOTER ── */
+footer{background:#0f172a;padding:40px 20px 24px;text-align:center}
+.foot-logo{margin-bottom:8px}
+.foot-logo img{height:64px;width:auto;object-fit:contain;filter:brightness(0) invert(1);opacity:.9}
+.foot-sub{font-size:13px;color:rgba(255,255,255,.35);margin-bottom:24px}
+.foot-links{display:flex;flex-wrap:wrap;gap:16px;justify-content:center;margin-bottom:24px}
+.foot-links a{color:rgba(255,255,255,.4);text-decoration:none;font-size:12px}
+.foot-copy{font-size:11px;color:rgba(255,255,255,.2);border-top:1px solid rgba(255,255,255,.08);padding-top:20px}
+
+/* ── FLOAT WA ── */
+.wa-float{position:fixed;bottom:20px;right:20px;z-index:400;background:#25D366;border-radius:50%;width:56px;height:56px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(37,211,102,.4);text-decoration:none}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:88px;left:50%;transform:translateX(-50%);background:var(--dark);color:#fff;padding:12px 24px;border-radius:8px;font-size:14px;font-weight:500;z-index:600;display:none;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,.3)}
+.toast.show{display:block}
+.toast.green{background:var(--green)}
+
+/* ── MODAL DETAIL ── */
+.detail-modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:550;align-items:center;justify-content:center;padding:20px}
+.detail-modal-bg.open{display:flex}
+.detail-modal{background:#fff;border-radius:16px;padding:28px 24px;width:100%;max-width:480px;max-height:80vh;overflow-y:auto}
+.detail-modal h3{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center}
+.detail-close{background:none;border:none;font-size:22px;cursor:pointer;color:var(--mid)}
+.detail-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border);font-size:14px}
+.detail-row:last-child{border-bottom:none}
+.detail-row strong{color:var(--mid);font-weight:500}
+.detail-row span{font-weight:600;text-align:right;max-width:60%}
+.detail-actions{display:flex;gap:10px;margin-top:20px}
+.btn-pay-toggle{flex:1;padding:12px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;border:none}
+.btn-mark-paid{background:var(--green-l);color:var(--green)}
+.btn-mark-pending{background:var(--amber-l);color:var(--amber)}
+.btn-del-res{background:var(--red-l);color:var(--red);padding:12px;border-radius:8px;font-size:14px;font-weight:700;cursor:pointer;border:none}
+
+@media(min-width:600px){
+  .form-grid{grid-template-columns:repeat(2,1fr)}
+  .form-full{grid-column:1/-1}
+}
+@media(min-width:768px){
+  .reserve-section,.pricing-section,.amenities-section,.gallery-section,.about-section,.contact-section{padding:72px 40px}
+}
+</style>
 </head>
 <body>
 
+<!-- NAV -->
 <nav>
-  <a href="#" class="nav-logo">Hospeda<span>Temporada</span></a>
-  <a href="#imoveis" class="nav-cta">Ver sítios</a>
+  <a href="#" class="nav-logo"><img src="logo.jpg" alt="Sítio Iluminado"></a>
+  <div class="nav-links">
+    <a href="#reservar">Reservar</a>
+    <a href="#precos">Preços</a>
+    <a href="#estrutura">Estrutura</a>
+    <a href="#galeria">Galeria</a>
+    <a href="#outros-sitios">Outros sítios</a>
+    <a href="#contato">Contato</a>
+  </div>
+  <div class="nav-actions">
+    <a href="https://wa.me/5511941942210?text=Olá Arlei! Gostaria de informações sobre o Sítio Iluminado." target="_blank" class="btn-wa-nav">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      WhatsApp
+    </a>
+    <button class="btn-reserve-nav" onclick="goTo('reservar')">Reservar</button>
+  </div>
 </nav>
 
+<!-- HERO -->
 <section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
   <div class="hero-content">
-    <span class="hero-tag">🏡 Temporada · Eventos · Festas</span>
-    <h1>O sítio <em>perfeito</em> para cada momento especial</h1>
-    <p>Reserve online com calendário integrado. Sítios selecionados para temporada, eventos, festas e formaturas em São Paulo e região.</p>
-    <div class="hero-buttons">
-      <a href="#imoveis" class="btn-primary">Ver sítios disponíveis</a>
-      <a href="https://wa.me/5511941942210?text=Olá! Tenho interesse em reservar um sítio para temporada." class="btn-secondary" target="_blank">Falar no WhatsApp</a>
+    <span class="hero-badge">🌳 Mogi das Cruzes · Biritiba Mirim — 1h de SP</span>
+    <h1>Sítio <span>Iluminado</span></h1>
+    <p class="hero-sub">Piscina com hidromassagem e cascata, churrasqueira, forno de pizza, campo de futebol e muito mais. Acomoda até <span style="color:#fbbf24;font-weight:700">22 pessoas</span>.</p>
+    <div class="hero-pill-row">
+      <span class="hero-pill">🏊 Piscina + Hidromassagem</span>
+      <span class="hero-pill">🍕 Forno de Pizza</span>
+      <span class="hero-pill">⚽ Campo de Futebol</span>
+      <span class="hero-pill">🏐 Quadra de Vôlei</span>
+      <span class="hero-pill">💒 Capela</span>
+    </div>
+    <div class="hero-cta-row">
+      <button class="btn-primary" onclick="goTo('reservar')">📅 Reservar agora</button>
+      <a href="https://wa.me/5511941942210" target="_blank" class="btn-outline">Falar com Arlei</a>
     </div>
   </div>
   <div class="hero-stats">
-    <div class="stat"><span class="stat-number" id="stat-count">4</span><span class="stat-label">Sítios</span></div>
-    <div class="stat"><span class="stat-number">100%</span><span class="stat-label">Online</span></div>
-    <div class="stat"><span class="stat-number">SP</span><span class="stat-label">Interior & Serra</span></div>
+    <div class="hstat"><span class="hstat-n">22</span><span class="hstat-l">Pessoas</span></div>
+    <div class="hstat"><span class="hstat-n">4</span><span class="hstat-l">Quartos</span></div>
+    <div class="hstat"><span class="hstat-n">100</span><span class="hstat-l">Vagas</span></div>
+    <div class="hstat"><span class="hstat-n">1h</span><span class="hstat-l">de SP</span></div>
   </div>
 </section>
 
-<div class="search-section">
-  <div class="search-box">
-    <h2>Encontre seu sítio ideal</h2>
-    <div class="search-form">
-      <input type="text" id="search-input" placeholder="🔍 Nome ou cidade...">
-      <select id="search-tipo">
-        <option value="">🏷️ Tipo de ocasião</option>
-        <option>Temporada / Férias</option>
-        <option>Festa de formatura</option>
-        <option>Evento corporativo</option>
-        <option>Aniversário / Celebração</option>
-        <option>Casamento / Recepção</option>
-        <option>Retiro / Grupos</option>
-      </select>
-      <button class="btn-primary" style="border:none;cursor:pointer;" onclick="document.getElementById('imoveis').scrollIntoView({behavior:'smooth'})">Buscar sítios</button>
+<!-- OUTROS SÍTIOS -->
+<style>
+/* Cards */
+.outro-card{background:#fff;border-radius:12px;border:1px solid var(--border);overflow:hidden;display:flex;flex-direction:column;box-shadow:0 1px 4px rgba(0,0,0,.06);transition:transform .2s,box-shadow .2s;flex-shrink:0}
+.outro-card:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,.1)}
+.outro-img{width:100%;height:200px;object-fit:cover;display:block}
+.outro-body{padding:20px;flex:1;display:flex;flex-direction:column}
+.outro-tag{display:inline-block;background:var(--blue-l);color:var(--accent);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:4px 12px;border-radius:100px;margin-bottom:10px}
+.outro-name{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--dark);margin-bottom:6px}
+.outro-local{font-size:13px;color:var(--mid);margin-bottom:12px}
+.outro-feats{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.outro-feat{font-size:12px;color:var(--mid);background:var(--light);padding:5px 12px;border-radius:100px}
+.outro-price{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--accent);margin-bottom:14px;margin-top:auto}
+.outro-price span{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;color:var(--mid);font-weight:400}
+.outro-btn{display:block;width:100%;text-align:center;background:var(--accent);color:#fff;padding:13px;border-radius:8px;font-weight:700;font-size:14px;text-decoration:none;border:none;cursor:pointer}
+/* Desktop grid */
+.outros-desktop{display:none;grid-template-columns:repeat(3,1fr);gap:20px}
+/* Mobile carousel */
+.outros-carousel-wrap{position:relative}
+.outros-carousel{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:4px}
+.outros-carousel::-webkit-scrollbar{display:none}
+.outros-carousel .outro-card{width:82vw;max-width:300px;scroll-snap-align:start}
+.carousel-dots{display:flex;justify-content:center;gap:7px;margin-top:16px}
+.cdot{width:8px;height:8px;border-radius:50%;background:var(--border);transition:background .2s,transform .2s;cursor:pointer}
+.cdot.active{background:var(--accent);transform:scale(1.2)}
+@media(min-width:700px){
+  .outros-carousel-wrap{display:none}
+  .outros-desktop{display:grid}
+}
+/* Admin panel - outros sítios */
+.outros-admin{margin-top:24px;border-top:1px solid var(--border);padding-top:20px;display:none}
+.outros-admin.open{display:block}
+.outros-admin-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center}
+.outros-list-admin{}
+.outros-item-admin{border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:10px;display:flex;gap:12px;align-items:center}
+.outros-item-admin img{width:60px;height:50px;object-fit:cover;border-radius:6px;flex-shrink:0}
+.outros-item-admin-info{flex:1;min-width:0}
+.outros-item-admin-name{font-weight:700;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.outros-item-admin-local{font-size:12px;color:var(--mid)}
+.outros-item-admin-actions{display:flex;gap:6px;flex-shrink:0}
+.btn-edit-outro{background:var(--light);border:1px solid var(--border);color:var(--dark);padding:6px 12px;border-radius:6px;font-size:12px;cursor:pointer}
+.btn-del-outro{background:rgba(220,38,38,.08);border:1px solid rgba(220,38,38,.2);color:var(--red);padding:6px 12px;border-radius:6px;font-size:12px;cursor:pointer}
+.btn-add-outro{background:var(--accent);color:#fff;border:none;padding:10px 18px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;width:100%;margin-top:8px}
+/* Outro edit modal */
+.outro-modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:600;align-items:flex-end;justify-content:center;padding:0}
+.outro-modal-bg.open{display:flex}
+.outro-modal{background:#fff;border-radius:16px 16px 0 0;padding:28px 20px 40px;width:100%;max-width:540px;max-height:90vh;overflow-y:auto}
+.outro-modal h3{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center}
+.outro-modal .form-row{margin-bottom:14px}
+.outro-modal .form-row label{display:block;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--dark);margin-bottom:6px}
+.outro-modal .form-row input,.outro-modal .form-row textarea{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:var(--dark);background:#fff}
+.outro-modal .form-row input:focus,.outro-modal .form-row textarea:focus{outline:none;border-color:var(--accent)}
+.outro-modal .form-hint{font-size:11px;color:var(--mid);margin-top:4px}
+.outro-modal-save{width:100%;background:var(--accent);color:#fff;border:none;padding:15px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;margin-top:6px}
+/* Admin FAB */
+.admin-fab{position:fixed;bottom:90px;left:16px;z-index:450;background:#fff;border:2px solid var(--accent);border-radius:50px;padding:10px 16px;font-size:13px;font-weight:700;color:var(--accent);cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.15);display:none;align-items:center;gap:6px}
+.admin-fab.show{display:flex}
+/* upload foto */
+.foto-upload-tabs{display:flex;gap:0;margin-bottom:10px;border:1.5px solid var(--border);border-radius:8px;overflow:hidden}
+.foto-tab{flex:1;padding:9px;font-size:12px;font-weight:700;text-align:center;cursor:pointer;background:#fff;color:var(--mid);border:none;transition:background .15s}
+.foto-tab.active{background:var(--accent);color:#fff}
+.foto-tab-panel{display:none}.foto-tab-panel.active{display:block}
+</style>
+
+<section id="outros-sitios" style="padding:48px 20px;background:#fff;border-top:1px solid var(--border)">
+  <div style="max-width:900px;margin:0 auto">
+    <span class="sec-label">Portfólio Hospeda Temporada</span>
+    <h2 class="sec-h2">Outros sítios disponíveis</h2>
+    <p class="sec-sub" style="margin-bottom:28px">Além do Sítio Iluminado, Arlei conta com outros espaços para temporada, eventos e festas.</p>
+
+    <!-- MOBILE: Carrossel -->
+    <div class="outros-carousel-wrap">
+      <div class="outros-carousel" id="outros-carousel"></div>
+      <div class="carousel-dots" id="carousel-dots"></div>
     </div>
+
+    <!-- DESKTOP: Grid -->
+    <div class="outros-desktop" id="outros-desktop"></div>
+
+    <p style="font-size:13px;color:var(--mid);margin-top:24px;text-align:center">
+      Dúvidas ou quer conhecer? <a href="https://wa.me/5511941942210?text=Olá Arlei! Gostaria de conhecer os outros sítios disponíveis." target="_blank" style="color:var(--accent);font-weight:600">Fale no WhatsApp →</a>
+    </p>
+  </div>
+</section>
+
+<!-- ADMIN FAB -->
+<button class="admin-fab" id="admin-fab" onclick="openOutroModal(null)">
+  ⚙️ Gerenciar sítios
+</button>
+
+<!-- OUTRO EDIT MODAL -->
+<div class="outro-modal-bg" id="outro-modal-bg" onclick="if(event.target===this)closeOutroModal()">
+  <div class="outro-modal">
+    <h3><span id="outro-modal-title">Novo sítio</span><button onclick="closeOutroModal()" style="background:none;border:none;font-size:22px;cursor:pointer;color:var(--mid)">✕</button></h3>
+    <input type="hidden" id="outro-edit-idx" value="">
+    <div class="form-row"><label>Nome do sítio *</label><input type="text" id="oe-nome" placeholder="Ex: Sítio Bela Vista"></div>
+    <div class="form-row"><label>Localização *</label><input type="text" id="oe-local" placeholder="Ex: Guararema, SP"></div>
+    <div class="form-row"><label>Tipo / Rótulo</label><input type="text" id="oe-tipo" placeholder="Ex: 🌿 Natureza · Eventos"></div>
+    <div class="form-row"><label>Preço</label><input type="text" id="oe-preco" placeholder="Ex: R$1.500"></div>
+    <div class="form-row"><label>Detalhe do preço</label><input type="text" id="oe-detalhe" placeholder="Ex: / dia (até 20 pessoas)"></div>
+    <div class="form-row">
+      <label>Foto de capa *</label>
+      <div class="foto-upload-tabs">
+        <button class="foto-tab active" onclick="switchFotoTab('url')">🔗 URL</button>
+        <button class="foto-tab" onclick="switchFotoTab('file')">📁 Arquivo</button>
+      </div>
+      <div class="foto-tab-panel active" id="foto-panel-url">
+        <input type="url" id="oe-capa" placeholder="https://..." oninput="setPreview(this.value)">
+        <p class="form-hint">Cole a URL de uma imagem (Google Drive público, Dropbox, etc.)</p>
+      </div>
+      <div class="foto-tab-panel" id="foto-panel-file">
+        <input type="file" id="oe-capa-file" accept="image/*" onchange="loadFotoFile(this)" style="padding:8px 0">
+        <p class="form-hint">Selecione uma imagem do seu celular ou computador</p>
+      </div>
+      <img id="oe-preview" src="" alt="" style="width:100%;height:140px;object-fit:cover;border-radius:8px;margin-top:10px;display:block;background:var(--light)">
+    </div>
+    <div class="form-row">
+      <label>Características (uma por linha)</label>
+      <textarea id="oe-feats" rows="4" placeholder="🛏️ 4 quartos&#10;🔥 Churrasqueira&#10;🌿 Área verde&#10;🚗 Estacionamento"></textarea>
+      <p class="form-hint">Use emojis no início. Ex: 🛏️ 4 quartos</p>
+    </div>
+    <div class="form-row"><label>Mensagem WhatsApp</label><input type="text" id="oe-wa" placeholder="Olá Arlei! Tenho interesse no Sítio X..."></div>
+    <button class="outro-modal-save" onclick="saveOutro()">💾 Salvar sítio</button>
   </div>
 </div>
 
-<!-- PROPERTIES — populated by JS from sitios-data.js -->
-<section class="properties-section" id="imoveis">
-  <div class="properties-header">
-    <span class="section-tag">Nosso portfólio</span>
-    <h2 class="section-title">Sítios disponíveis</h2>
-    <p class="section-subtitle">Espaços cuidadosamente selecionados para proporcionar a melhor experiência</p>
-  </div>
-  <div class="properties-grid" id="properties-grid">
-    <!-- JS populated -->
-  </div>
-  <div style="text-align:center;margin-top:40px;">
-    <a href="https://wa.me/5511941942210?text=Olá! Quero ver todos os sítios disponíveis." target="_blank" class="btn-primary">Falar no WhatsApp</a>
+<script>
+function slugify(s){return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'');}
+
+// ── OUTROS SÍTIOS — carrega de sitios.json (fonte de verdade no servidor) ──
+const OS_DEFAULT = [
+  {nome:"Sítio das Pedras",local:"Guararema, SP",tipo:"🪨 Campo · Casamentos · Retiros",preco:"R$1.800",precoDetalhe:"/ dia (até 30 pessoas)",capa:"https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",features:["🛏️ 4 quartos","🔥 Churrasqueira","🌿 Área verde","💒 Casamentos"],wa:"Olá Arlei! Tenho interesse no Sítio das Pedras.",fotos:[]},
+  {nome:"Sítio Beira Rio",local:"Salesópolis, SP",tipo:"🌊 Rio · Pesca · Família",preco:"R$1.200",precoDetalhe:"/ dia (até 20 pessoas)",capa:"https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800&q=80",features:["🛏️ 3 quartos","🎣 Deck para pesca","🌊 Beira do rio","🌲 Trilhas"],wa:"Olá Arlei! Tenho interesse no Sítio Beira Rio.",fotos:[]},
+  {nome:"Sítio Alto da Serra",local:"Paraibuna, SP",tipo:"⛰️ Serra · Vista panorâmica · Retiros",preco:"R$2.200",precoDetalhe:"/ dia (até 40 pessoas)",capa:"https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",features:["🛏️ 6 quartos","⛰️ Vista panorâmica","🔥 Lareira","🧘 Retiros"],wa:"Olá Arlei! Tenho interesse no Sítio Alto da Serra.",fotos:[]}
+];
+
+// Carrega do arquivo JSON (salvo pelo admin) — fallback para default
+fetch('sitios.json?v='+Date.now())
+  .then(r=>r.ok?r.json():Promise.reject())
+  .then(data=>{
+    if(data&&data.length) renderOutros(data);
+    else renderOutros(OS_DEFAULT);
+  })
+  .catch(()=>renderOutros(OS_DEFAULT));
+
+// saveOutros agora só usado internamente pelo admin inline (não mais via localStorage)
+function saveOutros(arr){/* dados salvos via admin.html no GitHub */}
+
+function buildOutroCard(s){
+  const c=document.createElement('div');
+  c.className='outro-card';
+  c.innerHTML=`<img class="outro-img" src="${s.capa}" alt="${s.nome}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400&q=60'">
+  <div class="outro-body">
+    <span class="outro-tag">${s.tipo||'🏡 Sítio'}</span>
+    <div class="outro-name">${s.nome}</div>
+    <div class="outro-local">📍 ${s.local}</div>
+    <div class="outro-feats">${(s.features||[]).map(f=>`<span class="outro-feat">${f}</span>`).join('')}</div>
+    <div class="outro-price">${s.preco||'Consulte'}<span> ${s.precoDetalhe||''}</span></div>
+    <a href="sitio.html?id=${slugify(s.nome)}" class="outro-btn">Ver disponibilidade</a>
+  </div>`;
+  return c;
+}
+
+function renderOutros(data){
+  if(!data) return;
+  const car=document.getElementById('outros-carousel');
+  const desk=document.getElementById('outros-desktop');
+  const dots=document.getElementById('carousel-dots');
+  car.innerHTML=''; desk.innerHTML=''; dots.innerHTML='';
+  data.forEach((s,i)=>{
+    car.appendChild(buildOutroCard(s));
+    desk.appendChild(buildOutroCard(s));
+    const dot=document.createElement('div');
+    dot.className='cdot'+(i===0?' active':'');
+    dot.onclick=()=>scrollCarousel(i);
+    dots.appendChild(dot);
+  });
+  // Update dots on scroll
+  car.onscroll=()=>{
+    const idx=Math.round(car.scrollLeft/(car.offsetWidth*0.82+16));
+    document.querySelectorAll('.cdot').forEach((d,i)=>d.classList.toggle('active',i===idx));
+  };
+  renderOutrosAdmin();
+}
+
+function scrollCarousel(idx){
+  const car=document.getElementById('outros-carousel');
+  const cardW=car.offsetWidth*0.82+16;
+  car.scrollTo({left:idx*cardW,behavior:'smooth'});
+}
+
+// ── ADMIN PANEL ──
+function renderOutrosAdmin(){
+  const panel=document.getElementById('outros-admin-list');
+  if(!panel)return;
+  const data=getOutros();
+  panel.innerHTML='';
+  data.forEach((s,i)=>{
+    const el=document.createElement('div');
+    el.className='outros-item-admin';
+    el.innerHTML=`<img src="${s.capa}" alt="${s.nome}" onerror="this.style.display='none'">
+    <div class="outros-item-admin-info"><div class="outros-item-admin-name">${s.nome}</div><div class="outros-item-admin-local">📍 ${s.local}</div></div>
+    <div class="outros-item-admin-actions">
+      <button class="btn-edit-outro" onclick="editOutro(${i})">✏️</button>
+      <button class="btn-del-outro" onclick="delOutro(${i})">🗑️</button>
+    </div>`;
+    panel.appendChild(el);
+  });
+}
+
+// ── ADMIN FAB: aparece após login no painel de reservas ──
+function showAdminFab(){ document.getElementById('admin-fab').classList.add('show'); }
+
+function switchFotoTab(tab){
+  document.querySelectorAll('.foto-tab').forEach((t,i)=>t.classList.toggle('active',i===(tab==='url'?0:1)));
+  document.getElementById('foto-panel-url').classList.toggle('active', tab==='url');
+  document.getElementById('foto-panel-file').classList.toggle('active', tab==='file');
+}
+
+function setPreview(src){
+  const p=document.getElementById('oe-preview');
+  p.src=src; p.style.display=src?'block':'none';
+}
+
+function loadFotoFile(input){
+  const file=input.files[0]; if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    document.getElementById('oe-capa').value=e.target.result;
+    setPreview(e.target.result);
+  };
+  reader.readAsDataURL(file);
+}
+
+function openOutroModal(idx){
+  const data=getOutros();
+  const editing=idx!=null;
+  document.getElementById('outro-modal-title').textContent=editing?'Editar sítio':'Novo sítio';
+  document.getElementById('outro-edit-idx').value=editing?idx:'';
+  const s=editing?data[idx]:{};
+  document.getElementById('oe-nome').value=s.nome||'';
+  document.getElementById('oe-local').value=s.local||'';
+  document.getElementById('oe-tipo').value=s.tipo||'';
+  document.getElementById('oe-preco').value=s.preco||'';
+  document.getElementById('oe-detalhe').value=s.precoDetalhe||'';
+  document.getElementById('oe-capa').value=s.capa||'';
+  document.getElementById('oe-preview').src=s.capa||'';
+  document.getElementById('oe-feats').value=(s.features||[]).join('\n');
+  document.getElementById('oe-wa').value=s.wa||'';
+  document.getElementById('outro-modal-bg').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeOutroModal(){document.getElementById('outro-modal-bg').classList.remove('open');document.body.style.overflow='';}
+function editOutro(i){openOutroModal(i);}
+function delOutro(i){
+  if(!confirm('Excluir este sítio?'))return;
+  /* removido - gerenciado pelo admin.html */
+}
+function saveOutro(){
+  const nome=document.getElementById('oe-nome').value.trim();
+  const capa=document.getElementById('oe-capa').value.trim();
+  if(!nome||!capa){alert('Nome e foto são obrigatórios!');return;}
+  const s={
+    nome,
+    local:document.getElementById('oe-local').value.trim(),
+    tipo:document.getElementById('oe-tipo').value.trim()||'🏡 Temporada · Eventos',
+    preco:document.getElementById('oe-preco').value.trim()||'Consulte',
+    precoDetalhe:document.getElementById('oe-detalhe').value.trim(),
+    capa,
+    features:document.getElementById('oe-feats').value.split('\n').map(l=>l.trim()).filter(Boolean),
+    wa:document.getElementById('oe-wa').value.trim()||`Olá Arlei! Tenho interesse no ${nome}. Pode me passar informações?`
+  };
+  const data=getOutros();
+  const idx=document.getElementById('outro-edit-idx').value;
+  if(idx!=='')data[parseInt(idx)]=s; else data.push(s);
+  /* removido - gerenciado pelo admin.html */
+}
+
+// renderOutros() chamado via fetch acima
+
+// ── APLICAR CONFIG DO SÍTIO ILUMINADO (editável via admin) ──
+(function applySIConfig(){
+  const SI_KEY = 'sitio_iluminado_config';
+  let si; try{si=JSON.parse(localStorage.getItem(SI_KEY));}catch(e){si=null;}
+  if(!si) return;
+  const badge = document.querySelector('.hero-badge');
+  if(badge && si.badge) badge.textContent = si.badge;
+  const sub = document.querySelector('.hero-sub');
+  if(sub && si.subtitulo) sub.innerHTML = si.subtitulo;
+  if(si.pills && si.pills.length){
+    const pillRow = document.querySelector('.hero-pill-row');
+    if(pillRow) pillRow.innerHTML = si.pills.map(p=>`<span class="hero-pill">${p}</span>`).join('');
+  }
+  if(si.stats && si.stats.length){
+    const statsEl = document.querySelector('.hero-stats');
+    if(statsEl) statsEl.innerHTML = si.stats.map(s=>`<div class="hstat"><span class="hstat-n">${s.n}</span><span class="hstat-l">${s.l}</span></div>`).join('');
+  }
+  if(si.descricao){
+    const aboutInner = document.querySelector('.about-inner');
+    if(aboutInner){
+      const paras = aboutInner.querySelectorAll('p.sec-sub');
+      const lines = si.descricao.split('\n\n').filter(Boolean);
+      paras.forEach((p,i)=>{ if(lines[i]) p.innerHTML = lines[i]; });
+    }
+  }
+  if(si.whatsapp){
+    document.querySelectorAll('a[href*="wa.me"]').forEach(a=>{
+      a.href = a.href.replace(/wa\.me\/\d+/, 'wa.me/'+si.whatsapp);
+    });
+  }
+  if(si.instagram){
+    document.querySelectorAll('a[href*="instagram"]').forEach(a=>{ a.href=si.instagram; });
+  }
+})();
+</script>
+
+<!-- RESERVE SECTION -->
+<section class="reserve-section" id="reservar">
+  <div class="reserve-inner">
+    <span class="sec-label">Calendário & Reservas</span>
+    <h2 class="sec-h2">Verifique disponibilidade e reserve</h2>
+    <p class="sec-sub">Datas em vermelho = reservadas. Selecione as datas desejadas e preencha o formulário.</p>
+
+    <!-- TOP SPLIT: PHOTOS + CALENDAR -->
+    <div class="reserve-top">
+      <!-- Mini gallery left -->
+      <div>
+        <div class="mini-gallery" id="mini-gallery">
+          <img src="fotos/piscina-principal.jpg" alt="Piscina" onclick="document.getElementById('galeria').scrollIntoView({behavior:'smooth'})">
+          <img src="fotos/churrasqueira.jpg" alt="Churrasqueira" onclick="document.getElementById('galeria').scrollIntoView({behavior:'smooth'})">
+          <img src="fotos/salao-festas.jpg" alt="Salão de festas" onclick="document.getElementById('galeria').scrollIntoView({behavior:'smooth'})">
+          <img src="fotos/campo-futebol.jpg" alt="Campo de futebol" onclick="document.getElementById('galeria').scrollIntoView({behavior:'smooth'})">
+          <img src="fotos/piscina-hidromassagem.jpg" alt="Hidromassagem" onclick="document.getElementById('galeria').scrollIntoView({behavior:'smooth'})">
+        </div>
+        <p style="font-size:12px;color:var(--mid);margin-top:8px;text-align:center;cursor:pointer" onclick="document.getElementById('galeria').scrollIntoView({behavior:'smooth'})">📸 Ver todas as fotos →</p>
+      </div>
+      <!-- Calendar right -->
+      <div>
+    <div class="cal-card">
+      <div class="cal-top">
+        <span class="cal-month-label" id="cal-label">Março 2026</span>
+        <div class="cal-nav">
+          <button class="cal-nav-btn" onclick="calPrev()" title="Mês anterior">‹</button>
+          <button class="cal-nav-btn" onclick="calNext()" title="Próximo mês">›</button>
+        </div>
+      </div>
+      <div class="cal-grid" id="cal-grid"></div>
+      <div class="cal-legend">
+        <div class="leg"><div class="leg-box" style="background:rgba(22,163,74,.08);border:1.5px solid var(--green)"></div>✅ Disponível</div>
+        <div class="leg"><div class="leg-box" style="background:#fecaca;border:1.5px solid #f87171"></div>🔴 Reservado / Indisponível</div>
+        <div class="leg"><div class="leg-box" style="background:var(--accent)"></div>📅 Selecionado</div>
+      </div>
+    </div>
+      </div><!-- /col calendar -->
+    </div><!-- /reserve-top -->
+
+    <!-- PRICE CALCULATOR -->
+    <div class="price-calc" id="price-calc-box">
+      <h3>💰 Calcule o valor da sua reserva</h3>
+      <div class="price-calc-row">
+        <div class="price-calc-field">
+          <label>Tipo de período</label>
+          <select id="calc-period" onchange="updateGuestsOptions();calcPrice()">
+            <option value="">Selecione o período</option>
+            <optgroup label="── Fim de semana ──">
+              <option value="fds">🗓️ Fim de semana comum</option>
+            </optgroup>
+            <optgroup label="── Feriados 2 dias ──">
+              <option value="diasdamaes">👩 Dia das Mães — 09/05 a 10/05</option>
+              <option value="diasdospais">👨 Dia dos Pais — 08/08 a 09/08</option>
+              <option value="proclamacao">🇧🇷 Proclamação — 14/11 a 15/11</option>
+            </optgroup>
+            <optgroup label="── Feriados 3 dias ──">
+              <option value="pascoa">🐣 Páscoa — 03/04 a 05/04</option>
+              <option value="trabalhador">⚒️ Trabalhador — 01/05 a 03/05</option>
+              <option value="independencia">🎖️ Independência — 05/09 a 07/09</option>
+              <option value="criancas">👶 Crianças — 10/10 a 12/10</option>
+              <option value="finados">🕯️ Finados — 30/10 a 02/11</option>
+              <option value="consciencia">✊ Consciência — 20/11 a 22/11</option>
+            </optgroup>
+            <optgroup label="── Feriados 4 dias ──">
+              <option value="tiradentes">⚔️ Tiradentes — 18/04 a 21/04</option>
+            </optgroup>
+            <optgroup label="── Datas especiais ──">
+              <option value="natal">🎄 Natal 2026 — 22/12 a 26/12</option>
+              <option value="carnaval">🎭 Carnaval 2027 — 05/02 a 09/02</option>
+            </optgroup>
+            <optgroup label="── Eventos ──">
+              <option value="evento">🎉 Festa / Casamento / Debutante</option>
+            </optgroup>
+          </select>
+        </div>
+        <div class="price-calc-field">
+          <label>Quantidade de pessoas</label>
+          <select id="calc-guests" onchange="calcPrice()">
+            <option value="">Selecione primeiro o período</option>
+          </select>
+        </div>
+      </div>
+      <div class="price-result" id="price-result">
+        <div class="price-result-label">Selecione as opções acima para ver o valor</div>
+        <div class="price-result-value" id="price-value" style="display:none"></div>
+        <div class="price-result-detail" id="price-detail" style="display:none"></div>
+        <div class="price-result-note" id="price-note" style="display:none"></div>
+      </div>
+    </div>
+
+    <!-- FORM -->
+    <div class="form-section">
+      <h3>📝 Solicitar reserva</h3>
+      <div class="dates-row" style="margin-bottom:20px">
+        <div class="date-chip">
+          <div class="date-chip-l">Check-in</div>
+          <div class="date-chip-v empty" id="disp-ci">Selecione no calendário</div>
+        </div>
+        <div class="date-chip">
+          <div class="date-chip-l">Check-out</div>
+          <div class="date-chip-v empty" id="disp-co">Selecione no calendário</div>
+        </div>
+      </div>
+      <div class="form-grid">
+        <div class="form-row form-full">
+          <label>Nome completo *</label>
+          <input type="text" id="f-name" placeholder="Seu nome completo">
+        </div>
+        <div class="form-row">
+          <label>Telefone / WhatsApp *</label>
+          <input type="tel" id="f-phone" placeholder="(11) 99999-9999">
+        </div>
+        <div class="form-row">
+          <label>E-mail</label>
+          <input type="email" id="f-email" placeholder="seu@email.com">
+        </div>
+        <div class="form-row">
+          <label>Quantidade de pessoas *</label>
+          <select id="f-guests">
+            <option value="">Selecione</option>
+            <option value="até 15">Até 15 pessoas</option>
+            <option value="até 20">Até 20 pessoas</option>
+            <option value="até 25">Até 25 pessoas</option>
+            <option value="até 30">Até 30 pessoas</option>
+            <option value="acima de 30">Acima de 30 (consultar)</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label>Tipo de evento</label>
+          <select id="f-occasion">
+            <option value="">Selecione o período</option>
+            <option>FIM DE SEMANA COMUM</option>
+            <option>DIA DAS MÃES (2 DIAS) - 09/05 A 10/05/2026</option>
+            <option>DIA DOS PAIS (2 DIAS) - 08/08 A 09/08/2026</option>
+            <option>PROCLAMAÇÃO (2 DIAS) - 14/11 A 15/11/2026</option>
+            <option>PÁSCOA (3 DIAS) - 03/04 A 05/04/2026</option>
+            <option>TRABALHADOR (3 DIAS) - 01/05 A 03/05/2026</option>
+            <option>INDEPENDÊNCIA (3 DIAS) - 05/09 A 07/09/2026</option>
+            <option>CRIANÇAS (3 DIAS) - 10/10 A 12/10/2026</option>
+            <option>FINADOS (3 DIAS) - 30/10 A 02/11/2026</option>
+            <option>CONSCIÊNCIA (3 DIAS) - 20/11 A 22/11/2026</option>
+            <option>TIRADENTES (4 DIAS) - 18/04 A 21/04/2026</option>
+            <option>NATAL 2026 (4 DIAS) - 22/12 A 26/12/2026</option>
+            <option>CARNAVAL 2027 (4 DIAS) - 05/02 A 09/02/2027</option>
+            <option>DIÁRIA PARA EVENTOS</option>
+          </select>
+        </div>
+        <div class="form-row form-full">
+          <label>Observações (opcional)</label>
+          <textarea id="f-obs" placeholder="Informações adicionais, dúvidas, necessidades especiais..."></textarea>
+        </div>
+      </div>
+      <button class="btn-submit" onclick="submitReserve()">📲 Enviar solicitação via WhatsApp</button>
+    </div>
+
+    <!-- RESERVATIONS LIST -->
+    <div class="reservations-panel">
+      <h3>
+        <span>Reservas registradas</span>
+        <button onclick="togglePanel()" style="background:none;border:none;font-size:13px;color:var(--mid);cursor:pointer" id="toggle-btn">▼ Ver</button>
+      </h3>
+      <div id="reservations-list" style="display:none"></div>
+
+      <!-- ADMIN: OUTROS SÍTIOS -->
+      <div class="outros-admin" id="outros-admin-panel">
+        <div class="outros-admin-title">
+          <span>🏡 Gerenciar outros sítios</span>
+          <button onclick="document.getElementById('outros-admin-panel').classList.remove('open')" style="background:none;border:none;font-size:18px;cursor:pointer;color:var(--mid)">✕</button>
+        </div>
+        <div class="outros-list-admin" id="outros-admin-list"></div>
+        <button class="btn-add-outro" onclick="openOutroModal(null)">+ Adicionar novo sítio</button>
+      </div>
+    </div>
   </div>
 </section>
 
-<section class="how-section">
-  <span class="section-tag">Como funciona</span>
-  <h2 class="section-title">Reserve em 3 passos simples</h2>
-  <p class="section-subtitle">Processo 100% online, rápido e seguro</p>
-  <div class="steps">
-    <div class="step"><div class="step-number">1</div><div class="step-content"><h3>Escolha o sítio</h3><p>Explore o portfólio e encontre o espaço ideal para sua ocasião.</p></div></div>
-    <div class="step"><div class="step-number">2</div><div class="step-content"><h3>Selecione as datas</h3><p>Verifique a disponibilidade no calendário e escolha o período desejado.</p></div></div>
-    <div class="step"><div class="step-number">3</div><div class="step-content"><h3>Confirme a reserva</h3><p>Finalize pelo WhatsApp com o proprietário e receba todas as informações.</p></div></div>
-    <div class="step"><div class="step-number">4</div><div class="step-content"><h3>Aproveite!</h3><p>Receba as chaves e curta seu evento ou temporada com tranquilidade.</p></div></div>
+<!-- PRICING -->
+<section class="pricing-section" id="precos">
+  <div class="pricing-inner">
+    <span class="sec-label">Tabela de Preços</span>
+    <h2 class="sec-h2">Valores por período</h2>
+    <p class="sec-sub">📌 Taxa de limpeza: R$300 — <strong>NÃO inclusa</strong> nos valores abaixo. Pagamento via PIX. Confirme disponibilidade pelo WhatsApp antes de pagar.</p>
+
+    <div class="pricing-tabs">
+      <button class="ptab active" onclick="showTab('fds')">🗓️ Fim de semana</button>
+      <button class="ptab" onclick="showTab('carnaval')">🎭 Carnaval</button>
+      <button class="ptab" onclick="showTab('consciencia')">✊ Consciência Negra</button>
+      <button class="ptab" onclick="showTab('criancas')">👶 Dia das Crianças</button>
+      <button class="ptab" onclick="showTab('diasdamaes')">👩 Dia das Mães</button>
+      <button class="ptab" onclick="showTab('diasdospais')">👨 Dia dos Pais</button>
+      <button class="ptab" onclick="showTab('evento')">🎉 Eventos</button>
+      <button class="ptab" onclick="showTab('finados')">🕯️ Finados</button>
+      <button class="ptab" onclick="showTab('independencia')">🎖️ Independência</button>
+      <button class="ptab" onclick="showTab('natal')">🎄 Natal</button>
+      <button class="ptab" onclick="showTab('pascoa')">🐣 Páscoa</button>
+      <button class="ptab" onclick="showTab('proclamacao')">🇧🇷 Proclamação</button>
+      <button class="ptab" onclick="showTab('tiradentes')">⚔️ Tiradentes</button>
+      <button class="ptab" onclick="showTab('trabalhador')">⚒️ Trabalhador</button>
+    </div>
+
+    <!-- FIM DE SEMANA -->
+    <div class="pricing-table active" id="tab-fds">
+      <table class="ptable">
+        <thead>
+          <tr><th colspan="2">🗓️ Fim de Semana Comum — Sábado/Domingo</th></tr>
+          <tr><th colspan="2" style="font-weight:400;font-size:12px;color:var(--mid)">Check-in: Sábado 08h · Check-out: Domingo 18h</th></tr>
+          <tr><th>Quantidade de pessoas</th><th>Valor total</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Até 10 pessoas</td><td class="price-val">R$ 1.600</td></tr>
+          <tr><td>Até 15 pessoas</td><td class="price-val">R$ 1.900</td></tr>
+          <tr><td>Até 20 pessoas</td><td class="price-val">R$ 2.200</td></tr>
+          <tr><td>Até 25 pessoas</td><td class="price-val">R$ 2.500</td></tr>
+          <tr><td>Até 30 pessoas</td><td class="price-val">R$ 3.000</td></tr>
+          <tr><td>Acima de 30 pessoas</td><td class="price-val">Sob consulta</td></tr>
+          <tr style="background:#fef9c3"><td colspan="2" style="font-size:12px;color:#92400e;text-align:center;padding:8px 16px">🧹 <strong>Taxa de limpeza: R$ 300 — NÃO inclusa</strong></td></tr>
+          <tr style="background:var(--blue-l)"><td colspan="2" style="font-size:12px;color:var(--blue);text-align:center;padding:10px 16px">🎉 Festa com convidados externos: <strong>+ R$ 30 por convidado</strong> (somente festa, sem pernoite)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- CARNAVAL -->
+    <div class="pricing-table" id="tab-carnaval">
+      <table class="ptable">
+        <thead>
+          <tr><th colspan="2">🎭 Carnaval 2027 — 05/02 a 09/02/2027 (4 dias)</th></tr>
+          <tr><th colspan="2" style="font-weight:400;font-size:12px;color:var(--mid)">Check-in: Sexta 08h (05/02) · Check-out: Terça 18h (09/02)</th></tr>
+          <tr><th>Quantidade de pessoas</th><th>Valor total</th></tr>
+        </thead>
+        <tbody>
+          <tr><td colspan="2" style="text-align:center;padding:16px;color:var(--mid)">📞 Valores sob consulta — entre em contato via WhatsApp</td></tr>
+          <tr style="background:#fef9c3"><td colspan="2" style="font-size:12px;color:#92400e;text-align:center;padding:8px 16px">🧹 <strong>Taxa de limpeza: R$ 300 — NÃO inclusa</strong></td></tr>
+          <tr style="background:var(--blue-l)"><td colspan="2" style="font-size:12px;color:var(--blue);text-align:center;padding:10px 16px">🎉 Festa com convidados externos: <strong>+ R$ 30 por convidado</strong> (somente festa, sem pernoite)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- CONSCIÊNCIA NEGRA -->
+    <div class="pricing-table" id="tab-consciencia">
+      <table class="ptable">
+        <thead>
+          <tr><th colspan="2">✊ Consciência Negra — 20/11 a 22/11/2026 (3 dias)</th></tr>
+          <tr><th colspan="2" style="font-weight:400;font-size:12px;color:var(--mid)">Check-in: Sexta 08h · Check-out: Segunda 18h</th></tr>
+          <tr><th>Quantidade de pessoas</th><th>Valor total</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Até 10 pessoas</td><td class="price-val">R$ 2.300</td></tr>
+          <tr><td>Até 15 pessoas</td><td class="price-val">R$ 2.550</td></tr>
+          <tr><td>Até 20 pessoas</td><td class="price-val">R$ 3.000</td></tr>
+          <tr><td>Até 25 pessoas</td><td class="price-val">R$ 3.600</td></tr>
+          <tr><td>Até 30 pessoas</td><td class="price-val">R$ 4.800</td></tr>
+          <tr><td>Acima de 30 pessoas</td><td class="price-val">Sob consulta</td></tr>
+          <tr style="background:#fef9c3"><td colspan="2" style="font-size:12px;color:#92400e;text-align:center;padding:8px 16px">🧹 <strong>Taxa de limpeza: R$ 300 — NÃO inclusa</strong></td></tr>
+          <tr style="background:var(--blue-l)"><td colspan="2" style="font-size:12px;color:var(--blue);text-align:center;padding:10px 16px">🎉 Festa com convidados externos: <strong>+ R$ 30 por convidado</strong> (somente festa, sem pernoite)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- DIA DAS CRIANÇAS -->
+    <div class="pricing-table" id="tab-criancas">
+      <table class="ptable">
+        <thead>
+          <tr><th colspan="2">👶 Dia das Crianças — 10/10 a 12/10/2026 (3 dias)</th></tr>
+          <tr><th colspan="2" style="font-weight:400;font-size:12px;color:var(--mid)">Check-in: Sexta 08h · Check-out: Segunda 18h</th></tr>
+          <tr><th>Quantidade de pessoas</th><th>Valor total</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Até 10 pessoas</td><td class="price-val">R$ 2.300</td></tr>
+          <tr><td>Até 15 pessoas</td><td class="price-val">R$ 2.550</td></tr>
+          <tr><td>Até 20 pessoas</td><td class="price-val">R$ 3.000</td></tr>
+          <tr><td>Até 25 pessoas</td><td class="price-val">R$ 3.600</td></tr>
+          <tr><td>Até 30 pessoas</td><td class="price-val">R$ 4.800</td></tr>
+          <tr><td>Acima de 30 pessoas</td><td class="price-val">Sob consulta</td></tr>
+          <tr style="background:#fef9c3"><td colspan="2" style="font-size:12px;color:#92400e;text-align:center;padding:8px 16px">🧹 <strong>Taxa de limpeza: R$ 300 — NÃO inclusa</strong></td></tr>
+          <tr style="background:var(--blue-l)"><td colspan="2" style="font-size:12px;color:var(--blue);text-align:center;padding:10px 16px">🎉 Festa com convidados externos: <strong>+ R$ 30 por convidado</strong> (somente festa, sem pernoite)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- DIA DAS MÃES -->
+    <div class="pricing-table" id="tab-diasdamaes">
+      <table class="ptable">
+        <thead>
+          <tr><th colspan="2">👩 Dia das Mães — 09/05 a 10/05/2026 (2 dias)</th></tr>
+          <tr><th colspan="2" style="font-weight:400;font-size:12px;color:var(--mid)">Check-in: Sábado 08h · Check-out: Domingo 18h</th></tr>
+          <tr><th>Quantidade de pessoas</th><th>Valor total</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Até 10 pessoas</td><td class="price-val">R$ 1.900</td></tr>
+          <tr><td>Até 15 pessoas</td><td class="price-val">R$ 2.100</td></tr>
+          <tr><td>Até 20 pessoas</td><td class="price-val">R$ 2.300</td></tr>
+          <tr><td>Até 25 pessoas</td><td class="price-val">R$ 2.700</td></tr>
+          <tr><td>Até 30 pessoas</td><td class="price-val">R$ 3.200</td></tr>
+          <tr><td>Acima de 30 pessoas</td><td class="price-val">Sob consulta</td></tr>
+          <tr style="background:#fef9c3"><td colspan="2" style="font-size:12px;color:#92400e;text-align:center;padding:8px 16px">🧹 <strong>Taxa de limpeza: R$ 300 — NÃO inclusa</strong></td></tr>
+          <tr style="background:var(--blue-l)"><td colspan="2" style="font-size:12px;color:var(--blue);text-align:center;padding:10px 16px">🎉 Festa com convidados externos: <strong>+ R$ 30 por convidado</strong> (somente festa, sem pernoite)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- DIA DOS PAIS -->
+    <div class="pricing-table" id="tab-diasdospais">
+      <table class="ptable">
+        <thead>
+          <tr><th colspan="2">👨 Dia dos Pais — 08/08 a 09/08/2026 (2 dias)</th></tr>
+          <tr><th colspan="2" style="font-weight:400;font-size:12px;color:var(--mid)">Check-in: Sábado 08h · Check-out: Domingo 18h</th></tr>
+          <tr><th>Quantidade de pessoas</th><th>Valor total</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Até 15 pessoas</td><td class="price-val">R$ 2.000</td></tr>
+          <tr><td>Até 20 pessoas</td><td class="price-val">R$ 2.300</td></tr>
+          <tr><td>Até 25 pessoas</td><td class="price-val">R$ 2.800</td></tr>
+          <tr><td>Até 30 pessoas</td><td class="price-val">R$ 3.200</td></tr>
+          <tr><td>Acima de 30 pessoas</td><td class="price-val">Sob consulta</td></tr>
+          <tr style="background:#fef9c3"><td colspan="2" style="font-size:12px;color:#92400e;text-align:center;padding:8px 16px">🧹 <strong>Taxa de limpeza: R$ 300 — NÃO inclusa</strong></td></tr>
+          <tr style="background:var(--blue-l)"><td colspan="2" style="font-size:12px;color:var(--blue);text-align:center;padding:10px 16px">🎉 Festa com convidados externos: <strong>+ R$ 30 por convidado</strong> (somente festa, sem pernoite)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- EVENTOS -->
+    <div class="pricing-table" id="tab-evento">
+      <table class="ptable">
+        <thead>
+          <tr><th colspan="2">🎉 Diária para Eventos — Festas · Casamentos · Debutantes</th></tr>
+          <tr><th colspan="2" style="font-weight:400;font-size:12px;color:var(--mid)">Horário flexível — não ultrapassa 00h00</th></tr>
+          <tr><th>Quantidade de pessoas</th><th>Valor total</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Até 50 pessoas</td><td class="price-val">R$ 2.400</td></tr>
+          <tr><td>51 a 100 pessoas</td><td class="price-val">R$ 3.000</td></tr>
+          <tr><td>Acima de 100 pessoas</td><td class="price-val">Sob consulta</td></tr>
+          <tr style="background:#fef9c3"><td colspan="2" style="font-size:12px;color:#92400e;text-align:center;padding:8px 16px">🧹 <strong>Taxa de limpeza: R$ 300 — NÃO inclusa</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- FINADOS -->
+    <div class="pricing-table" id="tab-finados">
+      <table class="ptable">
+        <thead>
+          <tr><th colspan="2">🕯️ Finados — 30/10 a 02/11/2026 (3 dias)</th></tr>
+          <tr><th colspan="2" style="font-weight:400;font-size:12px;color:var(--mid)">Check-in: Sábado 08h · Check-out: Segunda 18h</th></tr>
+          <tr><th>Quantidade de pessoas</th><th>Valor total</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Até 10 pessoas</td><td class="price-val">R$ 2.300</td></tr>
+          <tr><td>Até 15 pessoas</td><td class="price-val">R$ 2.550</td></tr>
+          <tr><td>Até 20 pessoas</td><td class="price-val">R$ 3.000</td></tr>
+          <tr><td>Até 25 pessoas</td><td class="price-val">R$ 3.600</td></tr>
+          <tr><td>Até 30 pessoas</td><td class="price-val">R$ 4.800</td></tr>
+          <tr><td>Acima de 30 pessoas</td><td class="price-val">Sob consulta</td></tr>
+          <tr style="background:#fef9c3"><td colspan="2" style="font-size:12px;color:#92400e;text-align:center;padding:8px 16px">🧹 <strong>Taxa de limpeza: R$ 300 — NÃO inclusa</strong></td></tr>
+          <tr style="background:var(--blue-l)"><td colspan="2" style="font-size:12px;color:var(--blue);text-align:center;padding:10px 16px">🎉 Festa com convidados externos: <strong>+ R$ 30 por convidado</strong> (somente festa, sem pernoite)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- INDEPENDÊNCIA -->
+    <div class="pricing-table" id="tab-independencia">
+      <table class="ptable">
+        <thead>
+          <tr><th colspan="2">🎖️ Independência — 05/09 a 07/09/2026 (3 dias)</th></tr>
+          <tr><th colspan="2" style="font-weight:400;font-size:12px;color:var(--mid)">Check-in: Sexta 08h · Check-out: Segunda 18h</th></tr>
+          <tr><th>Quantidade de pessoas</th><th>Valor total</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Até 10 pessoas</td><td class="price-val">R$ 2.300</td></tr>
+          <tr><td>Até 15 pessoas</td><td class="price-val">R$ 2.550</td></tr>
+          <tr><td>Até 20 pessoas</td><td class="price-val">R$ 3.000</td></tr>
+          <tr><td>Até 25 pessoas</td><td class="price-val">R$ 3.600</td></tr>
+          <tr><td>Até 30 pessoas</td><td class="price-val">R$ 4.800</td></tr>
+          <tr><td>Acima de 30 pessoas</td><td class="price-val">Sob consulta</td></tr>
+          <tr style="background:#fef9c3"><td colspan="2" style="font-size:12px;color:#92400e;text-align:center;padding:8px 16px">🧹 <strong>Taxa de limpeza: R$ 300 — NÃO inclusa</strong></td></tr>
+          <tr style="background:var(--blue-l)"><td colspan="2" style="font-size:12px;color:var(--blue);text-align:center;padding:10px 16px">🎉 Festa com convidados externos: <strong>+ R$ 30 por convidado</strong> (somente festa, sem pernoite)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- NATAL -->
+    <div class="pricing-table" id="tab-natal">
+      <table class="ptable">
+        <thead>
+          <tr><th colspan="2">🎄 Natal 2026 — 22/12 a 26/12/2026 (4 dias)</th></tr>
+          <tr><th colspan="2" style="font-weight:400;font-size:12px;color:var(--mid)">Check-in: Terça 08h (22/12) · Check-out: Sábado 18h (26/12)</th></tr>
+          <tr><th>Quantidade de pessoas</th><th>Valor total</th></tr>
+        </thead>
+        <tbody>
+          <tr><td colspan="2" style="text-align:center;padding:16px;color:var(--mid)">📞 Valores sob consulta — entre em contato via WhatsApp</td></tr>
+          <tr style="background:#fef9c3"><td colspan="2" style="font-size:12px;color:#92400e;text-align:center;padding:8px 16px">🧹 <strong>Taxa de limpeza: R$ 300 — NÃO inclusa</strong></td></tr>
+          <tr style="background:var(--blue-l)"><td colspan="2" style="font-size:12px;color:var(--blue);text-align:center;padding:10px 16px">🎉 Festa com convidados externos: <strong>+ R$ 30 por convidado</strong> (somente festa, sem pernoite)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- PÁSCOA -->
+    <div class="pricing-table" id="tab-pascoa">
+      <table class="ptable">
+        <thead>
+          <tr><th colspan="2">🐣 Páscoa — 03/04 a 05/04/2026 (3 dias)</th></tr>
+          <tr><th colspan="2" style="font-weight:400;font-size:12px;color:var(--mid)">Check-in: Sábado 08h · Check-out: Domingo 18h</th></tr>
+          <tr><th>Quantidade de pessoas</th><th>Valor total</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Até 10 pessoas</td><td class="price-val">R$ 2.300</td></tr>
+          <tr><td>Até 15 pessoas</td><td class="price-val">R$ 2.550</td></tr>
+          <tr><td>Até 20 pessoas</td><td class="price-val">R$ 3.000</td></tr>
+          <tr><td>Até 25 pessoas</td><td class="price-val">R$ 3.600</td></tr>
+          <tr><td>Até 30 pessoas</td><td class="price-val">R$ 4.800</td></tr>
+          <tr><td>Acima de 30 pessoas</td><td class="price-val">Sob consulta</td></tr>
+          <tr style="background:#fef9c3"><td colspan="2" style="font-size:12px;color:#92400e;text-align:center;padding:8px 16px">🧹 <strong>Taxa de limpeza: R$ 300 — NÃO inclusa</strong></td></tr>
+          <tr style="background:var(--blue-l)"><td colspan="2" style="font-size:12px;color:var(--blue);text-align:center;padding:10px 16px">🎉 Festa com convidados externos: <strong>+ R$ 30 por convidado</strong> (somente festa, sem pernoite)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- PROCLAMAÇÃO -->
+    <div class="pricing-table" id="tab-proclamacao">
+      <table class="ptable">
+        <thead>
+          <tr><th colspan="2">🇧🇷 Proclamação da República — 14/11 a 15/11/2026 (2 dias)</th></tr>
+          <tr><th colspan="2" style="font-weight:400;font-size:12px;color:var(--mid)">Check-in: Sábado 08h · Check-out: Domingo 18h</th></tr>
+          <tr><th>Quantidade de pessoas</th><th>Valor total</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Até 15 pessoas</td><td class="price-val">R$ 2.000</td></tr>
+          <tr><td>Até 20 pessoas</td><td class="price-val">R$ 2.300</td></tr>
+          <tr><td>Até 25 pessoas</td><td class="price-val">R$ 2.800</td></tr>
+          <tr><td>Até 30 pessoas</td><td class="price-val">R$ 3.200</td></tr>
+          <tr><td>Acima de 30 pessoas</td><td class="price-val">Sob consulta</td></tr>
+          <tr style="background:#fef9c3"><td colspan="2" style="font-size:12px;color:#92400e;text-align:center;padding:8px 16px">🧹 <strong>Taxa de limpeza: R$ 300 — NÃO inclusa</strong></td></tr>
+          <tr style="background:var(--blue-l)"><td colspan="2" style="font-size:12px;color:var(--blue);text-align:center;padding:10px 16px">🎉 Festa com convidados externos: <strong>+ R$ 30 por convidado</strong> (somente festa, sem pernoite)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- TIRADENTES -->
+    <div class="pricing-table" id="tab-tiradentes">
+      <table class="ptable">
+        <thead>
+          <tr><th colspan="2">⚔️ Tiradentes — 18/04 a 21/04/2026 (4 dias)</th></tr>
+          <tr><th colspan="2" style="font-weight:400;font-size:12px;color:var(--mid)">Check-in: Sábado 08h (18/04) · Check-out: Terça 18h (21/04)</th></tr>
+          <tr><th>Quantidade de pessoas</th><th>Valor total</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Até 10 pessoas</td><td class="price-val">R$ 2.800</td></tr>
+          <tr><td>Até 15 pessoas</td><td class="price-val">R$ 3.100</td></tr>
+          <tr><td>Até 20 pessoas</td><td class="price-val">R$ 3.600</td></tr>
+          <tr><td>Até 25 pessoas</td><td class="price-val">R$ 4.500</td></tr>
+          <tr><td>Até 30 pessoas</td><td class="price-val">R$ 5.400</td></tr>
+          <tr><td>Acima de 30 pessoas</td><td class="price-val">Sob consulta</td></tr>
+          <tr style="background:#fef9c3"><td colspan="2" style="font-size:12px;color:#92400e;text-align:center;padding:8px 16px">🧹 <strong>Taxa de limpeza: R$ 300 — NÃO inclusa</strong></td></tr>
+          <tr style="background:var(--blue-l)"><td colspan="2" style="font-size:12px;color:var(--blue);text-align:center;padding:10px 16px">🎉 Festa com convidados externos: <strong>+ R$ 30 por convidado</strong> (somente festa, sem pernoite)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- TRABALHADOR -->
+    <div class="pricing-table" id="tab-trabalhador">
+      <table class="ptable">
+        <thead>
+          <tr><th colspan="2">⚒️ Dia do Trabalhador — 01/05 a 03/05/2026 (3 dias)</th></tr>
+          <tr><th colspan="2" style="font-weight:400;font-size:12px;color:var(--mid)">Check-in: Sexta 08h · Check-out: Domingo 18h</th></tr>
+          <tr><th>Quantidade de pessoas</th><th>Valor total</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Até 10 pessoas</td><td class="price-val">R$ 2.300</td></tr>
+          <tr><td>Até 15 pessoas</td><td class="price-val">R$ 2.550</td></tr>
+          <tr><td>Até 20 pessoas</td><td class="price-val">R$ 3.000</td></tr>
+          <tr><td>Até 25 pessoas</td><td class="price-val">R$ 3.600</td></tr>
+          <tr><td>Até 30 pessoas</td><td class="price-val">R$ 4.800</td></tr>
+          <tr><td>Acima de 30 pessoas</td><td class="price-val">Sob consulta</td></tr>
+          <tr style="background:#fef9c3"><td colspan="2" style="font-size:12px;color:#92400e;text-align:center;padding:8px 16px">🧹 <strong>Taxa de limpeza: R$ 300 — NÃO inclusa</strong></td></tr>
+          <tr style="background:var(--blue-l)"><td colspan="2" style="font-size:12px;color:var(--blue);text-align:center;padding:10px 16px">🎉 Festa com convidados externos: <strong>+ R$ 30 por convidado</strong> (somente festa, sem pernoite)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="price-note">
+      <span>📌</span>
+      <span><strong>Taxa de limpeza: R$ 300 — NÃO inclusa</strong> em nenhum dos pacotes acima. Pagamento via PIX. Confirme disponibilidade pelo WhatsApp antes de efetuar o pagamento.</span>
+    </div>
+    <div class="price-note" style="margin-top:10px;background:var(--blue-l);border-color:rgba(37,99,235,.2);color:var(--blue)">
+      <span>🎉</span>
+      <span><strong>Festa com convidados externos:</strong> R$ 30,00 por convidado que participar apenas da festa e não for pernoitar — aplicável em todos os pacotes de fim de semana e feriados. Informe a quantidade total de convidados ao confirmar a reserva.</span>
+    </div>
+
+    <div style="text-align:center;margin-top:28px">
+      <a href="https://wa.me/5511941942210?text=Olá! Gostaria de verificar disponibilidade e valores do Sítio Iluminado." target="_blank" class="btn-primary" style="text-decoration:none;display:inline-block">💬 Verificar disponibilidade via WhatsApp</a>
+    </div>
   </div>
 </section>
 
-<section class="testimonials-section">
-  <span class="section-tag">Avaliações</span>
-  <h2 class="section-title">O que dizem nossos hóspedes</h2>
-  <div class="testimonials-list">
-    <div class="testimonial"><div class="testimonial-stars">★★★★★</div><p class="testimonial-text">"Sítio impecável, exatamente como nas fotos. A reserva foi super simples pelo calendário online. Voltarei com certeza!"</p><span class="testimonial-author">Ana Clara M. — Mogi das Cruzes</span></div>
-    <div class="testimonial"><div class="testimonial-stars">★★★★★</div><p class="testimonial-text">"Usamos o sítio para a formatura da minha filha. Espaço incrível, acomodou todas as 40 pessoas com muito conforto!"</p><span class="testimonial-author">Roberto S. — São Paulo</span></div>
-    <div class="testimonial"><div class="testimonial-stars">★★★★★</div><p class="testimonial-text">"Processo de reserva muito prático. Atendimento rápido pelo WhatsApp e sítio entregue perfeito. 10/10!"</p><span class="testimonial-author">Juliana F. — Guarulhos</span></div>
-    <div class="testimonial"><div class="testimonial-stars">★★★★★</div><p class="testimonial-text">"Natureza linda, estrutura ótima e Arlei super atencioso. Já indiquei para todos os amigos!"</p><span class="testimonial-author">Marcos T. — Santo André</span></div>
+<!-- AMENITIES -->
+<section class="amenities-section" id="estrutura">
+  <div class="amenities-inner">
+    <span class="sec-label">Estrutura completa</span>
+    <h2 class="sec-h2">Tudo que você precisa</h2>
+    <p class="sec-sub">Sítio completo para festas, eventos, finais de semana e feriados com a família ou amigos</p>
+    <!-- ACOMODAÇÕES -->
+    <h3 style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;margin:32px 0 16px;color:var(--dark)">🛌 Acomodações</h3>
+    <div class="amenity-grid">
+      <div class="amenity-item"><div class="amenity-icon">👥</div><span class="amenity-name">Até 22 pessoas (pernoite)</span></div>
+      <div class="amenity-item"><div class="amenity-icon">🛏️</div><span class="amenity-name">12 em camas · 10 em colchões</span></div>
+      <div class="amenity-item"><div class="amenity-icon">🛌</div><span class="amenity-name">4 Quartos · 4 Camas de casal</span></div>
+      <div class="amenity-item"><div class="amenity-icon">🛌</div><span class="amenity-name">2 Camas de solteiro · 1 Beliche</span></div>
+      <div class="amenity-item"><div class="amenity-icon">🚽</div><span class="amenity-name">4 Banheiros completos</span></div>
+      <div class="amenity-item"><div class="amenity-icon">🧺</div><span class="amenity-name">Levando colchão: até 100 pessoas</span></div>
+    </div>
+
+    <!-- PISCINA & LAZER -->
+    <h3 style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;margin:32px 0 16px;color:var(--dark)">🏊 Piscina & Lazer</h3>
+    <div class="amenity-grid">
+      <div class="amenity-item"><div class="amenity-icon">🏊</div><span class="amenity-name">Piscina com cascata</span></div>
+      <div class="amenity-item"><div class="amenity-icon">💦</div><span class="amenity-name">Hidromassagem</span></div>
+      <div class="amenity-item"><div class="amenity-icon">🫧</div><span class="amenity-name">Tratamento com ozônio</span></div>
+      <div class="amenity-item"><div class="amenity-icon">⚽</div><span class="amenity-name">Campo de futebol</span></div>
+      <div class="amenity-item"><div class="amenity-icon">🏐</div><span class="amenity-name">Quadra de vôlei</span></div>
+      <div class="amenity-item"><div class="amenity-icon">💒</div><span class="amenity-name">Capela</span></div>
+    </div>
+
+    <!-- ÁREA GOURMET -->
+    <h3 style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;margin:32px 0 16px;color:var(--dark)">🍖 Área Gourmet & Entretenimento</h3>
+    <div class="amenity-grid">
+      <div class="amenity-item"><div class="amenity-icon">🥩</div><span class="amenity-name">Churrasqueira coberta</span></div>
+      <div class="amenity-item"><div class="amenity-icon">🍕</div><span class="amenity-name">Forno de pizza a lenha</span></div>
+      <div class="amenity-item"><div class="amenity-icon">🎉</div><span class="amenity-name">Salão de festas</span></div>
+      <div class="amenity-item"><div class="amenity-icon">🎱</div><span class="amenity-name">Mesa de sinuca</span></div>
+      <div class="amenity-item"><div class="amenity-icon">🏓</div><span class="amenity-name">Ping-pong</span></div>
+      <div class="amenity-item"><div class="amenity-icon">🔥</div><span class="amenity-name">Lareira</span></div>
+    </div>
+
+    <!-- INFRAESTRUTURA -->
+    <h3 style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;margin:32px 0 16px;color:var(--dark)">✅ Infraestrutura</h3>
+    <div class="amenity-grid">
+      <div class="amenity-item"><div class="amenity-icon">📶</div><span class="amenity-name">Wi-Fi</span></div>
+      <div class="amenity-item"><div class="amenity-icon">💧</div><span class="amenity-name">Água filtrada em todo o sítio</span></div>
+      <div class="amenity-item"><div class="amenity-icon">🛣️</div><span class="amenity-name">Asfalto até a porta</span></div>
+      <div class="amenity-item"><div class="amenity-icon">🚗</div><span class="amenity-name">100 vagas de estacionamento</span></div>
+    </div>
+
+    <!-- LOCALIZAÇÃO -->
+    <h3 style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;margin:32px 0 16px;color:var(--dark)">📍 Localização privilegiada</h3>
+    <div style="background:#fff;border-radius:12px;border:1px solid var(--border);padding:24px;margin-bottom:8px">
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;align-items:flex-start;gap:10px;font-size:14px"><span style="font-size:20px">📍</span><span><strong>Biritiba Mirim / Mogi das Cruzes – SP</strong><br><span style="color:var(--mid)">Apenas 20 minutos do Shopping Mogi</span></span></div>
+        <div style="display:flex;align-items:flex-start;gap:10px;font-size:14px"><span style="font-size:20px">🚗</span><span><strong>Fácil acesso</strong> — estrada totalmente asfaltada até a porta</span></div>
+        <div style="display:flex;align-items:flex-start;gap:10px;font-size:14px"><span style="font-size:20px">🏪</span><span><strong>1 km da cidade</strong> — mercado, padaria, posto de saúde próximos</span></div>
+        <div style="display:flex;align-items:flex-start;gap:10px;font-size:14px"><span style="font-size:20px">🌿</span><span>Próximo a <strong>áreas naturais</strong> e pontos turísticos da região</span></div>
+        <div style="display:flex;align-items:flex-start;gap:10px;font-size:14px"><span style="font-size:20px">⏱️</span><span><strong>Apenas 1 hora de São Paulo</strong> — perfeito para finais de semana</span></div>
+      </div>
+    </div>
+
+    <!-- IDEAL PARA -->
+    <h3 style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;margin:32px 0 16px;color:var(--dark)">✨ Ideal para</h3>
+    <div class="amenity-grid">
+      <div class="amenity-item"><div class="amenity-icon">🗓️</div><span class="amenity-name">Finais de semana e feriados</span></div>
+      <div class="amenity-item"><div class="amenity-icon">🏖️</div><span class="amenity-name">Temporada e férias</span></div>
+      <div class="amenity-item"><div class="amenity-icon">👨‍👩‍👧</div><span class="amenity-name">Famílias grandes e grupos</span></div>
+      <div class="amenity-item"><div class="amenity-icon">🎊</div><span class="amenity-name">Confraternizações e retiros</span></div>
+      <div class="amenity-item"><div class="amenity-icon">🎓</div><span class="amenity-name">Formaturas e aniversários</span></div>
+      <div class="amenity-item"><div class="amenity-icon">💼</div><span class="amenity-name">Eventos corporativos</span></div>
+    </div>
   </div>
 </section>
 
+<!-- VIDEO -->
+<section style="padding:48px 20px;background:#0f172a;text-align:center" id="video">
+  <div style="max-width:480px;margin:0 auto">
+    <span class="sec-label" style="color:#4ade80">Vídeo</span>
+    <h2 class="sec-h2" style="color:#fff;margin-bottom:8px">Veja o sítio em vídeo</h2>
+    <p style="color:rgba(255,255,255,.6);font-size:15px;margin-bottom:28px">Um passeio real pelo Sítio Iluminado 🌿</p>
+    <div style="position:relative;width:100%;max-width:340px;margin:0 auto;border-radius:16px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.5)">
+      <iframe
+        src="https://www.youtube.com/embed/ZM-ybTJY4qA"
+        title="Sítio Iluminado — vídeo"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+        style="width:100%;aspect-ratio:9/16;display:block">
+      </iframe>
+    </div>
+    <p style="margin-top:20px">
+      <a href="https://www.youtube.com/shorts/ZM-ybTJY4qA" target="_blank" style="color:#4ade80;font-size:14px;text-decoration:none">▶ Assistir no YouTube</a>
+    </p>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery-section" id="galeria">
+  <div class="gallery-inner">
+    <span class="sec-label">Galeria de fotos</span>
+    <h2 class="sec-h2">Conheça o espaço</h2>
+    <p class="sec-sub">Veja como é o Sítio Iluminado por dentro e por fora</p>
+    <div class="gallery-grid" id="gallery-grid">
+      <!-- Filled by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section">
+  <div class="about-inner">
+    <span class="sec-label">Sobre o sítio</span>
+    <h2 class="sec-h2">Sítio Iluminado</h2>
+    <p class="sec-sub" style="margin-bottom:16px">🌿 Localizado em Biritiba Mirim / Mogi das Cruzes – SP, a apenas <strong style="color:#60a5fa">1 hora de São Paulo</strong> e 20 minutos do Shopping Mogi. Estrada totalmente asfaltada até a porta.</p>
+    <p class="sec-sub" style="margin-bottom:16px">💦 Piscina com cascata, hidromassagem e tratamento em ozônio. Água filtrada em todo o sítio. Acomoda até <strong style="color:#60a5fa">22 pessoas</strong> em camas (4 quartos, 4 banheiros) e até 100 pessoas trazendo colchões.</p>
+    <p class="sec-sub" style="margin-bottom:16px">🍖 Churrasqueira coberta, forno de pizza a lenha, salão de festas com sinuca e ping-pong, lareira, campo de futebol, quadra de vôlei, capela e 100 vagas de estacionamento.</p>
+    <p class="sec-sub">Gerenciado diretamente pelo proprietário Arlei — sem intermediários, atendimento personalizado e comunicação rápida pelo WhatsApp.</p>
+    <div class="about-social">
+      <a href="https://www.instagram.com/sitioiluminadotemporada/" target="_blank" class="social-btn">
+        📸 @sitioiluminadotemporada
+      </a>
+      <a href="https://wa.me/5511941942210" target="_blank" class="social-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        (11) 94194-2210
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
 <section class="contact-section" id="contato">
-  <span class="section-tag">Fale conosco</span>
-  <h2 class="section-title">Pronto para reservar?</h2>
-  <p class="section-subtitle">Entre em contato e garanta as datas do seu evento ou temporada</p>
-  <div class="contact-options">
-    <a href="https://wa.me/5511941942210?text=Olá! Gostaria de informações sobre os sítios." target="_blank" class="contact-option"><div class="contact-icon">💬</div><div class="contact-option-text"><strong>WhatsApp</strong><span>Resposta em minutos</span></div></a>
-    <a href="tel:+5511941942210" class="contact-option"><div class="contact-icon">📞</div><div class="contact-option-text"><strong>Telefone</strong><span>(11) 94194-2210</span></div></a>
+  <div class="contact-inner">
+    <span class="sec-label">Contato</span>
+    <h2 class="sec-h2">Pronto para reservar?</h2>
+    <p class="sec-sub">Fale diretamente com Arlei pelo WhatsApp e garanta sua data!</p>
+    <a href="https://wa.me/5511941942210?text=Olá Arlei! Quero fazer uma reserva no Sítio Iluminado." target="_blank" class="wa-btn-big">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Reservar pelo WhatsApp
+    </a>
   </div>
-  <a href="https://wa.me/5511941942210?text=Olá! Quero reservar um sítio para temporada." target="_blank" class="whatsapp-btn-big">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-    Reservar pelo WhatsApp agora
-  </a>
 </section>
 
 <footer>
-  <div class="footer-logo">Hospeda<span>Temporada</span></div>
-  <p class="footer-tagline">Sítios para temporada, eventos, festas e formaturas<br>em São Paulo e região 🌿</p>
-  <div class="footer-links">
-    <a href="#imoveis">Sítios</a>
-    <a href="#contato">Contato</a>
+  <div class="foot-logo"><img src="logo.jpg" alt="Sítio Iluminado"></div>
+  <p class="foot-sub">Mogi das Cruzes / Biritiba Mirim, SP · 1h de São Paulo</p>
+  <div class="foot-links">
+    <a href="#reservar">Reservar</a>
+    <a href="#precos">Preços</a>
+    <a href="#estrutura">Estrutura</a>
+    <a href="#galeria">Galeria</a>
+    <a href="https://www.instagram.com/sitioiluminadotemporada/" target="_blank">Instagram</a>
     <a href="https://wa.me/5511941942210" target="_blank">WhatsApp</a>
-    <a href="admin.html" style="opacity:0.3;">Admin</a>
   </div>
-  <p class="footer-copy">© 2026 Hospeda Temporada — Todos os direitos reservados</p>
+  <p class="foot-copy">© 2026 Sítio Iluminado · Proprietário: Arlei</p>
 </footer>
 
-<a href="https://wa.me/5511941942210?text=Olá! Tenho interesse em um sítio para temporada." target="_blank" class="whatsapp-float" aria-label="WhatsApp">
-  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+<a href="https://wa.me/5511941942210?text=Olá! Quero fazer uma reserva no Sítio Iluminado." target="_blank" class="wa-float">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
 
-<!-- MODAL RESERVA -->
-<div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this)closeModal()">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal()">✕</button>
-    <h2 class="modal-title">Solicitar reserva</h2>
-    <div class="form-group"><label>Seu nome</label><input type="text" id="reserve-name" placeholder="Nome completo"></div>
-    <div class="form-group"><label>WhatsApp</label><input type="tel" id="reserve-phone" placeholder="(00) 00000-0000"></div>
-    <div class="form-group"><label>Sítio desejado</label><select id="reserve-property"><option value="">Selecione o sítio</option></select></div>
-    <div class="form-group"><label>Tipo de ocasião</label><select><option>Temporada / Férias</option><option>Festa de formatura</option><option>Evento corporativo</option><option>Aniversário</option><option>Casamento</option><option>Retiro</option><option>Outro</option></select></div>
-    <div class="form-group"><label>Entrada</label><input type="date" id="modal-checkin"></div>
-    <div class="form-group"><label>Saída</label><input type="date" id="modal-checkout"></div>
-    <div class="form-group"><label>Nº de pessoas</label><input type="number" placeholder="Quantas pessoas?" min="1"></div>
-    <button class="form-submit" onclick="sendReserveWhatsApp()">Enviar solicitação via WhatsApp</button>
+<div class="toast" id="toast"></div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="if(event.target===this)closeLightbox()">
+  <button class="lb-close" onclick="closeLightbox()">✕</button>
+  <div class="lb-img-wrap">
+    <button class="lb-arrow lb-arrow-prev" onclick="lbPrev()">‹</button>
+    <img id="lb-img" src="" alt="">
+    <button class="lb-arrow lb-arrow-next" onclick="lbNext()">›</button>
+  </div>
+  <div class="lb-info">
+    <div class="lb-label" id="lb-label"></div>
+    <div class="lb-desc" id="lb-desc"></div>
+    <div class="lb-counter" id="lb-counter"></div>
   </div>
 </div>
 
-<script src="sitios-data.js"></script>
-<script>
-  function buildCards() {
-    const grid = document.getElementById('properties-grid');
-    const sel = document.getElementById('reserve-property');
-    const ativos = SITIOS.filter(s => s.ativo);
-    document.getElementById('stat-count').textContent = ativos.length + '+';
-    grid.innerHTML = '';
-    ativos.forEach(s => {
-      const isIluminado = s.id === 'sitio-iluminado';
-      const link = isIluminado ? 'sitio-iluminado.html' : `sitio-template.html?id=${s.id}`;
-      const card = document.createElement('div');
-      card.className = 'property-card';
-      card.innerHTML = `
-        <img class="property-img" src="${s.fotoCapa}" alt="${s.nome}" loading="lazy">
-        <div class="property-body">
-          <span class="property-tag">${s.tipo}</span>
-          <h3 class="property-name">${s.nome}</h3>
-          <p class="property-location">📍 ${s.localizacao}</p>
-          <div class="property-features">${s.features.slice(0,3).map(f=>`<span class="property-feature">${f}</span>`).join('')}</div>
-          <p class="property-price">${s.preco}${s.precoDetalhe?`<span> ${s.precoDetalhe}</span>`:''}</p>
-          <a href="${link}" class="property-btn">Ver disponibilidade</a>
-        </div>`;
-      grid.appendChild(card);
-      const opt = document.createElement('option');
-      opt.value = s.nome;
-      opt.textContent = s.nome + ' — ' + s.localizacao;
-      sel.appendChild(opt);
-    });
-  }
-  buildCards();
+<!-- DETAIL MODAL -->
+<div class="detail-modal-bg" id="detail-modal" onclick="if(event.target===this)closeDetail()">
+  <div class="detail-modal">
+    <h3>
+      <span>Detalhes da reserva</span>
+      <button class="detail-close" onclick="closeDetail()">✕</button>
+    </h3>
+    <div id="detail-content"></div>
+  </div>
+</div>
 
-  function openModal() { document.getElementById('modal-overlay').classList.add('active'); document.body.style.overflow='hidden'; }
-  function closeModal() { document.getElementById('modal-overlay').classList.remove('active'); document.body.style.overflow=''; }
-  function sendReserveWhatsApp() {
-    const name = document.getElementById('reserve-name').value||'não informado';
-    const phone = document.getElementById('reserve-phone').value||'não informado';
-    const property = document.getElementById('reserve-property').value||'não informado';
-    const checkin = document.getElementById('modal-checkin').value||'não informado';
-    const checkout = document.getElementById('modal-checkout').value||'não informado';
-    const msg = encodeURIComponent(`Olá! Tenho interesse em reservar:\n\nNome: ${name}\nTelefone: ${phone}\nSítio: ${property}\nCheck-in: ${checkin}\nCheck-out: ${checkout}\n\nAguardo confirmação!`);
-    window.open(`https://wa.me/5511941942210?text=${msg}`,'_blank');
+<script>
+// ===== STORAGE =====
+const SK = 'sitio_reservations';
+function getRes(){try{return JSON.parse(localStorage.getItem(SK))||[];}catch(e){return[];}}
+function saveRes(arr){localStorage.setItem(SK,JSON.stringify(arr));}
+function genId(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
+
+// ===== GALLERY IMAGES (fotos reais do Sítio Iluminado) =====
+const GALLERY_IMGS = [
+  {src:'fotos/piscina-principal.jpg',label:'🏊 Piscina com hidromassagem e cascata',desc:'Piscina com hidromassagem, cascata e tratamento de água com ozônio. Perfeita para relaxar e curtir com a família e amigos.'},
+  {src:'fotos/piscina-hidromassagem.jpg',label:'💦 Piscina com hidromassagem',desc:'Área de hidromassagem integrada à piscina principal. Conforto e lazer em um único espaço.'},
+  {src:'fotos/piscina-cascata.jpg',label:'🏊 Piscina — Hidromassagem e Cascata',desc:'Vista completa da piscina com cascata d\'água e área de hidromassagem. Água tratada com sistema de ozônio.'},
+  {src:'fotos/vista-piscina.jpg',label:'🌅 Vista da piscina',desc:'Vista panorâmica da piscina a partir do salão. Integração perfeita entre área interna e área de lazer.'},
+  {src:'fotos/churrasqueira.jpg',label:'🥩 Churrasqueira e forno de pizza 🍕',desc:'Churrasqueira coberta de alvenaria com forno de pizza de lenha. Espaço gourmet completo para eventos e festas.'},
+  {src:'fotos/salao-festas.jpg',label:'🎊 Salão de festas e jogos 🎱🎯',desc:'Salão amplo com sinuca, ping-pong e outros jogos. Espaço ideal para festa com capacidade para grandes grupos.'},
+  {src:'fotos/salao-terraco.jpg',label:'🌳 Salão com terraço ✅',desc:'Frente do salão com terraço aberto. Vista privilegiada para a área verde e piscina.'},
+  {src:'fotos/sala-madeira.jpg',label:'🪵 Sala — Casa de madeira',desc:'Sala aconchegante na casa de madeira. Ambiente rústico e confortável com lareira para os dias mais frios.'},
+  {src:'fotos/sala-vista-piscina.jpg',label:'💦 Sala — Dois ambientes com vista piscina',desc:'Sala integrada com dois ambientes e vista direta para a piscina. Conforto e integração com a área de lazer.'},
+  {src:'fotos/quarto-2.jpg',label:'🛏️ Quarto 2',desc:'Quarto 2 confortável com camas de casal. Acomoda até 2 pessoas com conforto e privacidade.'},
+  {src:'fotos/quarto-3.jpg',label:'🛏️ Quarto 3',desc:'Quarto 3 com camas individuais. Ideal para grupos de amigos ou crianças.'},
+  {src:'fotos/quarto-4.jpg',label:'🛏️ Quarto 4',desc:'Quarto 4 — Sítio com 4 quartos no total, acomodando até 12 pessoas em camas + 10 em colchonetes.'},
+  {src:'fotos/banheiro-completo.jpg',label:'🛀 Banheiro completo 🚾',desc:'Banheiro completo com pia, vaso e chuveiro. O sítio conta com 4 banheiros no total para maior conforto dos hóspedes.'},
+  {src:'fotos/banheiro-box.jpg',label:'🛀 Banheiro com box',desc:'Banheiro com box de vidro. Estrutura completa e bem cuidada para garantir o conforto de todos.'},
+  {src:'fotos/quadra-volei.jpg',label:'🏐 Quadra de vôlei',desc:'Quadra de vôlei gramada para diversão garantida. Perfeita para grupos que querem se exercitar e se divertir.'},
+  {src:'fotos/campo-futebol.jpg',label:'⚽ Campo de futebol',desc:'Campo de futebol gramado com traves. Diversão certa para os amantes do futebol durante os finais de semana.'},
+  {src:'fotos/capela.jpg',label:'💒 Capela',desc:'Capela no terreno do sítio — ideal para casamentos, cerimônias religiosas e momentos especiais em família.'},
+  {src:'fotos/sitio-externo.jpg',label:'🌳 Sítio Iluminado',desc:'Vista externa do Sítio Iluminado em Biritiba Mirim / Mogi das Cruzes. Área verde exuberante, 100 vagas de estacionamento e asfalto até a porta.'},
+  {src:'fotos/bambu.jpg',label:'🎋 Bambuzal',desc:'Área de bambu do sítio. Paisagismo natural que traz charme, frescor e uma atmosfera tranquila e bucólica.'},
+  {src:'fotos/palmeiras.jpg',label:'🌴 Palmeiras',desc:'Área de palmeiras imperiais que emolduram o sítio. Paisagem tropical deslumbrante em pleno interior de São Paulo.'},
+  {src:'fotos/trilha-palmeiras.jpg',label:'🌿 Trilha entre palmeiras',desc:'Caminho arborizado entre as palmeiras do sítio. Um convite para caminhar, relaxar e se conectar com a natureza.'},
+  {src:'fotos/area-verde.jpg',label:'🌳 Área verde',desc:'Área verde exuberante do Sítio Iluminado. Natureza preservada com muito espaço para curtir ao ar livre.'},
+  {src:'fotos/area-lazer.jpg',label:'🏡 Área de lazer',desc:'Vista geral da área de lazer do Sítio Iluminado. Espaço amplo e aconchegante, perfeito para reunir família e amigos.'},
+  {src:'fotos/foto-extra-01.jpg',label:'📸 Sítio Iluminado',desc:'Mais um ângulo do Sítio Iluminado em Biritiba Mirim / Mogi das Cruzes.'},
+  {src:'fotos/foto-extra-02.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
+  {src:'fotos/foto-extra-03.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
+  {src:'fotos/foto-extra-04.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
+  {src:'fotos/foto-extra-05.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
+  {src:'fotos/foto-extra-06.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
+  {src:'fotos/foto-extra-07.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
+  {src:'fotos/foto-extra-08.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
+  {src:'fotos/foto-extra-09.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
+  {src:'fotos/foto-extra-10.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
+  {src:'fotos/foto-extra-11.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
+  {src:'fotos/foto-extra-12.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
+  {src:'fotos/foto-extra-13.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
+  {src:'fotos/foto-extra-14.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
+  {src:'fotos/foto-extra-15.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
+  {src:'fotos/foto-extra-16.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
+  {src:'fotos/foto-extra-17.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
+  {src:'fotos/foto-extra-18.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
+  {src:'fotos/foto-extra-19.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
+  {src:'fotos/foto-extra-20.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
+];
+
+function renderGallery(){
+  const g = document.getElementById('gallery-grid');
+  g.innerHTML = GALLERY_IMGS.map((i,idx)=>`
+    <div class="gallery-item" onclick="openLightbox(${idx})">
+      <img class="gallery-img" src="${i.src}" alt="${i.label}" loading="lazy">
+      <div class="gallery-overlay"><span>${i.label}</span></div>
+    </div>`).join('');
+}
+
+// ===== LIGHTBOX =====
+let lbIdx = 0;
+function openLightbox(idx){
+  lbIdx = idx;
+  showLightbox();
+}
+function showLightbox(){
+  const i = GALLERY_IMGS[lbIdx];
+  document.getElementById('lb-img').src = i.src;
+  document.getElementById('lb-img').alt = i.label;
+  document.getElementById('lb-label').textContent = i.label;
+  document.getElementById('lb-desc').textContent = i.desc;
+  document.getElementById('lb-counter').textContent = `${lbIdx+1} / ${GALLERY_IMGS.length}`;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox(){
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function lbPrev(){ lbIdx = (lbIdx - 1 + GALLERY_IMGS.length) % GALLERY_IMGS.length; showLightbox(); }
+function lbNext(){ lbIdx = (lbIdx + 1) % GALLERY_IMGS.length; showLightbox(); }
+document.addEventListener('keydown', e => {
+  if(!document.getElementById('lightbox').classList.contains('open')) return;
+  if(e.key === 'ArrowLeft') lbPrev();
+  if(e.key === 'ArrowRight') lbNext();
+  if(e.key === 'Escape') closeLightbox();
+});
+
+// ===== CALENDAR =====
+let calDate = new Date();
+let selStart = null, selEnd = null;
+const MONTHS = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+const DAYS_SH = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+
+// Feriados: data de início → {label, cor}
+const HOLIDAYS = {
+  '2026-04-03': {label:'🐣 Páscoa',       color:'#7c3aed'},
+  '2026-04-04': {label:'🐣 Páscoa',       color:'#7c3aed'},
+  '2026-04-05': {label:'🐣 Páscoa',       color:'#7c3aed'},
+  '2026-04-18': {label:'⚔️ Tiradentes',   color:'#b45309'},
+  '2026-04-19': {label:'⚔️ Tiradentes',   color:'#b45309'},
+  '2026-04-20': {label:'⚔️ Tiradentes',   color:'#b45309'},
+  '2026-04-21': {label:'⚔️ Tiradentes',   color:'#b45309'},
+  '2026-05-01': {label:'⚒️ Trabalhador',  color:'#0369a1'},
+  '2026-05-02': {label:'⚒️ Trabalhador',  color:'#0369a1'},
+  '2026-05-03': {label:'⚒️ Trabalhador',  color:'#0369a1'},
+  '2026-05-09': {label:'👩 Dia das Mães', color:'#be185d'},
+  '2026-05-10': {label:'👩 Dia das Mães', color:'#be185d'},
+  '2026-08-08': {label:'👨 Dia dos Pais', color:'#1d4ed8'},
+  '2026-08-09': {label:'👨 Dia dos Pais', color:'#1d4ed8'},
+  '2026-09-05': {label:'🎖️ Independência',color:'#15803d'},
+  '2026-09-06': {label:'🎖️ Independência',color:'#15803d'},
+  '2026-09-07': {label:'🎖️ Independência',color:'#15803d'},
+  '2026-10-10': {label:'👶 Crianças',     color:'#ea580c'},
+  '2026-10-11': {label:'👶 Crianças',     color:'#ea580c'},
+  '2026-10-12': {label:'👶 Crianças',     color:'#ea580c'},
+  '2026-10-30': {label:'🕯️ Finados',      color:'#6b21a8'},
+  '2026-10-31': {label:'🕯️ Finados',      color:'#6b21a8'},
+  '2026-11-01': {label:'🕯️ Finados',      color:'#6b21a8'},
+  '2026-11-02': {label:'🕯️ Finados',      color:'#6b21a8'},
+  '2026-11-14': {label:'🇧🇷 Proclamação', color:'#15803d'},
+  '2026-11-15': {label:'🇧🇷 Proclamação', color:'#15803d'},
+  '2026-11-20': {label:'✊ Consciência',  color:'#92400e'},
+  '2026-11-21': {label:'✊ Consciência',  color:'#92400e'},
+  '2026-11-22': {label:'✊ Consciência',  color:'#92400e'},
+  '2026-12-22': {label:'🎄 Natal',        color:'#dc2626'},
+  '2026-12-23': {label:'🎄 Natal',        color:'#dc2626'},
+  '2026-12-24': {label:'🎄 Natal',        color:'#dc2626'},
+  '2026-12-25': {label:'🎄 Natal',        color:'#dc2626'},
+  '2026-12-26': {label:'🎄 Natal',        color:'#dc2626'},
+  '2027-02-05': {label:'🎭 Carnaval',     color:'#7c3aed'},
+  '2027-02-06': {label:'🎭 Carnaval',     color:'#7c3aed'},
+  '2027-02-07': {label:'🎭 Carnaval',     color:'#7c3aed'},
+  '2027-02-08': {label:'🎭 Carnaval',     color:'#7c3aed'},
+  '2027-02-09': {label:'🎭 Carnaval',     color:'#7c3aed'},
+};
+
+function getReservedDates(){
+  const res = getRes();
+  const map = {}; // dateStr -> {id, status}
+  res.forEach(r => {
+    let cur = new Date(r.checkin);
+    const end = new Date(r.checkout);
+    while(cur <= end){
+      const ds = cur.toISOString().split('T')[0];
+      map[ds] = {id: r.id, status: r.status};
+      cur.setDate(cur.getDate()+1);
+    }
+  });
+  return map;
+}
+
+function renderCal(){
+  const today = new Date(); today.setHours(0,0,0,0);
+  document.getElementById('cal-label').textContent = MONTHS[calDate.getMonth()] + ' ' + calDate.getFullYear();
+  const resMap = getReservedDates();
+  const grid = document.getElementById('cal-grid');
+  grid.innerHTML = DAYS_SH.map(d=>`<div class="cal-head">${d}</div>`).join('');
+
+  const firstDay = new Date(calDate.getFullYear(), calDate.getMonth(), 1).getDay();
+  for(let i=0;i<firstDay;i++) grid.innerHTML += `<div class="cal-day empty"></div>`;
+
+  const daysInMonth = new Date(calDate.getFullYear(), calDate.getMonth()+1, 0).getDate();
+  for(let d=1;d<=daysInMonth;d++){
+    const dt = new Date(calDate.getFullYear(), calDate.getMonth(), d);
+    const ds = dt.toISOString().split('T')[0];
+    const isPast = dt < today;
+    const res = resMap[ds];
+    let cls = 'cal-day ';
+    let dot = '';
+    let click = '';
+    const holiday = HOLIDAYS[ds];
+    if(isPast){ cls += 'past'; }
+    else if(res){
+      cls += 'reserved-paid';
+      dot = `<div class="cal-day-dot" style="background:var(--red)"></div>`;
+      click = `onclick="openDetailById('${res.id}')"`;
+    } else {
+      cls += 'free';
+      if(selStart && ds === selStart) cls += ' sel-start';
+      else if(selEnd && ds === selEnd) cls += ' sel-end';
+      else if(selStart && selEnd && ds > selStart && ds < selEnd) cls += ' sel-range';
+      click = `onclick="selectDay('${ds}')"`;
+    }
+    // Holiday badge below day number
+    let holidayTag = '';
+    if(holiday && !res){
+      holidayTag = `<div class="cal-hday-label" style="color:${holiday.color}">${holiday.label}</div>`;
+      if(!cls.includes('sel-') && !cls.includes('past')) cls += ' has-holiday';
+    }
+    grid.innerHTML += `<div class="${cls}" ${click} style="${holiday && !res ? `border-bottom:2px solid ${holiday.color}` : ''}">${d}${dot}${holidayTag}</div>`;
   }
+}
+
+function selectDay(ds){
+  if(!selStart || (selStart && selEnd)){
+    selStart = ds; selEnd = null;
+  } else if(ds > selStart){
+    selEnd = ds;
+    document.getElementById('disp-ci').textContent = fmtDate(selStart);
+    document.getElementById('disp-ci').classList.remove('empty');
+    document.getElementById('disp-co').textContent = fmtDate(selEnd);
+    document.getElementById('disp-co').classList.remove('empty');
+    updateCalcFromDates();
+  } else {
+    selStart = ds; selEnd = null;
+    document.getElementById('disp-ci').textContent = fmtDate(selStart);
+    document.getElementById('disp-ci').classList.remove('empty');
+    document.getElementById('disp-co').textContent = 'Selecione no calendário';
+    document.getElementById('disp-co').classList.add('empty');
+  }
+  renderCal();
+}
+
+function fmtDate(ds){
+  if(!ds) return '—';
+  const [y,m,d] = ds.split('-');
+  return `${d}/${m}/${y}`;
+}
+
+function calPrev(){ calDate.setMonth(calDate.getMonth()-1); renderCal(); }
+function calNext(){ calDate.setMonth(calDate.getMonth()+1); renderCal(); }
+
+// ===== SUBMIT =====
+function submitReserve(){
+  const name = document.getElementById('f-name').value.trim();
+  const phone = document.getElementById('f-phone').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+  const guests = document.getElementById('f-guests').value;
+  const occasion = document.getElementById('f-occasion').value;
+  const obs = document.getElementById('f-obs').value.trim();
+
+  if(!name){ showToast('Por favor, informe o nome completo.'); return; }
+  if(!phone){ showToast('Por favor, informe o WhatsApp.'); return; }
+  if(!guests){ showToast('Por favor, selecione a quantidade de pessoas.'); return; }
+  if(!selStart || !selEnd){ showToast('Selecione as datas de check-in e check-out no calendário.'); return; }
+
+  // Check conflict
+  const resMap = getReservedDates();
+  let cur = new Date(selStart);
+  const end = new Date(selEnd);
+  while(cur <= end){
+    const ds = cur.toISOString().split('T')[0];
+    if(resMap[ds]){ showToast('⚠️ Algumas datas selecionadas já estão reservadas!'); return; }
+    cur.setDate(cur.getDate()+1);
+  }
+
+  // Save
+  const newRes = {
+    id: genId(),
+    name, phone, email,
+    guests, occasion, obs,
+    checkin: selStart,
+    checkout: selEnd,
+    status: 'pending',
+    createdAt: new Date().toISOString()
+  };
+  const arr = getRes();
+  arr.push(newRes);
+  saveRes(arr);
+
+  // WhatsApp
+  const msg = encodeURIComponent(
+    `🏡 *Solicitação de Reserva — Sítio Iluminado*\n\n` +
+    `*Nome:* ${name}\n` +
+    `*WhatsApp:* ${phone}\n` +
+    `*E-mail:* ${email||'Não informado'}\n` +
+    `*Check-in:* ${fmtDate(selStart)}\n` +
+    `*Check-out:* ${fmtDate(selEnd)}\n` +
+    `*Pessoas:* ${guests}\n` +
+    `*Ocasião:* ${occasion}\n` +
+    `*Obs:* ${obs||'—'}\n\n` +
+    `Aguardo confirmação! 😊`
+  );
+  window.open(`https://wa.me/5511941942210?text=${msg}`, '_blank');
+
+  // Reset
+  selStart = null; selEnd = null;
+  document.getElementById('f-name').value = '';
+  document.getElementById('f-phone').value = '';
+  document.getElementById('f-email').value = '';
+  document.getElementById('f-guests').value = '';
+  document.getElementById('f-obs').value = '';
+  document.getElementById('disp-ci').textContent = 'Selecione no calendário';
+  document.getElementById('disp-ci').classList.add('empty');
+  document.getElementById('disp-co').textContent = 'Selecione no calendário';
+  document.getElementById('disp-co').classList.add('empty');
+
+  renderCal();
+  renderResList();
+  showToast('✅ Solicitação enviada! Aguarde confirmação pelo WhatsApp.', true);
+}
+
+// ===== RESERVATIONS LIST =====
+let panelOpen = false;
+let adminAuth = false;
+function togglePanel(){
+  if(!panelOpen && !adminAuth){
+    const pw = prompt('🔐 Senha do painel admin:');
+    if(pw !== 'hospeda2026'){ if(pw!==null) alert('Senha incorreta!'); return; }
+    adminAuth = true;
+    showAdminFab();
+  }
+  panelOpen = !panelOpen;
+  document.getElementById('reservations-list').style.display = panelOpen ? 'block' : 'none';
+  document.getElementById('toggle-btn').textContent = panelOpen ? '▲ Fechar' : '▼ Ver';
+  if(panelOpen){renderResList();showOutrosAdminBtn();}
+  else{document.getElementById('outros-admin-panel').classList.remove('open');};
+}
+
+function showOutrosAdminBtn(){
+  // Show a small button to manage outros sítios within the admin panel
+  const rl = document.getElementById('reservations-list');
+  if(!rl) return;
+  if(!document.getElementById('btn-manage-outros')){
+    const btn = document.createElement('button');
+    btn.id = 'btn-manage-outros';
+    btn.textContent = '🏡 Gerenciar outros sítios';
+    btn.style.cssText = 'display:block;width:100%;background:var(--blue-l);color:var(--accent);border:1px solid rgba(37,99,235,.2);border-radius:8px;padding:11px;font-size:13px;font-weight:700;cursor:pointer;margin-top:16px';
+    btn.onclick = () => document.getElementById('outros-admin-panel').classList.toggle('open');
+    rl.parentNode.appendChild(btn);
+  }
+}
+
+function renderResList(){
+  const arr = getRes();
+  const el = document.getElementById('reservations-list');
+  if(!arr.length){
+    el.innerHTML = `<div class="no-reservations">Nenhuma reserva registrada ainda.<br><small>As reservas feitas pelo site aparecem aqui.</small></div>`;
+    return;
+  }
+  el.innerHTML = arr.slice().reverse().map(r => `
+    <div class="res-item" id="ri-${r.id}">
+      <div class="res-item-top">
+        <div>
+          <div class="res-name">${r.name}</div>
+          <div class="res-dates">📅 ${fmtDate(r.checkin)} → ${fmtDate(r.checkout)} · ${r.guests}</div>
+        </div>
+        <button class="res-badge ${r.status==='paid'?'badge-paid':'badge-pending'}" onclick="toggleStatus('${r.id}')">
+          ${r.status==='paid'?'✅ Pago':'⏳ Pendente'}
+        </button>
+      </div>
+      <div class="res-info">
+        <span class="res-info-item">📞 <strong>${r.phone}</strong></span>
+        ${r.email?`<span class="res-info-item">📧 <strong>${r.email}</strong></span>`:''}
+        <span class="res-info-item">🎉 <strong>${r.occasion}</strong></span>
+      </div>
+      ${r.obs?`<div style="margin-top:8px;font-size:12px;color:var(--mid)">💬 ${r.obs}</div>`:''}
+      <button class="res-delete" onclick="deleteRes('${r.id}')" title="Excluir reserva">🗑</button>
+    </div>
+  `).join('');
+}
+
+function toggleStatus(id){
+  const arr = getRes();
+  const r = arr.find(x=>x.id===id);
+  if(!r) return;
+  r.status = r.status === 'paid' ? 'pending' : 'paid';
+  saveRes(arr);
+  renderResList();
+  renderCal();
+  showToast(r.status==='paid'?'✅ Marcado como Pago':'⏳ Marcado como Pendente', r.status==='paid');
+}
+
+function deleteRes(id){
+  if(!confirm('Excluir esta reserva?')) return;
+  saveRes(getRes().filter(x=>x.id!==id));
+  renderResList();
+  renderCal();
+  showToast('Reserva excluída.');
+}
+
+// ===== DETAIL MODAL (click on reserved day) =====
+function openDetailById(id){
+  const r = getRes().find(x=>x.id===id);
+  if(!r) return;
+  document.getElementById('detail-content').innerHTML = `
+    <div class="detail-row"><strong>Nome</strong><span>${r.name}</span></div>
+    <div class="detail-row"><strong>WhatsApp</strong><span>${r.phone}</span></div>
+    <div class="detail-row"><strong>E-mail</strong><span>${r.email||'—'}</span></div>
+    <div class="detail-row"><strong>Check-in</strong><span>${fmtDate(r.checkin)}</span></div>
+    <div class="detail-row"><strong>Check-out</strong><span>${fmtDate(r.checkout)}</span></div>
+    <div class="detail-row"><strong>Pessoas</strong><span>${r.guests}</span></div>
+    <div class="detail-row"><strong>Ocasião</strong><span>${r.occasion}</span></div>
+    <div class="detail-row"><strong>Status</strong><span style="color:${r.status==='paid'?'var(--green)':'var(--amber)'}"><strong>${r.status==='paid'?'✅ Pago':'⏳ Pendente'}</strong></span></div>
+    ${r.obs?`<div class="detail-row"><strong>Obs</strong><span>${r.obs}</span></div>`:''}
+    <div class="detail-actions">
+      <button class="btn-pay-toggle ${r.status==='paid'?'btn-mark-pending':'btn-mark-paid'}" onclick="toggleStatus('${r.id}');closeDetail();renderCal()">
+        ${r.status==='paid'?'⏳ Marcar como Pendente':'✅ Marcar como Pago'}
+      </button>
+      <button class="btn-del-res" onclick="deleteRes('${r.id}');closeDetail()">🗑 Excluir</button>
+    </div>
+  `;
+  document.getElementById('detail-modal').classList.add('open');
+}
+function closeDetail(){ document.getElementById('detail-modal').classList.remove('open'); }
+
+// ===== PRICE CALCULATOR =====
+const PRICE_TABLE = {
+  fds:          {15:1700, 20:2000, 25:2500, 30:2800, '30+':'Sob consulta'},
+  diasdamaes:   {15:2000, 20:2300, 25:2800, 30:3200, '30+':'Sob consulta'},
+  diasdospais:  {15:2000, 20:2300, 25:2800, 30:3200, '30+':'Sob consulta'},
+  proclamacao:  {15:2000, 20:2300, 25:2800, 30:3200, '30+':'Sob consulta'},
+  pascoa:       {15:2700, 20:3200, 25:3750, 30:4200, '30+':'Sob consulta'},
+  trabalhador:  {15:2700, 20:3200, 25:3750, 30:4200, '30+':'Sob consulta'},
+  independencia:{15:2700, 20:3200, 25:3750, 30:4200, '30+':'Sob consulta'},
+  criancas:     {15:2700, 20:3200, 25:3750, 30:4200, '30+':'Sob consulta'},
+  finados:      {15:2700, 20:3200, 25:3750, 30:4200, '30+':'Sob consulta'},
+  consciencia:  {15:2700, 20:3200, 25:3750, 30:4200, '30+':'Sob consulta'},
+  tiradentes:   {10:2800, 15:3600, 20:4000, 25:4500, 30:4800, '30+':'Sob consulta'},
+  natal:        {20:20000, 25:25000, 30:30000, '30+':'Sob consulta'},
+  carnaval:     {15:12000, 20:14000, 25:17500, 30:20000, '30+':'Sob consulta'},
+  evento:       {50:2000, 100:2700, 150:3500, 200:4500, 250:6000, '250+':'A combinar'},
+};
+const PERIOD_LABEL = {
+  fds:          'Fim de semana · Check-in sáb 08h · Check-out dom 18h',
+  diasdamaes:   'Dia das Mães · 09/05 a 10/05/2026 (2 dias)',
+  diasdospais:  'Dia dos Pais · 08/08 a 09/08/2026 (2 dias)',
+  proclamacao:  'Proclamação · 14/11 a 15/11/2026 (2 dias)',
+  pascoa:       'Páscoa · 03/04 a 05/04/2026 (3 dias)',
+  trabalhador:  'Trabalhador · 01/05 a 03/05/2026 (3 dias)',
+  independencia:'Independência · 05/09 a 07/09/2026 (3 dias)',
+  criancas:     'Dia das Crianças · 10/10 a 12/10/2026 (3 dias)',
+  finados:      'Finados · 30/10 a 02/11/2026 (3 dias)',
+  consciencia:  'Consciência Negra · 20/11 a 22/11/2026 (3 dias)',
+  tiradentes:   'Tiradentes · 18/04 a 21/04/2026 (4 dias)',
+  natal:        'Natal 2026 · 22/12 a 26/12 (4 dias)',
+  carnaval:     'Carnaval 2027 · 05/02 a 09/02 (4 dias)',
+  evento:       'Diária para eventos · Festas, Casamentos, Debutantes',
+};
+
+const G_STD  = [{v:'15',l:'Até 15 pessoas'},{v:'20',l:'Até 20 pessoas'},{v:'25',l:'Até 25 pessoas'},{v:'30',l:'Até 30 pessoas'},{v:'30+',l:'Acima de 30 (sob consulta)'}];
+const G_4D   = [{v:'10',l:'Até 10 pessoas'},{v:'15',l:'Até 15 pessoas'},{v:'20',l:'Até 20 pessoas'},{v:'25',l:'Até 25 pessoas'},{v:'30',l:'Até 30 pessoas'},{v:'30+',l:'Acima de 30 (sob consulta)'}];
+const G_NATAL= [{v:'20',l:'Até 20 pessoas'},{v:'25',l:'Até 25 pessoas'},{v:'30',l:'Até 30 pessoas'},{v:'30+',l:'Acima de 30 (sob consulta)'}];
+const G_EVT  = [{v:'50',l:'Até 50 pessoas'},{v:'100',l:'51 a 100 pessoas'},{v:'150',l:'101 a 150 pessoas'},{v:'200',l:'151 a 200 pessoas'},{v:'250',l:'201 a 250 pessoas'},{v:'250+',l:'Acima de 250 (a combinar)'}];
+const GUESTS_OPTIONS = {
+  fds:G_STD, diasdamaes:G_STD, diasdospais:G_STD, proclamacao:G_STD,
+  pascoa:G_STD, trabalhador:G_STD, independencia:G_STD,
+  criancas:G_STD, finados:G_STD, consciencia:G_STD,
+  tiradentes:G_4D, natal:G_NATAL, carnaval:G_STD, evento:G_EVT,
+};
+
+function updateGuestsOptions(){
+  const period = document.getElementById('calc-period').value;
+  const sel = document.getElementById('calc-guests');
+  sel.innerHTML = '<option value="">Selecione a quantidade</option>';
+  if(!period) return;
+  (GUESTS_OPTIONS[period]||[]).forEach(o=>{
+    sel.innerHTML += `<option value="${o.v}">${o.l}</option>`;
+  });
+}
+
+function calcPrice(){
+  const guests = document.getElementById('calc-guests').value;
+  const period = document.getElementById('calc-period').value;
+  const valEl = document.getElementById('price-value');
+  const detEl = document.getElementById('price-detail');
+  const noteEl = document.getElementById('price-note');
+
+  if(!guests || !period){
+    document.querySelector('.price-result-label').textContent = 'Selecione as opções acima para ver o valor';
+    valEl.style.display = 'none'; detEl.style.display = 'none'; noteEl.style.display = 'none';
+    return;
+  }
+
+  document.querySelector('.price-result-label').textContent = 'Valor estimado';
+  const table = PRICE_TABLE[period];
+  const val = table[parseInt(guests)] || table[guests] || 'Combinar';
+  const isEvento = period === 'evento';
+  const cleaningNote = isEvento
+    ? '🧹 Taxa de limpeza: R$ 300 NÃO inclusa no valor acima · Evento até 00h00'
+    : '🧹 Taxa de limpeza: R$ 300 inclusa no valor acima · Confirme pelo WhatsApp antes de pagar';
+
+  if(val === 'Combinar'){
+    valEl.textContent = 'À combinar';
+    detEl.textContent = 'Entre em contato pelo WhatsApp para grupos maiores.';
+  } else {
+    valEl.textContent = 'R$ ' + val.toLocaleString('pt-BR');
+    detEl.textContent = (isEvento ? 'Até ' + guests + ' pessoas · ' : guests + ' pessoas · ') + PERIOD_LABEL[period];
+  }
+  valEl.style.display = 'block';
+  detEl.style.display = 'block';
+  noteEl.textContent = cleaningNote;
+  noteEl.style.display = 'block';
+}
+
+// Update calculator when dates are selected
+function updateCalcFromDates(){
+  if(!selStart || !selEnd) return;
+  const diff = Math.round((new Date(selEnd) - new Date(selStart)) / (1000*60*60*24));
+  const periodSel = document.getElementById('calc-period');
+  if(diff <= 2) periodSel.value = 'fds';
+  else if(diff === 2) periodSel.value = 'fer2';
+  else if(diff === 3) periodSel.value = 'fer3';
+  else if(diff >= 4) periodSel.value = 'fer4';
+  calcPrice();
+  document.getElementById('price-calc-box').scrollIntoView({behavior:'smooth', block:'nearest'});
+}
+
+// ===== PRICING TABS =====
+function showTab(tab){
+  document.querySelectorAll('.pricing-table').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.ptab').forEach(t=>t.classList.remove('active'));
+  const el = document.getElementById('tab-'+tab);
+  if(el) el.classList.add('active');
+  if(event && event.target) event.target.classList.add('active');
+}
+
+// ===== UTILS =====
+function goTo(id){ document.getElementById(id)?.scrollIntoView({behavior:'smooth'}); }
+function showToast(msg, green=false){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (green?' green':'');
+  setTimeout(()=>t.classList.remove('show'), 3500);
+}
+
+// ===== DEMO RESERVATIONS (remove after testing) =====
+function loadDemoReservations(){
+  const existing = getRes();
+  if(existing.length > 0) return; // don't overwrite real data
+  const demos = [
+    {
+      id: genId(),
+      name: 'João Silva',
+      phone: '(11) 98765-4321',
+      email: 'joao@email.com',
+      guests: 'até 20',
+      occasion: 'Festa / Evento',
+      obs: 'Aniversário de 15 anos',
+      checkin: getNextDate(6),
+      checkout: getNextDate(8),
+      status: 'paid',
+      createdAt: new Date().toISOString()
+    },
+    {
+      id: genId(),
+      name: 'Maria Santos',
+      phone: '(11) 91234-5678',
+      email: 'maria@email.com',
+      guests: 'até 15',
+      occasion: 'Formatura',
+      obs: 'Formatura de engenharia',
+      checkin: getNextDate(13),
+      checkout: getNextDate(15),
+      status: 'pending',
+      createdAt: new Date().toISOString()
+    },
+    {
+      id: genId(),
+      name: 'Carlos Oliveira',
+      phone: '(11) 99999-0000',
+      email: 'carlos@email.com',
+      guests: 'até 25',
+      occasion: 'Aniversário',
+      obs: '',
+      checkin: getNextDate(20),
+      checkout: getNextDate(22),
+      status: 'paid',
+      createdAt: new Date().toISOString()
+    }
+  ];
+  saveRes(demos);
+}
+function getNextDate(daysFromNow){
+  const d = new Date();
+  d.setDate(d.getDate() + daysFromNow);
+  return d.toISOString().split('T')[0];
+}
+loadDemoReservations();
+
+// ===== INIT =====
+renderCal();
+renderGallery();
 </script>
 </body>
 </html>
