@@ -1303,74 +1303,45 @@ let adminCalYear = new Date().getFullYear();
 let adminCalMonth = new Date().getMonth();
 const MONTHS = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
 
-async function renderAdminCal(){
+// Renderiza calendario imediatamente com dados em cache
+function _drawCal(){
   const grid = document.getElementById('admin-cal-grid');
   const label = document.getElementById('admin-cal-label');
   if(!grid || !label) return;
-  grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:16px;color:var(--mid);font-size:12px">⏳ Carregando...</div>';
-
-  // 1. Garante _resCache preenchido (nunca fica null)
-  if(!_resCache){
-    try{ await getRes(); }catch(e){ _resCache=[]; }
-  }
-  if(!_resCache) _resCache = [];
-
-  // 2. Popula select sem chamar getSitios (usa cache se tiver, senão pula)
   const sel = document.getElementById('admin-cal-sitio');
-  if(sel && _sitiosCache && sel.options.length <= 2){
-    _sitiosCache.forEach((s,i)=>{
-      const opt = document.createElement('option');
-      opt.value = 'sitio-'+i;
-      opt.textContent = s.nome+(s.local?' · '+s.local:'');
-      sel.appendChild(opt);
-    });
-  }
-
   const sitioFiltro = sel ? sel.value : 'all';
   let reservas = (_resCache || []).slice();
-  if(sitioFiltro !== 'all'){
-    reservas = reservas.filter(r=> (r.sitioId||'si') === sitioFiltro);
-  }
-
-  // 3. Mapa de datas reservadas
+  if(sitioFiltro !== 'all') reservas = reservas.filter(r=>(r.sitioId||'si')===sitioFiltro);
   const resMap = {};
   reservas.forEach(r=>{
-    if(!r.checkin || !r.checkout) return;
+    if(!r.checkin||!r.checkout) return;
     let cur = new Date(r.checkin+'T12:00:00');
     const end = new Date(r.checkout+'T12:00:00');
-    while(cur < end){
-      const dk = cur.toISOString().split('T')[0];
-      resMap[dk] = r;
-      cur.setDate(cur.getDate()+1);
-    }
+    while(cur<end){ resMap[cur.toISOString().split('T')[0]]=r; cur.setDate(cur.getDate()+1); }
   });
-
-  // 4. Renderiza
-  try{
-    const today = todayStr();
-    const firstDay = new Date(adminCalYear, adminCalMonth, 1).getDay();
-    const daysInMonth = new Date(adminCalYear, adminCalMonth+1, 0).getDate();
-    label.textContent = MONTHS[adminCalMonth]+' '+adminCalYear;
-    const pad = n => String(n).padStart(2,'0');
-    const mk = d => adminCalYear+'-'+pad(adminCalMonth+1)+'-'+pad(d);
-    let html = '';
-    for(let i=0;i<firstDay;i++) html += '<div class="cal-day empty"></div>';
-    for(let d=1;d<=daysInMonth;d++){
-      const key = mk(d);
-      const res = resMap[key];
-      let cls = 'cal-day '+(res ? (res.status==='paid'?'reserved-paid':'reserved-pending') : 'free');
-      if(key===today) cls += ' today';
-      html += '<div class="'+cls+'" style="cursor:pointer" onclick="showCalDetail(\''+key+'\')">';
-      html += '<span>'+d+'</span>';
-      if(res) html += '<div class="cal-day-dot"></div>';
-      html += '</div>';
-    }
-    grid.innerHTML = html;
-  }catch(err){
-    grid.innerHTML = '<div style="grid-column:1/-1;padding:16px;color:red;font-size:12px">❌ Erro: '+err.message+'</div>';
+  const today = new Date().toISOString().split('T')[0];
+  const firstDay = new Date(adminCalYear, adminCalMonth, 1).getDay();
+  const daysInMonth = new Date(adminCalYear, adminCalMonth+1, 0).getDate();
+  label.textContent = MONTHS[adminCalMonth]+' '+adminCalYear;
+  const pad = n => String(n).padStart(2,'0');
+  let html = '';
+  for(let i=0;i<firstDay;i++) html += '<div class="cal-day empty"></div>';
+  for(let d=1;d<=daysInMonth;d++){
+    const key = adminCalYear+'-'+pad(adminCalMonth+1)+'-'+pad(d);
+    const res = resMap[key];
+    let cls = 'cal-day '+(res?(res.status==='paid'?'reserved-paid':'reserved-pending'):'free');
+    if(key===today) cls+=' today';
+    html += '<div class="'+cls+'" style="cursor:pointer" onclick="showCalDetail(\''+key+'\')"><span>'+d+'</span>'+(res?'<div class="cal-day-dot"></div>':'')+'</div>';
   }
+  grid.innerHTML = html;
 }
 
+function renderAdminCal(){
+  _drawCal();
+  if(!_resCache){
+    getRes().then(()=>_drawCal()).catch(()=>{ _resCache=[]; _drawCal(); });
+  }
+}
 function adminCalPrev(){ adminCalMonth--; if(adminCalMonth<0){adminCalMonth=11;adminCalYear--;} renderAdminCal(); }
 function adminCalNext(){ adminCalMonth++; if(adminCalMonth>11){adminCalMonth=0;adminCalYear++;} renderAdminCal(); }
 
