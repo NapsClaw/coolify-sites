@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="RST Automação - Instalação, venda e manutenção de câmeras de segurança, alarmes e controle de acesso em São Paulo.">
+  <title>RST Automação | Câmeras, Alarmes e Controle de Acesso</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Barlow:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0b0e13;
+      --bg2: #111520;
+      --bg3: #171c28;
+      --accent: #e63329;
+      --accent2: #ff5c53;
+      --gold: #f5a623;
+      --text: #f0f2f7;
+      --text2: #9aa3b8;
+      --border: rgba(255,255,255,0.07);
+      --radius: 12px;
+      --wpp: #25D366;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Barlow', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ---- NAV ---- */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 24px;
+      background: rgba(11,14,19,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+
+    .nav-logo span { color: var(--accent); }
+
+    .nav-cta {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .nav-cta:hover { background: var(--accent2); }
+
+    /* ---- HERO ---- */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      position: relative;
+      overflow: hidden;
+      padding: 100px 24px 60px;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: 
+        linear-gradient(to bottom, rgba(11,14,19,0.3) 0%, rgba(11,14,19,0.7) 50%, rgba(11,14,19,0.97) 100%),
+        url('fotos/foto3.jpg') center/cover no-repeat;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(230,51,41,0.15);
+      border: 1px solid rgba(230,51,41,0.4);
+      color: var(--accent2);
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 999px;
+      margin-bottom: 24px;
+      position: relative;
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.4); }
+    }
+
+    .hero-content { position: relative; }
+
+    .hero h1 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(36px, 8vw, 72px);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -1.5px;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 em {
+      color: var(--accent);
+      font-style: normal;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: var(--text2);
+      max-width: 520px;
+      margin-bottom: 36px;
+      line-height: 1.7;
+    }
+
+    .hero-btns {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .btn-primary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: var(--wpp);
+      color: #fff;
+      text-decoration: none;
+      padding: 18px 28px;
+      border-radius: 12px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+
+    .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+
+    .btn-secondary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: transparent;
+      color: var(--text);
+      text-decoration: none;
+      padding: 16px 28px;
+      border-radius: 12px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      transition: border-color 0.2s;
+    }
+
+    .btn-secondary:hover { border-color: rgba(255,255,255,0.2); }
+
+    /* ---- STATS BAR ---- */
+    .stats-bar {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 32px 24px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: var(--text2);
+      margin-top: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* ---- SECTION COMUM ---- */
+    section {
+      padding: 72px 24px;
+    }
+
+    .section-tag {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(28px, 5vw, 42px);
+      font-weight: 700;
+      letter-spacing: -0.8px;
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .section-sub {
+      font-size: 16px;
+      color: var(--text2);
+      line-height: 1.7;
+      max-width: 500px;
+    }
+
+    /* ---- SERVICES ---- */
+    .services { background: var(--bg); }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-top: 40px;
+    }
+
+    .service-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .service-card:hover {
+      border-color: rgba(230,51,41,0.3);
+      transform: translateY(-2px);
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .service-card:hover::before { opacity: 1; }
+
+    .service-icon {
+      width: 52px; height: 52px;
+      background: rgba(230,51,41,0.1);
+      border: 1px solid rgba(230,51,41,0.2);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 18px;
+      font-size: 24px;
+    }
+
+    .service-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .service-desc {
+      font-size: 14px;
+      color: var(--text2);
+      line-height: 1.65;
+    }
+
+    /* ---- GALLERY ---- */
+    .gallery { background: var(--bg2); }
+
+    .gallery-scroll {
+      display: flex;
+      gap: 12px;
+      overflow-x: auto;
+      padding: 32px 0 16px;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+      scroll-snap-type: x mandatory;
+    }
+
+    .gallery-scroll::-webkit-scrollbar { display: none; }
+
+    .gallery-item {
+      flex: 0 0 280px;
+      height: 200px;
+      border-radius: 12px;
+      overflow: hidden;
+      scroll-snap-align: start;
+      position: relative;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s;
+    }
+
+    .gallery-item:hover img { transform: scale(1.05); }
+
+    /* ---- ABOUT ---- */
+    .about { background: var(--bg3); }
+
+    .about-inner {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    .about-photo {
+      width: 100%;
+      aspect-ratio: 4/3;
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .about-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .about-photo-badge {
+      position: absolute;
+      bottom: 16px;
+      left: 16px;
+      background: var(--accent);
+      color: #fff;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 8px 16px;
+      border-radius: 8px;
+    }
+
+    .about-text p {
+      font-size: 16px;
+      color: var(--text2);
+      line-height: 1.75;
+      margin-bottom: 20px;
+    }
+
+    .about-pillars {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .pillar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .pillar-dot {
+      width: 8px; height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ---- WHY US ---- */
+    .why { background: var(--bg); }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin-top: 40px;
+    }
+
+    .why-card {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+    }
+
+    .why-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--accent);
+      opacity: 0.3;
+      line-height: 1;
+      flex-shrink: 0;
+      width: 44px;
+    }
+
+    .why-info h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .why-info p {
+      font-size: 14px;
+      color: var(--text2);
+      line-height: 1.6;
+    }
+
+    /* ---- CTA BANNER ---- */
+    .cta-banner {
+      background: linear-gradient(135deg, var(--accent) 0%, #c0211a 100%);
+      padding: 60px 24px;
+      text-align: center;
+    }
+
+    .cta-banner h2 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(28px, 6vw, 42px);
+      font-weight: 700;
+      letter-spacing: -0.8px;
+      margin-bottom: 16px;
+      line-height: 1.15;
+    }
+
+    .cta-banner p {
+      font-size: 16px;
+      opacity: 0.85;
+      margin-bottom: 36px;
+      line-height: 1.65;
+    }
+
+    .btn-wpp-lg {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: #fff;
+      color: #111;
+      text-decoration: none;
+      padding: 20px 36px;
+      border-radius: 12px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      width: 100%;
+      transition: opacity 0.2s;
+    }
+
+    .btn-wpp-lg:hover { opacity: 0.92; }
+
+    /* ---- CONTACT ---- */
+    .contact { background: var(--bg2); }
+
+    .contact-card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px 24px;
+      margin-top: 36px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .contact-item:last-child { border-bottom: none; }
+
+    .contact-icon {
+      width: 40px; height: 40px;
+      background: rgba(230,51,41,0.1);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .contact-info strong {
+      display: block;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .contact-info span {
+      font-size: 14px;
+      color: var(--text2);
+    }
+
+    .contact-wpp-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: var(--wpp);
+      color: #fff;
+      text-decoration: none;
+      padding: 18px;
+      border-radius: 12px;
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      margin-top: 24px;
+      transition: opacity 0.2s;
+    }
+
+    .contact-wpp-btn:hover { opacity: 0.9; }
+
+    /* ---- FOOTER ---- */
+    footer {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 32px 24px;
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .footer-logo span { color: var(--accent); }
+
+    footer p {
+      font-size: 13px;
+      color: var(--text2);
+    }
+
+    /* ---- FLOAT WPP ---- */
+    .float-wpp {
+      position: fixed;
+      bottom: 24px;
+      right: 20px;
+      z-index: 999;
+      background: var(--wpp);
+      width: 60px; height: 60px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+    }
+
+    .float-wpp:hover {
+      transform: scale(1.08);
+      box-shadow: 0 6px 28px rgba(37,211,102,0.5);
+    }
+
+    .float-wpp svg { width: 30px; height: 30px; }
+
+    /* ---- DESKTOP ---- */
+    @media (min-width: 768px) {
+      nav { padding: 18px 48px; }
+
+      .hero { padding: 120px 48px 80px; }
+
+      .hero-btns {
+        flex-direction: row;
+      }
+
+      .btn-primary, .btn-secondary { width: auto; }
+
+      .stats-grid { grid-template-columns: repeat(4, 1fr); }
+
+      section { padding: 96px 48px; }
+
+      .services-grid { grid-template-columns: repeat(3, 1fr); }
+
+      .gallery-item { flex: 0 0 360px; height: 260px; }
+
+      .about-inner {
+        flex-direction: row;
+        align-items: center;
+      }
+
+      .about-photo { flex: 0 0 45%; }
+      .about-text { flex: 1; }
+
+      .why-grid { grid-template-columns: repeat(2, 1fr); }
+
+      .btn-wpp-lg { width: auto; padding: 20px 48px; }
+
+      .contact-card { max-width: 540px; }
+    }
+
+    @media (min-width: 1200px) {
+      .hero { padding: 140px 80px 100px; }
+      section { padding: 112px 80px; }
+      .services-grid { grid-template-columns: repeat(3, 1fr); }
+      .why-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    /* ---- ANIMATIONS ---- */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">RST<span>.</span></a>
+    <a href="https://wa.me/5511947022078?text=Olá!%20Gostaria%20de%20solicitar%20um%20orçamento." class="nav-cta" target="_blank">Pedir Orçamento</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-badge">Segurança Eletrônica Profissional</div>
+      <h1>Proteja o que é <em>seu</em>.</h1>
+      <p>Câmeras de segurança, alarmes e controle de acesso — instalação, venda e manutenção com qualidade garantida.</p>
+      <div class="hero-btns">
+        <a href="https://wa.me/5511947022078?text=Olá!%20Gostaria%20de%20solicitar%20um%20orçamento." class="btn-primary" target="_blank">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Solicitar Orçamento
+        </a>
+        <a href="#servicos" class="btn-secondary">
+          Ver Serviços ↓
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats-bar">
+    <div class="stats-grid">
+      <div class="stat">
+        <div class="stat-num">500+</div>
+        <div class="stat-label">Clientes atendidos</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">10+</div>
+        <div class="stat-label">Anos de experiência</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">24h</div>
+        <div class="stat-label">Suporte rápido</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Satisfação garantida</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section class="services" id="servicos">
+    <div class="section-tag">O que fazemos</div>
+    <h2 class="section-title">Soluções completas<br>em segurança eletrônica</h2>
+    <p class="section-sub">Da instalação à manutenção, cuidamos de tudo para que você fique sempre protegido.</p>
+
+    <div class="services-grid">
+      <div class="service-card fade-up">
+        <div class="service-icon">📹</div>
+        <h3 class="service-title">Câmeras de Segurança</h3>
+        <p class="service-desc">Venda e instalação de câmeras CCTV, IP e analógicas para residências, comércios e empresas. Monitoramento remoto pelo celular.</p>
+      </div>
+      <div class="service-card fade-up">
+        <div class="service-icon">🚨</div>
+        <h3 class="service-title">Alarmes</h3>
+        <p class="service-desc">Sistemas de alarme perimetral e interno com sensores de presença, abertura de portas e sirene. Integração com central monitorada.</p>
+      </div>
+      <div class="service-card fade-up">
+        <div class="service-icon">🔐</div>
+        <h3 class="service-title">Controle de Acesso</h3>
+        <p class="service-desc">Catracas, cancelas, fechaduras biométricas, cartão e senha. Controle total de quem entra e sai do seu espaço.</p>
+      </div>
+      <div class="service-card fade-up">
+        <div class="service-icon">🔧</div>
+        <h3 class="service-title">Manutenção</h3>
+        <p class="service-desc">Manutenção preventiva e corretiva em todos os sistemas. Diagnóstico rápido e reparo com garantia de serviço.</p>
+      </div>
+      <div class="service-card fade-up">
+        <div class="service-icon">🖥️</div>
+        <h3 class="service-title">DVR / NVR</h3>
+        <p class="service-desc">Instalação e configuração de gravadores digitais com acesso remoto. Armazenamento local e em nuvem.</p>
+      </div>
+      <div class="service-card fade-up">
+        <div class="service-icon">💡</div>
+        <h3 class="service-title">Automação</h3>
+        <p class="service-desc">Sistemas eletroeletrônicos integrados para residências e empresas. Automação inteligente com controle pelo smartphone.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery" id="galeria">
+    <div class="section-tag">Nosso trabalho</div>
+    <h2 class="section-title">Instalações reais,<br>resultados reais</h2>
+    <p class="section-sub">Veja alguns dos projetos que entregamos com qualidade e profissionalismo.</p>
+
+    <div class="gallery-scroll">
+      <div class="gallery-item">
+        <img src="fotos/foto1.jpg" alt="Instalação de câmeras de segurança" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="fotos/foto2.jpg" alt="Sistema de alarme instalado" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="fotos/foto4.jpg" alt="Controle de acesso profissional" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="fotos/foto5.jpg" alt="Câmeras CCTV" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="fotos/foto6.jpg" alt="Instalação profissional" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="fotos/foto7.jpg" alt="Sistema de segurança" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="sobre">
+    <div class="about-inner">
+      <div class="about-photo">
+        <img src="fotos/foto5.jpg" alt="Equipe RST Automação" loading="lazy">
+        <div class="about-photo-badge">+ de 10 anos no mercado</div>
+      </div>
+      <div class="about-text">
+        <div class="section-tag">Quem somos</div>
+        <h2 class="section-title">RST Automação</h2>
+        <p>Somos especializados em sistemas de segurança eletrônica: câmeras, alarmes e controle de acesso. Atendemos residências, comércios e empresas com soluções sob medida e suporte ágil.</p>
+        <p>Nossa missão é oferecer tranquilidade e proteção real, com equipamentos de qualidade e mão de obra qualificada.</p>
+        <div class="about-pillars">
+          <div class="pillar"><div class="pillar-dot"></div> Equipamentos de alta qualidade</div>
+          <div class="pillar"><div class="pillar-dot"></div> Instalação limpa e profissional</div>
+          <div class="pillar"><div class="pillar-dot"></div> Suporte pós-instalação garantido</div>
+          <div class="pillar"><div class="pillar-dot"></div> Atendimento rápido e personalizado</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY -->
+  <section class="why">
+    <div class="section-tag">Por que escolher a RST</div>
+    <h2 class="section-title">Segurança que você<br>pode confiar</h2>
+
+    <div class="why-grid">
+      <div class="why-card fade-up">
+        <div class="why-num">01</div>
+        <div class="why-info">
+          <h3>Técnicos certificados</h3>
+          <p>Equipe treinada e experiente em instalações residenciais, comerciais e industriais.</p>
+        </div>
+      </div>
+      <div class="why-card fade-up">
+        <div class="why-num">02</div>
+        <div class="why-info">
+          <h3>Orçamento sem compromisso</h3>
+          <p>Avaliamos sua necessidade e enviamos proposta detalhada, sem custo e sem burocracia.</p>
+        </div>
+      </div>
+      <div class="why-card fade-up">
+        <div class="why-num">03</div>
+        <div class="why-info">
+          <h3>Suporte rápido</h3>
+          <p>Qualquer problema, estamos disponíveis para atender e resolver com agilidade.</p>
+        </div>
+      </div>
+      <div class="why-card fade-up">
+        <div class="why-num">04</div>
+        <div class="why-info">
+          <h3>Instalação garantida</h3>
+          <p>Todo serviço tem garantia. Trabalhamos com cuidado para não deixar rasgo, fio solto ou bagunça.</p>
+        </div>
+      </div>
+      <div class="why-card fade-up">
+        <div class="why-num">05</div>
+        <div class="why-info">
+          <h3>Acesso remoto</h3>
+          <p>Configure seu sistema para monitorar pelo celular de onde estiver, com total segurança.</p>
+        </div>
+      </div>
+      <div class="why-card fade-up">
+        <div class="why-num">06</div>
+        <div class="why-info">
+          <h3>Preço justo</h3>
+          <p>Custo-benefício real: tecnologia de ponta com preço acessível e transparente.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <div class="cta-banner">
+    <h2>Pronto pra proteger<br>o que é seu?</h2>
+    <p>Fale agora com a nossa equipe e receba um orçamento gratuito e sem compromisso.</p>
+    <a href="https://wa.me/5511947022078?text=Olá!%20Quero%20um%20orçamento%20para%20câmeras%20de%20segurança." class="btn-wpp-lg" target="_blank">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="#25D366"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Falar no WhatsApp agora
+    </a>
+  </div>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contato">
+    <div class="section-tag">Contato</div>
+    <h2 class="section-title">Fale com a gente</h2>
+    <p class="section-sub">Atendemos São Paulo e região. Entre em contato e tire todas as suas dúvidas.</p>
+
+    <div class="contact-card">
+      <div class="contact-item">
+        <div class="contact-icon">📱</div>
+        <div class="contact-info">
+          <strong>WhatsApp</strong>
+          <span>(11) 94702-2078</span>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">🕐</div>
+        <div class="contact-info">
+          <strong>Horário de atendimento</strong>
+          <span>Segunda a Sábado, 8h às 18h</span>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">📍</div>
+        <div class="contact-info">
+          <strong>Área de atendimento</strong>
+          <span>São Paulo e Grande São Paulo</span>
+        </div>
+      </div>
+      <a href="https://wa.me/5511947022078?text=Olá!%20Gostaria%20de%20solicitar%20um%20orçamento." class="contact-wpp-btn" target="_blank">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Enviar mensagem agora
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">RST<span>.</span></div>
+    <p>RST Automação e Sistemas Eletroeletrônicos</p>
+    <p style="margin-top:4px;">© 2025 · Todos os direitos reservados</p>
+  </footer>
+
+  <!-- FLOATING WPP -->
+  <a href="https://wa.me/5511947022078?text=Olá!%20Gostaria%20de%20solicitar%20um%20orçamento." class="float-wpp" target="_blank" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+  <script>
+    // Scroll animation
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
