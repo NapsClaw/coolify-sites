@@ -1134,13 +1134,17 @@ function fecharModalSitio(){
 
 function switchCapaTab(t){
   _capaTab = t;
-  document.querySelectorAll('#modal-sitio-bg .foto-tab').slice(0,2).forEach((b,i)=>b.classList.toggle('active',i===(t==='url'?0:1)));
+  const tabs = Array.from(document.querySelectorAll('#modal-sitio-bg .foto-tab'));
+  if(tabs[0]) tabs[0].classList.toggle('active', t==='url');
+  if(tabs[1]) tabs[1].classList.toggle('active', t==='file');
   document.getElementById('cp-url').classList.toggle('active',t==='url');
   document.getElementById('cp-file').classList.toggle('active',t==='file');
 }
 function switchGalTab(t){
   _galTab = t;
-  document.querySelectorAll('#modal-sitio-bg .foto-tab').slice(2,4).forEach((b,i)=>b.classList.toggle('active',i===(t==='url'?0:1)));
+  const tabs = Array.from(document.querySelectorAll('#modal-sitio-bg .foto-tab'));
+  if(tabs[2]) tabs[2].classList.toggle('active', t==='url');
+  if(tabs[3]) tabs[3].classList.toggle('active', t==='file');
   document.getElementById('gal-url').classList.toggle('active',t==='url');
   document.getElementById('gal-file').classList.toggle('active',t==='file');
 }
