@@ -1840,16 +1840,48 @@ function previewCapa(val){
   const p=document.getElementById('sm-capa-preview');
   if(val){p.src=val;p.style.display='block';}else p.style.display='none';
 }
-function uploadCapaSitio(input){
+async function uploadParaGitHub(file, pasta){
+  return new Promise((resolve, reject)=>{
+    const reader = new FileReader();
+    reader.onload = async e=>{
+      const b64 = e.target.result.split(',')[1]; // remove "data:image/...;base64,"
+      const ext = file.name.split('.').pop().toLowerCase();
+      const nome = Date.now()+'_'+Math.random().toString(36).slice(2,7)+'.'+ext;
+      const path = 'sitio-iluminado/fotos/'+pasta+'/'+nome;
+      const apiUrl = 'https://api.github.com/repos/'+GH_REPO+'/contents/'+path;
+      try{
+        const r = await fetch(apiUrl,{
+          method:'PUT',
+          headers:{'Authorization':'token '+GH_TOKEN,'Content-Type':'application/json'},
+          body: JSON.stringify({ message:'foto: '+nome, content: b64 })
+        });
+        const d = await r.json();
+        if(d.content && d.content.download_url){
+          resolve(d.content.download_url);
+        } else {
+          // fallback: monta URL raw diretamente
+          resolve('https://raw.githubusercontent.com/'+GH_REPO+'/main/'+path);
+        }
+      }catch(err){ reject(err); }
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+async function uploadCapaSitio(input){
   const file=input.files[0]; if(!file)return;
-  const reader=new FileReader();
-  reader.onload=e=>{
-    const b64=e.target.result;
-    // salva no campo oculto E faz preview
-    document.getElementById('sm-capa').value=b64;
-    previewCapa(b64);
-  };
-  reader.readAsDataURL(file);
+  const btn = input.closest('.upload-area');
+  if(btn) btn.style.opacity='0.5';
+  try{
+    showToast('⬆️ Enviando foto...');
+    const url = await uploadParaGitHub(file, 'capas');
+    document.getElementById('sm-capa').value = url;
+    previewCapa(url);
+    showToast('✅ Foto enviada!');
+  }catch(e){
+    showToast('❌ Erro no upload: '+e.message);
+  }
+  if(btn) btn.style.opacity='1';
 }
 
 function buildGalRows(fotos){
@@ -1868,16 +1900,24 @@ function addGalRow(val=''){
   wrap.appendChild(row);
 }
 
-function uploadGalSitio(input){
+async function uploadGalSitio(input){
   if(!window.galUploadUrls) window.galUploadUrls=[];
-  Array.from(input.files).forEach(file=>{
-    const reader=new FileReader();
-    reader.onload=e=>{
-      window.galUploadUrls.push(e.target.result);
+  const files = Array.from(input.files);
+  if(!files.length) return;
+  showToast('⬆️ Enviando '+files.length+' foto(s)...');
+  const area = input.closest('.upload-area');
+  if(area) area.style.opacity='0.5';
+  let ok=0;
+  for(const file of files){
+    try{
+      const url = await uploadParaGitHub(file, 'galeria');
+      window.galUploadUrls.push(url);
+      ok++;
       buildGalThumbs(window.galUploadUrls);
-    };
-    reader.readAsDataURL(file);
-  });
+    }catch(e){ showToast('❌ Erro: '+e.message); }
+  }
+  if(area) area.style.opacity='1';
+  if(ok) showToast('✅ '+ok+' foto(s) enviada(s)!');
 }
 function buildGalThumbs(list){
   document.getElementById('sm-gal-thumbs').innerHTML=list.map((src,i)=>`
