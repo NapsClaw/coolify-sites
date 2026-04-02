@@ -1618,8 +1618,14 @@ async function openSitioModal(idx){
   galUploadUrls = [];
   capaTabAtual = 'url';
   galTabAtual = 'url';
-  const data = await getSitios();
-  const s = idx != null ? data[idx] : {};
+  // Abre o modal imediatamente (vazio para novo, vai buscar dados para edição)
+  document.getElementById('sitio-modal-bg').classList.add('open');
+  document.getElementById('sitio-modal-title').textContent = idx != null ? 'Carregando...' : 'Novo sítio';
+  let data = _sitiosCache || [];
+  if(idx != null && !_sitiosCache){
+    try{ data = await getSitios(); }catch(e){ data = []; }
+  }
+  const s = idx != null ? (data[idx]||{}) : {};
   document.getElementById('sm-idx').value = idx != null ? idx : '';
   document.getElementById('sitio-modal-title').textContent = idx != null ? 'Editar sítio' : 'Novo sítio';
   document.getElementById('sm-nome').value = s.nome||'';
@@ -1633,14 +1639,11 @@ async function openSitioModal(idx){
   document.getElementById('sm-capa').value = s.capa||'';
   const prev = document.getElementById('sm-capa-preview');
   if(s.capa){prev.src=s.capa;prev.style.display='block';}else prev.style.display='none';
-  // preços
   buildPriceRows(s.prices||{});
-  // reset tabs to URL
   switchCapaTab('url');
   switchGalTab('url');
   buildGalRows(s.fotos||[]);
   buildGalThumbs([]);
-  document.getElementById('sitio-modal-bg').classList.add('open');
 }
 function closeSitioModal(){
   document.getElementById('sitio-modal-bg').classList.remove('open');
