@@ -525,18 +525,23 @@ function verificarAuto() {
     const prof = getProfissional(ginId, periodo);
     if (!prof) return;
     const grupos = getGrupos(ginId, periodo);
-    if (!grupos.includes(h)) return;
-    const pacs = getPacientes(ginId, h);
-    if (!pacs.length) return;
-    const key = ginId+'_'+h+'_auto_todos';
-    if (autoKeys.has(key)) return;
-    autoKeys.add(key);
-    // Chamar todos em sequência automática
-    chamarTodosSequencia(ginId, h);
+    // Verificar TODOS os grupos que já passaram do horário e têm pacientes não chamados
+    grupos.forEach(hora => {
+      if (hora > h) return; // ainda não chegou
+      const pacs = getPacientes(ginId, hora);
+      if (!pacs.length) return;
+      const chamados = getChamados(ginId);
+      const temPendente = pacs.some((_, i) => !chamados[hora+'_'+i]);
+      if (!temPendente) return;
+      const key = ginId+'_'+hora+'_auto';
+      if (autoKeys.has(key)) return;
+      autoKeys.add(key);
+      chamarTodosSequencia(ginId, hora);
+    });
   });
 }
 
-setInterval(verificarAuto, 30000);
+setInterval(verificarAuto, 15000);
 setInterval(renderAgenda, 60000);
 
 // ============================================================
