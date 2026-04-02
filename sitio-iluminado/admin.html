@@ -1309,12 +1309,11 @@ async function renderAdminCal(){
   if(!grid || !label) return;
   grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:16px;color:var(--mid);font-size:12px">⏳ Carregando...</div>';
 
-  // 1. Carrega reservas (com timeout de segurança)
+  // 1. Garante _resCache preenchido (nunca fica null)
   if(!_resCache){
-    try{
-      await Promise.race([getRes(), new Promise((_,r)=>setTimeout(()=>r('timeout'),8000))]);
-    }catch(e){ console.warn('getRes falhou:', e); }
+    try{ await getRes(); }catch(e){ _resCache=[]; }
   }
+  if(!_resCache) _resCache = [];
 
   // 2. Popula select sem chamar getSitios (usa cache se tiver, senão pula)
   const sel = document.getElementById('admin-cal-sitio');
@@ -1347,25 +1346,29 @@ async function renderAdminCal(){
   });
 
   // 4. Renderiza
-  const today = todayStr();
-  const firstDay = new Date(adminCalYear, adminCalMonth, 1).getDay();
-  const daysInMonth = new Date(adminCalYear, adminCalMonth+1, 0).getDate();
-  label.textContent = MONTHS[adminCalMonth]+' '+adminCalYear;
-  const pad = n => String(n).padStart(2,'0');
-  const dk = d => adminCalYear+'-'+pad(adminCalMonth+1)+'-'+pad(d);
-  let html = '';
-  for(let i=0;i<firstDay;i++) html += '<div class="cal-day empty"></div>';
-  for(let d=1;d<=daysInMonth;d++){
-    const key = dk(d);
-    const res = resMap[key];
-    let cls = 'cal-day '+(res ? (res.status==='paid'?'reserved-paid':'reserved-pending') : 'free');
-    if(key===today) cls += ' today';
-    html += `<div class="${cls}" style="cursor:pointer" onclick="showCalDetail('${key}')">`
-          + `<span>${d}</span>`
-          + (res ? '<div class="cal-day-dot"></div>' : '')
-          + '</div>';
+  try{
+    const today = todayStr();
+    const firstDay = new Date(adminCalYear, adminCalMonth, 1).getDay();
+    const daysInMonth = new Date(adminCalYear, adminCalMonth+1, 0).getDate();
+    label.textContent = MONTHS[adminCalMonth]+' '+adminCalYear;
+    const pad = n => String(n).padStart(2,'0');
+    const mk = d => adminCalYear+'-'+pad(adminCalMonth+1)+'-'+pad(d);
+    let html = '';
+    for(let i=0;i<firstDay;i++) html += '<div class="cal-day empty"></div>';
+    for(let d=1;d<=daysInMonth;d++){
+      const key = mk(d);
+      const res = resMap[key];
+      let cls = 'cal-day '+(res ? (res.status==='paid'?'reserved-paid':'reserved-pending') : 'free');
+      if(key===today) cls += ' today';
+      html += '<div class="'+cls+'" style="cursor:pointer" onclick="showCalDetail(\''+key+'\')">';
+      html += '<span>'+d+'</span>';
+      if(res) html += '<div class="cal-day-dot"></div>';
+      html += '</div>';
+    }
+    grid.innerHTML = html;
+  }catch(err){
+    grid.innerHTML = '<div style="grid-column:1/-1;padding:16px;color:red;font-size:12px">❌ Erro: '+err.message+'</div>';
   }
-  grid.innerHTML = html;
 }
 
 function adminCalPrev(){ adminCalMonth--; if(adminCalMonth<0){adminCalMonth=11;adminCalYear--;} renderAdminCal(); }
