@@ -1581,41 +1581,122 @@ async function renderSitios(){
   const data = await getSitios();
 
   // Sítio Iluminado — item principal (sem excluir)
+  const allRes = getResCached();
   const siRow = `
-    <div class="sitio-row" style="border:2px solid var(--accent);background:rgba(37,99,235,.03)">
-      <img class="sitio-thumb" src="fotos/piscina-principal.jpg" alt="Sítio Iluminado" onerror="this.style.opacity='.3'">
-      <div class="sitio-body">
-        <div class="sitio-name">${si.nome} <span style="font-size:11px;background:var(--blue-l);color:var(--blue);padding:2px 8px;border-radius:100px;font-weight:700;vertical-align:middle">⭐ Principal</span></div>
-        <div class="sitio-loc">📍 Biritiba Mirim / Mogi das Cruzes, SP</div>
-        <div class="sitio-badges">
-          ${(si.pills||[]).slice(0,3).map(p=>`<span class="sitio-badge">${p}</span>`).join('')}
+    <div class="sitio-card-admin" style="border:2px solid var(--accent);background:rgba(37,99,235,.03);border-radius:12px;margin-bottom:16px;overflow:hidden">
+      <div class="sitio-row" style="border:none">
+        <img class="sitio-thumb" src="fotos/piscina-principal.jpg" alt="Sítio Iluminado" onerror="this.style.opacity='.3'">
+        <div class="sitio-body">
+          <div class="sitio-name">${si.nome} <span style="font-size:11px;background:var(--blue-l);color:var(--blue);padding:2px 8px;border-radius:100px;font-weight:700;vertical-align:middle">⭐ Principal</span></div>
+          <div class="sitio-loc">📍 Biritiba Mirim / Mogi das Cruzes, SP</div>
+          <div class="sitio-badges">${(si.pills||[]).slice(0,3).map(p=>`<span class="sitio-badge">${p}</span>`).join('')}</div>
+        </div>
+        <div class="sitio-col-actions">
+          <button class="btn-new" style="font-size:12px;padding:7px 12px" onclick="window.open('index.html','_blank')">👁️ Ver</button>
+          <button class="btn-export" style="font-size:12px;padding:7px 12px" onclick="openSIModal()">✏️ Editar</button>
+          <button class="btn-export" style="font-size:12px;padding:7px 12px" onclick="toggleSitioCalendario('cal-si')">📅 Calendário</button>
         </div>
       </div>
-      <div class="sitio-col-actions">
-        <button class="btn-new" style="font-size:12px;padding:7px 12px" onclick="window.open('index.html','_blank')">👁️ Ver</button>
-        <button class="btn-export" style="font-size:12px;padding:7px 12px" onclick="openSIModal()">✏️ Editar</button>
+      <div id="cal-si" style="display:none;padding:16px;border-top:1px solid var(--border)">
+        ${renderMiniCal('si', allRes.filter(r=>!r.sitioId || r.sitioId==='si'))}
       </div>
     </div>`;
 
-  const outrosRows = data.length ? data.map((s,i)=>`
-    <div class="sitio-row">
-      <img class="sitio-thumb" src="${s.capa}" alt="${s.nome}" onerror="this.style.opacity='.3'">
-      <div class="sitio-body">
-        <div class="sitio-name">${s.nome}</div>
-        <div class="sitio-loc">📍 ${s.local}</div>
-        <div class="sitio-badges">
-          <span class="sitio-badge amber">${s.preco||'Consulte'}</span>
-          ${(s.features||[]).slice(0,2).map(f=>`<span class="sitio-badge">${f}</span>`).join('')}
+  const outrosRows = data.length ? data.map((s,i)=>{
+    const sid = 'sitio-'+i;
+    const resDoSitio = allRes.filter(r=>r.sitioId===sid);
+    return `
+    <div class="sitio-card-admin" style="border:1px solid var(--border);border-radius:12px;margin-bottom:16px;overflow:hidden">
+      <div class="sitio-row" style="border:none">
+        <img class="sitio-thumb" src="${s.capa}" alt="${s.nome}" onerror="this.style.opacity='.3'">
+        <div class="sitio-body">
+          <div class="sitio-name">${s.nome}</div>
+          <div class="sitio-loc">📍 ${s.local}</div>
+          <div class="sitio-badges">
+            <span class="sitio-badge amber">${s.preco||'Consulte'}</span>
+            ${(s.features||[]).slice(0,2).map(f=>`<span class="sitio-badge">${f}</span>`).join('')}
+          </div>
+        </div>
+        <div class="sitio-col-actions">
+          <button class="btn-new" style="font-size:12px;padding:7px 12px" onclick="window.open('sitio.html?id=${slugify(s.nome)}','_blank')">👁️ Ver</button>
+          <button class="btn-export" style="font-size:12px;padding:7px 12px" onclick="openSitioModal(${i})">✏️ Editar</button>
+          <button class="btn-export" style="font-size:12px;padding:7px 12px" onclick="toggleSitioCalendario('cal-${sid}')">📅 Calendário</button>
+          <button class="btn-icon" style="color:var(--red);border-color:rgba(220,38,38,.3)" onclick="excluirSitio(${i})">🗑️</button>
         </div>
       </div>
-      <div class="sitio-col-actions">
-        <button class="btn-new" style="font-size:12px;padding:7px 12px" onclick="window.open('sitio.html?id=${slugify(s.nome)}','_blank')">👁️ Ver</button>
-        <button class="btn-export" style="font-size:12px;padding:7px 12px" onclick="openSitioModal(${i})">✏️ Editar</button>
-        <button class="btn-icon" style="color:var(--red);border-color:rgba(220,38,38,.3)" onclick="excluirSitio(${i})">🗑️</button>
+      <div id="cal-${sid}" style="display:none;padding:16px;border-top:1px solid var(--border)">
+        ${renderMiniCal(sid, resDoSitio)}
       </div>
-    </div>`).join('') : '<div style="text-align:center;padding:24px;color:var(--mid);font-size:13px">Nenhum outro sítio cadastrado. Clique em "+ Novo sítio" para adicionar.</div>';
+    </div>`;
+  }).join('') : '<div style="text-align:center;padding:24px;color:var(--mid);font-size:13px">Nenhum outro sítio cadastrado. Clique em "+ Novo sítio" para adicionar.</div>';
 
   list.innerHTML = siRow + outrosRows;
+}
+
+function toggleSitioCalendario(id){
+  var el = document.getElementById(id);
+  if(el) el.style.display = el.style.display==='none' ? 'block' : 'none';
+}
+
+function renderMiniCal(sitioId, reservas){
+  const today = new Date(); today.setHours(0,0,0,0);
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth();
+  const DAYS = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+  const MESES = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  // build map of reserved dates
+  const resMap = {};
+  reservas.forEach(r=>{
+    let cur = new Date(r.checkin);
+    const end = new Date(r.checkout);
+    while(cur <= end){
+      const ds = cur.toISOString().split('T')[0];
+      resMap[ds] = r.status;
+      cur.setDate(cur.getDate()+1);
+    }
+  });
+  // render 2 months
+  let html = `<div style="display:flex;gap:16px;flex-wrap:wrap">`;
+  for(let mo=0; mo<2; mo++){
+    const m = (month+mo)%12;
+    const y = year + Math.floor((month+mo)/12);
+    const firstDay = new Date(y,m,1).getDay();
+    const daysInMonth = new Date(y,m+1,0).getDate();
+    html += `<div style="flex:1;min-width:220px">`;
+    html += `<div style="font-weight:700;font-size:13px;margin-bottom:8px;color:var(--dark)">${MESES[m]} ${y}</div>`;
+    html += `<div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;font-size:11px">`;
+    DAYS.forEach(d=>{ html += `<div style="text-align:center;font-weight:700;color:var(--mid);padding:3px 0">${d}</div>`; });
+    for(let i=0;i<firstDay;i++) html += `<div></div>`;
+    for(let d=1;d<=daysInMonth;d++){
+      const ds = `${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+      const dt = new Date(y,m,d);
+      const isPast = dt < today;
+      const status = resMap[ds];
+      let bg = isPast ? '#f3f4f6' : '#dcfce7';
+      let color = isPast ? '#9ca3af' : '#15803d';
+      let title = isPast ? '' : 'Livre';
+      if(status==='paid'){ bg='#fecaca'; color='#b91c1c'; title='Reservado (pago)'; }
+      if(status==='pending'){ bg='#fef3c7'; color='#d97706'; title='Reservado (pendente)'; }
+      html += `<div style="text-align:center;padding:3px 2px;border-radius:4px;background:${bg};color:${color};font-weight:${status?'700':'400'};font-size:11px;cursor:default" title="${title}">${d}</div>`;
+    }
+    html += `</div></div>`;
+  }
+  html += `</div>`;
+  if(reservas.length){
+    html += `<div style="margin-top:12px;border-top:1px solid var(--border);padding-top:10px">`;
+    html += `<div style="font-size:12px;font-weight:700;color:var(--mid);margin-bottom:6px">RESERVAS</div>`;
+    reservas.slice(-5).reverse().forEach(r=>{
+      html += `<div style="font-size:12px;padding:5px 0;border-bottom:1px solid var(--light);display:flex;justify-content:space-between;align-items:center">`;
+      html += `<span>📅 <strong>${r.name}</strong> · ${fmtDate(r.checkin)} → ${fmtDate(r.checkout)}</span>`;
+      html += `<span style="font-size:11px;padding:2px 8px;border-radius:100px;background:${r.status==='paid'?'var(--green-l)':'var(--amber-l)'};color:${r.status==='paid'?'var(--green)':'var(--amber)'};font-weight:600">${r.status==='paid'?'✅ Pago':'⏳ Pendente'}</span>`;
+      html += `</div>`;
+    });
+    html += `</div>`;
+  } else {
+    html += `<div style="font-size:12px;color:var(--mid);margin-top:8px;text-align:center">📅 Nenhuma reserva cadastrada para este sítio</div>`;
+  }
+  return html;
 }
 
 function abrirNovoSitio(){
@@ -1683,7 +1764,9 @@ async function openSitioModal(idx){
   buildGalThumbs([]);
 }
 function closeSitioModal(){
-  document.getElementById('sitio-modal-bg').classList.remove('open');
+  var modal = document.getElementById('sitio-modal-bg');
+  modal.classList.remove('open');
+  modal.style.display = '';
 }
 
 function switchCapaTab(tab){
