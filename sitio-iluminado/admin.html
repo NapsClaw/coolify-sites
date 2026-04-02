@@ -1307,72 +1307,63 @@ async function renderAdminCal(){
   const grid = document.getElementById('admin-cal-grid');
   const label = document.getElementById('admin-cal-label');
   if(!grid || !label) return;
-
-  // Mostra loading
   grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:16px;color:var(--mid);font-size:12px">⏳ Carregando...</div>';
 
-  // Garante dados do GitHub
-  try{ await getRes(); } catch(e){}
-
-  // Popula select de sítios dinamicamente
-  const sel = document.getElementById('admin-cal-sitio');
-  if(sel){
+  // 1. Carrega reservas (com timeout de segurança)
+  if(!_resCache){
     try{
-      const sitios = await getSitios();
-      // Remove opções antigas de outros sítios (mantém 'all' e 'si')
-      while(sel.options.length > 2) sel.remove(2);
-      sitios.forEach((s,i)=>{
-        const opt = document.createElement('option');
-        opt.value = 'sitio-'+i;
-        opt.textContent = s.nome+(s.local?' · '+s.local:'');
-        sel.appendChild(opt);
-      });
-    }catch(e){}
+      await Promise.race([getRes(), new Promise((_,r)=>setTimeout(()=>r('timeout'),8000))]);
+    }catch(e){ console.warn('getRes falhou:', e); }
   }
 
-  const sitioFiltro = sel ? sel.value : 'all';
-  let reservas = getResCached() || [];
-  if(sitioFiltro !== 'all'){
-    reservas = reservas.filter(r=>{
-      const sid = r.sitioId || 'si';
-      return sid === sitioFiltro;
+  // 2. Popula select sem chamar getSitios (usa cache se tiver, senão pula)
+  const sel = document.getElementById('admin-cal-sitio');
+  if(sel && _sitiosCache && sel.options.length <= 2){
+    _sitiosCache.forEach((s,i)=>{
+      const opt = document.createElement('option');
+      opt.value = 'sitio-'+i;
+      opt.textContent = s.nome+(s.local?' · '+s.local:'');
+      sel.appendChild(opt);
     });
   }
 
-  // Mapa de datas reservadas
+  const sitioFiltro = sel ? sel.value : 'all';
+  let reservas = (_resCache || []).slice();
+  if(sitioFiltro !== 'all'){
+    reservas = reservas.filter(r=> (r.sitioId||'si') === sitioFiltro);
+  }
+
+  // 3. Mapa de datas reservadas
   const resMap = {};
   reservas.forEach(r=>{
     if(!r.checkin || !r.checkout) return;
     let cur = new Date(r.checkin+'T12:00:00');
     const end = new Date(r.checkout+'T12:00:00');
     while(cur < end){
-      const ds = cur.toISOString().split('T')[0];
-      resMap[ds] = r;
+      const dk = cur.toISOString().split('T')[0];
+      resMap[dk] = r;
       cur.setDate(cur.getDate()+1);
     }
   });
 
+  // 4. Renderiza
   const today = todayStr();
   const firstDay = new Date(adminCalYear, adminCalMonth, 1).getDay();
   const daysInMonth = new Date(adminCalYear, adminCalMonth+1, 0).getDate();
   label.textContent = MONTHS[adminCalMonth]+' '+adminCalYear;
-
-  function ds(d){ return adminCalYear+'-'+String(adminCalMonth+1).padStart(2,'0')+'-'+String(d).padStart(2,'0'); }
-
+  const pad = n => String(n).padStart(2,'0');
+  const dk = d => adminCalYear+'-'+pad(adminCalMonth+1)+'-'+pad(d);
   let html = '';
   for(let i=0;i<firstDay;i++) html += '<div class="cal-day empty"></div>';
   for(let d=1;d<=daysInMonth;d++){
-    const dateKey = ds(d);
-    const res = resMap[dateKey];
-    const isToday = dateKey===today;
-    let cls = 'cal-day free';
-    if(isToday) cls += ' today';
-    if(res) cls = 'cal-day '+(res.status==='paid'?'reserved-paid':'reserved-pending');
-    // Todo dia é clicavel
-    html += `<div class="${cls}" style="cursor:pointer" onclick="showCalDetail('${dateKey}')">`;
-    html += `<span>${d}</span>`;
-    if(res) html += '<div class="cal-day-dot"></div>';
-    html += '</div>';
+    const key = dk(d);
+    const res = resMap[key];
+    let cls = 'cal-day '+(res ? (res.status==='paid'?'reserved-paid':'reserved-pending') : 'free');
+    if(key===today) cls += ' today';
+    html += `<div class="${cls}" style="cursor:pointer" onclick="showCalDetail('${key}')">`
+          + `<span>${d}</span>`
+          + (res ? '<div class="cal-day-dot"></div>' : '')
+          + '</div>';
   }
   grid.innerHTML = html;
 }
@@ -1876,9 +1867,14 @@ function previewCapa(val){
   if(val){p.src=val;p.style.display='block';}else p.style.display='none';
 }
 function uploadCapaSitio(input){
-  const file=input.files[0];if(!file)return;
+  const file=input.files[0]; if(!file)return;
   const reader=new FileReader();
-  reader.onload=e=>{previewCapa(e.target.result);};
+  reader.onload=e=>{
+    const b64=e.target.result;
+    // salva no campo oculto E faz preview
+    document.getElementById('sm-capa').value=b64;
+    previewCapa(b64);
+  };
   reader.readAsDataURL(file);
 }
 
@@ -1899,9 +1895,13 @@ function addGalRow(val=''){
 }
 
 function uploadGalSitio(input){
+  if(!window.galUploadUrls) window.galUploadUrls=[];
   Array.from(input.files).forEach(file=>{
     const reader=new FileReader();
-    reader.onload=e=>{galUploadUrls.push(e.target.result);buildGalThumbs(galUploadUrls);};
+    reader.onload=e=>{
+      window.galUploadUrls.push(e.target.result);
+      buildGalThumbs(window.galUploadUrls);
+    };
     reader.readAsDataURL(file);
   });
 }
@@ -1919,9 +1919,9 @@ async function salvarSitio(){
   const local=document.getElementById('sm-local').value.trim();
   const capa=document.getElementById('sm-capa').value.trim();
   if(!nome||!local){showToast('⚠️ Preencha Nome e Localização');return;}
-  if(!capa){showToast('⚠️ Adicione uma foto de capa');return;}
+  if(!capa){showToast('⚠️ Adicione uma foto de capa (URL ou upload)');return;}
   const urlRows=Array.from(document.querySelectorAll('#sm-gal-urls input')).map(i=>i.value.trim()).filter(Boolean);
-  const fotos=[...urlRows,...galUploadUrls].filter(Boolean);
+  const fotos=[...urlRows,...(window.galUploadUrls||[])].filter(Boolean);
   const s={
     nome,local,
     tipo:document.getElementById('sm-tipo').value.trim()||'🏡 Temporada · Eventos',
