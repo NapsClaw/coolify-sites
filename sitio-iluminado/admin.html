@@ -710,7 +710,12 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:#f1f5f9;color:var(--d
           <p style="font-size:11px;color:var(--mid);margin-top:4px">Cole qualquer URL de imagem pública</p>
         </div>
         <div class="foto-panel" id="capa-panel-file">
-          <div class="upload-area"><input type="file" accept="image/*" onchange="uploadCapaSitio(this)"><p>📷 Clique ou arraste uma foto aqui</p></div>
+          <div id="capa-upload-status" style="margin-bottom:6px;font-size:12px;color:var(--mid)"></div>
+          <label for="capa-file-input" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border:2px dashed var(--border);border-radius:8px;cursor:pointer;background:var(--light);font-size:13px;color:var(--mid)">
+            <span style="font-size:22px">📷</span>
+            <span id="capa-file-label">Clique aqui para selecionar a foto de capa</span>
+          </label>
+          <input type="file" id="capa-file-input" accept="image/*" style="display:none" onchange="uploadCapaSitio(this)">
         </div>
         <img id="sm-capa-preview" class="capa-preview-img" src="" alt="">
         <input type="hidden" id="sm-capa" value="">
@@ -727,7 +732,12 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:#f1f5f9;color:var(--d
           <button class="btn-add-galeria" onclick="addGalRow()">+ Adicionar foto</button>
         </div>
         <div class="foto-panel" id="gal-panel-file">
-          <div class="upload-area"><input type="file" accept="image/*" multiple onchange="uploadGalSitio(this)"><p>📷 Selecione uma ou várias fotos de uma vez</p></div>
+          <label for="gal-file-input" style="display:flex;align-items:center;gap:10px;padding:12px 16px;border:2px dashed var(--border);border-radius:8px;cursor:pointer;background:var(--light);font-size:13px;color:var(--mid)">
+            <span style="font-size:22px">📷</span>
+            <span>Clique aqui para selecionar fotos (pode selecionar várias)</span>
+          </label>
+          <input type="file" id="gal-file-input" accept="image/*" multiple style="display:none" onchange="uploadGalSitio(this)">
+          <div id="gal-upload-progress" style="font-size:12px;color:var(--mid);margin-top:6px"></div>
           <div class="upload-thumbs-row" id="sm-gal-thumbs"></div>
         </div>
       </div>
@@ -1870,18 +1880,22 @@ async function uploadParaGitHub(file, pasta){
 
 async function uploadCapaSitio(input){
   const file=input.files[0]; if(!file)return;
-  const btn = input.closest('.upload-area');
-  if(btn) btn.style.opacity='0.5';
+  const status = document.getElementById('capa-upload-status');
+  const lbl = document.getElementById('capa-file-label');
+  if(status) status.textContent = '⏳ Enviando '+file.name+'...';
+  if(lbl) lbl.textContent = '⏳ Enviando...';
   try{
-    showToast('⬆️ Enviando foto...');
     const url = await uploadParaGitHub(file, 'capas');
     document.getElementById('sm-capa').value = url;
     previewCapa(url);
-    showToast('✅ Foto enviada!');
+    if(status) status.innerHTML = '✅ Foto enviada!';
+    if(lbl) lbl.textContent = '✅ '+file.name+' enviado!';
+    showToast('✅ Foto de capa enviada!');
   }catch(e){
+    if(status) status.textContent = '❌ Erro: '+e.message;
+    if(lbl) lbl.textContent = 'Clique aqui para selecionar a foto de capa';
     showToast('❌ Erro no upload: '+e.message);
   }
-  if(btn) btn.style.opacity='1';
 }
 
 function buildGalRows(fotos){
@@ -1904,20 +1918,21 @@ async function uploadGalSitio(input){
   if(!window.galUploadUrls) window.galUploadUrls=[];
   const files = Array.from(input.files);
   if(!files.length) return;
-  showToast('⬆️ Enviando '+files.length+' foto(s)...');
-  const area = input.closest('.upload-area');
-  if(area) area.style.opacity='0.5';
+  const prog = document.getElementById('gal-upload-progress');
   let ok=0;
-  for(const file of files){
+  for(let i=0;i<files.length;i++){
+    if(prog) prog.textContent = '⏳ Enviando foto '+(i+1)+' de '+files.length+'...';
     try{
-      const url = await uploadParaGitHub(file, 'galeria');
+      const url = await uploadParaGitHub(files[i], 'galeria');
       window.galUploadUrls.push(url);
       ok++;
       buildGalThumbs(window.galUploadUrls);
-    }catch(e){ showToast('❌ Erro: '+e.message); }
+    }catch(e){
+      if(prog) prog.textContent = '❌ Erro: '+e.message;
+    }
   }
-  if(area) area.style.opacity='1';
-  if(ok) showToast('✅ '+ok+' foto(s) enviada(s)!');
+  if(prog) prog.textContent = ok ? '✅ '+ok+' foto(s) enviada(s)!' : '';
+  if(ok) showToast('✅ '+ok+' foto(s) na galeria!');
 }
 function buildGalThumbs(list){
   document.getElementById('sm-gal-thumbs').innerHTML=list.map((src,i)=>`
