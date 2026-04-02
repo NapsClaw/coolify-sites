@@ -109,6 +109,13 @@
 
 <!-- ABA 1: Agenda -->
 <div id="aba1">
+  <div id="ativar-banner" style="background:#1a1800;border:2px solid #FFD700;border-radius:12px;padding:14px 18px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+    <div>
+      <div style="font-size:.8rem;color:#FFD700;font-weight:700;text-transform:uppercase;letter-spacing:1px">🔔 Chamada Automática</div>
+      <div id="ativar-status" style="font-size:.85rem;color:rgba(255,255,255,.6);margin-top:3px">Clique para ativar — necessário uma vez por dia</div>
+    </div>
+    <button id="btn-ativar" onclick="ativarAudio()" style="background:#FFD700;color:#000;border:none;border-radius:9px;padding:10px 20px;font-size:.9rem;font-weight:800;cursor:pointer;font-family:inherit">▶ ATIVAR AGORA</button>
+  </div>
   <div id="gin-grid" class="gin-grid"></div>
 </div>
 
@@ -531,6 +538,35 @@ function verificarAuto() {
 
 setInterval(verificarAuto, 30000);
 setInterval(renderAgenda, 60000);
+
+// ============================================================
+// ATIVAR ÁUDIO (obrigatório pelo navegador)
+// ============================================================
+var audioAtivado = false;
+function ativarAudio() {
+  if (!('speechSynthesis' in window)) {
+    audioAtivado = true;
+    document.getElementById('ativar-status').textContent = '✅ Chamada automática ativa!';
+    document.getElementById('btn-ativar').textContent = '✅ ATIVADO';
+    document.getElementById('btn-ativar').style.background = '#4CAF50';
+    document.getElementById('btn-ativar').disabled = true;
+    return;
+  }
+  // Faz uma fala silenciosa para desbloquear o audio context
+  const utt = new SpeechSynthesisUtterance(' ');
+  utt.volume = 0;
+  utt.onend = () => {
+    audioAtivado = true;
+    document.getElementById('ativar-status').textContent = '✅ Chamada automática ativa! Os pacientes serão chamados automaticamente nos horários.';
+    document.getElementById('btn-ativar').textContent = '✅ ATIVADO';
+    document.getElementById('btn-ativar').style.background = '#4CAF50';
+    document.getElementById('btn-ativar').style.color = '#fff';
+    document.getElementById('btn-ativar').disabled = true;
+    document.getElementById('ativar-banner').style.borderColor = '#4CAF50';
+    document.getElementById('ativar-banner').style.background = '#0a2010';
+  };
+  window.speechSynthesis.speak(utt);
+}
 
 // Init
 if ('speechSynthesis' in window) {
