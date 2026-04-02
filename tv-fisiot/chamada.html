@@ -354,7 +354,7 @@ function renderAgenda() {
             <div class="grupo-info">${count}/${max} pacientes</div>
           </div>
           <div class="grupo-actions">
-            ${count > 0 ? `<button class="btn-chamar-grupo" onclick="chamarProximo('${ginId}','${hora}')">📢 Chamar próximo</button>` : ''}
+            ${count > 0 ? `<button class="btn-chamar-grupo" onclick="chamarTodosSequencia('${ginId}','${hora}')">📢 Chamar todos</button><button class="btn-small" style="background:rgba(204,0,0,.2);color:#ff9999;border-color:rgba(204,0,0,.3)" onclick="chamarProximo('${ginId}','${hora}')">1x</button>` : ''}
             ${count > 0 ? `<button class="btn-small" onclick="limparGrupo('${ginId}','${hora}')">🗑</button>` : ''}
           </div>
         </div>
@@ -444,6 +444,42 @@ function chamarProximo(ginId, hora) {
   const idx = pacs.findIndex((_, i) => !chamados[hora+'_'+i]);
   if (idx === -1) { alert('Todos os pacientes deste grupo já foram chamados!'); return; }
   chamarPac(ginId, hora, idx);
+}
+
+function chamarTodosSequencia(ginId, hora) {
+  const pacs = getPacientes(ginId, hora);
+  const chamados = getChamados(ginId);
+  const pendentes = pacs.map((_, i) => i).filter(i => !chamados[hora+'_'+i]);
+  if (!pendentes.length) { alert('Todos os pacientes deste grupo já foram chamados!'); return; }
+  
+  let i = 0;
+  function chamarNext() {
+    if (i >= pendentes.length) return;
+    const idx = pendentes[i];
+    const nome = pacs[idx];
+    const periodo = getPeriodo(hora);
+    const prof = getProfissional(ginId, periodo);
+    const gin = CFG[ginId].nome;
+    const msg = `Atenção! Paciente ${nome}, por favor dirija-se ao ${gin}.`;
+    mostrarBanner(`<span>${nome}</span> → ${gin} · ${prof}`);
+    localStorage.setItem('fisiot_chamada', JSON.stringify({nome,ginasio:gin,profissional:prof,horario:hora,msg,timestamp:Date.now()}));
+    setChamado(ginId, hora, idx);
+    renderAgenda();
+    
+    if (!('speechSynthesis' in window)) { i++; setTimeout(chamarNext, 2000); return; }
+    window.speechSynthesis.cancel();
+    setTimeout(() => {
+      const utt = new SpeechSynthesisUtterance(msg);
+      utt.lang = 'pt-BR'; utt.rate = 0.88; utt.pitch = 1; utt.volume = 1;
+      const vs = window.speechSynthesis.getVoices();
+      const v = vs.find(x => x.lang==='pt-BR') || vs.find(x => x.lang.startsWith('pt'));
+      if (v) utt.voice = v;
+      utt.onend = () => { i++; setTimeout(chamarNext, 800); };
+      utt.onerror = () => { i++; setTimeout(chamarNext, 800); };
+      window.speechSynthesis.speak(utt);
+    }, 300);
+  }
+  chamarNext();
 }
 
 function chamarAgora() {
