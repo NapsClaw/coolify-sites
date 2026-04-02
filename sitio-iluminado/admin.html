@@ -1619,30 +1619,36 @@ async function renderSitios(){
 }
 
 function abrirNovoSitio(){
-  // Função síncrona simples para abrir o modal vazio
   try{
-    galUploadUrls = [];
-    capaTabAtual = 'url';
-    galTabAtual = 'url';
-    document.getElementById('sm-idx').value = '';
-    document.getElementById('sitio-modal-title').textContent = 'Novo sítio';
-    document.getElementById('sm-nome').value = '';
-    document.getElementById('sm-local').value = '';
-    document.getElementById('sm-tipo').value = '';
-    document.getElementById('sm-preco').value = '';
-    document.getElementById('sm-detalhe').value = '';
-    document.getElementById('sm-wa').value = '';
-    document.getElementById('sm-feats').value = '';
-    document.getElementById('sm-capa-url').value = '';
-    document.getElementById('sm-capa').value = '';
-    document.getElementById('sm-capa-preview').style.display = 'none';
-    buildPriceRows({});
-    switchCapaTab('url');
-    switchGalTab('url');
-    buildGalRows([]);
-    buildGalThumbs([]);
-    document.getElementById('sitio-modal-bg').classList.add('open');
-  }catch(e){ alert('Erro ao abrir modal: '+e.message); }
+    window._galUploadUrls = [];
+    window._capaTabAtual = 'url';
+    window._galTabAtual = 'url';
+    // limpa campos
+    ['sm-idx','sm-nome','sm-local','sm-tipo','sm-preco','sm-detalhe','sm-wa','sm-feats','sm-capa-url','sm-capa'].forEach(function(id){
+      var el = document.getElementById(id);
+      if(el) el.value = '';
+    });
+    var prev = document.getElementById('sm-capa-preview');
+    if(prev) prev.style.display = 'none';
+    var title = document.getElementById('sitio-modal-title');
+    if(title) title.textContent = 'Novo sítio';
+    // limpa lista de fotos
+    var galWrap = document.getElementById('sm-gal-urls');
+    if(galWrap) galWrap.innerHTML = '';
+    var thumbs = document.getElementById('sm-gal-thumbs');
+    if(thumbs) thumbs.innerHTML = '';
+    // limpa tabela de precos
+    var priceRows = document.getElementById('sm-price-rows');
+    if(priceRows) priceRows.innerHTML = '';
+    // abre o modal
+    var modal = document.getElementById('sitio-modal-bg');
+    if(modal){
+      modal.style.display = 'flex';
+      modal.classList.add('open');
+    } else {
+      alert('Modal nao encontrado no DOM');
+    }
+  }catch(e){ alert('Erro: '+e.message+' (linha aprox: '+e.stack+')'); }
 }
 
 async function openSitioModal(idx){
