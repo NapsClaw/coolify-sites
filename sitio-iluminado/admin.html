@@ -1304,59 +1304,100 @@ let adminCalMonth = new Date().getMonth();
 const MONTHS = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
 
 async function renderAdminCal(){
-  // Garante dados carregados do GitHub
-  if(!_resCache) await getRes();
-  // Popula select de sítios
-  await populateCalSitioSelect();
-  const sitioFiltro = (document.getElementById('admin-cal-sitio')||{value:'all'}).value;
-  let all = getResCached();
-  if(sitioFiltro !== 'all') all = all.filter(r=> r.sitioId === sitioFiltro || (!r.sitioId && sitioFiltro==='si'));
+  const grid = document.getElementById('admin-cal-grid');
+  const label = document.getElementById('admin-cal-label');
+  if(!grid || !label) return;
+
+  // Mostra loading
+  grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:16px;color:var(--mid);font-size:12px">⏳ Carregando...</div>';
+
+  // Garante dados do GitHub
+  try{ await getRes(); } catch(e){}
+
+  // Popula select de sítios dinamicamente
+  const sel = document.getElementById('admin-cal-sitio');
+  if(sel){
+    try{
+      const sitios = await getSitios();
+      // Remove opções antigas de outros sítios (mantém 'all' e 'si')
+      while(sel.options.length > 2) sel.remove(2);
+      sitios.forEach((s,i)=>{
+        const opt = document.createElement('option');
+        opt.value = 'sitio-'+i;
+        opt.textContent = s.nome+(s.local?' · '+s.local:'');
+        sel.appendChild(opt);
+      });
+    }catch(e){}
+  }
+
+  const sitioFiltro = sel ? sel.value : 'all';
+  let reservas = getResCached() || [];
+  if(sitioFiltro !== 'all'){
+    reservas = reservas.filter(r=>{
+      const sid = r.sitioId || 'si';
+      return sid === sitioFiltro;
+    });
+  }
+
+  // Mapa de datas reservadas
+  const resMap = {};
+  reservas.forEach(r=>{
+    if(!r.checkin || !r.checkout) return;
+    let cur = new Date(r.checkin+'T12:00:00');
+    const end = new Date(r.checkout+'T12:00:00');
+    while(cur < end){
+      const ds = cur.toISOString().split('T')[0];
+      resMap[ds] = r;
+      cur.setDate(cur.getDate()+1);
+    }
+  });
 
   const today = todayStr();
   const firstDay = new Date(adminCalYear, adminCalMonth, 1).getDay();
   const daysInMonth = new Date(adminCalYear, adminCalMonth+1, 0).getDate();
-  document.getElementById('admin-cal-label').textContent = MONTHS[adminCalMonth]+' '+adminCalYear;
+  label.textContent = MONTHS[adminCalMonth]+' '+adminCalYear;
 
-  function dateStr(d){ return `${adminCalYear}-${String(adminCalMonth+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`; }
-  function getResForDate(ds){ return all.find(r=>r.checkin<=ds && r.checkout>ds); }
+  function ds(d){ return adminCalYear+'-'+String(adminCalMonth+1).padStart(2,'0')+'-'+String(d).padStart(2,'0'); }
 
   let html = '';
   for(let i=0;i<firstDay;i++) html += '<div class="cal-day empty"></div>';
   for(let d=1;d<=daysInMonth;d++){
-    const ds = dateStr(d);
-    const res = getResForDate(ds);
-    const isToday = ds===today;
+    const dateKey = ds(d);
+    const res = resMap[dateKey];
+    const isToday = dateKey===today;
     let cls = 'cal-day free';
     if(isToday) cls += ' today';
     if(res) cls = 'cal-day '+(res.status==='paid'?'reserved-paid':'reserved-pending');
-    const onclick = res ? `onclick="showCalDetail('${ds}')"` : '';
-    html += `<div class="${cls}" ${onclick}><span>${d}</span>${res?'<div class="cal-day-dot"></div>':''}</div>`;
+    // Todo dia é clicavel
+    html += `<div class="${cls}" style="cursor:pointer" onclick="showCalDetail('${dateKey}')">`;
+    html += `<span>${d}</span>`;
+    if(res) html += '<div class="cal-day-dot"></div>';
+    html += '</div>';
   }
-  document.getElementById('admin-cal-grid').innerHTML = html;
+  grid.innerHTML = html;
 }
-async function populateCalSitioSelect(){
-  const sel = document.getElementById('admin-cal-sitio');
-  if(!sel) return;
-  const data = _sitiosCache || await getSitios();
-  // Só adiciona se ainda não tiver os outros sítios
-  if(sel.options.length <= 2){
-    data.forEach((s,i)=>{
-      const opt = document.createElement('option');
-      opt.value = 'sitio-'+i;
-      opt.textContent = s.nome+' · '+s.local;
-      sel.appendChild(opt);
-    });
-  }
-}
+
 function adminCalPrev(){ adminCalMonth--; if(adminCalMonth<0){adminCalMonth=11;adminCalYear--;} renderAdminCal(); }
 function adminCalNext(){ adminCalMonth++; if(adminCalMonth>11){adminCalMonth=0;adminCalYear++;} renderAdminCal(); }
 
 function showCalDetail(ds){
-  const all = getResCached();
-  const res = all.filter(r=>r.checkin<=ds && r.checkout>ds);
-  document.getElementById('cal-detail-title').textContent = '📋 Reservas em '+fmtDate(ds);
-  if(!res.length){ document.getElementById('cal-detail-content').innerHTML='<div class="empty-state"><div class="empty-sub">Nenhuma reserva nesta data</div></div>'; return; }
-  document.getElementById('cal-detail-content').innerHTML = res.map(r=>`
+  const sitioFiltro = (document.getElementById('admin-cal-sitio')||{value:'all'}).value;
+  let all = getResCached() || [];
+  if(sitioFiltro !== 'all') all = all.filter(r=> (r.sitioId||'si') === sitioFiltro);
+  const res = all.filter(r=> r.checkin && r.checkout && r.checkin<=ds && r.checkout>ds);
+  const titleEl = document.getElementById('cal-detail-title');
+  const contentEl = document.getElementById('cal-detail-content');
+  if(!titleEl || !contentEl) return;
+  titleEl.textContent = '📋 Reservas em '+fmtDate(ds);
+  if(!res.length){
+    contentEl.innerHTML = `<div class="empty-state">
+      <div class="empty-icon">📅</div>
+      <div class="empty-sub">Nenhuma reserva nesta data</div>
+      <button class="btn-new" style="margin-top:12px" onclick="goPage('nova')">➕ Criar reserva</button>
+    </div>`;
+    return;
+  }
+  contentEl.innerHTML = res.map(r=>`
     <div class="tl-item" onclick="openModal('${r.id}')" style="cursor:pointer">
       <div class="tl-dot ${r.status}">${r.status==='paid'?'✅':'⏳'}</div>
       <div class="tl-body">
