@@ -557,7 +557,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:#f1f5f9;color:var(--d
         <div class="sec-header">
           <div class="sec-title">🏡 Outros sítios</div>
           <div class="sec-actions">
-            <button class="btn-new" onclick="openSitioModal(null)">➕ Novo sítio</button>
+            <button class="btn-new" onclick="abrirNovoSitio()">➕ Novo sítio</button>
           </div>
         </div>
         <div class="alert-info" style="background:var(--blue-l);border:1px solid rgba(37,99,235,.2);color:var(--blue);border-radius:8px;padding:12px 16px;font-size:13px;margin-bottom:20px;line-height:1.6">
@@ -1612,6 +1612,33 @@ async function renderSitios(){
     </div>`).join('') : '<div style="text-align:center;padding:24px;color:var(--mid);font-size:13px">Nenhum outro sítio cadastrado. Clique em "+ Novo sítio" para adicionar.</div>';
 
   list.innerHTML = siRow + outrosRows;
+}
+
+function abrirNovoSitio(){
+  // Função síncrona simples para abrir o modal vazio
+  try{
+    galUploadUrls = [];
+    capaTabAtual = 'url';
+    galTabAtual = 'url';
+    document.getElementById('sm-idx').value = '';
+    document.getElementById('sitio-modal-title').textContent = 'Novo sítio';
+    document.getElementById('sm-nome').value = '';
+    document.getElementById('sm-local').value = '';
+    document.getElementById('sm-tipo').value = '';
+    document.getElementById('sm-preco').value = '';
+    document.getElementById('sm-detalhe').value = '';
+    document.getElementById('sm-wa').value = '';
+    document.getElementById('sm-feats').value = '';
+    document.getElementById('sm-capa-url').value = '';
+    document.getElementById('sm-capa').value = '';
+    document.getElementById('sm-capa-preview').style.display = 'none';
+    buildPriceRows({});
+    switchCapaTab('url');
+    switchGalTab('url');
+    buildGalRows([]);
+    buildGalThumbs([]);
+    document.getElementById('sitio-modal-bg').classList.add('open');
+  }catch(e){ alert('Erro ao abrir modal: '+e.message); }
 }
 
 async function openSitioModal(idx){
