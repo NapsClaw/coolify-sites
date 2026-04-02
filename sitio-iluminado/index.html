@@ -1235,7 +1235,9 @@ function buildResMap(reservas){
 let _resMapCache = {};
 async function refreshResMap(){
   const arr = await getRes();
-  _resMapCache = buildResMap(arr);
+  // Site principal: mostra só reservas do sitio-iluminado (sitioId='si' ou sem sitioId)
+  const filtered = arr.filter(r => !r.sitioId || r.sitioId === 'si');
+  _resMapCache = buildResMap(filtered);
   return _resMapCache;
 }
 

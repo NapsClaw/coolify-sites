@@ -453,6 +453,12 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:#f1f5f9;color:var(--d
         <div class="add-form">
           <h3>📝 Dados da reserva</h3>
           <div class="form-grid-2">
+            <div class="form-row" style="grid-column:1/-1">
+              <label>Sítio *</label>
+              <select id="nf-sitio">
+                <option value="si">⭐ Sítio Iluminado (principal)</option>
+              </select>
+            </div>
             <div class="form-row">
               <label>Nome completo *</label>
               <input type="text" id="nf-name" placeholder="João Silva">
@@ -954,6 +960,7 @@ function goPage(p){
   if(p==='calendario') renderAdminCal();
   if(p==='leads') renderLeads();
   if(p==='sitios') renderSitios();
+  if(p==='nova') populateSitioSelect();
   // close sidebar on mobile
   document.getElementById('sidebar').classList.remove('open');
 }
@@ -1419,8 +1426,9 @@ function saveNewReservation(){
   if(!name||!phone||!checkin||!checkout||!guests){ showToast('⚠️ Preencha os campos obrigatórios'); return; }
   if(checkin >= checkout){ showToast('⚠️ Check-out deve ser depois do check-in'); return; }
 
+  const sitioId = (document.getElementById('nf-sitio')||{value:'si'}).value || 'si';
   const all = getResCached();
-  all.push({ id:genId(), name, phone, email, guests, checkin, checkout, occasion, status, obs, externos, totalVal, sinalVal, restanteVal, createdAt:new Date().toISOString() });
+  all.push({ id:genId(), name, phone, email, guests, checkin, checkout, occasion, status, obs, externos, totalVal, sinalVal, restanteVal, sitioId, createdAt:new Date().toISOString() });
   saveRes(all);
 
   // reset
@@ -1429,6 +1437,7 @@ function saveNewReservation(){
   document.getElementById('nf-externos').value='';
   document.getElementById('nf-occasion').value='';
   document.getElementById('nf-status').value='pending';
+  document.getElementById('nf-sitio').value='si';
 
   showToast('✅ Reserva salva com sucesso!');
   goPage('reservas');
@@ -1631,6 +1640,16 @@ async function renderSitios(){
   }).join('') : '<div style="text-align:center;padding:24px;color:var(--mid);font-size:13px">Nenhum outro sítio cadastrado. Clique em "+ Novo sítio" para adicionar.</div>';
 
   list.innerHTML = siRow + outrosRows;
+}
+
+async function populateSitioSelect(){
+  const sel = document.getElementById('nf-sitio');
+  if(!sel) return;
+  const data = _sitiosCache || await getSitios();
+  sel.innerHTML = '<option value="si">⭐ Sítio Iluminado (principal)</option>';
+  data.forEach((s,i)=>{
+    sel.innerHTML += `<option value="sitio-${i}">${s.nome} · ${s.local}</option>`;
+  });
 }
 
 function toggleSitioCalendario(id){
