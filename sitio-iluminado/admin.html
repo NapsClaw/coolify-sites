@@ -394,6 +394,13 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:#f1f5f9;color:var(--d
           <div class="sec-title">🗓️ Calendário de reservas</div>
         </div>
         <div class="cal-admin-wrap">
+          <div style="margin-bottom:12px;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+            <label style="font-size:12px;font-weight:700;color:var(--mid)">Sítio:</label>
+            <select id="admin-cal-sitio" onchange="renderAdminCal()" style="padding:6px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;font-family:inherit">
+              <option value="all">Todos os sítios</option>
+              <option value="si">⭐ Sítio Iluminado (principal)</option>
+            </select>
+          </div>
           <div class="cal-admin-top">
             <div class="cal-month-label" id="admin-cal-label"></div>
             <div class="cal-nav">
@@ -1296,8 +1303,15 @@ let adminCalYear = new Date().getFullYear();
 let adminCalMonth = new Date().getMonth();
 const MONTHS = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
 
-function renderAdminCal(){
-  const all = getResCached();
+async function renderAdminCal(){
+  // Garante dados carregados do GitHub
+  if(!_resCache) await getRes();
+  // Popula select de sítios
+  await populateCalSitioSelect();
+  const sitioFiltro = (document.getElementById('admin-cal-sitio')||{value:'all'}).value;
+  let all = getResCached();
+  if(sitioFiltro !== 'all') all = all.filter(r=> r.sitioId === sitioFiltro || (!r.sitioId && sitioFiltro==='si'));
+
   const today = todayStr();
   const firstDay = new Date(adminCalYear, adminCalMonth, 1).getDay();
   const daysInMonth = new Date(adminCalYear, adminCalMonth+1, 0).getDate();
@@ -1319,6 +1333,20 @@ function renderAdminCal(){
     html += `<div class="${cls}" ${onclick}><span>${d}</span>${res?'<div class="cal-day-dot"></div>':''}</div>`;
   }
   document.getElementById('admin-cal-grid').innerHTML = html;
+}
+async function populateCalSitioSelect(){
+  const sel = document.getElementById('admin-cal-sitio');
+  if(!sel) return;
+  const data = _sitiosCache || await getSitios();
+  // Só adiciona se ainda não tiver os outros sítios
+  if(sel.options.length <= 2){
+    data.forEach((s,i)=>{
+      const opt = document.createElement('option');
+      opt.value = 'sitio-'+i;
+      opt.textContent = s.nome+' · '+s.local;
+      sel.appendChild(opt);
+    });
+  }
 }
 function adminCalPrev(){ adminCalMonth--; if(adminCalMonth<0){adminCalMonth=11;adminCalYear--;} renderAdminCal(); }
 function adminCalNext(){ adminCalMonth++; if(adminCalMonth>11){adminCalMonth=0;adminCalYear++;} renderAdminCal(); }
