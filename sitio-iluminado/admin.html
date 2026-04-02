@@ -881,10 +881,36 @@ if(sessionStorage.getItem(SESSION_KEY)){
   document.getElementById('app').style.display = 'block';
 }
 
-// ===== STORAGE (shared with main site) =====
-const STORAGE_KEY = 'sitio_reservations';
-function getRes(){ try{return JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');}catch{return[];} }
-function saveRes(a){ localStorage.setItem(STORAGE_KEY, JSON.stringify(a)); }
+// ===== GITHUB BACKEND — reservas compartilhadas com o site público =====
+const GH_RES_FILE = 'sitio-iluminado/reservas.json';
+const GH_RES_API  = `https://api.github.com/repos/${GH_REPO}/contents/${GH_RES_FILE}`;
+let _resCache = null;
+let _resSha   = null;
+
+async function getRes(){
+  if(_resCache) return _resCache;
+  try{
+    const r = await fetch(GH_RES_API+'?t='+Date.now(), {headers:{'Authorization':'token '+GH_TOKEN}});
+    const d = await r.json();
+    _resSha = d.sha;
+    _resCache = JSON.parse(atob(d.content.replace(/\n/g,'')));
+    return _resCache;
+  }catch(e){ _resCache=[]; return []; }
+}
+function getResCached(){ return _resCache||[]; }
+
+async function saveRes(arr){
+  _resCache = arr;
+  const content = btoa(unescape(encodeURIComponent(JSON.stringify(arr,null,2))));
+  if(!_resSha){
+    try{ const r=await fetch(GH_RES_API,{headers:{'Authorization':'token '+GH_TOKEN}}); const d=await r.json(); _resSha=d.sha; }catch(e){}
+  }
+  const body = {message:'admin: atualiza reservas.json', content, sha:_resSha};
+  const r = await fetch(GH_RES_API,{method:'PUT',headers:{'Authorization':'token '+GH_TOKEN,'Content-Type':'application/json'},body:JSON.stringify(body)});
+  const d = await r.json();
+  _resSha = d.content?.sha||_resSha;
+  return r.ok;
+}
 function genId(){ return Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
 
 // ===== UTILS =====
@@ -932,7 +958,7 @@ function toggleSidebar(){
 
 // ===== DASHBOARD =====
 function renderDashboard(){
-  const all = getRes();
+  const all = getResCached();
   const pending = all.filter(r=>r.status==='pending');
   const paid = all.filter(r=>r.status==='paid');
   document.getElementById('stat-total').textContent = all.length;
@@ -1028,7 +1054,7 @@ function filterRes(f, btn){
 }
 
 function renderResTable(){
-  let all = getRes();
+  let all = getResCached();
   const search = (document.getElementById('search-input')||{}).value?.toLowerCase()||'';
   if(currentFilter==='pending') all = all.filter(r=>r.status==='pending');
   if(currentFilter==='paid') all = all.filter(r=>r.status==='paid');
@@ -1069,7 +1095,7 @@ function renderResTable(){
 }
 
 function toggleStatusDirect(id){
-  const all = getRes();
+  const all = getResCached();
   const r = all.find(x=>x.id===id);
   if(!r) return;
   r.status = r.status==='paid' ? 'pending' : 'paid';
@@ -1080,7 +1106,7 @@ function toggleStatusDirect(id){
 
 function deleteRes(id){
   if(!confirm('Excluir esta reserva?')) return;
-  saveRes(getRes().filter(r=>r.id!==id));
+  saveRes(getResCached().filter(r=>r.id!==id));
   renderResTable();
   showToast('🗑️ Reserva excluída');
 }
@@ -1088,7 +1114,7 @@ function deleteRes(id){
 // ===== MODAL =====
 let modalResId = null;
 function openModal(id){
-  const r = getRes().find(x=>x.id===id);
+  const r = getResCached().find(x=>x.id===id);
   if(!r) return;
   modalResId = id;
   document.getElementById('md-name').textContent = r.name||'—';
@@ -1137,7 +1163,7 @@ function toggleEditMode(){
     document.getElementById('md-title').textContent='📋 Detalhes da reserva';
   } else {
     // switch to edit — pre-fill fields
-    const r = getRes().find(x=>x.id===modalResId);
+    const r = getResCached().find(x=>x.id===modalResId);
     if(!r) return;
     document.getElementById('ed-name').value = r.name||'';
     document.getElementById('ed-phone').value = r.phone||'';
@@ -1165,7 +1191,7 @@ function saveEdit(){
   if(!checkin || !checkout){ showToast('⚠️ Datas obrigatórias'); return; }
   if(checkin >= checkout){ showToast('⚠️ Check-out deve ser depois do check-in'); return; }
 
-  const all = getRes();
+  const all = getResCached();
   const idx = all.findIndex(x=>x.id===modalResId);
   if(idx === -1) return;
   all[idx] = {
@@ -1190,7 +1216,7 @@ function saveEdit(){
 }
 function toggleResStatus(){
   if(!modalResId) return;
-  const all = getRes();
+  const all = getResCached();
   const r = all.find(x=>x.id===modalResId);
   if(!r) return;
   r.status = r.status==='paid' ? 'pending' : 'paid';
@@ -1203,7 +1229,7 @@ function toggleResStatus(){
 function cancelReservation(){
   if(!modalResId) return;
   if(!confirm('Excluir esta reserva?')) return;
-  saveRes(getRes().filter(r=>r.id!==modalResId));
+  saveRes(getResCached().filter(r=>r.id!==modalResId));
   closeModal();
   renderDashboard();
   renderResTable();
@@ -1229,7 +1255,7 @@ function diasParaCheckin(checkin){
 }
 
 function cobrarCliente(id){
-  const r = getRes().find(x=>x.id===id);
+  const r = getResCached().find(x=>x.id===id);
   if(!r || !r.phone) return;
   const n = r.phone.replace(/\D/g,'');
   const faltam = diasParaCheckin(r.checkin);
@@ -1258,7 +1284,7 @@ let adminCalMonth = new Date().getMonth();
 const MONTHS = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
 
 function renderAdminCal(){
-  const all = getRes();
+  const all = getResCached();
   const today = todayStr();
   const firstDay = new Date(adminCalYear, adminCalMonth, 1).getDay();
   const daysInMonth = new Date(adminCalYear, adminCalMonth+1, 0).getDate();
@@ -1285,7 +1311,7 @@ function adminCalPrev(){ adminCalMonth--; if(adminCalMonth<0){adminCalMonth=11;a
 function adminCalNext(){ adminCalMonth++; if(adminCalMonth>11){adminCalMonth=0;adminCalYear++;} renderAdminCal(); }
 
 function showCalDetail(ds){
-  const all = getRes();
+  const all = getResCached();
   const res = all.filter(r=>r.checkin<=ds && r.checkout>ds);
   document.getElementById('cal-detail-title').textContent = '📋 Reservas em '+fmtDate(ds);
   if(!res.length){ document.getElementById('cal-detail-content').innerHTML='<div class="empty-state"><div class="empty-sub">Nenhuma reserva nesta data</div></div>'; return; }
@@ -1303,7 +1329,7 @@ function showCalDetail(ds){
 
 // ===== LEADS =====
 function renderLeads(){
-  let all = getRes();
+  let all = getResCached();
   const search = (document.getElementById('leads-search')||{}).value?.toLowerCase()||'';
   // Group by phone
   const map = {};
@@ -1331,7 +1357,7 @@ function renderLeads(){
 
 // ===== EXPORT CSV =====
 function exportCSV(){
-  const all = getRes();
+  const all = getResCached();
   const header = ['Nome','Telefone','Email','Check-in','Check-out','Dias','Pessoas','Ocasião','Status','Observações','Registrado em'];
   const rows = all.map(r=>[
     r.name, r.phone||'', r.email||'',
@@ -1345,7 +1371,7 @@ function exportCSV(){
   downloadCSV([header,...rows], 'reservas-sitio-iluminado.csv');
 }
 function exportLeadsCSV(){
-  const all = getRes();
+  const all = getResCached();
   const header = ['Nome','Telefone','Email','Total reservas'];
   const map = {};
   all.forEach(r=>{
@@ -1387,7 +1413,7 @@ function saveNewReservation(){
   if(!name||!phone||!checkin||!checkout||!guests){ showToast('⚠️ Preencha os campos obrigatórios'); return; }
   if(checkin >= checkout){ showToast('⚠️ Check-out deve ser depois do check-in'); return; }
 
-  const all = getRes();
+  const all = getResCached();
   all.push({ id:genId(), name, phone, email, guests, checkin, checkout, occasion, status, obs, externos, totalVal, sinalVal, restanteVal, createdAt:new Date().toISOString() });
   saveRes(all);
 
@@ -1719,7 +1745,9 @@ async function excluirSitio(i){
 }
 
 // ===== INIT =====
-function init(){
+async function init(){
+  // Carrega reservas do GitHub antes de renderizar
+  await getRes();
   renderDashboard();
   // pré-carrega cache dos sítios em background
   getSitios();

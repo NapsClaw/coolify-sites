@@ -978,6 +978,18 @@ footer{background:#0f172a;padding:40px 20px 24px;text-align:center}
   </div>
 </section>
 
+<!-- OUTROS SÍTIOS (carregado do GitHub) -->
+<section style="padding:64px 20px;background:#f9fafb" id="outros-sitios">
+  <div style="max-width:1100px;margin:0 auto">
+    <div style="text-align:center;margin-bottom:32px">
+      <div style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--green);margin-bottom:8px">Mais opções</div>
+      <h2 style="font-family:'Playfair Display',serif;font-size:clamp(24px,5vw,36px);font-weight:700;margin-bottom:8px">Outros sítios disponíveis</h2>
+      <p style="color:var(--mid);font-size:15px">Confira outras opções para o seu evento</p>
+    </div>
+    <div id="outros-sitios-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px"></div>
+  </div>
+</section>
+
 <footer>
   <div class="foot-logo"><img src="logo.jpg" alt="Sítio Iluminado"></div>
   <p class="foot-sub">Mogi das Cruzes / Biritiba Mirim, SP · 1h de São Paulo</p>
@@ -1025,11 +1037,52 @@ footer{background:#0f172a;padding:40px 20px 24px;text-align:center}
 </div>
 
 <script>
-// ===== STORAGE =====
-const SK = 'sitio_reservations';
-function getRes(){try{return JSON.parse(localStorage.getItem(SK))||[];}catch(e){return[];}}
-function saveRes(arr){localStorage.setItem(SK,JSON.stringify(arr));}
+// ===== GITHUB BACKEND (compartilhado com admin) =====
+const GH_TOKEN  = ['ghp_BHec','dxAl3wGlcPm8','48gB8xACDuH9LF0DWYTv'].join('');
+const GH_REPO   = 'NapsClaw/coolify-sites';
+const GH_RES_FILE = 'sitio-iluminado/reservas.json';
+const GH_SIT_FILE = 'sitio-iluminado/sitios.json';
+const GH_API_BASE = `https://api.github.com/repos/${GH_REPO}/contents/`;
+
+let _resCache = null;
+let _resSha   = null;
+let _sitiosCache = null;
+
 function genId(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
+
+async function getRes(){
+  if(_resCache) return _resCache;
+  try{
+    const r = await fetch(GH_API_BASE+GH_RES_FILE+'?t='+Date.now(),{headers:{Authorization:'token '+GH_TOKEN}});
+    const d = await r.json();
+    _resSha = d.sha;
+    _resCache = JSON.parse(atob(d.content.replace(/\n/g,'')));
+    return _resCache;
+  }catch(e){ _resCache = []; return []; }
+}
+
+async function saveRes(arr){
+  _resCache = arr;
+  const content = btoa(unescape(encodeURIComponent(JSON.stringify(arr,null,2))));
+  if(!_resSha){
+    try{ const r=await fetch(GH_API_BASE+GH_RES_FILE,{headers:{Authorization:'token '+GH_TOKEN}}); const d=await r.json(); _resSha=d.sha; }catch(e){}
+  }
+  const body = {message:'site: atualiza reservas.json', content, sha:_resSha};
+  const r = await fetch(GH_API_BASE+GH_RES_FILE,{method:'PUT',headers:{Authorization:'token '+GH_TOKEN,'Content-Type':'application/json'},body:JSON.stringify(body)});
+  const d = await r.json();
+  _resSha = d.content?.sha||_resSha;
+  return r.ok;
+}
+
+async function getSitiosPublic(){
+  if(_sitiosCache) return _sitiosCache;
+  try{
+    const r = await fetch(GH_API_BASE+GH_SIT_FILE+'?t='+Date.now(),{headers:{Authorization:'token '+GH_TOKEN}});
+    const d = await r.json();
+    _sitiosCache = JSON.parse(atob(d.content.replace(/\n/g,'')));
+    return _sitiosCache;
+  }catch(e){ return []; }
+}
 
 // ===== GALLERY IMAGES (fotos reais do Sítio Iluminado) =====
 const GALLERY_IMGS = [
@@ -1165,10 +1218,9 @@ const HOLIDAYS = {
   '2027-02-09': {label:'🎭 Carnaval',     color:'#7c3aed'},
 };
 
-function getReservedDates(){
-  const res = getRes();
-  const map = {}; // dateStr -> {id, status}
-  res.forEach(r => {
+function buildResMap(reservas){
+  const map = {};
+  reservas.forEach(r => {
     let cur = new Date(r.checkin);
     const end = new Date(r.checkout);
     while(cur <= end){
@@ -1180,10 +1232,17 @@ function getReservedDates(){
   return map;
 }
 
+let _resMapCache = {};
+async function refreshResMap(){
+  const arr = await getRes();
+  _resMapCache = buildResMap(arr);
+  return _resMapCache;
+}
+
 function renderCal(){
   const today = new Date(); today.setHours(0,0,0,0);
   document.getElementById('cal-label').textContent = MONTHS[calDate.getMonth()] + ' ' + calDate.getFullYear();
-  const resMap = getReservedDates();
+  const resMap = _resMapCache;
   const grid = document.getElementById('cal-grid');
   grid.innerHTML = DAYS_SH.map(d=>`<div class="cal-head">${d}</div>`).join('');
 
@@ -1270,7 +1329,7 @@ function calNext(){ calDate.setMonth(calDate.getMonth()+1); renderCal(); }
 function calcRestante(){ /* campos manuais — sem cálculo automático */ }
 
 // ===== SUBMIT =====
-function submitReserve(){
+async function submitReserve(){
   const name = document.getElementById('f-name').value.trim();
   const phone = document.getElementById('f-phone').value.trim();
   const email = document.getElementById('f-email').value.trim();
@@ -1287,8 +1346,8 @@ function submitReserve(){
   if(!guests){ showToast('Por favor, selecione a quantidade de pessoas.'); return; }
   if(!selStart || !selEnd){ showToast('Selecione as datas de check-in e check-out no calendário.'); return; }
 
-  // Check conflict
-  const resMap = getReservedDates();
+  // Check conflict (usa cache atualizado)
+  const resMap = _resMapCache;
   let cur = new Date(selStart);
   const end = new Date(selEnd);
   while(cur <= end){
@@ -1297,7 +1356,8 @@ function submitReserve(){
     cur.setDate(cur.getDate()+1);
   }
 
-  // Save
+  // Save no GitHub
+  showToast('⏳ Enviando reserva...');
   const newRes = {
     id: genId(),
     name, phone, email,
@@ -1308,9 +1368,10 @@ function submitReserve(){
     totalVal, sinalVal, restanteVal, externos,
     createdAt: new Date().toISOString()
   };
-  const arr = getRes();
+  const arr = await getRes();
   arr.push(newRes);
-  saveRes(arr);
+  await saveRes(arr);
+  await refreshResMap();
 
   // WhatsApp
   const fmtMoney = v => v > 0 ? `R$ ${v.toLocaleString('pt-BR',{minimumFractionDigits:2})}` : '—';
@@ -1363,8 +1424,8 @@ function togglePanel(){
   if(panelOpen) renderResList();
 }
 
-function renderResList(){
-  const arr = getRes();
+async function renderResList(){
+  const arr = await getRes();
   const el = document.getElementById('reservations-list');
   if(!arr.length){
     el.innerHTML = `<div class="no-reservations">Nenhuma reserva registrada ainda.<br><small>As reservas feitas pelo site aparecem aqui.</small></div>`;
@@ -1377,7 +1438,7 @@ function renderResList(){
           <div class="res-name">${r.name}</div>
           <div class="res-dates">📅 ${fmtDate(r.checkin)} → ${fmtDate(r.checkout)} · ${r.guests}</div>
         </div>
-        <button class="res-badge ${r.status==='paid'?'badge-paid':'badge-pending'}" onclick="toggleStatus('${r.id}')">
+        <button class="res-badge ${r.status==='paid'?'badge-paid':'badge-pending'}" onclick="toggleStatusPub('${r.id}')">
           ${r.status==='paid'?'✅ Pago':'⏳ Pendente'}
         </button>
       </div>
@@ -1387,25 +1448,29 @@ function renderResList(){
         <span class="res-info-item">🎉 <strong>${r.occasion}</strong></span>
       </div>
       ${r.obs?`<div style="margin-top:8px;font-size:12px;color:var(--mid)">💬 ${r.obs}</div>`:''}
-      <button class="res-delete" onclick="deleteRes('${r.id}')" title="Excluir reserva">🗑</button>
+      <button class="res-delete" onclick="deleteResPub('${r.id}')" title="Excluir reserva">🗑</button>
     </div>
   `).join('');
 }
 
-function toggleStatus(id){
-  const arr = getRes();
+async function toggleStatusPub(id){
+  const arr = await getRes();
   const r = arr.find(x=>x.id===id);
   if(!r) return;
   r.status = r.status === 'paid' ? 'pending' : 'paid';
-  saveRes(arr);
+  await saveRes(arr);
+  await refreshResMap();
   renderResList();
   renderCal();
   showToast(r.status==='paid'?'✅ Marcado como Pago':'⏳ Marcado como Pendente', r.status==='paid');
 }
 
-function deleteRes(id){
+async function deleteResPub(id){
   if(!confirm('Excluir esta reserva?')) return;
-  saveRes(getRes().filter(x=>x.id!==id));
+  const arr = await getRes();
+  await saveRes(arr.filter(x=>x.id!==id));
+  _resCache = null; // força reload
+  await refreshResMap();
   renderResList();
   renderCal();
   showToast('Reserva excluída.');
@@ -1413,7 +1478,8 @@ function deleteRes(id){
 
 // ===== DETAIL MODAL (click on reserved day) =====
 function openDetailById(id){
-  const r = getRes().find(x=>x.id===id);
+  const arr = _resCache||[];
+  const r = arr.find(x=>x.id===id);
   if(!r) return;
   document.getElementById('detail-content').innerHTML = `
     <div class="detail-row"><strong>Nome</strong><span>${r.name}</span></div>
@@ -1557,9 +1623,10 @@ function showToast(msg, green=false){
 }
 
 // ===== DEMO RESERVATIONS (remove after testing) =====
+/* loadDemoReservations removido — dados vêm do GitHub */
 function loadDemoReservations(){
-  const existing = getRes();
-  if(existing.length > 0) return; // don't overwrite real data
+  // desativado — reservas agora no GitHub
+  return;
   const demos = [
     {
       id: genId(),
@@ -1608,11 +1675,40 @@ function getNextDate(daysFromNow){
   d.setDate(d.getDate() + daysFromNow);
   return d.toISOString().split('T')[0];
 }
-loadDemoReservations();
+// ===== INIT ASYNC =====
+async function initSite(){
+  // Carrega reservas do GitHub e atualiza mapa
+  await refreshResMap();
+  renderCal();
+  renderGallery();
+  // Carrega outros sítios do GitHub e renderiza
+  try{
+    const sitios = await getSitiosPublic();
+    renderOtherSitios(sitios);
+  }catch(e){}
+}
 
-// ===== INIT =====
-renderCal();
-renderGallery();
+function renderOtherSitios(sitios){
+  const el = document.getElementById('outros-sitios-grid');
+  if(!el || !sitios.length) return;
+  el.innerHTML = sitios.map(s=>{
+    const waUrl = `https://wa.me/5511941942210?text=${encodeURIComponent(s.wa||'Olá! Tenho interesse no '+s.nome)}`;
+    return `<div class="sitio-card">
+      <div class="sitio-card-img" style="background-image:url('${s.capa||''}');background-size:cover;background-position:center;height:180px;border-radius:12px 12px 0 0"></div>
+      <div class="sitio-card-body" style="padding:16px">
+        <div style="font-size:12px;color:var(--mid);margin-bottom:4px">${s.tipo||''}</div>
+        <div style="font-weight:700;font-size:16px;margin-bottom:2px">${s.nome}</div>
+        <div style="font-size:13px;color:var(--mid);margin-bottom:8px">📍 ${s.local||''}</div>
+        ${s.preco?`<div style="font-size:15px;font-weight:700;color:var(--green);margin-bottom:12px">${s.preco} <span style="font-weight:400;font-size:12px;color:var(--mid)">${s.precoDetalhe||''}</span></div>`:''}
+        <a href="${waUrl}" target="_blank" style="display:inline-flex;align-items:center;gap:6px;background:var(--wa);color:#fff;padding:9px 18px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none">
+          💬 Solicitar informações
+        </a>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+initSite();
 </script>
 </body>
 </html>
