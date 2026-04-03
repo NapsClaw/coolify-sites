@@ -791,7 +791,7 @@ function confirmarRes(id){
   const r = arr.find(x=>x.id===id);
   if(!r) return;
   r.status = 'confirmada';
-  salvarReservas(arr);
+  salvarReservas(arr); // salva no localStorage E sincroniza GitHub
   showToast('✅ Reserva confirmada!');
   renderReservas();
   renderCalendario();
@@ -802,7 +802,7 @@ function cancelarRes(id){
   const r = arr.find(x=>x.id===id);
   if(!r) return;
   r.status = 'cancelada';
-  salvarReservas(arr);
+  salvarReservas(arr); // salva no localStorage E sincroniza GitHub
   showToast('❌ Reserva cancelada');
   renderReservas();
   renderCalendario();
@@ -970,7 +970,18 @@ function salvarNovaReserva(){
   }
 
   const arr = getReservas();
-  arr.push({ id:genId(), sitioId, sitioLabel, nome, telefone, email, pessoas, checkin, checkout, ocasiao, status, externos, total, sinal, obs, criadoEm:new Date().toISOString() });
+  arr.push({
+    id: genId(),
+    sitioId,        // 'principal' para Sítio Iluminado, 'sitio-N' para outros
+    sitioNome: sitioLabel,
+    sitioLabel,
+    nome, telefone, email, pessoas,
+    checkin,  checkout,    // campos canônicos usados pelo admin
+    dataInicio: checkin,   // aliases para compatibilidade com site/sitio.html
+    dataFim: checkout,
+    ocasiao, status, externos, total, sinal, obs,
+    criadoEm: new Date().toISOString()
+  });
   salvarReservas(arr);
 
   // reset form

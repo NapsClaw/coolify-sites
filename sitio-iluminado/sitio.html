@@ -91,8 +91,15 @@ nav{position:fixed;top:0;left:0;right:0;z-index:500;background:rgba(255,255,255,
 .cal-card{background:#fff;border-radius:12px;border:1px solid var(--border);padding:20px}
 .cal-card h3{font-family:'Playfair Display',serif;font-size:18px;margin-bottom:4px}
 .cal-card p{font-size:13px;color:var(--mid);margin-bottom:16px}
-.flatpickr-calendar.inline{margin:0 auto!important;width:100%!important;max-width:400px;box-shadow:none!important;border:none!important}
-.flatpickr-day.blocked-day{background:var(--red-l)!important;border-color:var(--red)!important;color:var(--red)!important;pointer-events:none!important}
+.flatpickr-calendar.inline{margin:0 auto!important;width:100%!important;max-width:420px;box-shadow:none!important;border:none!important}
+.flatpickr-day.reservado,.flatpickr-day.reservado:hover{background:#ffcccc!important;color:#cc0000!important;cursor:not-allowed!important;text-decoration:line-through}
+.flatpickr-day.feriado{background:#fff3cd!important;color:#856404!important;font-weight:700!important}
+.calendario-legenda{display:flex;gap:16px;margin-top:12px;flex-wrap:wrap}
+.legenda-item{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--mid)}
+.legenda-cor{width:14px;height:14px;border-radius:3px;border:1px solid}
+.legenda-livre{background:#e8f5e9;border-color:#4caf50!important}
+.legenda-ocupado{background:#ffcccc;border-color:#cc0000!important}
+.legenda-feriado{background:#fff3cd;border-color:#856404!important}
 .cal-legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:12px}
 .leg{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--mid)}
 .leg-box{width:14px;height:14px;border-radius:3px;border:1px solid}
@@ -221,9 +228,10 @@ footer{background:#0f172a;color:rgba(255,255,255,.5);text-align:center;padding:2
         <h3>🗓️ Disponibilidade</h3>
         <p id="cal-desc">Selecione as datas desejadas</p>
         <div id="flatpickr-cal"></div>
-        <div class="cal-legend" style="margin-top:16px">
-          <div class="leg"><div class="leg-box" style="background:var(--red-l);border-color:var(--red)"></div>Reservado</div>
-          <div class="leg"><div class="leg-box" style="background:#dcfce7;border-color:var(--green)"></div>Disponível</div>
+        <div class="calendario-legenda">
+          <div class="legenda-item"><div class="legenda-cor legenda-livre"></div><span>Disponível</span></div>
+          <div class="legenda-item"><div class="legenda-cor legenda-ocupado"></div><span>Reservado</span></div>
+          <div class="legenda-item"><div class="legenda-cor legenda-feriado"></div><span>Feriado</span></div>
         </div>
       </div>
     </div>
@@ -486,39 +494,90 @@ function renderPrecos(prices, precoResumo){
 }
 
 // ================================================
-// CALENDÁRIO — Flatpickr inline
+// FERIADOS — mesma tabela do index.html
 // ================================================
+const HOLIDAYS = {
+  '2026-04-03':{label:'Páscoa',color:'#7c3aed'},
+  '2026-04-04':{label:'Páscoa',color:'#7c3aed'},
+  '2026-04-05':{label:'Páscoa',color:'#7c3aed'},
+  '2026-04-18':{label:'Tiradentes',color:'#b45309'},
+  '2026-04-19':{label:'Tiradentes',color:'#b45309'},
+  '2026-04-20':{label:'Tiradentes',color:'#b45309'},
+  '2026-04-21':{label:'Tiradentes',color:'#b45309'},
+  '2026-05-01':{label:'Trabalhador',color:'#0369a1'},
+  '2026-05-02':{label:'Trabalhador',color:'#0369a1'},
+  '2026-05-03':{label:'Trabalhador',color:'#0369a1'},
+  '2026-05-09':{label:'Dia das Maes',color:'#be185d'},
+  '2026-05-10':{label:'Dia das Maes',color:'#be185d'},
+  '2026-08-08':{label:'Dia dos Pais',color:'#1d4ed8'},
+  '2026-08-09':{label:'Dia dos Pais',color:'#1d4ed8'},
+  '2026-09-05':{label:'Independencia',color:'#15803d'},
+  '2026-09-06':{label:'Independencia',color:'#15803d'},
+  '2026-09-07':{label:'Independencia',color:'#15803d'},
+  '2026-10-10':{label:'Criancas',color:'#ea580c'},
+  '2026-10-11':{label:'Criancas',color:'#ea580c'},
+  '2026-10-12':{label:'Criancas',color:'#ea580c'},
+  '2026-10-30':{label:'Finados',color:'#6b21a8'},
+  '2026-11-01':{label:'Finados',color:'#6b21a8'},
+  '2026-11-02':{label:'Finados',color:'#6b21a8'},
+  '2026-11-14':{label:'Proclamacao',color:'#15803d'},
+  '2026-11-15':{label:'Proclamacao',color:'#15803d'},
+  '2026-11-20':{label:'Consciencia',color:'#92400e'},
+  '2026-11-21':{label:'Consciencia',color:'#92400e'},
+  '2026-11-22':{label:'Consciencia',color:'#92400e'},
+  '2026-12-22':{label:'Natal',color:'#dc2626'},
+  '2026-12-23':{label:'Natal',color:'#dc2626'},
+  '2026-12-24':{label:'Natal',color:'#dc2626'},
+  '2026-12-25':{label:'Natal',color:'#dc2626'},
+  '2026-12-26':{label:'Natal',color:'#dc2626'},
+  '2027-02-05':{label:'Carnaval',color:'#7c3aed'},
+  '2027-02-06':{label:'Carnaval',color:'#7c3aed'},
+  '2027-02-07':{label:'Carnaval',color:'#7c3aed'},
+  '2027-02-08':{label:'Carnaval',color:'#7c3aed'},
+  '2027-02-09':{label:'Carnaval',color:'#7c3aed'},
+};
+const FERIADO_DATES = Object.keys(HOLIDAYS);
+
+// ================================================
+// CALENDÁRIO — Flatpickr inline com feriados
+// ================================================
+let _fpInstance = null;
+
+function getDatasBlockeadas(sitioId){
+  const reservas = JSON.parse(localStorage.getItem('reservas')||'[]');
+  return reservas
+    .filter(r => r.sitioId===sitioId && r.status==='confirmada')
+    .map(r => ({ from: r.checkin||r.dataInicio, to: r.checkout||r.dataFim }))
+    .filter(r => r.from && r.to);
+}
+
 function renderCalendario(){
   const sitioId = 'sitio-'+SITIO._idx;
-  const reservas = JSON.parse(localStorage.getItem('reservas')||'[]');
-  const confirmadas = reservas.filter(r=> r.sitioId===sitioId && r.status==='confirmada');
-
-  // Monta ranges de datas bloqueadas
-  const disable = confirmadas.map(r=>({from:r.checkin, to:r.checkout})).filter(r=>r.from&&r.to);
-
-  flatpickr('#flatpickr-cal', {
+  const datasReservadas = getDatasBlockeadas(sitioId);
+  if(_fpInstance){ _fpInstance.destroy(); _fpInstance = null; }
+  _fpInstance = flatpickr('#flatpickr-cal', {
     inline: true,
     mode: 'range',
     minDate: 'today',
     locale: 'pt',
-    disable: disable,
+    disable: [...datasReservadas, ...FERIADO_DATES],
     onDayCreate: function(dObj, dStr, fp, dayElem){
       const ds = dayElem.dateObj.toISOString().split('T')[0];
-      const isBlocked = confirmadas.some(r=> r.checkin<=ds && r.checkout>ds);
-      if(isBlocked) dayElem.classList.add('blocked-day');
+      const isRes = datasReservadas.some(r => r.from <= ds && r.to > ds);
+      const isFer = HOLIDAYS[ds];
+      if(isRes){ dayElem.classList.add('reservado'); dayElem.title='Data indisponível'; }
+      else if(isFer){ dayElem.classList.add('feriado'); dayElem.title=isFer.label; dayElem.style.borderBottom='2px solid '+isFer.color; }
     },
     onChange: function(dates){
       if(dates.length===2){
         const fmt = d=>d.toLocaleDateString('pt-BR');
         document.getElementById('cal-desc').textContent = '📅 '+fmt(dates[0])+' → '+fmt(dates[1]);
-        // preenche datas no form
         document.getElementById('f-inicio').value = dates[0].toISOString().split('T')[0];
         document.getElementById('f-fim').value = dates[1].toISOString().split('T')[0];
       }
     }
   });
 }
-
 // ================================================
 // FORMULÁRIO — salva lead no localStorage
 // ================================================

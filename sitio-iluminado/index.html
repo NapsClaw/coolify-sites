@@ -1221,9 +1221,13 @@ const HOLIDAYS = {
 function buildResMap(reservas){
   const map = {};
   reservas.forEach(r => {
-    let cur = new Date(r.checkin);
-    const end = new Date(r.checkout);
-    while(cur <= end){
+    // Suporta checkin/checkout (admin) e dataInicio/dataFim (site)
+    const inicio = r.checkin || r.dataInicio;
+    const fim = r.checkout || r.dataFim;
+    if(!inicio || !fim) return;
+    let cur = new Date(inicio+'T12:00:00');
+    const end = new Date(fim+'T12:00:00');
+    while(cur < end){
       const ds = cur.toISOString().split('T')[0];
       map[ds] = {id: r.id, status: r.status};
       cur.setDate(cur.getDate()+1);
@@ -1235,8 +1239,10 @@ function buildResMap(reservas){
 let _resMapCache = {};
 async function refreshResMap(){
   const arr = await getRes();
-  // Site principal: mostra só reservas do sitio-iluminado (sitioId='si' ou sem sitioId)
-  const filtered = arr.filter(r => !r.sitioId || r.sitioId === 'si');
+  // Site principal: sitioId='principal', 'si', ou sem sitioId (compatibilidade total)
+  const filtered = arr.filter(r =>
+    !r.sitioId || r.sitioId === 'si' || r.sitioId === 'principal'
+  );
   _resMapCache = buildResMap(filtered);
   return _resMapCache;
 }
