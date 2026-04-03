@@ -515,14 +515,21 @@ function atualizarProfNow() {
 // AUTO-CHAMADA nos horários exatos — chama TODOS em sequência
 // ============================================================
 var autoKeys = new Set();
+var autoChamandoAgora = false; // impede chamadas sobrepostas
+
 function verificarAuto() {
+  if (!audioAtivado) return; // só roda após ativar
+  if (autoChamandoAgora) return; // já tem chamada em andamento
+
   const h = getHoraAtual();
   const periodo = getPeriodo(h);
+
+  // Coletar todos os grupos pendentes em ordem (G1 antes G2 antes G3, e por horário)
+  const pendentes = [];
   ['G1','G2','G3'].forEach(ginId => {
     const prof = getProfissional(ginId, periodo);
     if (!prof) return;
     const grupos = getGrupos(ginId, periodo);
-    // Verificar TODOS os grupos que já passaram do horário e têm pacientes não chamados
     grupos.forEach(hora => {
       if (hora > h) return; // ainda não chegou
       const pacs = getPacientes(ginId, hora);
@@ -532,10 +539,22 @@ function verificarAuto() {
       if (!temPendente) return;
       const key = ginId+'_'+hora+'_auto';
       if (autoKeys.has(key)) return;
-      autoKeys.add(key);
-      chamarTodosSequencia(ginId, hora);
+      pendentes.push({ginId, hora, key});
     });
   });
+
+  if (!pendentes.length) return;
+
+  // Chamar o primeiro da fila
+  const {ginId, hora, key} = pendentes[0];
+  autoKeys.add(key);
+  autoChamandoAgora = true;
+
+  // Após a fala terminar, libera para próxima verificação
+  const orig = window.speechSynthesis.onend;
+  chamarTodosSequencia(ginId, hora);
+  // Aguarda 6s após o início para liberar (tempo suficiente para o anúncio terminar)
+  setTimeout(() => { autoChamandoAgora = false; }, 6000);
 }
 
 setInterval(verificarAuto, 15000);
