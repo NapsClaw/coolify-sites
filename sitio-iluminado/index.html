@@ -509,14 +509,7 @@ footer{background:#0f172a;padding:40px 20px 24px;text-align:center}
       <button class="btn-submit" onclick="submitReserve()">📲 Enviar solicitação via WhatsApp</button>
     </div>
 
-    <!-- RESERVATIONS LIST -->
-    <div class="reservations-panel">
-      <h3>
-        <span>Reservas registradas</span>
-        <button onclick="togglePanel()" style="background:none;border:none;font-size:13px;color:var(--mid);cursor:pointer" id="toggle-btn">▼ Ver</button>
-      </h3>
-      <div id="reservations-list" style="display:none"></div>
-    </div>
+    <!-- RESERVATIONS LIST removido: dados pessoais ficam apenas no painel admin -->
   </div>
 </section>
 
@@ -1271,7 +1264,8 @@ function renderCal(){
     else if(res){
       cls += 'reserved-paid';
       dot = `<div class="cal-day-dot" style="background:var(--red)"></div>`;
-      click = `onclick="openDetailById('${res.id}')"`;
+      // Datas reservadas não clicáveis no site público (privacidade)
+      click = '';
     } else {
       cls += 'free';
       if(selStart && ds === selStart) cls += ' sel-start';
@@ -1432,81 +1426,17 @@ function togglePanel(){
   if(panelOpen) renderResList();
 }
 
-async function renderResList(){
-  const arr = await getRes();
-  const el = document.getElementById('reservations-list');
-  if(!arr.length){
-    el.innerHTML = `<div class="no-reservations">Nenhuma reserva registrada ainda.<br><small>As reservas feitas pelo site aparecem aqui.</small></div>`;
-    return;
-  }
-  el.innerHTML = arr.slice().reverse().map(r => `
-    <div class="res-item" id="ri-${r.id}">
-      <div class="res-item-top">
-        <div>
-          <div class="res-name">${r.name}</div>
-          <div class="res-dates">📅 ${fmtDate(r.checkin)} → ${fmtDate(r.checkout)} · ${r.guests}</div>
-        </div>
-        <button class="res-badge ${r.status==='paid'?'badge-paid':'badge-pending'}" onclick="toggleStatusPub('${r.id}')">
-          ${r.status==='paid'?'✅ Pago':'⏳ Pendente'}
-        </button>
-      </div>
-      <div class="res-info">
-        <span class="res-info-item">📞 <strong>${r.phone}</strong></span>
-        ${r.email?`<span class="res-info-item">📧 <strong>${r.email}</strong></span>`:''}
-        <span class="res-info-item">🎉 <strong>${r.occasion}</strong></span>
-      </div>
-      ${r.obs?`<div style="margin-top:8px;font-size:12px;color:var(--mid)">💬 ${r.obs}</div>`:''}
-      <button class="res-delete" onclick="deleteResPub('${r.id}')" title="Excluir reserva">🗑</button>
-    </div>
-  `).join('');
-}
+// renderResList removida do site público — dados pessoais ficam apenas no admin.html
+async function renderResList(){ /* no-op no site público */ }
 
-async function toggleStatusPub(id){
-  const arr = await getRes();
-  const r = arr.find(x=>x.id===id);
-  if(!r) return;
-  r.status = r.status === 'paid' ? 'pending' : 'paid';
-  await saveRes(arr);
-  await refreshResMap();
-  renderResList();
-  renderCal();
-  showToast(r.status==='paid'?'✅ Marcado como Pago':'⏳ Marcado como Pendente', r.status==='paid');
-}
-
-async function deleteResPub(id){
-  if(!confirm('Excluir esta reserva?')) return;
-  const arr = await getRes();
-  await saveRes(arr.filter(x=>x.id!==id));
-  _resCache = null; // força reload
-  await refreshResMap();
-  renderResList();
-  renderCal();
-  showToast('Reserva excluída.');
-}
+// toggleStatusPub / deleteResPub removidos do site público (apenas admin pode gerenciar reservas)
+async function toggleStatusPub(id){ /* no-op */ }
+async function deleteResPub(id){ /* no-op */ }
 
 // ===== DETAIL MODAL (click on reserved day) =====
 function openDetailById(id){
-  const arr = _resCache||[];
-  const r = arr.find(x=>x.id===id);
-  if(!r) return;
-  document.getElementById('detail-content').innerHTML = `
-    <div class="detail-row"><strong>Nome</strong><span>${r.name}</span></div>
-    <div class="detail-row"><strong>WhatsApp</strong><span>${r.phone}</span></div>
-    <div class="detail-row"><strong>E-mail</strong><span>${r.email||'—'}</span></div>
-    <div class="detail-row"><strong>Check-in</strong><span>${fmtDate(r.checkin)}</span></div>
-    <div class="detail-row"><strong>Check-out</strong><span>${fmtDate(r.checkout)}</span></div>
-    <div class="detail-row"><strong>Pessoas</strong><span>${r.guests}</span></div>
-    <div class="detail-row"><strong>Ocasião</strong><span>${r.occasion}</span></div>
-    <div class="detail-row"><strong>Status</strong><span style="color:${r.status==='paid'?'var(--green)':'var(--amber)'}"><strong>${r.status==='paid'?'✅ Pago':'⏳ Pendente'}</strong></span></div>
-    ${r.obs?`<div class="detail-row"><strong>Obs</strong><span>${r.obs}</span></div>`:''}
-    <div class="detail-actions">
-      <button class="btn-pay-toggle ${r.status==='paid'?'btn-mark-pending':'btn-mark-paid'}" onclick="toggleStatus('${r.id}');closeDetail();renderCal()">
-        ${r.status==='paid'?'⏳ Marcar como Pendente':'✅ Marcar como Pago'}
-      </button>
-      <button class="btn-del-res" onclick="deleteRes('${r.id}');closeDetail()">🗑 Excluir</button>
-    </div>
-  `;
-  document.getElementById('detail-modal').classList.add('open');
+  // Site público: não exibe dados pessoais de reservas
+  return;
 }
 function closeDetail(){ document.getElementById('detail-modal').classList.remove('open'); }
 

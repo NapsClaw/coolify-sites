@@ -1016,6 +1016,7 @@ function renderSitios(){
         <div class="sitio-actions">
           <button class="btn-new" style="font-size:12px;padding:7px 12px" onclick="window.open('index.html','_blank')">👁️ Ver</button>
           <button class="btn-export" onclick="toggleCalSitio('principal')">📅 Calendário</button>
+          <button class="btn-export" onclick="editarSitioPrincipal()">✏️ Editar</button>
         </div>
       </div>
       <div class="sitio-cal-panel" id="cal-panel-principal">
@@ -1232,37 +1233,55 @@ function readPriceTable(){
 }
 
 async function salvarSitio(){
-  const nome = document.getElementById('ms-nome').value.trim();
-  const local = document.getElementById('ms-local').value.trim();
-  const capa = document.getElementById('ms-capa').value.trim();
+  try {
+    const nome = document.getElementById('ms-nome').value.trim();
+    const local = document.getElementById('ms-local').value.trim();
+    const capa = document.getElementById('ms-capa').value.trim() || _capaFile || '';
 
-  if(!nome||!local){ showToast('⚠️ Preencha Nome e Localização'); return; }
-  if(!capa){ showToast('⚠️ Adicione uma foto de capa (URL ou upload)'); return; }
+    if(!nome||!local){ showToast('⚠️ Preencha Nome e Localização'); return; }
+    if(!capa){ showToast('⚠️ Adicione uma foto de capa (URL ou upload)'); return; }
 
-  const urlRows = Array.from(document.querySelectorAll('#ms-gal-urls input')).map(i=>i.value.trim()).filter(Boolean);
-  const fotos = [...urlRows, ..._galFiles].filter(Boolean);
+    const urlRows = Array.from(document.querySelectorAll('#ms-gal-urls input')).map(i=>i.value.trim()).filter(Boolean);
+    const fotos = [...urlRows, ..._galFiles].filter(Boolean);
 
-  const s = {
-    nome, local,
-    tipo: document.getElementById('ms-tipo').value.trim()||'🏡 Temporada · Eventos',
-    preco: document.getElementById('ms-preco').value.trim()||'Consulte',
-    wa: document.getElementById('ms-wa').value.trim(),
-    detalhe: document.getElementById('ms-detalhe').value.trim(),
-    features: document.getElementById('ms-feats').value.split('\n').map(l=>l.trim()).filter(Boolean),
-    prices: readPriceTable(),
-    capa,
-    fotos: fotos.length ? fotos : [capa]
-  };
+    const s = {
+      nome, local,
+      tipo: document.getElementById('ms-tipo').value.trim()||'🏡 Temporada · Eventos',
+      preco: document.getElementById('ms-preco').value.trim()||'Consulte',
+      wa: document.getElementById('ms-wa').value.trim(),
+      detalhe: document.getElementById('ms-detalhe').value.trim(),
+      features: document.getElementById('ms-feats').value.split('\n').map(l=>l.trim()).filter(Boolean),
+      prices: readPriceTable(),
+      capa,
+      fotos: fotos.length ? fotos : [capa]
+    };
 
-  const arr = getSitios();
-  const idxVal = document.getElementById('ms-idx').value;
-  if(idxVal!=='') arr[parseInt(idxVal)] = s; else arr.push(s);
-  salvarSitiosLS(arr);
+    const arr = getSitios();
+    const idxVal = document.getElementById('ms-idx').value;
+    if(idxVal!=='') arr[parseInt(idxVal)] = s; else arr.push(s);
+    salvarSitiosLS(arr);
 
-  fecharModalSitio();
-  popularSelects();
-  renderSitios();
-  showToast('✅ Sítio salvo!');
+    fecharModalSitio();
+    popularSelects();
+    renderSitios();
+    showToast('✅ Sítio salvo!');
+  } catch(err) {
+    console.error('Erro ao salvar sítio:', err);
+    if(err.name === 'QuotaExceededError'){
+      showToast('❌ Imagens muito grandes! Use imagens menores (máx 1MB cada)');
+    } else {
+      showToast('❌ Erro ao salvar: ' + err.message);
+    }
+  }
+}
+
+// Editar sítio principal (Sítio Iluminado)
+function editarSitioPrincipal(){
+  // O sítio principal não é armazenado no array de sitios — abre modal para editar metadados básicos
+  // Por ora, abre uma página de edição simplificada
+  const nome = prompt('Nome do sítio:', 'Sítio Iluminado');
+  if(nome === null) return; // cancelou
+  showToast('ℹ️ Para editar o Sítio Iluminado, edite diretamente o index.html ou entre em contato com o suporte.');
 }
 
 // =============================================
