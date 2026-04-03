@@ -463,27 +463,35 @@ function chamarTodosSequencia(ginId, hora) {
   const prof = getProfissional(ginId, periodo);
   const gin = CFG[ginId].nome;
 
-  // Uma única chamada para o grupo inteiro
-  const msg = `Atenção! Pacientes d${prof.startsWith('Dr.') ? 'o' : 'a'} ${prof} das ${hora}, por favor comparecer ao ${gin}.`;
-
-  mostrarBanner(`Pacientes d${prof.startsWith('Dr.') ? 'o' : 'a'} <span>${prof}</span> das ${hora} → ${gin}`);
-  localStorage.setItem('fisiot_chamada', JSON.stringify({nome:'Grupo '+hora,ginasio:gin,profissional:prof,horario:hora,msg,timestamp:Date.now()}));
-
   // Marcar todos como chamados
   pendentes.forEach(idx => setChamado(ginId, hora, idx));
   renderAgenda();
 
-  // Falar o anuncio
-  if (!('speechSynthesis' in window)) return;
-  window.speechSynthesis.cancel();
-  setTimeout(() => {
-    const utt = new SpeechSynthesisUtterance(msg);
-    utt.lang = 'pt-BR'; utt.rate = 0.85; utt.pitch = 1; utt.volume = 1;
-    const vs = window.speechSynthesis.getVoices();
-    const v = vs.find(x => x.lang==='pt-BR') || vs.find(x => x.lang.startsWith('pt'));
-    if (v) utt.voice = v;
-    window.speechSynthesis.speak(utt);
-  }, 300);
+  // Chamar cada paciente individualmente em sequência
+  // Formato: "[Nome], Ginásio X, [Profissional]"
+  let i = 0;
+  function falarProximo() {
+    if (i >= pendentes.length) return;
+    const idx = pendentes[i];
+    const nome = pacs[idx];
+    const msg = `${nome}. ${gin}. ${prof}.`;
+    mostrarBanner(`<span>${nome}</span> → ${gin} · ${prof}`);
+    localStorage.setItem('fisiot_chamada', JSON.stringify({nome,ginasio:gin,profissional:prof,horario:hora,msg,timestamp:Date.now()}));
+
+    if (!('speechSynthesis' in window)) { i++; setTimeout(falarProximo, 1500); return; }
+    window.speechSynthesis.cancel();
+    setTimeout(() => {
+      const utt = new SpeechSynthesisUtterance(msg);
+      utt.lang = 'pt-BR'; utt.rate = 0.85; utt.pitch = 1; utt.volume = 1;
+      const vs = window.speechSynthesis.getVoices();
+      const v = vs.find(x => x.lang==='pt-BR') || vs.find(x => x.lang.startsWith('pt'));
+      if (v) utt.voice = v;
+      utt.onend = () => { i++; setTimeout(falarProximo, 800); };
+      utt.onerror = () => { i++; setTimeout(falarProximo, 800); };
+      window.speechSynthesis.speak(utt);
+    }, 300);
+  }
+  falarProximo();
 }
 
 function chamarAgora() {
