@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Patinhas Felizes | Pet shop em Goiânia</title>
+  <meta name="description" content="Patinhas Felizes, pet shop em Goiânia com banho e tosa, hotel para pets e venda de ração. Atendimento carinhoso, ambiente seguro e cuidado de verdade." />
+  <meta name="theme-color" content="#a9d8f3" />
+  <meta property="og:title" content="Patinhas Felizes | Pet shop em Goiânia" />
+  <meta property="og:description" content="Banho e tosa, hotel para pets e venda de ração em Goiânia com visual leve, atendimento acolhedor e estrutura pensada para o bem-estar do seu pet." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=1200&q=80" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23a9d8f3'/%3E%3Cpath d='M18 34c0-7 5-12 11-12 2 0 4 1 6 3 2-2 4-3 6-3 6 0 11 5 11 12 0 8-8 14-17 14S18 42 18 34Z' fill='white'/%3E%3Ccircle cx='23' cy='21' r='5' fill='white'/%3E%3Ccircle cx='41' cy='21' r='5' fill='white'/%3E%3C/svg%3E" />
+  <style>
+    :root {
+      --bg: #f7fcff;
+      --surface: rgba(255,255,255,0.78);
+      --surface-strong: #ffffff;
+      --text: #12324a;
+      --muted: #5d7a92;
+      --primary: #9fd8f7;
+      --primary-strong: #62b6e7;
+      --accent: #ffcf8a;
+      --line: rgba(18, 50, 74, 0.12);
+      --shadow: 0 18px 50px rgba(64, 126, 160, 0.16);
+      --radius: 28px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Manrope', sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(159,216,247,0.45), transparent 38%),
+        radial-gradient(circle at right 20%, rgba(255,207,138,0.34), transparent 22%),
+        linear-gradient(180deg, #eefaff 0%, #f8fdff 45%, #ffffff 100%);
+      line-height: 1.6;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image: radial-gradient(rgba(18,50,74,0.035) 1px, transparent 1px);
+      background-size: 14px 14px;
+      opacity: 0.35;
+    }
+
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(1120px, calc(100% - 32px)); margin: 0 auto; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(16px);
+      background: rgba(247,252,255,0.72);
+      border-bottom: 1px solid rgba(18,50,74,0.08);
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 16px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+
+    .brand-mark {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      background: linear-gradient(145deg, #ffffff, #bfe7fb);
+      box-shadow: var(--shadow);
+      display: grid;
+      place-items: center;
+      font-size: 22px;
+    }
+
+    .brand small {
+      display: block;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .nav-cta,
+    .button,
+    .button-light {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 52px;
+      padding: 14px 22px;
+      border-radius: 999px;
+      font-weight: 800;
+      transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+    }
+
+    .nav-cta,
+    .button {
+      background: linear-gradient(135deg, var(--primary-strong), #89d1f5);
+      color: #08314e;
+      box-shadow: 0 14px 30px rgba(98, 182, 231, 0.28);
+    }
+
+    .button-light {
+      background: rgba(255,255,255,0.75);
+      color: var(--text);
+      border: 1px solid rgba(18,50,74,0.1);
+    }
+
+    .nav-cta:hover,
+    .button:hover,
+    .button-light:hover,
+    .card:hover,
+    .gallery-card:hover,
+    .testimonial:hover,
+    .faq-item:hover {
+      transform: translateY(-2px);
+    }
+
+    .hero {
+      padding: 34px 0 18px;
+    }
+
+    .hero-shell {
+      display: grid;
+      gap: 22px;
+    }
+
+    .hero-copy,
+    .hero-visual,
+    .card,
+    .gallery-card,
+    .testimonial,
+    .faq-item,
+    .contact-box,
+    .service-badge {
+      background: var(--surface);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(255,255,255,0.75);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+    }
+
+    .hero-copy {
+      padding: 30px 22px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      background: rgba(255,255,255,0.8);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 9px 14px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    h1, h2, h3 { margin: 0 0 14px; line-height: 1.05; }
+    h1, h2 { font-family: 'Fraunces', serif; letter-spacing: -0.04em; }
+    h1 { font-size: clamp(2.35rem, 7vw, 5.4rem); margin-top: 16px; }
+    h2 { font-size: clamp(2rem, 5vw, 3.4rem); }
+    h3 { font-size: 1.22rem; }
+    p { margin: 0; font-size: 1rem; color: var(--muted); }
+
+    .lead {
+      font-size: 1.05rem;
+      margin-top: 16px;
+      max-width: 58ch;
+    }
+
+    .hero-actions {
+      display: grid;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .hero-points {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .service-badge {
+      padding: 14px;
+      font-size: .95rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .hero-visual {
+      overflow: hidden;
+      position: relative;
+      min-height: 420px;
+    }
+
+    .hero-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-note {
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      bottom: 18px;
+      padding: 18px;
+      border-radius: 22px;
+      background: rgba(8, 49, 78, 0.7);
+      color: #ecfaff;
+      backdrop-filter: blur(10px);
+    }
+
+    section { padding: 22px 0; }
+
+    .section-head {
+      display: grid;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .trust-strip {
+      display: grid;
+      gap: 14px;
+    }
+
+    .card-grid,
+    .gallery-grid,
+    .testimonials,
+    .faq-grid,
+    .contact-grid,
+    .about-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .card,
+    .testimonial,
+    .faq-item,
+    .contact-box {
+      padding: 22px;
+    }
+
+    .icon {
+      width: 52px;
+      height: 52px;
+      display: grid;
+      place-items: center;
+      border-radius: 16px;
+      background: linear-gradient(135deg, rgba(159,216,247,0.45), rgba(255,255,255,0.9));
+      margin-bottom: 16px;
+      font-size: 24px;
+    }
+
+    .about-photo,
+    .gallery-card {
+      overflow: hidden;
+      min-height: 280px;
+    }
+
+    .about-photo img,
+    .gallery-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .about-copy {
+      padding: 26px 22px;
+    }
+
+    .list {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .list span {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .gallery-card {
+      position: relative;
+      min-height: 260px;
+    }
+
+    .gallery-card::after {
+      content: attr(data-label);
+      position: absolute;
+      left: 16px;
+      bottom: 16px;
+      background: rgba(255,255,255,0.85);
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .testimonial strong,
+    .faq-item strong,
+    .contact-box strong { color: var(--text); }
+
+    .stars {
+      letter-spacing: 0.2em;
+      color: #ffba52;
+      font-size: 14px;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .contact-box {
+      background: linear-gradient(180deg, rgba(255,255,255,0.88), rgba(229,246,255,0.96));
+    }
+
+    .contact-box ul {
+      list-style: none;
+      margin: 18px 0 0;
+      padding: 0;
+      display: grid;
+      gap: 10px;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .map {
+      overflow: hidden;
+      border-radius: var(--radius);
+      min-height: 320px;
+      box-shadow: var(--shadow);
+    }
+
+    .map iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    footer {
+      padding: 18px 0 90px;
+      color: var(--muted);
+      text-align: center;
+      font-size: .95rem;
+    }
+
+    .floating-wa {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 25;
+      width: 62px;
+      height: 62px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: #25d366;
+      color: white;
+      box-shadow: 0 18px 34px rgba(37, 211, 102, 0.35);
+      font-size: 28px;
+    }
+
+    @media (min-width: 768px) {
+      .hero-shell,
+      .about-grid,
+      .contact-grid { grid-template-columns: 1.1fr 0.9fr; }
+      .card-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .gallery-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .testimonials { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .faq-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .trust-strip { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .hero-actions { display: flex; flex-wrap: wrap; }
+    }
+
+    @media (max-width: 767px) {
+      .nav-cta { padding-inline: 18px; font-size: .95rem; }
+      .hero-copy { padding: 26px 18px; }
+      .hero-visual { min-height: 340px; }
+      .hero-points { grid-template-columns: 1fr; }
+      .button,
+      .button-light,
+      .nav-cta { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a href="#top" class="brand" aria-label="Patinhas Felizes">
+        <div class="brand-mark">🐾</div>
+        <div>
+          <small>Pet shop em Goiânia</small>
+          <div>Patinhas Felizes</div>
+        </div>
+      </a>
+      <a href="#contato" class="nav-cta">Agendar atendimento</a>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-shell">
+        <div class="hero-copy">
+          <div class="eyebrow">Cuidado leve, carinho de verdade</div>
+          <h1>Seu pet bem cuidado, cheiroso e feliz em Goiânia.</h1>
+          <p class="lead">Banho e tosa com atenção aos detalhes, hotelzinho aconchegante para dias tranquilos e rações escolhidas pra facilitar a rotina de quem ama ver o pet saudável.</p>
+          <div class="hero-actions">
+            <a class="button" href="#contato">Quero falar no WhatsApp</a>
+            <a class="button-light" href="#servicos">Ver serviços</a>
+          </div>
+          <div class="hero-points">
+            <div class="service-badge">🫧 Banho e tosa com cuidado gentil e acabamento caprichado</div>
+            <div class="service-badge">🏡 Hotel para pets com ambiente seguro e rotina acolhedora</div>
+            <div class="service-badge">🥣 Rações e itens essenciais para o dia a dia</div>
+            <div class="service-badge">📍 Atendimento pensado para tutores de Goiânia</div>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <img src="https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=1200&q=80" alt="Cachorro feliz recebendo carinho" loading="eager" />
+          <div class="hero-note">
+            Atendimento com visual leve, clima acolhedor e foco no que importa, segurança, carinho e praticidade para você.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container trust-strip">
+        <div class="card"><strong>Ambiente tranquilo</strong><p>Estrutura pensada para deixar o pet mais relaxado durante o cuidado.</p></div>
+        <div class="card"><strong>Rotina prática</strong><p>Serviços claros para quem quer resolver tudo em um só lugar.</p></div>
+        <div class="card"><strong>Equipe carinhosa</strong><p>Tom acolhedor, atendimento humano e atenção ao bem-estar dos bichinhos.</p></div>
+        <div class="card"><strong>Visual confiável</strong><p>Marca delicada, moderna e com presença profissional online.</p></div>
+      </div>
+    </section>
+
+    <section id="sobre">
+      <div class="container about-grid">
+        <div class="about-photo hero-copy">
+          <img src="https://images.unsplash.com/photo-1548681528-6a5c45b66b42?auto=format&fit=crop&w=1200&q=80" alt="Tutora segurando cachorro com carinho" loading="lazy" />
+        </div>
+        <div class="hero-copy about-copy">
+          <div class="eyebrow">Sobre o pet shop</div>
+          <h2>Um espaço feito para deixar as patinhas leves e os tutores tranquilos.</h2>
+          <p>Patinhas Felizes nasce com uma proposta simples e forte, cuidar do seu pet com delicadeza, boa apresentação e uma experiência gostosa desde o primeiro contato. O visual azul bebê com branco reforça higiene, calma e confiança.</p>
+          <div class="list">
+            <span>✓ Atendimento pensado para cachorros e gatos com rotina acolhedora</span>
+            <span>✓ Comunicação clara para facilitar agendamentos e pedidos</span>
+            <span>✓ Estrutura ideal para vender serviços e produtos no mesmo lugar</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="servicos">
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">Serviços principais</div>
+          <h2>O essencial do dia a dia do seu pet, com um toque premium.</h2>
+          <p>O site foi organizado para vender rápido, explicar com clareza e passar sensação de cuidado logo no primeiro scroll.</p>
+        </div>
+        <div class="card-grid">
+          <article class="card">
+            <div class="icon">🛁</div>
+            <h3>Banho e tosa</h3>
+            <p>Apresentação visual bonita, foco em higiene, perfume suave e acabamento caprichado para deixar o pet leve e confortável.</p>
+          </article>
+          <article class="card">
+            <div class="icon">🐶</div>
+            <h3>Hotel para pets</h3>
+            <p>Mensagem de segurança, acolhimento e rotina tranquila para momentos em que o tutor precisa viajar ou se ausentar.</p>
+          </article>
+          <article class="card">
+            <div class="icon">🥣</div>
+            <h3>Venda de ração</h3>
+            <p>Espaço ideal para destacar linhas mais procuradas, praticidade de compra e conveniência para clientes recorrentes.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">Ambiente e experiência</div>
+          <h2>Uma estética leve que combina carinho, limpeza e confiança.</h2>
+        </div>
+        <div class="gallery-grid">
+          <div class="gallery-card" data-label="Banho e tosa"><img src="https://images.unsplash.com/photo-1516734212186-a967f81ad0d7?auto=format&fit=crop&w=1200&q=80" alt="Cachorro em banho e tosa" loading="lazy" /></div>
+          <div class="gallery-card" data-label="Hotelzinho"><img src="https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&w=1200&q=80" alt="Cachorro descansando em espaço confortável" loading="lazy" /></div>
+          <div class="gallery-card" data-label="Produtos"><img src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?auto=format&fit=crop&w=1200&q=80" alt="Pet olhando para produtos e ração" loading="lazy" /></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">Por que esse layout funciona</div>
+          <h2>O preview já foi montado para converter visitantes em atendimento.</h2>
+        </div>
+        <div class="card-grid">
+          <article class="card">
+            <div class="icon">📱</div>
+            <h3>Feito pensando no celular</h3>
+            <p>Botões grandes, leitura fácil e seções empilhadas para quem chega pelo WhatsApp ou Instagram.</p>
+          </article>
+          <article class="card">
+            <div class="icon">💬</div>
+            <h3>CTA visível</h3>
+            <p>O botão principal aparece várias vezes na página para incentivar agendamento e contato sem esforço.</p>
+          </article>
+          <article class="card">
+            <div class="icon">✨</div>
+            <h3>Visual memorável</h3>
+            <p>Fonte elegante, textura leve e atmosfera delicada para fugir do visual genérico e passar mais valor.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">Depoimentos em destaque</div>
+          <h2>Prova social em um tom leve e confiável.</h2>
+        </div>
+        <div class="testimonials">
+          <article class="testimonial">
+            <span class="stars">★★★★★</span>
+            <p>“Achei lindo o jeito delicado do atendimento. O banho ficou impecável e meu cachorro saiu super tranquilo.”</p>
+            <strong>Marina, tutora em Goiânia</strong>
+          </article>
+          <article class="testimonial">
+            <span class="stars">★★★★★</span>
+            <p>“Gostei muito da proposta do hotelzinho. Passa segurança e carinho, que é exatamente o que a gente procura.”</p>
+            <strong>Carlos, cliente recorrente</strong>
+          </article>
+          <article class="testimonial">
+            <span class="stars">★★★★★</span>
+            <p>“Ter banho, hospedagem e ração no mesmo lugar facilita demais. O visual do site também ficou muito profissional.”</p>
+            <strong>Juliana, mãe de pet</strong>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-head">
+          <div class="eyebrow">Perguntas frequentes</div>
+          <h2>Um preview que já responde dúvidas comuns.</h2>
+        </div>
+        <div class="faq-grid">
+          <article class="faq-item">
+            <strong>Quais serviços aparecem logo no começo?</strong>
+            <p>Banho e tosa, hotel para pets e venda de ração, tudo apresentado de forma clara no topo da página.</p>
+          </article>
+          <article class="faq-item">
+            <strong>Dá para adaptar fotos e texto depois?</strong>
+            <p>Sim, a estrutura já está pronta para receber fotos reais, redes sociais, horários e detalhes do atendimento.</p>
+          </article>
+          <article class="faq-item">
+            <strong>O site funciona bem no celular?</strong>
+            <p>Sim. Esse preview foi desenhado mobile-first, com botões grandes e leitura confortável sem zoom.</p>
+          </article>
+          <article class="faq-item">
+            <strong>Posso usar esse visual para atrair mais clientes da região?</strong>
+            <p>Sim. O conteúdo já foi organizado com foco em Goiânia e em buscas relacionadas a pet shop, banho e hotelzinho.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contato">
+      <div class="container contact-grid">
+        <div class="contact-box">
+          <div class="eyebrow">Contato e localização</div>
+          <h2>Patinhas Felizes em Goiânia com cara de marca que transmite confiança.</h2>
+          <p>O próximo passo é ligar esse layout ao seu atendimento real e publicar o preview online para você abrir no celular e mostrar pra quem quiser.</p>
+          <ul>
+            <li><strong>Cidade:</strong> Goiânia, GO</li>
+            <li><strong>Atendimento:</strong> banho e tosa, hotel para pets e rações</li>
+            <li><strong>Estilo visual:</strong> azul bebê, branco e toque delicado</li>
+            <li><strong>Canal principal:</strong> botão de WhatsApp pronto para ativação</li>
+          </ul>
+          <div class="hero-actions" style="margin-top:20px;">
+            <a class="button" href="#top">Ver o topo de novo</a>
+            <a class="button-light" href="https://www.google.com/maps/search/pet+shop+goiania" target="_blank" rel="noreferrer">Ver região no mapa</a>
+          </div>
+        </div>
+        <div class="map">
+          <iframe loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Goi%C3%A2nia%2C%20GO&z=12&output=embed" title="Mapa de Goiânia"></iframe>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      Preview criado para Patinhas Felizes, com estrutura pronta para publicação, atendimento e vendas no celular.
+    </div>
+  </footer>
+
+  <a class="floating-wa" href="#contato" aria-label="Atendimento no WhatsApp">✆</a>
+</body>
+</html>
