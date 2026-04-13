@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vox4 Consultoria — Tim, Claro, Vivo Fibra | São Paulo-SP</title>
+  <meta name="description" content="Vox4 Consultoria — Agente autorizado Tim, Claro Empresa e Vivo Fibra em São Paulo. Internet fibra ótica, telefonia móvel, PABX em nuvem e dispositivos. Parcele em até 24x no boleto.">
+  <meta name="keywords" content="Tim São Paulo, Claro Empresa, Vivo Fibra, PABX nuvem, internet fibra, telefonia corporativa, Santa Efigênia">
+  <meta property="og:title" content="Vox4 Consultoria — Tim · Claro · Vivo Fibra">
+  <meta property="og:description" content="Agente autorizado das maiores operadoras. Internet fibra, PABX em nuvem, dispositivos. Parcele até 24x no boleto.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📡</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+
+  <style>
+    /* ================================================
+       CSS VARIABLES
+    ================================================ */
+    :root {
+      --bg:          #080810;
+      --bg-card:     #10101C;
+      --bg-surface:  #161628;
+      --bg-raise:    #1C1C32;
+      --primary:     #D4FF00;
+      --primary-dim: rgba(212,255,0,0.10);
+      --primary-glow:rgba(212,255,0,0.25);
+      --accent:      #FF3366;
+      --accent-dim:  rgba(255,51,102,0.10);
+      --text:        #E8E8F0;
+      --text-muted:  #6E6E94;
+      --border:      rgba(212,255,0,0.18);
+      --border-sub:  rgba(255,255,255,0.06);
+      --tim:         #00AEEF;
+      --claro:       #FF4444;
+      --vivo:        #9B59B6;
+      --wa:          #25D366;
+      --font-d:      'Syne', sans-serif;
+      --font-b:      'IBM Plex Sans', sans-serif;
+    }
+
+    /* ================================================
+       RESET
+    ================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-b);
+      font-weight: 400;
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    ul { list-style: none; }
+
+    /* ================================================
+       KEYFRAMES
+    ================================================ */
+
+    /* 1 — Hero lines slide up with skew */
+    @keyframes heroReveal {
+      from { opacity: 0; transform: translateY(44px) skewY(2.5deg); }
+      to   { opacity: 1; transform: translateY(0)    skewY(0deg); }
+    }
+
+    /* 2 — Horizontal scan line crosses the hero */
+    @keyframes scanLine {
+      0%   { transform: translateY(-4px); opacity: 0.5; }
+      60%  { opacity: 0.35; }
+      100% { transform: translateY(100vh); opacity: 0; }
+    }
+
+    /* 3 — WhatsApp float pulse glow */
+    @keyframes signalPulse {
+      0%,100% {
+        box-shadow: 0 0 0 0 rgba(37,211,102,.45),
+                    0 6px 24px rgba(0,0,0,.5);
+      }
+      55% {
+        box-shadow: 0 0 0 14px rgba(37,211,102,0),
+                    0 6px 24px rgba(0,0,0,.5);
+      }
+    }
+
+    /* 4 — Primary lime text glow breathe */
+    @keyframes glowPrimary {
+      0%,100% { text-shadow: 0 0 24px rgba(212,255,0,.35); }
+      50%      { text-shadow: 0 0 52px rgba(212,255,0,.75), 0 0 100px rgba(212,255,0,.15); }
+    }
+
+    /* 5 — Scroll reveal generic */
+    @keyframes revealUp {
+      from { opacity: 0; transform: translateY(32px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 6 — Animated bottom-border trace on service cards */
+    @keyframes traceIn {
+      from { transform: scaleX(0); }
+      to   { transform: scaleX(1); }
+    }
+
+    /* 7 — Operator badge float */
+    @keyframes floatBadge {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-5px); }
+    }
+
+    /* ================================================
+       SCROLL REVEAL CLASSES
+    ================================================ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity .75s cubic-bezier(.16,1,.3,1),
+                  transform .75s cubic-bezier(.16,1,.3,1);
+    }
+    .reveal.visible          { opacity:1; transform:translateY(0); }
+    .reveal-d1 { transition-delay:.08s; }
+    .reveal-d2 { transition-delay:.16s; }
+    .reveal-d3 { transition-delay:.24s; }
+    .reveal-d4 { transition-delay:.32s; }
+    .reveal-d5 { transition-delay:.40s; }
+    .reveal-d6 { transition-delay:.48s; }
+
+    /* ================================================
+       NAV
+    ================================================ */
+    .nav {
+      position: fixed;
+      inset: 0 0 auto 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 24px;
+      background: linear-gradient(to bottom, rgba(8,8,16,.96) 60%, transparent);
+      backdrop-filter: blur(10px);
+    }
+    .nav-logo {
+      font-family: var(--font-d);
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -.02em;
+    }
+    .nav-logo em { color: var(--primary); font-style: normal; }
+    .nav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--primary);
+      color: #080810;
+      font-family: var(--font-b);
+      font-weight: 600;
+      font-size: 12px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      padding: 11px 20px;
+      border-radius: 2px;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .nav-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px var(--primary-glow);
+    }
+
+    /* ================================================
+       HERO
+    ================================================ */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 24px 72px;
+      overflow: hidden;
+    }
+
+    /* Dot-grid background */
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 90% 55% at 50% -5%,  rgba(212,255,0,.055) 0%, transparent 65%),
+        radial-gradient(ellipse 60% 40% at 85% 90%,  rgba(255,51,102,.04) 0%, transparent 55%),
+        radial-gradient(circle   at 10% 40%,          rgba(212,255,0,.02) 0%, transparent 40%),
+        var(--bg);
+      z-index: 0;
+    }
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(212,255,0,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(212,255,0,.025) 1px, transparent 1px);
+      background-size: 64px 64px;
+      z-index: 1;
+    }
+
+    /* Scan line */
+    .hero-scan {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent 0%, var(--primary) 50%, transparent 100%);
+      animation: scanLine 7s linear infinite;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 3;
+      max-width: 820px;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 28px;
+      animation: heroReveal .6s cubic-bezier(.16,1,.3,1) .05s both;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 1px;
+      background: var(--primary);
+    }
+
+    .hero-title {
+      font-family: var(--font-d);
+      font-size: clamp(52px, 13vw, 108px);
+      font-weight: 800;
+      line-height: .92;
+      letter-spacing: -.035em;
+      margin-bottom: 32px;
+    }
+    .hero-title .l1 {
+      display: block;
+      animation: heroReveal .7s cubic-bezier(.16,1,.3,1) .12s both;
+    }
+    .hero-title .l2 {
+      display: block;
+      color: var(--primary);
+      animation: heroReveal .7s cubic-bezier(.16,1,.3,1) .22s both,
+                 glowPrimary 3.5s ease-in-out 1.2s infinite;
+    }
+    .hero-title .l3 {
+      display: block;
+      animation: heroReveal .7s cubic-bezier(.16,1,.3,1) .32s both;
+    }
+
+    .hero-sub {
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--text-muted);
+      max-width: 460px;
+      line-height: 1.75;
+      margin-bottom: 44px;
+      animation: heroReveal .7s cubic-bezier(.16,1,.3,1) .44s both;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      animation: heroReveal .7s cubic-bezier(.16,1,.3,1) .54s both;
+    }
+    .btn-pri {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: var(--primary);
+      color: #080810;
+      font-family: var(--font-b);
+      font-weight: 600;
+      font-size: 14px;
+      letter-spacing: .02em;
+      padding: 18px 32px;
+      border-radius: 2px;
+      min-height: 56px;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .btn-pri:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 36px var(--primary-glow);
+    }
+    .btn-sec {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: var(--font-b);
+      font-weight: 400;
+      font-size: 14px;
+      padding: 18px 32px;
+      border-radius: 2px;
+      min-height: 56px;
+      transition: border-color .2s, background .2s;
+    }
+    .btn-sec:hover {
+      border-color: var(--primary);
+      background: var(--primary-dim);
+    }
+
+    /* Operator badges row */
+    .hero-ops {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 64px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border-sub);
+      animation: heroReveal .7s cubic-bezier(.16,1,.3,1) .65s both;
+    }
+    .ops-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .ops-list { display: flex; gap: 8px; flex-wrap: wrap; }
+    .op-badge {
+      padding: 6px 14px;
+      border-radius: 2px;
+      font-family: var(--font-d);
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: .06em;
+      border: 1px solid;
+      animation: floatBadge 4s ease-in-out infinite;
+    }
+    .op-badge.tim   { color:var(--tim);   border-color:rgba(0,174,239,.35);  background:rgba(0,174,239,.06);  animation-delay: 0s; }
+    .op-badge.claro { color:var(--claro); border-color:rgba(255,68,68,.35);  background:rgba(255,68,68,.06);  animation-delay:.5s; }
+    .op-badge.vivo  { color:var(--vivo);  border-color:rgba(155,89,182,.35); background:rgba(155,89,182,.06); animation-delay:1s; }
+
+    /* ================================================
+       SECTION COMMON
+    ================================================ */
+    section { padding: 80px 24px; }
+
+    .sec-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 14px;
+    }
+    .sec-label::before {
+      content: '';
+      display: block;
+      width: 16px;
+      height: 1px;
+      background: var(--primary);
+    }
+    .sec-title {
+      font-family: var(--font-d);
+      font-size: clamp(30px, 6.5vw, 54px);
+      font-weight: 800;
+      line-height: 1.04;
+      letter-spacing: -.028em;
+      margin-bottom: 18px;
+    }
+    .sec-sub {
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--text-muted);
+      max-width: 500px;
+      line-height: 1.75;
+      margin-bottom: 48px;
+    }
+
+    /* ================================================
+       ABOUT — asymmetric 2-col
+    ================================================ */
+    .about {
+      background: var(--bg-card);
+      position: relative;
+      overflow: hidden;
+    }
+    .about::after {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 55%;
+      height: 100%;
+      background: radial-gradient(ellipse 90% 80% at 100% 50%, rgba(212,255,0,.025), transparent);
+      pointer-events: none;
+    }
+    .about-wrap {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+    .about-text p {
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.85;
+      margin-bottom: 18px;
+    }
+    .about-text strong { color: var(--text); font-weight: 500; }
+
+    /* Differentials */
+    .diffs {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+    .diff-card {
+      padding: 24px 24px 24px 28px;
+      border: 1px solid var(--border-sub);
+      border-radius: 3px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color .3s, transform .3s;
+    }
+    .diff-card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: var(--primary);
+    }
+    .diff-card:hover {
+      border-color: var(--border);
+      transform: translateX(5px);
+    }
+    .diff-num {
+      font-family: var(--font-d);
+      font-size: 38px;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: -.03em;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .diff-desc {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+    .diff-desc strong { color: var(--text); font-weight: 500; }
+
+    /* ================================================
+       SERVICES
+    ================================================ */
+    .services { background: var(--bg); }
+
+    .svc-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+    .svc-card {
+      background: var(--bg-card);
+      padding: 40px 32px;
+      position: relative;
+      overflow: hidden;
+      transition: background .35s;
+    }
+    /* Animated bottom trace on hover */
+    .svc-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 32px; right: 32px;
+      height: 1px;
+      background: linear-gradient(90deg, var(--primary), transparent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .45s cubic-bezier(.16,1,.3,1);
+    }
+    .svc-card:hover { background: var(--bg-surface); }
+    .svc-card:hover::after { transform: scaleX(1); }
+
+    .svc-num {
+      position: absolute;
+      top: 20px; right: 20px;
+      font-family: var(--font-d);
+      font-size: 72px;
+      font-weight: 800;
+      color: rgba(255,255,255,.025);
+      letter-spacing: -.05em;
+      line-height: 1;
+      pointer-events: none;
+      transition: color .35s;
+    }
+    .svc-card:hover .svc-num { color: rgba(212,255,0,.04); }
+
+    .svc-icon {
+      width: 44px;
+      height: 44px;
+      color: var(--primary);
+      margin-bottom: 20px;
+    }
+    .svc-name {
+      font-family: var(--font-d);
+      font-size: 21px;
+      font-weight: 700;
+      letter-spacing: -.015em;
+      margin-bottom: 12px;
+    }
+    .svc-desc {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.65;
+      max-width: 380px;
+    }
+    .svc-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--primary);
+      transition: gap .2s;
+    }
+    .svc-link:hover { gap: 14px; }
+
+    /* ================================================
+       OPERATORS
+    ================================================ */
+    .operators {
+      background: var(--bg-card);
+      padding: 72px 24px;
+    }
+    .ops-header { text-align: center; margin-bottom: 48px; }
+    .ops-header .sec-label { justify-content: center; }
+    .ops-header .sec-label::before { display: none; }
+
+    .ops-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    .opcard {
+      padding: 32px 28px;
+      border: 1px solid var(--border-sub);
+      border-radius: 3px;
+      position: relative;
+      overflow: hidden;
+      transition: transform .3s, border-color .3s, box-shadow .3s;
+    }
+    .opcard:hover { transform: translateY(-5px); }
+    .opcard-name {
+      font-family: var(--font-d);
+      font-size: 34px;
+      font-weight: 800;
+      letter-spacing: -.025em;
+      margin-bottom: 8px;
+    }
+    .opcard-tag {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 2px;
+      display: inline-block;
+      margin-bottom: 20px;
+    }
+    .opcard-svcs li {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--text-muted);
+      padding: 9px 0;
+      border-bottom: 1px solid var(--border-sub);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .opcard-svcs li:last-child { border-bottom: none; }
+    .opcard-svcs li::before {
+      content: '';
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .opcard-tim  { border-color: rgba(0,174,239,.15); }
+    .opcard-tim:hover  { border-color: rgba(0,174,239,.45); box-shadow: 0 18px 56px rgba(0,174,239,.07); }
+    .opcard-tim  .opcard-name { color: var(--tim); }
+    .opcard-tim  .opcard-tag  { color: var(--tim);   background: rgba(0,174,239,.08); }
+    .opcard-tim  .opcard-svcs li::before { background: var(--tim); }
+
+    .opcard-claro { border-color: rgba(255,68,68,.15); }
+    .opcard-claro:hover { border-color: rgba(255,68,68,.45); box-shadow: 0 18px 56px rgba(255,68,68,.07); }
+    .opcard-claro .opcard-name { color: var(--claro); }
+    .opcard-claro .opcard-tag  { color: var(--claro); background: rgba(255,68,68,.08); }
+    .opcard-claro .opcard-svcs li::before { background: var(--claro); }
+
+    .opcard-vivo  { border-color: rgba(155,89,182,.15); }
+    .opcard-vivo:hover  { border-color: rgba(155,89,182,.45); box-shadow: 0 18px 56px rgba(155,89,182,.07); }
+    .opcard-vivo  .opcard-name { color: var(--vivo); }
+    .opcard-vivo  .opcard-tag  { color: var(--vivo);  background: rgba(155,89,182,.08); }
+    .opcard-vivo  .opcard-svcs li::before { background: var(--vivo); }
+
+    /* ================================================
+       DEVICES — Bento-ish grid
+    ================================================ */
+    .devices { background: var(--bg); }
+
+    .dev-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+    .dev-card {
+      padding: 28px 16px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-sub);
+      border-radius: 3px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      transition: border-color .3s, transform .3s, box-shadow .3s;
+    }
+    .dev-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 120% 100% at 50% 110%, var(--primary-dim), transparent);
+      opacity: 0;
+      transition: opacity .35s;
+    }
+    .dev-card:hover {
+      border-color: var(--border);
+      transform: translateY(-5px);
+      box-shadow: 0 14px 44px rgba(0,0,0,.45);
+    }
+    .dev-card:hover::before { opacity: 1; }
+    .dev-emoji {
+      font-size: 34px;
+      margin-bottom: 12px;
+      display: block;
+      position: relative;
+      z-index: 1;
+    }
+    .dev-name {
+      font-family: var(--font-d);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .02em;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ================================================
+       FINANCING — Inverted bright section
+    ================================================ */
+    .financing {
+      background: var(--primary);
+      color: #080810;
+      padding: 80px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .financing::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,0,0,.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,0,0,.055) 1px, transparent 1px);
+      background-size: 44px 44px;
+      pointer-events: none;
+    }
+    .financing-inner { position: relative; z-index: 1; }
+    .financing .sec-label       { color: rgba(8,8,16,.5); }
+    .financing .sec-label::before { background: rgba(8,8,16,.35); }
+    .financing .sec-title       { color: #080810; }
+    .financing .sec-sub         { color: rgba(8,8,16,.6); max-width: 440px; }
+
+    .fin-cards {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    .fin-card {
+      padding: 32px 28px;
+      background: rgba(8,8,16,.08);
+      border: 1px solid rgba(8,8,16,.12);
+      border-radius: 3px;
+    }
+    .fin-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(8,8,16,.5);
+      margin-bottom: 10px;
+    }
+    .fin-big {
+      font-family: var(--font-d);
+      font-size: clamp(40px, 9vw, 64px);
+      font-weight: 800;
+      letter-spacing: -.04em;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .fin-detail {
+      font-size: 13px;
+      font-weight: 400;
+      color: rgba(8,8,16,.6);
+      line-height: 1.55;
+    }
+
+    /* ================================================
+       CONTACT — dark section, inverted
+    ================================================ */
+    .contact {
+      background: #050509;
+      position: relative;
+      overflow: hidden;
+      padding: 80px 24px 96px;
+    }
+    .contact::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--primary), transparent);
+    }
+    .contact::after {
+      content: '';
+      position: absolute;
+      bottom: -200px; right: -200px;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(212,255,0,.03), transparent 70%);
+      pointer-events: none;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+    .contact-info h2 { margin-bottom: 32px; }
+
+    .c-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      margin-bottom: 22px;
+    }
+    .c-icon {
+      width: 20px;
+      height: 20px;
+      color: var(--primary);
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .c-item-lbl {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+    .c-item-val {
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .btn-wa {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: var(--wa);
+      color: #fff;
+      font-family: var(--font-b);
+      font-weight: 600;
+      font-size: 15px;
+      padding: 20px 32px;
+      border-radius: 4px;
+      width: 100%;
+      min-height: 60px;
+      margin-top: 32px;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .btn-wa:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 36px rgba(37,211,102,.28);
+    }
+
+    /* Hours panel */
+    .hours-panel {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-sub);
+      border-radius: 4px;
+      padding: 32px;
+      height: 100%;
+    }
+    .hours-panel h3 {
+      font-family: var(--font-d);
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 24px;
+    }
+    .hour-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border-sub);
+      font-size: 14px;
+    }
+    .hour-row:last-of-type { border-bottom: none; }
+    .hour-row .day  { font-weight: 300; color: var(--text-muted); }
+    .hour-row .time { font-weight: 500; }
+    .hour-row .closed { color: var(--text-muted); }
+
+    .addr-box {
+      margin-top: 24px;
+      padding: 16px;
+      background: var(--primary-dim);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      text-align: center;
+    }
+    .addr-box p {
+      font-size: 13px;
+      color: var(--primary);
+      font-weight: 500;
+      line-height: 1.6;
+    }
+
+    /* ================================================
+       FOOTER
+    ================================================ */
+    .footer {
+      background: #030307;
+      padding: 24px;
+      text-align: center;
+      border-top: 1px solid var(--border-sub);
+    }
+    .footer p {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+    .footer span { color: var(--primary); }
+    .footer .f-ops span { font-weight: 600; }
+
+    /* ================================================
+       WHATSAPP FLOAT
+    ================================================ */
+    .wa-float {
+      position: fixed;
+      bottom: 28px;
+      right: 24px;
+      width: 60px;
+      height: 60px;
+      background: var(--wa);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+      animation: signalPulse 2.8s ease-in-out infinite;
+      transition: transform .2s, animation .2s;
+    }
+    .wa-float:hover {
+      transform: scale(1.12);
+      animation: none;
+      box-shadow: 0 6px 28px rgba(37,211,102,.45);
+    }
+    .wa-float svg { width: 28px; height: 28px; fill: #fff; }
+
+    /* ================================================
+       RESPONSIVE — 640px
+    ================================================ */
+    @media (min-width: 640px) {
+      .hero-actions   { flex-direction: row; flex-wrap: wrap; }
+      .btn-pri,
+      .btn-sec        { width: auto; }
+      .diffs          { grid-template-columns: repeat(2,1fr); }
+      .dev-grid       { grid-template-columns: repeat(3,1fr); }
+      .fin-cards      { grid-template-columns: repeat(2,1fr); }
+    }
+
+    /* ================================================
+       RESPONSIVE — 768px
+    ================================================ */
+    @media (min-width: 768px) {
+      .nav      { padding: 22px 48px; }
+      .hero     { padding: 0 48px 88px; }
+      section   { padding: 100px 48px; }
+      .operators { padding: 88px 48px; }
+      .financing { padding: 100px 48px; }
+      .contact  { padding: 100px 48px 112px; }
+
+      .about-wrap { grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+      .svc-grid   { grid-template-columns: repeat(2,1fr); }
+      .ops-grid   { grid-template-columns: repeat(3,1fr); }
+      .dev-grid   { grid-template-columns: repeat(3,1fr); }
+      .contact-grid { grid-template-columns: 1fr 1fr; gap: 64px; }
+    }
+
+    /* ================================================
+       RESPONSIVE — 1024px
+    ================================================ */
+    @media (min-width: 1024px) {
+      .nav      { padding: 26px 64px; }
+      .hero     { padding: 0 64px 100px; }
+      section   { padding: 120px 64px; }
+      .operators { padding: 100px 64px; }
+      .financing { padding: 120px 64px; }
+      .contact  { padding: 120px 64px 128px; }
+
+      .svc-grid   { grid-template-columns: repeat(2,1fr); }
+      .dev-grid   { grid-template-columns: repeat(6,1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==================== NAV ==================== -->
+  <nav class="nav">
+    <div class="nav-logo">VOX<em>4</em></div>
+    <a href="https://wa.me/5508000003884?text=Olá!%20Vim%20pelo%20site%20da%20Vox4%20e%20gostaria%20de%20mais%20informações."
+       class="nav-btn" target="_blank" rel="noopener noreferrer">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+      Fale Conosco
+    </a>
+  </nav>
+
+  <!-- ==================== HERO ==================== -->
+  <section class="hero" id="inicio">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-scan"></div>
+
+    <div class="hero-inner">
+      <div class="hero-eyebrow">Agente autorizado · Tim · Claro · Vivo</div>
+
+      <h1 class="hero-title">
+        <span class="l1">Conecte</span>
+        <span class="l2">Seu Negócio</span>
+        <span class="l3">de Verdade.</span>
+      </h1>
+
+      <p class="hero-sub">
+        Internet fibra ótica, telefonia móvel, PABX em nuvem e dispositivos premium — tudo em um único ponto de contato, com parcelamento facilitado para pessoa física e jurídica.
+      </p>
+
+      <div class="hero-actions">
+        <a href="https://wa.me/5508000003884?text=Olá!%20Quero%20conhecer%20as%20soluções%20da%20Vox4%20Consultoria."
+           class="btn-pri" target="_blank" rel="noopener noreferrer">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+          Falar no WhatsApp
+        </a>
+        <a href="#servicos" class="btn-sec">
+          Ver Serviços
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+
+      <div class="hero-ops">
+        <span class="ops-label">Operadoras parceiras</span>
+        <div class="ops-list">
+          <span class="op-badge tim">TIM</span>
+          <span class="op-badge claro">CLARO</span>
+          <span class="op-badge vivo">VIVO</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ABOUT ==================== -->
+  <section class="about" id="sobre">
+    <div class="about-wrap">
+      <div class="about-text reveal">
+        <span class="sec-label">Sobre a Vox4</span>
+        <h2 class="sec-title">Consultoria telecom<br>de confiança</h2>
+        <p>A <strong>Vox4 Consultoria</strong> é agente autorizado das principais operadoras do Brasil, com atuação em São Paulo. Oferecemos soluções completas em conectividade e tecnologia para <strong>pessoas físicas e empresas</strong> de todos os portes.</p>
+        <p>Com atendimento personalizado e condições exclusivas de parcelamento, tornamos o acesso à melhor tecnologia simples, acessível e sem burocracia.</p>
+        <p>Localizado no coração da <strong>Santa Efigênia</strong> — o polo tecnológico de São Paulo — atendemos clientes de todo o Brasil via televendas.</p>
+      </div>
+
+      <div class="diffs">
+        <div class="diff-card reveal reveal-d1">
+          <div class="diff-num">18×</div>
+          <div class="diff-desc">Parcelamento no boleto para <strong>pessoa física</strong> — crediário Brasilcard no CPF, sem consulta restritiva</div>
+        </div>
+        <div class="diff-card reveal reveal-d2">
+          <div class="diff-num">24×</div>
+          <div class="diff-desc">Parcelamento para <strong>empresas</strong> (ME e LTDA) — no boleto, sem entrada, sem burocracia</div>
+        </div>
+        <div class="diff-card reveal reveal-d3">
+          <div class="diff-num">3+</div>
+          <div class="diff-desc"><strong>Operadoras autorizadas</strong> — Tim, Claro Empresa e Vivo Fibra em um único ponto de contato</div>
+        </div>
+        <div class="diff-card reveal reveal-d4">
+          <div class="diff-num">SP</div>
+          <div class="diff-desc">Atendimento presencial em <strong>Santa Efigênia</strong> e televendas para todo o Brasil via 0800</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SERVICES ==================== -->
+  <section class="services" id="servicos">
+    <span class="sec-label reveal">Nossos Serviços</span>
+    <h2 class="sec-title reveal">Soluções completas<br>em conectividade</h2>
+    <p class="sec-sub reveal">Tudo o que sua empresa ou residência precisa, com as melhores operadoras do mercado.</p>
+
+    <div class="svc-grid">
+
+      <div class="svc-card reveal">
+        <span class="svc-num">01</span>
+        <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M8.288 15.038a5.25 5.25 0 017.424 0M5.106 11.856c3.807-3.808 9.98-3.808 13.788 0M1.924 8.674c5.565-5.565 14.587-5.565 20.152 0M12 20.25h.008v.008H12v-.008z"/>
+        </svg>
+        <h3 class="svc-name">Internet Fibra Ótica</h3>
+        <p class="svc-desc">Planos de alta velocidade com fibra ótica via Tim, Claro e Vivo Fibra — para residências e empresas de todos os portes.</p>
+        <a href="https://wa.me/5508000003884?text=Quero%20saber%20sobre%20planos%20de%20internet%20fibra%20ótica."
+           class="svc-link" target="_blank" rel="noopener noreferrer">Saiba mais →</a>
+      </div>
+
+      <div class="svc-card reveal reveal-d1">
+        <span class="svc-num">02</span>
+        <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18h3"/>
+        </svg>
+        <h3 class="svc-name">Telefonia Móvel</h3>
+        <p class="svc-desc">Planos de voz e dados para celular com a melhor cobertura 4G/5G. Tim, Claro e Vivo para pessoas físicas e frotas corporativas.</p>
+        <a href="https://wa.me/5508000003884?text=Quero%20saber%20sobre%20planos%20de%20telefonia%20móvel."
+           class="svc-link" target="_blank" rel="noopener noreferrer">Saiba mais →</a>
+      </div>
+
+      <div class="svc-card reveal reveal-d2">
+        <span class="svc-num">03</span>
+        <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/>
+        </svg>
+        <h3 class="svc-name">PABX em Nuvem</h3>
+        <p class="svc-desc">Telefonia empresarial em nuvem com ramais, URA, gravação de chamadas e gestão completa — sem infraestrutura física.</p>
+        <a href="https://wa.me/5508000003884?text=Quero%20saber%20sobre%20PABX%20em%20nuvem."
+           class="svc-link" target="_blank" rel="noopener noreferrer">Saiba mais →</a>
+      </div>
+
+      <div class="svc-card reveal reveal-d3">
+        <span class="svc-num">04</span>
+        <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0H3"/>
+        </svg>
+        <h3 class="svc-name">Dispositivos</h3>
+        <p class="svc-desc">Locação e venda de iPhone, smartphones, tablets, smartwatches, notebooks e PCs com parcelamento facilitado PF e PJ.</p>
+        <a href="https://wa.me/5508000003884?text=Quero%20saber%20sobre%20dispositivos%20e%20equipamentos."
+           class="svc-link" target="_blank" rel="noopener noreferrer">Saiba mais →</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== OPERATORS ==================== -->
+  <section class="operators" id="operadoras">
+    <div class="ops-header">
+      <span class="sec-label reveal">Parceiros Autorizados</span>
+      <h2 class="sec-title reveal">Agente oficial das<br>maiores operadoras</h2>
+    </div>
+
+    <div class="ops-grid">
+
+      <div class="opcard opcard-tim reveal">
+        <div class="opcard-name">TIM</div>
+        <span class="opcard-tag">Agente Autorizado</span>
+        <ul class="opcard-svcs">
+          <li>Planos Pré e Pós-pago</li>
+          <li>Internet Móvel 4G/5G</li>
+          <li>Planos Empresariais</li>
+          <li>Portabilidade Numérica</li>
+        </ul>
+      </div>
+
+      <div class="opcard opcard-claro reveal reveal-d1">
+        <div class="opcard-name">CLARO</div>
+        <span class="opcard-tag">Agente Autorizado</span>
+        <ul class="opcard-svcs">
+          <li>Claro Empresa</li>
+          <li>Internet Fibra Claro</li>
+          <li>Dados Móveis Corporativos</li>
+          <li>Soluções para LTDA e ME</li>
+        </ul>
+      </div>
+
+      <div class="opcard opcard-vivo reveal reveal-d2">
+        <div class="opcard-name">VIVO</div>
+        <span class="opcard-tag">Agente Autorizado</span>
+        <ul class="opcard-svcs">
+          <li>Vivo Fibra Residencial</li>
+          <li>Vivo Fibra Empresarial</li>
+          <li>Planos Móveis Vivo</li>
+          <li>Convergência Total</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== DEVICES ==================== -->
+  <section class="devices" id="dispositivos">
+    <span class="sec-label reveal">Dispositivos</span>
+    <h2 class="sec-title reveal">Tecnologia que você<br>pode ter hoje</h2>
+    <p class="sec-sub reveal">Locação e venda com parcelamento facilitado. Sem burocracia, sem complicação.</p>
+
+    <div class="dev-grid">
+      <div class="dev-card reveal">
+        <span class="dev-emoji">📱</span>
+        <div class="dev-name">iPhone</div>
+      </div>
+      <div class="dev-card reveal reveal-d1">
+        <span class="dev-emoji">📲</span>
+        <div class="dev-name">Smartphone</div>
+      </div>
+      <div class="dev-card reveal reveal-d2">
+        <span class="dev-emoji">🖥️</span>
+        <div class="dev-name">Tablet</div>
+      </div>
+      <div class="dev-card reveal reveal-d3">
+        <span class="dev-emoji">⌚</span>
+        <div class="dev-name">Smartwatch</div>
+      </div>
+      <div class="dev-card reveal reveal-d4">
+        <span class="dev-emoji">💻</span>
+        <div class="dev-name">Notebook</div>
+      </div>
+      <div class="dev-card reveal reveal-d5">
+        <span class="dev-emoji">🖥️</span>
+        <div class="dev-name">PC / Desktop</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FINANCING ==================== -->
+  <section class="financing" id="parcelamento">
+    <div class="financing-inner">
+      <span class="sec-label reveal">Parcelamento Facilitado</span>
+      <h2 class="sec-title reveal">Parcele do<br>seu jeito.</h2>
+      <p class="sec-sub reveal">Condições especiais para pessoa física e jurídica — boleto bancário, sem precisar de cartão de crédito.</p>
+
+      <div class="fin-cards">
+        <div class="fin-card reveal">
+          <div class="fin-label">Pessoa Física · CPF</div>
+          <div class="fin-big">18×</div>
+          <div class="fin-detail">No boleto — crediário Brasilcard<br>Sem consulta restritiva</div>
+        </div>
+        <div class="fin-card reveal reveal-d1">
+          <div class="fin-label">Empresa · ME e LTDA</div>
+          <div class="fin-big">24×</div>
+          <div class="fin-detail">No boleto, sem entrada<br>Para ME e LTDA</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CONTACT ==================== -->
+  <section class="contact" id="contato">
+    <div class="contact-grid">
+
+      <div class="contact-info reveal">
+        <span class="sec-label">Fale Conosco</span>
+        <h2 class="sec-title">Pronto para<br>se conectar?</h2>
+
+        <div class="c-item">
+          <svg class="c-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/>
+          </svg>
+          <div>
+            <div class="c-item-lbl">Endereço</div>
+            <div class="c-item-val">Rua Shopping 25 de Março, 1278<br>Santa Efigênia — São Paulo, SP<br>CEP 11658-9000</div>
+          </div>
+        </div>
+
+        <div class="c-item">
+          <svg class="c-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/>
+          </svg>
+          <div>
+            <div class="c-item-lbl">Televendas / WhatsApp</div>
+            <div class="c-item-val">0800 000 3884<br>Atendimento em todo o Brasil</div>
+          </div>
+        </div>
+
+        <a href="https://wa.me/5508000003884?text=Olá!%20Vim%20pelo%20site%20da%20Vox4%20e%20gostaria%20de%20mais%20informações."
+           class="btn-wa" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+          Falar no WhatsApp — 0800 000 3884
+        </a>
+      </div>
+
+      <div class="reveal reveal-d2">
+        <div class="hours-panel">
+          <span class="sec-label">Horários</span>
+          <h3>Atendimento</h3>
+          <div class="hour-row">
+            <span class="day">Segunda a Sexta</span>
+            <span class="time">09h – 18h</span>
+          </div>
+          <div class="hour-row">
+            <span class="day">Sábado</span>
+            <span class="time">09h – 13h</span>
+          </div>
+          <div class="hour-row">
+            <span class="day">Domingo e Feriado</span>
+            <span class="closed">Fechado</span>
+          </div>
+          <div class="addr-box">
+            <p>📍 Rua Shopping 25 de Março, 1278<br>Santa Efigênia — São Paulo, SP</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="margin-top:48px; padding-top:32px; border-top:1px solid var(--border-sub); text-align:center;" class="reveal">
+      <p style="font-size:13px; color:var(--text-muted); line-height:1.7;">
+        Vox4 Consultoria — Agente autorizado
+        <span style="color:var(--tim); font-weight:600;"> TIM </span>·
+        <span style="color:var(--claro); font-weight:600;"> CLARO </span>·
+        <span style="color:var(--vivo); font-weight:600;"> VIVO </span>
+        | Santa Efigênia, São Paulo — SP
+      </p>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="footer">
+    <p>© 2025 <span>Vox4 Consultoria</span>. Todos os direitos reservados.<br>
+    Tim, Claro e Vivo são marcas registradas de seus respectivos proprietários.</p>
+  </footer>
+
+  <!-- ==================== WHATSAPP FLOAT ==================== -->
+  <a href="https://wa.me/5508000003884?text=Olá!%20Vim%20pelo%20site%20da%20Vox4%20e%20gostaria%20de%20mais%20informações."
+     class="wa-float"
+     target="_blank"
+     rel="noopener noreferrer"
+     aria-label="Falar no WhatsApp">
+    <svg viewBox="0 0 24 24">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+
+  <!-- ==================== JS ==================== -->
+  <script>
+    // IntersectionObserver scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.08,
+      rootMargin: '0px 0px -48px 0px'
+    });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Smooth anchor scroll for nav/buttons
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', (e) => {
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
