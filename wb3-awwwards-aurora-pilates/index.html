@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aurora Pilates Studio | Experiência boutique de Pilates em São Paulo</title>
+  <meta name="description" content="Aurora Pilates Studio oferece Pilates com atenção individual, ambiente silencioso, avaliação postural e agendamento simples pelo WhatsApp." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Didact+Gothic&family=Forum&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f1ebe3;
+      --bg-soft: #f8f4ef;
+      --ink: #201813;
+      --muted: #57463d;
+      --taupe: #c3aa91;
+      --clay: #85593b;
+      --clay-deep: #5f3a24;
+      --sage: #95a187;
+      --line: rgba(32, 24, 19, 0.12);
+      --shadow: 0 28px 70px rgba(55, 34, 21, 0.12);
+      --max: 1220px;
+      --r-lg: 40px;
+      --r-md: 26px;
+      --r-sm: 18px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: 'Didact Gothic', sans-serif;
+      background:
+        radial-gradient(circle at 14% 14%, rgba(149,161,135,0.18), transparent 23%),
+        radial-gradient(circle at 90% 8%, rgba(133,89,59,0.16), transparent 22%),
+        linear-gradient(180deg, #f7f2ed 0%, var(--bg) 100%);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,0.18) 0 1px, transparent 1px),
+        linear-gradient(rgba(255,255,255,0.12) 0 1px, transparent 1px);
+      background-size: 120px 120px;
+      opacity: 0.35;
+      mix-blend-mode: screen;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(calc(100% - 32px), var(--max)); margin: 0 auto; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(16px);
+      background: rgba(247, 242, 237, 0.76);
+      border-bottom: 1px solid rgba(32,24,19,0.06);
+    }
+
+    .topbar-inner {
+      min-height: 82px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .mark {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #dac6b1, #b1815b);
+      position: relative;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.85), 0 14px 24px rgba(95,58,36,0.12);
+    }
+
+    .mark::before,
+    .mark::after {
+      content: "";
+      position: absolute;
+      inset: 12px 17px;
+      border-radius: 999px;
+      border: 1.5px solid rgba(255,255,255,0.9);
+      transform: rotate(30deg);
+    }
+
+    .mark::after {
+      inset: 17px 12px;
+      transform: rotate(-28deg);
+      opacity: 0.8;
+    }
+
+    .brand-copy strong {
+      display: block;
+      font-family: 'Forum', serif;
+      font-size: 1.35rem;
+      font-weight: 400;
+      letter-spacing: 0.03em;
+    }
+
+    .brand-copy span {
+      display: block;
+      font-size: 0.84rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .nav-links { display: flex; gap: 18px; }
+
+    .button {
+      min-height: 52px;
+      padding: 0 24px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 180ms ease, box-shadow 180ms ease;
+      font-weight: 700;
+    }
+
+    .button:hover { transform: translateY(-2px); }
+
+    .button-primary {
+      color: #fff8f2;
+      background: linear-gradient(135deg, var(--clay), var(--clay-deep));
+      box-shadow: 0 18px 36px rgba(95,58,36,0.22);
+    }
+
+    .button-secondary {
+      background: rgba(255,255,255,0.52);
+      border: 1px solid rgba(32,24,19,0.12);
+    }
+
+    .hero {
+      padding: 34px 0 18px;
+      position: relative;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.02fr 0.98fr;
+      gap: 20px;
+      align-items: end;
+    }
+
+    .micro-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.56);
+      border: 1px solid rgba(32,24,19,0.08);
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-bottom: 18px;
+    }
+
+    h1, h2, h3 { margin: 0; }
+    h1, h2 { font-family: 'Forum', serif; font-weight: 400; }
+
+    h1 {
+      font-size: clamp(2.9rem, 7vw, 5.9rem);
+      line-height: 0.94;
+      letter-spacing: -0.04em;
+      max-width: 10.3ch;
+    }
+
+    .hero-copy p {
+      margin: 24px 0 0;
+      max-width: 58ch;
+      color: var(--muted);
+      line-height: 1.78;
+      font-size: 1.03rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .hero-notes {
+      margin-top: 34px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .note {
+      padding: 16px 0 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .note strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+    }
+
+    .note span {
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 0.93rem;
+    }
+
+    .stage {
+      min-height: 650px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 44px;
+      background: linear-gradient(160deg, #f7f2ec 0%, #ead8c4 46%, #f8f4ef 100%);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(32,24,19,0.08);
+    }
+
+    .stage::before {
+      content: "";
+      position: absolute;
+      inset: 22px;
+      border-radius: 34px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.38), transparent 28%),
+        linear-gradient(140deg, rgba(255,255,255,0.1), rgba(195,170,145,0.4));
+      box-shadow: inset 0 0 0 1px rgba(32,24,19,0.06);
+    }
+
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(1px);
+    }
+
+    .orb.one {
+      width: 240px;
+      height: 240px;
+      top: -50px;
+      right: -20px;
+      background: radial-gradient(circle, rgba(133,89,59,0.24), transparent 72%);
+    }
+
+    .orb.two {
+      width: 200px;
+      height: 200px;
+      bottom: 60px;
+      left: -20px;
+      background: radial-gradient(circle, rgba(149,161,135,0.22), transparent 72%);
+    }
+
+    .sculpture {
+      position: absolute;
+      inset: 0;
+    }
+
+    .arch {
+      position: absolute;
+      width: 54%;
+      height: 68%;
+      right: 9%;
+      top: 9%;
+      border-radius: 50% 50% 18% 18% / 42% 42% 16% 16%;
+      background: linear-gradient(180deg, rgba(255,255,255,0.44), rgba(255,255,255,0.12));
+      box-shadow: inset 0 0 0 1px rgba(32,24,19,0.08);
+    }
+
+    .arch::before {
+      content: "";
+      position: absolute;
+      inset: 18% 16% 20%;
+      border-radius: inherit;
+      border: 1px solid rgba(32,24,19,0.08);
+    }
+
+    .disc {
+      position: absolute;
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      top: 18%;
+      left: 14%;
+      background: radial-gradient(circle at 32% 32%, rgba(255,255,255,0.82), rgba(133,89,59,0.52));
+      box-shadow: 0 16px 36px rgba(95,58,36,0.14);
+    }
+
+    .disc.small {
+      width: 84px;
+      height: 84px;
+      top: 60%;
+      left: 72%;
+      background: radial-gradient(circle at 32% 32%, rgba(255,255,255,0.74), rgba(149,161,135,0.56));
+    }
+
+    .reformer {
+      position: absolute;
+      left: 13%;
+      bottom: 18%;
+      width: 68%;
+      height: 20px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #5f3a24, #b0815c);
+      box-shadow: 0 18px 34px rgba(95,58,36,0.18);
+    }
+
+    .reformer::before,
+    .reformer::after {
+      content: "";
+      position: absolute;
+      width: 18px;
+      height: 104px;
+      bottom: -84px;
+      border-radius: 10px;
+      background: linear-gradient(180deg, #af805b, #68432b);
+    }
+
+    .reformer::before { left: 10%; }
+    .reformer::after { right: 14%; }
+
+    .carriage {
+      position: absolute;
+      left: 31%;
+      bottom: 19.8%;
+      width: 22%;
+      height: 52px;
+      border-radius: 22px;
+      background: linear-gradient(180deg, #d6b79a, #9f7555);
+    }
+
+    .figure {
+      position: absolute;
+      left: 34%;
+      bottom: 24%;
+      width: 30%;
+      height: 43%;
+    }
+
+    .figure div {
+      position: absolute;
+      background: linear-gradient(180deg, #7b5844, #523528);
+      border-radius: 999px;
+      transform-origin: center;
+    }
+
+    .head { width: 56px; height: 56px; border-radius: 50%; top: 0; right: 18%; }
+    .torso { width: 42px; height: 148px; top: 54px; left: 54%; transform: rotate(18deg); }
+    .arm { width: 18px; height: 120px; top: 74px; left: 54%; transform: rotate(84deg); }
+    .leg.front { width: 26px; height: 170px; left: 43%; bottom: 0; transform: rotate(72deg); }
+    .leg.back { width: 24px; height: 150px; left: 58%; bottom: 14px; transform: rotate(20deg); opacity: 0.9; }
+
+    .floating-card,
+    .floating-card.alt {
+      position: absolute;
+      padding: 18px;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.82);
+      border: 1px solid rgba(32,24,19,0.08);
+      box-shadow: 0 22px 36px rgba(95,58,36,0.12);
+      backdrop-filter: blur(10px);
+    }
+
+    .floating-card {
+      top: 34px;
+      left: 32px;
+      width: 180px;
+    }
+
+    .floating-card.alt {
+      right: 28px;
+      bottom: 22px;
+      width: 224px;
+    }
+
+    .floating-card small,
+    .floating-card.alt small {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.72rem;
+    }
+
+    .floating-card strong,
+    .floating-card.alt strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 1.02rem;
+    }
+
+    .floating-card p,
+    .floating-card.alt p,
+    .section-head p,
+    .block p,
+    .service p,
+    .testimonial p,
+    .schedule-card p,
+    .faq-answer,
+    .closing p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.72;
+    }
+
+    section { padding: 28px 0; }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 30px;
+      margin-bottom: 20px;
+    }
+
+    .section-head h2,
+    .closing h2 {
+      font-size: clamp(2rem, 4vw, 3.65rem);
+      line-height: 0.98;
+      max-width: 10ch;
+    }
+
+    .split-block {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .intro-panel {
+      padding-top: 14px;
+      color: var(--muted);
+      max-width: 52ch;
+    }
+
+    .stack,
+    .services,
+    .testimonials,
+    .faqs { display: grid; gap: 14px; }
+
+    .stack { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .services { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .testimonials { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .faqs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+    .block,
+    .service,
+    .testimonial,
+    .schedule-card,
+    .faq-item,
+    .closing {
+      border-radius: var(--r-md);
+      border: 1px solid rgba(32,24,19,0.08);
+      background: rgba(255,255,255,0.76);
+      box-shadow: var(--shadow);
+    }
+
+    .block,
+    .service,
+    .testimonial,
+    .schedule-card,
+    .faq-item { padding: 24px; }
+
+    .index {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(133,89,59,0.12);
+      color: var(--clay-deep);
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    .block strong,
+    .service strong,
+    .schedule-card strong { display: block; margin-bottom: 10px; font-size: 1.05rem; }
+
+    .quote {
+      font-family: 'Forum', serif;
+      font-size: 2.7rem;
+      line-height: 1;
+      color: rgba(133,89,59,0.32);
+      margin-bottom: 12px;
+    }
+
+    .testimonial cite {
+      display: block;
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid var(--line);
+      font-style: normal;
+      font-weight: 700;
+    }
+
+    .schedule-layout {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 16px;
+    }
+
+    .schedule-stack {
+      display: grid;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .schedule-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .schedule-row:last-child { border-bottom: 0; padding-bottom: 0; }
+
+    .faq-item button {
+      width: 100%;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      text-align: left;
+      align-items: start;
+      font: inherit;
+      cursor: pointer;
+      color: var(--ink);
+    }
+
+    .faq-item h3 { margin: 0; font-size: 1.03rem; }
+
+    .toggle {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: rgba(133,89,59,0.12);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--clay-deep);
+      flex: 0 0 34px;
+      transition: transform 180ms ease;
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 240ms ease, margin-top 240ms ease;
+    }
+
+    .faq-item.active .faq-answer {
+      max-height: 180px;
+      margin-top: 14px;
+    }
+
+    .faq-item.active .toggle { transform: rotate(45deg); }
+
+    .closing {
+      padding: 28px;
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 28px;
+      align-items: center;
+      background:
+        radial-gradient(circle at top right, rgba(149,161,135,0.18), transparent 30%),
+        linear-gradient(135deg, #5e3925, #86583a);
+      color: #fff8f1;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .closing::after {
+      content: "";
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      right: -90px;
+      bottom: -100px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,255,255,0.16), transparent 70%);
+    }
+
+    .closing p { color: rgba(255,248,241,0.84); }
+    .closing-points { display: grid; gap: 12px; font-weight: 700; }
+    .closing-points div { padding-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.14); }
+    .closing-points div:last-child { border-bottom: 0; padding-bottom: 0; }
+
+    .float {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      z-index: 24;
+      display: none;
+    }
+
+    footer {
+      padding: 0 0 32px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 1080px) {
+      .hero-grid,
+      .split-block,
+      .stack,
+      .services,
+      .testimonials,
+      .schedule-layout,
+      .closing { grid-template-columns: 1fr; }
+      .faqs { grid-template-columns: 1fr; }
+      .section-head { flex-direction: column; align-items: start; }
+      .nav-links { display: none; }
+      .stage { min-height: 540px; }
+    }
+
+    @media (max-width: 760px) {
+      .hero { padding-top: 24px; }
+      h1 { font-size: clamp(2.7rem, 13vw, 4.3rem); }
+      .hero-actions { flex-direction: column; }
+      .button { width: 100%; }
+      .hero-notes { grid-template-columns: 1fr; }
+      .stage { min-height: 460px; }
+      .floating-card { width: 154px; padding: 14px; }
+      .floating-card.alt { width: calc(100% - 40px); left: 20px; right: 20px; bottom: 20px; }
+      .float { display: block; left: 16px; right: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="#top" aria-label="Aurora Pilates Studio">
+        <span class="mark" aria-hidden="true"></span>
+        <span class="brand-copy">
+          <strong>Aurora Pilates Studio</strong>
+          <span>movimento guiado com calma</span>
+        </span>
+      </a>
+      <nav class="nav">
+        <div class="nav-links">
+          <a href="#beneficios">Benefícios</a>
+          <a href="#como-funciona">Primeira aula</a>
+          <a href="#servicos">Serviços</a>
+          <a href="#faq">FAQ</a>
+        </div>
+        <a class="button button-primary" href="https://wa.me/5511999010004?text=Ol%C3%A1%21%20Quero%20agendar%20uma%20aula%20experimental%20na%20Aurora%20Pilates%20Studio." target="_blank" rel="noopener noreferrer">Agendar pelo WhatsApp</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <div class="micro-label">Pilates boutique em São Paulo para quem quer presença, força e movimento sem excesso</div>
+          <h1>Um estúdio silencioso para cuidar do corpo com precisão e leveza</h1>
+          <p>Na Aurora Pilates Studio, cada sessão combina atenção individual, condução liderada por fisioterapeuta e um ambiente calmo para quem busca melhorar postura, mobilidade e força sem a sensação de academia lotada.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="https://wa.me/5511999010004?text=Ol%C3%A1%21%20Quero%20agendar%20uma%20aula%20experimental%20na%20Aurora%20Pilates%20Studio." target="_blank" rel="noopener noreferrer">Agendar aula experimental pelo WhatsApp</a>
+            <a class="button button-secondary" href="#como-funciona">Como funciona a primeira aula</a>
+          </div>
+          <div class="hero-notes">
+            <div class="note">
+              <strong>Condução humana e técnica</strong>
+              <span>Orientação liderada por fisioterapeuta durante toda a prática.</span>
+            </div>
+            <div class="note">
+              <strong>Turmas de até 4 pessoas</strong>
+              <span>Menos ruído, mais atenção real e ajustes feitos com cuidado.</span>
+            </div>
+            <div class="note">
+              <strong>Horários flexíveis</strong>
+              <span>Manhã e noite para encaixar o Pilates em uma rotina possível.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="stage" aria-hidden="true">
+          <div class="orb one"></div>
+          <div class="orb two"></div>
+          <div class="sculpture">
+            <div class="arch"></div>
+            <div class="disc"></div>
+            <div class="disc small"></div>
+            <div class="reformer"></div>
+            <div class="carriage"></div>
+            <div class="figure">
+              <div class="head"></div>
+              <div class="torso"></div>
+              <div class="arm"></div>
+              <div class="leg front"></div>
+              <div class="leg back"></div>
+            </div>
+          </div>
+          <div class="floating-card">
+            <small>Atmosfera</small>
+            <strong>Calma e foco</strong>
+            <p>Um lugar para respirar melhor e se mover com consciência.</p>
+          </div>
+          <div class="floating-card alt">
+            <small>Primeira experiência</small>
+            <strong>Avaliação postural e aula guiada</strong>
+            <p>Você entende seu momento atual e recebe uma orientação clara sobre o melhor formato para seguir.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="beneficios">
+      <div class="container split-block">
+        <div>
+          <div class="section-head" style="display:block; margin-bottom:0;">
+            <h2>O que muda quando o espaço realmente acompanha o seu ritmo</h2>
+          </div>
+          <p class="intro-panel">A experiência Aurora foi desenhada para quem valoriza precisão, constância e um ambiente que transmite acolhimento sem excesso visual ou pressa.</p>
+        </div>
+        <div class="stack">
+          <article class="block">
+            <div class="index">01</div>
+            <strong>Mais consciência corporal</strong>
+            <p>Exercícios guiados com clareza ajudam você a perceber melhor alinhamento, respiração e qualidade do movimento.</p>
+          </article>
+          <article class="block">
+            <div class="index">02</div>
+            <strong>Fortalecimento progressivo</strong>
+            <p>A prática respeita o seu momento e organiza o esforço de forma consistente, sem exageros e sem improviso.</p>
+          </article>
+          <article class="block">
+            <div class="index">03</div>
+            <strong>Constância com leveza</strong>
+            <p>Horários flexíveis e comunicação direta pelo WhatsApp deixam o processo mais simples para manter o hábito.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="como-funciona">
+      <div class="container">
+        <div class="section-head">
+          <h2>Como funciona a sua primeira aula</h2>
+          <p>O primeiro encontro foi pensado para acolher, entender seu momento atual e mostrar na prática como o método pode se encaixar na sua rotina.</p>
+        </div>
+        <div class="services">
+          <article class="service">
+            <div class="index">1</div>
+            <strong>Agendamento pelo WhatsApp</strong>
+            <p>Você entra em contato, informa sua disponibilidade e recebe retorno rápido para marcar seu primeiro horário.</p>
+          </article>
+          <article class="service">
+            <div class="index">2</div>
+            <strong>Escuta e avaliação postural</strong>
+            <p>Na chegada, a equipe observa postura, mobilidade e objetivos para direcionar a experiência com mais precisão.</p>
+          </article>
+          <article class="service">
+            <div class="index">3</div>
+            <strong>Aula guiada e próximos passos</strong>
+            <p>Você vivencia uma sessão acolhedora e entende qual formato de atendimento faz mais sentido para seguir com constância.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="servicos">
+      <div class="container">
+        <div class="section-head">
+          <h2>Serviços para diferentes necessidades e ritmos</h2>
+          <p>Todos os formatos preservam o mesmo princípio, atenção real, ambiente boutique e personalização suficiente para uma prática consistente.</p>
+        </div>
+        <div class="services">
+          <article class="service">
+            <div class="index">A</div>
+            <strong>Sessões individualizadas</strong>
+            <p>Para quem quer acompanhamento ainda mais próximo, com ajustes detalhados e plano pensado de forma personalizada.</p>
+          </article>
+          <article class="service">
+            <div class="index">B</div>
+            <strong>Grupos de até 4 pessoas</strong>
+            <p>Turmas pequenas que mantêm a atenção da equipe e a sensação de prática acolhedora, sem excesso de pessoas.</p>
+          </article>
+          <article class="service">
+            <div class="index">C</div>
+            <strong>Orientação para a rotina real</strong>
+            <p>Depois da experiência inicial, você recebe uma indicação clara de frequência e melhor organização de horários.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-head">
+          <h2>Depoimentos que traduzem a experiência do estúdio</h2>
+          <p>Relatos ilustrativos para apresentar o tipo de percepção que a Aurora quer gerar em quem chega buscando mais presença e atenção individual.</p>
+        </div>
+        <div class="testimonials">
+          <article class="testimonial">
+            <div class="quote">“</div>
+            <p>Eu queria um espaço mais silencioso e com orientação de verdade. A sensação foi de cuidado desde o primeiro minuto.</p>
+            <cite>Juliana, 43 anos</cite>
+          </article>
+          <article class="testimonial">
+            <div class="quote">“</div>
+            <p>Gostei da calma do ambiente e da clareza na condução. Parece um lugar feito para você se mover sem pressão.</p>
+            <cite>Ricardo, 50 anos</cite>
+          </article>
+          <article class="testimonial">
+            <div class="quote">“</div>
+            <p>Os horários ajudaram muito e o contato pelo WhatsApp foi simples. A primeira aula já mostrou que o estúdio é bem diferente.</p>
+            <cite>Bianca, 37 anos</cite>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container schedule-layout">
+        <article class="schedule-card">
+          <strong>Horários que acompanham a vida real</strong>
+          <p>A Aurora atende pessoas que preferem começar o dia com mais organização corporal ou desacelerar no começo da noite com uma prática guiada.</p>
+          <div class="schedule-stack">
+            <div class="schedule-row"><span>Manhã</span><span>Para começar o dia com mais presença e mobilidade</span></div>
+            <div class="schedule-row"><span>Tarde</span><span>Janelas mais tranquilas para quem gosta de um estúdio silencioso</span></div>
+            <div class="schedule-row"><span>Noite</span><span>Horários flexíveis para encaixar a prática depois do trabalho</span></div>
+          </div>
+        </article>
+        <article class="schedule-card">
+          <strong>O que diferencia a experiência</strong>
+          <p>Condução por fisioterapeuta, espaço boutique, grupos reduzidos e contato direto pelo WhatsApp para manter a continuidade com simplicidade.</p>
+          <div class="schedule-stack">
+            <div class="schedule-row"><span>Estúdio reservado</span><span>Mais foco e menos estímulo excessivo</span></div>
+            <div class="schedule-row"><span>Planos personalizados</span><span>Orientação conforme seu momento e objetivo</span></div>
+            <div class="schedule-row"><span>Contato direto</span><span>Agendamento rápido e continuidade sem burocracia</span></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="container">
+        <div class="section-head">
+          <h2>Perguntas frequentes antes de agendar</h2>
+          <p>As respostas abaixo ajudam a entender como será o primeiro contato e o que esperar dessa experiência.</p>
+        </div>
+        <div class="faqs">
+          <article class="faq-item active">
+            <button type="button" aria-expanded="true">
+              <h3>Preciso já ter praticado Pilates antes?</h3>
+              <span class="toggle">+</span>
+            </button>
+            <div class="faq-answer">Não. A aula experimental foi pensada para receber iniciantes com calma, explicação clara e progressão respeitosa.</div>
+          </article>
+          <article class="faq-item">
+            <button type="button" aria-expanded="false">
+              <h3>Como faço para agendar?</h3>
+              <span class="toggle">+</span>
+            </button>
+            <div class="faq-answer">Basta tocar no botão de WhatsApp e enviar sua mensagem. A equipe combina o melhor horário e orienta os próximos passos.</div>
+          </article>
+          <article class="faq-item">
+            <button type="button" aria-expanded="false">
+              <h3>As aulas são sempre individuais?</h3>
+              <span class="toggle">+</span>
+            </button>
+            <div class="faq-answer">Não. Há sessões individualizadas e grupos pequenos com até 4 pessoas, sempre com atenção próxima durante a prática.</div>
+          </article>
+          <article class="faq-item">
+            <button type="button" aria-expanded="false">
+              <h3>Existem horários de manhã e à noite?</h3>
+              <span class="toggle">+</span>
+            </button>
+            <div class="faq-answer">Sim. O estúdio trabalha com horários em diferentes janelas do dia para facilitar constância e rotina.</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <article class="closing">
+          <div>
+            <h2>Agende sua aula experimental e sinta se esse ritmo combina com você</h2>
+            <p>Se você procura um Pilates mais humano, preciso e acolhedor, a Aurora pode ser o começo certo para uma prática com mais presença e continuidade.</p>
+            <div class="hero-actions">
+              <a class="button button-primary" href="https://wa.me/5511999010004?text=Ol%C3%A1%21%20Quero%20agendar%20uma%20aula%20experimental%20na%20Aurora%20Pilates%20Studio." target="_blank" rel="noopener noreferrer">Agendar aula experimental pelo WhatsApp</a>
+            </div>
+          </div>
+          <div class="closing-points">
+            <div>Condução técnica com atenção humana</div>
+            <div>Turmas pequenas em ambiente silencioso</div>
+            <div>Horários flexíveis para rotina real</div>
+            <div>Agendamento simples pelo WhatsApp</div>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <a class="float" href="https://wa.me/5511999010004?text=Ol%C3%A1%21%20Quero%20agendar%20uma%20aula%20experimental%20na%20Aurora%20Pilates%20Studio." target="_blank" rel="noopener noreferrer" aria-label="Agendar aula experimental pelo WhatsApp">
+    <span class="button button-primary">Agendar pelo WhatsApp</span>
+  </a>
+
+  <footer>
+    <div class="container">Aurora Pilates Studio, movimento guiado com calma, técnica e continuidade.</div>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.faq-item button').forEach((button) => {
+      button.addEventListener('click', () => {
+        const item = button.parentElement;
+        const open = item.classList.contains('active');
+        document.querySelectorAll('.faq-item').forEach((faq) => {
+          faq.classList.remove('active');
+          faq.querySelector('button').setAttribute('aria-expanded', 'false');
+        });
+        if (!open) {
+          item.classList.add('active');
+          button.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
