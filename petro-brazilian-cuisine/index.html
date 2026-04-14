@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Petro Brazilian Cuisine | Refined Brazilian Dining</title>
+  <meta name="description" content="Petro Brazilian Cuisine is a refined Brazilian dining concept with warm hospitality, signature flavors, and an elegant reservation-first experience." />
+  <meta name="theme-color" content="#12100d" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #12100d;
+      --bg-soft: #191612;
+      --panel: rgba(34, 28, 22, 0.82);
+      --panel-strong: rgba(19, 16, 13, 0.94);
+      --gold: #c8b18a;
+      --gold-bright: #e6d1aa;
+      --champagne: #f3ead7;
+      --muted: #c7b89c;
+      --line: rgba(230, 209, 170, 0.14);
+      --shadow: 0 28px 90px rgba(0, 0, 0, 0.36);
+      --radius: 30px;
+      --max: 1160px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Instrument Sans', sans-serif;
+      color: var(--champagne);
+      background:
+        radial-gradient(circle at top, rgba(230, 209, 170, 0.08), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(200, 177, 138, 0.08), transparent 22%),
+        linear-gradient(180deg, #090807 0%, #12100d 35%, #0e0c0a 100%);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.13;
+      background:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+      background-size: 24px 24px;
+      mask-image: radial-gradient(circle at center, black 40%, transparent 88%);
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    .container { width: min(var(--max), calc(100% - 32px)); margin: 0 auto; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(18px);
+      background: rgba(8, 7, 6, 0.64);
+      border-bottom: 1px solid rgba(230, 209, 170, 0.08);
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 0;
+    }
+
+    .brand-lockup {
+      display: grid;
+      gap: 2px;
+    }
+
+    .crest {
+      width: 48px;
+      height: 22px;
+      border: 1px solid rgba(230, 209, 170, 0.3);
+      border-bottom: none;
+      border-radius: 999px 999px 0 0;
+      position: relative;
+      margin-bottom: 5px;
+      opacity: 0.8;
+    }
+
+    .crest::before,
+    .crest::after {
+      content: "";
+      position: absolute;
+      bottom: -1px;
+      width: 1px;
+      background: rgba(230, 209, 170, 0.3);
+      height: 14px;
+    }
+
+    .crest::before { left: 12px; box-shadow: 12px 0 0 rgba(230, 209, 170, 0.3), 24px 0 0 rgba(230, 209, 170, 0.3); }
+    .crest::after { right: 12px; }
+
+    .brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 4vw, 2.4rem);
+      letter-spacing: 0.08em;
+      line-height: 0.9;
+      text-transform: uppercase;
+      color: var(--gold-bright);
+    }
+
+    .brand-sub {
+      font-size: 0.78rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .nav-cta,
+    .btn {
+      min-height: 50px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 22px;
+      font-weight: 700;
+      transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+    }
+
+    .nav-cta,
+    .btn-primary {
+      background: linear-gradient(135deg, #e5cda4, #b99661);
+      color: #17120d;
+      box-shadow: var(--shadow);
+    }
+
+    .btn-secondary {
+      border: 1px solid rgba(230, 209, 170, 0.24);
+      background: rgba(255,255,255,0.03);
+      color: var(--champagne);
+    }
+
+    .nav-cta:hover,
+    .btn:hover { transform: translateY(-2px); }
+
+    .hero {
+      padding: 28px 0 18px;
+    }
+
+    .hero-card {
+      position: relative;
+      min-height: 88vh;
+      overflow: hidden;
+      border-radius: 42px;
+      background:
+        linear-gradient(180deg, rgba(8,6,5,0.12), rgba(8,6,5,0.9)),
+        radial-gradient(circle at top, rgba(230,209,170,0.14), transparent 28%),
+        url('https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&w=1600&q=80') center/cover;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(230, 209, 170, 0.08);
+      isolation: isolate;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, rgba(10,9,8,0.22), transparent 45%, rgba(230,209,170,0.07) 80%, rgba(10,9,8,0.42));
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      padding: 28px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .badge {
+      width: fit-content;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(230, 209, 170, 0.18);
+      background: rgba(20,17,14,0.62);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.74rem;
+      color: var(--gold-bright);
+    }
+
+    h1, h2, h3 { margin: 0; font-family: 'Cormorant Garamond', serif; line-height: 0.92; }
+    h1 {
+      max-width: 8ch;
+      font-size: clamp(3.5rem, 10vw, 7.7rem);
+      letter-spacing: 0.02em;
+    }
+
+    .hero-copy {
+      max-width: 620px;
+      font-size: 1.05rem;
+      line-height: 1.85;
+      color: #e2d3b8;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 6px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      max-width: 820px;
+      margin-top: 10px;
+    }
+
+    .hero-stat,
+    .panel,
+    .menu-card,
+    .experience-card,
+    .story-card,
+    .contact-card {
+      backdrop-filter: blur(14px);
+      background: rgba(18, 15, 12, 0.72);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-stat {
+      padding: 18px;
+      border-radius: 24px;
+    }
+
+    .hero-stat strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 0.78rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold-bright);
+    }
+
+    section { padding: 26px 0; }
+
+    .section-head {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .eyebrow {
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    h2 { font-size: clamp(2.4rem, 6vw, 4.6rem); }
+
+    .lead {
+      max-width: 720px;
+      color: var(--muted);
+      line-height: 1.85;
+      font-size: 1rem;
+    }
+
+    .story-grid,
+    .experience-grid,
+    .menu-grid,
+    .contact-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .story-grid {
+      grid-template-columns: 1.2fr 0.8fr;
+    }
+
+    .story-card,
+    .contact-card {
+      border-radius: var(--radius);
+      padding: 26px;
+    }
+
+    .story-card p,
+    .contact-card p { color: var(--muted); line-height: 1.9; }
+
+    .quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.9rem, 4vw, 3rem);
+      color: var(--gold-bright);
+      margin-bottom: 18px;
+    }
+
+    .experience-grid,
+    .menu-grid,
+    .contact-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .experience-card,
+    .menu-card {
+      border-radius: 28px;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .experience-card::before,
+    .menu-card::before,
+    .story-card::before,
+    .contact-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(140deg, rgba(230,209,170,0.08), transparent 45%);
+      pointer-events: none;
+    }
+
+    .card-kicker {
+      display: inline-flex;
+      margin-bottom: 16px;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+    }
+
+    h3 {
+      font-size: clamp(2rem, 4vw, 2.6rem);
+      margin-bottom: 10px;
+    }
+
+    .menu-card p,
+    .experience-card p {
+      color: var(--muted);
+      line-height: 1.8;
+      margin: 0;
+    }
+
+    .menu-line {
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(230, 209, 170, 0.12);
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--gold-bright);
+      font-size: 0.92rem;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: 1.3fr 0.7fr;
+      gap: 18px;
+      margin-top: 8px;
+    }
+
+    .gallery-main,
+    .gallery-stack > div {
+      border-radius: 32px;
+      min-height: 320px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(230, 209, 170, 0.08);
+    }
+
+    .gallery-main {
+      background:
+        linear-gradient(180deg, rgba(10,8,7,0.1), rgba(10,8,7,0.35)),
+        url('https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1400&q=80') center/cover;
+    }
+
+    .gallery-stack {
+      display: grid;
+      gap: 18px;
+    }
+
+    .gallery-stack .one {
+      background:
+        linear-gradient(180deg, rgba(10,8,7,0.15), rgba(10,8,7,0.38)),
+        url('https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1200&q=80') center/cover;
+    }
+
+    .gallery-stack .two {
+      background:
+        linear-gradient(180deg, rgba(10,8,7,0.16), rgba(10,8,7,0.42)),
+        url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=80') center/cover;
+    }
+
+    .contact-card strong {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 1rem;
+      color: var(--gold-bright);
+      letter-spacing: 0.03em;
+    }
+
+    .contact-note {
+      margin-top: 22px;
+      padding: 18px;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(230,209,170,0.12);
+      color: var(--champagne);
+    }
+
+    .footer {
+      padding: 16px 0 34px;
+      color: rgba(243, 234, 215, 0.7);
+      text-align: center;
+      font-size: 0.92rem;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 980px) {
+      .story-grid,
+      .gallery,
+      .experience-grid,
+      .menu-grid,
+      .contact-grid,
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-card { min-height: auto; }
+      h1 { max-width: 10ch; }
+      .gallery-main, .gallery-stack > div { min-height: 240px; }
+    }
+
+    @media (max-width: 640px) {
+      .container { width: min(var(--max), calc(100% - 20px)); }
+      .topbar-inner { align-items: flex-start; flex-direction: column; }
+      .nav-cta { width: 100%; }
+      .hero-content,
+      .story-card,
+      .contact-card,
+      .menu-card,
+      .experience-card { padding: 20px; }
+      .hero-actions .btn { width: 100%; }
+      .brand-sub { letter-spacing: 0.18em; }
+      h1 { font-size: clamp(3rem, 15vw, 4.8rem); }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand-lockup" aria-label="Petro Brazilian Cuisine">
+        <div class="crest" aria-hidden="true"></div>
+        <div class="brand">Petro</div>
+        <div class="brand-sub">Brazilian Cuisine</div>
+      </div>
+      <a class="nav-cta" href="https://wa.me/16892210982?text=Hi%20Petro%2C%20I%20would%20like%20to%20reserve%20a%20table." target="_blank" rel="noopener noreferrer">Reserve via WhatsApp</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-card reveal">
+          <div class="hero-content">
+            <div class="badge">Elegant Brazilian dining</div>
+            <h1>Brazilian flavor, dressed in gold and candlelight.</h1>
+            <p class="hero-copy">Petro Brazilian Cuisine is a refined restaurant concept created to feel warm, intimate, and unforgettable, pairing classic Brazilian soul with a polished contemporary atmosphere.</p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="https://wa.me/16892210982?text=Hi%20Petro%2C%20I%20would%20like%20to%20book%20a%20table." target="_blank" rel="noopener noreferrer">Book your table</a>
+              <a class="btn btn-secondary" href="#experience">Explore the experience</a>
+            </div>
+            <div class="hero-grid">
+              <div class="hero-stat">
+                <strong>Signature</strong>
+                Elevated Brazilian cuisine with a luxurious, intimate tone.
+              </div>
+              <div class="hero-stat">
+                <strong>Atmosphere</strong>
+                Candlelit mood, premium service, and a destination feel.
+              </div>
+              <div class="hero-stat">
+                <strong>Reservations</strong>
+                Fast booking and direct contact through WhatsApp.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="story-grid">
+          <article class="story-card reveal">
+            <div class="eyebrow">The concept</div>
+            <div class="quote">A restaurant brand with the elegance of a private club and the heart of Brazilian hospitality.</div>
+            <p>This preview positions Petro as a high-end culinary destination, ideal for guests who value atmosphere as much as flavor. The visual language mirrors the logo you sent, using deep charcoal tones, champagne gold highlights, and editorial typography to create an elevated first impression.</p>
+            <p>The website is structured to convert attention into reservations quickly, while still feeling curated and memorable. It works especially well for social media traffic, direct WhatsApp inquiries, and premium dining positioning.</p>
+          </article>
+          <aside class="story-card reveal">
+            <div class="eyebrow">Brand notes</div>
+            <p><strong>Visual direction</strong><br>Luxury dark palette inspired by the Petro identity.</p>
+            <p><strong>Ideal audience</strong><br>Guests seeking a polished Brazilian dining experience.</p>
+            <p><strong>Main action</strong><br>Drive table reservations and private dining conversations.</p>
+            <div class="contact-note">Everything in this preview can still be adjusted, like dishes, photos, address, opening hours, and contact details.</div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="eyebrow">Experience</div>
+          <h2>Designed to feel rich, intimate, and memorable.</h2>
+          <p class="lead">Instead of a generic restaurant page, this concept sells a mood. The experience blocks below help guests understand why Petro feels special before they even arrive.</p>
+        </div>
+        <div class="experience-grid">
+          <article class="experience-card reveal">
+            <span class="card-kicker">01</span>
+            <h3>Brazilian signatures</h3>
+            <p>Classic references reimagined with a more refined presentation, celebrating depth of flavor, texture, and warmth.</p>
+          </article>
+          <article class="experience-card reveal">
+            <span class="card-kicker">02</span>
+            <h3>Private ambiance</h3>
+            <p>Dark tones, candlelit contrast, and elegant details turn each reservation into a full evening experience.</p>
+          </article>
+          <article class="experience-card reveal">
+            <span class="card-kicker">03</span>
+            <h3>Concierge-style booking</h3>
+            <p>WhatsApp-first contact keeps reservations simple and personal, with room for custom requests and events.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="eyebrow">Menu storytelling</div>
+          <h2>A few hero moments your site can showcase.</h2>
+          <p class="lead">These sections can be replaced with your real menu items, while already communicating the premium tone of the brand and helping customers imagine the dining style.</p>
+        </div>
+        <div class="menu-grid">
+          <article class="menu-card reveal">
+            <span class="card-kicker">Starter</span>
+            <h3>Golden pão de queijo service</h3>
+            <p>Warm cheese bread presented with curated butter pairings and a polished table-side introduction.</p>
+            <div class="menu-line"><span>Editorial feature</span><span>Highlight item</span></div>
+          </article>
+          <article class="menu-card reveal">
+            <span class="card-kicker">Main course</span>
+            <h3>Slow-crafted Brazilian classics</h3>
+            <p>Signature dishes can be displayed here with rich descriptions, chef notes, and pairing suggestions.</p>
+            <div class="menu-line"><span>Visual focus</span><span>Best seller</span></div>
+          </article>
+          <article class="menu-card reveal">
+            <span class="card-kicker">After dinner</span>
+            <h3>Desserts and cocktails</h3>
+            <p>A final section for sweet finishes, signature drinks, or tasting menu experiences that elevate perceived value.</p>
+            <div class="menu-line"><span>Upsell area</span><span>Premium add-on</span></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="eyebrow">Visual atmosphere</div>
+          <h2>The mood arrives before the first bite.</h2>
+          <p class="lead">This image direction helps the brand feel cinematic and upscale. We can swap these references for your real photos whenever you send them.</p>
+        </div>
+        <div class="gallery reveal">
+          <div class="gallery-main" aria-label="Restaurant ambiance preview"></div>
+          <div class="gallery-stack">
+            <div class="one" aria-label="Dining room preview"></div>
+            <div class="two" aria-label="Cuisine preview"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="eyebrow">Contact</div>
+          <h2>Ready to turn this into reservations?</h2>
+          <p class="lead">The final version can include your real address, hours, menu, event inquiries, and branded photography. For now, the site is already prepared to receive direct WhatsApp bookings.</p>
+        </div>
+        <div class="contact-grid">
+          <article class="contact-card reveal">
+            <strong>WhatsApp reservations</strong>
+            <p>Direct guests into a personal reservation flow with one tap from the homepage.</p>
+            <a class="btn btn-primary" href="https://wa.me/16892210982?text=Hi%20Petro%2C%20I%20would%20like%20to%20make%20a%20reservation." target="_blank" rel="noopener noreferrer">Open WhatsApp</a>
+          </article>
+          <article class="contact-card reveal">
+            <strong>Private dining and events</strong>
+            <p>Create a premium channel for celebrations, chef tables, and curated group experiences.</p>
+          </article>
+          <article class="contact-card reveal">
+            <strong>Next refinements</strong>
+            <p>Add your address, opening hours, real menu sections, gallery, and any booking details you want displayed.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">Petro Brazilian Cuisine, crafted for a premium first impression.</div>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+  </script>
+</body>
+</html>
