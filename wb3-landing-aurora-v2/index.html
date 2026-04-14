@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Aurora Pilates Studio, sessões individualizadas e pequenos grupos em um estúdio boutique em São Paulo. Agende sua aula experimental pelo WhatsApp." />
+  <title>Aurora Pilates Studio | Aula experimental</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --pine: #20362f;
+      --pine-soft: rgba(32, 54, 47, 0.82);
+      --moss: #6d8a77;
+      --sand: #e9decb;
+      --ivory: #f7f2ea;
+      --copper: #b97849;
+      --text: #f7f2ea;
+      --ink: #1c2521;
+      --muted: #5c645f;
+      --line: rgba(32, 54, 47, 0.12);
+      --shadow: 0 28px 60px rgba(18, 33, 29, 0.22);
+      --radius: 28px;
+      --radius-sm: 18px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Manrope", sans-serif;
+      color: var(--ink);
+      background: linear-gradient(180deg, #f4efe7 0%, #f8f3ec 100%);
+      overflow-x: hidden;
+    }
+
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+
+    .page-shell::before,
+    .page-shell::after {
+      content: "";
+      position: fixed;
+      inset: auto;
+      width: 18rem;
+      height: 18rem;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+      filter: blur(12px);
+      opacity: 0.55;
+    }
+
+    .page-shell::before {
+      top: -3rem;
+      right: -5rem;
+      background: radial-gradient(circle, rgba(185, 120, 73, 0.22), transparent 70%);
+    }
+
+    .page-shell::after {
+      left: -6rem;
+      top: 38rem;
+      background: radial-gradient(circle, rgba(109, 138, 119, 0.16), transparent 68%);
+    }
+
+    .section,
+    .hero-inner,
+    .sticky-cta {
+      position: relative;
+      z-index: 1;
+    }
+
+    .container {
+      width: min(calc(100% - 2rem), var(--max));
+      margin: 0 auto;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      color: var(--text);
+      background:
+        linear-gradient(180deg, rgba(17, 28, 24, 0.24) 0%, rgba(17, 28, 24, 0.60) 42%, rgba(17, 28, 24, 0.78) 100%),
+        linear-gradient(120deg, rgba(32,54,47,0.80) 0%, rgba(32,54,47,0.18) 54%, rgba(32,54,47,0.70) 100%),
+        url('https://images.unsplash.com/photo-1552196527-bffef41ef674?auto=format&fit=crop&w=1400&q=80') center/cover no-repeat;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 18%, rgba(255,255,255,0.15), transparent 28%),
+        radial-gradient(circle at 78% 24%, rgba(185,120,73,0.20), transparent 24%),
+        linear-gradient(180deg, transparent 52%, rgba(247,242,234,0.08) 100%);
+      mix-blend-mode: screen;
+    }
+
+    .hero-inner {
+      min-height: 100svh;
+      display: grid;
+      align-items: end;
+      padding: 1rem 0 2rem;
+    }
+
+    .hero-panel {
+      width: min(100%, 38rem);
+      padding: 0;
+      border-radius: 30px;
+      background: transparent;
+      border: 0;
+      backdrop-filter: none;
+      box-shadow: none;
+    }
+
+    .brand-row {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.85rem;
+      margin-bottom: 1.1rem;
+    }
+
+    .brand-mark {
+      width: 3rem;
+      height: 3rem;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: radial-gradient(circle at 30% 30%, rgba(247,242,234,0.22), rgba(247,242,234,0.06));
+      border: 1px solid rgba(247,242,234,0.30);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.16);
+    }
+
+    .brand-mark svg { width: 2rem; height: 2rem; }
+
+    .brand-text small,
+    .eyebrow,
+    .trust-pill,
+    .chip,
+    .meta-badge,
+    .steps-label,
+    .faq-tag {
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-size: 0.70rem;
+      font-weight: 700;
+    }
+
+    .brand-text strong {
+      display: block;
+      font-family: "Fraunces", serif;
+      font-size: 1.15rem;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+    }
+
+    .brand-text small,
+    .hero-copy p,
+    .hero-note,
+    .hero-mini-card p,
+    .section-intro p,
+    .service-copy p,
+    .quote-card p,
+    .faq-answer,
+    .footer-copy,
+    .schedule-copy p,
+    .benefit-copy p {
+      color: rgba(247, 242, 234, 0.84);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.55rem 0.8rem;
+      border-radius: 999px;
+      background: rgba(247,242,234,0.11);
+      border: 1px solid rgba(247,242,234,0.14);
+      margin-bottom: 0.9rem;
+    }
+
+    .eyebrow::before,
+    .trust-pill::before,
+    .meta-badge::before {
+      content: "";
+      width: 0.45rem;
+      height: 0.45rem;
+      border-radius: 50%;
+      background: #d9b58e;
+      box-shadow: 0 0 0 0.35rem rgba(217,181,142,0.13);
+    }
+
+    .hero-copy h1,
+    .cta-card h2,
+    .section-heading,
+    .quote-card blockquote,
+    .faq-heading {
+      font-family: "Fraunces", serif;
+      margin: 0;
+      letter-spacing: -0.03em;
+    }
+
+    .hero-copy {
+      max-width: 24rem;
+    }
+
+    .hero-copy h1 {
+      font-size: clamp(2.3rem, 6.7vw, 4.9rem);
+      line-height: 0.92;
+      max-width: 10ch;
+      text-shadow: 0 10px 30px rgba(8, 14, 12, 0.42);
+    }
+
+    .hero-copy p {
+      margin: 0.8rem 0 0;
+      max-width: 27rem;
+      font-size: 0.98rem;
+      line-height: 1.55;
+      text-shadow: 0 8px 24px rgba(8, 14, 12, 0.36);
+    }
+
+    .hero-actions {
+      margin-top: 1.15rem;
+      display: grid;
+      gap: 0.8rem;
+    }
+
+    .cta-primary,
+    .cta-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.65rem;
+      min-height: 3.5rem;
+      padding: 0.95rem 1.25rem;
+      border-radius: 999px;
+      font-weight: 800;
+      line-height: 1.2;
+      text-align: center;
+      white-space: normal;
+      transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+      border: 1px solid transparent;
+    }
+
+    .cta-primary {
+      background: linear-gradient(135deg, #d99f68, #b97849 70%);
+      color: #fff8f1;
+      box-shadow: 0 16px 36px rgba(185,120,73,0.32);
+    }
+
+    .cta-primary:hover,
+    .cta-primary:focus-visible,
+    .cta-secondary:hover,
+    .cta-secondary:focus-visible,
+    .faq-question:hover,
+    .faq-question:focus-visible {
+      transform: translateY(-1px);
+    }
+
+    .cta-secondary {
+      color: var(--text);
+      background: rgba(247,242,234,0.08);
+      border-color: rgba(247,242,234,0.18);
+    }
+
+    .trust-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.65rem;
+      padding: 0.72rem 0.9rem;
+      border-radius: 999px;
+      background: rgba(247,242,234,0.14);
+      border: 1px solid rgba(247,242,234,0.15);
+      color: #f8efe5;
+      font-size: 0.74rem;
+      font-weight: 700;
+      line-height: 1.35;
+      max-width: fit-content;
+      backdrop-filter: blur(10px);
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.8rem;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.62rem 0.82rem;
+      border-radius: 999px;
+      background: rgba(247,242,234,0.08);
+      border: 1px solid rgba(247,242,234,0.12);
+      color: rgba(247,242,234,0.92);
+    }
+
+    .hero-mini-card {
+      display: none;
+      margin-top: 1rem;
+      grid-template-columns: 5.2rem 1fr;
+      gap: 0.9rem;
+      padding: 0.8rem;
+      border-radius: 24px;
+      background: rgba(247,242,234,0.08);
+      border: 1px solid rgba(247,242,234,0.10);
+      backdrop-filter: blur(12px);
+    }
+
+    .hero-mini-card .mini-image {
+      min-height: 5.4rem;
+      border-radius: 18px;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0.04), rgba(0,0,0,0.26)),
+        url('https://images.unsplash.com/photo-1604467731651-3d8b9c702b86?auto=format&fit=crop&w=900&q=80') center/cover no-repeat;
+      box-shadow: inset 0 0 0 1px rgba(247,242,234,0.10);
+    }
+
+    .hero-note {
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    .section {
+      padding: 4.5rem 0;
+    }
+
+    .section.light { background: linear-gradient(180deg, #f8f3eb, #f4ece0); }
+    .section.deep {
+      background: linear-gradient(180deg, #243a33 0%, #1e302a 100%);
+      color: var(--text);
+    }
+    .section.deep .section-intro p,
+    .section.deep .benefit-copy p,
+    .section.deep .service-copy p,
+    .section.deep .schedule-copy p,
+    .section.deep .faq-answer,
+    .section.deep .footer-copy,
+    .section.deep .quote-card cite { color: rgba(247,242,234,0.78); }
+    .section.deep .section-kicker,
+    .section.deep .faq-tag { color: rgba(247,242,234,0.78); }
+
+    .section-intro {
+      display: grid;
+      gap: 0.75rem;
+      margin-bottom: 1.7rem;
+      max-width: 40rem;
+    }
+
+    .section-kicker,
+    .meta-badge,
+    .steps-label,
+    .faq-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--moss);
+      margin-bottom: 0.2rem;
+    }
+
+    .section-heading {
+      font-size: clamp(2rem, 5vw, 3.8rem);
+      line-height: 0.97;
+      max-width: 11ch;
+    }
+
+    .section-intro p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 1rem;
+    }
+
+    .benefits-layout {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .benefit-large {
+      padding: 1.4rem;
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(247,242,234,0.72), rgba(233,222,203,0.95));
+      box-shadow: var(--shadow);
+    }
+
+    .benefit-grid {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .benefit-card {
+      padding: 1.25rem;
+      border-radius: 24px;
+      border: 1px solid rgba(32,54,47,0.10);
+      background: rgba(255,255,255,0.56);
+      backdrop-filter: blur(8px);
+    }
+
+    .benefit-visual {
+      min-height: 13rem;
+      border-radius: 24px;
+      background:
+        linear-gradient(180deg, rgba(17,29,25,0.08), rgba(17,29,25,0.26)),
+        url('https://images.unsplash.com/photo-1717500250573-a76fce75ffb3?auto=format&fit=crop&w=1100&q=80') center/cover no-repeat;
+      box-shadow: var(--shadow);
+    }
+
+    .benefit-icon {
+      width: 3rem;
+      height: 3rem;
+      display: grid;
+      place-items: center;
+      border-radius: 18px;
+      background: rgba(32,54,47,0.08);
+      color: var(--pine);
+      margin-bottom: 0.9rem;
+    }
+
+    .benefit-copy h3,
+    .service-copy h3,
+    .faq-question span,
+    .schedule-copy h3 {
+      margin: 0;
+      font-size: 1.12rem;
+      line-height: 1.25;
+    }
+
+    .benefit-copy p,
+    .service-copy p,
+    .schedule-copy p,
+    .faq-answer {
+      margin: 0.7rem 0 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .steps {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .step {
+      padding: 1.4rem;
+      border-radius: 26px;
+      background: rgba(247,242,234,0.06);
+      border: 1px solid rgba(247,242,234,0.10);
+    }
+
+    .step strong {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 50%;
+      background: rgba(217,181,142,0.16);
+      color: #ffe3c7;
+      margin-bottom: 0.8rem;
+      font-size: 0.92rem;
+    }
+
+    .step h3 {
+      margin: 0;
+      font-size: 1.2rem;
+    }
+
+    .step p {
+      margin: 0.55rem 0 0;
+      line-height: 1.7;
+      color: rgba(247,242,234,0.82);
+    }
+
+    .services-stack {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .service-card {
+      display: grid;
+      gap: 1rem;
+      padding: 1rem;
+      border-radius: 28px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.68), rgba(255,255,255,0.92));
+      border: 1px solid rgba(32,54,47,0.10);
+      box-shadow: var(--shadow);
+    }
+
+    .service-visual {
+      min-height: 15rem;
+      border-radius: 22px;
+      overflow: hidden;
+      position: relative;
+      background-color: #d7d0c6;
+    }
+
+    .service-visual.one {
+      background:
+        linear-gradient(180deg, rgba(17,29,25,0.06), rgba(17,29,25,0.28)),
+        url('https://images.unsplash.com/photo-1717500250573-a76fce75ffb3?auto=format&fit=crop&w=1400&q=80') center/cover no-repeat;
+    }
+
+    .service-visual.two {
+      background:
+        linear-gradient(180deg, rgba(17,29,25,0.02), rgba(17,29,25,0.28)),
+        url('https://images.unsplash.com/photo-1715780463401-b9ef0567943e?auto=format&fit=crop&w=1400&q=80') center/cover no-repeat;
+    }
+
+    .service-visual.three {
+      background:
+        linear-gradient(180deg, rgba(17,29,25,0.02), rgba(17,29,25,0.22)),
+        url('https://images.unsplash.com/photo-1604467731651-3d8b9c702b86?auto=format&fit=crop&w=1400&q=80') center/cover no-repeat;
+    }
+
+    .meta-badge {
+      width: fit-content;
+      padding: 0.5rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(32,54,47,0.06);
+      color: var(--pine);
+    }
+
+    .quote-layout {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .quote-card {
+      padding: 1.4rem;
+      border-radius: var(--radius);
+      background: rgba(247,242,234,0.08);
+      border: 1px solid rgba(247,242,234,0.10);
+    }
+
+    .quote-card blockquote {
+      font-size: clamp(1.75rem, 5vw, 3rem);
+      line-height: 1.02;
+      max-width: 11ch;
+    }
+
+    .quote-card p {
+      margin: 1rem 0 0;
+      line-height: 1.7;
+      max-width: 34rem;
+    }
+
+    .testimonials {
+      display: grid;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .testimonial {
+      padding: 1.2rem;
+      border-radius: 22px;
+      background: rgba(247,242,234,0.07);
+      border: 1px solid rgba(247,242,234,0.10);
+    }
+
+    .testimonial strong,
+    .testimonial span {
+      display: block;
+    }
+
+    .testimonial span { margin-top: 0.25rem; color: rgba(247,242,234,0.72); font-size: 0.9rem; }
+    .testimonial p { margin: 0 0 0.8rem; color: rgba(247,242,234,0.9); line-height: 1.7; }
+
+    .support-visual {
+      min-height: 22rem;
+      border-radius: var(--radius);
+      background:
+        linear-gradient(180deg, rgba(17,29,25,0.08), rgba(17,29,25,0.28)),
+        url('https://images.unsplash.com/photo-1604467731651-3d8b9c702b86?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+      box-shadow: var(--shadow);
+    }
+
+    .schedule-panel {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .schedule-card,
+    .faq-item,
+    .cta-card {
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .schedule-card {
+      padding: 1.25rem;
+      background: linear-gradient(180deg, rgba(233,222,203,0.86), rgba(247,242,234,0.98));
+      border: 1px solid rgba(32,54,47,0.10);
+    }
+
+    .schedule-list {
+      display: grid;
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .schedule-list li {
+      list-style: none;
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+      padding: 0.8rem 0;
+      border-top: 1px solid rgba(32,54,47,0.12);
+    }
+
+    .schedule-list li:first-child { border-top: 0; padding-top: 0; }
+    .schedule-list li::before {
+      content: "";
+      width: 0.6rem;
+      height: 0.6rem;
+      margin-top: 0.45rem;
+      border-radius: 50%;
+      background: var(--copper);
+      flex: 0 0 auto;
+    }
+
+    .faq-wrap {
+      display: grid;
+      gap: 0.8rem;
+    }
+
+    .faq-item {
+      background: rgba(255,255,255,0.72);
+      border: 1px solid rgba(32,54,47,0.10);
+      overflow: hidden;
+    }
+
+    .faq-question {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      border: 0;
+      background: transparent;
+      padding: 1.15rem 1.2rem;
+      cursor: pointer;
+      color: var(--ink);
+      text-align: left;
+    }
+
+    .faq-question i {
+      width: 1.8rem;
+      height: 1.8rem;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-style: normal;
+      background: rgba(32,54,47,0.08);
+      transition: transform 180ms ease;
+    }
+
+    .faq-item[open] .faq-question i { transform: rotate(45deg); }
+
+    .faq-answer {
+      padding: 0 1.2rem 1.15rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .cta-card {
+      padding: 1.5rem;
+      background:
+        linear-gradient(180deg, rgba(18,33,29,0.74), rgba(18,33,29,0.88)),
+        url('https://images.unsplash.com/photo-1715780463401-b9ef0567943e?auto=format&fit=crop&w=1400&q=80') center/cover no-repeat;
+      color: var(--text);
+      border: 1px solid rgba(247,242,234,0.12);
+    }
+
+    .cta-card h2 {
+      font-size: clamp(2rem, 6vw, 3.7rem);
+      line-height: 0.95;
+      max-width: 10ch;
+    }
+
+    .cta-card p {
+      max-width: 34rem;
+      line-height: 1.7;
+      color: rgba(247,242,234,0.82);
+    }
+
+    .footer {
+      padding: 2rem 0 6rem;
+      background: #15231f;
+      color: rgba(247,242,234,0.88);
+    }
+
+    .footer-grid {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .footer-copy {
+      font-size: 0.92rem;
+      line-height: 1.7;
+      color: rgba(247,242,234,0.70);
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem 1rem;
+      font-size: 0.88rem;
+      color: rgba(247,242,234,0.78);
+    }
+
+    .footer-links a {
+      text-decoration: underline;
+      text-decoration-color: rgba(247,242,234,0.25);
+      text-underline-offset: 0.18rem;
+    }
+
+    .sticky-cta {
+      position: fixed;
+      left: 50%;
+      bottom: 1rem;
+      transform: translateX(-50%);
+      width: min(calc(100% - 1rem), 28rem);
+      z-index: 20;
+    }
+
+    .sticky-cta a {
+      width: 100%;
+      justify-content: center;
+      box-shadow: 0 18px 36px rgba(32,54,47,0.28);
+      border: 1px solid rgba(255,255,255,0.14);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 500ms ease, transform 500ms ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (min-width: 760px) {
+      .hero-inner { padding: 1.2rem 0 2.2rem; align-items: center; }
+      .hero-panel {
+        padding: 1.35rem;
+        background: linear-gradient(180deg, rgba(17, 29, 25, 0.34), rgba(17, 29, 25, 0.58));
+        border: 1px solid rgba(247,242,234,0.16);
+        backdrop-filter: blur(16px);
+        box-shadow: 0 22px 60px rgba(0, 0, 0, 0.18);
+      }
+      .hero-copy p { font-size: 1.02rem; }
+      .hero-actions { grid-template-columns: minmax(0, 1fr) auto; align-items: center; }
+      .hero-mini-card { display: grid; width: 19rem; margin-left: auto; }
+      .benefits-layout { grid-template-columns: 1.15fr 0.85fr; align-items: stretch; }
+      .benefit-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .steps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .services-stack .service-card { grid-template-columns: 0.92fr 1.08fr; align-items: center; padding: 1.2rem; }
+      .services-stack .service-card:nth-child(even) { grid-template-columns: 1.08fr 0.92fr; }
+      .services-stack .service-card:nth-child(even) .service-visual { order: 2; }
+      .quote-layout { grid-template-columns: 1.05fr 0.95fr; align-items: stretch; }
+      .schedule-panel { grid-template-columns: 0.9fr 1.1fr; align-items: stretch; }
+      .footer-grid { grid-template-columns: 1fr auto; align-items: end; }
+    }
+
+    @media (min-width: 1040px) {
+      .section { padding: 6rem 0; }
+      .hero-panel {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 18rem;
+        gap: 1.3rem;
+        align-items: end;
+      }
+      .hero-copy h1 { max-width: 8.5ch; }
+      .hero-mini-card { margin: 0; align-self: end; }
+      .hero-note { max-width: 15rem; }
+      .service-card { min-height: 22rem; }
+      .sticky-cta { width: 22rem; left: auto; right: 1rem; transform: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .reveal,
+      .reveal.visible,
+      .cta-primary,
+      .cta-secondary,
+      .faq-question,
+      .faq-question i { transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <div class="container hero-inner">
+        <div class="hero-panel reveal visible">
+          <div class="hero-copy">
+            <div class="brand-row" aria-label="Aurora Pilates Studio">
+              <div class="brand-mark" aria-hidden="true">
+                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="32" cy="32" r="22" stroke="rgba(247,242,234,0.78)" stroke-width="1.6"/>
+                  <path d="M18 38c9.2 0 10.6-13 21.8-13 4.3 0 8.1 2 11.2 5.8" stroke="#F7F2EA" stroke-width="3.2" stroke-linecap="round"/>
+                  <path d="M22 24c5.4 2 8.9 6.2 10.9 12.1" stroke="rgba(217,181,142,0.92)" stroke-width="2.6" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="brand-text">
+                <strong>Aurora Pilates Studio</strong>
+                <small>Studio boutique em São Paulo</small>
+              </div>
+            </div>
+
+            <div class="eyebrow">Boutique Pilates com atenção individual</div>
+            <h1>Movimento guiado para postura, força e leveza.</h1>
+            <p>Sessões individualizadas e pequenos grupos para cuidar do corpo com calma, precisão e um ambiente longe da sensação de academia lotada.</p>
+
+            <div class="hero-actions">
+              <a class="cta-primary" href="https://wa.me/5511999010001?text=Ol%C3%A1%21%20Quero%20agendar%20uma%20aula%20experimental%20na%20Aurora%20Pilates%20Studio." aria-label="Agendar aula experimental pelo WhatsApp">Agendar aula experimental pelo WhatsApp</a>
+              <div class="trust-pill">Fisioterapeuta, grupos até 4 pessoas e estúdio silencioso</div>
+            </div>
+
+            <div class="chips" aria-label="Diferenciais principais">
+              <span class="chip">Iniciante bem-vindo</span>
+              <span class="chip">Horários manhã e noite</span>
+            </div>
+          </div>
+
+          <div class="hero-mini-card" aria-hidden="true">
+            <div class="mini-image"></div>
+            <div>
+              <div class="meta-badge">Primeira experiência</div>
+              <p class="hero-note">Você chega, conversa sobre sua rotina, passa por uma leitura postural e faz a aula no seu ritmo, com atenção real aos movimentos.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="section light">
+        <div class="container">
+          <div class="section-intro reveal">
+            <div class="section-kicker">Por que escolher a Aurora</div>
+            <h2 class="section-heading">Um estúdio pensado para quem quer cuidado e constância.</h2>
+            <p>Em vez de treinos corridos e salas cheias, a Aurora trabalha com atenção individual, leitura cuidadosa do corpo e sessões que combinam mobilidade, força e calma.</p>
+          </div>
+
+          <div class="benefits-layout">
+            <article class="benefit-large reveal">
+              <div class="benefit-icon" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 3v18M6 8c1.7-1.8 3.6-2.7 6-2.7s4.3.9 6 2.7M6 16c1.7 1.8 3.6 2.7 6 2.7s4.3-.9 6-2.7" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+              </div>
+              <div class="benefit-copy">
+                <h3>Mais consciência corporal, menos sensação de pressa</h3>
+                <p>Cada encontro é guiado para melhorar postura, mobilidade e estabilidade com precisão, respeitando seu momento e seu histórico de movimento.</p>
+              </div>
+            </article>
+
+            <div class="benefit-grid">
+              <article class="benefit-card reveal">
+                <div class="benefit-icon" aria-hidden="true">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 12h16M12 4v16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+                </div>
+                <div class="benefit-copy">
+                  <h3>Grupos pequenos, olhar próximo</h3>
+                  <p>As aulas em grupo têm no máximo 4 pessoas, para manter correções claras, ambiente tranquilo e experiência personalizada.</p>
+                </div>
+              </article>
+
+              <div class="benefit-visual reveal" role="img" aria-label="Pessoa em sessão de Pilates em estúdio claro"></div>
+
+              <article class="benefit-card reveal">
+                <div class="benefit-icon" aria-hidden="true">
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 6v6l4 2" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.7"/></svg>
+                </div>
+                <div class="benefit-copy">
+                  <h3>Horários flexíveis para encaixar na rotina</h3>
+                  <p>Manhã e noite com agendamento pelo WhatsApp, para facilitar a constância sem complicar sua agenda.</p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section deep">
+        <div class="container">
+          <div class="section-intro reveal">
+            <div class="steps-label">Como funciona a primeira aula</div>
+            <h2 class="section-heading">Uma entrada tranquila, clara e sem pressão.</h2>
+            <p>Quem está começando costuma querer entender como será a experiência. A primeira aula foi desenhada para isso.</p>
+          </div>
+
+          <div class="steps">
+            <article class="step reveal">
+              <strong>1</strong>
+              <h3>Conversa inicial</h3>
+              <p>Você conta sua rotina, objetivos e o que busca melhorar no dia a dia, para que a sessão faça sentido desde o início.</p>
+            </article>
+            <article class="step reveal">
+              <strong>2</strong>
+              <h3>Avaliação postural</h3>
+              <p>O encontro começa com uma leitura cuidadosa do corpo para orientar ajustes, escolhas de exercício e progressão com mais precisão.</p>
+            </article>
+            <article class="step reveal">
+              <strong>3</strong>
+              <h3>Aula guiada no seu ritmo</h3>
+              <p>Você experimenta os movimentos com orientação próxima, sem pressa e sem promessas exageradas, entendendo como a Aurora conduz cada prática.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section light">
+        <div class="container">
+          <div class="section-intro reveal">
+            <div class="section-kicker">Serviços</div>
+            <h2 class="section-heading">Escolha o formato que combina com o seu momento.</h2>
+            <p>Todos os formatos mantêm a mesma base, atenção individual, precisão técnica e um ambiente calmo para praticar com confiança.</p>
+          </div>
+
+          <div class="services-stack">
+            <article class="service-card reveal">
+              <div class="service-visual one" role="img" aria-label="Pessoa utilizando equipamento de Pilates em sessão guiada"></div>
+              <div class="service-copy">
+                <div class="meta-badge">Sessões individualizadas</div>
+                <h3>Para quem quer acompanhamento próximo e progressão sob medida</h3>
+                <p>Ideal para quem está começando, quer um ritmo mais personalizado ou prefere desenvolver postura, mobilidade e força com atenção integral ao corpo.</p>
+              </div>
+            </article>
+
+            <article class="service-card reveal">
+              <div class="service-visual two" role="img" aria-label="Detalhe de equipamento de Pilates em estúdio boutique"></div>
+              <div class="service-copy">
+                <div class="meta-badge">Pequenos grupos</div>
+                <h3>Até 4 pessoas, com correções claras e ambiente silencioso</h3>
+                <p>Uma opção para quem gosta da energia de praticar junto, sem abrir mão de orientação real e espaço confortável para se mover bem.</p>
+              </div>
+            </article>
+
+            <article class="service-card reveal">
+              <div class="service-visual three" role="img" aria-label="Interior de estúdio de Pilates com reformers"></div>
+              <div class="service-copy">
+                <div class="meta-badge">Avaliação postural</div>
+                <h3>Um ponto de partida cuidadoso para orientar o plano</h3>
+                <p>A avaliação ajuda a entender necessidades, hábitos e objetivos antes de montar o caminho mais coerente para a sua prática.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section deep">
+        <div class="container quote-layout">
+          <div class="quote-card reveal">
+            <div class="faq-tag">Prova e percepção</div>
+            <blockquote>“Eu queria voltar a me movimentar com confiança, sem me sentir perdida no meio de uma sala cheia.”</blockquote>
+            <p>Quem procura a Aurora normalmente quer exatamente isso, um lugar acolhedor, preciso e humano, onde dá para construir constância com orientação real.</p>
+            <div class="testimonials">
+              <article class="testimonial">
+                <p>“A diferença para mim foi a atenção. Mesmo em grupo, senti que cada ajuste era pensado para o meu corpo.”</p>
+                <strong>Marina, 42</strong>
+                <span>Aula em pequeno grupo</span>
+              </article>
+              <article class="testimonial">
+                <p>“Gostei porque a primeira aula foi muito clara. Entendi meu ritmo, fui bem orientado e me senti confortável desde o começo.”</p>
+                <strong>Eduardo, 51</strong>
+                <span>Sessão experimental</span>
+              </article>
+            </div>
+          </div>
+          <div class="support-visual reveal" role="img" aria-label="Estúdio de Pilates organizado e silencioso"></div>
+        </div>
+      </section>
+
+      <section class="section light">
+        <div class="container schedule-panel">
+          <div class="schedule-card reveal">
+            <div class="section-kicker">Localização e horários</div>
+            <div class="schedule-copy">
+              <h3>Um estúdio boutique em São Paulo, com agenda pensada para a vida real.</h3>
+              <p>A Aurora atende com horários flexíveis pela manhã e à noite, para facilitar o cuidado contínuo sem transformar o Pilates em mais uma correria.</p>
+            </div>
+          </div>
+          <div class="schedule-card reveal">
+            <div class="meta-badge">O que você encontra</div>
+            <ul class="schedule-list">
+              <li>Agendamento e confirmação direto pelo WhatsApp</li>
+              <li>Ambiente silencioso, acolhedor e sem sensação de academia lotada</li>
+              <li>Opções para quem está começando ou quer retomar a prática com calma</li>
+              <li>Planejamento cuidadoso para postura, mobilidade, força e controle corporal</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="section light" id="faq">
+        <div class="container">
+          <div class="section-intro reveal">
+            <div class="faq-tag">FAQ</div>
+            <h2 class="section-heading faq-heading">Perguntas comuns antes da primeira aula.</h2>
+            <p>Se você nunca fez Pilates ou está retomando o movimento, estas dúvidas costumam aparecer primeiro.</p>
+          </div>
+
+          <div class="faq-wrap">
+            <details class="faq-item reveal">
+              <summary class="faq-question"><span>Preciso ter experiência com Pilates para começar?</span><i>+</i></summary>
+              <div class="faq-answer">Não. A proposta é justamente receber iniciantes com orientação clara, leitura cuidadosa do corpo e progressão no seu ritmo.</div>
+            </details>
+            <details class="faq-item reveal">
+              <summary class="faq-question"><span>Como funciona a aula experimental?</span><i>+</i></summary>
+              <div class="faq-answer">A experiência começa com uma conversa breve sobre sua rotina e objetivos, passa por uma avaliação postural e segue para uma aula guiada com atenção próxima.</div>
+            </details>
+            <details class="faq-item reveal">
+              <summary class="faq-question"><span>As aulas em grupo são cheias?</span><i>+</i></summary>
+              <div class="faq-answer">Não. Os grupos são pequenos, com até 4 pessoas, para manter correções claras, espaço confortável e um clima mais tranquilo.</div>
+            </details>
+            <details class="faq-item reveal">
+              <summary class="faq-question"><span>Consigo agendar pelo WhatsApp?</span><i>+</i></summary>
+              <div class="faq-answer">Sim. O agendamento é feito diretamente pelo WhatsApp, de forma simples, inclusive para alinhar melhor horário e formato de aula.</div>
+            </details>
+            <details class="faq-item reveal">
+              <summary class="faq-question"><span>Que roupa devo usar?</span><i>+</i></summary>
+              <div class="faq-answer">Prefira uma roupa confortável que permita se mover com liberdade. O mais importante é se sentir à vontade para praticar com calma.</div>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <section class="section deep">
+        <div class="container">
+          <div class="cta-card reveal">
+            <div class="section-kicker">Agende sua primeira experiência</div>
+            <h2>Seu corpo merece um ritmo mais atento.</h2>
+            <p>Se você busca postura melhor, mais mobilidade e um espaço confiável para começar ou retomar a prática, fale com a Aurora e agende sua aula experimental pelo WhatsApp.</p>
+            <a class="cta-primary" href="https://wa.me/5511999010001?text=Ol%C3%A1%21%20Quero%20agendar%20uma%20aula%20experimental%20na%20Aurora%20Pilates%20Studio.">Agendar aula experimental pelo WhatsApp</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer-grid">
+        <div>
+          <div class="brand-row" aria-label="Aurora Pilates Studio rodapé">
+            <div class="brand-mark" aria-hidden="true">
+              <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="32" cy="32" r="22" stroke="rgba(247,242,234,0.78)" stroke-width="1.6"/>
+                <path d="M18 38c9.2 0 10.6-13 21.8-13 4.3 0 8.1 2 11.2 5.8" stroke="#F7F2EA" stroke-width="3.2" stroke-linecap="round"/>
+                <path d="M22 24c5.4 2 8.9 6.2 10.9 12.1" stroke="rgba(217,181,142,0.92)" stroke-width="2.6" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="brand-text">
+              <strong>Aurora Pilates Studio</strong>
+              <small>Movimento guiado com calma e precisão</small>
+            </div>
+          </div>
+          <p class="footer-copy">Página de campanha com foco em agendamento pelo WhatsApp. As imagens foram usadas com atribuição discreta, via Unsplash.</p>
+        </div>
+        <div class="footer-links" aria-label="Atribuição de imagens">
+          <a href="https://unsplash.com/s/photos/pilates-studio" target="_blank" rel="noreferrer noopener">Foto via Unsplash, hero</a>
+          <a href="https://unsplash.com/s/photos/reformer-pilates" target="_blank" rel="noreferrer noopener">Foto via Unsplash, serviços</a>
+          <a href="https://unsplash.com/s/photos/pilates-interior" target="_blank" rel="noreferrer noopener">Foto via Unsplash, estúdio</a>
+          <a href="https://unsplash.com/s/photos/pilates-equipment" target="_blank" rel="noreferrer noopener">Foto via Unsplash, detalhe</a>
+        </div>
+      </div>
+    </footer>
+
+    <div class="sticky-cta">
+      <a class="cta-primary" href="https://wa.me/5511999010001?text=Ol%C3%A1%21%20Quero%20agendar%20uma%20aula%20experimental%20na%20Aurora%20Pilates%20Studio.">Agendar pelo WhatsApp</a>
+    </div>
+  </div>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      }
+    }, { threshold: 0.18 });
+
+    document.querySelectorAll('.reveal').forEach((element, index) => {
+      if (index === 0) return;
+      observer.observe(element);
+    });
+
+    document.querySelectorAll('.faq-question').forEach((button) => {
+      button.addEventListener('click', (event) => {
+        const detail = event.currentTarget.parentElement;
+        if (!detail.hasAttribute('open')) {
+          document.querySelectorAll('.faq-item[open]').forEach((item) => {
+            if (item !== detail) item.removeAttribute('open');
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
