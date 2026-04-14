@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vale Cash Back | Smart rewards for everyday spending</title>
+  <meta name="description" content="Vale Cash Back turns everyday purchases into real savings with a premium cashback experience for users and partner businesses." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0e0d;
+      --panel: rgba(17, 24, 22, 0.8);
+      --line: rgba(177, 255, 213, 0.16);
+      --text: #eef6f1;
+      --muted: #a9bbb1;
+      --green: #7cffb2;
+      --green-deep: #2ee889;
+      --gold: #ffd976;
+      --shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 16px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'DM Sans', sans-serif;
+      background:
+        radial-gradient(circle at 15% 20%, rgba(124, 255, 178, 0.16), transparent 28%),
+        radial-gradient(circle at 84% 15%, rgba(255, 217, 118, 0.14), transparent 25%),
+        radial-gradient(circle at 50% 85%, rgba(46, 232, 137, 0.14), transparent 30%),
+        linear-gradient(180deg, #07100c 0%, #0a0e0d 42%, #091411 100%);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.12;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+      background-size: 70px 70px;
+      mask-image: radial-gradient(circle at center, black 55%, transparent 95%);
+    }
+
+    .shell {
+      width: min(calc(100% - 32px), var(--max));
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px 0;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(145deg, rgba(124,255,178,0.25), rgba(255,217,118,0.18));
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 12px 35px rgba(46,232,137,0.14);
+      color: var(--green);
+      font-size: 1.2rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+
+    .button,
+    .ghost-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 22px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+    }
+
+    .button {
+      color: #041109;
+      background: linear-gradient(135deg, var(--green) 0%, #d4ff87 100%);
+      box-shadow: 0 18px 40px rgba(124,255,178,0.22);
+    }
+
+    .ghost-button {
+      color: var(--text);
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(18px);
+    }
+
+    .button:hover,
+    .ghost-button:hover {
+      transform: translateY(-2px);
+    }
+
+    .hero {
+      padding: 54px 0 38px;
+      display: grid;
+      grid-template-columns: 1.2fr 0.9fr;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--green);
+      font-size: 0.84rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Fraunces', serif;
+      line-height: 0.95;
+      margin: 0;
+      font-weight: 700;
+    }
+
+    h1 {
+      margin-top: 20px;
+      font-size: clamp(3.4rem, 8vw, 6.8rem);
+      max-width: 11ch;
+    }
+
+    .hero-copy p,
+    .section-copy,
+    .stat p,
+    .card p,
+    .faq p,
+    .step p,
+    footer p {
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 1.02rem;
+    }
+
+    .hero-copy p {
+      max-width: 58ch;
+      margin: 22px 0 28px;
+    }
+
+    .hero-actions,
+    .cta-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .hero-note {
+      margin-top: 18px;
+      color: #dcefe4;
+      font-size: 0.95rem;
+    }
+
+    .showcase {
+      position: relative;
+      padding: 20px;
+      border-radius: var(--radius-xl);
+      background: linear-gradient(180deg, rgba(19,28,25,0.88), rgba(11,17,15,0.94));
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .showcase::after {
+      content: "";
+      position: absolute;
+      inset: auto -40px -60px auto;
+      width: 200px;
+      height: 200px;
+      background: radial-gradient(circle, rgba(124,255,178,0.35), transparent 70%);
+      filter: blur(5px);
+    }
+
+    .phone-frame {
+      margin-left: auto;
+      width: min(100%, 360px);
+      background: #041109;
+      border-radius: 34px;
+      padding: 14px;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+    }
+
+    .phone-screen {
+      border-radius: 24px;
+      padding: 22px;
+      min-height: 580px;
+      background:
+        radial-gradient(circle at 80% 12%, rgba(255,217,118,0.18), transparent 22%),
+        linear-gradient(180deg, #0c1713 0%, #08100d 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .phone-top,
+    .pill,
+    .step-badge,
+    .metric,
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+    }
+
+    .phone-top {
+      padding: 8px 12px;
+      background: rgba(255,255,255,0.06);
+      color: var(--muted);
+      font-size: 0.82rem;
+      margin-bottom: 18px;
+    }
+
+    .balance-card,
+    .mini-card,
+    .card,
+    .step,
+    .faq,
+    .cta {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      backdrop-filter: blur(18px);
+    }
+
+    .balance-card {
+      border-radius: 24px;
+      padding: 22px;
+      margin-bottom: 18px;
+    }
+
+    .balance-card strong {
+      display: block;
+      margin-top: 10px;
+      font-size: 2.35rem;
+      letter-spacing: -0.05em;
+    }
+
+    .pill {
+      padding: 7px 12px;
+      background: rgba(124,255,178,0.12);
+      color: var(--green);
+      font-size: 0.84rem;
+    }
+
+    .grid-mini {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .mini-card {
+      border-radius: 20px;
+      padding: 18px;
+    }
+
+    .mini-card span,
+    .tag {
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+
+    .mini-card strong {
+      display: block;
+      margin-top: 10px;
+      font-size: 1.15rem;
+    }
+
+    .section {
+      padding: 48px 0;
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 28px;
+      align-items: end;
+      margin-bottom: 26px;
+    }
+
+    h2 {
+      font-size: clamp(2.3rem, 5vw, 4.4rem);
+      max-width: 10ch;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 12px;
+    }
+
+    .stat,
+    .card,
+    .step,
+    .faq,
+    .cta {
+      border-radius: var(--radius-lg);
+      padding: 24px;
+    }
+
+    .stat strong {
+      font-size: 2rem;
+      color: var(--text);
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .feature-grid,
+    .steps,
+    .faq-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .feature-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .card {
+      min-height: 250px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: auto -30px -45px auto;
+      width: 120px;
+      height: 120px;
+      background: radial-gradient(circle, rgba(124,255,178,0.28), transparent 72%);
+    }
+
+    .metric,
+    .step-badge,
+    .tag {
+      padding: 7px 11px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .card h3,
+    .step h3,
+    .faq h3 {
+      font-size: 1.55rem;
+      margin: 20px 0 10px;
+      line-height: 1.05;
+    }
+
+    .steps {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .step-badge {
+      color: var(--green);
+      width: fit-content;
+    }
+
+    .highlight {
+      color: var(--gold);
+    }
+
+    .faq-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .cta {
+      padding: 34px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta::before {
+      content: "";
+      position: absolute;
+      inset: -60px auto auto -60px;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(255,217,118,0.2), transparent 72%);
+    }
+
+    .cta h2 {
+      max-width: 12ch;
+      margin-bottom: 14px;
+    }
+
+    footer {
+      padding: 12px 0 50px;
+    }
+
+    footer .shell {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 22px;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      animation: rise 0.8s ease forwards;
+    }
+
+    .delay-1 { animation-delay: 0.15s; }
+    .delay-2 { animation-delay: 0.3s; }
+    .delay-3 { animation-delay: 0.45s; }
+    .delay-4 { animation-delay: 0.6s; }
+
+    @keyframes rise {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .section-head,
+      .feature-grid,
+      .stats,
+      .steps,
+      .faq-grid {
+        grid-template-columns: 1fr;
+      }
+
+      h1 { max-width: 100%; }
+      .showcase { order: -1; }
+      .phone-frame { margin: 0 auto; }
+    }
+
+    @media (max-width: 640px) {
+      .nav { gap: 14px; flex-direction: column; align-items: stretch; }
+      .nav-links { justify-content: space-between; flex-wrap: wrap; }
+      .hero { padding-top: 28px; }
+      .hero-actions,
+      .cta-actions { flex-direction: column; }
+      .button,
+      .ghost-button { width: 100%; }
+      .phone-screen { min-height: 520px; }
+      .cta,
+      .card,
+      .step,
+      .faq,
+      .stat { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="shell">
+    <nav class="nav reveal">
+      <a class="brand" href="#top">
+        <span class="brand-mark">$</span>
+        <span>Vale Cash Back</span>
+      </a>
+      <div class="nav-links">
+        <a href="#benefits">Benefits</a>
+        <a href="#how-it-works">How it works</a>
+        <a href="#partners">Partners</a>
+        <a class="button" href="https://wa.me/13392427253" target="_blank" rel="noopener">Talk on WhatsApp</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="shell hero">
+      <div class="hero-copy">
+        <div class="eyebrow reveal">Cashback, loyalty, and smarter spending</div>
+        <h1 class="reveal delay-1">Every purchase should give something back.</h1>
+        <p class="reveal delay-2">Vale Cash Back is the app built for people who want more value from daily purchases and for businesses that want to reward loyalty with real, measurable cashback.</p>
+        <div class="hero-actions reveal delay-3">
+          <a class="button" href="https://wa.me/13392427253" target="_blank" rel="noopener">Request a demo</a>
+          <a class="ghost-button" href="#how-it-works">See the experience</a>
+        </div>
+        <div class="hero-note reveal delay-4">Designed to feel premium, simple, and instantly useful, for users and partner merchants alike.</div>
+      </div>
+
+      <div class="showcase reveal delay-2">
+        <div class="phone-frame">
+          <div class="phone-screen">
+            <div class="phone-top">Live cashback dashboard</div>
+            <div class="balance-card">
+              <span class="pill">Available now</span>
+              <strong>$248.70</strong>
+              <p>Your rewards from groceries, beauty, dining, fuel, and local favorites, all in one elegant wallet.</p>
+            </div>
+            <div class="grid-mini">
+              <div class="mini-card">
+                <span>Today's return</span>
+                <strong>+12.5%</strong>
+              </div>
+              <div class="mini-card">
+                <span>Partner stores</span>
+                <strong>180+</strong>
+              </div>
+              <div class="mini-card">
+                <span>Recent cashback</span>
+                <strong>$32.10</strong>
+              </div>
+              <div class="mini-card">
+                <span>Average savings</span>
+                <strong>$65/mo</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="shell section" id="benefits">
+      <div class="section-head">
+        <h2>Built for people who like their savings to feel immediate.</h2>
+        <p class="section-copy">Vale Cash Back positions cashback as a modern growth engine, not a gimmick. The experience is made to be intuitive for customers, attractive for partner businesses, and credible from the first screen.</p>
+      </div>
+      <div class="stats">
+        <article class="stat reveal">
+          <strong>Real value</strong>
+          <p>Users can accumulate cashback from recurring purchases and actually feel the impact on their monthly budget.</p>
+        </article>
+        <article class="stat reveal delay-1">
+          <strong>More loyalty</strong>
+          <p>Merchants gain a compelling reason for customers to come back instead of drifting to competitors.</p>
+        </article>
+        <article class="stat reveal delay-2">
+          <strong>Clear data</strong>
+          <p>Every reward action tells a story about engagement, retention, and what offers convert best.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="shell section" id="how-it-works">
+      <div class="section-head">
+        <h2>One app, three simple moments, constant return.</h2>
+        <p class="section-copy">The product story is clear: discover a partner, buy normally, and watch the reward come back into your ecosystem. It feels effortless, which is exactly why people keep using it.</p>
+      </div>
+      <div class="steps">
+        <article class="step reveal">
+          <span class="step-badge">01</span>
+          <h3>Find offers that fit real life.</h3>
+          <p>Users browse partner businesses and cashback opportunities that match routines like dining, services, retail, and essentials.</p>
+        </article>
+        <article class="step reveal delay-1">
+          <span class="step-badge">02</span>
+          <h3>Buy as usual, earn <span class="highlight">more</span>.</h3>
+          <p>Purchases feel familiar, but now each transaction creates an additional layer of value and brand connection.</p>
+        </article>
+        <article class="step reveal delay-2">
+          <span class="step-badge">03</span>
+          <h3>Track rewards in a premium wallet flow.</h3>
+          <p>The app makes cashback visible, motivating, and easy to understand, so savings stop being abstract.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="shell section" id="partners">
+      <div class="section-head">
+        <h2>A presentation site that sells the idea fast.</h2>
+        <p class="section-copy">This landing page was structured to help Vale Cash Back explain the product quickly, create trust, and turn interest into conversations with potential users and business partners.</p>
+      </div>
+      <div class="feature-grid">
+        <article class="card reveal">
+          <span class="metric">For users</span>
+          <h3>Save without changing your routine.</h3>
+          <p>The core promise is tangible: spend where you already shop and receive value back in a system that feels premium and transparent.</p>
+        </article>
+        <article class="card reveal delay-1">
+          <span class="metric">For merchants</span>
+          <h3>Turn rewards into repeat business.</h3>
+          <p>Cashback works as a loyalty mechanism that attracts attention, improves retention, and strengthens brand preference.</p>
+        </article>
+        <article class="card reveal delay-2">
+          <span class="metric">For growth</span>
+          <h3>Present the app with more authority.</h3>
+          <p>A focused website gives the brand a professional front door for links in WhatsApp, social media, ads, and meetings.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="shell section">
+      <div class="section-head">
+        <h2>Questions buyers and partners usually ask.</h2>
+        <p class="section-copy">These blocks reduce friction and help the conversation move forward with clarity, especially in demos, outreach, and first-contact scenarios.</p>
+      </div>
+      <div class="faq-grid">
+        <article class="faq reveal">
+          <span class="tag">FAQ</span>
+          <h3>Who is Vale Cash Back for?</h3>
+          <p>It serves both sides of the ecosystem: consumers looking for smarter savings and businesses that want a better retention strategy.</p>
+        </article>
+        <article class="faq reveal delay-1">
+          <span class="tag">FAQ</span>
+          <h3>What makes the offer attractive?</h3>
+          <p>It combines practical savings with an experience that feels modern and rewarding instead of cluttered or confusing.</p>
+        </article>
+        <article class="faq reveal delay-2">
+          <span class="tag">FAQ</span>
+          <h3>Why use a dedicated website if the app already exists?</h3>
+          <p>The site gives the brand a trusted presentation layer, perfect for campaigns, partnerships, onboarding, and customer education.</p>
+        </article>
+        <article class="faq reveal delay-3">
+          <span class="tag">FAQ</span>
+          <h3>What is the next step?</h3>
+          <p>Start a conversation on WhatsApp to align messaging, campaign focus, download links, and partner acquisition strategy.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="shell section">
+      <div class="cta reveal">
+        <span class="eyebrow">Ready to present the app with more impact?</span>
+        <h2>Put Vale Cash Back in front of users and partners with a cleaner, stronger digital presence.</h2>
+        <p>Use this page as the launch point for demos, ad traffic, QR codes, and direct outreach. It is built to explain the concept quickly and turn curiosity into conversations.</p>
+        <div class="cta-actions">
+          <a class="button" href="https://wa.me/13392427253" target="_blank" rel="noopener">Open WhatsApp</a>
+          <a class="ghost-button" href="#partners">Explore the site structure</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell">
+      <p>Vale Cash Back, a modern presentation page for a cashback app with premium positioning and conversion-focused messaging.</p>
+      <p>WhatsApp: +1 (339) 242-7253</p>
+    </div>
+  </footer>
+</body>
+</html>
