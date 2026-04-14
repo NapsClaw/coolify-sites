@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pedal Pronto Oficina Móvel | Manutenção de Bicicletas em Curitiba</title>
+  <meta name="description" content="Oficina móvel de bicicletas em Curitiba com manutenção em domicílio, revisão, freios, pneus, corrente e regulagem para ciclistas urbanos." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;500;600;700&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --petrol: #0f3b45;
+      --petrol-deep: #08252b;
+      --petrol-soft: #1a5662;
+      --orange: #c96a2a;
+      --orange-bright: #e58b43;
+      --ice: #f1f3ef;
+      --ice-soft: rgba(241, 243, 239, 0.78);
+      --line: rgba(241, 243, 239, 0.12);
+      --shadow: 0 30px 80px rgba(0, 0, 0, 0.28);
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Instrument Sans", sans-serif;
+      background:
+        radial-gradient(circle at 15% 15%, rgba(229, 139, 67, 0.16), transparent 28%),
+        radial-gradient(circle at 85% 20%, rgba(15, 59, 69, 0.35), transparent 30%),
+        linear-gradient(180deg, #0a2025 0%, var(--petrol-deep) 38%, #07171b 100%);
+      color: var(--ice);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        linear-gradient(90deg, transparent 0 96%, rgba(241, 243, 239, 0.03) 96% 100%),
+        linear-gradient(transparent 0 96%, rgba(241, 243, 239, 0.03) 96% 100%);
+      background-size: 36px 36px;
+      pointer-events: none;
+      opacity: 0.4;
+      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.8), transparent 90%);
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .wrap { width: min(calc(100% - 2rem), var(--max)); margin: 0 auto; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(18px);
+      background: rgba(8, 37, 43, 0.65);
+      border-bottom: 1px solid rgba(241, 243, 239, 0.08);
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1rem 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .brand-badge {
+      width: 3rem;
+      height: 3rem;
+      border-radius: 0.9rem;
+      background: linear-gradient(145deg, var(--orange-bright), var(--orange));
+      color: #161616;
+      display: grid;
+      place-items: center;
+      font-family: "Chakra Petch", sans-serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+      box-shadow: 0 12px 30px rgba(201, 106, 42, 0.28);
+    }
+
+    .brand-text strong,
+    h1, h2, h3, .eyebrow, .stat strong {
+      font-family: "Chakra Petch", sans-serif;
+      letter-spacing: 0.03em;
+    }
+
+    .brand-text strong {
+      display: block;
+      font-size: 1rem;
+      text-transform: uppercase;
+    }
+
+    .brand-text span {
+      font-size: 0.82rem;
+      color: var(--ice-soft);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .nav-links {
+      display: flex;
+      color: var(--ice-soft);
+      font-size: 0.95rem;
+    }
+
+    .nav-links a + a {
+      margin-left: 1rem;
+    }
+
+    .button,
+    .button-outline {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.55rem;
+      padding: 0.95rem 1.35rem;
+      border-radius: 999px;
+      font-weight: 700;
+      transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+    }
+
+    .button {
+      background: linear-gradient(135deg, var(--orange-bright), var(--orange));
+      color: #1f130c;
+      box-shadow: 0 16px 36px rgba(201, 106, 42, 0.35);
+    }
+
+    .button:hover,
+    .button-outline:hover {
+      transform: translateY(-2px);
+    }
+
+    .button-outline {
+      border: 1px solid rgba(241, 243, 239, 0.18);
+      background: rgba(241, 243, 239, 0.03);
+      color: var(--ice);
+    }
+
+    .hero {
+      position: relative;
+      padding: 4.8rem 0 3rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0.8rem;
+      border: 1px solid rgba(201, 106, 42, 0.38);
+      border-radius: 999px;
+      background: rgba(201, 106, 42, 0.08);
+      color: #ffd3af;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+    }
+
+    h1 {
+      margin: 1rem 0 1rem;
+      font-size: clamp(3rem, 8vw, 6.4rem);
+      line-height: 0.94;
+      text-transform: uppercase;
+      max-width: 10ch;
+    }
+
+    .hero p {
+      max-width: 58ch;
+      font-size: 1.08rem;
+      line-height: 1.75;
+      color: rgba(241, 243, 239, 0.92);
+      text-shadow: 0 1px 1px rgba(0, 0, 0, 0.18);
+    }
+
+    .hero-actions,
+    .hero-notes,
+    .service-grid,
+    .reasons,
+    .steps,
+    .footer-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .hero-actions { margin-top: 1.7rem; }
+
+    .hero-notes {
+      margin-top: 1.8rem;
+      color: var(--ice-soft);
+      font-size: 0.95rem;
+      gap: 0.75rem 1.25rem;
+    }
+
+    .hero-notes span::before {
+      content: "◢";
+      color: var(--orange-bright);
+      margin-right: 0.55rem;
+    }
+
+    .hero-card {
+      position: relative;
+      border: 1px solid var(--line);
+      border-radius: 2rem;
+      background:
+        radial-gradient(circle at 82% 22%, rgba(229, 139, 67, 0.28), transparent 18%),
+        linear-gradient(180deg, rgba(26, 86, 98, 0.72), rgba(8, 37, 43, 0.94));
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      min-height: 540px;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(130deg, transparent 0 42%, rgba(229, 139, 67, 0.16) 42% 47%, transparent 47% 100%),
+        radial-gradient(circle at top right, rgba(229, 139, 67, 0.25), transparent 34%);
+      pointer-events: none;
+    }
+
+    .bike-track {
+      position: absolute;
+      inset: 1rem;
+      border-radius: 1.6rem;
+      border: 1px solid rgba(241, 243, 239, 0.09);
+      overflow: hidden;
+    }
+
+    .bike-track::before,
+    .bike-track::after {
+      content: "";
+      position: absolute;
+      border: 2px dashed rgba(241, 243, 239, 0.12);
+      border-radius: 999px;
+    }
+
+    .bike-track::before {
+      width: 78%;
+      height: 78%;
+      left: 11%;
+      top: 10%;
+      transform: rotate(-12deg);
+    }
+
+    .bike-track::after {
+      width: 42%;
+      height: 42%;
+      left: 29%;
+      top: 29%;
+      transform: rotate(14deg);
+    }
+
+    .service-panel {
+      position: absolute;
+      left: 1.4rem;
+      right: 1.4rem;
+      bottom: 1.4rem;
+      padding: 1.35rem;
+      border-radius: 1.4rem;
+      background: rgba(7, 23, 27, 0.86);
+      border: 1px solid rgba(241, 243, 239, 0.08);
+      backdrop-filter: blur(10px);
+      z-index: 2;
+    }
+
+    .service-panel h3 {
+      margin: 0 0 0.9rem;
+      font-size: 1.2rem;
+      text-transform: uppercase;
+    }
+
+    .service-grid {
+      gap: 0.75rem;
+    }
+
+    .tag {
+      padding: 0.7rem 0.85rem;
+      border-radius: 999px;
+      background: rgba(241, 243, 239, 0.08);
+      border: 1px solid rgba(241, 243, 239, 0.08);
+      font-size: 0.92rem;
+    }
+
+    section {
+      padding: 2.2rem 0;
+    }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 1rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .section-heading h2 {
+      margin: 0;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      text-transform: uppercase;
+    }
+
+    .section-heading p {
+      margin: 0;
+      max-width: 50ch;
+      color: var(--ice-soft);
+      line-height: 1.7;
+    }
+
+    .highlights {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+    }
+
+    .panel {
+      position: relative;
+      padding: 1.4rem;
+      border-radius: 1.6rem;
+      background: linear-gradient(180deg, rgba(241, 243, 239, 0.04), rgba(241, 243, 239, 0.015));
+      border: 1px solid rgba(241, 243, 239, 0.08);
+      overflow: hidden;
+    }
+
+    .panel::after {
+      content: "";
+      position: absolute;
+      inset: auto -30% -60% auto;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(229, 139, 67, 0.12), transparent 70%);
+      pointer-events: none;
+    }
+
+    .panel small {
+      color: #ffd3af;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-weight: 700;
+    }
+
+    .panel h3 {
+      margin: 0.7rem 0 0.6rem;
+      font-size: 1.25rem;
+      text-transform: uppercase;
+    }
+
+    .panel p {
+      margin: 0;
+      line-height: 1.75;
+      color: rgba(241, 243, 239, 0.88);
+    }
+
+    .reasons,
+    .steps {
+      gap: 1rem;
+    }
+
+    .reason,
+    .step {
+      flex: 1 1 220px;
+      padding: 1.35rem;
+      border-radius: 1.5rem;
+      background: rgba(241, 243, 239, 0.03);
+      border: 1px solid rgba(241, 243, 239, 0.08);
+    }
+
+    .reason strong,
+    .step strong {
+      display: block;
+      margin-bottom: 0.65rem;
+      font-size: 1rem;
+      text-transform: uppercase;
+      font-family: "Chakra Petch", sans-serif;
+    }
+
+    .reason p,
+    .step p,
+    .hours p,
+    .cta p,
+    footer p {
+      margin: 0;
+      line-height: 1.7;
+      color: rgba(241, 243, 239, 0.88);
+    }
+
+    .hours-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .hours {
+      padding: 1.5rem;
+      border-radius: 1.7rem;
+      background: linear-gradient(180deg, rgba(201, 106, 42, 0.16), rgba(241, 243, 239, 0.03));
+      border: 1px solid rgba(229, 139, 67, 0.22);
+    }
+
+    .hours strong {
+      display: block;
+      margin-bottom: 0.7rem;
+      font-family: "Chakra Petch", sans-serif;
+      font-size: 1.2rem;
+      text-transform: uppercase;
+    }
+
+    .hours-list {
+      margin-top: 0.9rem;
+      display: grid;
+      gap: 0.8rem;
+    }
+
+    .hours-item {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding-bottom: 0.8rem;
+      border-bottom: 1px solid rgba(241, 243, 239, 0.08);
+    }
+
+    .cta {
+      padding: 2rem;
+      border-radius: 2rem;
+      background:
+        linear-gradient(115deg, rgba(229, 139, 67, 0.2), transparent 42%),
+        linear-gradient(180deg, rgba(15, 59, 69, 0.95), rgba(8, 37, 43, 0.95));
+      border: 1px solid rgba(241, 243, 239, 0.08);
+      box-shadow: var(--shadow);
+    }
+
+    .cta h2 {
+      margin: 0 0 0.8rem;
+      font-size: clamp(1.9rem, 4vw, 3rem);
+      text-transform: uppercase;
+    }
+
+    footer {
+      padding: 2rem 0 3rem;
+    }
+
+    .footer-grid {
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(241, 243, 239, 0.08);
+      padding-top: 1.5rem;
+    }
+
+    .stat-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 1.3rem;
+    }
+
+    .stat {
+      padding: 1rem;
+      border-radius: 1.2rem;
+      background: rgba(241, 243, 239, 0.04);
+      border: 1px solid rgba(241, 243, 239, 0.08);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.4rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .float-cta {
+      position: fixed;
+      right: 1rem;
+      bottom: 1rem;
+      z-index: 30;
+    }
+
+    .float-cta a {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+      padding: 0.95rem 1.2rem;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #25d366, #128c7e);
+      color: white;
+      box-shadow: 0 18px 36px rgba(18, 140, 126, 0.3);
+      font-weight: 700;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      animation: rise 0.8s ease forwards;
+    }
+
+    .reveal:nth-child(2) { animation-delay: 120ms; }
+    .reveal:nth-child(3) { animation-delay: 240ms; }
+    .reveal:nth-child(4) { animation-delay: 360ms; }
+
+    @keyframes rise {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 920px) {
+      .hero-grid,
+      .hours-wrap,
+      .highlights,
+      .stat-strip {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links { display: none; }
+      h1 { max-width: 100%; }
+      .hero-card { min-height: 420px; }
+      .section-heading { align-items: start; flex-direction: column; }
+    }
+
+    @media (max-width: 640px) {
+      .topbar-inner { align-items: start; flex-direction: column; }
+      .nav { width: 100%; justify-content: space-between; }
+      .hero { padding-top: 3rem; }
+      .button, .button-outline { width: 100%; }
+      .hero-actions { flex-direction: column; }
+      .service-panel { left: 1rem; right: 1rem; bottom: 1rem; }
+      .float-cta { left: 1rem; right: 1rem; }
+      .float-cta a { width: 100%; justify-content: center; }
+      .hours-item { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a class="brand" href="#inicio" aria-label="Pedal Pronto">
+        <div class="brand-badge">PP</div>
+        <div class="brand-text">
+          <strong>Pedal Pronto</strong>
+          <span>Oficina móvel de bicicletas em Curitiba</span>
+        </div>
+      </a>
+      <div class="nav">
+        <nav class="nav-links" aria-label="Navegação principal">
+          <a href="#servicos">Serviços</a>
+          <a href="#como-funciona">Como funciona</a>
+          <a href="#horarios">Horários</a>
+        </nav>
+        <a class="button" href="https://wa.me/551190001044?text=Oi%21%20Quero%20agendar%20uma%20manuten%C3%A7%C3%A3o%20na%20minha%20bike." target="_blank" rel="noreferrer">Agendar pelo WhatsApp</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="inicio">
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <div class="eyebrow reveal">Curitiba, atendimento onde sua bike estiver</div>
+          <h1 class="reveal">Sua bike pronta sem sair de casa</h1>
+          <p class="reveal">A Pedal Pronto leva a oficina até você. Revisão, troca de corrente, ajuste de freios, pneus e regulagem completa para quem pedala na cidade e quer resolver tudo direto pelo WhatsApp, sem deslocamento e sem perder tempo.</p>
+          <div class="hero-actions reveal">
+            <a class="button" href="https://wa.me/551190001044?text=Oi%21%20Quero%20agendar%20um%20atendimento%20da%20Pedal%20Pronto." target="_blank" rel="noreferrer">Chamar no WhatsApp</a>
+            <a class="button-outline" href="#servicos">Ver serviços</a>
+          </div>
+          <div class="hero-notes reveal" aria-label="Destaques rápidos">
+            <span>Atendimento em domicílio</span>
+            <span>Foco em ciclistas urbanos</span>
+            <span>Segunda a sábado, 8h às 18h</span>
+          </div>
+          <div class="stat-strip reveal">
+            <div class="stat"><strong>Rápido</strong><span>Agendamento direto pelo WhatsApp</span></div>
+            <div class="stat"><strong>Móvel</strong><span>A oficina vai até você</span></div>
+            <div class="stat"><strong>Prático</strong><span>Ideal para rotina urbana</span></div>
+          </div>
+        </div>
+
+        <div class="hero-card reveal" aria-hidden="true">
+          <div class="bike-track"></div>
+          <svg viewBox="0 0 720 720" style="position:absolute; inset:0; width:100%; height:100%; z-index:1; opacity:0.96;" role="presentation">
+            <defs>
+              <linearGradient id="bikeStroke" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#f1f3ef" stop-opacity="0.95"></stop>
+                <stop offset="100%" stop-color="#e58b43" stop-opacity="0.82"></stop>
+              </linearGradient>
+              <linearGradient id="vanFill" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#144752"></stop>
+                <stop offset="100%" stop-color="#0a2a31"></stop>
+              </linearGradient>
+            </defs>
+            <circle cx="182" cy="332" r="98" fill="none" stroke="url(#bikeStroke)" stroke-width="18"></circle>
+            <circle cx="520" cy="332" r="98" fill="none" stroke="url(#bikeStroke)" stroke-width="18"></circle>
+            <path d="M182 332 L280 208 L392 208 L520 332 M280 208 L330 332 L232 332 M392 208 L330 332 M392 208 L448 162" fill="none" stroke="url(#bikeStroke)" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M430 130 L474 130 L490 152" fill="none" stroke="#f1f3ef" stroke-opacity="0.88" stroke-width="14" stroke-linecap="round"></path>
+            <rect x="318" y="126" width="74" height="18" rx="9" fill="#e58b43"></rect>
+            <path d="M70 470 H650" stroke="rgba(241,243,239,0.15)" stroke-width="4"></path>
+            <g transform="translate(360 408)">
+              <rect x="-170" y="0" width="340" height="114" rx="28" fill="url(#vanFill)" stroke="rgba(241,243,239,0.14)" stroke-width="4"></rect>
+              <path d="M52 0 H148 L192 42 V114 H52 Z" fill="#103843" stroke="rgba(241,243,239,0.14)" stroke-width="4"></path>
+              <circle cx="-90" cy="118" r="24" fill="#07171b" stroke="#f1f3ef" stroke-opacity="0.65" stroke-width="6"></circle>
+              <circle cx="104" cy="118" r="24" fill="#07171b" stroke="#f1f3ef" stroke-opacity="0.65" stroke-width="6"></circle>
+              <rect x="-130" y="26" width="102" height="42" rx="10" fill="#e58b43"></rect>
+              <rect x="70" y="24" width="78" height="32" rx="10" fill="#d5ecf0" fill-opacity="0.18"></rect>
+              <path d="M-10 22 V86" stroke="#f1f3ef" stroke-opacity="0.18" stroke-width="4"></path>
+            </g>
+            <g transform="translate(122 114)">
+              <rect x="0" y="0" width="164" height="58" rx="16" fill="rgba(7,23,27,0.72)" stroke="rgba(241,243,239,0.15)" stroke-width="3"></rect>
+              <text x="22" y="24" fill="#ffd3af" font-size="13" font-family="Instrument Sans, sans-serif" letter-spacing="2">ATENDIMENTO MÓVEL</text>
+              <text x="22" y="42" fill="#f1f3ef" font-size="18" font-family="Chakra Petch, sans-serif" font-weight="700">SEM LOJA, COM AGILIDADE</text>
+            </g>
+          </svg>
+          <div class="service-panel">
+            <h3>Serviços que mais saem</h3>
+            <div class="service-grid">
+              <div class="tag">Revisão geral</div>
+              <div class="tag">Troca de corrente</div>
+              <div class="tag">Ajuste de freios</div>
+              <div class="tag">Troca de pneus</div>
+              <div class="tag">Regulagem fina</div>
+              <div class="tag">Manutenção preventiva</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="servicos">
+      <div class="wrap">
+        <div class="section-heading">
+          <h2>Oficina urbana, sem fila e sem loja física</h2>
+          <p>O site foi pensado para destacar conveniência, confiança e resposta rápida. A mensagem principal é simples: você chama, combina o horário e recebe o atendimento onde estiver.</p>
+        </div>
+        <div class="highlights">
+          <article class="panel reveal">
+            <small>01</small>
+            <h3>Manutenção em domicílio</h3>
+            <p>Atendimento no condomínio, em casa ou no trabalho. Ideal para quem usa a bike no dia a dia e não quer depender de deslocamento até oficina.</p>
+          </article>
+          <article class="panel reveal">
+            <small>02</small>
+            <h3>Revisão e regulagem</h3>
+            <p>Acertos finos para deixar a pedalada mais segura e fluida, com foco em freios, transmissão, pneus e componentes que mais sofrem no uso urbano.</p>
+          </article>
+          <article class="panel reveal">
+            <small>03</small>
+            <h3>Agendamento pelo WhatsApp</h3>
+            <p>Sem formulário travado ou telefone fixo. O cliente clica, conversa e já combina o atendimento pelo canal que mais usa.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="section-heading">
+          <h2>Por que esse posicionamento funciona</h2>
+          <p>Para oficina móvel, o site precisa vender praticidade. Então a estrutura evita excesso de texto e foca em serviço, rotina e ação imediata.</p>
+        </div>
+        <div class="reasons">
+          <article class="reason reveal">
+            <strong>Conveniência primeiro</strong>
+            <p>A proposta aparece logo na abertura, deixando claro que a oficina vai até o cliente.</p>
+          </article>
+          <article class="reason reveal">
+            <strong>Linguagem de rua</strong>
+            <p>Tom direto, visual técnico e cores com energia para conversar com ciclistas urbanos e rotina prática.</p>
+          </article>
+          <article class="reason reveal">
+            <strong>WhatsApp em destaque</strong>
+            <p>Todo o fluxo empurra naturalmente para o clique de agendamento, que é o objetivo principal do negócio.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="como-funciona">
+      <div class="wrap hours-wrap">
+        <div>
+          <div class="section-heading">
+            <h2>Como funciona</h2>
+            <p>O atendimento pode ser vendido em três passos simples, ajudando o cliente a entender que o processo é rápido.</p>
+          </div>
+          <div class="steps">
+            <article class="step reveal">
+              <strong>1. Chama no WhatsApp</strong>
+              <p>O cliente descreve a bike, o problema ou o tipo de revisão que precisa.</p>
+            </article>
+            <article class="step reveal">
+              <strong>2. Agenda o melhor horário</strong>
+              <p>Vocês combinam o atendimento dentro da janela de segunda a sábado, das 8h às 18h.</p>
+            </article>
+            <article class="step reveal">
+              <strong>3. Recebe a oficina no local</strong>
+              <p>A manutenção acontece com praticidade, sem levar a bike até uma loja física.</p>
+            </article>
+          </div>
+        </div>
+
+        <div id="horarios" class="hours reveal">
+          <strong>Horários de atendimento</strong>
+          <p>Estrutura pronta para o cliente bater o olho e já saber quando pode chamar.</p>
+          <div class="hours-list">
+            <div class="hours-item"><span>Segunda a sábado</span><span>8h às 18h</span></div>
+            <div class="hours-item"><span>Atendimento</span><span>Em domicílio</span></div>
+            <div class="hours-item"><span>Cidade base</span><span>Curitiba, PR</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="cta reveal">
+          <h2>Preview focado em gerar agendamento</h2>
+          <p>Se quiser, eu posso seguir com esse visual e já colocar logo, fotos reais da oficina, bairros atendidos e textos finais para publicar a versão oficial.</p>
+          <div class="hero-actions" style="margin-top:1.25rem;">
+            <a class="button" href="https://wa.me/551190001044?text=Oi%21%20Quero%20continuar%20com%20esse%20site%20da%20Pedal%20Pronto." target="_blank" rel="noreferrer">Continuar esse site</a>
+            <a class="button-outline" href="#inicio">Voltar ao topo</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-grid">
+      <div>
+        <div class="brand-text">
+          <strong>Pedal Pronto Oficina Móvel</strong>
+          <p>Manutenção de bicicletas em Curitiba com atendimento direto pelo WhatsApp.</p>
+        </div>
+      </div>
+      <a class="button-outline" href="https://wa.me/551190001044?text=Oi%21%20Quero%20agendar%20um%20atendimento." target="_blank" rel="noreferrer">Agendar atendimento</a>
+    </div>
+  </footer>
+
+  <div class="float-cta">
+    <a href="https://wa.me/551190001044?text=Oi%21%20Quero%20agendar%20uma%20manuten%C3%A7%C3%A3o%20na%20minha%20bike." target="_blank" rel="noreferrer">WhatsApp • Agendar agora</a>
+  </div>
+</body>
+</html>
