@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aurora Pilates Studio</title>
+  <meta name="description" content="Aulas de Pilates em studio tranquilo, com acompanhamento de fisioterapeuta e turmas de ate 4 pessoas.">
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,500;6..72,650&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #17201b;
+      --muted: #59665f;
+      --paper: #fbfcf8;
+      --mist: #eef4ee;
+      --line: rgba(23, 32, 27, .14);
+      --leaf: #245f46;
+      --leaf-dark: #133f2d;
+      --coral: #d96c5f;
+      --sun: #f4c35d;
+      --white: #ffffff;
+      --shadow: 0 24px 80px rgba(18, 40, 30, .18);
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--paper);
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--paper);
+      font-family: Manrope, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: 0;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    a { color: inherit; }
+
+    .page {
+      overflow: hidden;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.76), rgba(238,244,238,.44) 38%, rgba(251,252,248,1) 100%),
+        var(--paper);
+    }
+
+    .hero {
+      min-height: 94svh;
+      position: relative;
+      isolation: isolate;
+      display: grid;
+      align-items: stretch;
+      padding: 20px;
+      color: var(--white);
+      background: #10291e;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(8, 25, 18, .58) 0%, rgba(8, 25, 18, .22) 28%, rgba(8, 25, 18, .74) 100%),
+        url("https://images.unsplash.com/photo-1715780463401-b9ef0567943e?auto=format&fit=crop&w=1600&q=82") center / cover no-repeat;
+      z-index: -2;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0;
+      height: 34%;
+      background: linear-gradient(180deg, rgba(251,252,248,0), var(--paper));
+      z-index: -1;
+    }
+
+    .topline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      max-width: 1180px;
+      width: 100%;
+      margin: 0 auto;
+      align-self: start;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      font-size: .82rem;
+      letter-spacing: 0;
+    }
+
+    .mark {
+      width: 38px;
+      height: 38px;
+      border: 1px solid rgba(255,255,255,.7);
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      background: rgba(255,255,255,.13);
+      backdrop-filter: blur(14px);
+      font-family: Newsreader, serif;
+      font-size: 1.45rem;
+      line-height: 1;
+    }
+
+    .signal {
+      border: 1px solid rgba(255,255,255,.46);
+      border-radius: 999px;
+      padding: 9px 12px;
+      background: rgba(255,255,255,.13);
+      backdrop-filter: blur(14px);
+      font-size: .74rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .hero-copy {
+      align-self: end;
+      max-width: 1180px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 0 12svh;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 14px;
+      color: rgba(255,255,255,.9);
+      font-size: .78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 28px;
+      height: 2px;
+      background: var(--sun);
+      border-radius: 999px;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 760px;
+      font-family: Newsreader, Georgia, serif;
+      font-size: clamp(3.1rem, 12vw, 7.4rem);
+      line-height: .88;
+      letter-spacing: 0;
+      font-weight: 650;
+      text-wrap: balance;
+    }
+
+    .hero-text {
+      margin: 20px 0 0;
+      max-width: 520px;
+      color: rgba(255,255,255,.9);
+      font-size: clamp(1rem, 4vw, 1.25rem);
+      line-height: 1.55;
+      font-weight: 600;
+    }
+
+    .hero-proof {
+      margin-top: 22px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border: 1px solid rgba(255,255,255,.36);
+      border-radius: 999px;
+      background: rgba(255,255,255,.12);
+      backdrop-filter: blur(12px);
+      color: rgba(255,255,255,.95);
+      font-size: .82rem;
+      font-weight: 800;
+    }
+
+    .pill i {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--sun);
+      display: block;
+    }
+
+    .wa-float {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: #25d366;
+      color: #fff;
+      z-index: 20;
+      box-shadow: 0 18px 42px rgba(37, 211, 102, .42), 0 0 0 8px rgba(37, 211, 102, .14);
+      border: 1px solid rgba(255,255,255,.72);
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+
+    .wa-float:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 24px 58px rgba(37, 211, 102, .48), 0 0 0 10px rgba(37, 211, 102, .16);
+    }
+
+    .wa-float svg {
+      width: 32px;
+      height: 32px;
+      fill: currentColor;
+    }
+
+    .strip {
+      background: var(--leaf-dark);
+      color: var(--white);
+      padding: 18px 20px;
+    }
+
+    .strip-inner {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      font-weight: 800;
+      font-size: .92rem;
+    }
+
+    .strip span {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .strip span::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--coral);
+      flex: 0 0 auto;
+    }
+
+    section {
+      padding: 70px 20px;
+    }
+
+    .wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .editorial {
+      display: grid;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .media-tall {
+      min-height: 440px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      position: relative;
+      background: var(--mist);
+    }
+
+    .media-tall img {
+      height: 100%;
+      min-height: 440px;
+      object-fit: cover;
+    }
+
+    .caption {
+      position: absolute;
+      left: 16px;
+      bottom: 16px;
+      color: #fff;
+      background: rgba(19, 63, 45, .8);
+      padding: 9px 11px;
+      border-radius: 8px;
+      font-size: .72rem;
+      font-weight: 800;
+    }
+
+    .kicker {
+      margin: 0 0 12px;
+      color: var(--leaf);
+      font-size: .78rem;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      margin: 0;
+      font-family: Newsreader, Georgia, serif;
+      font-size: clamp(2.45rem, 8vw, 5rem);
+      line-height: .95;
+      letter-spacing: 0;
+      font-weight: 650;
+      text-wrap: balance;
+    }
+
+    .lead {
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: clamp(1rem, 3.8vw, 1.2rem);
+      line-height: 1.7;
+      max-width: 620px;
+    }
+
+    .line-list {
+      margin: 28px 0 0;
+      padding: 0;
+      list-style: none;
+      border-top: 1px solid var(--line);
+    }
+
+    .line-list li {
+      padding: 16px 0;
+      border-bottom: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: 26px 1fr;
+      gap: 10px;
+      color: var(--ink);
+      font-weight: 700;
+      line-height: 1.45;
+    }
+
+    .line-list b {
+      color: var(--coral);
+    }
+
+    .benefits {
+      background: var(--mist);
+      padding-top: 62px;
+      padding-bottom: 62px;
+    }
+
+    .benefit-grid {
+      margin-top: 28px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .benefit {
+      border: 1px solid rgba(36,95,70,.16);
+      border-radius: 8px;
+      padding: 24px;
+      background: rgba(255,255,255,.78);
+    }
+
+    .benefit strong {
+      display: block;
+      font-size: 1rem;
+      margin-bottom: 8px;
+    }
+
+    .benefit p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.58;
+      font-size: .95rem;
+    }
+
+    .process {
+      background: var(--paper);
+    }
+
+    .steps {
+      margin-top: 34px;
+      border-top: 1px solid var(--line);
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 18px;
+      padding: 22px 0;
+      border-bottom: 1px solid var(--line);
+      align-items: start;
+    }
+
+    .num {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: var(--leaf);
+      color: var(--white);
+      font-weight: 900;
+    }
+
+    .step h3,
+    .faq h3 {
+      margin: 0;
+      font-size: 1.05rem;
+      line-height: 1.35;
+    }
+
+    .step p,
+    .faq p {
+      margin: 7px 0 0;
+      color: var(--muted);
+      line-height: 1.62;
+    }
+
+    .quote-band {
+      padding: 0;
+      background: var(--leaf-dark);
+      color: var(--white);
+    }
+
+    .quote-layout {
+      display: grid;
+    }
+
+    .quote-photo {
+      min-height: 360px;
+      background: url("https://images.unsplash.com/photo-1675691833330-ae48b9c15502?auto=format&fit=crop&w=1400&q=82") center / cover no-repeat;
+    }
+
+    .quote-copy {
+      padding: 54px 20px;
+    }
+
+    blockquote {
+      margin: 0;
+      font-family: Newsreader, Georgia, serif;
+      font-size: clamp(2.2rem, 8vw, 5rem);
+      line-height: .98;
+      letter-spacing: 0;
+      text-wrap: balance;
+    }
+
+    .quote-copy p {
+      margin: 22px 0 0;
+      color: rgba(255,255,255,.8);
+      max-width: 540px;
+      line-height: 1.7;
+    }
+
+    .faq {
+      display: grid;
+      gap: 30px;
+      align-items: start;
+    }
+
+    .questions {
+      border-top: 1px solid var(--line);
+    }
+
+    .question {
+      padding: 20px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .final {
+      position: relative;
+      color: var(--white);
+      background: #123727;
+      overflow: hidden;
+      padding: 86px 20px 104px;
+    }
+
+    .final::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(18,55,39,.92), rgba(18,55,39,.62)),
+        url("https://images.unsplash.com/photo-1552196527-bffef41ef674?auto=format&fit=crop&w=1600&q=82") center / cover no-repeat;
+      transform: scale(1.02);
+    }
+
+    .final .wrap {
+      position: relative;
+      z-index: 1;
+    }
+
+    .final h2 {
+      max-width: 760px;
+    }
+
+    .final p {
+      max-width: 520px;
+      color: rgba(255,255,255,.84);
+    }
+
+    .final-note {
+      margin-top: 28px;
+      display: inline-flex;
+      max-width: 360px;
+      padding: 13px 15px;
+      border: 1px solid rgba(255,255,255,.32);
+      border-radius: 8px;
+      background: rgba(255,255,255,.12);
+      font-weight: 800;
+      line-height: 1.45;
+    }
+
+    .attribution {
+      padding: 18px 20px 88px;
+      color: var(--muted);
+      font-size: .72rem;
+      text-align: center;
+    }
+
+    @media (min-width: 720px) {
+      .hero {
+        min-height: 92vh;
+        padding: 30px;
+      }
+
+      .hero-copy {
+        padding-bottom: 14vh;
+      }
+
+      .strip-inner {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      section {
+        padding: 104px 30px;
+      }
+
+      .editorial {
+        grid-template-columns: .92fr 1.08fr;
+        gap: 72px;
+      }
+
+      .editorial.reverse {
+        grid-template-columns: 1.08fr .92fr;
+      }
+
+      .editorial.reverse .media-tall {
+        order: 2;
+      }
+
+      .benefit-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .steps {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        border-top: 0;
+        gap: 0;
+      }
+
+      .step {
+        grid-template-columns: 1fr;
+        padding: 0 26px;
+        border-bottom: 0;
+        border-left: 1px solid var(--line);
+      }
+
+      .step:first-child {
+        border-left: 0;
+        padding-left: 0;
+      }
+
+      .quote-layout {
+        grid-template-columns: 48% 52%;
+        min-height: 620px;
+      }
+
+      .quote-copy {
+        align-self: center;
+        padding: 72px;
+      }
+
+      .faq {
+        grid-template-columns: .78fr 1fr;
+        gap: 70px;
+      }
+
+      .wa-float {
+        right: 28px;
+        bottom: 28px;
+        width: 72px;
+        height: 72px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero" aria-label="Aurora Pilates Studio">
+      <div class="topline">
+        <div class="brand" aria-label="Aurora Pilates Studio">
+          <span class="mark">A</span>
+          <span>Aurora<br>Pilates Studio</span>
+        </div>
+        <div class="signal">Sao Paulo</div>
+      </div>
+
+      <div class="hero-copy">
+        <p class="eyebrow">Pilates boutique</p>
+        <h1>Movimento calmo para um corpo mais livre.</h1>
+        <p class="hero-text">Aulas guiadas por fisioterapeuta, em studio silencioso, com plano ajustado ao seu ritmo. Para agendar a aula experimental, toque no icone do WhatsApp.</p>
+        <div class="hero-proof" aria-label="Diferenciais">
+          <span class="pill"><i></i>Turmas de ate 4 pessoas</span>
+          <span class="pill"><i></i>Iniciantes bem-vindos</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="strip" aria-label="Sinais de confianca">
+      <div class="strip-inner">
+        <span>Avaliacao postural antes do plano</span>
+        <span>Horarios de manha e fim de tarde</span>
+        <span>Ambiente sem clima de academia cheia</span>
+      </div>
+    </div>
+
+    <section>
+      <div class="wrap editorial">
+        <div class="media-tall">
+          <img src="https://images.unsplash.com/photo-1604467731651-3d8b9c702b86?auto=format&fit=crop&w=1200&q=82" alt="Pessoa praticando Pilates em studio claro">
+          <span class="caption">Foto via Unsplash</span>
+        </div>
+        <div>
+          <p class="kicker">Do desconforto ao controle</p>
+          <h2>Postura, mobilidade e forca sem pressa.</h2>
+          <p class="lead">A proposta da Aurora e criar uma pratica consistente: movimentos precisos, orientacao proxima e ajustes para que cada aula faca sentido para o seu corpo.</p>
+          <ul class="line-list">
+            <li><b>01</b><span>Comece com uma conversa breve sobre dores, rotina e objetivos.</span></li>
+            <li><b>02</b><span>Receba ajustes durante a aula, sem competir por atencao.</span></li>
+            <li><b>03</b><span>Saia com uma direcao clara para evoluir nas proximas sessoes.</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="benefits">
+      <div class="wrap">
+        <p class="kicker">O que muda na pratica</p>
+        <h2>Beneficios ligados ao jeito da aula acontecer.</h2>
+        <div class="benefit-grid">
+          <div class="benefit">
+            <strong>Alinhamento com acompanhamento</strong>
+            <p>Com fisioterapeuta conduzindo, os ajustes acontecem enquanto voce se move.</p>
+          </div>
+          <div class="benefit">
+            <strong>Turmas pequenas</strong>
+            <p>Ate 4 pessoas por horario para manter atencao individual e ritmo tranquilo.</p>
+          </div>
+          <div class="benefit">
+            <strong>Plano flexivel</strong>
+            <p>Sessoes individuais ou em pequenos grupos, com horarios para encaixar na rotina.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="process">
+      <div class="wrap">
+        <p class="kicker">Primeira aula</p>
+        <h2>Simples, orientado e sem compromisso confuso.</h2>
+        <div class="steps">
+          <div class="step">
+            <span class="num">1</span>
+            <div>
+              <h3>Voce chama pelo WhatsApp</h3>
+              <p>Toque no icone verde no canto da tela e diga seu melhor horario.</p>
+            </div>
+          </div>
+          <div class="step">
+            <span class="num">2</span>
+            <div>
+              <h3>Aurora entende seu objetivo</h3>
+              <p>Postura, dor, mobilidade, forca ou retorno gradual ao movimento.</p>
+            </div>
+          </div>
+          <div class="step">
+            <span class="num">3</span>
+            <div>
+              <h3>Voce experimenta o studio</h3>
+              <p>Aula guiada, ritmo seguro e orientacao sobre o melhor formato para continuar.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="quote-band">
+      <div class="quote-layout">
+        <div class="quote-photo" role="img" aria-label="Studio de Pilates com aparelho e luz natural"></div>
+        <div class="quote-copy">
+          <p class="kicker" style="color:#f4c35d">Evidencia humana</p>
+          <blockquote>Um studio para prestar atencao no movimento, nao no barulho.</blockquote>
+          <p>O cuidado aparece no tamanho das turmas, na conducao tecnica e no ambiente pensado para quem quer voltar a se mover com confianca.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap faq">
+        <div>
+          <p class="kicker">Duvidas comuns</p>
+          <h2>Antes de marcar.</h2>
+          <p class="lead">Se fizer sentido para voce, o proximo passo e simples: toque no icone do WhatsApp e combine a aula experimental.</p>
+        </div>
+        <div class="questions">
+          <div class="question">
+            <h3>Nunca fiz Pilates. Posso comecar?</h3>
+            <p>Sim. A primeira aula considera seu nivel atual e evita uma experiencia acelerada demais.</p>
+          </div>
+          <div class="question">
+            <h3>As aulas sao individuais?</h3>
+            <p>Existem sessoes individuais e pequenos grupos de ate 4 pessoas.</p>
+          </div>
+          <div class="question">
+            <h3>Serve para dor?</h3>
+            <p>O Pilates pode apoiar mobilidade, postura e fortalecimento. A Aurora nao promete cura; a avaliacao orienta o caminho mais adequado.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="final">
+      <div class="wrap">
+        <p class="kicker" style="color:#f4c35d">Aula experimental</p>
+        <h2>Comece com uma aula para sentir o metodo.</h2>
+        <p class="lead">Toque no icone verde no canto inferior direito e envie uma mensagem. A Aurora combina um horario e entende qual formato faz mais sentido para voce.</p>
+        <div class="final-note">O unico botao de contato fica no icone do WhatsApp.</div>
+      </div>
+    </section>
+
+    <div class="attribution">Fotos via Unsplash. Pagina experimental Website Builder 3.</div>
+  </main>
+
+  <a class="wa-float" href="https://wa.me/5511960932768?text=Oi%2C%20quero%20agendar%20uma%20aula%20experimental%20na%20Aurora%20Pilates" aria-label="Agendar aula experimental pelo WhatsApp">
+    <svg viewBox="0 0 32 32" aria-hidden="true">
+      <path d="M16.02 3.2A12.65 12.65 0 0 0 5.2 22.4L3.7 28.8l6.54-1.44A12.65 12.65 0 1 0 16.02 3.2Zm0 2.32a10.33 10.33 0 0 1 8.79 15.75l-.25.4a10.32 10.32 0 0 1-12.98 3.42l-.43-.22-3.52.78.8-3.42-.25-.44A10.33 10.33 0 0 1 16.02 5.52Zm-4.07 4.98c-.22 0-.58.08-.89.42-.31.35-1.17 1.15-1.17 2.8 0 1.65 1.2 3.25 1.37 3.47.17.23 2.32 3.72 5.73 5.07 2.84 1.12 3.41.9 4.03.84.62-.06 2-.82 2.28-1.61.28-.8.28-1.48.2-1.62-.08-.14-.31-.23-.65-.4-.34-.17-2-.99-2.31-1.1-.31-.12-.54-.17-.77.17-.23.34-.88 1.1-1.08 1.33-.2.23-.4.26-.74.09-.34-.17-1.43-.53-2.73-1.69-1.01-.9-1.69-2.01-1.89-2.35-.2-.34-.02-.52.15-.69.15-.15.34-.4.51-.6.17-.2.23-.34.34-.57.11-.23.06-.43-.03-.6-.08-.17-.76-1.84-1.04-2.52-.27-.65-.55-.56-.76-.57h-.56Z"/>
+    </svg>
+  </a>
+</body>
+</html>
