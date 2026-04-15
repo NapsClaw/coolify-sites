@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark light" />
+  <title>Nara Atelier Floral</title>
+  <meta
+    name="description"
+    content="Nara Atelier Floral cria composições sazonais, bouquets premium e styling floral sob medida em São Paulo."
+  />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Instrument+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    :root {
+      --bg: #101614;
+      --bg-soft: #18211f;
+      --panel: #eef2ec;
+      --panel-strong: #f8faf8;
+      --ink: #f5f0e8;
+      --ink-soft: rgba(245, 240, 232, 0.78);
+      --text: #17211e;
+      --text-soft: rgba(23, 33, 30, 0.74);
+      --line: rgba(223, 210, 195, 0.24);
+      --line-strong: rgba(23, 33, 30, 0.14);
+      --moss: #2f5b4e;
+      --olive: #7b8f62;
+      --coral: #d47b6f;
+      --blush: #f0c9c0;
+      --gold: #b68d62;
+      --shadow: 0 26px 56px rgba(7, 11, 10, 0.28);
+      --radius: 8px;
+      --max: 1160px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Instrument Sans", system-ui, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(196, 141, 102, 0.16), transparent 42%),
+        radial-gradient(circle at 85% 15%, rgba(215, 123, 111, 0.16), transparent 28%),
+        linear-gradient(180deg, #121917 0%, #101614 30%, #0d1210 100%);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+      background-size: 40px 40px;
+      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.4), transparent 82%);
+      opacity: 0.18;
+      z-index: 0;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+    }
+
+    .shell {
+      width: min(calc(100% - 32px), var(--max));
+      margin: 0 auto;
+    }
+
+    .hero {
+      min-height: 100svh;
+      position: relative;
+      overflow: clip;
+      display: grid;
+      align-items: end;
+      isolation: isolate;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(11, 16, 14, 0.28), rgba(11, 16, 14, 0.78) 72%, rgba(11, 16, 14, 0.94)),
+        radial-gradient(circle at 20% 18%, rgba(253, 248, 240, 0.11), transparent 30%);
+      z-index: -1;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(135deg, rgba(13, 19, 17, 0.15), rgba(13, 19, 17, 0.68)),
+        url("https://images.unsplash.com/photo-1771142169235-70f00cab62f8?auto=format&fit=crop&fm=jpg&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&ixlib=rb-4.1.0&q=60&w=3000") center center/cover no-repeat;
+      filter: saturate(0.92) contrast(1.02);
+      transform: scale(1.02);
+      z-index: -2;
+    }
+
+    .hero-content {
+      padding: 24px 0 24px;
+      display: grid;
+      gap: 26px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      width: fit-content;
+      text-decoration: none;
+    }
+
+    .mark {
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      color: #eff1ea;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.08));
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.24);
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.25rem;
+      letter-spacing: 0;
+    }
+
+    .brand-copy {
+      display: grid;
+      gap: 2px;
+    }
+
+    .brand-copy strong {
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .brand-copy span {
+      color: var(--ink-soft);
+      font-size: 0.88rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      gap: 18px;
+      align-items: end;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      width: fit-content;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 999px;
+      background: rgba(16, 22, 20, 0.4);
+      color: var(--ink-soft);
+      font-size: 0.82rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      backdrop-filter: blur(14px);
+    }
+
+    h1,
+    h2,
+    h3,
+    .quote {
+      font-family: "Cormorant Garamond", serif;
+      font-weight: 500;
+      letter-spacing: 0;
+      margin: 0;
+    }
+
+    h1 {
+      font-size: clamp(3.5rem, 11vw, 6.6rem);
+      line-height: 0.9;
+      max-width: 10ch;
+      text-wrap: balance;
+    }
+
+    .lead {
+      max-width: 32rem;
+      font-size: clamp(1.02rem, 2.6vw, 1.18rem);
+      line-height: 1.6;
+      color: rgba(245, 240, 232, 0.88);
+      text-wrap: pretty;
+    }
+
+    .hero-meta {
+      display: grid;
+      gap: 12px;
+      max-width: 31rem;
+    }
+
+    .proof-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      padding: 8px 11px;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: rgba(245, 240, 232, 0.88);
+    }
+
+    .pull-note {
+      display: grid;
+      gap: 4px;
+      padding-left: 14px;
+      border-left: 1px solid rgba(255, 255, 255, 0.2);
+      color: var(--ink-soft);
+      font-size: 0.94rem;
+    }
+
+    .hero-visual {
+      position: relative;
+      width: min(100%, 510px);
+      margin-top: 12px;
+      margin-left: auto;
+      aspect-ratio: 5 / 6;
+      border-radius: 2px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: var(--shadow);
+      background: rgba(255, 255, 255, 0.04);
+      justify-self: end;
+    }
+
+    .hero-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero-caption {
+      position: absolute;
+      left: 16px;
+      right: 16px;
+      bottom: 16px;
+      padding: 14px 14px 12px;
+      border-radius: var(--radius);
+      background: rgba(16, 22, 20, 0.58);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(14px);
+    }
+
+    .hero-caption strong {
+      display: block;
+      font-size: 1rem;
+      margin-bottom: 2px;
+    }
+
+    .hero-caption span {
+      color: var(--ink-soft);
+      font-size: 0.88rem;
+    }
+
+    main {
+      display: grid;
+      gap: 0;
+    }
+
+    section {
+      border-top: 1px solid var(--line);
+    }
+
+    .band {
+      padding: 28px 0;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent);
+    }
+
+    .trust-band {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: 1fr;
+    }
+
+    .trust-item {
+      padding: 16px 0 0;
+      border-top: 1px solid var(--line);
+      display: grid;
+      gap: 8px;
+    }
+
+    .trust-item strong {
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      line-height: 1;
+    }
+
+    .trust-item span {
+      color: var(--ink-soft);
+      line-height: 1.55;
+      max-width: 22ch;
+    }
+
+    .panel {
+      background: var(--panel);
+      color: var(--text);
+    }
+
+    .section-inner {
+      padding: 72px 0;
+      display: grid;
+      gap: 32px;
+    }
+
+    .section-heading {
+      display: grid;
+      gap: 14px;
+      max-width: 40rem;
+    }
+
+    .section-kicker {
+      font-size: 0.83rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(23, 33, 30, 0.62);
+    }
+
+    .section-heading h2 {
+      font-size: clamp(2.7rem, 7vw, 4.8rem);
+      line-height: 0.95;
+      max-width: 12ch;
+    }
+
+    .section-heading p {
+      font-size: 1.02rem;
+      line-height: 1.7;
+      color: var(--text-soft);
+      max-width: 40rem;
+      margin: 0;
+    }
+
+    .split {
+      display: grid;
+      gap: 22px;
+      align-items: start;
+    }
+
+    .editorial-image {
+      position: relative;
+      overflow: hidden;
+      border-radius: 2px;
+      min-height: 360px;
+      border: 1px solid rgba(23, 33, 30, 0.12);
+      box-shadow: 0 24px 44px rgba(17, 28, 24, 0.16);
+    }
+
+    .editorial-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .panel-note {
+      display: grid;
+      gap: 12px;
+      padding: 18px 0 0;
+    }
+
+    .panel-note p {
+      margin: 0;
+      color: var(--text-soft);
+      line-height: 1.72;
+      max-width: 34rem;
+    }
+
+    .signal-list {
+      display: grid;
+      gap: 0;
+      border-top: 1px solid var(--line-strong);
+    }
+
+    .signal {
+      padding: 20px 0;
+      border-bottom: 1px solid var(--line-strong);
+      display: grid;
+      gap: 8px;
+    }
+
+    .signal b {
+      font-size: 1rem;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+
+    .signal span {
+      color: var(--text-soft);
+      line-height: 1.68;
+      max-width: 34rem;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 18px;
+    }
+
+    .step {
+      display: grid;
+      gap: 10px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(23, 33, 30, 0.12);
+    }
+
+    .step .num {
+      font-size: 0.84rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(23, 33, 30, 0.56);
+    }
+
+    .step h3 {
+      font-size: 1.7rem;
+      line-height: 1;
+    }
+
+    .step p {
+      margin: 0;
+      color: var(--text-soft);
+      line-height: 1.7;
+      max-width: 34rem;
+    }
+
+    .quote-band {
+      background:
+        linear-gradient(120deg, rgba(37, 67, 56, 0.94), rgba(16, 24, 20, 0.98)),
+        url("https://images.unsplash.com/photo-1759058627394-0f2e569330cd?auto=format&fit=crop&fm=jpg&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&ixlib=rb-4.1.0&q=60&w=3000") center center/cover no-repeat;
+      color: var(--ink);
+    }
+
+    .quote-layout {
+      display: grid;
+      gap: 26px;
+      align-items: center;
+    }
+
+    .quote {
+      font-size: clamp(2.4rem, 7vw, 4.4rem);
+      line-height: 0.98;
+      max-width: 12ch;
+      margin: 0;
+    }
+
+    .quote-copy {
+      display: grid;
+      gap: 16px;
+    }
+
+    .quote-copy p {
+      margin: 0;
+      max-width: 34rem;
+      color: rgba(245, 240, 232, 0.84);
+      line-height: 1.7;
+    }
+
+    .mini-collage {
+      display: grid;
+      grid-template-columns: 1.08fr 0.9fr;
+      gap: 12px;
+    }
+
+    .mini-collage img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: 2px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      box-shadow: var(--shadow);
+      min-height: 210px;
+    }
+
+    .faq {
+      display: grid;
+      gap: 12px;
+      max-width: 44rem;
+    }
+
+    details {
+      border-top: 1px solid rgba(23, 33, 30, 0.14);
+      padding-top: 14px;
+    }
+
+    summary {
+      list-style: none;
+      cursor: pointer;
+      font-family: "Cormorant Garamond", serif;
+      font-size: 1.7rem;
+      line-height: 1.1;
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      align-items: baseline;
+    }
+
+    summary::-webkit-details-marker {
+      display: none;
+    }
+
+    summary::after {
+      content: "+";
+      font-family: "Instrument Sans", sans-serif;
+      font-size: 1rem;
+      line-height: 1;
+      color: rgba(23, 33, 30, 0.54);
+      flex: none;
+    }
+
+    details[open] summary::after {
+      content: "–";
+    }
+
+    details p {
+      margin: 12px 0 0;
+      color: var(--text-soft);
+      line-height: 1.7;
+      max-width: 38rem;
+    }
+
+    .closing {
+      display: grid;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .closing .tone {
+      font-size: 1.03rem;
+      line-height: 1.72;
+      color: var(--text-soft);
+      max-width: 42rem;
+      margin: 0;
+    }
+
+    .close-note {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      width: fit-content;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(23, 33, 30, 0.14);
+      color: rgba(23, 33, 30, 0.76);
+      background: rgba(255, 255, 255, 0.48);
+    }
+
+    .footer {
+      padding: 22px 0 112px;
+      border-top: 1px solid rgba(23, 33, 30, 0.1);
+      display: grid;
+      gap: 14px;
+      color: rgba(23, 33, 30, 0.6);
+      font-size: 0.9rem;
+    }
+
+    .attribution {
+      display: grid;
+      gap: 6px;
+      line-height: 1.5;
+    }
+
+    .whatsapp-fab {
+      position: fixed;
+      right: 16px;
+      bottom: 16px;
+      width: 56px;
+      height: 56px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      background: #25d366;
+      color: #fff;
+      box-shadow: 0 14px 28px rgba(0, 0, 0, 0.28);
+      z-index: 50;
+      text-decoration: none;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .whatsapp-fab svg {
+      width: 26px;
+      height: 26px;
+      display: block;
+      fill: currentColor;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+    }
+
+    @media (min-width: 760px) {
+      .hero-content {
+        padding: 32px 0 30px;
+        gap: 34px;
+      }
+
+      .hero-grid {
+        grid-template-columns: minmax(0, 1.12fr) minmax(320px, 0.88fr);
+        gap: 28px;
+        align-items: end;
+      }
+
+      .trust-band {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 24px;
+      }
+
+      .trust-item {
+        padding-top: 18px;
+      }
+
+      .split {
+        grid-template-columns: minmax(0, 1.06fr) minmax(0, 0.94fr);
+        gap: 34px;
+      }
+
+      .section-inner {
+        padding: 88px 0;
+      }
+
+      .signal-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        border-top: 0;
+      }
+
+      .signal {
+        padding-right: 20px;
+      }
+
+      .timeline {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .step {
+        padding-top: 0;
+        border-top: 0;
+      }
+
+      .quote-layout {
+        grid-template-columns: minmax(0, 1fr) minmax(340px, 0.86fr);
+        gap: 34px;
+      }
+
+      .faq {
+        max-width: 54rem;
+      }
+
+      .closing {
+        grid-template-columns: minmax(0, 1.06fr) minmax(280px, 0.76fr);
+        gap: 28px;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <div class="hero-bg" aria-hidden="true"></div>
+      <div class="shell hero-content">
+        <a class="brand reveal" href="#top" aria-label="Nara Atelier Floral">
+          <div class="mark">NA</div>
+          <div class="brand-copy">
+            <strong>Nara Atelier Floral</strong>
+            <span>São Paulo · composições sazonais</span>
+          </div>
+        </a>
+
+        <div class="hero-grid">
+          <div class="hero-meta reveal">
+            <div class="eyebrow">Atendimento floral sob medida</div>
+            <h1>Flores que deixam o evento mais inteiro.</h1>
+            <p class="lead">
+              Bouquet premium, styling de mesa, cerimônia íntima e arranjos corporativos com resposta rápida.
+              O primeiro passo é direto: pedir orçamento pelo WhatsApp.
+            </p>
+            <div class="proof-row" aria-label="Provas rápidas">
+              <span class="chip">Flores sazonais</span>
+              <span class="chip">Entrega em São Paulo</span>
+              <span class="chip">Composições autorais</span>
+            </div>
+            <div class="pull-note">
+              <span>Para quem quer delicadeza sem formalidade vazia.</span>
+              <span>Casamentos pequenos, hotéis boutique, restaurantes e presentes elegantes.</span>
+            </div>
+          </div>
+
+          <div class="hero-visual reveal">
+            <img
+              src="https://images.unsplash.com/photo-1549048799-482af26246f3?auto=format&fit=crop&fm=jpg&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&ixlib=rb-4.1.0&q=60&w=3000"
+              alt="Bouquet rosa e branco sobre fundo claro."
+            />
+            <div class="hero-caption">
+              <strong>Peças pensadas como composição, não como catálogo.</strong>
+              <span>Do arranjo menor ao styling da mesa inteira.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="band">
+        <div class="shell trust-band reveal">
+          <div class="trust-item">
+            <strong>01</strong>
+            <span>Briefing rápido, conversa humana e orçamento sem fricção.</span>
+          </div>
+          <div class="trust-item">
+            <strong>02</strong>
+            <span>Materiais sazonais escolhidos pela textura, cor e frescor do dia.</span>
+          </div>
+          <div class="trust-item">
+            <strong>03</strong>
+            <span>Entrega em São Paulo e montagem pensada para o espaço real.</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="shell section-inner">
+          <div class="section-heading reveal">
+            <div class="section-kicker">Ateliê e linguagem</div>
+            <h2>Uma presença visual que parece viva, calma e precisa.</h2>
+            <p>
+              Nara fala com quem procura flor como linguagem de ocasião: quem quer casar pequeno,
+              vestir uma mesa com cuidado ou entregar um presente elegante sem parecer genérico.
+            </p>
+          </div>
+
+          <div class="split">
+            <div class="editorial-image reveal">
+              <img
+                src="https://images.unsplash.com/photo-1670406444035-5375977f5bf9?auto=format&fit=crop&fm=jpg&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&ixlib=rb-4.1.0&q=60&w=3000"
+                alt="Bouquet de rosas e flores pequenas em composição delicada."
+              />
+            </div>
+            <div class="panel-note reveal">
+              <p>
+                O desenho da página precisa conduzir a conversa do impulso visual para a confiança:
+                primeiro a atmosfera, depois o mecanismo, depois a decisão de chamar no WhatsApp.
+              </p>
+              <div class="signal-list">
+                <div class="signal">
+                  <b>Composição sob medida</b>
+                  <span>Sem fórmulas prontas. Cada pedido parte do contexto, da escala e do sentimento da ocasião.</span>
+                </div>
+                <div class="signal">
+                  <b>Styling de mesa</b>
+                  <span>Arranjos que conversam com louça, mesa, luz e circulação. Floral como parte do cenário.</span>
+                </div>
+                <div class="signal">
+                  <b>Entrega e montagem</b>
+                  <span>O atendimento considera o tempo do evento e o deslocamento em São Paulo.</span>
+                </div>
+                <div class="signal">
+                  <b>Resposta rápida</b>
+                  <span>O caminho para o orçamento é curto, direto e sem burocracia visual.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" style="background: #e6ece6;">
+        <div class="shell section-inner">
+          <div class="section-heading reveal">
+            <div class="section-kicker">O que muda na prática</div>
+            <h2>Quatro sinais de valor que precisam aparecer sem pressa.</h2>
+          </div>
+          <div class="signal-list reveal">
+            <div class="signal">
+              <b>Para casamentos pequenos</b>
+              <span>Clima mais íntimo, mais preciso e menos genérico. A flor segura a cena sem engolir as pessoas.</span>
+            </div>
+            <div class="signal">
+              <b>Para hotéis e restaurantes</b>
+              <span>Arranjos que elevam recepção, mesa e ambiente com a mesma linguagem visual.</span>
+            </div>
+            <div class="signal">
+              <b>Para presentes premium</b>
+              <span>Bouquets com presença, escala correta e acabamento que parece realmente preparado por mãos humanas.</span>
+            </div>
+            <div class="signal">
+              <b>Para eventos corporativos</b>
+              <span>Composição limpa, segura e contemporânea, sem exagero nem cara de template.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="shell section-inner">
+          <div class="section-heading reveal">
+            <div class="section-kicker">Como funciona</div>
+            <h2>Um processo curto, calmo e fácil de responder.</h2>
+          </div>
+          <div class="timeline reveal">
+            <article class="step">
+              <div class="num">Passo 01</div>
+              <h3>Você descreve a ocasião.</h3>
+              <p>Tipo de evento, data, clima visual e tamanho da entrega. O suficiente para começar direito.</p>
+            </article>
+            <article class="step">
+              <div class="num">Passo 02</div>
+              <h3>Nara monta a direção.</h3>
+              <p>Flores sazonais, paleta, volume e acabamento são definidos com intenção, não por fórmula.</p>
+            </article>
+            <article class="step">
+              <div class="num">Passo 03</div>
+              <h3>O orçamento segue sem ruído.</h3>
+              <p>A conversa vira proposta com foco no que realmente importa para decidir.</p>
+            </article>
+            <article class="step">
+              <div class="num">Passo 04</div>
+              <h3>Entrega, instalação e acabamento.</h3>
+              <p>Da embalagem à mesa pronta, o resultado precisa preservar a sensação de cuidado.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="quote-band panel">
+        <div class="shell section-inner quote-layout">
+          <div class="quote-copy reveal">
+            <div class="section-kicker" style="color: rgba(245,240,232,0.62);">Prova e voz</div>
+            <h2 class="quote">“Flores boas não decoram só um lugar. Elas organizam a memória do momento.”</h2>
+            <p>
+              O site precisa falar como um ateliê que sabe escutar. A promessa não é volume nem espetáculo:
+              é composição correta, frescor e uma entrega que respeita a ocasião.
+            </p>
+          </div>
+          <div class="mini-collage reveal" aria-hidden="true">
+            <img
+              src="https://images.unsplash.com/photo-1549048799-482af26246f3?auto=format&fit=crop&fm=jpg&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&ixlib=rb-4.1.0&q=60&w=3000"
+              alt=""
+            />
+            <img
+              src="https://images.unsplash.com/photo-1771142169235-70f00cab62f8?auto=format&fit=crop&fm=jpg&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&ixlib=rb-4.1.0&q=60&w=3000"
+              alt=""
+            />
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="shell section-inner">
+          <div class="section-heading reveal">
+            <div class="section-kicker">Dúvidas comuns</div>
+            <h2>Respostas que tiram o peso antes de começar.</h2>
+          </div>
+          <div class="faq reveal">
+            <details>
+              <summary>Vocês atendem pedidos pequenos?</summary>
+              <p>
+                Sim. O foco não é volume mínimo, e sim clareza de briefing e coerência da composição para a ocasião.
+              </p>
+            </details>
+            <details>
+              <summary>Vocês trabalham com flores do dia?</summary>
+              <p>
+                Sim. A seleção prioriza sazonalidade, frescor e o que faz sentido visualmente no momento da produção.
+              </p>
+            </details>
+            <details>
+              <summary>Quanto tempo demora para receber o orçamento?</summary>
+              <p>
+                A página convida para um contato curto e direto. A resposta é pensada para ser rápida, sem formulário longo.
+              </p>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="shell section-inner closing">
+          <div class="reveal">
+            <div class="section-kicker">Última dobra</div>
+            <h2>Se a ocasião pede delicadeza, o caminho certo é simples.</h2>
+          </div>
+          <div class="reveal">
+            <p class="tone">
+              Pedir orçamento pelo WhatsApp é o movimento final. O botão fixo no canto fica só para isso,
+              sem distrações, sem outros atalhos e sem ruído visual.
+            </p>
+            <div class="close-note">Atendimento humano · São Paulo · composições sob medida</div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="shell footer">
+      <div class="attribution">
+        <span>Imagens via Unsplash: Aniki Photos, Darian Baisarov e Pew Nguyen.</span>
+        <span>Layout e texto em português do Brasil para o briefing Nara Atelier Floral.</span>
+      </div>
+    </footer>
+  </div>
+
+  <a
+    class="whatsapp-fab"
+    href="https://wa.me/5511960932768"
+    target="_blank"
+    rel="noreferrer"
+    aria-label="Abrir conversa no WhatsApp"
+  >
+    <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+      <path d="M19.11 17.64c-.27-.14-1.59-.78-1.83-.87-.24-.09-.41-.14-.58.14-.17.27-.67.87-.82 1.05-.15.18-.3.2-.57.07-.27-.14-1.16-.43-2.21-1.37-.82-.73-1.37-1.64-1.53-1.91-.16-.27-.02-.42.12-.56.12-.12.27-.3.41-.45.14-.15.19-.27.29-.45.09-.18.05-.34-.02-.48-.07-.14-.58-1.46-.8-2-.21-.51-.43-.44-.58-.45l-.5-.01c-.17 0-.45.07-.68.34-.23.27-.89.87-.89 2.12s.91 2.45 1.04 2.62c.14.18 1.76 2.69 4.25 3.77.59.26 1.06.42 1.42.54.59.19 1.12.16 1.54.1.47-.07 1.59-.65 1.82-1.28.22-.63.22-1.17.16-1.28-.07-.11-.24-.18-.51-.32Z"/>
+      <path fill-rule="evenodd" d="M16 3C8.82 3 3 8.65 3 15.62c0 2.37.68 4.56 1.86 6.45L3.6 29l6.96-1.79a13.21 13.21 0 0 0 5.44 1.16C23.18 28.37 29 22.72 29 15.75 29 8.78 23.18 3 16 3Zm0 23.31c-1.84 0-3.56-.5-5.04-1.36l-.36-.21-4.13 1.06 1.1-3.99-.23-.38A11.2 11.2 0 0 1 4.8 15.62C4.8 9.65 9.79 4.8 16 4.8S27.2 9.65 27.2 15.75c0 6.1-4.99 11.06-11.2 11.06Z"/>
+    </svg>
+  </a>
+
+  <script>
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("in-view");
+          observer.unobserve(entry.target);
+        }
+      }
+    }, { threshold: 0.18 });
+
+    document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
+  </script>
+</body>
+</html>
