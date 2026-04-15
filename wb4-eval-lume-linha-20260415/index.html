@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lume & Linha | Cortinas e persianas sob medida em Curitiba</title>
+  <meta name="description" content="Atelier de cortinas, persianas e enxoval sob medida em Curitiba. Visita tecnica, curadoria de tecidos e instalacao propria." />
+  <link rel="preconnect" href="https://images.unsplash.com" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Manrope:wght@400;600;700;800&display=swap');
+
+    :root {
+      --ink: #101414;
+      --muted: #53605b;
+      --paper: #f7f8f4;
+      --surface: #ffffff;
+      --sage: #315448;
+      --moss: #789081;
+      --coral: #e86d4f;
+      --line: rgba(16, 20, 20, .13);
+      --shadow: 0 24px 70px rgba(16, 20, 20, .14);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Manrope, sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+      letter-spacing: 0;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; }
+
+    .topbar {
+      position: fixed;
+      z-index: 20;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px clamp(18px, 5vw, 64px);
+      background: rgba(247, 248, 244, .88);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--line);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      font-size: 13px;
+    }
+    .mark {
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      background: var(--sage);
+      border-radius: 6px;
+      font-family: Fraunces, serif;
+      font-size: 17px;
+    }
+    .nav {
+      display: none;
+      gap: 26px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--muted);
+    }
+    .nav a { text-decoration: none; }
+    .top-cta, .btn {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 13px 18px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      background: var(--coral);
+      color: #fff;
+      font-weight: 800;
+      text-decoration: none;
+      box-shadow: 0 16px 34px rgba(232, 109, 79, .24);
+    }
+    .top-cta { display: none; }
+
+    .hero {
+      min-height: 94vh;
+      display: grid;
+      align-items: end;
+      padding: 92px clamp(18px, 5vw, 64px) 28px;
+      background:
+        linear-gradient(180deg, rgba(247,248,244,.12) 0%, rgba(247,248,244,.92) 78%),
+        linear-gradient(90deg, rgba(16,20,20,.74) 0%, rgba(16,20,20,.18) 62%),
+        url('https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1800&q=82') center/cover;
+    }
+    .hero-inner {
+      width: min(1120px, 100%);
+      display: grid;
+      gap: 28px;
+    }
+    .eyebrow {
+      width: fit-content;
+      padding: 8px 12px;
+      border: 1px solid rgba(255,255,255,.44);
+      border-radius: 8px;
+      color: #fff;
+      background: rgba(16,20,20,.24);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+    h1, h2, h3 {
+      margin: 0;
+      font-family: Fraunces, serif;
+      line-height: .96;
+      letter-spacing: 0;
+    }
+    h1 {
+      max-width: 820px;
+      color: #fff;
+      font-size: clamp(42px, 9vw, 106px);
+      text-wrap: balance;
+    }
+    .hero-copy {
+      max-width: 640px;
+      color: rgba(255,255,255,.9);
+      font-size: 18px;
+      line-height: 1.65;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+    .btn.secondary {
+      color: var(--ink);
+      background: rgba(255,255,255,.9);
+      border-color: rgba(255,255,255,.7);
+      box-shadow: none;
+    }
+    .proof-strip {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 10px;
+    }
+    .proof {
+      padding: 13px 14px;
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 8px;
+      color: #fff;
+      background: rgba(16,20,20,.3);
+      backdrop-filter: blur(12px);
+      font-weight: 700;
+    }
+
+    section { padding: 72px clamp(18px, 5vw, 64px); }
+    .section-head {
+      display: grid;
+      gap: 14px;
+      margin-bottom: 32px;
+    }
+    h2 {
+      font-size: clamp(34px, 6vw, 72px);
+      max-width: 830px;
+    }
+    .lead {
+      max-width: 690px;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.7;
+    }
+
+    .trust-band {
+      display: grid;
+      gap: 1px;
+      padding: 0;
+      background: var(--line);
+    }
+    .trust-item {
+      padding: 28px clamp(18px, 5vw, 64px);
+      background: var(--sage);
+      color: #fff;
+    }
+    .trust-item strong {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 22px;
+      font-family: Fraunces, serif;
+    }
+    .trust-item span { color: rgba(255,255,255,.78); }
+
+    .editorial {
+      display: grid;
+      gap: 28px;
+      align-items: center;
+    }
+    .editorial img {
+      width: 100%;
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+    .service-list {
+      display: grid;
+      gap: 14px;
+      margin-top: 28px;
+    }
+    .service {
+      display: grid;
+      grid-template-columns: 38px 1fr;
+      gap: 14px;
+      align-items: start;
+      padding: 18px 0;
+      border-top: 1px solid var(--line);
+    }
+    .num {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 8px;
+      color: #fff;
+      background: var(--sage);
+      font-weight: 800;
+    }
+    .service h3 {
+      margin-bottom: 6px;
+      font-size: 24px;
+      line-height: 1.1;
+    }
+    .service p, .step p, .quote p, .faq p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .process {
+      background: #fff;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .steps {
+      display: grid;
+      gap: 18px;
+    }
+    .step {
+      position: relative;
+      padding: 24px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: linear-gradient(135deg, #fff, #f3f7f0);
+    }
+    .step small {
+      display: block;
+      margin-bottom: 18px;
+      color: var(--coral);
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+    .step h3 {
+      margin-bottom: 10px;
+      font-size: 28px;
+    }
+
+    .materials {
+      display: grid;
+      gap: 18px;
+    }
+    .material-card {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+      box-shadow: 0 20px 50px rgba(16,20,20,.08);
+    }
+    .material-card img {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+    }
+    .material-card div { padding: 20px; }
+    .material-card h3 {
+      margin-bottom: 8px;
+      font-size: 26px;
+    }
+
+    .quote {
+      display: grid;
+      gap: 24px;
+      align-items: center;
+      color: #fff;
+      background: var(--ink);
+    }
+    .quote blockquote {
+      margin: 0;
+      font-family: Fraunces, serif;
+      font-size: clamp(32px, 6vw, 76px);
+      line-height: 1.02;
+    }
+    .quote p { color: rgba(255,255,255,.72); }
+    .quote img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .faq-grid {
+      display: grid;
+      gap: 14px;
+    }
+    .faq {
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fff;
+    }
+    .faq h3 {
+      margin-bottom: 8px;
+      font-size: 23px;
+    }
+
+    .final {
+      display: grid;
+      gap: 20px;
+      text-align: left;
+      color: #fff;
+      background:
+        linear-gradient(90deg, rgba(49,84,72,.95), rgba(49,84,72,.7)),
+        url('https://images.unsplash.com/photo-1600607688969-a5bfcd646154?auto=format&fit=crop&w=1600&q=82') center/cover;
+    }
+    .final h2 { color: #fff; }
+    .final .lead { color: rgba(255,255,255,.78); }
+
+    footer {
+      padding: 28px clamp(18px, 5vw, 64px);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      background: #fff;
+      font-size: 14px;
+    }
+
+    @media (min-width: 720px) {
+      .nav, .top-cta { display: inline-flex; }
+      .proof-strip { grid-template-columns: repeat(3, 1fr); }
+      .trust-band { grid-template-columns: repeat(3, 1fr); }
+      .editorial { grid-template-columns: .8fr 1fr; }
+      .steps { grid-template-columns: repeat(4, 1fr); }
+      .materials { grid-template-columns: repeat(3, 1fr); }
+      .quote { grid-template-columns: 1.2fr .8fr; }
+      .faq-grid { grid-template-columns: repeat(2, 1fr); }
+      footer { flex-direction: row; justify-content: space-between; }
+    }
+
+    @media (max-width: 480px) {
+      .hero {
+        min-height: 92vh;
+        padding-top: 84px;
+      }
+      .hero-copy, .lead { font-size: 16px; }
+      .btn { width: 100%; }
+      section { padding-top: 58px; padding-bottom: 58px; }
+      .service { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="Lume & Linha">
+      <span class="mark">L</span>
+      <span>Lume & Linha</span>
+    </a>
+    <nav class="nav" aria-label="Navegacao">
+      <a href="#servicos">Servicos</a>
+      <a href="#processo">Processo</a>
+      <a href="#faq">Duvidas</a>
+    </nav>
+    <a class="top-cta" href="https://wa.me/5511960932768?text=Oi%2C%20quero%20um%20orcamento%20da%20Lume%20%26%20Linha" target="_blank" rel="noopener">Pedir orcamento</a>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-inner">
+        <span class="eyebrow">Cortinas, persianas e enxoval em Curitiba</span>
+        <h1>A casa pronta para receber luz do jeito certo.</h1>
+        <p class="hero-copy">Projetamos, medimos e instalamos cortinas, persianas e enxoval sob medida para salas e quartos com acabamento preciso, curadoria de tecidos e entrega em ate 15 dias uteis.</p>
+        <div class="hero-actions">
+          <a class="btn" href="https://wa.me/5511960932768?text=Oi%2C%20quero%20agendar%20uma%20visita%20tecnica%20da%20Lume%20%26%20Linha" target="_blank" rel="noopener">Pedir orcamento no WhatsApp</a>
+          <a class="btn secondary" href="#servicos">Ver solucoes</a>
+        </div>
+        <div class="proof-strip">
+          <div class="proof">Medição no local</div>
+          <div class="proof">Instalação propria</div>
+          <div class="proof">Curitiba e região</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="trust-band" aria-label="Diferenciais">
+      <div class="trust-item"><strong>15 dias uteis</strong><span>Prazo medio para entrega apos aprovacao do projeto.</span></div>
+      <div class="trust-item"><strong>Curadoria guiada</strong><span>Tecidos e sistemas escolhidos para rotina, privacidade e luz.</span></div>
+      <div class="trust-item"><strong>Obra limpa</strong><span>Equipe propria para medicao, instalacao e acabamento final.</span></div>
+    </section>
+
+    <section id="servicos">
+      <div class="editorial">
+        <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=82" alt="Sala com cortina clara sob medida" />
+        <div>
+          <div class="section-head">
+            <h2>Solucoes para cada ambiente, sem improviso.</h2>
+            <p class="lead">A Lume & Linha combina leitura tecnica do espaco com olhar de atelier. A visita mede janelas, incidencia de sol, altura de trilhos, rotina da familia e estilo do projeto.</p>
+          </div>
+          <div class="service-list">
+            <article class="service">
+              <span class="num">1</span>
+              <div><h3>Cortinas sob medida</h3><p>Voil, linho, blackout e composicoes em camadas para sala, quarto e home office.</p></div>
+            </article>
+            <article class="service">
+              <span class="num">2</span>
+              <div><h3>Persianas e telas solares</h3><p>Privacidade, controle de calor e acabamento discreto para apartamentos e escritorios.</p></div>
+            </article>
+            <article class="service">
+              <span class="num">3</span>
+              <div><h3>Enxoval coordenado</h3><p>Colchas, almofadas e detalhes texteis alinhados ao mesmo conceito visual.</p></div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="process" id="processo">
+      <div class="section-head">
+        <h2>Do primeiro contato ao trilho instalado.</h2>
+        <p class="lead">Um processo curto, claro e acompanhado. Ideal para quem esta recebendo as chaves, finalizando reforma ou entregando projeto de interiores.</p>
+      </div>
+      <div class="steps">
+        <article class="step"><small>01</small><h3>Briefing</h3><p>Voce envia medidas, fotos ou planta e conta o que precisa resolver.</p></article>
+        <article class="step"><small>02</small><h3>Visita</h3><p>Medimos no local, avaliamos luz e confirmamos pontos de instalacao.</p></article>
+        <article class="step"><small>03</small><h3>Curadoria</h3><p>Selecionamos tecidos, sistemas e acabamentos dentro do orcamento.</p></article>
+        <article class="step"><small>04</small><h3>Instalacao</h3><p>A equipe propria instala, ajusta caimento e entrega o ambiente pronto.</p></article>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-head">
+        <h2>Materiais escolhidos para durar no uso real.</h2>
+        <p class="lead">Cada tecido ou sistema entra no projeto por funcao: bloquear luz, suavizar vista, reduzir calor, dar privacidade ou completar a atmosfera.</p>
+      </div>
+      <div class="materials">
+        <article class="material-card">
+          <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1000&q=82" alt="Quarto com cortina clara" />
+          <div><h3>Quartos</h3><p>Blackout, forro e camadas leves para sono, aconchego e privacidade.</p></div>
+        </article>
+        <article class="material-card">
+          <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1000&q=82" alt="Sala contemporanea com luz natural" />
+          <div><h3>Salas</h3><p>Cortinas com presenca, caimento correto e proporcao para pe direito e layout.</p></div>
+        </article>
+        <article class="material-card">
+          <img src="https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1000&q=82" alt="Ambiente com persiana discreta" />
+          <div><h3>Home office</h3><p>Telas solares e persianas que controlam reflexo sem escurecer o dia.</p></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="quote">
+      <div>
+        <blockquote>"A cortina certa muda a luz, a privacidade e a sensacao de acabamento do ambiente."</blockquote>
+        <p>Indicada para apartamentos novos, reformas com arquiteto e familias que querem resolver tudo com uma unica equipe.</p>
+      </div>
+      <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1000&q=82" alt="Detalhe de sala com tecido e luz natural" />
+    </section>
+
+    <section id="faq">
+      <div class="section-head">
+        <h2>Duvidas comuns antes da visita.</h2>
+      </div>
+      <div class="faq-grid">
+        <article class="faq"><h3>Preciso ter as medidas?</h3><p>Nao. Fotos ajudam no primeiro contato, mas a medicao final e feita no local.</p></article>
+        <article class="faq"><h3>Atendem arquitetos?</h3><p>Sim. Trabalhamos com especificacao, amostras e alinhamento com o conceito do projeto.</p></article>
+        <article class="faq"><h3>Instalam em Curitiba toda?</h3><p>Sim, com atendimento tambem na regiao metropolitana conforme agenda.</p></article>
+        <article class="faq"><h3>O prazo e sempre 15 dias?</h3><p>Esse e o prazo medio apos aprovacao, variando por tecido, volume e complexidade.</p></article>
+      </div>
+    </section>
+
+    <section class="final">
+      <span class="eyebrow">Visita tecnica + orcamento</span>
+      <h2>Vamos desenhar a luz da sua casa?</h2>
+      <p class="lead">Envie uma foto da janela ou do ambiente e receba o proximo horario disponivel para medicao em Curitiba.</p>
+      <a class="btn" href="https://wa.me/5511960932768?text=Oi%2C%20quero%20um%20orcamento%20para%20cortinas%20ou%20persianas%20sob%20medida" target="_blank" rel="noopener">Chamar no WhatsApp</a>
+    </section>
+  </main>
+
+  <footer>
+    <strong>Lume & Linha</strong>
+    <span>Cortinas, persianas e enxoval sob medida em Curitiba e regiao metropolitana.</span>
+  </footer>
+</body>
+</html>
