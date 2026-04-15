@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rádio Viva | Ouça ao vivo em qualquer lugar</title>
+  <meta name="description" content="Ouça a Rádio Viva ao vivo, confira a programação de segunda a sexta e conheça a equipe que faz a rádio acontecer." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #07131f;
+      --bg-soft: #0e2135;
+      --panel: rgba(10, 24, 39, 0.84);
+      --panel-soft: rgba(255,255,255,0.06);
+      --line: rgba(255,255,255,0.1);
+      --text: #f7fbff;
+      --muted: #c7d7ea;
+      --gold: #f3c45b;
+      --gold-soft: #ffd979;
+      --cyan: #5ed9ff;
+      --emerald: #7ff2bb;
+      --shadow: 0 28px 70px rgba(0,0,0,0.34);
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Manrope", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 18% 8%, rgba(243,196,91,0.18), transparent 26%),
+        radial-gradient(circle at 82% 12%, rgba(94,217,255,0.14), transparent 26%),
+        linear-gradient(180deg, #06101a 0%, #0a1827 44%, #050b12 100%);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(90deg, rgba(255,255,255,0.028) 1px, transparent 1px),
+        linear-gradient(rgba(255,255,255,0.028) 1px, transparent 1px);
+      background-size: 32px 32px;
+      mask-image: linear-gradient(180deg, rgba(0,0,0,0.62), transparent 86%);
+    }
+
+    a { color: inherit; text-decoration: none; }
+    .wrap {
+      width: 100%;
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(18px);
+      background: rgba(4, 11, 19, 0.78);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .topbar-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1rem 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      width: 3rem;
+      height: 3rem;
+      border-radius: 1rem;
+      display: grid;
+      place-items: center;
+      font-family: "Syne", sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      color: #041019;
+      background: linear-gradient(135deg, var(--gold-soft), var(--cyan));
+      box-shadow: 0 16px 30px rgba(94,217,255,0.18);
+    }
+
+    .brand-text strong,
+    h1, h2, h3,
+    .eyebrow,
+    .time,
+    .presenter-name,
+    .final-title {
+      font-family: "Syne", sans-serif;
+    }
+
+    .brand-text strong {
+      display: block;
+      font-size: 1rem;
+      line-height: 1;
+    }
+
+    .brand-text span {
+      display: block;
+      margin-top: 0.2rem;
+      color: var(--muted);
+      font-size: 0.84rem;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      color: var(--muted);
+      font-size: 0.95rem;
+      white-space: nowrap;
+    }
+
+    .nav-links a + a { margin-left: 1rem; }
+
+    .button,
+    .button-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.55rem;
+      min-height: 52px;
+      padding: 0.95rem 1.35rem;
+      border-radius: 999px;
+      font-weight: 800;
+      transition: transform 160ms ease, box-shadow 160ms ease;
+    }
+
+    .button:hover,
+    .button-secondary:hover { transform: translateY(-2px); }
+
+    .button {
+      background: linear-gradient(135deg, var(--gold-soft), var(--gold));
+      color: #091320;
+      box-shadow: 0 18px 34px rgba(243,196,91,0.22);
+    }
+
+    .button-secondary {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--text);
+    }
+
+    section { padding: 2.2rem 0; }
+
+    .hero {
+      padding-top: 4.5rem;
+      position: relative;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 1.4rem;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      padding: 0.55rem 0.82rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: var(--muted);
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .live-dot {
+      width: 0.6rem;
+      height: 0.6rem;
+      border-radius: 50%;
+      background: #ff637d;
+      box-shadow: 0 0 0 0 rgba(255,99,125,0.72);
+      animation: pulse 1.8s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(255,99,125,0.72); }
+      70% { box-shadow: 0 0 0 14px rgba(255,99,125,0); }
+      100% { box-shadow: 0 0 0 0 rgba(255,99,125,0); }
+    }
+
+    h1 {
+      margin: 1rem 0 1rem;
+      font-size: clamp(2.8rem, 5.9vw, 5.4rem);
+      line-height: 0.95;
+      letter-spacing: -0.05em;
+      max-width: 11ch;
+    }
+
+    .gradient {
+      background: linear-gradient(135deg, #ffffff 18%, var(--emerald) 58%, var(--cyan) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .lead,
+    .section-copy,
+    .schedule-copy,
+    .presenter-copy,
+    .contact-copy,
+    footer p {
+      color: var(--muted);
+      line-height: 1.85;
+      font-size: 1.04rem;
+      margin: 0;
+    }
+
+    .hero-actions,
+    .hero-trust,
+    .schedule-grid,
+    .presenters-grid,
+    .footer-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .hero-actions { margin-top: 1.8rem; }
+
+    .hero-trust {
+      margin-top: 1.5rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+      gap: 0.8rem 1.2rem;
+    }
+
+    .hero-trust span::before {
+      content: "◉";
+      color: var(--gold-soft);
+      margin-right: 0.45rem;
+    }
+
+    .panel,
+    .quote-band,
+    .schedule-card,
+    .presenter-card,
+    .final-panel {
+      border-radius: 2rem;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      box-shadow: var(--shadow);
+    }
+
+    .hero-panel {
+      padding: 1.3rem;
+      position: relative;
+      overflow: hidden;
+      min-height: 560px;
+    }
+
+    .hero-panel::before {
+      content: "";
+      position: absolute;
+      inset: auto -12% -14% auto;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(243,196,91,0.18), transparent 68%);
+      pointer-events: none;
+    }
+
+    .hero-panel-inner {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 1rem;
+      height: 100%;
+    }
+
+    .hero-player {
+      padding: 1.1rem;
+      border-radius: 1.4rem;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .hero-player-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: center;
+      margin-bottom: 0.9rem;
+    }
+
+    .hero-player-top strong {
+      display: block;
+      font-size: 1rem;
+    }
+
+    .hero-player-top span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.86rem;
+      margin-top: 0.2rem;
+    }
+
+    .live-pill {
+      padding: 0.45rem 0.7rem;
+      border-radius: 999px;
+      background: rgba(255,99,125,0.14);
+      border: 1px solid rgba(255,99,125,0.26);
+      color: #ffdce4;
+      font-size: 0.8rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    audio {
+      width: 100%;
+      margin-top: 0.2rem;
+      filter: saturate(1.08) hue-rotate(-8deg);
+    }
+
+    .wave-band {
+      display: grid;
+      grid-template-columns: repeat(16, 1fr);
+      gap: 0.3rem;
+      align-items: end;
+      height: 82px;
+      margin: 1rem 0 0.3rem;
+    }
+
+    .wave-band span {
+      display: block;
+      border-radius: 999px;
+      background: linear-gradient(180deg, var(--cyan), var(--gold));
+      opacity: 0.88;
+      animation: wave 1.6s ease-in-out infinite;
+    }
+
+    .wave-band span:nth-child(1) { height: 28%; animation-delay: .1s; }
+    .wave-band span:nth-child(2) { height: 52%; animation-delay: .2s; }
+    .wave-band span:nth-child(3) { height: 72%; animation-delay: .4s; }
+    .wave-band span:nth-child(4) { height: 36%; animation-delay: .6s; }
+    .wave-band span:nth-child(5) { height: 58%; animation-delay: .3s; }
+    .wave-band span:nth-child(6) { height: 84%; animation-delay: .2s; }
+    .wave-band span:nth-child(7) { height: 44%; animation-delay: .7s; }
+    .wave-band span:nth-child(8) { height: 68%; animation-delay: .5s; }
+    .wave-band span:nth-child(9) { height: 34%; animation-delay: .1s; }
+    .wave-band span:nth-child(10) { height: 76%; animation-delay: .4s; }
+    .wave-band span:nth-child(11) { height: 56%; animation-delay: .6s; }
+    .wave-band span:nth-child(12) { height: 82%; animation-delay: .2s; }
+    .wave-band span:nth-child(13) { height: 48%; animation-delay: .5s; }
+    .wave-band span:nth-child(14) { height: 62%; animation-delay: .7s; }
+    .wave-band span:nth-child(15) { height: 32%; animation-delay: .3s; }
+    .wave-band span:nth-child(16) { height: 70%; animation-delay: .6s; }
+
+    @keyframes wave {
+      0%, 100% { transform: scaleY(0.72); opacity: .78; }
+      50% { transform: scaleY(1.08); opacity: 1; }
+    }
+
+    .hero-program-highlight {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.8rem;
+      margin-top: 1rem;
+    }
+
+    .hero-program-highlight div {
+      padding: 0.9rem;
+      border-radius: 1.15rem;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .hero-program-highlight strong {
+      display: block;
+      font-size: 0.95rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .hero-program-highlight span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.86rem;
+      line-height: 1.55;
+    }
+
+    .section-heading {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .section-heading h2 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 0.95;
+      max-width: 12ch;
+    }
+
+    .section-heading p {
+      max-width: 56ch;
+    }
+
+    .quote-band {
+      padding: 1.35rem 1.4rem;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .quote-band .quote {
+      font-family: "Syne", sans-serif;
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      line-height: 1.08;
+      margin: 0;
+    }
+
+    .quote-band .quote small {
+      display: block;
+      font-family: "Manrope", sans-serif;
+      font-size: 0.94rem;
+      color: var(--muted);
+      margin-top: 0.75rem;
+      line-height: 1.7;
+    }
+
+    .quote-side {
+      padding-left: 1rem;
+      border-left: 1px solid rgba(255,255,255,0.08);
+      color: var(--muted);
+      line-height: 1.75;
+      font-size: 0.98rem;
+    }
+
+    .schedule-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .schedule-card {
+      padding: 1.2rem;
+      display: flex;
+      gap: 1rem;
+      align-items: start;
+    }
+
+    .time {
+      min-width: 72px;
+      font-size: 1.15rem;
+      line-height: 1;
+      color: var(--gold-soft);
+    }
+
+    .schedule-card h3 {
+      margin: 0 0 0.3rem;
+      font-size: 1.2rem;
+      line-height: 1.05;
+    }
+
+    .schedule-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 0.96rem;
+    }
+
+    .presenters-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .hero-card-bottom {
+      padding: 1rem 1.05rem;
+      border-radius: 1.35rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .hero-card-bottom strong {
+      display: block;
+      margin-bottom: 0.7rem;
+      font-size: 0.98rem;
+    }
+
+    .line-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.7rem;
+    }
+
+    .line {
+      padding: 0.75rem 0.85rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--muted);
+      text-align: center;
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .presenter-card {
+      padding: 1.15rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      position: relative;
+      min-height: 100%;
+    }
+
+    .presenter-top {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 0.9rem;
+    }
+
+    .presenter-chip {
+      width: 3rem;
+      height: 3rem;
+      border-radius: 0.95rem;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      background: linear-gradient(135deg, rgba(243,196,91,0.18), rgba(94,217,255,0.18));
+      border: 1px solid rgba(255,255,255,0.08);
+      font-family: "Syne", sans-serif;
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--text);
+    }
+
+    .presenter-name {
+      display: block;
+      font-size: 1.08rem;
+      margin-bottom: 0.28rem;
+      line-height: 1.15;
+    }
+
+    .presenter-meta {
+      display: block;
+      color: var(--gold-soft);
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 0.1rem;
+    }
+
+    .presenter-program {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    .presenter-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.68;
+      font-size: 0.93rem;
+    }
+
+    .final-panel {
+      padding: 1.6rem;
+      background:
+        radial-gradient(circle at top right, rgba(243,196,91,0.12), transparent 24%),
+        linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+    }
+
+    .final-title {
+      margin: 0 0 0.8rem;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 0.95;
+      max-width: 12ch;
+    }
+
+    .final-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+      margin-top: 1.3rem;
+    }
+
+    .contact-lines {
+      display: grid;
+      gap: 0.85rem;
+      margin-top: 1.3rem;
+    }
+
+    .contact-line {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding-top: 0.85rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      color: var(--muted);
+    }
+
+    .contact-line strong { color: var(--text); }
+
+    footer {
+      padding: 2rem 0 3rem;
+    }
+
+    .footer-grid {
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 1.35rem;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    @media (max-width: 980px) {
+      .hero-grid,
+      .quote-band,
+      .schedule-grid,
+      .presenters-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .quote-side {
+        padding-left: 0;
+        border-left: none;
+      }
+
+      .nav-links { display: none; }
+      h1, .section-heading h2, .final-title { max-width: 100%; }
+      .section-heading { flex-direction: column; align-items: start; }
+    }
+
+    @media (max-width: 640px) {
+      .topbar-inner,
+      .footer-grid { flex-direction: column; align-items: start; }
+      .nav { width: 100%; justify-content: space-between; }
+      .hero { padding-top: 3rem; }
+      .hero-program-highlight,
+      .hero-card-bottom .line-list { grid-template-columns: 1fr; }
+      .hero-actions,
+      .final-actions { flex-direction: column; }
+      .button,
+      .button-secondary { width: 100%; }
+      .contact-line { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap topbar-inner">
+      <a class="brand" href="#inicio" aria-label="Rádio Viva">
+        <div class="brand-mark">RV</div>
+        <div class="brand-text">
+          <strong>Rádio Viva</strong>
+          <span>Transmissão ao vivo, programação e conexão diária</span>
+        </div>
+      </a>
+      <div class="nav">
+        <nav class="nav-links" aria-label="Navegação principal">
+          <a href="#ao-vivo">Ao vivo</a>
+          <a href="#programacao">Programação</a>
+          <a href="#equipe">Equipe</a>
+          <a href="#contato">Contato</a>
+        </nav>
+        <a class="button" href="#ao-vivo">Ouvir agora</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="inicio">
+    <section class="hero">
+      <div class="wrap hero-grid">
+        <div>
+          <div class="eyebrow"><span class="live-dot"></span>no ar de segunda a sexta</div>
+          <h1>Rádio Viva ao vivo, programação e equipe em um só lugar</h1>
+          <p class="lead">Ouça a transmissão agora, confira os horários de segunda a sexta e acompanhe quem conduz cada faixa da programação.</p>
+          <div class="hero-actions">
+            <a class="button" href="#ao-vivo">Ouvir ao vivo</a>
+            <a class="button-secondary" href="#programacao">Ver programação completa</a>
+          </div>
+          <div class="hero-trust" aria-label="Destaques da rádio">
+            <span>Transmissão online em destaque</span>
+            <span>Grade de segunda a sexta</span>
+            <span>Espaço para ouvintes e anunciantes</span>
+          </div>
+        </div>
+
+        <div class="panel hero-panel" id="ao-vivo">
+          <div class="hero-panel-inner">
+            <div class="hero-player">
+              <div class="hero-player-top">
+                <div>
+                  <strong>Rádio Viva ao vivo</strong>
+                  <span>Clique, ouça e acompanhe onde estiver</span>
+                </div>
+                <div class="live-pill">AO VIVO</div>
+              </div>
+              <audio controls preload="none">
+                <source src="https://stream-178.zeno.fm/dmxa70ebsm0uv?" type="audio/mpeg" />
+                Seu navegador não suporta áudio embutido.
+              </audio>
+              <div class="wave-band" aria-hidden="true">
+                <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+              </div>
+            </div>
+
+            <div class="hero-program-highlight">
+              <div>
+                <strong>Manhã</strong>
+                <span>Cenário Musical às 5h e Todo Mundo Ouve 1ª Edição às 8h.</span>
+              </div>
+              <div>
+                <strong>Tarde</strong>
+                <span>Uma Hora de Músicas às 12h e Todo Mundo Ouve 2ª Edição às 13h.</span>
+              </div>
+              <div>
+                <strong>Noite</strong>
+                <span>As 10 Mais da Viva às 18h, Boa Noite Viva às 19h e Som do Céu às 21h.</span>
+              </div>
+              <div>
+                <strong>Comunidade</strong>
+                <span>Espaço das Igrejas às 23h encerrando a programação do dia.</span>
+              </div>
+            </div>
+
+            <div class="hero-card-bottom">
+              <strong>Tudo em um só lugar</strong>
+              <div class="line-list">
+                <div class="line">Ouvir agora</div>
+                <div class="line">Ver horários</div>
+                <div class="line">Conhecer a equipe</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap quote-band">
+        <p class="quote">No site da Rádio Viva você encontra tudo com clareza.<small>Transmissão ao vivo, horários da semana e as vozes que fazem parte da programação diária.</small></p>
+        <div class="quote-side">É uma página pensada para quem quer abrir, ouvir e localizar rapidamente o programa que mais gosta.</div>
+      </div>
+    </section>
+
+    <section id="programacao">
+      <div class="wrap">
+        <div class="section-heading">
+          <h2>Programação de segunda a sexta</h2>
+          <p class="schedule-copy">Escolha seu horário favorito e acompanhe a Rádio Viva do começo da manhã até o fim da noite.</p>
+        </div>
+        <div class="schedule-grid">
+          <article class="schedule-card">
+            <div class="time">5h</div>
+            <div>
+              <h3>Cenário Musical</h3>
+              <p>Com Camila Souza, abrindo o dia com música e companhia logo cedo.</p>
+            </div>
+          </article>
+          <article class="schedule-card">
+            <div class="time">8h</div>
+            <div>
+              <h3>Todo Mundo Ouve 1ª Edição</h3>
+              <p>Com Walbert Xavier, trazendo informação, presença e ritmo para a manhã.</p>
+            </div>
+          </article>
+          <article class="schedule-card">
+            <div class="time">12h</div>
+            <div>
+              <h3>Uma Hora de Músicas</h3>
+              <p>Com Pr. Aloizio Cordeiro, no intervalo do meio-dia com repertório especial.</p>
+            </div>
+          </article>
+          <article class="schedule-card">
+            <div class="time">13h</div>
+            <div>
+              <h3>Todo Mundo Ouve 2ª Edição</h3>
+              <p>Com Samuel Rodrigues, continuando a programação da tarde com energia.</p>
+            </div>
+          </article>
+          <article class="schedule-card">
+            <div class="time">18h</div>
+            <div>
+              <h3>As 10 Mais da Viva</h3>
+              <p>Com Joséli Xavier, reunindo os destaques musicais da programação.</p>
+            </div>
+          </article>
+          <article class="schedule-card">
+            <div class="time">19h</div>
+            <div>
+              <h3>Boa Noite Viva</h3>
+              <p>Com Ronaldo Santos, recebendo a noite com voz próxima e acolhedora.</p>
+            </div>
+          </article>
+          <article class="schedule-card">
+            <div class="time">21h</div>
+            <div>
+              <h3>Som do Céu</h3>
+              <p>Com Rosilaine Xavier, em uma faixa pensada para escuta, paz e conexão.</p>
+            </div>
+          </article>
+          <article class="schedule-card">
+            <div class="time">23h</div>
+            <div>
+              <h3>Espaço das Igrejas</h3>
+              <p>Com Carlos Almeida, encerrando a grade com espaço dedicado à comunidade.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="equipe">
+      <div class="wrap">
+        <div class="section-heading">
+          <h2>Equipe e vozes da programação</h2>
+          <p class="presenter-copy">Conheça quem conduz cada faixa da Rádio Viva ao longo do dia.</p>
+        </div>
+        <div class="presenters-grid">
+          <article class="presenter-card">
+            <div class="presenter-top">
+              <div>
+                <span class="presenter-name">Camila Souza</span>
+                <span class="presenter-meta">5h</span>
+                <span class="presenter-program">Cenário Musical</span>
+              </div>
+              <div class="presenter-chip">CS</div>
+            </div>
+            <p>Começa a manhã com música e companhia para quem já está em movimento logo cedo.</p>
+          </article>
+          <article class="presenter-card">
+            <div class="presenter-top">
+              <div>
+                <span class="presenter-name">Walbert Xavier</span>
+                <span class="presenter-meta">8h</span>
+                <span class="presenter-program">Todo Mundo Ouve 1ª Edição</span>
+              </div>
+              <div class="presenter-chip">WX</div>
+            </div>
+            <p>Conduz a manhã com presença e ritmo para acompanhar a rotina dos ouvintes.</p>
+          </article>
+          <article class="presenter-card">
+            <div class="presenter-top">
+              <div>
+                <span class="presenter-name">Pr. Aloizio Cordeiro</span>
+                <span class="presenter-meta">12h</span>
+                <span class="presenter-program">Uma Hora de Músicas</span>
+              </div>
+              <div class="presenter-chip">AC</div>
+            </div>
+            <p>Marca o meio-dia com repertório especial em uma pausa musical no centro do dia.</p>
+          </article>
+          <article class="presenter-card">
+            <div class="presenter-top">
+              <div>
+                <span class="presenter-name">Samuel Rodrigues</span>
+                <span class="presenter-meta">13h</span>
+                <span class="presenter-program">Todo Mundo Ouve 2ª Edição</span>
+              </div>
+              <div class="presenter-chip">SR</div>
+            </div>
+            <p>Dá sequência à programação da tarde com energia e continuidade logo após o almoço.</p>
+          </article>
+          <article class="presenter-card">
+            <div class="presenter-top">
+              <div>
+                <span class="presenter-name">Joséli Xavier</span>
+                <span class="presenter-meta">18h</span>
+                <span class="presenter-program">As 10 Mais da Viva</span>
+              </div>
+              <div class="presenter-chip">JX</div>
+            </div>
+            <p>Reúne os destaques musicais da grade em uma das faixas mais aguardadas do dia.</p>
+          </article>
+          <article class="presenter-card">
+            <div class="presenter-top">
+              <div>
+                <span class="presenter-name">Ronaldo Santos</span>
+                <span class="presenter-meta">19h</span>
+                <span class="presenter-program">Boa Noite Viva</span>
+              </div>
+              <div class="presenter-chip">RS</div>
+            </div>
+            <p>Recebe a noite com voz próxima e clima acolhedor para quem segue ouvindo a rádio.</p>
+          </article>
+          <article class="presenter-card">
+            <div class="presenter-top">
+              <div>
+                <span class="presenter-name">Rosilaine Xavier</span>
+                <span class="presenter-meta">21h</span>
+                <span class="presenter-program">Som do Céu</span>
+              </div>
+              <div class="presenter-chip">RX</div>
+            </div>
+            <p>Conduz uma faixa de escuta mais contemplativa e conectada com o público da noite.</p>
+          </article>
+          <article class="presenter-card">
+            <div class="presenter-top">
+              <div>
+                <span class="presenter-name">Carlos Almeida</span>
+                <span class="presenter-meta">23h</span>
+                <span class="presenter-program">Espaço das Igrejas</span>
+              </div>
+              <div class="presenter-chip">CA</div>
+            </div>
+            <p>Encerra a programação com espaço dedicado à comunidade e à mensagem.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contato">
+      <div class="wrap final-panel">
+        <h2 class="final-title">Ouça a Rádio Viva em qualquer horário do dia</h2>
+        <p class="contact-copy">Acompanhe a transmissão ao vivo, veja a programação da semana e conheça cada voz que faz parte da rádio.</p>
+        <div class="final-actions">
+          <a class="button" href="#ao-vivo">Ouvir ao vivo</a>
+          <a class="button-secondary" href="#programacao">Ver programação</a>
+        </div>
+        <div class="contact-lines" aria-label="Resumo final">
+          <div class="contact-line"><span>Transmissão</span><strong>Player ao vivo incorporado</strong></div>
+          <div class="contact-line"><span>Grade</span><strong>Segunda a sexta com 8 faixas</strong></div>
+          <div class="contact-line"><span>Público</span><strong>Ouvintes, comunidade e anunciantes</strong></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-grid">
+      <p>Rádio Viva com transmissão ao vivo, programação diária e acesso rápido para ouvir de onde estiver.</p>
+      <a href="#ao-vivo">Ouvir ao vivo</a>
+    </div>
+  </footer>
+</body>
+</html>
