@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Forno e Fogo Pizzaria Artesanal, em Boa Viagem, Recife. Pizza de forno a lenha, delivery e salão. Peça no WhatsApp." />
+  <meta name="theme-color" content="#8c3426" />
+  <title>Forno e Fogo Pizzaria Artesanal | Boa Viagem, Recife</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --brick: #8a3125;
+      --brick-dark: #5b2019;
+      --cream: #f7efe2;
+      --paper: #fffaf2;
+      --charcoal: #251712;
+      --gold: #d7a15a;
+      --muted: #6d5a50;
+      --line: rgba(37, 23, 18, 0.12);
+      --shadow: 0 18px 40px rgba(59, 20, 12, 0.18);
+      --radius: 26px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Manrope", sans-serif;
+      color: var(--charcoal);
+      background:
+        radial-gradient(circle at top left, rgba(215, 161, 90, 0.20), transparent 28%),
+        radial-gradient(circle at 80% 0%, rgba(138, 49, 37, 0.14), transparent 32%),
+        linear-gradient(180deg, #fffdf8 0%, #f8f1e7 56%, #f3e8d9 100%);
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.05), rgba(255,255,255,0.05)),
+        radial-gradient(rgba(37,23,18,0.06) 1px, transparent 1px);
+      background-size: auto, 12px 12px;
+      mix-blend-mode: multiply;
+      opacity: 0.22;
+      z-index: 0;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    .page { position: relative; z-index: 1; }
+    .wrap {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      padding: 18px 0 8px;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+    .mark {
+      width: 44px;
+      height: 44px;
+      border-radius: 15px 15px 18px 18px;
+      background: linear-gradient(180deg, #b34a39 0%, #7a271d 100%);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.28), 0 10px 24px rgba(90, 26, 18, 0.22);
+      display: grid;
+      place-items: center;
+      color: #fff7eb;
+      font-size: 20px;
+    }
+    .brand strong {
+      font-family: "Fraunces", serif;
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+    .brand span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.82rem;
+      margin-top: 2px;
+      font-weight: 600;
+    }
+
+    .hero {
+      padding: 10px 0 34px;
+    }
+    .hero-grid {
+      display: grid;
+      gap: 22px;
+      align-items: center;
+    }
+    .eyebrow {
+      display: inline-flex;
+      gap: 10px;
+      align-items: center;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 250, 242, 0.82);
+      border: 1px solid rgba(138, 49, 37, 0.14);
+      color: var(--brick-dark);
+      font-size: 0.88rem;
+      font-weight: 700;
+      width: fit-content;
+      box-shadow: 0 8px 24px rgba(90, 26, 18, 0.06);
+    }
+    h1, h2, h3, .big {
+      font-family: "Fraunces", serif;
+      margin: 0;
+      letter-spacing: -0.02em;
+    }
+    h1 {
+      font-size: clamp(2.7rem, 10vw, 5.8rem);
+      line-height: 0.94;
+      max-width: 10ch;
+      margin-top: 14px;
+      color: var(--brick-dark);
+    }
+    .lead {
+      margin: 18px 0 0;
+      font-size: 1.08rem;
+      line-height: 1.65;
+      color: var(--muted);
+      max-width: 36rem;
+    }
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 22px;
+    }
+    .btn {
+      min-height: 50px;
+      padding: 14px 18px;
+      border-radius: 16px;
+      font-weight: 800;
+      font-size: 0.98rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border: 1px solid transparent;
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+      will-change: transform;
+    }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-primary {
+      background: linear-gradient(180deg, #b44838 0%, #8a3125 100%);
+      color: #fff8ef;
+      box-shadow: 0 14px 28px rgba(138, 49, 37, 0.26);
+    }
+    .btn-secondary {
+      background: rgba(255, 250, 242, 0.78);
+      border-color: rgba(138, 49, 37, 0.18);
+      color: var(--brick-dark);
+    }
+
+    .hero-proof {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+    .pill {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 250, 242, 0.84);
+      border: 1px solid rgba(138, 49, 37, 0.1);
+      color: var(--brick-dark);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 420px;
+      border-radius: calc(var(--radius) + 10px);
+      overflow: hidden;
+      background: linear-gradient(180deg, #f0d9bc 0%, #b25a41 42%, #6c251c 100%);
+      box-shadow: var(--shadow);
+      isolation: isolate;
+    }
+    .hero-visual::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.05), rgba(0,0,0,0.28));
+      z-index: 1;
+    }
+    .hero-visual img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      filter: saturate(1.05) contrast(1.05);
+    }
+    .hero-card {
+      position: absolute;
+      right: 16px;
+      bottom: 16px;
+      z-index: 2;
+      max-width: 240px;
+      background: rgba(255, 250, 242, 0.92);
+      border: 1px solid rgba(255,255,255,0.28);
+      border-radius: 20px;
+      padding: 14px;
+      box-shadow: 0 16px 34px rgba(0,0,0,0.18);
+    }
+    .hero-card .small {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      color: var(--brick);
+      font-weight: 800;
+    }
+    .hero-card p {
+      margin: 8px 0 0;
+      font-size: 0.94rem;
+      line-height: 1.45;
+      color: var(--charcoal);
+    }
+
+    .section {
+      padding: 22px 0 0;
+    }
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 14px;
+    }
+    .section h2 {
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      color: var(--brick-dark);
+    }
+    .section p.kicker {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.98rem;
+      line-height: 1.6;
+      max-width: 34rem;
+    }
+
+    .panel {
+      background: rgba(255, 250, 242, 0.78);
+      border: 1px solid rgba(138, 49, 37, 0.12);
+      border-radius: var(--radius);
+      box-shadow: 0 20px 52px rgba(62, 25, 16, 0.07);
+    }
+
+    .triple {
+      display: grid;
+      gap: 14px;
+    }
+    .feature {
+      overflow: hidden;
+      position: relative;
+      padding: 14px;
+      min-height: 260px;
+    }
+    .feature figure {
+      margin: 0;
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+      min-height: 150px;
+    }
+    .feature img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      aspect-ratio: 16 / 10;
+    }
+    .feature .tag {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      z-index: 2;
+      background: rgba(255, 250, 242, 0.94);
+      color: var(--brick-dark);
+      font-size: 0.76rem;
+      font-weight: 800;
+      padding: 8px 10px;
+      border-radius: 999px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .feature .body {
+      padding: 14px 4px 2px;
+    }
+    .feature h3 {
+      font-size: 1.5rem;
+      color: var(--charcoal);
+      margin-bottom: 8px;
+    }
+    .feature p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 0.98rem;
+    }
+
+    .steps {
+      display: grid;
+      gap: 14px;
+    }
+    .step {
+      padding: 18px;
+      display: grid;
+      gap: 10px;
+    }
+    .step .num {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(180deg, #b24c3a, #8a3125);
+      color: #fff8ef;
+      font-weight: 900;
+      box-shadow: 0 12px 22px rgba(138, 49, 37, 0.20);
+    }
+    .step h3 {
+      font-size: 1.25rem;
+      margin: 0;
+    }
+    .step p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .loc-grid {
+      display: grid;
+      gap: 14px;
+    }
+    .loc-box {
+      padding: 18px;
+    }
+    .loc-box p {
+      margin: 10px 0 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .loc-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 16px;
+    }
+    .meta {
+      padding: 9px 12px;
+      border-radius: 999px;
+      background: rgba(138, 49, 37, 0.07);
+      border: 1px solid rgba(138, 49, 37, 0.12);
+      color: var(--brick-dark);
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+
+    .faq {
+      display: grid;
+      gap: 12px;
+    }
+    details {
+      background: rgba(255, 250, 242, 0.82);
+      border: 1px solid rgba(138, 49, 37, 0.12);
+      border-radius: 18px;
+      padding: 0 16px;
+      box-shadow: 0 10px 22px rgba(62, 25, 16, 0.05);
+    }
+    summary {
+      list-style: none;
+      cursor: pointer;
+      min-height: 56px;
+      display: flex;
+      align-items: center;
+      font-weight: 800;
+      color: var(--charcoal);
+    }
+    summary::-webkit-details-marker { display: none; }
+    details p {
+      margin: 0 0 16px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .final-cta {
+      margin: 26px 0 34px;
+      padding: 20px;
+      background:
+        linear-gradient(135deg, rgba(138,49,37,0.98), rgba(90,31,24,0.98)),
+        #8a3125;
+      color: #fff9f1;
+      border-radius: calc(var(--radius) + 4px);
+      box-shadow: 0 24px 50px rgba(74, 24, 16, 0.26);
+      overflow: hidden;
+      position: relative;
+    }
+    .final-cta::after {
+      content: "";
+      position: absolute;
+      inset: auto -20% -60% auto;
+      width: 260px;
+      height: 260px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.08);
+    }
+    .final-cta h2 {
+      color: #fff7ef;
+      margin-bottom: 10px;
+    }
+    .final-cta p {
+      margin: 0;
+      max-width: 42rem;
+      line-height: 1.7;
+      color: rgba(255, 250, 242, 0.88);
+    }
+    .final-cta .cta-row { margin-top: 18px; }
+    .final-cta .btn-secondary {
+      background: rgba(255,255,255,0.12);
+      color: #fff8ef;
+      border-color: rgba(255,255,255,0.18);
+    }
+
+    .footer {
+      padding: 0 0 40px;
+      color: rgba(37, 23, 18, 0.68);
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    .sticky-cta {
+      position: sticky;
+      bottom: 12px;
+      z-index: 5;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin: 14px 0 0;
+    }
+    .sticky-cta .btn { width: 100%; }
+
+    @media (min-width: 760px) {
+      .topbar { padding-top: 24px; }
+      .hero { padding-top: 18px; }
+      .hero-grid { grid-template-columns: 1.02fr 0.98fr; gap: 30px; }
+      .hero-visual { min-height: 620px; }
+      .triple { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .steps { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .loc-grid { grid-template-columns: 0.94fr 1.06fr; }
+      .sticky-cta { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .feature { min-height: 100%; }
+    }
+
+    @media (max-width: 759px) {
+      .section-head { display: block; }
+      .section-head p.kicker { margin-top: 8px; }
+      .hero-visual { min-height: 360px; }
+      .hero-card { left: 16px; right: 16px; max-width: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="wrap">
+      <header class="topbar">
+        <a class="brand" href="#topo" aria-label="Forno e Fogo Pizzaria Artesanal, voltar ao topo">
+          <div class="mark">🔥</div>
+          <div>
+            <strong>Forno e Fogo</strong>
+            <span>Pizzaria Artesanal</span>
+          </div>
+        </a>
+      </header>
+
+      <section class="hero" id="topo">
+        <div class="hero-grid">
+          <div>
+            <div class="eyebrow">Boa Viagem, Recife · forno a lenha de verdade</div>
+            <h1>Pizza artesanal com fogo, alma e borda viva.</h1>
+            <p class="lead">Margherita clássica, calabresa generosa e a doce de Nutella com morango, tudo feito para delivery e salão, com aquele sabor rústico que só o forno a lenha entrega.</p>
+            <div class="cta-row">
+              <a class="btn btn-primary" href="https://wa.me/5581998887766?text=Ol%C3%A1%2C%20quero%20pedir%20na%20Forno%20e%20Fogo%20Pizzaria%20Artesanal." target="_blank" rel="noreferrer">Pedir no WhatsApp</a>
+              <a class="btn btn-secondary" href="#sabores">Ver sabores estrela</a>
+            </div>
+            <div class="hero-proof" aria-label="Destaques do serviço">
+              <span class="pill">Forno a lenha</span>
+              <span class="pill">Delivery</span>
+              <span class="pill">Salão</span>
+              <span class="pill">Boa Viagem</span>
+            </div>
+          </div>
+
+          <div class="hero-visual" aria-label="Pizza artesanal em destaque">
+            <img
+              src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1200&q=80"
+              alt="Pizza artesanal italiana com manjericão e borda dourada"
+              fetchpriority="high"
+              loading="eager"
+              decoding="async"
+            />
+            <div class="hero-card">
+              <div class="small">pedido rápido</div>
+              <p>Peça pelo WhatsApp e escolha entre sair para delivery ou aproveitar o salão.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="panel loc-box">
+          <div class="section-head">
+            <h2>Cheiro de forno, clima de casa.</h2>
+            <p class="kicker">Uma pizzaria rústica, com foco no que importa, massa bem feita, ingredientes honestos e uma experiência que combina com Recife e com a mesa.</p>
+          </div>
+          <div class="hero-proof">
+            <span class="pill">Artesanal</span>
+            <span class="pill">Rústica italiana</span>
+            <span class="pill">Boa Viagem</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="sabores">
+        <div class="section-head">
+          <h2>Sabores estrela</h2>
+          <p class="kicker">Sem cardápio fechado, mas com três pedidos que já contam a história da casa.</p>
+        </div>
+        <div class="triple">
+          <article class="panel feature">
+            <figure>
+              <span class="tag">Clássica</span>
+              <img src="https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?auto=format&fit=crop&w=900&q=80" alt="Pizza margherita artesanal com tomate, queijo e manjericão" loading="lazy" decoding="async">
+            </figure>
+            <div class="body">
+              <h3>Margherita</h3>
+              <p>Tomate, queijo e manjericão em equilíbrio, com a borda tostada que faz o forno aparecer no primeiro pedaço.</p>
+            </div>
+          </article>
+
+          <article class="panel feature">
+            <figure>
+              <span class="tag">Mais pedida</span>
+              <img src="https://images.unsplash.com/photo-1571997478779-2adcbbe9ab2b?auto=format&fit=crop&w=900&q=80" alt="Pizza de calabresa artesanal em mesa rústica" loading="lazy" decoding="async">
+            </figure>
+            <div class="body">
+              <h3>Calabresa</h3>
+              <p>Fatia suculenta, aroma forte e presença de pizzaria italiana de bairro, daquelas que pedem outra rodada.</p>
+            </div>
+          </article>
+
+          <article class="panel feature">
+            <figure>
+              <span class="tag">Doce</span>
+              <img src="https://images.unsplash.com/photo-1601924582975-2a7c1b2f0c52?auto=format&fit=crop&w=900&q=80" alt="Pizza doce com cobertura cremosa e frutas vermelhas" loading="lazy" decoding="async">
+            </figure>
+            <div class="body">
+              <h3>Nutella com morango</h3>
+              <p>Final de refeição com cara de sobremesa de impacto, cremosa, brilhante e pronta para sumir da mesa rápido.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2>Como pedir</h2>
+          <p class="kicker">Fluxo simples, sem fricção, para quem quer resolver a fome rápido e com segurança.</p>
+        </div>
+        <div class="steps">
+          <article class="panel step">
+            <div class="num">1</div>
+            <h3>Chame no WhatsApp</h3>
+            <p>Abra a conversa, diga qual sabor quer e receba o atendimento direto da casa.</p>
+          </article>
+          <article class="panel step">
+            <div class="num">2</div>
+            <h3>Escolha delivery ou salão</h3>
+            <p>Você decide se a pizza vai até você ou se vira jantar no clima da casa.</p>
+          </article>
+          <article class="panel step">
+            <div class="num">3</div>
+            <h3>Saboreie sem enrolação</h3>
+            <p>Da margherita ao doce de Nutella, o foco é sair quente e com cara de feito na hora.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="loc-grid">
+          <div class="panel loc-box">
+            <div class="section-head">
+              <h2>Onde estamos</h2>
+            </div>
+            <p>Boa Viagem, Recife. A Forno e Fogo nasceu com cara de bairro e gosto de Itália, para quem quer pizza de verdade sem mistério.</p>
+            <div class="loc-meta">
+              <span class="meta">Bairro Boa Viagem</span>
+              <span class="meta">Recife, PE</span>
+              <span class="meta">Forno a lenha</span>
+            </div>
+          </div>
+          <div class="panel loc-box">
+            <div class="section-head">
+              <h2>Perguntas frequentes</h2>
+            </div>
+            <div class="faq">
+              <details>
+                <summary>Vocês fazem delivery?</summary>
+                <p>Sim. A casa atende delivery e salão.</p>
+              </details>
+              <details>
+                <summary>Tem atendimento no salão?</summary>
+                <p>Tem, e a proposta é justamente oferecer o clima completo da pizzaria artesanal.</p>
+              </details>
+              <details>
+                <summary>Quais são os sabores estrela?</summary>
+                <p>Margherita, calabresa e a doce de Nutella com morango.</p>
+              </details>
+              <details>
+                <summary>Onde fica?</summary>
+                <p>Em Boa Viagem, Recife.</p>
+              </details>
+              <details>
+                <summary>Como faço pedido?</summary>
+                <p>É só chamar no WhatsApp e falar o sabor que você quer.</p>
+              </details>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="final-cta">
+        <h2>Pronto para pedir uma pizza de forno a lenha?</h2>
+        <p>Chame a Forno e Fogo no WhatsApp e peça sua favorita, seja para delivery em Boa Viagem ou para curtir o salão.</p>
+        <div class="cta-row sticky-cta">
+          <a class="btn btn-primary" href="https://wa.me/5581998887766?text=Ol%C3%A1%2C%20quero%20pedir%20na%20Forno%20e%20Fogo%20Pizzaria%20Artesanal." target="_blank" rel="noreferrer">Pedir agora no WhatsApp</a>
+          <a class="btn btn-secondary" href="#topo">Voltar ao topo</a>
+        </div>
+      </section>
+
+      <footer class="footer">
+        Forno e Fogo Pizzaria Artesanal · Boa Viagem, Recife
+      </footer>
+    </div>
+  </main>
+</body>
+</html>
