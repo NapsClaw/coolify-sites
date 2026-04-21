@@ -4,31 +4,31 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Verde Lago Cafe — Cafés Especiais & Brunch em Pinheiros, São Paulo</title>
-  <meta name="description" content="Verde Lago Cafe em Pinheiros, SP. Cafés especiais de origem selecionada, bolos caseiros e brunch nos finais de semana. Venha nos visitar." />
-  <meta property="og:title" content="Verde Lago Cafe — Pinheiros, São Paulo" />
-  <meta property="og:description" content="Cafés especiais, bolos caseiros e brunch nos fins de semana. O seu refúgio em Pinheiros." />
+  <meta name="description" content="Verde Lago Cafe em Pinheiros, SP. Cafés especiais de origem, bolos caseiros e brunch de fim de semana. Venha viver o ritual do bom café." />
+  <meta property="og:title" content="Verde Lago Cafe — Pinheiros, SP" />
+  <meta property="og:description" content="Cafés especiais, bolos caseiros e brunch nos finais de semana em Pinheiros, São Paulo." />
   <meta property="og:type" content="website" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☕</text></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
 
   <style>
     :root {
-      --dark:    #1C3829;
-      --dark2:   #0F2018;
-      --mid:     #2D5C44;
-      --accent:  #C8933A;
-      --bg:      #F5EFE6;
-      --bg2:     #EDE6D8;
-      --text:    #1A1A16;
-      --muted:   #7A7A6A;
-      --white:   #FDFAF5;
+      --primary: #2D4A3E;
+      --primary-light: #3D6455;
+      --accent: #C8773A;
+      --accent-light: #E09060;
+      --bg: #FAF7F2;
+      --bg-warm: #F2ECE3;
+      --bg-dark: #1C2E27;
+      --text: #2A1810;
+      --text-muted: #8C7B72;
+      --border: #E2D9CE;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; }
 
     body {
@@ -36,578 +36,620 @@
       background-color: var(--bg);
       color: var(--text);
       overflow-x: hidden;
+      position: relative;
     }
 
-    /* ── TYPOGRAPHY ── */
-    .display {
-      font-family: 'Fraunces', serif;
-      font-weight: 900;
-    }
-    .serif { font-family: 'Fraunces', serif; }
-
-    /* ── NOISE TEXTURE OVERLAY ── */
+    /* Noise texture overlay */
     body::before {
       content: '';
       position: fixed;
       inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
       pointer-events: none;
       z-index: 1000;
       opacity: 0.4;
     }
 
-    /* ── NAVBAR ── */
-    nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      padding: 20px 32px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      transition: background 0.4s ease, backdrop-filter 0.4s ease;
+    .font-display { font-family: 'Fraunces', serif; }
+    .font-body { font-family: 'DM Sans', sans-serif; }
+
+    /* ===================== ANIMATIONS ===================== */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
-    nav.scrolled {
-      background: rgba(28, 56, 41, 0.92);
-      backdrop-filter: blur(12px);
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.92); }
+      to   { opacity: 1; transform: scale(1); }
     }
-    .nav-logo {
-      font-family: 'Fraunces', serif;
-      font-weight: 700;
-      font-size: 1.25rem;
-      color: var(--white);
-      letter-spacing: -0.01em;
+    @keyframes pulse-wa {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(37,211,102,0.5); }
+      50%       { box-shadow: 0 0 0 14px rgba(37,211,102,0); }
     }
-    .nav-cta {
-      background: var(--accent);
-      color: var(--white);
-      font-size: 0.8rem;
-      font-weight: 500;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 10px 20px;
-      border-radius: 100px;
-      text-decoration: none;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-    .nav-cta:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 4px 16px rgba(200, 147, 58, 0.4);
+    @keyframes slideRight {
+      0%   { transform: translateX(-100%); }
+      50%  { transform: translateX(0); }
+      100% { transform: translateX(100%); }
     }
 
-    /* ── HERO ── */
-    #hero {
-      position: relative;
-      height: 100svh;
-      min-height: 600px;
-      display: flex;
-      align-items: flex-end;
-      overflow: hidden;
-      background: var(--dark2);
-    }
-    .hero-img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0.5;
-      transform: scale(1.05);
-      animation: heroZoom 12s ease-out forwards;
-    }
-    @keyframes heroZoom {
-      to { transform: scale(1); opacity: 0.45; }
-    }
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        to top,
-        rgba(15, 32, 24, 0.98) 0%,
-        rgba(15, 32, 24, 0.6) 50%,
-        rgba(15, 32, 24, 0.2) 100%
-      );
-    }
-    .hero-content {
-      position: relative;
-      z-index: 10;
-      padding: 48px 32px;
-      width: 100%;
-    }
-    .hero-eyebrow {
-      font-size: 0.7rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--accent);
-      font-weight: 500;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: slideUp 0.8s 0.2s ease forwards;
-    }
-    .hero-title {
-      font-family: 'Fraunces', serif;
-      font-weight: 900;
-      font-size: clamp(3.5rem, 11vw, 8rem);
-      line-height: 0.9;
-      color: var(--white);
-      margin-top: 12px;
-      opacity: 0;
-      transform: translateY(30px);
-      animation: slideUp 0.9s 0.4s ease forwards;
-    }
-    .hero-title em {
-      font-style: italic;
-      color: var(--accent);
-    }
-    .hero-tagline {
-      font-size: clamp(0.9rem, 2.5vw, 1.1rem);
-      color: rgba(253, 250, 245, 0.7);
-      font-weight: 300;
-      margin-top: 20px;
-      max-width: 400px;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: slideUp 0.8s 0.65s ease forwards;
-    }
-    .hero-actions {
-      display: flex;
-      gap: 12px;
-      margin-top: 32px;
-      flex-wrap: wrap;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: slideUp 0.8s 0.85s ease forwards;
-    }
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--accent);
-      color: var(--white);
-      font-weight: 500;
-      font-size: 0.9rem;
-      padding: 14px 28px;
-      border-radius: 100px;
-      text-decoration: none;
-      transition: all 0.25s ease;
-    }
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(200, 147, 58, 0.45);
-    }
-    .btn-outline {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      border: 1.5px solid rgba(253, 250, 245, 0.35);
-      color: var(--white);
-      font-weight: 400;
-      font-size: 0.9rem;
-      padding: 14px 28px;
-      border-radius: 100px;
-      text-decoration: none;
-      transition: all 0.25s ease;
-    }
-    .btn-outline:hover {
-      border-color: var(--white);
-      background: rgba(253, 250, 245, 0.08);
-    }
-    .hero-scroll {
-      position: absolute;
-      bottom: 40px;
-      right: 32px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      opacity: 0;
-      animation: fadeIn 1s 1.4s ease forwards;
-    }
-    .hero-scroll span {
-      font-size: 0.65rem;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      color: rgba(253, 250, 245, 0.4);
-      writing-mode: vertical-rl;
-    }
-    .scroll-line {
-      width: 1px;
-      height: 48px;
-      background: linear-gradient(to bottom, var(--accent), transparent);
-      animation: scrollPulse 2s 1.4s ease-in-out infinite;
-    }
-    @keyframes scrollPulse {
-      0%, 100% { opacity: 0.4; transform: scaleY(1); }
-      50% { opacity: 1; transform: scaleY(0.7); }
-    }
+    .hero-badge   { animation: fadeUp 0.7s ease forwards; animation-delay: 0.1s; opacity: 0; }
+    .hero-title   { animation: fadeUp 0.8s ease forwards; animation-delay: 0.25s; opacity: 0; }
+    .hero-sub     { animation: fadeUp 0.8s ease forwards; animation-delay: 0.45s; opacity: 0; }
+    .hero-cta     { animation: fadeUp 0.8s ease forwards; animation-delay: 0.6s; opacity: 0; }
+    .hero-img     { animation: scaleIn 1.2s ease forwards; animation-delay: 0.1s; opacity: 0; }
 
-    /* ── KEYFRAMES ── */
-    @keyframes slideUp {
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeIn {
-      to { opacity: 1; }
-    }
-
-    /* ── REVEAL ON SCROLL ── */
+    /* Scroll reveal */
     .reveal {
       opacity: 0;
       transform: translateY(32px);
       transition: opacity 0.7s ease, transform 0.7s ease;
     }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
     .reveal-delay-1 { transition-delay: 0.1s; }
     .reveal-delay-2 { transition-delay: 0.2s; }
     .reveal-delay-3 { transition-delay: 0.3s; }
     .reveal-delay-4 { transition-delay: 0.4s; }
 
-    /* ── SECTION COMMON ── */
-    section { position: relative; }
-
-    /* ── ABOUT ── */
-    #about {
-      background: var(--bg);
-      padding: 80px 32px;
+    /* ===================== NAVBAR ===================== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(250,247,242,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      transition: background 0.3s ease, box-shadow 0.3s ease;
     }
-    .about-grid {
+    .nav-logo {
+      font-family: 'Fraunces', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: -0.02em;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-cta {
+      background: var(--primary);
+      color: #FAF7F2;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 10px 20px;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .nav-cta:hover { background: var(--accent); transform: scale(1.03); }
+
+    /* ===================== HERO ===================== */
+    .hero {
+      min-height: 100svh;
+      padding-top: 80px;
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr;
+      overflow: hidden;
+      background: var(--bg);
+    }
+    @media (min-width: 768px) {
+      .hero { grid-template-columns: 1fr 1fr; min-height: 100svh; }
+    }
+
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 48px 24px 40px;
+      position: relative;
+      z-index: 2;
+    }
+    @media (min-width: 768px) {
+      .hero-content { padding: 80px 64px; }
+    }
+
+    .hero-badge-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-warm);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 6px 14px 6px 10px;
+      width: fit-content;
+      margin-bottom: 28px;
+    }
+    .hero-badge-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); }
+    .hero-badge-text {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .hero-h1 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 900;
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      color: var(--primary);
+      margin-bottom: 24px;
+    }
+    .hero-h1 em { font-style: italic; color: var(--accent); }
+
+    .hero-tagline {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.7;
+      max-width: 380px;
+      margin-bottom: 40px;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--primary);
+      color: var(--bg);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      padding: 16px 28px;
+      border-radius: 100px;
+      text-decoration: none;
+      width: fit-content;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(200,119,58,0.35);
+    }
+    .btn-primary svg { transition: transform 0.2s; }
+    .btn-primary:hover svg { transform: translateX(4px); }
+
+    .hero-scroll-hint {
+      margin-top: 56px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .hero-scroll-line {
+      width: 48px;
+      height: 1px;
+      background: var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-scroll-line::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--accent);
+      animation: slideRight 2s ease-in-out infinite;
+    }
+
+    .hero-image-wrap {
+      position: relative;
+      overflow: hidden;
+      min-height: 340px;
+    }
+    @media (min-width: 768px) { .hero-image-wrap { min-height: unset; } }
+    .hero-image-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+    .hero-image-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(44,74,62,0.25) 0%, transparent 60%);
+    }
+    .hero-image-tag {
+      position: absolute;
+      bottom: 24px;
+      left: 24px;
+      background: rgba(250,247,242,0.92);
+      backdrop-filter: blur(8px);
+      border-radius: 12px;
+      padding: 14px 18px;
+    }
+    .hero-image-tag .number {
+      font-family: 'Fraunces', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1;
+    }
+    .hero-image-tag .label {
+      font-size: 0.7rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      font-family: 'DM Sans', sans-serif;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    /* ===================== SECTION BASE ===================== */
+    section { position: relative; }
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    /* ===================== ABOUT ===================== */
+    .about { background: var(--bg); padding: 96px 24px; }
+    @media (min-width: 768px) { .about { padding: 128px 64px; } }
+
+    .about-inner {
+      max-width: 1100px;
+      margin: 0 auto;
       display: grid;
       grid-template-columns: 1fr;
       gap: 48px;
-      max-width: 1100px;
-      margin: 0 auto;
+      align-items: center;
     }
-    .about-img-wrap {
-      position: relative;
-    }
-    .about-img {
-      width: 100%;
-      height: 380px;
-      object-fit: cover;
-      border-radius: 4px;
-    }
-    .about-badge {
-      position: absolute;
-      bottom: -20px;
-      right: 20px;
-      background: var(--accent);
-      color: var(--white);
+    @media (min-width: 768px) { .about-inner { grid-template-columns: 1fr 1fr; gap: 80px; } }
+
+    .about-h2 {
       font-family: 'Fraunces', serif;
-      font-style: italic;
-      font-size: 0.85rem;
-      padding: 10px 18px;
-      border-radius: 100px;
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.025em;
+      color: var(--primary);
+      margin-bottom: 28px;
     }
-    .section-eyebrow {
-      font-size: 0.65rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--accent);
-      font-weight: 500;
-      margin-bottom: 16px;
+    .about-h2 em { font-style: italic; color: var(--accent); }
+    .about-p { font-size: 1.05rem; font-weight: 300; line-height: 1.8; color: var(--text-muted); margin-bottom: 20px; }
+
+    .about-stats {
+      display: flex;
+      gap: 40px;
+      margin-top: 40px;
+      padding-top: 40px;
+      border-top: 1px solid var(--border);
     }
-    .section-title {
+    .about-stat-num {
       font-family: 'Fraunces', serif;
+      font-size: 2.5rem;
       font-weight: 900;
-      font-size: clamp(2.2rem, 6vw, 4rem);
+      color: var(--primary);
       line-height: 1;
-      color: var(--dark);
     }
-    .section-title em {
-      font-style: italic;
-      color: var(--mid);
-    }
-    .about-text {
-      font-size: 1.05rem;
-      line-height: 1.8;
-      color: var(--muted);
-      margin-top: 24px;
-      font-weight: 300;
-    }
-    .about-divider {
-      width: 48px;
-      height: 2px;
-      background: var(--accent);
-      margin: 28px 0;
-    }
-    .about-detail {
-      font-size: 0.8rem;
+    .about-stat-label {
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: var(--text-muted);
       letter-spacing: 0.06em;
       text-transform: uppercase;
-      color: var(--dark);
-      font-weight: 500;
+      margin-top: 4px;
     }
 
-    /* ── MENU / SERVICES ── */
-    #menu {
-      background: var(--dark);
-      padding: 80px 32px;
-    }
-    .menu-header {
-      max-width: 1100px;
-      margin: 0 auto 48px;
-    }
-    .menu-header .section-eyebrow { color: var(--accent); }
-    .menu-header .section-title { color: var(--white); }
-    .menu-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 2px;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-    .menu-card {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.07);
-      padding: 36px 32px;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 16px;
-      align-items: start;
-      transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
-      cursor: default;
-    }
-    .menu-card:hover {
-      background: rgba(255,255,255,0.08);
-      border-color: rgba(200, 147, 58, 0.4);
-      transform: translateX(6px);
-    }
-    .menu-card-icon {
-      font-size: 2rem;
-      line-height: 1;
-    }
-    .menu-card-number {
-      font-family: 'Fraunces', serif;
-      font-size: 0.75rem;
-      color: var(--accent);
-      opacity: 0.6;
-      font-weight: 300;
-    }
-    .menu-card-title {
-      font-family: 'Fraunces', serif;
-      font-weight: 700;
-      font-size: 1.5rem;
-      color: var(--white);
-      margin-top: 8px;
-      line-height: 1.1;
-    }
-    .menu-card-desc {
-      font-size: 0.9rem;
-      line-height: 1.7;
-      color: rgba(253, 250, 245, 0.5);
-      margin-top: 12px;
-      font-weight: 300;
-    }
-    .menu-card-tag {
-      background: rgba(200, 147, 58, 0.15);
-      border: 1px solid rgba(200, 147, 58, 0.3);
-      color: var(--accent);
-      font-size: 0.65rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      padding: 4px 10px;
-      border-radius: 100px;
-      white-space: nowrap;
-      align-self: start;
-    }
-
-    /* ── GALLERY ── */
-    #gallery {
-      background: var(--bg2);
-      padding: 80px 32px;
-    }
-    .gallery-header {
-      max-width: 1100px;
-      margin: 0 auto 40px;
-    }
-    .gallery-bento {
-      max-width: 1100px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: auto;
-      gap: 8px;
-    }
-    .gallery-item {
-      overflow: hidden;
-      border-radius: 4px;
-      position: relative;
-    }
-    .gallery-item img {
-      width: 100%;
-      height: 100%;
+    .about-image-col { position: relative; }
+    .about-img-main { width: 100%; aspect-ratio: 4/5; object-fit: cover; border-radius: 16px; }
+    .about-img-accent {
+      position: absolute;
+      bottom: -32px;
+      left: -24px;
+      width: 48%;
+      aspect-ratio: 1;
       object-fit: cover;
-      transition: transform 0.6s ease;
-      display: block;
+      border-radius: 12px;
+      border: 4px solid var(--bg);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
     }
-    .gallery-item:hover img {
-      transform: scale(1.04);
-    }
-    .gallery-item.tall { grid-row: span 2; }
-    .gallery-item.wide { grid-column: span 2; }
-    .gallery-img-sm { height: 180px; }
-    .gallery-img-md { height: 260px; }
-    .gallery-img-lg { height: 100%; min-height: 360px; }
+    @media (max-width: 767px) { .about-img-accent { display: none; } }
 
-    /* ── TESTIMONIALS ── */
-    #reviews {
-      background: var(--bg);
-      padding: 80px 32px;
+    /* ===================== SERVICES ===================== */
+    .services {
+      background: var(--bg-dark);
+      padding: 96px 24px;
+      position: relative;
+      overflow: hidden;
     }
-    .reviews-header {
-      max-width: 1100px;
-      margin: 0 auto 48px;
+    @media (min-width: 768px) { .services { padding: 128px 64px; } }
+    .services::before {
+      content: '';
+      position: absolute;
+      top: -100px; right: -100px;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(200,119,58,0.12) 0%, transparent 70%);
+      pointer-events: none;
     }
-    .reviews-grid {
+
+    .services-inner { max-width: 1100px; margin: 0 auto; }
+
+    .services-header {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 56px;
+    }
+    @media (min-width: 768px) {
+      .services-header { flex-direction: row; align-items: flex-end; justify-content: space-between; }
+    }
+
+    .services-h2 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.025em;
+      color: #FAF7F2;
+      max-width: 480px;
+    }
+    .services-h2 em { font-style: italic; color: var(--accent); }
+    .services-sub {
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: rgba(250,247,242,0.5);
+      max-width: 260px;
+      line-height: 1.7;
+      margin-top: 16px;
+    }
+    @media (min-width: 768px) { .services-sub { margin-top: 0; text-align: right; } }
+
+    .services-grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 24px;
-      max-width: 1100px;
-      margin: 0 auto;
+      gap: 20px;
     }
-    .review-card {
-      background: var(--white);
-      border-radius: 4px;
-      padding: 32px;
-      border: 1px solid rgba(0,0,0,0.06);
-      transition: box-shadow 0.3s ease, transform 0.3s ease;
+    @media (min-width: 640px) { .services-grid { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 1024px) { .services-grid { grid-template-columns: 1fr 1fr 1fr; } }
+
+    .service-card {
+      background: rgba(250,247,242,0.04);
+      border: 1px solid rgba(250,247,242,0.08);
+      border-radius: 20px;
+      padding: 36px 28px;
+      transition: background 0.3s, border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
     }
-    .review-card:hover {
-      box-shadow: 0 12px 40px rgba(28, 56, 41, 0.12);
-      transform: translateY(-4px);
+    .service-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 30% 30%, rgba(200,119,58,0.08) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.4s;
     }
-    .review-quote {
+    .service-card:hover {
+      background: rgba(250,247,242,0.07);
+      border-color: rgba(200,119,58,0.4);
+      transform: translateY(-6px);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.3);
+    }
+    .service-card:hover::before { opacity: 1; }
+
+    .service-icon { font-size: 2.2rem; margin-bottom: 20px; display: block; }
+    .service-name {
       font-family: 'Fraunces', serif;
-      font-size: 3.5rem;
-      line-height: 1;
-      color: var(--accent);
-      opacity: 0.4;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #FAF7F2;
+      margin-bottom: 12px;
+      line-height: 1.2;
     }
-    .review-text {
-      font-family: 'Fraunces', serif;
-      font-style: italic;
-      font-size: 1.05rem;
-      line-height: 1.7;
-      color: var(--dark);
-      margin-top: -8px;
-      font-weight: 300;
-    }
-    .review-author {
+    .service-desc { font-size: 0.9rem; font-weight: 300; color: rgba(250,247,242,0.55); line-height: 1.7; }
+    .service-tag {
+      display: inline-block;
       margin-top: 20px;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
+      font-weight: 500;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      font-weight: 500;
-      color: var(--muted);
-    }
-    .stars {
       color: var(--accent);
-      font-size: 0.85rem;
-      margin-bottom: 12px;
+      padding: 4px 12px;
+      border: 1px solid rgba(200,119,58,0.3);
+      border-radius: 100px;
     }
 
-    /* ── CONTACT ── */
-    #contact {
-      background: var(--dark2);
-      padding: 80px 32px 120px;
+    /* ===================== GALLERY ===================== */
+    .gallery { background: var(--bg-warm); padding: 96px 24px; }
+    @media (min-width: 768px) { .gallery { padding: 128px 64px; } }
+
+    .gallery-inner { max-width: 1100px; margin: 0 auto; }
+
+    .gallery-h2 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      color: var(--primary);
+      margin-bottom: 48px;
+      line-height: 1.05;
     }
+    .gallery-h2 em { font-style: italic; color: var(--accent); }
+
+    .bento {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media (min-width: 768px) {
+      .bento {
+        grid-template-columns: 2fr 1fr 1fr;
+        grid-template-rows: 260px 260px;
+        gap: 16px;
+      }
+    }
+
+    .bento-item { border-radius: 16px; overflow: hidden; position: relative; }
+    .bento-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+    .bento-item:hover img { transform: scale(1.05); }
+
+    .bento-item:nth-child(1) { aspect-ratio: 1; }
+    @media (min-width: 768px) {
+      .bento-item:nth-child(1) { grid-row: 1 / 3; aspect-ratio: unset; }
+    }
+
+    .bento-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(28,46,39,0.5) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.3s;
+      display: flex;
+      align-items: flex-end;
+      padding: 20px;
+    }
+    .bento-item:hover .bento-overlay { opacity: 1; }
+    .bento-overlay span { font-family: 'Fraunces', serif; font-size: 0.9rem; color: #FAF7F2; font-style: italic; }
+
+    /* ===================== TESTIMONIAL ===================== */
+    .testimonial {
+      background: var(--primary);
+      padding: 96px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    @media (min-width: 768px) { .testimonial { padding: 120px 64px; } }
+
+    .testimonial::before {
+      content: '"';
+      font-family: 'Fraunces', serif;
+      font-size: 28rem;
+      color: rgba(250,247,242,0.04);
+      position: absolute;
+      top: -80px; left: -20px;
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .testimonial-inner { max-width: 800px; margin: 0 auto; text-align: center; position: relative; z-index: 1; }
+    .testimonial-quote {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+      font-weight: 300;
+      font-style: italic;
+      color: #FAF7F2;
+      line-height: 1.55;
+      margin-bottom: 40px;
+    }
+
+    .testimonial-author { display: flex; align-items: center; justify-content: center; gap: 14px; }
+    .testimonial-avatar { width: 48px; height: 48px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent); }
+    .testimonial-name { font-size: 0.85rem; font-weight: 500; color: #FAF7F2; }
+    .testimonial-role { font-size: 0.75rem; color: rgba(250,247,242,0.5); margin-top: 2px; }
+
+    /* ===================== CONTACT ===================== */
+    .contact { background: var(--bg-dark); padding: 96px 24px 80px; position: relative; overflow: hidden; }
+    @media (min-width: 768px) { .contact { padding: 128px 64px 96px; } }
+
     .contact-inner {
       max-width: 1100px;
       margin: 0 auto;
-    }
-    .contact-header .section-eyebrow { color: var(--accent); }
-    .contact-header .section-title { color: var(--white); }
-    .contact-grid {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 48px;
-      margin-top: 48px;
+      gap: 56px;
     }
-    .contact-info-label {
-      font-size: 0.65rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: rgba(253, 250, 245, 0.35);
-      margin-bottom: 8px;
-    }
-    .contact-info-value {
+    @media (min-width: 768px) { .contact-inner { grid-template-columns: 1fr 1fr; gap: 80px; } }
+
+    .contact-h2 {
       font-family: 'Fraunces', serif;
-      font-size: 1.25rem;
-      color: var(--white);
-      font-weight: 400;
-      line-height: 1.5;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      color: #FAF7F2;
+      line-height: 1.05;
+      margin-bottom: 40px;
     }
-    .contact-divider {
-      height: 1px;
-      background: rgba(255,255,255,0.07);
-      margin: 24px 0;
-    }
-    .hours-row {
+    .contact-h2 em { font-style: italic; color: var(--accent); }
+
+    .contact-info-item {
       display: flex;
-      justify-content: space-between;
-      font-size: 0.9rem;
-      color: rgba(253, 250, 245, 0.6);
-      font-weight: 300;
-      padding: 8px 0;
+      gap: 16px;
+      align-items: flex-start;
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(250,247,242,0.07);
     }
-    .hours-row span:first-child { color: rgba(253, 250, 245, 0.4); }
-    .btn-whatsapp-big {
+    .contact-info-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; }
+    .contact-info-label { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); margin-bottom: 4px; }
+    .contact-info-value { font-size: 0.95rem; font-weight: 300; color: rgba(250,247,242,0.75); line-height: 1.6; }
+
+    .btn-wa {
       display: inline-flex;
       align-items: center;
       gap: 12px;
       background: #25D366;
-      color: var(--white);
-      font-weight: 500;
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
       font-size: 1rem;
-      padding: 18px 36px;
+      font-weight: 500;
+      padding: 18px 32px;
       border-radius: 100px;
       text-decoration: none;
-      margin-top: 32px;
-      transition: all 0.25s ease;
-      box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3);
-    }
-    .btn-whatsapp-big:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 32px rgba(37, 211, 102, 0.45);
-    }
-    .map-container {
-      border-radius: 4px;
-      overflow: hidden;
-      height: 280px;
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-    .map-container iframe {
       width: 100%;
-      height: 100%;
-      border: none;
-      filter: invert(90%) hue-rotate(180deg) saturate(0.5);
+      justify-content: center;
+      margin-top: 32px;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-wa:hover {
+      background: #1ebe5a;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(37,211,102,0.35);
     }
 
-    /* ── FOOTER ── */
-    footer {
-      background: var(--dark2);
-      border-top: 1px solid rgba(255,255,255,0.06);
-      padding: 24px 32px;
+    .contact-map-placeholder {
+      background: rgba(250,247,242,0.04);
+      border: 1px solid rgba(250,247,242,0.08);
+      border-radius: 20px;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: space-between;
-      flex-wrap: gap;
+      justify-content: center;
+      min-height: 320px;
+      gap: 12px;
+      padding: 40px;
     }
-    .footer-logo {
-      font-family: 'Fraunces', serif;
-      font-size: 1rem;
-      color: rgba(253, 250, 245, 0.4);
-    }
-    .footer-copy {
-      font-size: 0.75rem;
-      color: rgba(253, 250, 245, 0.2);
-    }
+    .contact-map-icon { font-size: 3rem; }
+    .contact-map-label { font-family: 'Fraunces', serif; font-size: 1.3rem; color: rgba(250,247,242,0.6); font-style: italic; }
+    .contact-map-sub { font-size: 0.85rem; color: rgba(250,247,242,0.35); text-align: center; line-height: 1.6; }
 
-    /* ── WHATSAPP FLOAT ── */
+    /* ===================== FOOTER ===================== */
+    footer { background: #0F1D17; padding: 32px 24px; border-top: 1px solid rgba(250,247,242,0.06); }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: center;
+      text-align: center;
+    }
+    @media (min-width: 768px) { .footer-inner { flex-direction: row; justify-content: space-between; text-align: left; } }
+    .footer-logo { font-family: 'Fraunces', serif; font-size: 1.1rem; font-weight: 700; color: rgba(250,247,242,0.7); }
+    .footer-logo span { color: var(--accent); }
+    .footer-copy { font-size: 0.75rem; color: rgba(250,247,242,0.3); font-weight: 300; }
+
+    /* ===================== WHATSAPP FLOAT ===================== */
     .wa-float {
       position: fixed;
       bottom: 28px;
@@ -615,273 +657,274 @@
       z-index: 999;
       width: 60px;
       height: 60px;
-      background: #25D366;
       border-radius: 50%;
+      background: #25D366;
       display: flex;
       align-items: center;
       justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.5);
       text-decoration: none;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-      animation: waPulse 3s ease-in-out infinite;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      animation: pulse-wa 2.5s ease-in-out infinite;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
     .wa-float:hover {
       transform: scale(1.1);
-      box-shadow: 0 8px 24px rgba(37, 211, 102, 0.5);
+      box-shadow: 0 8px 30px rgba(37,211,102,0.6);
       animation: none;
     }
-    .wa-float svg {
-      width: 28px;
-      height: 28px;
-      fill: white;
-    }
-    @keyframes waPulse {
-      0%, 100% { box-shadow: 0 4px 12px rgba(0,0,0,0.25), 0 0 0 0 rgba(37, 211, 102, 0.4); }
-      50% { box-shadow: 0 4px 12px rgba(0,0,0,0.25), 0 0 0 12px rgba(37, 211, 102, 0); }
-    }
-
-    /* ── DECORATIVE LINE ── */
-    .deco-line {
-      width: 100%;
-      height: 1px;
-      background: linear-gradient(to right, transparent, var(--accent), transparent);
-      opacity: 0.3;
-    }
-
-    /* ── DESKTOP BREAKPOINTS ── */
-    @media (min-width: 768px) {
-      nav { padding: 24px 56px; }
-
-      .hero-content { padding: 64px 56px; }
-      .hero-title { font-size: clamp(5rem, 10vw, 9rem); }
-      .hero-scroll { right: 56px; }
-
-      #about { padding: 120px 56px; }
-      .about-grid {
-        grid-template-columns: 1fr 1fr;
-        align-items: center;
-        gap: 72px;
-      }
-      .about-img { height: 520px; }
-
-      #menu { padding: 120px 56px; }
-      .menu-grid { grid-template-columns: repeat(3, 1fr); gap: 2px; }
-      .menu-card:hover { transform: translateY(-6px) translateX(0); }
-
-      #gallery { padding: 120px 56px; }
-      .gallery-bento {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 12px;
-      }
-      .gallery-img-sm { height: 220px; }
-      .gallery-img-md { height: 300px; }
-      .gallery-img-lg { min-height: 480px; }
-
-      #reviews { padding: 120px 56px; }
-      .reviews-grid { grid-template-columns: repeat(3, 1fr); }
-
-      #contact { padding: 120px 56px 140px; }
-      .contact-grid { grid-template-columns: 1fr 1fr; align-items: start; }
-
-      footer { padding: 28px 56px; }
-    }
-
-    @media (min-width: 1200px) {
-      .about-grid { gap: 96px; }
-    }
+    .wa-float svg { width: 30px; height: 30px; }
   </style>
 </head>
 <body>
 
   <!-- NAV -->
-  <nav id="navbar">
-    <div class="nav-logo">Verde Lago</div>
-    <a href="https://wa.me/5511981177621?text=Olá!%20Vi%20o%20site%20e%20quero%20saber%20mais." class="nav-cta" target="_blank" rel="noopener">
-      Fale Conosco
+  <nav>
+    <div class="nav-logo">Verde<span>Lago</span> Cafe</div>
+    <a href="https://wa.me/5511936188206?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20saber%20mais%20sobre%20o%20Verde%20Lago%20Cafe." class="nav-cta" target="_blank" rel="noopener">
+      Reservar Mesa
     </a>
   </nav>
 
   <!-- HERO -->
-  <section id="hero">
-    <img
-      class="hero-img"
-      src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=1800&q=85&fit=crop"
-      alt="Verde Lago Cafe — interior aconchegante em Pinheiros"
-      fetchpriority="high"
-    />
-    <div class="hero-overlay"></div>
+  <section class="hero">
     <div class="hero-content">
-      <p class="hero-eyebrow">Pinheiros · São Paulo · Desde sempre</p>
-      <h1 class="hero-title display">Verde<br /><em>Lago</em><br />Cafe</h1>
-      <p class="hero-tagline">Cafés de origem selecionada, bolos caseiros e brunch<br />nos fins de semana — no coração de Pinheiros.</p>
-      <div class="hero-actions">
-        <a href="https://wa.me/5511981177621?text=Olá!%20Quero%20saber%20mais%20sobre%20o%20Verde%20Lago%20Cafe." class="btn-primary" target="_blank" rel="noopener">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-          Chamar no WhatsApp
+      <div class="hero-badge-wrap hero-badge">
+        <div class="hero-badge-dot"></div>
+        <span class="hero-badge-text">Pinheiros · São Paulo</span>
+      </div>
+      <h1 class="hero-h1 hero-title">
+        O café<br />que você<br /><em>merecia.</em>
+      </h1>
+      <p class="hero-tagline hero-sub">
+        Grãos de origem única, bolos caseiros com receita de avó e brunch pra tornar seu fim de semana inesquecível.
+      </p>
+      <div class="hero-cta">
+        <a href="https://wa.me/5511936188206?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20saber%20mais%20sobre%20o%20Verde%20Lago%20Cafe." class="btn-primary" target="_blank" rel="noopener">
+          Fale pelo WhatsApp
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
         </a>
-        <a href="#menu" class="btn-outline">Ver o Menu →</a>
+      </div>
+      <div class="hero-scroll-hint hero-cta" style="animation-delay:0.75s">
+        <div class="hero-scroll-line"></div>
+        <span>Descubra o cardápio</span>
       </div>
     </div>
-    <div class="hero-scroll">
-      <div class="scroll-line"></div>
-      <span>scroll</span>
+
+    <div class="hero-image-wrap hero-img">
+      <img
+        src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=900&q=80&auto=format&fit=crop"
+        alt="Café especial Verde Lago"
+        loading="eager"
+      />
+      <div class="hero-image-overlay"></div>
+      <div class="hero-image-tag">
+        <div class="number">100%</div>
+        <div class="label">Grãos Especiais</div>
+      </div>
     </div>
   </section>
 
   <!-- ABOUT -->
-  <section id="about">
-    <div class="about-grid">
-      <div class="about-img-wrap reveal">
+  <section class="about" id="sobre">
+    <div class="about-inner">
+      <div class="about-text-col reveal">
+        <div class="section-label">Nossa história</div>
+        <h2 class="about-h2">Feito com<br /><em>intenção</em>,<br />servido com alma.</h2>
+        <p class="about-p">
+          O Verde Lago nasceu do amor por café de verdade — aquele que você sente o aroma antes mesmo de dar o primeiro gole. Em Pinheiros, criamos um espaço onde cada detalhe importa.
+        </p>
+        <p class="about-p">
+          Nossos grãos são selecionados de pequenos produtores brasileiros. Nossas receitas são caseiras de verdade. E nosso brunch de fim de semana já virou ritual pra quem conhece.
+        </p>
+        <div class="about-stats">
+          <div>
+            <div class="about-stat-num">+40</div>
+            <div class="about-stat-label">Origens de grãos</div>
+          </div>
+          <div>
+            <div class="about-stat-num">7h</div>
+            <div class="about-stat-label">Abrimos cedo</div>
+          </div>
+          <div>
+            <div class="about-stat-num">♥</div>
+            <div class="about-stat-label">Todo dia</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-image-col reveal reveal-delay-2">
         <img
-          class="about-img"
-          src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=900&q=85&fit=crop"
-          alt="Café especial preparado com cuidado"
+          class="about-img-main"
+          src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=600&q=80&auto=format&fit=crop"
+          alt="Barista preparando café no Verde Lago"
           loading="lazy"
         />
-        <div class="about-badge">✦ Pinheiros, SP</div>
-      </div>
-      <div class="reveal reveal-delay-2">
-        <p class="section-eyebrow">Nossa história</p>
-        <h2 class="section-title">Um refúgio no<br /><em>coração</em><br />de Pinheiros</h2>
-        <div class="about-divider"></div>
-        <p class="about-text">
-          O Verde Lago Cafe nasceu do amor por café bem feito e pela vontade de criar um espaço onde cada visita vira memória. Aqui, cada xícara conta a origem do grão — do produtor à sua mesa.
-        </p>
-        <p class="about-text">
-          Nossos bolos são caseiros de verdade, e o brunch de fim de semana é o motivo pelo qual nossos clientes fazem fila com sorriso no rosto.
-        </p>
-        <div class="about-divider"></div>
-        <p class="about-detail">Cafés especiais · Bolos Caseiros · Brunch</p>
+        <img
+          class="about-img-accent"
+          src="https://images.unsplash.com/photo-1484723091739-30a097e8f929?w=400&q=80&auto=format&fit=crop"
+          alt="Bolo caseiro Verde Lago"
+          loading="lazy"
+        />
       </div>
     </div>
   </section>
 
-  <div class="deco-line"></div>
+  <!-- SERVICES -->
+  <section class="services" id="cardapio">
+    <div class="services-inner">
+      <div class="services-header">
+        <div>
+          <div class="section-label" style="color: var(--accent-light)">
+            O que servimos
+          </div>
+          <h2 class="services-h2 reveal">O melhor<br /><em>do café</em><br />artesanal.</h2>
+        </div>
+        <p class="services-sub reveal">
+          Cada item do cardápio foi pensado pra ser a melhor versão de si mesmo.
+        </p>
+      </div>
 
-  <!-- MENU / SERVICES -->
-  <section id="menu">
-    <div class="menu-header">
-      <p class="section-eyebrow reveal">O que oferecemos</p>
-      <h2 class="section-title reveal reveal-delay-1" style="color: var(--white);">Cada detalhe<br /><em style="color: var(--accent);">com intenção</em></h2>
-    </div>
-    <div class="menu-grid">
-      <div class="menu-card reveal">
-        <div>
-          <p class="menu-card-number">01</p>
-          <h3 class="menu-card-title">Cafés<br />Especiais</h3>
-          <p class="menu-card-desc">Grãos de origem única, selecionados de produtores brasileiros e internacionais. Espresso, filtrado, aeropress e mais — preparados por baristas apaixonados.</p>
+      <div class="services-grid">
+        <div class="service-card reveal reveal-delay-1">
+          <span class="service-icon">☕</span>
+          <div class="service-name">Cafés Especiais</div>
+          <div class="service-desc">Espresso, pour over, cold brew e métodos alternativos com grãos de origem única. Cada xícara conta a história de um produtor.</div>
+          <span class="service-tag">Origem única</span>
         </div>
-        <span class="menu-card-tag">Assinatura</span>
-      </div>
-      <div class="menu-card reveal reveal-delay-1">
-        <div>
-          <p class="menu-card-number">02</p>
-          <h3 class="menu-card-title">Bolos<br />Caseiros</h3>
-          <p class="menu-card-desc">Receitas de família, feitas todos os dias na nossa cozinha. Limão siciliano, cenoura com chocolate, fubá com queijo — sempre fresquinhos.</p>
+        <div class="service-card reveal reveal-delay-2">
+          <span class="service-icon">🍰</span>
+          <div class="service-name">Bolos Caseiros</div>
+          <div class="service-desc">Receitas de família, feitas todos os dias de manhã. Bolo de cenoura, limão siciliano, banana com canela e os especiais da semana.</div>
+          <span class="service-tag">Feito hoje</span>
         </div>
-        <span class="menu-card-tag">Diário</span>
-      </div>
-      <div class="menu-card reveal reveal-delay-2">
-        <div>
-          <p class="menu-card-number">03</p>
-          <h3 class="menu-card-title">Brunch de<br />Fim de Semana</h3>
-          <p class="menu-card-desc">Sábados e domingos das 9h às 14h. Um menu completo com ovos, pães artesanais, frutas e tudo que faz um fim de semana perfeito.</p>
+        <div class="service-card reveal reveal-delay-3">
+          <span class="service-icon">🍳</span>
+          <div class="service-name">Brunch de Fim de Semana</div>
+          <div class="service-desc">Sábados e domingos das 9h às 14h. Ovos, pão artesanal, geleias, frios e tudo que o ritual do fim de semana merece.</div>
+          <span class="service-tag">Sáb & Dom</span>
         </div>
-        <span class="menu-card-tag">Sáb & Dom</span>
+        <div class="service-card reveal reveal-delay-1">
+          <span class="service-icon">🫖</span>
+          <div class="service-name">Chás & Infusões</div>
+          <div class="service-desc">Seleção curada de chás de ervas, florais e especiarias. Para quem prefere a calmaria de uma infusão bem preparada.</div>
+          <span class="service-tag">Orgânicos</span>
+        </div>
+        <div class="service-card reveal reveal-delay-2">
+          <span class="service-icon">🥪</span>
+          <div class="service-name">Lanches & Torradas</div>
+          <div class="service-desc">Torradas com pastas artesanais, tapiocas, sandwíches e petiscos leves pra acompanhar seu café da tarde.</div>
+          <span class="service-tag">Todo dia</span>
+        </div>
+        <div class="service-card reveal reveal-delay-3">
+          <span class="service-icon">🎁</span>
+          <div class="service-name">Presentes & Assinaturas</div>
+          <div class="service-desc">Kits de café especial, cestas de fim de ano e a possibilidade de assinar nossos grãos favoritos entregues em casa.</div>
+          <span class="service-tag">Experiência</span>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- GALLERY -->
-  <section id="gallery">
-    <div class="gallery-header">
-      <p class="section-eyebrow reveal">Galeria</p>
-      <h2 class="section-title reveal reveal-delay-1">O espaço em<br /><em>imagens</em></h2>
-    </div>
-    <div class="gallery-bento">
-      <div class="gallery-item tall reveal">
-        <img class="gallery-img-lg" src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=700&q=80&fit=crop" alt="Interior do Verde Lago Cafe" loading="lazy" />
-      </div>
-      <div class="gallery-item reveal reveal-delay-1">
-        <img class="gallery-img-sm" src="https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=600&q=80&fit=crop" alt="Grãos de café especial" loading="lazy" />
-      </div>
-      <div class="gallery-item reveal reveal-delay-2">
-        <img class="gallery-img-sm" src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=600&q=80&fit=crop" alt="Bolo caseiro do Verde Lago" loading="lazy" />
-      </div>
-      <div class="gallery-item wide reveal reveal-delay-1">
-        <img class="gallery-img-md" src="https://images.unsplash.com/photo-1484723091739-30a097e8f929?w=1200&q=80&fit=crop" alt="Brunch no Verde Lago Cafe" loading="lazy" />
-      </div>
-      <div class="gallery-item reveal reveal-delay-2">
-        <img class="gallery-img-md" src="https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=600&q=80&fit=crop" alt="Café especial preparado" loading="lazy" />
-      </div>
-      <div class="gallery-item reveal reveal-delay-3">
-        <img class="gallery-img-md" src="https://images.unsplash.com/photo-1572119865084-43c285814d63?w=600&q=80&fit=crop" alt="Momento café no Verde Lago" loading="lazy" />
+  <section class="gallery" id="galeria">
+    <div class="gallery-inner">
+      <div class="section-label">Nosso espaço</div>
+      <h2 class="gallery-h2 reveal">Momentos que<br /><em>ficam.</em></h2>
+
+      <div class="bento reveal reveal-delay-1">
+        <div class="bento-item">
+          <img src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=700&q=80&auto=format&fit=crop" alt="Latte art Verde Lago" loading="lazy" />
+          <div class="bento-overlay"><span>Latte art feito a mão</span></div>
+        </div>
+        <div class="bento-item">
+          <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=500&q=80&auto=format&fit=crop" alt="Interior do café" loading="lazy" />
+          <div class="bento-overlay"><span>Ambiente aconchegante</span></div>
+        </div>
+        <div class="bento-item">
+          <img src="https://images.unsplash.com/photo-1490457843367-34b21b6f9471?w=500&q=80&auto=format&fit=crop" alt="Bolo caseiro" loading="lazy" />
+          <div class="bento-overlay"><span>Bolos fresquinhos</span></div>
+        </div>
+        <div class="bento-item">
+          <img src="https://images.unsplash.com/photo-1453614512568-c4024d13c247?w=500&q=80&auto=format&fit=crop" alt="Grãos especiais" loading="lazy" />
+          <div class="bento-overlay"><span>Grãos de origem</span></div>
+        </div>
+        <div class="bento-item">
+          <img src="https://images.unsplash.com/photo-1559305616-3f99cd43e353?w=500&q=80&auto=format&fit=crop" alt="Brunch fim de semana" loading="lazy" />
+          <div class="bento-overlay"><span>Brunch de fim de semana</span></div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- TESTIMONIALS -->
-  <section id="reviews">
-    <div class="reviews-header">
-      <p class="section-eyebrow reveal">Quem nos visita</p>
-      <h2 class="section-title reveal reveal-delay-1">O que dizem<br /><em>nossos clientes</em></h2>
-    </div>
-    <div class="reviews-grid">
-      <div class="review-card reveal">
-        <div class="stars">★★★★★</div>
-        <div class="review-quote">"</div>
-        <p class="review-text">O melhor café filtrado de Pinheiros, sem dúvida. O ambiente é incrível e os bolos são uma tentação. Virei cliente fiel.</p>
-        <p class="review-author">— Ana Beatriz M., São Paulo</p>
-      </div>
-      <div class="review-card reveal reveal-delay-1">
-        <div class="stars">★★★★★</div>
-        <div class="review-quote">"</div>
-        <p class="review-text">O brunch de domingo é sagrado aqui em casa. A qualidade dos ingredientes é de outro nível, e o atendimento é sempre impecável.</p>
-        <p class="review-author">— Rafael K., Pinheiros</p>
-      </div>
-      <div class="review-card reveal reveal-delay-2">
-        <div class="stars">★★★★★</div>
-        <div class="review-quote">"</div>
-        <p class="review-text">Descobri o Verde Lago pelo cheiro do café enquanto passeava. Saí com um bolo de fubá debaixo do braço e um sorriso no rosto. Voltarei sempre.</p>
-        <p class="review-author">— Camila S., Vila Madalena</p>
+  <!-- TESTIMONIAL -->
+  <section class="testimonial">
+    <div class="testimonial-inner reveal">
+      <p class="testimonial-quote">
+        "O Verde Lago mudou minha relação com o café. É o tipo de lugar que você descobre e quer guardar segredo, mas não consegue — fica contando pra todo mundo."
+      </p>
+      <div class="testimonial-author">
+        <img
+          class="testimonial-avatar"
+          src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=96&h=96&q=80&auto=format&fit=crop&crop=face"
+          alt="Cliente do Verde Lago Cafe"
+          loading="lazy"
+        />
+        <div>
+          <div class="testimonial-name">Ana Clara M.</div>
+          <div class="testimonial-role">Cliente fiel desde 2023 · Pinheiros, SP</div>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- CONTACT -->
-  <section id="contact">
+  <section class="contact" id="contato">
     <div class="contact-inner">
-      <div class="contact-header">
-        <p class="section-eyebrow reveal">Visite-nos</p>
-        <h2 class="section-title reveal reveal-delay-1">Venha tomar<br /><em style="color: var(--accent);">um café</em></h2>
-      </div>
-      <div class="contact-grid">
-        <div class="reveal reveal-delay-1">
-          <div style="margin-bottom: 32px;">
-            <p class="contact-info-label">Endereço</p>
-            <p class="contact-info-value">Pinheiros, São Paulo — SP</p>
+      <div class="reveal">
+        <div class="section-label" style="color: var(--accent-light)">Nos encontre</div>
+        <h2 class="contact-h2">Venha<br /><em>tomar</em><br />um café.</h2>
+
+        <div class="contact-info-item">
+          <span class="contact-info-icon">📍</span>
+          <div>
+            <div class="contact-info-label">Endereço</div>
+            <div class="contact-info-value">Pinheiros, São Paulo — SP<br />Próximo ao metrô Faria Lima</div>
           </div>
-          <div class="contact-divider"></div>
-          <p class="contact-info-label">Horários</p>
-          <div class="hours-row"><span>Segunda a Sexta</span><span>08h — 19h</span></div>
-          <div class="hours-row"><span>Sábado & Domingo</span><span>09h — 15h (Brunch)</span></div>
-          <div class="contact-divider"></div>
-          <p class="contact-info-label">Contato direto</p>
-          <a href="https://wa.me/5511981177621?text=Olá!%20Vi%20o%20site%20e%20quero%20saber%20mais%20sobre%20o%20Verde%20Lago%20Cafe." class="btn-whatsapp-big" target="_blank" rel="noopener">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-            +55 11 98117-7621
-          </a>
         </div>
-        <div class="reveal reveal-delay-2">
-          <div class="map-container">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14628.93009!2d-46.6863!3d-23.5637!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce579c07e3f3b7%3A0xbee3de3cbcae4cc1!2sPinheiros%2C%20S%C3%A3o%20Paulo%20-%20SP!5e0!3m2!1spt-BR!2sbr!4v1700000000000!5m2!1spt-BR!2sbr"
-              allowfullscreen=""
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-              title="Mapa - Verde Lago Cafe, Pinheiros SP"
-            ></iframe>
+        <div class="contact-info-item">
+          <span class="contact-info-icon">🕐</span>
+          <div>
+            <div class="contact-info-label">Horários</div>
+            <div class="contact-info-value">Seg – Sex: 7h às 19h<br />Sáb – Dom: 8h às 15h (Brunch!)</div>
           </div>
+        </div>
+        <div class="contact-info-item">
+          <span class="contact-info-icon">📱</span>
+          <div>
+            <div class="contact-info-label">WhatsApp</div>
+            <div class="contact-info-value">+55 (11) 93618-8206</div>
+          </div>
+        </div>
+
+        <a href="https://wa.me/5511936188206?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20saber%20mais%20sobre%20o%20Verde%20Lago%20Cafe." class="btn-wa" target="_blank" rel="noopener">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
+          </svg>
+          Chamar no WhatsApp
+        </a>
+      </div>
+
+      <div class="contact-map-placeholder reveal reveal-delay-2">
+        <div class="contact-map-icon">🗺️</div>
+        <div class="contact-map-label">Pinheiros, SP</div>
+        <div class="contact-map-sub">
+          São Paulo · SP<br />
+          A poucos passos do metrô Faria Lima<br /><br />
+          <a href="https://www.google.com/maps/search/Verde+Lago+Cafe+Pinheiros+SP" target="_blank" rel="noopener" style="color: var(--accent); font-size: 0.8rem; text-decoration: none; border-bottom: 1px solid rgba(200,119,58,0.4);">
+            Ver no Google Maps →
+          </a>
         </div>
       </div>
     </div>
@@ -889,36 +932,43 @@
 
   <!-- FOOTER -->
   <footer>
-    <span class="footer-logo">Verde Lago Cafe</span>
-    <span class="footer-copy">© 2026 · Pinheiros, São Paulo</span>
+    <div class="footer-inner">
+      <div class="footer-logo">Verde<span>Lago</span> Cafe</div>
+      <div class="footer-copy">© 2025 Verde Lago Cafe · Pinheiros, São Paulo · Todos os direitos reservados</div>
+    </div>
   </footer>
 
   <!-- WHATSAPP FLOAT -->
-  <a href="https://wa.me/5511981177621?text=Olá!%20Vi%20o%20site%20e%20quero%20saber%20mais." class="wa-float" target="_blank" rel="noopener" aria-label="Chamar no WhatsApp">
-    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+  <a class="wa-float" href="https://wa.me/5511936188206?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20quero%20saber%20mais%20sobre%20o%20Verde%20Lago%20Cafe." target="_blank" rel="noopener" aria-label="Chamar no WhatsApp">
+    <svg viewBox="0 0 24 24" fill="white">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
+    </svg>
   </a>
 
   <script>
-    // Navbar scroll
-    const navbar = document.getElementById('navbar');
-    window.addEventListener('scroll', () => {
-      navbar.classList.toggle('scrolled', window.scrollY > 60);
-    });
+    // Scroll reveal via IntersectionObserver
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 
-    // Scroll reveal
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }
-    );
-    reveals.forEach(el => observer.observe(el));
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Navbar scroll effect
+    const nav = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        nav.style.background = 'rgba(250,247,242,0.97)';
+        nav.style.boxShadow = '0 2px 20px rgba(0,0,0,0.08)';
+      } else {
+        nav.style.background = 'rgba(250,247,242,0.85)';
+        nav.style.boxShadow = 'none';
+      }
+    });
   </script>
 </body>
 </html>
