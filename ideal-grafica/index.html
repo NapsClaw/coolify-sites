@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ideal Gráfica — Sistema de Orçamentos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1a2744;
+      --primary-light: #253660;
+      --accent: #e84b2a;
+      --accent-hover: #c73d20;
+      --success: #16a34a;
+      --warning: #d97706;
+      --bg: #f0f2f5;
+      --card: #ffffff;
+      --text: #111827;
+      --text-muted: #6b7280;
+      --border: #e5e7eb;
+      --sidebar-w: 240px;
+      --font-mono: 'IBM Plex Mono', monospace;
+      --font-sans: 'IBM Plex Sans', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; font-family: var(--font-sans); background: var(--bg); color: var(--text); }
+
+    /* LAYOUT */
+    .app { display: flex; height: 100vh; overflow: hidden; }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: var(--sidebar-w);
+      background: var(--primary);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      overflow-y: auto;
+    }
+    .sidebar-logo {
+      padding: 24px 20px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .logo-mark {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo-icon {
+      width: 36px; height: 36px;
+      background: var(--accent);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+    }
+    .logo-text { color: #fff; font-size: 15px; font-weight: 700; line-height: 1.2; }
+    .logo-sub { color: rgba(255,255,255,0.45); font-size: 11px; font-weight: 400; letter-spacing: 0.5px; text-transform: uppercase; margin-top: 2px; }
+
+    .sidebar-nav { flex: 1; padding: 16px 0; }
+    .nav-section-label {
+      color: rgba(255,255,255,0.3);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 12px 20px 6px;
+    }
+    .nav-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 20px;
+      color: rgba(255,255,255,0.6);
+      font-size: 14px; font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s;
+      border-left: 3px solid transparent;
+      border-radius: 0;
+      user-select: none;
+    }
+    .nav-item:hover { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.9); }
+    .nav-item.active {
+      background: rgba(232,75,42,0.12);
+      color: #fff;
+      border-left-color: var(--accent);
+    }
+    .nav-item svg { width: 16px; height: 16px; flex-shrink: 0; opacity: 0.7; }
+    .nav-item.active svg { opacity: 1; }
+
+    .sidebar-footer {
+      padding: 16px 20px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .user-info { display: flex; align-items: center; gap: 10px; }
+    .user-avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-size: 13px; font-weight: 700; flex-shrink: 0;
+    }
+    .user-name { color: rgba(255,255,255,0.8); font-size: 13px; font-weight: 500; }
+    .user-role { color: rgba(255,255,255,0.35); font-size: 11px; }
+
+    /* MAIN CONTENT */
+    .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+    .topbar {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 0 28px;
+      height: 58px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .page-title { font-size: 16px; font-weight: 600; }
+    .page-subtitle { font-size: 13px; color: var(--text-muted); margin-top: 1px; }
+    .topbar-right { display: flex; align-items: center; gap: 12px; }
+    .badge {
+      display: inline-flex; align-items: center;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 12px; font-weight: 500;
+    }
+    .badge-blue { background: #eff6ff; color: #1d4ed8; }
+    .badge-orange { background: #fff7ed; color: #c2410c; }
+
+    .content { flex: 1; overflow-y: auto; padding: 24px 28px; }
+
+    /* PAGE VISIBILITY */
+    .page { display: none; }
+    .page.active { display: block; }
+
+    /* CARDS */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+    }
+    .card + .card { margin-top: 16px; }
+    .card-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .card-title { font-size: 15px; font-weight: 600; }
+    .card-subtitle { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+
+    /* FORM ELEMENTS */
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group.full { grid-column: 1 / -1; }
+    label { font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+    input[type="text"], input[type="number"], select, textarea {
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 9px 12px;
+      font-family: var(--font-sans);
+      font-size: 14px;
+      color: var(--text);
+      background: #fff;
+      transition: border-color 0.15s;
+      width: 100%;
+      outline: none;
+    }
+    input[type="number"] { font-family: var(--font-mono); }
+    input:focus, select:focus, textarea:focus { border-color: var(--primary); }
+    input.currency { font-family: var(--font-mono); }
+    select { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; padding-right: 30px; }
+
+    .input-prefix { position: relative; }
+    .input-prefix span {
+      position: absolute; left: 10px; top: 50%; transform: translateY(-50%);
+      color: var(--text-muted); font-size: 13px; font-family: var(--font-mono);
+    }
+    .input-prefix input { padding-left: 26px; }
+    .input-suffix { position: relative; }
+    .input-suffix span {
+      position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+      color: var(--text-muted); font-size: 12px;
+    }
+    .input-suffix input { padding-right: 40px; }
+
+    .divider { display: flex; align-items: center; gap: 12px; margin: 20px 0; }
+    .divider::before, .divider::after { content: ''; flex: 1; border-top: 1px solid var(--border); }
+    .divider span { font-size: 12px; color: var(--text-muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+
+    /* COST SECTION */
+    .cost-section {
+      background: #fafafa;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+    }
+    .cost-section-title {
+      font-size: 12px; font-weight: 700; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.8px;
+      margin-bottom: 14px;
+    }
+    .cost-row {
+      display: flex; align-items: center; gap: 10px;
+      padding: 6px 0;
+    }
+    .cost-row + .cost-row { border-top: 1px solid var(--border); }
+    .cost-label { flex: 1; font-size: 13px; color: var(--text); }
+    .cost-input-wrap { width: 140px; }
+
+    /* RESULT PANEL */
+    .result-panel {
+      background: var(--primary);
+      border-radius: 12px;
+      padding: 24px;
+      color: #fff;
+    }
+    .result-header { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; color: rgba(255,255,255,0.5); margin-bottom: 4px; }
+    .result-total { font-size: 38px; font-weight: 700; font-family: var(--font-mono); color: #fff; line-height: 1; }
+    .result-total small { font-size: 18px; margin-right: 4px; opacity: 0.7; }
+    .result-divider { border: none; border-top: 1px solid rgba(255,255,255,0.12); margin: 18px 0; }
+
+    .price-options { display: flex; flex-direction: column; gap: 10px; }
+    .price-option {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 12px 14px;
+      border-radius: 8px;
+      cursor: default;
+    }
+    .price-option.principal { background: rgba(232,75,42,0.25); border: 1px solid rgba(232,75,42,0.4); }
+    .price-option.desconto { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); }
+    .price-option.limite { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); }
+    .price-option-label { font-size: 12px; font-weight: 600; }
+    .price-option-mult { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 1px; }
+    .price-option-value { font-size: 20px; font-weight: 700; font-family: var(--font-mono); }
+
+    .result-note { font-size: 12px; color: rgba(255,255,255,0.4); margin-top: 14px; line-height: 1.5; }
+
+    /* DIGITAL CALC */
+    .calc-detail {
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+      border-radius: 8px;
+      padding: 14px 16px;
+      margin-top: 12px;
+    }
+    .calc-detail-title { font-size: 12px; font-weight: 600; color: #0369a1; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
+    .calc-detail-row { display: flex; justify-content: space-between; font-size: 13px; padding: 3px 0; }
+    .calc-detail-row span:first-child { color: #374151; }
+    .calc-detail-row span:last-child { font-family: var(--font-mono); font-weight: 600; color: #0369a1; }
+
+    /* BUTTONS */
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-family: var(--font-sans);
+      font-size: 14px; font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all 0.15s;
+    }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn-outline { background: transparent; color: var(--primary); border: 1.5px solid var(--border); }
+    .btn-outline:hover { border-color: var(--primary); background: #f9fafb; }
+    .btn-success { background: var(--success); color: #fff; }
+    .btn-success:hover { background: #15803d; }
+    .btn-sm { padding: 7px 14px; font-size: 13px; }
+    .btn-full { width: 100%; justify-content: center; }
+
+    .actions { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+
+    /* RECEIPT */
+    .receipt-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .receipt-header {
+      background: var(--primary);
+      padding: 20px 24px;
+      color: #fff;
+      display: flex; align-items: flex-start; justify-content: space-between;
+    }
+    .receipt-logo { font-size: 18px; font-weight: 700; }
+    .receipt-subtitle { font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 2px; }
+    .receipt-number { font-family: var(--font-mono); font-size: 13px; color: rgba(255,255,255,0.6); text-align: right; }
+    .receipt-number strong { font-size: 20px; color: #fff; display: block; }
+    .receipt-body { padding: 24px; }
+    .receipt-section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: var(--text-muted); margin-bottom: 10px; }
+    .receipt-info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 24px; margin-bottom: 20px; }
+    .receipt-info-item label { display: block; font-size: 11px; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.3px; margin-bottom: 2px; }
+    .receipt-info-item span { font-size: 14px; font-weight: 500; }
+    .receipt-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+    .receipt-table th { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); padding: 8px 10px; text-align: left; border-bottom: 2px solid var(--border); }
+    .receipt-table td { padding: 10px 10px; font-size: 13px; border-bottom: 1px solid var(--border); }
+    .receipt-table td:last-child { text-align: right; font-family: var(--font-mono); font-weight: 600; }
+    .receipt-total-row { background: #f9fafb; }
+    .receipt-total-row td { font-size: 15px; font-weight: 700; padding: 12px 10px; border-bottom: none; }
+    .receipt-footer { padding: 16px 24px; background: #f9fafb; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+    .receipt-sig { font-size: 12px; color: var(--text-muted); }
+
+    /* DASHBOARD */
+    .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 20px; }
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .stat-label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); margin-bottom: 8px; }
+    .stat-value { font-size: 28px; font-weight: 700; font-family: var(--font-mono); }
+    .stat-sub { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
+    .stat-card.accent .stat-value { color: var(--accent); }
+    .stat-card.success .stat-value { color: var(--success); }
+    .stat-card.primary .stat-value { color: var(--primary); }
+
+    .history-list { display: flex; flex-direction: column; gap: 8px; }
+    .history-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 16px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: border-color 0.15s;
+    }
+    .history-item:hover { border-color: var(--primary); }
+    .history-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .history-dot.offset { background: var(--accent); }
+    .history-dot.digital { background: #2563eb; }
+    .history-client { font-size: 14px; font-weight: 600; flex: 1; }
+    .history-product { font-size: 13px; color: var(--text-muted); }
+    .history-value { font-size: 14px; font-weight: 700; font-family: var(--font-mono); color: var(--primary); }
+    .history-time { font-size: 11px; color: var(--text-muted); }
+    .history-type {
+      font-size: 11px; font-weight: 600;
+      padding: 2px 8px; border-radius: 20px;
+    }
+    .history-type.offset { background: #fff7ed; color: #c2410c; }
+    .history-type.digital { background: #eff6ff; color: #1d4ed8; }
+
+    .empty-state {
+      text-align: center; padding: 48px 24px; color: var(--text-muted);
+    }
+    .empty-state-icon { font-size: 40px; margin-bottom: 12px; opacity: 0.4; }
+    .empty-state p { font-size: 14px; }
+
+    /* TABS */
+    .tab-bar {
+      display: flex; gap: 4px;
+      border-bottom: 2px solid var(--border);
+      margin-bottom: 20px;
+    }
+    .tab-btn {
+      padding: 10px 18px;
+      font-size: 14px; font-weight: 600;
+      cursor: pointer; border: none; background: none;
+      color: var(--text-muted);
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      transition: all 0.15s;
+      font-family: var(--font-sans);
+    }
+    .tab-btn.active { color: var(--primary); border-bottom-color: var(--accent); }
+    .tab-btn:hover:not(.active) { color: var(--text); }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* ALERT */
+    .alert {
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      display: flex; align-items: flex-start; gap: 8px;
+      margin-bottom: 16px;
+    }
+    .alert-info { background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }
+    .alert-success { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
+
+    /* PRINT */
+    @media print {
+      .sidebar, .topbar, .actions, .no-print { display: none !important; }
+      .main { overflow: visible; }
+      .content { padding: 0; overflow: visible; }
+      .receipt-card { border: none; box-shadow: none; }
+    }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .form-grid { grid-template-columns: 1fr; }
+      .form-grid-3 { grid-template-columns: 1fr; }
+      .stats-grid { grid-template-columns: 1fr; }
+      .receipt-info-grid { grid-template-columns: 1fr; }
+      .content { padding: 16px; }
+      .topbar { padding: 0 16px; }
+    }
+
+    /* ADJUST SECTION */
+    .adjust-row {
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .adjust-label { flex: 1; font-size: 13px; }
+    .adjust-original { font-family: var(--font-mono); font-size: 13px; color: var(--text-muted); width: 80px; text-align: right; }
+    .adjust-input { width: 120px; }
+  </style>
+</head>
+<body>
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-mark">
+        <div class="logo-icon">🖨️</div>
+        <div>
+          <div class="logo-text">Ideal Gráfica</div>
+          <div class="logo-sub">Sistema Interno</div>
+        </div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Principal</div>
+      <div class="nav-item active" onclick="showPage('dashboard', this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Dashboard
+      </div>
+      <div class="nav-section-label">Orçamentos</div>
+      <div class="nav-item" onclick="showPage('offset', this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        Offset
+        <span style="margin-left:auto;background:rgba(232,75,42,0.2);color:#f87171;font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;">OFFSET</span>
+      </div>
+      <div class="nav-item" onclick="showPage('digital', this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M3 9h18"/></svg>
+        Digital / Plota
+        <span style="margin-left:auto;background:rgba(37,99,235,0.2);color:#60a5fa;font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px;">PLOTA</span>
+      </div>
+      <div class="nav-section-label">Documentos</div>
+      <div class="nav-item" onclick="showPage('recibo', this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Recibo
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <div class="user-avatar">P</div>
+        <div>
+          <div class="user-name">Pedro</div>
+          <div class="user-role">Equipe Ideal</div>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <div class="topbar">
+      <div>
+        <div class="page-title" id="page-title">Dashboard</div>
+        <div class="page-subtitle" id="page-subtitle">Visão geral do dia</div>
+      </div>
+      <div class="topbar-right">
+        <span class="badge badge-blue" id="topbar-date"></span>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- ===================== DASHBOARD ===================== -->
+      <div class="page active" id="page-dashboard">
+        <div class="stats-grid">
+          <div class="stat-card primary">
+            <div class="stat-label">Orçamentos hoje</div>
+            <div class="stat-value" id="stat-orcamentos">0</div>
+            <div class="stat-sub">Total gerados na sessão</div>
+          </div>
+          <div class="stat-card accent">
+            <div class="stat-label">Offset</div>
+            <div class="stat-value" id="stat-offset">0</div>
+            <div class="stat-sub">Orçamentos offset</div>
+          </div>
+          <div class="stat-card success">
+            <div class="stat-label">Digital/Plota</div>
+            <div class="stat-value" id="stat-digital">0</div>
+            <div class="stat-sub">Orçamentos digitais</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Orçamentos Recentes</div>
+              <div class="card-subtitle">Histórico desta sessão</div>
+            </div>
+            <div style="display:flex;gap:8px;">
+              <button class="btn btn-outline btn-sm" onclick="showPage('offset', document.querySelector('.nav-item:nth-child(4)'))">+ Offset</button>
+              <button class="btn btn-primary btn-sm" onclick="showPage('digital', document.querySelector('.nav-item:nth-child(5)'))">+ Digital</button>
+            </div>
+          </div>
+          <div id="history-list">
+            <div class="empty-state">
+              <div class="empty-state-icon">📋</div>
+              <p>Nenhum orçamento gerado ainda.<br>Use os menus ao lado para começar.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===================== OFFSET ===================== -->
+      <div class="page" id="page-offset">
+        <div class="alert alert-info">
+          <span>ℹ️</span>
+          <span>Preencha os dados do pedido. Os multiplicadores de venda são calculados automaticamente (2.5 / 2.4 / 2.2).</span>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 320px;gap:20px;align-items:start;">
+          <!-- FORM COLUMN -->
+          <div>
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <div class="card-title">Dados do Pedido — Offset</div>
+                  <div class="card-subtitle">Santinho, cartaz, flyer, folder, cartão de visita, etc.</div>
+                </div>
+              </div>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label>Nome do Cliente</label>
+                  <input type="text" id="off-cliente" placeholder="Ex: João Silva">
+                </div>
+                <div class="form-group">
+                  <label>Produto / Serviço</label>
+                  <select id="off-produto">
+                    <option value="">Selecionar produto...</option>
+                    <option>Santinho político</option>
+                    <option>Cartão de visita</option>
+                    <option>Cartaz A3</option>
+                    <option>Cartaz A2</option>
+                    <option>Flyer A5</option>
+                    <option>Folder A4 (dobra)</option>
+                    <option>Panfleto</option>
+                    <option>Banner (offset)</option>
+                    <option>Outro</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Quantidade</label>
+                  <input type="number" id="off-qtd" placeholder="Ex: 1000" min="1">
+                </div>
+                <div class="form-group">
+                  <label>Formato / Tamanho</label>
+                  <input type="text" id="off-formato" placeholder="Ex: 10x15 cm">
+                </div>
+              </div>
+
+              <div class="divider"><span>Custos de Produção</span></div>
+
+              <div class="cost-section">
+                <div class="cost-section-title">Lançar valores (R$)</div>
+
+                <div class="cost-row">
+                  <span class="cost-label">📄 Papel / Resma</span>
+                  <div class="cost-input-wrap input-prefix">
+                    <span>R$</span>
+                    <input type="number" class="off-cost" id="off-papel" placeholder="0,00" step="0.01" min="0">
+                  </div>
+                </div>
+                <div class="cost-row">
+                  <span class="cost-label">🔲 Chapas</span>
+                  <div class="cost-input-wrap input-prefix">
+                    <span>R$</span>
+                    <input type="number" class="off-cost" id="off-chapas" placeholder="0,00" step="0.01" min="0">
+                  </div>
+                </div>
+                <div class="cost-row">
+                  <span class="cost-label">🎨 Tintas</span>
+                  <div class="cost-input-wrap input-prefix">
+                    <span>R$</span>
+                    <input type="number" class="off-cost" id="off-tintas" placeholder="0,00" step="0.01" min="0">
+                  </div>
+                </div>
+                <div class="cost-row">
+                  <span class="cost-label">📦 Insumos (embalagem, acabamento)</span>
+                  <div class="cost-input-wrap input-prefix">
+                    <span>R$</span>
+                    <input type="number" class="off-cost" id="off-insumos" placeholder="0,00" step="0.01" min="0">
+                  </div>
+                </div>
+                <div class="cost-row">
+                  <span class="cost-label">⚡ Energia / CEA</span>
+                  <div class="cost-input-wrap input-prefix">
+                    <span>R$</span>
+                    <input type="number" class="off-cost" id="off-energia" placeholder="0,00" step="0.01" min="0">
+                  </div>
+                </div>
+                <div class="cost-row">
+                  <span class="cost-label">👷 Operador / Impressor</span>
+                  <div class="cost-input-wrap input-prefix">
+                    <span>R$</span>
+                    <input type="number" class="off-cost" id="off-operador" placeholder="0,00" step="0.01" min="0">
+                  </div>
+                </div>
+                <div class="cost-row">
+                  <span class="cost-label">➕ Outros custos</span>
+                  <div class="cost-input-wrap input-prefix">
+                    <span>R$</span>
+                    <input type="number" class="off-cost" id="off-outros" placeholder="0,00" step="0.01" min="0">
+                  </div>
+                </div>
+              </div>
+
+              <div class="divider"><span>Ajuste Manual</span></div>
+              <div class="alert alert-info" style="margin-bottom:0;">
+                <span>✏️</span>
+                <span>Se preferir, informe o custo total diretamente (substitui a soma dos campos acima).</span>
+              </div>
+              <div style="margin-top:12px;">
+                <div class="form-group">
+                  <label>Custo Total Manual (opcional)</label>
+                  <div class="input-prefix">
+                    <span>R$</span>
+                    <input type="number" id="off-custo-manual" placeholder="Deixe em branco para usar a soma acima" step="0.01" min="0">
+                  </div>
+                </div>
+              </div>
+
+              <div class="actions">
+                <button class="btn btn-primary" onclick="calcOffset()">Calcular Orçamento</button>
+                <button class="btn btn-outline" onclick="clearOffset()">Limpar</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- RESULT COLUMN -->
+          <div>
+            <div class="result-panel" id="off-result" style="opacity:0.4;">
+              <div class="result-header">Custo Total</div>
+              <div class="result-total"><small>R$</small><span id="off-total-val">0,00</span></div>
+              <hr class="result-divider">
+              <div class="result-header" style="margin-bottom:12px;">Preços de Venda Sugeridos</div>
+              <div class="price-options">
+                <div class="price-option principal">
+                  <div>
+                    <div class="price-option-label">Principal</div>
+                    <div class="price-option-mult">× 2,5</div>
+                  </div>
+                  <div class="price-option-value" id="off-price-25">R$ 0,00</div>
+                </div>
+                <div class="price-option desconto">
+                  <div>
+                    <div class="price-option-label">Desconto</div>
+                    <div class="price-option-mult">× 2,4</div>
+                  </div>
+                  <div class="price-option-value" id="off-price-24">R$ 0,00</div>
+                </div>
+                <div class="price-option limite">
+                  <div>
+                    <div class="price-option-label">Limite</div>
+                    <div class="price-option-mult">× 2,2</div>
+                  </div>
+                  <div class="price-option-value" id="off-price-22">R$ 0,00</div>
+                </div>
+              </div>
+              <p class="result-note">Os preços sugeridos são multiplicadores padrão aplicados ao custo total.</p>
+            </div>
+            <div style="margin-top:12px;">
+              <button class="btn btn-success btn-full" onclick="gerarReciboOffset()" id="btn-recibo-off" disabled>
+                📄 Gerar Recibo
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===================== DIGITAL ===================== -->
+      <div class="page" id="page-digital">
+        <div class="alert alert-info">
+          <span>ℹ️</span>
+          <span>Informe as medidas da arte e material. O sistema calcula metros necessários e custo por m².</span>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 320px;gap:20px;align-items:start;">
+          <!-- FORM COLUMN -->
+          <div>
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <div class="card-title">Dados do Pedido — Digital / Plota</div>
+                  <div class="card-subtitle">Adesivo recortado, chapado, perfurado, bandeira</div>
+                </div>
+              </div>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label>Nome do Cliente</label>
+                  <input type="text" id="dig-cliente" placeholder="Ex: Mário Andrade">
+                </div>
+                <div class="form-group">
+                  <label>Tipo de Produto</label>
+                  <select id="dig-produto">
+                    <option value="">Selecionar...</option>
+                    <option>Adesivo Recortado</option>
+                    <option>Adesivo Chapado</option>
+                    <option>Adesivo Perfurado (Jateado)</option>
+                    <option>Bandeira</option>
+                    <option>Lona</option>
+                    <option>Banner Digital</option>
+                    <option>Placa PVC</option>
+                    <option>Outro</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Quantidade de Peças</label>
+                  <input type="number" id="dig-qtd" placeholder="Ex: 50" min="1">
+                </div>
+                <div class="form-group">
+                  <label>Largura do Material (m)</label>
+                  <select id="dig-mat-largura" onchange="calcDigital()">
+                    <option value="1.60">1,60 m (padrão)</option>
+                    <option value="1.26">1,26 m</option>
+                    <option value="1.00">1,00 m</option>
+                    <option value="custom">Outro...</option>
+                  </select>
+                </div>
+                <div class="form-group" id="dig-custom-largura-group" style="display:none;">
+                  <label>Largura customizada (m)</label>
+                  <div class="input-suffix">
+                    <input type="number" id="dig-mat-custom" placeholder="Ex: 1.40" step="0.01" min="0.1" oninput="calcDigital()">
+                    <span>m</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="divider"><span>Medidas da Arte / Peça</span></div>
+              <div class="form-grid-3">
+                <div class="form-group">
+                  <label>Largura da Arte (m)</label>
+                  <div class="input-suffix">
+                    <input type="number" id="dig-art-w" placeholder="0,50" step="0.01" min="0.01" oninput="calcDigital()">
+                    <span>m</span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Altura da Arte (m)</label>
+                  <div class="input-suffix">
+                    <input type="number" id="dig-art-h" placeholder="0,80" step="0.01" min="0.01" oninput="calcDigital()">
+                    <span>m</span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Área / Peça (m²)</label>
+                  <input type="text" id="dig-area-peca" readonly style="background:#f9fafb;font-family:var(--font-mono);font-weight:600;" value="—">
+                </div>
+              </div>
+
+              <div id="dig-calc-detail" class="calc-detail" style="display:none;">
+                <div class="calc-detail-title">📐 Cálculo de Material</div>
+                <div class="calc-detail-row"><span>Peças por fileira (m. largrua ÷ arte.largura)</span><span id="dd-peca-fileira">—</span></div>
+                <div class="calc-detail-row"><span>Fileiras necessárias</span><span id="dd-fileiras">—</span></div>
+                <div class="calc-detail-row"><span>Metros lineares necessários</span><span id="dd-metros">—</span></div>
+                <div class="calc-detail-row"><span>Área total utilizada</span><span id="dd-area-total">—</span></div>
+              </div>
+
+              <div class="divider"><span>Custos</span></div>
+              <div class="cost-section">
+                <div class="cost-section-title">Lançar custos (por m²)</div>
+                <div class="cost-row">
+                  <span class="cost-label">🎞️ Custo do Adesivo / Material</span>
+                  <div class="cost-input-wrap input-prefix">
+                    <span>R$</span>
+                    <input type="number" id="dig-custo-adesivo" placeholder="0,00" step="0.01" min="0" oninput="calcDigital()">
+                  </div>
+                </div>
+                <div class="cost-row">
+                  <span class="cost-label">🖨️ Custo da Tinta / Impressão</span>
+                  <div class="cost-input-wrap input-prefix">
+                    <span>R$</span>
+                    <input type="number" id="dig-custo-tinta" placeholder="0,00" step="0.01" min="0" oninput="calcDigital()">
+                  </div>
+                </div>
+                <div class="cost-row">
+                  <span class="cost-label">✂️ Custo de Acabamento / Corte</span>
+                  <div class="cost-input-wrap input-prefix">
+                    <span>R$</span>
+                    <input type="number" id="dig-custo-acabamento" placeholder="0,00" step="0.01" min="0" oninput="calcDigital()">
+                  </div>
+                </div>
+                <div class="cost-row">
+                  <span class="cost-label">👷 Mão de obra</span>
+                  <div class="cost-input-wrap input-prefix">
+                    <span>R$</span>
+                    <input type="number" id="dig-custo-mao" placeholder="0,00" step="0.01" min="0" oninput="calcDigital()">
+                  </div>
+                </div>
+                <div class="cost-row">
+                  <span class="cost-label">➕ Outros</span>
+                  <div class="cost-input-wrap input-prefix">
+                    <span>R$</span>
+                    <input type="number" id="dig-custo-outros" placeholder="0,00" step="0.01" min="0" oninput="calcDigital()">
+                  </div>
+                </div>
+              </div>
+
+              <div class="divider"><span>Ajuste Manual</span></div>
+              <div class="form-group">
+                <label>Custo Total Manual (opcional)</label>
+                <div class="input-prefix">
+                  <span>R$</span>
+                  <input type="number" id="dig-custo-manual" placeholder="Deixe em branco para usar a soma acima" step="0.01" min="0" oninput="calcDigital()">
+                </div>
+              </div>
+
+              <div class="actions">
+                <button class="btn btn-primary" onclick="calcDigital()">Calcular Orçamento</button>
+                <button class="btn btn-outline" onclick="clearDigital()">Limpar</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- RESULT COLUMN -->
+          <div>
+            <div class="result-panel" id="dig-result" style="opacity:0.4;">
+              <div class="result-header">Custo Total</div>
+              <div class="result-total"><small>R$</small><span id="dig-total-val">0,00</span></div>
+              <hr class="result-divider">
+              <div class="result-header" style="margin-bottom:4px;">Custo por Peça</div>
+              <div style="font-size:22px;font-weight:700;font-family:var(--font-mono);margin-bottom:16px;" id="dig-custo-peca">R$ 0,00</div>
+              <hr class="result-divider">
+              <div class="result-header" style="margin-bottom:12px;">Preços de Venda Sugeridos</div>
+              <div class="price-options">
+                <div class="price-option principal">
+                  <div>
+                    <div class="price-option-label">Principal</div>
+                    <div class="price-option-mult">× 2,5</div>
+                  </div>
+                  <div class="price-option-value" id="dig-price-25">R$ 0,00</div>
+                </div>
+                <div class="price-option desconto">
+                  <div>
+                    <div class="price-option-label">Desconto</div>
+                    <div class="price-option-mult">× 2,4</div>
+                  </div>
+                  <div class="price-option-value" id="dig-price-24">R$ 0,00</div>
+                </div>
+                <div class="price-option limite">
+                  <div>
+                    <div class="price-option-label">Limite</div>
+                    <div class="price-option-mult">× 2,2</div>
+                  </div>
+                  <div class="price-option-value" id="dig-price-22">R$ 0,00</div>
+                </div>
+              </div>
+              <div id="dig-metros-info" style="margin-top:14px;padding:10px 12px;background:rgba(255,255,255,0.07);border-radius:8px;font-size:12px;color:rgba(255,255,255,0.6);">
+                Informe as medidas para ver o detalhamento.
+              </div>
+            </div>
+            <div style="margin-top:12px;">
+              <button class="btn btn-success btn-full" onclick="gerarReciboDigital()" id="btn-recibo-dig" disabled>
+                📄 Gerar Recibo
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===================== RECIBO ===================== -->
+      <div class="page" id="page-recibo">
+        <div id="recibo-empty" class="card" style="text-align:center;padding:48px;">
+          <div style="font-size:48px;margin-bottom:16px;opacity:0.3;">🧾</div>
+          <div style="font-size:16px;font-weight:600;margin-bottom:8px;">Nenhum recibo gerado</div>
+          <div style="font-size:14px;color:var(--text-muted);margin-bottom:20px;">Gere um orçamento primeiro e clique em "Gerar Recibo".</div>
+          <div style="display:flex;gap:10px;justify-content:center;">
+            <button class="btn btn-outline" onclick="navTo('offset')">Ir para Offset</button>
+            <button class="btn btn-primary" onclick="navTo('digital')">Ir para Digital</button>
+          </div>
+        </div>
+
+        <div id="recibo-content" style="display:none;">
+          <div class="actions no-print" style="margin-bottom:16px;">
+            <button class="btn btn-primary" onclick="window.print()">🖨️ Imprimir</button>
+            <button class="btn btn-outline" onclick="novoRecibo()">Novo Orçamento</button>
+          </div>
+
+          <div class="receipt-card">
+            <div class="receipt-header">
+              <div>
+                <div class="receipt-logo">🖨️ Ideal Gráfica</div>
+                <div class="receipt-subtitle">Recibo / Orçamento</div>
+                <div style="margin-top:8px;font-size:12px;color:rgba(255,255,255,0.5);">Pedro — (96) 99160-0909</div>
+              </div>
+              <div class="receipt-number">
+                <span>Nº</span>
+                <strong id="r-numero">001</strong>
+                <div style="font-size:11px;margin-top:4px;color:rgba(255,255,255,0.4);" id="r-data"></div>
+              </div>
+            </div>
+            <div class="receipt-body">
+              <div class="receipt-section-title">Dados do Cliente</div>
+              <div class="receipt-info-grid">
+                <div class="receipt-info-item">
+                  <label>Nome</label>
+                  <span id="r-cliente">—</span>
+                </div>
+                <div class="receipt-info-item">
+                  <label>Tipo</label>
+                  <span id="r-tipo">—</span>
+                </div>
+                <div class="receipt-info-item">
+                  <label>Produto</label>
+                  <span id="r-produto">—</span>
+                </div>
+                <div class="receipt-info-item">
+                  <label>Quantidade</label>
+                  <span id="r-qtd">—</span>
+                </div>
+              </div>
+
+              <div class="receipt-section-title">Detalhamento de Custos</div>
+              <table class="receipt-table">
+                <thead>
+                  <tr>
+                    <th>Item</th>
+                    <th>Valor (R$)</th>
+                  </tr>
+                </thead>
+                <tbody id="r-itens"></tbody>
+                <tr class="receipt-total-row">
+                  <td>CUSTO TOTAL</td>
+                  <td id="r-total">R$ 0,00</td>
+                </tr>
+              </table>
+
+              <div class="receipt-section-title">Preços de Venda Sugeridos</div>
+              <table class="receipt-table">
+                <thead>
+                  <tr><th>Opção</th><th>Multiplicador</th><th>Valor (R$)</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Principal</td><td>× 2,5</td><td id="r-p25" style="font-family:var(--font-mono);font-weight:700;">—</td></tr>
+                  <tr><td>Desconto</td><td>× 2,4</td><td id="r-p24" style="font-family:var(--font-mono);font-weight:700;">—</td></tr>
+                  <tr><td>Limite</td><td>× 2,2</td><td id="r-p22" style="font-family:var(--font-mono);font-weight:700;">—</td></tr>
+                </tbody>
+              </table>
+
+              <div id="r-obs" style="display:none;">
+                <div class="receipt-section-title">Observações</div>
+                <div style="font-size:13px;color:var(--text-muted);padding:10px 0;" id="r-obs-text"></div>
+              </div>
+            </div>
+            <div class="receipt-footer">
+              <div class="receipt-sig">
+                <div style="font-weight:600;">Ideal Gráfica</div>
+                <div style="color:var(--text-muted);font-size:12px;margin-top:2px;">Sistema interno de orçamentos</div>
+              </div>
+              <div style="text-align:right;font-size:12px;color:var(--text-muted);">
+                <div>Gerado em: <span id="r-timestamp"></span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /content -->
+  </main>
+</div><!-- /app -->
+
+<script>
+// =================== STATE ===================
+let receiptCounter = 0;
+let history = [];
+let lastOffsetData = null;
+let lastDigitalData = null;
+
+// =================== UTILS ===================
+const fmt = (n) => n.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const fmtBRL = (n) => 'R$ ' + fmt(n);
+const v = (id) => parseFloat(document.getElementById(id)?.value) || 0;
+const vStr = (id) => (document.getElementById(id)?.value || '').trim();
+const el = (id) => document.getElementById(id);
+const today = () => new Date().toLocaleDateString('pt-BR');
+const now = () => new Date().toLocaleString('pt-BR');
+
+// =================== INIT ===================
+document.addEventListener('DOMContentLoaded', () => {
+  el('topbar-date').textContent = today();
+
+  // Auto-calc digital on input changes
+  ['dig-qtd','dig-mat-largura','dig-art-w','dig-art-h','dig-custo-adesivo','dig-custo-tinta','dig-custo-acabamento','dig-custo-mao','dig-custo-outros','dig-custo-manual'].forEach(id => {
+    const input = el(id);
+    if (input) input.addEventListener('input', calcDigital);
+  });
+
+  // Auto-calc offset on input changes
+  document.querySelectorAll('.off-cost').forEach(input => {
+    input.addEventListener('input', updateOffsetPreview);
+  });
+
+  // Material width custom toggle
+  el('dig-mat-largura').addEventListener('change', function() {
+    el('dig-custom-largura-group').style.display = this.value === 'custom' ? 'block' : 'none';
+    calcDigital();
+  });
+});
+
+// =================== NAVIGATION ===================
+function showPage(name, navEl) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  el('page-' + name).classList.add('active');
+  if (navEl) navEl.classList.add('active');
+
+  const titles = {
+    dashboard: ['Dashboard', 'Visão geral do dia'],
+    offset: ['Orçamento Offset', 'Santinho, cartaz, flyer, folder...'],
+    digital: ['Orçamento Digital / Plota', 'Adesivo, bandeira, lona...'],
+    recibo: ['Recibo', 'Visualizar e imprimir'],
+  };
+  el('page-title').textContent = titles[name][0];
+  el('page-subtitle').textContent = titles[name][1];
+}
+
+function navTo(name) {
+  const navItems = document.querySelectorAll('.nav-item');
+  let idx = { dashboard: 0, offset: 1, digital: 2, recibo: 3 };
+  showPage(name, navItems[idx[name]]);
+}
+
+// =================== OFFSET ===================
+function updateOffsetPreview() {
+  const total = calcOffsetTotal();
+  el('off-total-val').textContent = fmt(total);
+  el('off-price-25').textContent = fmtBRL(total * 2.5);
+  el('off-price-24').textContent = fmtBRL(total * 2.4);
+  el('off-price-22').textContent = fmtBRL(total * 2.2);
+  el('off-result').style.opacity = total > 0 ? '1' : '0.4';
+}
+
+function calcOffsetTotal() {
+  const manual = v('off-custo-manual');
+  if (manual > 0) return manual;
+  return v('off-papel') + v('off-chapas') + v('off-tintas') + v('off-insumos') + v('off-energia') + v('off-operador') + v('off-outros');
+}
+
+function calcOffset() {
+  const cliente = vStr('off-cliente');
+  const produto = vStr('off-produto');
+  const qtd = vStr('off-qtd');
+
+  if (!cliente || !produto) {
+    alert('Preencha o nome do cliente e o produto antes de calcular.');
+    return;
+  }
+
+  const total = calcOffsetTotal();
+  el('off-total-val').textContent = fmt(total);
+  el('off-price-25').textContent = fmtBRL(total * 2.5);
+  el('off-price-24').textContent = fmtBRL(total * 2.4);
+  el('off-price-22').textContent = fmtBRL(total * 2.2);
+  el('off-result').style.opacity = '1';
+  el('btn-recibo-off').disabled = false;
+
+  // Build item breakdown
+  const items = [];
+  const fields = [
+    ['off-papel','Papel / Resma'],
+    ['off-chapas','Chapas'],
+    ['off-tintas','Tintas'],
+    ['off-insumos','Insumos (embalagem, acabamento)'],
+    ['off-energia','Energia / CEA'],
+    ['off-operador','Operador / Impressor'],
+    ['off-outros','Outros custos'],
+  ];
+  fields.forEach(([id, label]) => {
+    const val = v(id);
+    if (val > 0) items.push({ label, value: val });
+  });
+  const manual = v('off-custo-manual');
+  if (manual > 0) items.push({ label: 'Custo manual informado', value: manual });
+
+  lastOffsetData = {
+    tipo: 'Offset',
+    cliente, produto,
+    qtd: qtd ? qtd + ' unid.' : '—',
+    total, items,
+    prices: { p25: total * 2.5, p24: total * 2.4, p22: total * 2.2 }
+  };
+
+  // Add to history
+  addHistory({ tipo: 'offset', cliente, produto, total });
+}
+
+function clearOffset() {
+  ['off-cliente','off-papel','off-chapas','off-tintas','off-insumos','off-energia','off-operador','off-outros','off-custo-manual'].forEach(id => { if(el(id)) el(id).value = ''; });
+  el('off-produto').value = '';
+  el('off-qtd').value = '';
+  el('off-formato').value = '';
+  el('off-total-val').textContent = '0,00';
+  el('off-price-25').textContent = 'R$ 0,00';
+  el('off-price-24').textContent = 'R$ 0,00';
+  el('off-price-22').textContent = 'R$ 0,00';
+  el('off-result').style.opacity = '0.4';
+  el('btn-recibo-off').disabled = true;
+  lastOffsetData = null;
+}
+
+// =================== DIGITAL ===================
+function getMatLargura() {
+  const sel = el('dig-mat-largura').value;
+  if (sel === 'custom') return parseFloat(el('dig-mat-custom').value) || 0;
+  return parseFloat(sel);
+}
+
+function calcDigital() {
+  const qtd = v('dig-qtd') || 0;
+  const matW = getMatLargura();
+  const artW = v('dig-art-w');
+  const artH = v('dig-art-h');
+
+  let metros = 0, pecasPorFileira = 0, fileiras = 0, areaTotal = 0;
+
+  if (artW > 0 && artH > 0 && matW > 0 && qtd > 0) {
+    pecasPorFileira = Math.floor(matW / artW);
+    if (pecasPorFileira < 1) pecasPorFileira = 1;
+    fileiras = Math.ceil(qtd / pecasPorFileira);
+    metros = fileiras * artH;
+    areaTotal = metros * matW;
+
+    // Update calc detail
+    el('dig-calc-detail').style.display = 'block';
+    el('dd-peca-fileira').textContent = pecasPorFileira + ' peça(s)';
+    el('dd-fileiras').textContent = fileiras;
+    el('dd-metros').textContent = metros.toFixed(2) + ' m';
+    el('dd-area-total').textContent = areaTotal.toFixed(2) + ' m²';
+    el('dig-area-peca').value = (artW * artH).toFixed(4) + ' m²';
+  } else {
+    el('dig-calc-detail').style.display = 'none';
+    el('dig-area-peca').value = '—';
+  }
+
+  // Calculate costs
+  const manual = v('dig-custo-manual');
+  let total = 0;
+
+  if (manual > 0) {
+    total = manual;
+  } else {
+    const costPerM2 = v('dig-custo-adesivo') + v('dig-custo-tinta');
+    const fixedCosts = v('dig-custo-acabamento') + v('dig-custo-mao') + v('dig-custo-outros');
+    total = (areaTotal * costPerM2) + fixedCosts;
+  }
+
+  const custoPeca = qtd > 0 ? total / qtd : 0;
+
+  el('dig-total-val').textContent = fmt(total);
+  el('dig-custo-peca').textContent = fmtBRL(custoPeca) + ' / peça';
+  el('dig-price-25').textContent = fmtBRL(total * 2.5);
+  el('dig-price-24').textContent = fmtBRL(total * 2.4);
+  el('dig-price-22').textContent = fmtBRL(total * 2.2);
+  el('dig-result').style.opacity = total > 0 ? '1' : '0.4';
+
+  if (metros > 0) {
+    el('dig-metros-info').innerHTML = `📏 Material: <strong>${metros.toFixed(2)}m lineares</strong> × ${matW}m = <strong>${areaTotal.toFixed(2)}m²</strong>`;
+  } else {
+    el('dig-metros-info').textContent = 'Informe as medidas para ver o detalhamento.';
+  }
+
+  el('btn-recibo-dig').disabled = total <= 0;
+
+  if (total > 0) {
+    const cliente = vStr('dig-cliente');
+    const produto = vStr('dig-produto');
+    const qtdStr = qtd > 0 ? qtd + ' unid.' : '—';
+    const items = [];
+    if (metros > 0) {
+      items.push({ label: `Material utilizado (${areaTotal.toFixed(2)} m²)`, value: null });
+    }
+    const f = [
+      ['dig-custo-adesivo','Adesivo / Material (por m²)'],
+      ['dig-custo-tinta','Tinta / Impressão (por m²)'],
+      ['dig-custo-acabamento','Acabamento / Corte'],
+      ['dig-custo-mao','Mão de obra'],
+      ['dig-custo-outros','Outros'],
+    ];
+    f.forEach(([id, label]) => {
+      const val = v(id);
+      if (val > 0) items.push({ label, value: val });
+    });
+    if (manual > 0) items.push({ label: 'Custo manual informado', value: manual });
+
+    lastDigitalData = {
+      tipo: 'Digital / Plota',
+      cliente, produto, qtd: qtdStr, total, items,
+      prices: { p25: total * 2.5, p24: total * 2.4, p22: total * 2.2 },
+      metros: metros > 0 ? metros.toFixed(2) + 'm lineares' : null
+    };
+  }
+}
+
+function clearDigital() {
+  ['dig-cliente','dig-qtd','dig-art-w','dig-art-h','dig-custo-adesivo','dig-custo-tinta','dig-custo-acabamento','dig-custo-mao','dig-custo-outros','dig-custo-manual'].forEach(id => { if(el(id)) el(id).value = ''; });
+  el('dig-produto').value = '';
+  el('dig-mat-largura').value = '1.60';
+  el('dig-calc-detail').style.display = 'none';
+  el('dig-area-peca').value = '—';
+  el('dig-total-val').textContent = '0,00';
+  el('dig-custo-peca').textContent = 'R$ 0,00';
+  el('dig-price-25').textContent = 'R$ 0,00';
+  el('dig-price-24').textContent = 'R$ 0,00';
+  el('dig-price-22').textContent = 'R$ 0,00';
+  el('dig-result').style.opacity = '0.4';
+  el('dig-metros-info').textContent = 'Informe as medidas para ver o detalhamento.';
+  el('btn-recibo-dig').disabled = true;
+  lastDigitalData = null;
+}
+
+// =================== RECIBO ===================
+function renderRecibo(data) {
+  receiptCounter++;
+  el('recibo-empty').style.display = 'none';
+  el('recibo-content').style.display = 'block';
+
+  el('r-numero').textContent = String(receiptCounter).padStart(3, '0');
+  el('r-data').textContent = today();
+  el('r-timestamp').textContent = now();
+  el('r-cliente').textContent = data.cliente || '—';
+  el('r-tipo').textContent = data.tipo;
+  el('r-produto').textContent = data.produto || '—';
+  el('r-qtd').textContent = data.qtd || '—';
+  el('r-total').textContent = fmtBRL(data.total);
+  el('r-p25').textContent = fmtBRL(data.prices.p25);
+  el('r-p24').textContent = fmtBRL(data.prices.p24);
+  el('r-p22').textContent = fmtBRL(data.prices.p22);
+
+  // Build items table
+  const tbody = el('r-itens');
+  tbody.innerHTML = '';
+  data.items.forEach(item => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `<td>${item.label}</td><td>${item.value !== null ? fmtBRL(item.value) : '—'}</td>`;
+    tbody.appendChild(tr);
+  });
+
+  if (data.metros) {
+    el('r-obs').style.display = 'block';
+    el('r-obs-text').textContent = `Material necessário: ${data.metros}`;
+  } else {
+    el('r-obs').style.display = 'none';
+  }
+
+  navTo('recibo');
+}
+
+function gerarReciboOffset() {
+  if (!lastOffsetData) { alert('Calcule o orçamento primeiro.'); return; }
+  renderRecibo(lastOffsetData);
+}
+
+function gerarReciboDigital() {
+  if (!lastDigitalData) { alert('Calcule o orçamento primeiro.'); return; }
+  renderRecibo(lastDigitalData);
+}
+
+function novoRecibo() {
+  navTo('dashboard');
+}
+
+// =================== HISTORY ===================
+function addHistory(entry) {
+  const timestamp = new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+  history.unshift({ ...entry, timestamp });
+  if (history.length > 20) history.pop();
+
+  // Update stats
+  const total = history.length;
+  const offsets = history.filter(h => h.tipo === 'offset').length;
+  const digitais = history.filter(h => h.tipo === 'digital').length;
+  el('stat-orcamentos').textContent = total;
+  el('stat-offset').textContent = offsets;
+  el('stat-digital').textContent = digitais;
+
+  // Render list
+  const listEl = el('history-list');
+  listEl.innerHTML = '';
+  history.forEach(h => {
+    const div = document.createElement('div');
+    div.className = 'history-item';
+    div.innerHTML = `
+      <div class="history-dot ${h.tipo}"></div>
+      <div style="flex:1;">
+        <div class="history-client">${h.cliente || '—'}</div>
+        <div class="history-product">${h.produto || '—'}</div>
+      </div>
+      <span class="history-type ${h.tipo}">${h.tipo === 'offset' ? 'OFFSET' : 'DIGITAL'}</span>
+      <div style="text-align:right;">
+        <div class="history-value">${fmtBRL(h.total)}</div>
+        <div class="history-time">${h.timestamp}</div>
+      </div>
+    `;
+    listEl.appendChild(div);
+  });
+}
+</script>
+</body>
+</html>
