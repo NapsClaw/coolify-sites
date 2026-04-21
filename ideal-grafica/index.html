@@ -396,6 +396,40 @@
       .topbar { padding: 0 16px; }
     }
 
+    /* OPTION SELECTOR */
+    .option-selector {
+      background: #fff;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
+      margin-top: 12px;
+    }
+    .option-selector-label {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.8px; color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+    .option-btn-group {
+      display: flex; gap: 6px;
+    }
+    .option-btn {
+      flex: 1; padding: 9px 8px;
+      border-radius: 7px;
+      border: 1.5px solid var(--border);
+      background: #f9fafb;
+      font-family: var(--font-sans);
+      font-size: 12px; font-weight: 600;
+      cursor: pointer; text-align: center;
+      color: var(--text-muted);
+      transition: all 0.15s;
+      line-height: 1.3;
+    }
+    .option-btn:hover { border-color: var(--primary); color: var(--primary); }
+    .option-btn.active-opt1 { background: rgba(232,75,42,0.08); border-color: var(--accent); color: var(--accent); }
+    .option-btn.active-opt2 { background: rgba(37,99,235,0.08); border-color: #2563eb; color: #2563eb; }
+    .option-btn.active-opt3 { background: rgba(107,114,128,0.1); border-color: #6b7280; color: #374151; }
+    .option-btn small { display: block; font-size: 10px; font-weight: 400; opacity: 0.75; margin-top: 1px; }
+
     /* ADJUST SECTION */
     .adjust-row {
       display: flex; align-items: center; gap: 10px;
@@ -666,7 +700,21 @@
               </div>
               <p class="result-note">Os preços sugeridos são multiplicadores padrão aplicados ao custo total.</p>
             </div>
-            <div style="margin-top:12px;">
+            <div class="option-selector" id="off-option-selector">
+              <div class="option-selector-label">🔒 Uso interno — Selecionar opção para o recibo</div>
+              <div class="option-btn-group">
+                <button class="option-btn active-opt1" id="off-opt-1" onclick="selectOffOpt(1)">
+                  Principal<small>× 2,5</small>
+                </button>
+                <button class="option-btn" id="off-opt-2" onclick="selectOffOpt(2)">
+                  Desconto<small>× 2,4</small>
+                </button>
+                <button class="option-btn" id="off-opt-3" onclick="selectOffOpt(3)">
+                  Limite<small>× 2,2</small>
+                </button>
+              </div>
+            </div>
+            <div style="margin-top:8px;">
               <button class="btn btn-success btn-full" onclick="gerarReciboOffset()" id="btn-recibo-off" disabled>
                 📄 Gerar Recibo
               </button>
@@ -856,7 +904,21 @@
                 Informe as medidas para ver o detalhamento.
               </div>
             </div>
-            <div style="margin-top:12px;">
+            <div class="option-selector" id="dig-option-selector">
+              <div class="option-selector-label">🔒 Uso interno — Selecionar opção para o recibo</div>
+              <div class="option-btn-group">
+                <button class="option-btn active-opt1" id="dig-opt-1" onclick="selectDigOpt(1)">
+                  Principal<small>× 2,5</small>
+                </button>
+                <button class="option-btn" id="dig-opt-2" onclick="selectDigOpt(2)">
+                  Desconto<small>× 2,4</small>
+                </button>
+                <button class="option-btn" id="dig-opt-3" onclick="selectDigOpt(3)">
+                  Limite<small>× 2,2</small>
+                </button>
+              </div>
+            </div>
+            <div style="margin-top:8px;">
               <button class="btn btn-success btn-full" onclick="gerarReciboDigital()" id="btn-recibo-dig" disabled>
                 📄 Gerar Recibo
               </button>
@@ -932,15 +994,17 @@
                 </tr>
               </table>
 
-              <div class="receipt-section-title">Preços de Venda Sugeridos</div>
+              <div class="receipt-section-title">Valor do Orçamento</div>
               <table class="receipt-table">
                 <thead>
-                  <tr><th>Opção</th><th>Multiplicador</th><th>Valor (R$)</th></tr>
+                  <tr><th>Opção Selecionada</th><th>Multiplicador</th><th>Valor (R$)</th></tr>
                 </thead>
                 <tbody>
-                  <tr><td>Principal</td><td>× 2,5</td><td id="r-p25" style="font-family:var(--font-mono);font-weight:700;">—</td></tr>
-                  <tr><td>Desconto</td><td>× 2,4</td><td id="r-p24" style="font-family:var(--font-mono);font-weight:700;">—</td></tr>
-                  <tr><td>Limite</td><td>× 2,2</td><td id="r-p22" style="font-family:var(--font-mono);font-weight:700;">—</td></tr>
+                  <tr class="receipt-total-row">
+                    <td id="r-opt-label" style="font-weight:700;">Principal</td>
+                    <td id="r-opt-mult" style="font-family:var(--font-mono);">× 2,5</td>
+                    <td id="r-opt-value" style="font-family:var(--font-mono);font-weight:700;font-size:17px;">—</td>
+                  </tr>
                 </tbody>
               </table>
 
@@ -972,6 +1036,8 @@ let receiptCounter = 0;
 let history = [];
 let lastOffsetData = null;
 let lastDigitalData = null;
+let offSelectedOpt = 1; // 1=Principal, 2=Desconto, 3=Limite
+let digSelectedOpt = 1;
 
 // =================== UTILS ===================
 const fmt = (n) => n.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -1003,6 +1069,27 @@ document.addEventListener('DOMContentLoaded', () => {
     calcDigital();
   });
 });
+
+// =================== OPTION SELECTORS ===================
+const optMeta = {
+  1: { label: 'Principal', mult: '× 2,5', factor: 2.5, cls: 'active-opt1' },
+  2: { label: 'Desconto',  mult: '× 2,4', factor: 2.4, cls: 'active-opt2' },
+  3: { label: 'Limite',    mult: '× 2,2', factor: 2.2, cls: 'active-opt3' },
+};
+
+function selectOffOpt(n) {
+  offSelectedOpt = n;
+  [1,2,3].forEach(i => {
+    el('off-opt-' + i).className = 'option-btn' + (i === n ? ' ' + optMeta[n].cls : '');
+  });
+}
+
+function selectDigOpt(n) {
+  digSelectedOpt = n;
+  [1,2,3].forEach(i => {
+    el('dig-opt-' + i).className = 'option-btn' + (i === n ? ' ' + optMeta[n].cls : '');
+  });
+}
 
 // =================== NAVIGATION ===================
 function showPage(name, navEl) {
@@ -1103,6 +1190,7 @@ function clearOffset() {
   el('off-result').style.opacity = '0.4';
   el('btn-recibo-off').disabled = true;
   lastOffsetData = null;
+  selectOffOpt(1);
 }
 
 // =================== DIGITAL ===================
@@ -1213,10 +1301,11 @@ function clearDigital() {
   el('dig-metros-info').textContent = 'Informe as medidas para ver o detalhamento.';
   el('btn-recibo-dig').disabled = true;
   lastDigitalData = null;
+  selectDigOpt(1);
 }
 
 // =================== RECIBO ===================
-function renderRecibo(data) {
+function renderRecibo(data, selectedOpt) {
   receiptCounter++;
   el('recibo-empty').style.display = 'none';
   el('recibo-content').style.display = 'block';
@@ -1229,9 +1318,13 @@ function renderRecibo(data) {
   el('r-produto').textContent = data.produto || '—';
   el('r-qtd').textContent = data.qtd || '—';
   el('r-total').textContent = fmtBRL(data.total);
-  el('r-p25').textContent = fmtBRL(data.prices.p25);
-  el('r-p24').textContent = fmtBRL(data.prices.p24);
-  el('r-p22').textContent = fmtBRL(data.prices.p22);
+
+  // Show only the chosen price option
+  const opt = optMeta[selectedOpt] || optMeta[1];
+  const priceKeys = { 1: data.prices.p25, 2: data.prices.p24, 3: data.prices.p22 };
+  el('r-opt-label').textContent = opt.label;
+  el('r-opt-mult').textContent = opt.mult;
+  el('r-opt-value').textContent = fmtBRL(priceKeys[selectedOpt]);
 
   // Build items table
   const tbody = el('r-itens');
@@ -1254,12 +1347,12 @@ function renderRecibo(data) {
 
 function gerarReciboOffset() {
   if (!lastOffsetData) { alert('Calcule o orçamento primeiro.'); return; }
-  renderRecibo(lastOffsetData);
+  renderRecibo(lastOffsetData, offSelectedOpt);
 }
 
 function gerarReciboDigital() {
   if (!lastDigitalData) { alert('Calcule o orçamento primeiro.'); return; }
-  renderRecibo(lastDigitalData);
+  renderRecibo(lastDigitalData, digSelectedOpt);
 }
 
 function novoRecibo() {
