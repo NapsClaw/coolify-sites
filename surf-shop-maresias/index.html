@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Surf Shop Maresias — Pranchas, Roupas e Acessórios de Surf em Maresias/SP</title>
+  <meta name="description" content="A sua loja de surf em Maresias. Pranchas, wetsuits, roupas e acessórios para quem vive o mar. Atendimento especializado, curadoria premium, no coração de Maresias/SP." />
+  <meta property="og:title" content="Surf Shop Maresias" />
+  <meta property="og:description" content="A sua loja de surf na praia. Pranchas, roupas e acessórios em Maresias/SP." />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1502680390469-be75c86b636f?w=1200&q=80" />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏄</text></svg>" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,700;12..96,800;12..96,900&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    :root {
+      --primary: #061E34;
+      --primary-mid: #0A3358;
+      --accent: #00C8FF;
+      --accent-glow: rgba(0, 200, 255, 0.25);
+      --bg: #F0EDE4;
+      --bg-warm: #E8E3D5;
+      --text: #061E34;
+      --text-muted: #4A6080;
+      --white: #F8F6F1;
+      --sunset: #FF6B2C;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+
+    /* ─── NOISE TEXTURE ─── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.4;
+    }
+
+    /* ─── NAVBAR ─── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 20px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.4s ease;
+    }
+
+    nav.scrolled {
+      background: rgba(6, 30, 52, 0.92);
+      backdrop-filter: blur(20px);
+      padding: 14px 32px;
+      border-bottom: 1px solid rgba(0, 200, 255, 0.1);
+    }
+
+    .nav-logo {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: 1.2rem;
+      color: var(--white);
+      letter-spacing: -0.03em;
+      text-decoration: none;
+    }
+
+    .nav-logo span { color: var(--accent); }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: var(--primary);
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      font-size: 0.85rem;
+      padding: 10px 20px;
+      border-radius: 100px;
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      transition: all 0.3s ease;
+    }
+
+    .nav-cta:hover {
+      background: var(--white);
+      transform: scale(1.04);
+      box-shadow: 0 0 24px var(--accent-glow);
+    }
+
+    /* ─── HERO ─── */
+    #hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 80px 32px 60px;
+      overflow: hidden;
+      background: var(--primary);
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1502680390469-be75c86b636f?w=1920&q=80');
+      background-size: cover;
+      background-position: center 30%;
+      transform-origin: center;
+      animation: heroZoom 12s ease-in-out infinite alternate;
+    }
+
+    @keyframes heroZoom {
+      from { transform: scale(1); }
+      to   { transform: scale(1.05); }
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(6, 30, 52, 0.97) 0%,
+        rgba(6, 30, 52, 0.6) 50%,
+        rgba(6, 30, 52, 0.2) 100%
+      );
+    }
+
+    .hero-overlay-2 {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 70% 50%, rgba(0, 200, 255, 0.08) 0%, transparent 70%);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 900px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0, 200, 255, 0.12);
+      border: 1px solid rgba(0, 200, 255, 0.3);
+      color: var(--accent);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 500;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 7px 16px;
+      border-radius: 100px;
+      margin-bottom: 28px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: revealUp 0.6s 0.1s forwards ease-out;
+    }
+
+    .hero-title {
+      font-size: clamp(3rem, 10vw, 8rem);
+      color: var(--white);
+      line-height: 0.92;
+      margin-bottom: 24px;
+    }
+
+    .hero-title .line {
+      display: block;
+      overflow: hidden;
+    }
+
+    .hero-title .line span {
+      display: block;
+      opacity: 0;
+      transform: translateY(100%);
+    }
+
+    .hero-title .line:nth-child(1) span { animation: slideUp 0.7s 0.3s forwards cubic-bezier(0.16, 1, 0.3, 1); }
+    .hero-title .line:nth-child(2) span { animation: slideUp 0.7s 0.5s forwards cubic-bezier(0.16, 1, 0.3, 1); }
+    .hero-title .line:nth-child(3) span { animation: slideUp 0.7s 0.7s forwards cubic-bezier(0.16, 1, 0.3, 1); }
+
+    .hero-title .accent-word { color: var(--accent); }
+
+    @keyframes slideUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes revealUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      color: rgba(240, 237, 228, 0.7);
+      font-weight: 300;
+      max-width: 480px;
+      line-height: 1.6;
+      margin-bottom: 40px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: revealUp 0.7s 0.9s forwards ease-out;
+    }
+
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: revealUp 0.7s 1.1s forwards ease-out;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--accent);
+      color: var(--primary);
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      padding: 16px 32px;
+      border-radius: 100px;
+      text-decoration: none;
+      letter-spacing: -0.01em;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 40px rgba(0, 200, 255, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 8px 48px rgba(0, 200, 255, 0.5);
+    }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: transparent;
+      color: var(--white);
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 15px 30px;
+      border-radius: 100px;
+      border: 1.5px solid rgba(248, 246, 241, 0.3);
+      text-decoration: none;
+      letter-spacing: -0.01em;
+      transition: all 0.3s ease;
+    }
+
+    .btn-outline:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(0, 200, 255, 0.07);
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 32px;
+      right: 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      z-index: 2;
+      opacity: 0;
+      animation: revealUp 0.6s 1.5s forwards ease-out;
+    }
+
+    .hero-scroll span {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(248,246,241,0.4);
+      writing-mode: vertical-rl;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+      animation: scrollLine 1.5s 2s infinite ease-in-out;
+    }
+
+    @keyframes scrollLine {
+      0%   { transform: scaleY(0); transform-origin: top; opacity: 1; }
+      50%  { transform: scaleY(1); transform-origin: top; opacity: 1; }
+      51%  { transform-origin: bottom; }
+      100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
+    }
+
+    /* ─── WAVE DIVIDER ─── */
+    .wave-divider {
+      display: block;
+      width: 100%;
+      overflow: hidden;
+      line-height: 0;
+    }
+
+    .wave-divider svg { display: block; width: 100%; }
+
+    /* ─── ABOUT ─── */
+    #about {
+      background: var(--bg);
+      padding: 80px 32px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #about::before {
+      content: '';
+      position: absolute;
+      top: -60px;
+      right: -80px;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(0, 200, 255, 0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 48px;
+      max-width: 1200px;
+      margin: 0 auto;
+      align-items: center;
+    }
+
+    .about-img-wrap {
+      position: relative;
+    }
+
+    .about-img-wrap img {
+      width: 100%;
+      height: 380px;
+      object-fit: cover;
+      border-radius: 4px;
+      display: block;
+    }
+
+    .about-img-accent {
+      position: absolute;
+      top: -16px;
+      left: -16px;
+      right: 16px;
+      bottom: 16px;
+      border: 2px solid var(--accent);
+      border-radius: 4px;
+      pointer-events: none;
+      opacity: 0.35;
+    }
+
+    .about-img-badge {
+      position: absolute;
+      bottom: -20px;
+      right: -20px;
+      background: var(--accent);
+      color: var(--primary);
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: 0.8rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 12px 20px;
+      border-radius: 100px;
+      box-shadow: 0 8px 24px rgba(0, 200, 255, 0.35);
+    }
+
+    .section-eyebrow {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 500;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .section-title {
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      color: var(--text);
+      margin-bottom: 24px;
+      line-height: 0.95;
+    }
+
+    .section-title.light { color: var(--white); }
+
+    .about-text {
+      font-size: 1.05rem;
+      line-height: 1.75;
+      color: var(--text-muted);
+      font-weight: 300;
+      margin-bottom: 16px;
+    }
+
+    .about-stats {
+      display: flex;
+      gap: 32px;
+      margin-top: 32px;
+      flex-wrap: wrap;
+    }
+
+    .stat-item {}
+
+    .stat-num {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: 2.4rem;
+      color: var(--primary);
+      line-height: 1;
+      letter-spacing: -0.03em;
+    }
+
+    .stat-num span { color: var(--accent); }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 400;
+      margin-top: 4px;
+      letter-spacing: 0.04em;
+    }
+
+    /* ─── PRODUCTS ─── */
+    #products {
+      background: var(--primary);
+      padding: 80px 32px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #products::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2300C8FF' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .products-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .products-header {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 56px;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .product-card {
+      position: relative;
+      border-radius: 4px;
+      overflow: hidden;
+      cursor: pointer;
+      group: true;
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .product-card:hover img { transform: scale(1.07); }
+
+    .product-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(6,30,52,0.9) 0%, rgba(6,30,52,0.1) 60%);
+      transition: opacity 0.3s ease;
+    }
+
+    .product-card:hover .product-card-overlay {
+      background: linear-gradient(to top, rgba(6,30,52,0.95) 0%, rgba(6,30,52,0.3) 60%);
+    }
+
+    .product-card-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 28px 24px;
+    }
+
+    .product-card-tag {
+      display: inline-block;
+      background: rgba(0, 200, 255, 0.15);
+      border: 1px solid rgba(0, 200, 255, 0.3);
+      color: var(--accent);
+      font-size: 0.65rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 100px;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .product-card-title {
+      font-size: 1.5rem;
+      color: var(--white);
+      line-height: 1.05;
+      margin-bottom: 8px;
+    }
+
+    .product-card-desc {
+      font-size: 0.85rem;
+      color: rgba(248,246,241,0.6);
+      font-weight: 300;
+      line-height: 1.5;
+      transform: translateY(8px);
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+
+    .product-card:hover .product-card-desc {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .product-card-arrow {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      width: 36px;
+      height: 36px;
+      background: rgba(0, 200, 255, 0.1);
+      border: 1px solid rgba(0, 200, 255, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      font-size: 0.9rem;
+      transform: translateY(-8px);
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+
+    .product-card:hover .product-card-arrow {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* ─── WHY ─── */
+    #why {
+      background: var(--bg-warm);
+      padding: 80px 32px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .why-inner { max-width: 1200px; margin: 0 auto; }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      margin-top: 56px;
+    }
+
+    .why-item {
+      background: var(--white);
+      padding: 36px 32px;
+      border-radius: 4px;
+      border: 1px solid rgba(6, 30, 52, 0.07);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .why-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+
+    .why-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 48px rgba(6, 30, 52, 0.1);
+    }
+
+    .why-item:hover::before { transform: scaleX(1); }
+
+    .why-icon {
+      font-size: 2.2rem;
+      margin-bottom: 20px;
+      display: block;
+      line-height: 1;
+    }
+
+    .why-title {
+      font-size: 1.25rem;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .why-text {
+      font-size: 0.9rem;
+      line-height: 1.65;
+      color: var(--text-muted);
+      font-weight: 300;
+    }
+
+    /* ─── CTA SECTION ─── */
+    #cta {
+      background: var(--primary-mid);
+      padding: 100px 32px;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    #cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=1600&q=60') center/cover no-repeat;
+      opacity: 0.12;
+    }
+
+    #cta::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(0, 200, 255, 0.15) 0%, transparent 70%);
+    }
+
+    .cta-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .cta-title {
+      font-size: clamp(2.4rem, 7vw, 5.5rem);
+      color: var(--white);
+      margin-bottom: 20px;
+      line-height: 0.93;
+    }
+
+    .cta-title .highlight { color: var(--accent); }
+
+    .cta-sub {
+      font-size: 1rem;
+      color: rgba(248,246,241,0.65);
+      font-weight: 300;
+      line-height: 1.6;
+      margin-bottom: 44px;
+    }
+
+    .btn-whatsapp {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: #25D366;
+      color: #fff;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      padding: 18px 40px;
+      border-radius: 100px;
+      text-decoration: none;
+      letter-spacing: -0.01em;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 32px rgba(37, 211, 102, 0.35);
+    }
+
+    .btn-whatsapp:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 16px 48px rgba(37, 211, 102, 0.5);
+    }
+
+    .btn-whatsapp svg { width: 22px; height: 22px; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--primary);
+      padding: 48px 32px 32px;
+      position: relative;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .footer-logo {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: 1.5rem;
+      color: var(--white);
+      letter-spacing: -0.03em;
+      margin-bottom: 12px;
+    }
+
+    .footer-logo span { color: var(--accent); }
+
+    .footer-tagline {
+      font-size: 0.85rem;
+      color: rgba(248,246,241,0.45);
+      font-weight: 300;
+      margin-bottom: 32px;
+    }
+
+    .footer-info {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 36px;
+    }
+
+    .footer-info-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.85rem;
+      color: rgba(248,246,241,0.55);
+      font-weight: 300;
+    }
+
+    .footer-info-item svg { width: 16px; height: 16px; opacity: 0.6; flex-shrink: 0; }
+
+    .footer-divider {
+      border: none;
+      border-top: 1px solid rgba(248,246,241,0.07);
+      margin-bottom: 24px;
+    }
+
+    .footer-bottom {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .footer-copy {
+      font-size: 0.75rem;
+      color: rgba(248,246,241,0.3);
+      font-weight: 300;
+    }
+
+    /* ─── WHATSAPP FLOAT ─── */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 500;
+      width: 60px;
+      height: 60px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: waPulse 2.5s 3s infinite ease-in-out;
+    }
+
+    .whatsapp-float:hover {
+      transform: scale(1.12);
+      box-shadow: 0 8px 32px rgba(37, 211, 102, 0.6);
+      animation: none;
+    }
+
+    .whatsapp-float svg { width: 30px; height: 30px; }
+
+    @keyframes waPulse {
+      0%   { box-shadow: 0 4px 20px rgba(37,211,102,0.4); }
+      50%  { box-shadow: 0 4px 20px rgba(37,211,102,0.4), 0 0 0 12px rgba(37,211,102,0.1); }
+      100% { box-shadow: 0 4px 20px rgba(37,211,102,0.4); }
+    }
+
+    /* ─── SCROLL REVEAL ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    .reveal-delay-5 { transition-delay: 0.5s; }
+
+    /* ─── DESKTOP ─── */
+    @media (min-width: 768px) {
+      #hero { padding: 120px 64px 80px; }
+
+      .about-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 80px;
+      }
+
+      .about-img-wrap img { height: 520px; }
+
+      .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .products-grid .product-card:first-child {
+        grid-column: 1 / -1;
+      }
+
+      .products-grid .product-card:first-child img { height: 380px; }
+
+      .why-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (min-width: 1024px) {
+      #about { padding: 120px 64px; }
+      #products { padding: 120px 64px; }
+      #why { padding: 120px 64px; }
+      #cta { padding: 140px 64px; }
+
+      .products-grid { grid-template-columns: repeat(3, 1fr); }
+
+      .products-grid .product-card:first-child {
+        grid-column: 1 / 3;
+      }
+
+      .why-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav id="navbar">
+    <a href="#" class="nav-logo">Surf Shop<span>.</span></a>
+    <a href="https://wa.me/5511981177621?text=Olá!%20Vim%20pelo%20site%20e%20gostaria%20de%20mais%20informações" class="nav-cta" target="_blank" rel="noopener">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Fale Conosco
+    </a>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-overlay-2"></div>
+
+    <div class="hero-content">
+      <div class="hero-badge">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg>
+        Maresias, São Paulo
+      </div>
+
+      <h1 class="hero-title">
+        <span class="line"><span>Surf Shop</span></span>
+        <span class="line"><span class="accent-word">Maresias</span></span>
+        <span class="line"><span style="font-size:0.55em;font-weight:300;color:rgba(240,237,228,0.55);letter-spacing:0.02em;">A sua loja de surf na praia</span></span>
+      </h1>
+
+      <p class="hero-sub">
+        Pranchas, wetsuits, roupas e acessórios para quem vive o mar. Curadoria especializada para todos os níveis, do iniciante ao surfista profissional.
+      </p>
+
+      <div class="hero-ctas">
+        <a href="https://wa.me/5511981177621?text=Olá!%20Gostaria%20de%20conhecer%20os%20produtos%20da%20Surf%20Shop%20Maresias" class="btn-primary" target="_blank" rel="noopener">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Falar no WhatsApp
+        </a>
+        <a href="#products" class="btn-outline">Ver Produtos ↓</a>
+      </div>
+    </div>
+
+    <div class="hero-scroll">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- WAVE DIVIDER -->
+  <div class="wave-divider" style="background:var(--primary);margin-bottom:-1px;">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="height:60px;">
+      <path d="M0,30 C360,60 720,0 1080,30 C1260,45 1380,20 1440,30 L1440,60 L0,60 Z" fill="#F0EDE4"/>
+    </svg>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-grid">
+      <div class="about-img-wrap reveal">
+        <div class="about-img-accent"></div>
+        <img
+          src="https://images.unsplash.com/photo-1531722569936-825d4eee9b18?w=800&q=80"
+          alt="Surf Shop Maresias — interior da loja"
+          loading="lazy"
+        />
+        <div class="about-img-badge">Desde 2010 em Maresias</div>
+      </div>
+
+      <div class="reveal reveal-delay-2">
+        <span class="section-eyebrow">Sobre a loja</span>
+        <h2 class="section-title">Nascemos<br/>do mar.</h2>
+        <p class="about-text">
+          A Surf Shop Maresias nasceu da paixão pelo surfe e pelo estilo de vida praiano. Localizada no coração de Maresias — uma das praias mais famosas do litoral paulista — somos a referência local para quem leva o surf a sério.
+        </p>
+        <p class="about-text">
+          Trabalhamos com as principais marcas nacionais e internacionais, oferecendo uma curadoria honesta: cada produto na loja foi escolhido por quem realmente surfa. Aqui você encontra o que precisa, com atendimento de quem entende.
+        </p>
+
+        <div class="about-stats">
+          <div class="stat-item">
+            <div class="stat-num">15<span>+</span></div>
+            <div class="stat-label">Anos em Maresias</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">200<span>+</span></div>
+            <div class="stat-label">Modelos de pranchas</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">50<span>+</span></div>
+            <div class="stat-label">Marcas no estoque</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WAVE DIVIDER 2 -->
+  <div class="wave-divider" style="background:var(--bg);margin-bottom:-1px;">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="height:60px;">
+      <path d="M0,20 C480,60 960,0 1440,30 L1440,60 L0,60 Z" fill="var(--primary)"/>
+    </svg>
+  </div>
+
+  <!-- PRODUCTS -->
+  <section id="products">
+    <div class="products-inner">
+      <div class="products-header">
+        <span class="section-eyebrow">O que você encontra aqui</span>
+        <h2 class="section-title light reveal">Tudo para<br/>o seu surf.</h2>
+      </div>
+
+      <div class="products-grid">
+
+        <div class="product-card reveal">
+          <img
+            src="https://images.unsplash.com/photo-1541689592655-f5f52825a3b8?w=1200&q=80"
+            alt="Pranchas de surf"
+            loading="lazy"
+          />
+          <div class="product-card-overlay"></div>
+          <div class="product-card-arrow">↗</div>
+          <div class="product-card-content">
+            <span class="product-card-tag">Destaque</span>
+            <h3 class="product-card-title">Pranchas de Surf</h3>
+            <p class="product-card-desc">Longboards, shortboards, fish, funboards e mais. Marcas nacionais e importadas, para todos os níveis.</p>
+          </div>
+        </div>
+
+        <div class="product-card reveal reveal-delay-1">
+          <img
+            src="https://images.unsplash.com/photo-1510130387422-82bed34b37e9?w=800&q=80"
+            alt="Wetsuits e lycras"
+            loading="lazy"
+          />
+          <div class="product-card-overlay"></div>
+          <div class="product-card-arrow">↗</div>
+          <div class="product-card-content">
+            <span class="product-card-tag">Proteção</span>
+            <h3 class="product-card-title">Wetsuits & Lycras</h3>
+            <p class="product-card-desc">Proteção térmica e solar para surfar com conforto em qualquer condição.</p>
+          </div>
+        </div>
+
+        <div class="product-card reveal reveal-delay-2">
+          <img
+            src="https://images.unsplash.com/photo-1515238152791-8216bfdf89a7?w=800&q=80"
+            alt="Roupas e lifestyle surf"
+            loading="lazy"
+          />
+          <div class="product-card-overlay"></div>
+          <div class="product-card-arrow">↗</div>
+          <div class="product-card-content">
+            <span class="product-card-tag">Lifestyle</span>
+            <h3 class="product-card-title">Roupas & Streetwear</h3>
+            <p class="product-card-desc">Shorts, camisetas, bonés e looks completos das marcas mais desejadas do universo surf.</p>
+          </div>
+        </div>
+
+        <div class="product-card reveal reveal-delay-1">
+          <img
+            src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&q=80"
+            alt="Acessórios de surf"
+            loading="lazy"
+          />
+          <div class="product-card-overlay"></div>
+          <div class="product-card-arrow">↗</div>
+          <div class="product-card-content">
+            <span class="product-card-tag">Acessórios</span>
+            <h3 class="product-card-title">Leash, Parafina & Mais</h3>
+            <p class="product-card-desc">Leashes, quilhas, parafina, capas e tudo que você precisa para entrar na água pronto.</p>
+          </div>
+        </div>
+
+        <div class="product-card reveal reveal-delay-2">
+          <img
+            src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=800&q=80"
+            alt="Calçados e sandálias"
+            loading="lazy"
+          />
+          <div class="product-card-overlay"></div>
+          <div class="product-card-arrow">↗</div>
+          <div class="product-card-content">
+            <span class="product-card-tag">Calçados</span>
+            <h3 class="product-card-title">Sandálias & Sapatilhas</h3>
+            <p class="product-card-desc">Havaianas, Reef, Oakley e outros. Do pé na areia ao visual completo fora d'água.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- WAVE DIVIDER 3 -->
+  <div class="wave-divider" style="background:var(--primary);margin-bottom:-1px;">
+    <svg viewBox="0 0 1440 60" preserveAspectRatio="none" style="height:60px;">
+      <path d="M0,40 C360,0 1080,60 1440,20 L1440,60 L0,60 Z" fill="var(--bg-warm)"/>
+    </svg>
+  </div>
+
+  <!-- WHY -->
+  <section id="why">
+    <div class="why-inner">
+      <div style="text-align:center;max-width:600px;margin:0 auto;">
+        <span class="section-eyebrow reveal">Por que a Surf Shop Maresias</span>
+        <h2 class="section-title reveal reveal-delay-1">A loja que entende<br/>o seu surf.</h2>
+      </div>
+
+      <div class="why-grid">
+        <div class="why-item reveal">
+          <span class="why-icon">🌊</span>
+          <h3 class="why-title">Localização Privilegiada</h3>
+          <p class="why-text">No coração de Maresias, a 200 metros da praia. Chegou de viagem ou vive no litoral, a gente está aqui.</p>
+        </div>
+
+        <div class="why-item reveal reveal-delay-1">
+          <span class="why-icon">🤙</span>
+          <h3 class="why-title">Atendimento de Surfista</h3>
+          <p class="why-text">Nossa equipe surfa. Isso significa recomendações honestas, sem empurrar produto errado para o nível errado.</p>
+        </div>
+
+        <div class="why-item reveal reveal-delay-2">
+          <span class="why-icon">🏆</span>
+          <h3 class="why-title">Marcas Selecionadas</h3>
+          <p class="why-text">Curadoria com o que há de melhor em marcas nacionais e internacionais. Qualidade que dura nas ondas.</p>
+        </div>
+
+        <div class="why-item reveal reveal-delay-3">
+          <span class="why-icon">📦</span>
+          <h3 class="why-title">Estoque Completo</h3>
+          <p class="why-text">Pranchas prontas para levar, wetsuits, roupas e acessórios. Tudo que você precisa em um só lugar.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section id="cta">
+    <div class="cta-inner">
+      <span class="section-eyebrow reveal" style="color:rgba(0,200,255,0.8);">Pronto para o próximo drop?</span>
+      <h2 class="cta-title reveal reveal-delay-1">
+        Fale com a<br/>
+        <span class="highlight">gente agora.</span>
+      </h2>
+      <p class="cta-sub reveal reveal-delay-2">
+        Tire dúvidas sobre produtos, peça uma prancha sob encomenda ou venha nos visitar em Maresias. Respondemos no WhatsApp.
+      </p>
+      <div class="reveal reveal-delay-3">
+        <a
+          href="https://wa.me/5511981177621?text=Olá!%20Vim%20pelo%20site%20da%20Surf%20Shop%20Maresias%20e%20gostaria%20de%20mais%20informações"
+          class="btn-whatsapp"
+          target="_blank"
+          rel="noopener"
+        >
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Chamar no WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">Surf Shop<span>.</span></div>
+      <div class="footer-tagline">A sua loja de surf na praia</div>
+
+      <div class="footer-info">
+        <div class="footer-info-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Maresias, São Sebastião — SP
+        </div>
+        <div class="footer-info-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.63A2 2 0 012 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 9.91a16 16 0 006.26 6.26l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          (11) 98117-7621
+        </div>
+        <div class="footer-info-item">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Segunda a Domingo · 9h às 19h
+        </div>
+      </div>
+
+      <hr class="footer-divider" />
+
+      <div class="footer-bottom">
+        <p class="footer-copy">© 2024 Surf Shop Maresias. Todos os direitos reservados.</p>
+        <p class="footer-copy">Feito com 🤙 em Maresias/SP</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WHATSAPP FLOAT -->
+  <a
+    href="https://wa.me/5511981177621?text=Olá!%20Vim%20pelo%20site%20da%20Surf%20Shop%20Maresias"
+    class="whatsapp-float"
+    target="_blank"
+    rel="noopener"
+    aria-label="Falar no WhatsApp"
+  >
+    <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+  <script>
+    // ─── NAVBAR SCROLL ───
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    // ─── SCROLL REVEAL ───
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    reveals.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
