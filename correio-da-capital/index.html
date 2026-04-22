@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Correio da Capital — Notícias, Política, Economia e Cultura</title>
+<meta name="description" content="Correio da Capital — O portal de notícias mais completo da capital. Política, economia, cultura, esporte e muito mais.">
+<meta property="og:title" content="Correio da Capital">
+<meta property="og:description" content="As principais notícias da capital. Política, economia, cultura e mais.">
+<meta property="og:type" content="website">
+<meta name="author" content="Correio da Capital">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📰</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+:root{
+  --primary:#C8102E;
+  --primary-dk:#9B0B22;
+  --dark:#0D1117;
+  --dark2:#141C27;
+  --dark3:#1E2D3D;
+  --bg:#F5F3EE;
+  --bg2:#EDEAE2;
+  --text:#1A1A1A;
+  --muted:#6B7280;
+  --accent:#1A3A5C;
+  --gold:#A07830;
+  --border:#D5D0C7;
+  --fd:'Playfair Display',Georgia,serif;
+  --fb:'Source Sans 3',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--fb);background:var(--bg);color:var(--text);min-height:100vh;}
+h1,h2,h3,h4,h5{font-family:var(--fd);}
+
+/* TICKER */
+.ticker-wrap{background:var(--primary);overflow:hidden;padding:7px 0;}
+.ticker-inner{display:flex;white-space:nowrap;animation:ticker 60s linear infinite;}
+.ticker-inner:hover{animation-play-state:paused;}
+@keyframes ticker{0%{transform:translateX(100vw);}100%{transform:translateX(-100%);}}
+.ticker-tag{background:rgba(0,0,0,0.25);color:#fff;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:2px 10px;margin-right:16px;flex-shrink:0;}
+.ticker-item{color:#fff;font-size:13px;font-weight:400;padding-right:60px;flex-shrink:0;}
+.ticker-item::before{content:"●";margin-right:12px;opacity:0.6;}
+
+/* NAV TOP */
+.nav-top{background:var(--dark);padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.05);}
+.nav-top-inner{max-width:1200px;margin:0 auto;padding:0 20px;display:flex;justify-content:space-between;align-items:center;}
+.nav-top span{color:#6B7280;font-size:11px;font-weight:400;}
+.nav-top a{color:#9CA3AF;font-size:11px;text-decoration:none;transition:color .2s;}
+.nav-top a:hover{color:white;}
+.nav-top-links{display:flex;gap:16px;}
+
+/* MAIN NAV */
+.main-nav{background:var(--dark);border-bottom:3px solid var(--primary);}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:70px;}
+.logo{font-family:var(--fd);font-size:26px;font-weight:900;color:white;letter-spacing:-0.5px;text-decoration:none;cursor:pointer;flex-shrink:0;}
+.logo em{color:var(--primary);font-style:normal;}
+.nav-actions{display:flex;align-items:center;gap:8px;}
+.nav-btn{background:none;border:none;color:#9CA3AF;cursor:pointer;padding:8px;transition:color .2s;display:flex;align-items:center;}
+.nav-btn:hover{color:white;}
+.nav-btn.red{background:var(--primary);color:white;padding:8px 16px;font-size:12px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;border:none;cursor:pointer;transition:background .2s;}
+.nav-btn.red:hover{background:var(--primary-dk);}
+
+/* CATEGORY NAV */
+.cat-nav{background:var(--dark2);overflow-x:auto;scrollbar-width:none;}
+.cat-nav::-webkit-scrollbar{display:none;}
+.cat-nav-inner{max-width:1200px;margin:0 auto;padding:0 20px;display:flex;gap:0;}
+.cat-link{color:#9CA3AF;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.8px;padding:11px 18px;text-decoration:none;white-space:nowrap;border-bottom:2px solid transparent;transition:color .2s,border-color .2s;cursor:pointer;background:none;border-top:none;border-left:none;border-right:none;font-family:var(--fb);}
+.cat-link:hover,.cat-link.active{color:white;border-bottom-color:var(--primary);}
+
+/* PAGE WRAPPER */
+.page{display:none;}
+.page.active{display:block;}
+.container{max-width:1200px;margin:0 auto;padding:0 20px;}
+
+/* SECTION HEADING */
+.sec-head{display:flex;align-items:center;gap:12px;margin-bottom:24px;}
+.sec-head h2{font-family:var(--fd);font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--muted);}
+.sec-head-line{flex:1;height:1px;background:var(--border);}
+.sec-head-accent{width:40px;height:3px;background:var(--primary);margin-right:12px;flex-shrink:0;}
+
+/* HERO */
+.hero-wrap{display:grid;grid-template-columns:2fr 1fr;gap:2px;max-height:520px;}
+@media(max-width:768px){.hero-wrap{grid-template-columns:1fr;max-height:none;}}
+.hero-main{position:relative;overflow:hidden;cursor:pointer;}
+.hero-main img{width:100%;height:520px;object-fit:cover;transition:transform .7s ease;display:block;}
+.hero-main:hover img{transform:scale(1.04);}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.88) 0%,rgba(0,0,0,0.2) 60%,transparent 100%);padding:32px;}
+.hero-overlay-content{position:absolute;bottom:32px;left:32px;right:32px;}
+.hero-main:hover .hero-title{text-decoration:underline;text-decoration-color:var(--primary);}
+.hero-title{font-family:var(--fd);font-size:clamp(22px,3.5vw,38px);font-weight:900;color:white;line-height:1.1;margin-bottom:10px;}
+.hero-sub{color:rgba(255,255,255,0.75);font-size:15px;line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.hero-side{display:flex;flex-direction:column;gap:2px;overflow:hidden;}
+@media(max-width:768px){.hero-side{display:grid;grid-template-columns:1fr 1fr;}}
+@media(max-width:480px){.hero-side{grid-template-columns:1fr;}}
+.hero-side-card{position:relative;overflow:hidden;cursor:pointer;flex:1;}
+.hero-side-card img{width:100%;height:100%;min-height:130px;object-fit:cover;transition:transform .5s ease;display:block;}
+.hero-side-card:hover img{transform:scale(1.06);}
+.hero-side-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.82) 0%,transparent 60%);padding:16px;}
+.hero-side-title{position:absolute;bottom:16px;left:16px;right:16px;font-family:var(--fd);font-size:15px;font-weight:700;color:white;line-height:1.25;}
+.hero-side-card:hover .hero-side-title{text-decoration:underline;text-decoration-color:var(--primary);}
+
+/* ARTICLE CARD */
+.art-card{cursor:pointer;transition:transform .2s;}
+.art-card:hover .art-card-title{color:var(--primary);}
+.art-card-img{overflow:hidden;aspect-ratio:16/9;margin-bottom:12px;}
+.art-card-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease;display:block;}
+.art-card:hover .art-card-img img{transform:scale(1.07);}
+.art-card-cat{display:inline-block;background:var(--primary);color:white;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:3px 8px;margin-bottom:8px;}
+.art-card-title{font-family:var(--fd);font-size:17px;font-weight:700;line-height:1.25;color:var(--text);transition:color .2s;margin-bottom:6px;}
+.art-card-excerpt{font-size:14px;color:var(--muted);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+.art-card-meta{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;margin-top:8px;}
+
+/* HORIZONTAL CARD */
+.art-hcard{display:grid;grid-template-columns:120px 1fr;gap:14px;cursor:pointer;padding-bottom:16px;border-bottom:1px solid var(--border);margin-bottom:16px;}
+.art-hcard:last-child{border-bottom:none;margin-bottom:0;}
+.art-hcard:hover .art-hcard-title{color:var(--primary);}
+.art-hcard-img{overflow:hidden;aspect-ratio:4/3;}
+.art-hcard-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s;display:block;}
+.art-hcard:hover .art-hcard-img img{transform:scale(1.07);}
+.art-hcard-title{font-family:var(--fd);font-size:15px;font-weight:700;line-height:1.25;color:var(--text);transition:color .2s;margin-bottom:5px;}
+.art-hcard-meta{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:0.3px;}
+
+/* SIDEBAR */
+.sidebar-box{background:white;border-top:3px solid var(--primary);padding:20px;}
+.sidebar-box h3{font-family:var(--fd);font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:16px;}
+.popular-num{font-family:var(--fd);font-size:32px;font-weight:900;color:var(--bg2);line-height:1;margin-right:12px;flex-shrink:0;}
+.popular-item{display:flex;align-items:flex-start;padding-bottom:14px;border-bottom:1px solid var(--border);margin-bottom:14px;cursor:pointer;}
+.popular-item:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
+.popular-item:hover .popular-title{color:var(--primary);}
+.popular-title{font-family:var(--fd);font-size:14px;font-weight:700;line-height:1.3;transition:color .2s;}
+
+/* DARK SECTION */
+.dark-section{background:var(--dark);color:white;padding:60px 0;}
+.dark-section .sec-head h2{color:rgba(255,255,255,0.4);}
+.dark-section .sec-head-line{background:rgba(255,255,255,0.1);}
+
+/* OPINION */
+.opinion-card{border-left:3px solid var(--gold);padding:16px 20px;background:white;margin-bottom:16px;cursor:pointer;transition:box-shadow .2s;}
+.opinion-card:hover{box-shadow:0 4px 20px rgba(0,0,0,0.08);}
+.opinion-card blockquote{font-family:var(--fd);font-size:17px;font-style:italic;line-height:1.5;color:var(--text);margin-bottom:10px;}
+.opinion-author{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--gold);}
+
+/* SEARCH OVERLAY */
+.search-overlay{display:none;position:fixed;inset:0;background:rgba(13,17,23,0.97);z-index:900;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;}
+.search-overlay.open{display:flex;}
+.search-input-wrap{width:100%;max-width:700px;}
+.search-label{color:rgba(255,255,255,0.4);font-size:12px;text-transform:uppercase;letter-spacing:2px;margin-bottom:12px;}
+.search-big-input{font-family:var(--fd);font-size:clamp(24px,5vw,48px);font-weight:700;color:white;background:none;border:none;border-bottom:2px solid rgba(255,255,255,0.3);width:100%;padding:12px 0;outline:none;transition:border-color .2s;}
+.search-big-input:focus{border-bottom-color:var(--primary);}
+.search-big-input::placeholder{color:rgba(255,255,255,0.2);}
+.search-close{position:absolute;top:24px;right:24px;background:none;border:none;color:rgba(255,255,255,0.5);font-size:28px;cursor:pointer;transition:color .2s;}
+.search-close:hover{color:white;}
+
+/* ARTICLE PAGE */
+.article-header{padding:40px 0 0;}
+.article-cat-label{display:inline-block;background:var(--primary);color:white;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;padding:4px 10px;margin-bottom:16px;}
+.article-h1{font-family:var(--fd);font-size:clamp(28px,5vw,52px);font-weight:900;line-height:1.1;margin-bottom:20px;}
+.article-lead{font-size:20px;color:#444;line-height:1.6;font-style:italic;border-left:3px solid var(--primary);padding-left:20px;margin-bottom:28px;}
+.article-meta-bar{display:flex;align-items:center;gap:16px;padding:16px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-bottom:32px;flex-wrap:wrap;}
+.article-author{font-weight:700;font-size:14px;}
+.article-date{font-size:13px;color:var(--muted);}
+.share-bar{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap;}
+.share-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;border:none;cursor:pointer;text-decoration:none;transition:opacity .2s;}
+.share-btn:hover{opacity:0.85;}
+.share-fb{background:#1877F2;color:white;}
+.share-tw{background:#000;color:white;}
+.share-wa{background:#25D366;color:white;}
+.share-li{background:#0A66C2;color:white;}
+.article-img{width:100%;max-height:500px;object-fit:cover;display:block;margin-bottom:10px;}
+.article-img-caption{font-size:13px;color:var(--muted);font-style:italic;margin-bottom:32px;}
+.article-body{font-size:18px;line-height:1.8;color:#2D2D2D;max-width:700px;}
+.article-body p{margin-bottom:22px;}
+.article-body h3{font-family:var(--fd);font-size:24px;font-weight:700;margin:32px 0 16px;}
+
+/* ADMIN */
+.admin-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:1000;overflow-y:auto;}
+.admin-overlay.open{display:flex;align-items:flex-start;justify-content:center;padding:40px 20px;}
+.admin-box{background:var(--dark2);width:100%;max-width:800px;border:1px solid rgba(255,255,255,0.08);}
+.admin-head{background:var(--dark);padding:20px 24px;display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid var(--primary);}
+.admin-head h2{font-family:var(--fd);color:white;font-size:20px;}
+.admin-close{background:none;border:none;color:rgba(255,255,255,0.5);font-size:22px;cursor:pointer;transition:color .2s;}
+.admin-close:hover{color:white;}
+.admin-body{padding:28px;}
+.admin-section{margin-bottom:32px;}
+.admin-section-title{color:rgba(255,255,255,0.4);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.07);}
+.admin-label{color:rgba(255,255,255,0.7);font-size:13px;font-weight:600;display:block;margin-bottom:6px;}
+.admin-input{width:100%;border:1px solid rgba(255,255,255,0.1);background:#0D1117;color:white;padding:10px 14px;font-family:var(--fb);font-size:14px;outline:none;margin-bottom:14px;transition:border-color .2s;}
+.admin-input:focus{border-color:var(--primary);}
+textarea.admin-input{min-height:140px;resize:vertical;}
+select.admin-input option{background:var(--dark);}
+.admin-btn{background:var(--primary);color:white;border:none;padding:12px 24px;font-family:var(--fb);font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;cursor:pointer;transition:background .2s;}
+.admin-btn:hover{background:var(--primary-dk);}
+.admin-btn.sec{background:rgba(255,255,255,0.1);margin-left:8px;}
+.admin-btn.sec:hover{background:rgba(255,255,255,0.15);}
+.admin-articles-list{display:flex;flex-direction:column;gap:8px;}
+.admin-art-item{background:rgba(0,0,0,0.3);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.admin-art-title{color:white;font-size:14px;font-weight:600;flex:1;}
+.admin-art-cat{background:rgba(200,16,46,0.2);color:var(--primary);font-size:10px;font-weight:700;text-transform:uppercase;padding:2px 8px;letter-spacing:0.5px;}
+.admin-art-del{background:none;border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.4);font-size:12px;padding:4px 10px;cursor:pointer;transition:all .2s;}
+.admin-art-del:hover{border-color:var(--primary);color:var(--primary);}
+
+/* PASSWORD */
+.login-box{background:var(--dark2);padding:40px;text-align:center;max-width:400px;width:100%;border:1px solid rgba(255,255,255,0.08);}
+.login-box h2{font-family:var(--fd);color:white;font-size:24px;margin-bottom:8px;}
+.login-box p{color:var(--muted);font-size:14px;margin-bottom:24px;}
+
+/* FOOTER */
+footer{background:var(--dark);color:rgba(255,255,255,0.5);padding:48px 0 24px;}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px;}
+@media(max-width:768px){.footer-grid{grid-template-columns:1fr 1fr;}
+.footer-logo-col{grid-column:1/-1;}}
+@media(max-width:480px){.footer-grid{grid-template-columns:1fr;}}
+.footer-logo{font-family:var(--fd);font-size:24px;font-weight:900;color:white;margin-bottom:12px;}
+.footer-logo em{color:var(--primary);font-style:normal;}
+.footer-desc{font-size:14px;line-height:1.6;margin-bottom:20px;}
+.footer-social{display:flex;gap:10px;}
+.footer-social a{width:36px;height:36px;background:rgba(255,255,255,0.08);display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.5);text-decoration:none;font-size:16px;transition:all .2s;}
+.footer-social a:hover{background:var(--primary);color:white;}
+.footer-col h4{font-family:var(--fd);color:white;font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px;}
+.footer-col a{display:block;color:rgba(255,255,255,0.45);font-size:14px;text-decoration:none;margin-bottom:8px;transition:color .2s;}
+.footer-col a:hover{color:white;}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.07);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:gap:16px;}
+.footer-bottom p{font-size:13px;}
+
+/* CONTACT */
+.contact-form-input{width:100%;border:none;border-bottom:2px solid var(--border);background:transparent;padding:14px 0;font-family:var(--fb);font-size:16px;color:var(--text);outline:none;transition:border-color .2s;margin-bottom:24px;}
+.contact-form-input:focus{border-bottom-color:var(--primary);}
+.contact-form-input::placeholder{color:var(--muted);}
+textarea.contact-form-input{resize:vertical;min-height:120px;border:2px solid var(--border);padding:14px;margin-top:4px;}
+
+/* WHATSAPP */
+.wa-float{position:fixed;bottom:24px;right:24px;width:60px;height:60px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;z-index:999;box-shadow:0 4px 12px rgba(0,0,0,0.25);text-decoration:none;animation:wapulse 2.5s ease-in-out infinite;transition:transform .2s;}
+.wa-float:hover{transform:scale(1.1);animation:none;}
+@keyframes wapulse{0%,100%{box-shadow:0 4px 12px rgba(0,0,0,0.25);}50%{box-shadow:0 4px 28px rgba(37,211,102,0.5);}}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+.fade-up{animation:fadeUp .6s ease forwards;opacity:0;}
+.d1{animation-delay:.05s;}.d2{animation-delay:.12s;}.d3{animation-delay:.2s;}.d4{animation-delay:.3s;}.d5{animation-delay:.4s;}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease;}
+.reveal.vis{opacity:1;transform:translateY(0);}
+
+/* NOTIFICATION */
+.notif{position:fixed;bottom:100px;right:24px;background:var(--dark);color:white;padding:14px 20px;font-size:14px;font-weight:600;z-index:1001;display:none;border-left:3px solid var(--primary);}
+
+/* TAG */
+.cat-badge{display:inline-block;background:var(--primary);color:white;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:3px 8px;}
+
+/* GRID */
+.main-grid{display:grid;grid-template-columns:1fr 320px;gap:40px;align-items:start;}
+@media(max-width:900px){.main-grid{grid-template-columns:1fr;}}
+
+/* CARDS GRID */
+.cards-3{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;}
+.cards-2{display:grid;grid-template-columns:repeat(2,1fr);gap:28px;}
+@media(max-width:768px){.cards-3{grid-template-columns:repeat(2,1fr);}.cards-2{grid-template-columns:1fr;}}
+@media(max-width:480px){.cards-3{grid-template-columns:1fr;}}
+
+/* BTN */
+.btn-primary{background:var(--primary);color:white;border:none;padding:14px 32px;font-family:var(--fb);font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;cursor:pointer;transition:background .2s;}
+.btn-primary:hover{background:var(--primary-dk);}
+.btn-ghost{background:transparent;color:var(--text);border:2px solid var(--border);padding:12px 28px;font-family:var(--fb);font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;}
+.btn-ghost:hover{border-color:var(--primary);color:var(--primary);}
+
+/* MORE BUTTON */
+.load-more{display:flex;justify-content:center;margin:40px 0;}
+
+/* ABOUT */
+.about-hero{background:var(--dark);padding:80px 0;text-align:center;margin-bottom:0;}
+.about-hero h1{font-family:var(--fd);color:white;font-size:clamp(32px,5vw,56px);font-weight:900;margin-bottom:16px;}
+.about-hero p{color:rgba(255,255,255,0.6);font-size:18px;max-width:600px;margin:0 auto;}
+
+/* RESPONSIVE UTILS */
+@media(max-width:640px){
+  .nav-top{display:none;}
+  .nav-btn.red{display:none;}
+  .hero-main img{height:280px;}
+}
+</style>
+</head>
+<body>
+
+<!-- SEARCH OVERLAY -->
+<div class="search-overlay" id="searchOverlay">
+  <button class="search-close" onclick="closeSearch()">✕</button>
+  <div class="search-input-wrap">
+    <div class="search-label">Buscar no Correio da Capital</div>
+    <input type="text" class="search-big-input" id="searchInput" placeholder="Digite para buscar..." oninput="handleSearch(this.value)" onkeydown="if(event.key==='Escape')closeSearch()">
+    <div id="searchHint" style="color:rgba(255,255,255,0.3);font-size:13px;margin-top:16px;">Pressione Enter para buscar</div>
+  </div>
+</div>
+
+<!-- ADMIN OVERLAY -->
+<div class="admin-overlay" id="adminOverlay">
+  <div id="adminContent"></div>
+</div>
+
+<!-- NOTIFICATION -->
+<div class="notif" id="notif"></div>
+
+<!-- HEADER -->
+<div class="nav-top">
+  <div class="nav-top-inner">
+    <span id="currentDateLabel"></span>
+    <div class="nav-top-links">
+      <a href="#" onclick="showPage('about');return false;">Sobre</a>
+      <a href="#" onclick="showPage('contact');return false;">Contato</a>
+      <a href="#" onclick="openAdmin();return false;">Área da Redação</a>
+    </div>
+  </div>
+</div>
+
+<nav class="main-nav">
+  <div class="nav-inner">
+    <a class="logo" onclick="showPage('home')" href="#"><em>Correio</em> da Capital</a>
+    <div class="nav-actions">
+      <button class="nav-btn" onclick="openSearch()" title="Buscar">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </button>
+      <button class="nav-btn red" onclick="openAdmin()">+ Publicar</button>
+    </div>
+  </div>
+</nav>
+
+<div class="cat-nav">
+  <div class="cat-nav-inner">
+    <button class="cat-link active" data-cat="all" onclick="filterCat(this,'all')">Início</button>
+    <button class="cat-link" data-cat="politica" onclick="filterCat(this,'politica')">Política</button>
+    <button class="cat-link" data-cat="economia" onclick="filterCat(this,'economia')">Economia</button>
+    <button class="cat-link" data-cat="cultura" onclick="filterCat(this,'cultura')">Cultura</button>
+    <button class="cat-link" data-cat="esporte" onclick="filterCat(this,'esporte')">Esporte</button>
+    <button class="cat-link" data-cat="cidade" onclick="filterCat(this,'cidade')">Cidade</button>
+  </div>
+</div>
+
+<div class="ticker-wrap">
+  <div class="ticker-inner" id="tickerInner"></div>
+</div>
+
+<!-- HOME PAGE -->
+<div class="page active" id="page-home">
+
+  <!-- HERO -->
+  <div style="background:var(--dark2);padding:16px 0 0;">
+    <div class="container">
+      <div class="hero-wrap fade-up" id="heroWrap"></div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="container" style="padding-top:48px;padding-bottom:60px;">
+    <div class="main-grid">
+
+      <!-- LEFT: Articles -->
+      <div>
+        <!-- ÚLTIMAS NOTÍCIAS -->
+        <div class="sec-head">
+          <div class="sec-head-accent"></div>
+          <h2>Últimas Notícias</h2>
+          <div class="sec-head-line"></div>
+        </div>
+        <div class="cards-3 reveal" id="latestCards"></div>
+
+        <!-- ECONOMIA SECTION -->
+        <div class="sec-head reveal" style="margin-top:48px;">
+          <div class="sec-head-accent" style="background:var(--accent);"></div>
+          <h2>Economia</h2>
+          <div class="sec-head-line"></div>
+        </div>
+        <div class="cards-2 reveal" id="economiaCards"></div>
+
+        <!-- OPINIÃO -->
+        <div class="sec-head reveal" style="margin-top:48px;">
+          <div class="sec-head-accent" style="background:var(--gold);"></div>
+          <h2>Opinião</h2>
+          <div class="sec-head-line"></div>
+        </div>
+        <div id="opiniaoCards" class="reveal"></div>
+
+        <div class="load-more reveal">
+          <button class="btn-ghost" onclick="showMore()">Carregar mais notícias</button>
+        </div>
+      </div>
+
+      <!-- SIDEBAR -->
+      <div>
+        <!-- MAIS LIDAS -->
+        <div class="sidebar-box reveal">
+          <h3>Mais Lidas</h3>
+          <div id="popularList"></div>
+        </div>
+
+        <!-- ESPORTE -->
+        <div class="sidebar-box reveal" style="margin-top:24px;border-top-color:var(--accent);">
+          <h3 style="color:var(--accent);">Esporte</h3>
+          <div id="esporteList"></div>
+        </div>
+
+        <!-- NEWSLETTER -->
+        <div style="background:var(--primary);padding:24px;margin-top:24px;" class="reveal">
+          <h3 style="font-family:var(--fd);color:white;font-size:18px;font-weight:700;margin-bottom:8px;">Receba as notícias</h3>
+          <p style="color:rgba(255,255,255,0.8);font-size:14px;margin-bottom:16px;">Fique por dentro do que acontece na capital.</p>
+          <input type="email" placeholder="seu@email.com" style="width:100%;padding:10px 14px;border:none;font-family:var(--fb);font-size:14px;margin-bottom:10px;outline:none;">
+          <button class="btn-primary" style="width:100%;background:var(--dark);" onclick="subscribeNewsletter()">Assinar →</button>
+        </div>
+
+        <!-- PUBLICIDADE -->
+        <div style="background:var(--bg2);border:2px dashed var(--border);padding:40px 20px;text-align:center;margin-top:24px;" class="reveal">
+          <p style="color:var(--muted);font-size:12px;text-transform:uppercase;letter-spacing:1px;">Publicidade</p>
+          <p style="color:var(--muted);font-size:13px;margin-top:8px;">Anuncie aqui</p>
+          <button class="btn-ghost" style="margin-top:12px;font-size:12px;padding:8px 20px;" onclick="showPage('contact')">Fale conosco</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- FULL WIDTH: CULTURA -->
+    <div style="margin-top:60px;" class="reveal">
+      <div class="sec-head">
+        <div class="sec-head-accent" style="background:var(--gold);"></div>
+        <h2>Cultura</h2>
+        <div class="sec-head-line"></div>
+      </div>
+      <div class="cards-3" id="culturaCards"></div>
+    </div>
+
+    <!-- CIDADE -->
+    <div style="margin-top:60px;" class="reveal">
+      <div class="sec-head">
+        <div class="sec-head-accent" style="background:#059669;"></div>
+        <h2>Cidade</h2>
+        <div class="sec-head-line"></div>
+      </div>
+      <div class="cards-3" id="cidadeCards"></div>
+    </div>
+  </div>
+
+  <!-- DARK SECTION -->
+  <div class="dark-section">
+    <div class="container">
+      <div class="sec-head">
+        <div class="sec-head-accent"></div>
+        <h2>Política</h2>
+        <div class="sec-head-line"></div>
+      </div>
+      <div class="cards-3" id="politicaDarkCards" style="gap:24px;"></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ARTICLE PAGE -->
+<div class="page" id="page-article">
+  <div class="container" style="padding-bottom:60px;">
+    <div class="main-grid">
+      <div id="articleContent"></div>
+      <div style="padding-top:40px;">
+        <div class="sidebar-box">
+          <h3>Leia Também</h3>
+          <div id="relatedArticles"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SEARCH PAGE -->
+<div class="page" id="page-search">
+  <div class="container" style="padding:48px 20px;">
+    <div class="sec-head">
+      <div class="sec-head-accent"></div>
+      <h2 id="searchResultsTitle">Resultados</h2>
+      <div class="sec-head-line"></div>
+    </div>
+    <div class="cards-3" id="searchResults"></div>
+    <div id="noResults" style="display:none;text-align:center;padding:60px 0;">
+      <p style="font-family:var(--fd);font-size:24px;color:var(--muted);">Nenhum resultado encontrado.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT PAGE -->
+<div class="page" id="page-about">
+  <div class="about-hero">
+    <div class="container">
+      <div style="display:inline-block;background:var(--primary);color:white;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;padding:4px 12px;margin-bottom:20px;">Desde 2010</div>
+      <h1>Sobre o Correio da Capital</h1>
+      <p>O portal de notícias que conecta a capital ao Brasil e ao mundo.</p>
+    </div>
+  </div>
+  <div class="container" style="padding:60px 20px;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;">
+      <div>
+        <h2 style="font-family:var(--fd);font-size:32px;font-weight:900;margin-bottom:20px;">Nossa missão</h2>
+        <div style="font-size:17px;line-height:1.8;color:#444;">
+          <p style="margin-bottom:20px;">O <strong>Correio da Capital</strong> nasceu da convicção de que jornalismo de qualidade é um serviço público essencial. Fundado em 2010, somos um dos principais portais de notícias da capital, com cobertura independente e comprometida com a verdade.</p>
+          <p style="margin-bottom:20px;">Nossa equipe é formada por jornalistas experientes, fotógrafos e repórteres que estão nas ruas todos os dias, levando até você as informações que importam sobre política, economia, cultura, esporte e cotidiano da capital.</p>
+          <p>Acreditamos em um jornalismo plural, rigoroso e acessível a todos. Aqui, a notícia chega primeiro.</p>
+        </div>
+      </div>
+      <div>
+        <div style="background:var(--bg2);padding:32px;border-left:3px solid var(--primary);margin-bottom:24px;">
+          <h3 style="font-family:var(--fd);font-size:40px;font-weight:900;color:var(--primary);line-height:1;">+2M</h3>
+          <p style="color:var(--muted);font-size:14px;margin-top:4px;">Leitores mensais</p>
+        </div>
+        <div style="background:var(--bg2);padding:32px;border-left:3px solid var(--accent);margin-bottom:24px;">
+          <h3 style="font-family:var(--fd);font-size:40px;font-weight:900;color:var(--accent);line-height:1;">15+</h3>
+          <p style="color:var(--muted);font-size:14px;margin-top:4px;">Jornalistas na redação</p>
+        </div>
+        <div style="background:var(--bg2);padding:32px;border-left:3px solid var(--gold);">
+          <h3 style="font-family:var(--fd);font-size:40px;font-weight:900;color:var(--gold);line-height:1;">24h</h3>
+          <p style="color:var(--muted);font-size:14px;margin-top:4px;">Cobertura ininterrupta</p>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:60px;background:var(--dark);padding:48px;text-align:center;">
+      <h2 style="font-family:var(--fd);color:white;font-size:28px;margin-bottom:12px;">Quer trabalhar conosco?</h2>
+      <p style="color:rgba(255,255,255,0.6);font-size:16px;margin-bottom:24px;">Enviamos currículo e portfólio para a nossa redação.</p>
+      <button class="btn-primary" onclick="showPage('contact')">Entrar em contato →</button>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT PAGE -->
+<div class="page" id="page-contact">
+  <div style="background:var(--dark);padding:60px 0 40px;">
+    <div class="container">
+      <div class="cat-badge" style="margin-bottom:16px;">Contato</div>
+      <h1 style="font-family:var(--fd);color:white;font-size:clamp(32px,5vw,52px);font-weight:900;margin-bottom:16px;">Fale com a redação</h1>
+      <p style="color:rgba(255,255,255,0.6);font-size:17px;max-width:500px;">Para anúncios, pautas, denúncias ou sugestões de reportagem.</p>
+    </div>
+  </div>
+  <div class="container" style="padding:60px 20px;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;">
+      <div>
+        <h2 style="font-family:var(--fd);font-size:24px;margin-bottom:24px;">Envie sua mensagem</h2>
+        <div>
+          <label style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);">Nome completo</label>
+          <input type="text" class="contact-form-input" id="cName" placeholder="Seu nome">
+          <label style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);">E-mail</label>
+          <input type="email" class="contact-form-input" id="cEmail" placeholder="seu@email.com">
+          <label style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);">Assunto</label>
+          <input type="text" class="contact-form-input" id="cSubject" placeholder="Pauta, denúncia, publicidade...">
+          <label style="font-size:13px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);">Mensagem</label>
+          <textarea class="contact-form-input" id="cMsg" placeholder="Escreva sua mensagem..."></textarea>
+          <button class="btn-primary" onclick="submitContact()" style="margin-top:8px;">Enviar mensagem →</button>
+        </div>
+      </div>
+      <div>
+        <h2 style="font-family:var(--fd);font-size:24px;margin-bottom:24px;">Informações</h2>
+        <div style="display:flex;flex-direction:column;gap:24px;">
+          <div style="display:flex;gap:16px;align-items:flex-start;">
+            <div style="width:40px;height:40px;background:var(--primary);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;">📍</div>
+            <div>
+              <div style="font-weight:700;margin-bottom:4px;">Redação</div>
+              <div style="color:var(--muted);font-size:14px;line-height:1.5;">Av. Central, 1200, sala 408<br>Centro — Capital</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:16px;align-items:flex-start;">
+            <div style="width:40px;height:40px;background:var(--primary);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;">📞</div>
+            <div>
+              <div style="font-weight:700;margin-bottom:4px;">Telefone</div>
+              <div style="color:var(--muted);font-size:14px;">+55 (63) 9267-2399</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:16px;align-items:flex-start;">
+            <div style="width:40px;height:40px;background:var(--primary);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;">✉️</div>
+            <div>
+              <div style="font-weight:700;margin-bottom:4px;">E-mail</div>
+              <div style="color:var(--muted);font-size:14px;">redacao@correiodacapital.com.br</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:16px;align-items:flex-start;">
+            <div style="width:40px;height:40px;background:var(--primary);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px;">🕐</div>
+            <div>
+              <div style="font-weight:700;margin-bottom:4px;">Horário de atendimento</div>
+              <div style="color:var(--muted);font-size:14px;line-height:1.6;">Segunda a Sexta: 8h às 18h<br>Sábado: 8h às 12h</div>
+            </div>
+          </div>
+          <a href="https://wa.me/5563926723999" target="_blank" style="display:flex;align-items:center;gap:12px;background:#25D366;color:white;padding:16px 20px;text-decoration:none;font-weight:700;">
+            <span style="font-size:24px;">📱</span>
+            <span>Chamar no WhatsApp</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-logo-col">
+        <div class="footer-logo"><em>Correio</em> da Capital</div>
+        <p class="footer-desc">O portal de notícias que conecta a capital ao Brasil e ao mundo. Jornalismo independente, comprometido com a verdade.</p>
+        <div class="footer-social">
+          <a href="#" title="Facebook">f</a>
+          <a href="#" title="Instagram">◉</a>
+          <a href="#" title="Twitter/X">✕</a>
+          <a href="#" title="YouTube">▶</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Editorias</h4>
+        <a href="#" onclick="filterCat(null,'politica');return false;">Política</a>
+        <a href="#" onclick="filterCat(null,'economia');return false;">Economia</a>
+        <a href="#" onclick="filterCat(null,'cultura');return false;">Cultura</a>
+        <a href="#" onclick="filterCat(null,'esporte');return false;">Esporte</a>
+        <a href="#" onclick="filterCat(null,'cidade');return false;">Cidade</a>
+      </div>
+      <div class="footer-col">
+        <h4>Portal</h4>
+        <a href="#" onclick="showPage('about');return false;">Sobre nós</a>
+        <a href="#" onclick="showPage('contact');return false;">Contato</a>
+        <a href="#" onclick="openAdmin();return false;">Área da Redação</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contato</h4>
+        <a href="tel:+556392672399">+55 63 9267-2399</a>
+        <a href="mailto:redacao@correiodacapital.com.br">redacao@<br>correiodacapital.com.br</a>
+        <a href="https://wa.me/5563926723999" target="_blank">WhatsApp</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Correio da Capital. Todos os direitos reservados.</p>
+      <p style="font-size:13px;opacity:.5;">CNPJ: 00.000.000/0001-00</p>
+    </div>
+  </div>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a class="wa-float" href="https://wa.me/5563926723999" target="_blank" title="Falar no WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+// ===================== DATA =====================
+const CATS = {
+  politica: 'Política',
+  economia: 'Economia',
+  cultura: 'Cultura',
+  esporte: 'Esporte',
+  cidade: 'Cidade',
+  opiniao: 'Opinião',
+};
+
+const CAT_COLORS = {
+  politica: '#C8102E',
+  economia: '#1A3A5C',
+  cultura: '#A07830',
+  esporte: '#059669',
+  cidade: '#7C3AED',
+  opiniao: '#A07830',
+};
+
+const IMGS = {
+  politica: [
+    'https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=800&auto=format',
+    'https://images.unsplash.com/photo-1541872703-74c5e44368f9?w=800&auto=format',
+    'https://images.unsplash.com/photo-1588681664899-f142ff2dc9b1?w=800&auto=format',
+  ],
+  economia: [
+    'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&auto=format',
+    'https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?w=800&auto=format',
+    'https://images.unsplash.com/photo-1543286386-713bdd548da4?w=800&auto=format',
+  ],
+  cultura: [
+    'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&auto=format',
+    'https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?w=800&auto=format',
+    'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=800&auto=format',
+  ],
+  esporte: [
+    'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=800&auto=format',
+    'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=800&auto=format',
+    'https://images.unsplash.com/photo-1552667466-07770ae110d0?w=800&auto=format',
+  ],
+  cidade: [
+    'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800&auto=format',
+    'https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=800&auto=format',
+    'https://images.unsplash.com/photo-1496568816309-51d7c20e3b21?w=800&auto=format',
+  ],
+};
+
+const DEFAULT_ARTICLES = [
+  {
+    id:1, cat:'politica', featured:true,
+    title:'Governador anuncia pacote de obras para infraestrutura da capital',
+    excerpt:'Investimento de R$ 800 milhões será destinado à pavimentação de vias, construção de viadutos e modernização do transporte público.',
+    body:`<p>O governador do estado anunciou nesta semana um pacote histórico de obras para a infraestrutura urbana da capital, com investimentos que totalizam R$ 800 milhões. O programa, batizado de "Capital do Futuro", prevê a pavimentação de mais de 200 quilômetros de vias, a construção de quatro novos viadutos e a modernização completa do sistema de transporte público.</p>
+<p>Em entrevista coletiva realizada no Palácio do Governo, o governador destacou que as obras serão iniciadas ainda no primeiro semestre deste ano e concluídas até 2026. "Este é o maior investimento em infraestrutura da história do nosso estado. Vamos transformar a forma como os cidadãos se deslocam pela capital", afirmou.</p>
+<h3>Prioridades do programa</h3>
+<p>Segundo o secretário de Infraestrutura, as obras foram planejadas com base em levantamentos técnicos e consultas à população. As áreas mais afetadas pelos gargalos de tráfego serão priorizadas na primeira fase do programa, com início previsto para março.</p>
+<p>A oposição, porém, questiona a origem dos recursos e cobra transparência na licitação das obras. O deputado estadual Marcos Silva (PDT) afirmou que solicitará uma audiência pública para debater os critérios de contratação das empreiteiras.</p>`,
+    author:'Redação Correio da Capital', date:'22 abr. 2025', img:0,
+  },
+  {
+    id:2, cat:'politica',
+    title:'Câmara Municipal vota projeto que amplia auxílio-moradia para servidores',
+    excerpt:'Proposta prevê reajuste de 35% nos valores pagos mensalmente a mais de 3 mil servidores públicos municipais.',
+    body:`<p>A Câmara Municipal votará na próxima semana o projeto de lei que propõe ampliar o auxílio-moradia pago aos servidores públicos municipais. A proposta, apresentada pelo vereador Ricardo Neves (MDB), prevê um reajuste de 35% nos valores do benefício, que atualmente varia entre R$ 400 e R$ 1.200.</p>
+<p>Caso aprovado, o impacto nos cofres municipais será de aproximadamente R$ 4,2 milhões por mês. A prefeitura ainda não se manifestou oficialmente sobre o projeto, mas fontes na secretaria de Fazenda indicam que a administração pode vetar a medida por questões orçamentárias.</p>`,
+    author:'Lucas Mendonça', date:'21 abr. 2025', img:1,
+  },
+  {
+    id:3, cat:'politica',
+    title:'Eleições 2026: pesquisa aponta liderança surpreendente no estado',
+    excerpt:'Levantamento realizado pelo instituto DataCapital ouviu 1.200 eleitores em 15 municípios do estado.',
+    body:`<p>Uma nova pesquisa eleitoral divulgada pelo instituto DataCapital mostra um cenário de competição acirrada para as eleições estaduais de 2026. O levantamento, realizado entre os dias 15 e 18 de abril, entrevistou 1.200 eleitores em 15 municípios e aponta um candidato surpresa liderando as intenções de voto.</p>`,
+    author:'Ana Beatriz Costa', date:'20 abr. 2025', img:2,
+  },
+  {
+    id:4, cat:'economia',
+    title:'Taxa de desemprego na capital cai para menor nível em 8 anos',
+    excerpt:'Dados do IBGE apontam geração de mais de 12 mil empregos formais no primeiro trimestre do ano.',
+    body:`<p>A taxa de desemprego na capital recuou para 7,2% no primeiro trimestre de 2025, o menor índice registrado nos últimos oito anos, segundo dados divulgados pelo IBGE. A queda representa uma redução de 1,8 ponto percentual em relação ao mesmo período de 2024 e sinaliza uma recuperação consistente do mercado de trabalho regional.</p>
+<p>O setor de serviços liderou a geração de vagas, com destaque para o comércio varejista e a construção civil. Segundo o coordenador do Sistema Nacional de Emprego (SINE) local, as perspectivas para o segundo semestre são ainda mais favoráveis, com previsão de abertura de novas fábricas na zona industrial.</p>`,
+    author:'Fernanda Lopes', date:'22 abr. 2025', img:0,
+  },
+  {
+    id:5, cat:'economia',
+    title:'Feira de empreendedorismo reúne mais de 500 startups na capital',
+    excerpt:'Evento ocorre no centro de convenções e terá rodadas de investimento com VCs de São Paulo e Brasília.',
+    body:`<p>O maior evento de empreendedorismo da região chega à sua 7ª edição com recorde de participantes. A Capital Innovation Week, que ocorre de 25 a 28 de abril no Centro de Convenções, receberá mais de 500 startups e terá a participação de fundos de venture capital de São Paulo, Brasília e Goiânia.</p>`,
+    author:'Rafael Souza', date:'21 abr. 2025', img:1,
+  },
+  {
+    id:6, cat:'cultura',
+    title:'Festival de teatro da capital anuncia programação com 40 espetáculos',
+    excerpt:'Evento gratuito acontece entre os dias 1 e 15 de maio em teatros e espaços públicos da cidade.',
+    body:`<p>O Festival de Teatro da Capital divulgou a programação completa da sua 12ª edição, que acontecerá entre 1 e 15 de maio. Ao todo, serão 40 espetáculos, entre peças nacionais e internacionais, distribuídos em 8 espaços da cidade — incluindo praças e parques públicos. Toda a programação é gratuita.</p>`,
+    author:'Camila Ramos', date:'22 abr. 2025', img:0,
+  },
+  {
+    id:7, cat:'cultura',
+    title:'Artista local expõe obra de 30 metros no Museu de Arte Contemporânea',
+    excerpt:'Instalação "Raízes" usa materiais coletados no cerrado e ficará em exposição por três meses.',
+    body:`<p>O artista plástico Pedro Alves inaugura esta semana a maior instalação de sua carreira no Museu de Arte Contemporânea da capital. A obra "Raízes", com 30 metros de comprimento, utiliza materiais coletados no cerrado — galhos, pedras, terra e sementes — para criar uma reflexão sobre a identidade regional e a relação do ser humano com a natureza.</p>`,
+    author:'Mariana Freitas', date:'19 abr. 2025', img:1,
+  },
+  {
+    id:8, cat:'cultura',
+    title:'Gastronomia regional ganha espaço em novo guia publicado pela prefeitura',
+    excerpt:'Publicação lista 120 restaurantes que preservam receitas típicas da culinária do cerrado e da região centro-norte.',
+    body:`<p>A Secretaria Municipal de Cultura lançou o "Guia Gastronômico da Capital", uma publicação que mapeia 120 restaurantes que trabalham com receitas típicas da culinária regional. O guia está disponível gratuitamente no site da prefeitura e em versão impressa nas bibliotecas públicas.</p>`,
+    author:'Redação', date:'18 abr. 2025', img:2,
+  },
+  {
+    id:9, cat:'esporte',
+    title:'Time local vence clássico regional e assume liderança do campeonato estadual',
+    excerpt:'Com gol nos acréscimos, equipe soma 28 pontos e abre vantagem de 4 pontos sobre o rival.',
+    body:`<p>Em partida emocionante disputada no estádio municipal, o time local garantiu a liderança do campeonato estadual ao vencer o clássico regional por 2 a 1. O gol da vitória saiu aos 47 minutos do segundo tempo e foi celebrado com festa pelas mais de 22 mil pessoas que lotaram as arquibancadas.</p>`,
+    author:'Carlos Drummond', date:'21 abr. 2025', img:0,
+  },
+  {
+    id:10, cat:'esporte',
+    title:'Atleta da capital é convocada para seleção brasileira de atletismo',
+    excerpt:'Corredora de 800 metros será a única representante do estado nos jogos pan-americanos juvenis.',
+    body:`<p>A corredora Isabela Monteiro, de 19 anos, foi convocada para representar o Brasil nos Jogos Pan-Americanos Juvenis que acontecerão em setembro no Chile. Natural da capital, ela é a única atleta do estado a integrar o grupo convocado pela Confederação Brasileira de Atletismo.</p>`,
+    author:'João Paulo Lima', date:'20 abr. 2025', img:1,
+  },
+  {
+    id:11, cat:'cidade',
+    title:'Prefeitura inaugura 3 novas praças com academia ao ar livre nos bairros periféricos',
+    excerpt:'Equipamentos beneficiarão cerca de 15 mil moradores e incluem pista de skate e quadra poliesportiva.',
+    body:`<p>A prefeitura entregou nesta semana três novas praças equipadas com academia ao ar livre, pista de skate e quadra poliesportiva em bairros da zona norte e leste da cidade. Os espaços foram construídos com recursos do governo federal e atenderão aproximadamente 15 mil moradores.</p>`,
+    author:'Redação', date:'22 abr. 2025', img:0,
+  },
+  {
+    id:12, cat:'cidade',
+    title:'Nova linha de ônibus elétrico é lançada com 12 veículos na capital',
+    excerpt:'Frota zero emissão irá percorrer o corredor central e integrará os terminais norte e sul.',
+    body:`<p>A capital deu mais um passo em direção à mobilidade sustentável com o lançamento de uma nova linha de ônibus elétrico. A linha E1 conta com 12 veículos de última geração, com ar-condicionado, Wi-Fi e carregamento por indução. O percurso conecta os terminais norte e sul, passando pelo corredor central da cidade.</p>`,
+    author:'Fernanda Lopes', date:'17 abr. 2025', img:1,
+  },
+  {
+    id:13, cat:'cidade',
+    title:'Temperatura bate recorde histórico na capital: 42°C registrados nesta semana',
+    excerpt:'Defesa Civil emite alerta e orienta população a redobrar cuidados com hidratação e exposição ao sol.',
+    body:`<p>A capital registrou nesta semana a maior temperatura da sua história: 42,3°C na quarta-feira, superando o recorde anterior de 41,8°C marcado em outubro de 2019. A Defesa Civil emitiu alertas à população e as escolas municipais tiveram as aulas suspensas no período da tarde.</p>`,
+    author:'Pedro Gomes', date:'16 abr. 2025', img:2,
+  },
+];
+
+const OPINIAO = [
+  {
+    id:90, cat:'opiniao',
+    title:'A capital que queremos — e a que temos',
+    excerpt:'"É preciso cobrar dos gestores o cumprimento das promessas feitas nas urnas. A cidade não pode esperar mais."',
+    author:'Maria Cecília Braga — Colunista',
+    body:`<p>Passados dois anos da última eleição municipal, é hora de fazer um balanço honesto: o que foi prometido e o que foi entregue. A cidade cresceu demograficamente, mas as políticas públicas não acompanharam esse crescimento.</p>`,
+    img:'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=400&auto=format', date:'21 abr. 2025',
+  },
+  {
+    id:91, cat:'opiniao',
+    title:'O cerrado precisa de políticas, não de promessas',
+    excerpt:'"A devastação do bioma não é novidade. O que falta é vontade política de transformar discurso em ação."',
+    author:'Prof. Dr. Henrique Valente — Especial',
+    body:`<p>O cerrado, segundo maior bioma do Brasil, é também o mais ameaçado. Estudos indicam que mais de 50% da cobertura vegetal original já foi perdida para a expansão agropecuária.</p>`,
+    img:'https://images.unsplash.com/photo-1508739773434-c26b3d09e071?w=400&auto=format', date:'19 abr. 2025',
+  },
+];
+
+// ===================== STATE =====================
+let articles = [];
+let currentPage = 'home';
+let currentArticleId = null;
+let adminAuthenticated = false;
+
+// ===================== INIT =====================
+function init(){
+  // Load from localStorage, fallback to defaults
+  const saved = localStorage.getItem('cdc_articles');
+  articles = saved ? JSON.parse(saved) : [...DEFAULT_ARTICLES, ...OPINIAO];
+
+  // Set date
+  document.getElementById('currentDateLabel').textContent = new Date().toLocaleDateString('pt-BR',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+
+  buildTicker();
+  buildHero();
+  buildHome();
+  initReveal();
+}
+
+function saveArticles(){
+  localStorage.setItem('cdc_articles', JSON.stringify(articles));
+}
+
+// ===================== TICKER =====================
+function buildTicker(){
+  const el = document.getElementById('tickerInner');
+  const items = articles.filter(a=>a.cat!=='opiniao').slice(0,8);
+  el.innerHTML = `<span class="ticker-tag">🔴 AO VIVO</span>` +
+    items.map(a=>`<span class="ticker-item" onclick="openArticle(${a.id})" style="cursor:pointer;">${a.title}</span>`).join('') +
+    `<span class="ticker-item">Siga o Correio da Capital nas redes sociais ● Jornalismo independente ● 24 horas no ar</span>`;
+}
+
+// ===================== IMG =====================
+function getImg(cat, idx){
+  const arr = IMGS[cat] || IMGS.cidade;
+  return arr[idx % arr.length];
+}
+
+function getAdminImg(art){
+  return art.customImg || getImg(art.cat, art.img||0);
+}
+
+// ===================== HERO =====================
+function buildHero(){
+  const featured = articles.filter(a=>a.cat!=='opiniao');
+  const main = featured[0];
+  const sides = featured.slice(1,3);
+  const wrap = document.getElementById('heroWrap');
+  if(!wrap || !main) return;
+
+  wrap.innerHTML = `
+    <div class="hero-main" onclick="openArticle(${main.id})">
+      <img src="${getAdminImg(main)}" alt="${main.title}" loading="lazy">
+      <div class="hero-overlay">
+        <div class="hero-overlay-content">
+          <span class="cat-badge" style="background:${CAT_COLORS[main.cat]||'#C8102E'};margin-bottom:12px;">${CATS[main.cat]||main.cat}</span>
+          <div class="hero-title">${main.title}</div>
+          <div class="hero-sub">${main.excerpt}</div>
+          <div style="margin-top:12px;color:rgba(255,255,255,0.5);font-size:12px;">${main.author} · ${main.date}</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-side">
+      ${sides.map(a=>`
+        <div class="hero-side-card" onclick="openArticle(${a.id})">
+          <img src="${getAdminImg(a)}" alt="${a.title}" loading="lazy">
+          <div class="hero-side-overlay"></div>
+          <span class="cat-badge" style="background:${CAT_COLORS[a.cat]||'#C8102E'};position:absolute;top:12px;left:12px;">${CATS[a.cat]||a.cat}</span>
+          <div class="hero-side-title">${a.title}</div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+// ===================== CARDS =====================
+function artCard(a){
+  return `<div class="art-card" onclick="openArticle(${a.id})">
+    <div class="art-card-img"><img src="${getAdminImg(a)}" alt="${a.title}" loading="lazy"></div>
+    <span class="art-card-cat" style="background:${CAT_COLORS[a.cat]||'#C8102E'};">${CATS[a.cat]||a.cat}</span>
+    <div class="art-card-title">${a.title}</div>
+    <div class="art-card-excerpt">${a.excerpt}</div>
+    <div class="art-card-meta">${a.author} · ${a.date}</div>
+  </div>`;
+}
+
+function artCardDark(a){
+  return `<div style="cursor:pointer;" onclick="openArticle(${a.id})">
+    <div style="overflow:hidden;aspect-ratio:16/9;margin-bottom:12px;">
+      <img src="${getAdminImg(a)}" alt="${a.title}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s;">
+    </div>
+    <span class="cat-badge">${CATS[a.cat]||a.cat}</span>
+    <div style="font-family:var(--fd);font-size:17px;font-weight:700;color:white;line-height:1.25;margin:8px 0 6px;">${a.title}</div>
+    <div style="font-size:13px;color:rgba(255,255,255,0.5);">${a.author} · ${a.date}</div>
+  </div>`;
+}
+
+function artHCard(a){
+  return `<div class="art-hcard" onclick="openArticle(${a.id})">
+    <div class="art-hcard-img"><img src="${getAdminImg(a)}" alt="${a.title}" loading="lazy"></div>
+    <div>
+      <div class="art-hcard-title">${a.title}</div>
+      <div class="art-hcard-meta">${a.date}</div>
+    </div>
+  </div>`;
+}
+
+// ===================== BUILD HOME =====================
+function buildHome(){
+  const nonOp = articles.filter(a=>a.cat!=='opiniao');
+  const bycat = (cat,n,skip=0)=>nonOp.filter(a=>a.cat===cat).slice(skip,skip+n);
+  const latest = nonOp.slice(0,6);
+
+  setHTML('latestCards', latest.map(artCard).join(''));
+  setHTML('economiaCards', bycat('economia',2).map(artCard).join(''));
+  setHTML('politicaDarkCards', bycat('politica',3).map(artCardDark).join(''));
+  setHTML('culturaCards', bycat('cultura',3).map(artCard).join(''));
+  setHTML('cidadeCards', bycat('cidade',3).map(artCard).join(''));
+
+  // Popular (top 5)
+  const popular = nonOp.slice(0,5);
+  setHTML('popularList', popular.map((a,i)=>`
+    <div class="popular-item" onclick="openArticle(${a.id})">
+      <span class="popular-num">${String(i+1).padStart(2,'0')}</span>
+      <div><div class="popular-title">${a.title}</div><div style="font-size:11px;color:var(--muted);margin-top:4px;">${a.date}</div></div>
+    </div>
+  `).join(''));
+
+  // Esporte list
+  const esp = bycat('esporte',3);
+  setHTML('esporteList', esp.map(artHCard).join(''));
+
+  // Opinião
+  const op = articles.filter(a=>a.cat==='opiniao');
+  setHTML('opiniaoCards', op.map(a=>`
+    <div class="opinion-card" onclick="openArticle(${a.id})">
+      <blockquote>${a.excerpt}</blockquote>
+      <div class="opinion-author">${a.author}</div>
+    </div>
+  `).join(''));
+}
+
+// ===================== PAGES =====================
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const el = document.getElementById('page-'+id);
+  if(el){ el.classList.add('active'); window.scrollTo(0,0); currentPage=id; }
+  // Reset cat nav
+  document.querySelectorAll('.cat-link').forEach(l=>l.classList.remove('active'));
+  if(id==='home') document.querySelector('[data-cat="all"]').classList.add('active');
+}
+
+function openArticle(id){
+  const a = articles.find(x=>x.id===id);
+  if(!a) return;
+  currentArticleId = id;
+
+  const related = articles.filter(x=>x.id!==id&&x.cat===a.cat).slice(0,3);
+  const imgSrc = getAdminImg(a);
+
+  setHTML('articleContent', `
+    <div class="article-header">
+      <span class="article-cat-label" style="background:${CAT_COLORS[a.cat]||'#C8102E'};">${CATS[a.cat]||a.cat}</span>
+      <h1 class="article-h1">${a.title}</h1>
+      <p class="article-lead">${a.excerpt}</p>
+      <div class="article-meta-bar">
+        <div>
+          <div class="article-author">${a.author}</div>
+          <div class="article-date">${a.date}</div>
+        </div>
+        <div class="share-bar">
+          <a class="share-btn share-fb" href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(location.href)}" target="_blank">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            Facebook
+          </a>
+          <a class="share-btn share-tw" href="https://twitter.com/intent/tweet?text=${encodeURIComponent(a.title)}&url=${encodeURIComponent(location.href)}" target="_blank">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M4 4l16 16M4 20L20 4"/></svg>
+            Twitter/X
+          </a>
+          <a class="share-btn share-wa" href="https://wa.me/?text=${encodeURIComponent(a.title+' '+location.href)}" target="_blank">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            WhatsApp
+          </a>
+          <a class="share-btn share-li" href="https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(location.href)}&title=${encodeURIComponent(a.title)}" target="_blank">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+            LinkedIn
+          </a>
+        </div>
+      </div>
+      <img class="article-img" src="${imgSrc}" alt="${a.title}" loading="lazy">
+      <div class="article-img-caption">Imagem: Correio da Capital / Arquivo</div>
+      <div class="article-body">${a.body||'<p>'+a.excerpt+'</p>'}</div>
+      <div style="margin-top:40px;padding:24px;background:var(--bg2);border-left:3px solid var(--primary);">
+        <div style="font-weight:700;margin-bottom:4px;">${a.author}</div>
+        <div style="font-size:14px;color:var(--muted);">Jornalista · Correio da Capital</div>
+      </div>
+      <div style="margin-top:40px;display:flex;gap:12px;flex-wrap:wrap;">
+        <button onclick="history.back();buildHome();" class="btn-ghost">← Voltar</button>
+        <a class="share-btn share-wa" href="https://wa.me/?text=${encodeURIComponent(a.title+' - leia em correiodacapital.com.br')}" target="_blank" style="padding:12px 24px;font-size:13px;">Compartilhar no WhatsApp</a>
+      </div>
+    </div>
+  `);
+
+  setHTML('relatedArticles', related.map(artHCard).join('') || '<p style="color:var(--muted);font-size:14px;">Sem artigos relacionados.</p>');
+  showPage('article');
+}
+
+// ===================== CATEGORY =====================
+function filterCat(btn, cat){
+  document.querySelectorAll('.cat-link').forEach(l=>l.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+
+  if(cat==='all'){ showPage('home'); return; }
+
+  // Build category page dynamically
+  const filtered = articles.filter(a=>a.cat===cat);
+  showPage('home');
+
+  // Rebuild home grids filtered
+  const main = document.getElementById('page-home');
+  // Actually show a filtered search-like view
+  showFilteredCat(cat, filtered);
+}
+
+function showFilteredCat(cat, filtered){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const searchPage = document.getElementById('page-search');
+  searchPage.classList.add('active');
+  window.scrollTo(0,0);
+
+  document.getElementById('searchResultsTitle').textContent = `${CATS[cat]||cat} — ${filtered.length} artigos`;
+  setHTML('searchResults', filtered.length ? filtered.map(artCard).join('') : '');
+  document.getElementById('noResults').style.display = filtered.length ? 'none' : 'block';
+}
+
+// ===================== SEARCH =====================
+function openSearch(){ document.getElementById('searchOverlay').classList.add('open'); document.getElementById('searchInput').focus(); }
+function closeSearch(){ document.getElementById('searchOverlay').classList.remove('open'); }
+
+function handleSearch(q){
+  if(!q || q.length < 2) return;
+  const results = articles.filter(a=>{
+    const s = (a.title+' '+a.excerpt+' '+(a.body||'')).toLowerCase();
+    return s.includes(q.toLowerCase());
+  });
+  document.getElementById('searchResults');
+  // Show results on search page immediately
+}
+
+document.addEventListener('keydown', function(e){
+  if(e.key==='Escape'){ closeSearch(); closeAdmin(); }
+  if(document.getElementById('searchOverlay').classList.contains('open') && e.key==='Enter'){
+    const q = document.getElementById('searchInput').value;
+    performSearch(q);
+    closeSearch();
+  }
+});
+
+function performSearch(q){
+  const results = articles.filter(a=>{
+    const s = (a.title+' '+a.excerpt+' '+(a.body||'')+' '+a.cat).toLowerCase();
+    return s.includes(q.toLowerCase());
+  });
+  showPage('search');
+  document.getElementById('searchResultsTitle').textContent = `"${q}" — ${results.length} resultado${results.length!==1?'s':''}`;
+  setHTML('searchResults', results.length ? results.map(artCard).join('') : '');
+  document.getElementById('noResults').style.display = results.length?'none':'block';
+}
+
+// ===================== ADMIN =====================
+function openAdmin(){
+  const overlay = document.getElementById('adminOverlay');
+  overlay.classList.add('open');
+  if(!adminAuthenticated){
+    renderLogin();
+  } else {
+    renderAdmin();
+  }
+}
+
+function closeAdmin(){
+  document.getElementById('adminOverlay').classList.remove('open');
+}
+
+function renderLogin(){
+  setHTML('adminContent', `
+    <div class="login-box">
+      <div style="font-size:32px;margin-bottom:12px;">📰</div>
+      <h2>Área da Redação</h2>
+      <p>Digite a senha para acessar o painel de publicação.</p>
+      <input type="password" class="admin-input" id="adminPass" placeholder="Senha" onkeydown="if(event.key==='Enter')checkPass()">
+      <button class="admin-btn" style="width:100%;margin-top:4px;" onclick="checkPass()">Entrar</button>
+      <button class="admin-btn sec" style="width:100%;margin-top:8px;" onclick="closeAdmin()">Cancelar</button>
+      <p style="color:rgba(255,255,255,0.2);font-size:12px;margin-top:16px;">Senha padrão: redacao123</p>
+    </div>
+  `);
+  setTimeout(()=>document.getElementById('adminPass')&&document.getElementById('adminPass').focus(),100);
+}
+
+function checkPass(){
+  const pass = document.getElementById('adminPass').value;
+  if(pass==='redacao123'){ adminAuthenticated=true; renderAdmin(); }
+  else { showNotif('Senha incorreta.'); }
+}
+
+function renderAdmin(){
+  const myArts = articles.filter(a=>a._custom);
+  setHTML('adminContent', `
+    <div class="admin-box">
+      <div class="admin-head">
+        <h2>📰 Painel da Redação</h2>
+        <button class="admin-close" onclick="closeAdmin()">✕</button>
+      </div>
+      <div class="admin-body">
+
+        <div class="admin-section">
+          <div class="admin-section-title">Publicar nova matéria</div>
+          <label class="admin-label">Título *</label>
+          <input type="text" class="admin-input" id="aTitle" placeholder="Título da matéria">
+          <label class="admin-label">Chamada / Resumo *</label>
+          <input type="text" class="admin-input" id="aExcerpt" placeholder="Resumo para a capa (2-3 linhas)">
+          <label class="admin-label">Categoria *</label>
+          <select class="admin-input" id="aCat">
+            <option value="politica">Política</option>
+            <option value="economia">Economia</option>
+            <option value="cultura">Cultura</option>
+            <option value="esporte">Esporte</option>
+            <option value="cidade">Cidade</option>
+            <option value="opiniao">Opinião / Coluna</option>
+          </select>
+          <label class="admin-label">Nome do jornalista / autor</label>
+          <input type="text" class="admin-input" id="aAuthor" placeholder="Ex: Redação Correio da Capital">
+          <label class="admin-label">URL da imagem (opcional)</label>
+          <input type="url" class="admin-input" id="aImg" placeholder="https://exemplo.com/foto.jpg">
+          <label class="admin-label">Texto completo da matéria *</label>
+          <textarea class="admin-input" id="aBody" placeholder="Escreva o texto completo da matéria aqui. Separe parágrafos com linha em branco.&#10;&#10;Você pode usar subtítulos entre parágrafos com ###."></textarea>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
+            <button class="admin-btn" onclick="publishArticle()">✓ Publicar agora</button>
+            <button class="admin-btn sec" onclick="renderAdmin()">Limpar</button>
+          </div>
+        </div>
+
+        <div class="admin-section">
+          <div class="admin-section-title">Matérias publicadas pela redação (${myArts.length})</div>
+          ${myArts.length===0
+            ? '<p style="color:rgba(255,255,255,0.3);font-size:14px;">Nenhuma matéria publicada ainda.</p>'
+            : `<div class="admin-articles-list">${myArts.map(a=>`
+              <div class="admin-art-item">
+                <div class="admin-art-title">${a.title}</div>
+                <span class="admin-art-cat">${CATS[a.cat]||a.cat}</span>
+                <button class="admin-art-del" onclick="deleteArticle(${a.id})">Excluir</button>
+              </div>
+            `).join('')}</div>`
+          }
+        </div>
+
+        <div class="admin-section">
+          <div class="admin-section-title">Ações rápidas</div>
+          <button class="admin-btn sec" onclick="if(confirm('Resetar para artigos padrão?')){localStorage.removeItem('cdc_articles');articles=[...DEFAULT_ARTICLES,...OPINIAO];saveArticles();buildHome();buildHero();buildTicker();renderAdmin();showNotif('Conteúdo resetado.');}">Resetar conteúdo padrão</button>
+          <button class="admin-btn sec" onclick="adminAuthenticated=false;closeAdmin();showNotif('Sessão encerrada.');">Sair da sessão</button>
+        </div>
+
+      </div>
+    </div>
+  `);
+}
+
+function publishArticle(){
+  const title = document.getElementById('aTitle').value.trim();
+  const excerpt = document.getElementById('aExcerpt').value.trim();
+  const cat = document.getElementById('aCat').value;
+  const author = document.getElementById('aAuthor').value.trim() || 'Redação Correio da Capital';
+  const imgUrl = document.getElementById('aImg').value.trim();
+  const bodyRaw = document.getElementById('aBody').value.trim();
+
+  if(!title||!excerpt||!bodyRaw){ showNotif('Preencha título, resumo e texto.'); return; }
+
+  const bodyHtml = bodyRaw.split('\n\n').map(p=>{
+    p=p.trim(); if(!p) return '';
+    if(p.startsWith('###')) return `<h3>${p.replace('###','').trim()}</h3>`;
+    return `<p>${p}</p>`;
+  }).join('');
+
+  const newId = Date.now();
+  const newArt = {
+    id: newId, cat, featured: false, _custom: true,
+    title, excerpt, body: bodyHtml,
+    author, date: new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'short',year:'numeric'}),
+    img: 0, customImg: imgUrl||null,
+  };
+
+  articles.unshift(newArt);
+  saveArticles();
+  buildHome();
+  buildHero();
+  buildTicker();
+  renderAdmin();
+  showNotif(`Matéria "${title.slice(0,30)}..." publicada com sucesso!`);
+}
+
+function deleteArticle(id){
+  if(!confirm('Excluir esta matéria?')) return;
+  articles = articles.filter(a=>a.id!==id);
+  saveArticles();
+  buildHome();
+  buildHero();
+  buildTicker();
+  renderAdmin();
+  showNotif('Matéria excluída.');
+}
+
+// ===================== SHOW MORE =====================
+function showMore(){
+  showNotif('Carregando mais notícias...');
+}
+
+// ===================== NEWSLETTER =====================
+function subscribeNewsletter(){
+  showNotif('Assinatura realizada! Obrigado.');
+}
+
+// ===================== CONTACT =====================
+function submitContact(){
+  const n=document.getElementById('cName').value.trim();
+  const e=document.getElementById('cEmail').value.trim();
+  const m=document.getElementById('cMsg').value.trim();
+  if(!n||!e||!m){ showNotif('Preencha todos os campos.'); return; }
+  showNotif('Mensagem enviada! Retornaremos em breve.');
+  document.getElementById('cName').value='';
+  document.getElementById('cEmail').value='';
+  document.getElementById('cSubject').value='';
+  document.getElementById('cMsg').value='';
+}
+
+// ===================== UTILS =====================
+function setHTML(id, html){ const el=document.getElementById(id); if(el) el.innerHTML=html; }
+
+function showNotif(msg){
+  const el = document.getElementById('notif');
+  el.textContent=msg; el.style.display='block';
+  setTimeout(()=>el.style.display='none', 3500);
+}
+
+// ===================== SCROLL REVEAL =====================
+function initReveal(){
+  const obs = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('vis'); obs.unobserve(e.target); }
+    });
+  },{threshold:.1});
+  document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+}
+
+// ===================== START =====================
+init();
+</script>
+</body>
+</html>
