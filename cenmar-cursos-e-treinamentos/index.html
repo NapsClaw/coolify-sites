@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CENMAR Cursos e Treinamentos | Segurança do Trabalho e Máquinas Pesadas</title>
+  <meta name="description" content="Treinamentos em Segurança do Trabalho e cursos de Operação de Máquinas Pesadas. Certificações reconhecidas pelo MTE. Forme-se com quem tem autoridade.">
+  <meta property="og:title" content="CENMAR Cursos e Treinamentos">
+  <meta property="og:description" content="Segurança do Trabalho e Máquinas Pesadas — certificações que abrem portas.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    :root {
+      --primary: #F5A623;
+      --primary-dark: #D4891A;
+      --accent: #E63946;
+      --bg: #0A0A0A;
+      --bg-card: #141414;
+      --bg-light: #F4F3EE;
+      --text-dark: #1C1C1E;
+      --border: rgba(245, 166, 35, 0.2);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'IBM Plex Sans', sans-serif;
+      background: var(--bg);
+      color: #F4F3EE;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, .display { font-family: 'Syne', sans-serif; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes slideRight {
+      from { transform: scaleX(0); transform-origin: left; }
+      to   { transform: scaleX(1); transform-origin: left; }
+    }
+    @keyframes pulseWa {
+      0%,100% { box-shadow: 0 0 0 0 rgba(37,211,102,.5); }
+      50%      { box-shadow: 0 0 0 14px rgba(37,211,102,0); }
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 20px 32px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(10,10,10,.92);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      animation: fadeIn .5s ease forwards;
+    }
+    .nav-logo { font-family:'Syne',sans-serif; font-weight:800; font-size:1.25rem; letter-spacing:-.02em; color:#F4F3EE; }
+    .nav-logo span { color: var(--primary); }
+    .nav-cta {
+      background: var(--primary); color: #0A0A0A;
+      font-family:'Syne',sans-serif; font-weight:700; font-size:.78rem;
+      letter-spacing:.05em; text-transform:uppercase;
+      padding: 10px 24px; text-decoration:none; display:inline-block;
+      transition: background .2s, transform .2s;
+    }
+    .nav-cta:hover { background: var(--primary-dark); transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 0 32px 80px;
+      position: relative; overflow: hidden;
+    }
+    .hero-bg { position:absolute; inset:0; z-index:0; }
+    .hero-bg img { width:100%; height:100%; object-fit:cover; filter:brightness(.3) saturate(.8); }
+    .hero-bg::after {
+      content:''; position:absolute; inset:0;
+      background: linear-gradient(to top,
+        rgba(10,10,10,.98) 0%,
+        rgba(10,10,10,.55) 45%,
+        rgba(10,10,10,.15) 100%
+      );
+    }
+    .hero-bg::before {
+      content:''; position:absolute; inset:0; z-index:1;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
+      opacity:.6;
+    }
+    .hero-content { position:relative; z-index:2; max-width:860px; }
+    .hero-tag {
+      display:inline-flex; align-items:center; gap:8px;
+      background:rgba(245,166,35,.1); border:1px solid rgba(245,166,35,.3);
+      color:var(--primary); font-size:.72rem; font-weight:600;
+      letter-spacing:.12em; text-transform:uppercase;
+      padding:8px 16px; margin-bottom:32px;
+      animation: fadeUp .6s ease .2s both;
+    }
+    .hero-tag::before { content:''; width:6px; height:6px; background:var(--primary); border-radius:50%; }
+    .hero-title {
+      font-family:'Syne',sans-serif; font-weight:800;
+      font-size: clamp(3.2rem, 9vw, 7.5rem);
+      line-height:.93; letter-spacing:-.04em; margin-bottom:32px;
+      animation: fadeUp .7s ease .35s both;
+    }
+    .hero-title .accent { color:var(--primary); display:block; }
+    .hero-divider {
+      width:72px; height:3px; background:var(--primary); margin-bottom:24px;
+      animation: slideRight .7s ease .5s both;
+    }
+    .hero-sub {
+      font-size:1.1rem; font-weight:300; color:rgba(244,243,238,.65);
+      max-width:460px; line-height:1.7; margin-bottom:48px;
+      animation: fadeUp .7s ease .5s both;
+    }
+    .hero-actions {
+      display:flex; gap:16px; flex-wrap:wrap;
+      animation: fadeUp .7s ease .65s both;
+    }
+    .btn-primary {
+      background:var(--primary); color:#0A0A0A;
+      font-family:'Syne',sans-serif; font-weight:700; font-size:.88rem;
+      letter-spacing:.04em; text-transform:uppercase;
+      padding:16px 36px; text-decoration:none; display:inline-block;
+      clip-path: polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px));
+      transition: all .25s;
+    }
+    .btn-primary:hover { background:var(--primary-dark); transform:translateY(-2px); box-shadow:0 8px 28px rgba(245,166,35,.3); }
+    .btn-outline {
+      background:transparent; color:#F4F3EE;
+      font-family:'Syne',sans-serif; font-weight:600; font-size:.88rem;
+      letter-spacing:.04em; text-transform:uppercase;
+      padding:16px 36px; border:1px solid rgba(244,243,238,.28);
+      text-decoration:none; display:inline-block; transition: all .25s;
+    }
+    .btn-outline:hover { border-color:var(--primary); color:var(--primary); }
+    .hero-stats {
+      position:absolute; right:32px; bottom:80px; z-index:2;
+      display:flex; flex-direction:column; gap:24px;
+      animation: fadeUp .7s ease .8s both;
+    }
+    .stat-item { text-align:right; border-right:2px solid var(--primary); padding-right:16px; }
+    .stat-num { font-family:'Syne',sans-serif; font-weight:800; font-size:2rem; color:var(--primary); line-height:1; }
+    .stat-label { font-size:.68rem; letter-spacing:.1em; text-transform:uppercase; color:rgba(244,243,238,.45); font-weight:500; }
+
+    /* ── SECTION HELPERS ── */
+    section { position:relative; }
+    .section-tag {
+      font-size:.7rem; font-weight:600; letter-spacing:.15em; text-transform:uppercase;
+      color:var(--primary); margin-bottom:16px;
+      display:flex; align-items:center; gap:10px;
+    }
+    .section-tag::before { content:''; width:28px; height:2px; background:var(--primary); }
+
+    /* ── ABOUT ── */
+    .about-section { background:var(--bg-light); color:var(--text-dark); padding:100px 32px; overflow:hidden; }
+    .about-grid {
+      display:grid; grid-template-columns:1fr 1fr; gap:80px;
+      max-width:1100px; margin:0 auto; align-items:center;
+    }
+    .about-img-wrap { position:relative; }
+    .about-img-wrap img { width:100%; height:500px; object-fit:cover; display:block; }
+    .about-img-wrap::before {
+      content:''; position:absolute; top:-16px; left:-16px;
+      width:110px; height:110px;
+      border-top:4px solid var(--primary); border-left:4px solid var(--primary); z-index:1;
+    }
+    .about-img-wrap::after {
+      content:''; position:absolute; bottom:-16px; right:-16px;
+      width:72px; height:72px; background:var(--primary); z-index:-1;
+    }
+    .about-content .section-tag { color:var(--primary-dark); }
+    .about-content .section-tag::before { background:var(--primary-dark); }
+    .about-title {
+      font-family:'Syne',sans-serif; font-weight:800;
+      font-size:clamp(2rem,4vw,3.4rem); line-height:1.05;
+      letter-spacing:-.02em; color:var(--text-dark); margin-bottom:24px;
+    }
+    .about-title strong { color:var(--primary-dark); }
+    .about-text { font-size:1.05rem; line-height:1.8; color:#4A4A52; margin-bottom:20px; font-weight:300; }
+    .about-badges { display:flex; flex-wrap:wrap; gap:10px; margin-top:28px; }
+    .badge {
+      background:#0A0A0A; color:var(--primary);
+      font-family:'Syne',sans-serif; font-weight:700;
+      font-size:.7rem; letter-spacing:.08em; text-transform:uppercase;
+      padding:8px 16px;
+    }
+
+    /* ── COURSES ── */
+    .courses-section { background:var(--bg); padding:100px 32px; }
+    .courses-header { max-width:1100px; margin:0 auto 60px; }
+    .courses-title {
+      font-family:'Syne',sans-serif; font-weight:800;
+      font-size:clamp(2rem,5vw,4rem); line-height:1.0;
+      letter-spacing:-.03em; margin-bottom:12px;
+    }
+    .courses-title span { color:var(--primary); }
+    .courses-sub { font-size:1rem; font-weight:300; color:rgba(244,243,238,.5); max-width:380px; }
+    .courses-grid {
+      display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+      gap:2px; max-width:1100px; margin:0 auto;
+    }
+    .course-card {
+      background:var(--bg-card); padding:40px 32px;
+      position:relative; overflow:hidden; cursor:pointer;
+      transition: all .3s; border:1px solid rgba(255,255,255,.04);
+    }
+    .course-card::before {
+      content:''; position:absolute; bottom:0; left:0; right:0; height:3px;
+      background:var(--primary); transform:scaleX(0); transform-origin:left;
+      transition: transform .4s cubic-bezier(.4,0,.2,1);
+    }
+    .course-card:hover { background:#1A1A1A; transform:translateY(-4px); box-shadow:0 20px 60px rgba(0,0,0,.6); border-color:rgba(245,166,35,.2); }
+    .course-card:hover::before { transform:scaleX(1); }
+    .course-nr {
+      font-family:'Syne',sans-serif; font-weight:800; font-size:3rem;
+      color:rgba(245,166,35,.1); position:absolute; top:16px; right:24px;
+      letter-spacing:-.04em; line-height:1; transition:color .3s;
+    }
+    .course-card:hover .course-nr { color:rgba(245,166,35,.22); }
+    .course-icon {
+      width:48px; height:48px;
+      background:rgba(245,166,35,.08); border:1px solid rgba(245,166,35,.22);
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.4rem; margin-bottom:24px; transition:background .3s;
+    }
+    .course-card:hover .course-icon { background:rgba(245,166,35,.18); }
+    .course-name { font-family:'Syne',sans-serif; font-weight:700; font-size:1.1rem; color:#F4F3EE; margin-bottom:8px; letter-spacing:-.01em; }
+    .course-desc { font-size:.875rem; color:rgba(244,243,238,.48); line-height:1.65; font-weight:300; }
+    .course-cta {
+      display:flex; align-items:center; gap:8px; margin-top:24px;
+      font-family:'Syne',sans-serif; font-size:.76rem; font-weight:700;
+      letter-spacing:.08em; text-transform:uppercase; color:var(--primary);
+      opacity:0; transform:translateX(-8px); transition:all .3s;
+    }
+    .course-card:hover .course-cta { opacity:1; transform:translateX(0); }
+    .course-cta::after { content:'→'; transition:transform .2s; }
+    .course-card:hover .course-cta::after { transform:translateX(4px); }
+
+    /* ── MACHINES ── */
+    .machines-section { background:#0E0E0E; padding:100px 32px; overflow:hidden; }
+    .machines-inner { max-width:1100px; margin:0 auto; }
+    .machines-header {
+      display:flex; justify-content:space-between; align-items:flex-end;
+      margin-bottom:56px; flex-wrap:wrap; gap:24px;
+    }
+    .machines-title {
+      font-family:'Syne',sans-serif; font-weight:800;
+      font-size:clamp(2.2rem,5vw,4.2rem); line-height:1.0; letter-spacing:-.03em;
+    }
+    .machines-title .hl { color:var(--primary); display:block; }
+    .machines-desc { font-size:.95rem; font-weight:300; color:rgba(244,243,238,.45); max-width:260px; line-height:1.7; }
+    .machines-big-img {
+      width:100%; height:420px; object-fit:cover; display:block; margin-bottom:2px;
+      filter:brightness(.75) saturate(.85); transition:filter .4s;
+    }
+    .machines-big-img:hover { filter:brightness(.95) saturate(1); }
+    .machines-row { display:grid; grid-template-columns:repeat(4,1fr); gap:2px; }
+    .machine-card {
+      background:var(--bg-card); padding:28px 22px;
+      border:1px solid rgba(255,255,255,.04); transition:all .3s; cursor:pointer;
+    }
+    .machine-card:hover { background:#1C1C1C; border-color:rgba(245,166,35,.22); }
+    .machine-emoji { font-size:1.8rem; margin-bottom:12px; display:block; }
+    .machine-name { font-family:'Syne',sans-serif; font-weight:700; font-size:.92rem; color:#F4F3EE; margin-bottom:6px; }
+    .machine-detail { font-size:.76rem; color:rgba(244,243,238,.38); font-weight:300; }
+
+    /* ── DIFERENCIAIS ── */
+    .diff-section { background:var(--primary); padding:100px 32px; overflow:hidden; }
+    .diff-inner {
+      max-width:1100px; margin:0 auto;
+      display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center;
+    }
+    .diff-title {
+      font-family:'Syne',sans-serif; font-weight:800;
+      font-size:clamp(2.5rem,5vw,4.5rem); line-height:1.0;
+      letter-spacing:-.03em; color:#0A0A0A; margin-bottom:8px;
+    }
+    .diff-sub { font-size:1rem; color:rgba(10,10,10,.6); font-weight:400; margin-top:16px; }
+    .diff-list { display:flex; flex-direction:column; gap:0; }
+    .diff-item {
+      padding:24px 0; border-bottom:1px solid rgba(10,10,10,.15);
+      display:flex; align-items:flex-start; gap:20px;
+    }
+    .diff-item:first-child { border-top:1px solid rgba(10,10,10,.15); }
+    .diff-num {
+      font-family:'Syne',sans-serif; font-weight:800; font-size:.76rem;
+      color:rgba(10,10,10,.38); letter-spacing:.08em; min-width:28px; margin-top:4px;
+    }
+    .diff-item-title { font-family:'Syne',sans-serif; font-weight:700; font-size:1rem; color:#0A0A0A; margin-bottom:4px; }
+    .diff-item-desc { font-size:.875rem; color:rgba(10,10,10,.6); line-height:1.65; font-weight:300; }
+
+    /* ── CONTACT ── */
+    .contact-section { background:#080808; padding:100px 32px; border-top:1px solid rgba(255,255,255,.06); }
+    .contact-inner {
+      max-width:1100px; margin:0 auto;
+      display:grid; grid-template-columns:1.2fr 1fr; gap:80px; align-items:start;
+    }
+    .contact-title {
+      font-family:'Syne',sans-serif; font-weight:800;
+      font-size:clamp(2rem,4vw,3.5rem); line-height:1.05;
+      letter-spacing:-.02em; margin-bottom:16px;
+    }
+    .contact-title span { color:var(--primary); }
+    .contact-lead { font-size:1rem; font-weight:300; color:rgba(244,243,238,.5); line-height:1.7; margin-bottom:44px; }
+    .contact-info-list { display:flex; flex-direction:column; gap:20px; }
+    .contact-info-item { display:flex; align-items:flex-start; gap:16px; }
+    .contact-icon {
+      width:40px; height:40px;
+      background:rgba(245,166,35,.08); border:1px solid rgba(245,166,35,.22);
+      display:flex; align-items:center; justify-content:center;
+      font-size:1rem; flex-shrink:0;
+    }
+    .contact-info-label { font-size:.7rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--primary); margin-bottom:4px; }
+    .contact-info-val { font-size:.92rem; font-weight:300; color:rgba(244,243,238,.75); line-height:1.5; }
+    .wa-cta-big {
+      background:#25D366; color:#fff;
+      font-family:'Syne',sans-serif; font-weight:700; font-size:1rem;
+      letter-spacing:.03em; padding:20px 36px; text-decoration:none;
+      display:inline-flex; align-items:center; gap:12px;
+      margin-top:40px; transition:all .3s; width:100%; justify-content:center;
+    }
+    .wa-cta-big:hover { background:#1da851; transform:translateY(-2px); box-shadow:0 8px 32px rgba(37,211,102,.4); }
+    .hours-card {
+      background:var(--bg-card); padding:40px 32px;
+      border:1px solid rgba(255,255,255,.06);
+    }
+    .hours-title { font-family:'Syne',sans-serif; font-weight:700; font-size:.9rem; letter-spacing:.06em; text-transform:uppercase; color:var(--primary); margin-bottom:28px; }
+    .hours-row { display:flex; justify-content:space-between; align-items:center; padding:14px 0; border-bottom:1px solid rgba(255,255,255,.06); font-size:.875rem; }
+    .hours-day { color:rgba(244,243,238,.48); font-weight:300; }
+    .hours-time { font-family:'Syne',sans-serif; font-weight:600; font-size:.875rem; color:#F4F3EE; }
+    .hours-time.closed { color:rgba(244,243,238,.28); font-weight:300; }
+    .turmas-note { margin-top:32px; padding-top:24px; border-top:1px solid rgba(255,255,255,.06); }
+    .turmas-label { font-size:.7rem; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--primary); margin-bottom:12px; }
+    .turmas-text { font-size:.875rem; color:rgba(244,243,238,.55); line-height:1.7; font-weight:300; }
+
+    /* ── FOOTER ── */
+    footer {
+      background:#040404; padding:36px 32px;
+      border-top:1px solid rgba(255,255,255,.04);
+      display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;
+    }
+    .footer-logo { font-family:'Syne',sans-serif; font-weight:800; font-size:1rem; color:#F4F3EE; }
+    .footer-logo span { color:var(--primary); }
+    .footer-copy { font-size:.76rem; color:rgba(244,243,238,.28); font-weight:300; }
+
+    /* ── WHATSAPP FLOAT ── */
+    .wa-float {
+      position:fixed; bottom:28px; right:28px; z-index:999;
+      width:60px; height:60px; background:#25D366; border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      box-shadow:0 4px 20px rgba(37,211,102,.5);
+      animation: pulseWa 2.5s infinite; transition:transform .2s;
+      text-decoration:none;
+    }
+    .wa-float:hover { transform:scale(1.1); animation:none; box-shadow:0 6px 28px rgba(37,211,102,.6); }
+    .wa-float svg { width:30px; height:30px; fill:white; }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal { opacity:0; transform:translateY(28px); transition:opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+    .reveal-d1 { transition-delay:.1s; }
+    .reveal-d2 { transition-delay:.2s; }
+    .reveal-d3 { transition-delay:.3s; }
+    .reveal-d4 { transition-delay:.4s; }
+    .reveal-d5 { transition-delay:.5s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width:768px) {
+      nav { padding:16px 20px; }
+      .hero { padding:0 20px 56px; }
+      .hero-stats { position:relative; right:auto; bottom:auto; flex-direction:row; gap:28px; margin-top:48px; }
+      .stat-item { text-align:left; border-right:none; border-left:2px solid var(--primary); padding:0 0 0 12px; }
+      .about-section { padding:64px 20px; }
+      .about-grid { grid-template-columns:1fr; gap:36px; }
+      .about-img-wrap img { height:280px; }
+      .courses-section { padding:64px 20px; }
+      .courses-grid { grid-template-columns:1fr; }
+      .machines-section { padding:64px 20px; }
+      .machines-row { grid-template-columns:1fr 1fr; }
+      .machines-big-img { height:240px; }
+      .diff-section { padding:64px 20px; }
+      .diff-inner { grid-template-columns:1fr; gap:40px; }
+      .contact-section { padding:64px 20px; }
+      .contact-inner { grid-template-columns:1fr; gap:44px; }
+      footer { padding:28px 20px; flex-direction:column; align-items:flex-start; }
+    }
+    @media (max-width:480px) {
+      .machines-row { grid-template-columns:1fr; }
+      .hero-actions { flex-direction:column; }
+      .btn-primary, .btn-outline { width:100%; text-align:center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">CEN<span>MAR</span></div>
+  <a href="#contato" class="nav-cta">Falar com especialista</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="hero-bg">
+    <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1600&q=80" alt="Obra industrial" loading="eager">
+  </div>
+  <div class="hero-content">
+    <div class="hero-tag">Segurança do Trabalho &amp; Máquinas Pesadas</div>
+    <h1 class="hero-title">
+      CAPACITAÇÃO<br>
+      <span class="accent">QUE ABRE</span>
+      PORTAS
+    </h1>
+    <div class="hero-divider"></div>
+    <p class="hero-sub">
+      Treinamentos reconhecidos em segurança do trabalho e operação de máquinas pesadas.
+      Certificações que o mercado exige — desde a primeira aula.
+    </p>
+    <div class="hero-actions">
+      <a href="#cursos" class="btn-primary">Ver cursos</a>
+      <a href="#contato" class="btn-outline">Falar com especialista</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">+500</div>
+        <div class="stat-label">Certificados</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">15+</div>
+        <div class="stat-label">Cursos ativos</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">NR</div>
+        <div class="stat-label">Homologado</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section class="about-section" id="sobre">
+  <div class="about-grid">
+    <div class="about-img-wrap reveal">
+      <img src="https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=800&q=80" alt="Treinamento de segurança" loading="lazy">
+    </div>
+    <div class="about-content">
+      <div class="section-tag reveal">Sobre a CENMAR</div>
+      <h2 class="about-title reveal reveal-d1">
+        Formando profissionais <strong>prontos para o mercado</strong>
+      </h2>
+      <p class="about-text reveal reveal-d2">
+        A CENMAR é especializada em capacitação profissional na área de segurança do trabalho e operação de máquinas pesadas.
+        Nossos treinamentos seguem rigorosamente as normas regulamentadoras vigentes, garantindo certificações válidas e reconhecidas pelas principais empresas do setor.
+      </p>
+      <p class="about-text reveal reveal-d3">
+        Com instrutores experientes e estrutura completa, preparamos cada aluno para atuar com segurança, competência e profissionalismo no canteiro de obra, mineração, agronegócio e logística.
+      </p>
+      <div class="about-badges reveal reveal-d4">
+        <span class="badge">MTE Reconhecido</span>
+        <span class="badge">Turmas Práticas</span>
+        <span class="badge">Certificado Válido</span>
+        <span class="badge">Instrutores Experientes</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CURSOS NR -->
+<section class="courses-section" id="cursos">
+  <div class="courses-header">
+    <div class="section-tag reveal">Normas Regulamentadoras</div>
+    <h2 class="courses-title reveal reveal-d1">Treinamentos em<br><span>Segurança</span></h2>
+    <p class="courses-sub reveal reveal-d2">Cursos conforme as NRs do Ministério do Trabalho e Emprego.</p>
+  </div>
+  <div class="courses-grid">
+    <div class="course-card reveal">
+      <div class="course-nr">10</div>
+      <div class="course-icon">⚡</div>
+      <div class="course-name">NR-10 — Eletricidade</div>
+      <div class="course-desc">Segurança em instalações e serviços em eletricidade. Obrigatório para trabalhadores que operam em sistemas elétricos de qualquer tensão.</div>
+      <div class="course-cta">Matricular</div>
+    </div>
+    <div class="course-card reveal reveal-d1">
+      <div class="course-nr">12</div>
+      <div class="course-icon">⚙️</div>
+      <div class="course-name">NR-12 — Máquinas</div>
+      <div class="course-desc">Segurança no trabalho em máquinas e equipamentos. Prevenção de acidentes e proteção coletiva em ambientes industriais.</div>
+      <div class="course-cta">Matricular</div>
+    </div>
+    <div class="course-card reveal reveal-d2">
+      <div class="course-nr">18</div>
+      <div class="course-icon">🏗️</div>
+      <div class="course-name">NR-18 — Construção Civil</div>
+      <div class="course-desc">Condições e meio ambiente de trabalho na indústria da construção. Normas essenciais para todo profissional do canteiro de obras.</div>
+      <div class="course-cta">Matricular</div>
+    </div>
+    <div class="course-card reveal reveal-d3">
+      <div class="course-nr">33</div>
+      <div class="course-icon">🕳️</div>
+      <div class="course-name">NR-33 — Espaço Confinado</div>
+      <div class="course-desc">Segurança em espaços confinados. Habilitação para supervisão de entrada, vigilante e trabalhador autorizado.</div>
+      <div class="course-cta">Matricular</div>
+    </div>
+    <div class="course-card reveal reveal-d4">
+      <div class="course-nr">35</div>
+      <div class="course-icon">🪜</div>
+      <div class="course-name">NR-35 — Trabalho em Altura</div>
+      <div class="course-desc">Atividades a partir de 2m do nível inferior. Treinamento teórico e prático com uso de EPI e ancoragem.</div>
+      <div class="course-cta">Matricular</div>
+    </div>
+    <div class="course-card reveal reveal-d5">
+      <div class="course-nr">20</div>
+      <div class="course-icon">🔥</div>
+      <div class="course-name">NR-20 — Inflamáveis</div>
+      <div class="course-desc">Segurança com inflamáveis e combustíveis. Classificação, armazenamento correto e procedimentos de emergência.</div>
+      <div class="course-cta">Matricular</div>
+    </div>
+  </div>
+</section>
+
+<!-- MÁQUINAS PESADAS -->
+<section class="machines-section" id="maquinas">
+  <div class="machines-inner">
+    <div class="machines-header">
+      <div>
+        <div class="section-tag reveal">Operação Profissional</div>
+        <h2 class="machines-title reveal reveal-d1">MÁQUINAS<br><span class="hl">PESADAS</span></h2>
+      </div>
+      <p class="machines-desc reveal reveal-d2">
+        Habilitação profissional para operar os equipamentos mais demandados no mercado de trabalho brasileiro.
+      </p>
+    </div>
+    <img
+      src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=1400&q=80"
+      alt="Escavadeira em operação"
+      class="machines-big-img reveal"
+      loading="lazy"
+    >
+    <div class="machines-row">
+      <div class="machine-card reveal">
+        <span class="machine-emoji">🚜</span>
+        <div class="machine-name">Escavadeira Hidráulica</div>
+        <div class="machine-detail">Operação, manutenção básica e segurança</div>
+      </div>
+      <div class="machine-card reveal reveal-d1">
+        <span class="machine-emoji">🏗️</span>
+        <div class="machine-name">Retroescavadeira</div>
+        <div class="machine-detail">Técnicas de escavação e carregamento</div>
+      </div>
+      <div class="machine-card reveal reveal-d2">
+        <span class="machine-emoji">🚛</span>
+        <div class="machine-name">Pá-Carregadeira</div>
+        <div class="machine-detail">Movimentação e carregamento de materiais</div>
+      </div>
+      <div class="machine-card reveal reveal-d3">
+        <span class="machine-emoji">⛏️</span>
+        <div class="machine-name">Motoniveladora</div>
+        <div class="machine-detail">Nivelamento e conformação de terreno</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIFERENCIAIS -->
+<section class="diff-section" id="diferenciais">
+  <div class="diff-inner">
+    <div>
+      <div style="font-size:.7rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;color:rgba(10,10,10,.55);display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+        <span style="width:28px;height:2px;background:rgba(10,10,10,.4);display:inline-block;"></span>
+        Por que escolher
+      </div>
+      <h2 class="diff-title reveal">A CENMAR<br>É DIFERENTE</h2>
+      <p class="diff-sub reveal reveal-d1">
+        Não somos mais uma escola — somos referência em capacitação industrial e de segurança na região.
+      </p>
+    </div>
+    <div class="diff-list">
+      <div class="diff-item reveal">
+        <span class="diff-num">01</span>
+        <div>
+          <div class="diff-item-title">Instrutores do mercado real</div>
+          <div class="diff-item-desc">Profissionais ativos com mais de 10 anos de experiência em obras, mineração e indústria — não apenas teóricos.</div>
+        </div>
+      </div>
+      <div class="diff-item reveal reveal-d1">
+        <span class="diff-num">02</span>
+        <div>
+          <div class="diff-item-title">Aulas 100% práticas</div>
+          <div class="diff-item-desc">Equipamentos reais, simulações de campo e EPIs fornecidos durante o treinamento. Nada de só teoria.</div>
+        </div>
+      </div>
+      <div class="diff-item reveal reveal-d2">
+        <span class="diff-num">03</span>
+        <div>
+          <div class="diff-item-title">Certificado reconhecido</div>
+          <div class="diff-item-desc">Documentação conforme normas MTE, aceita nas principais construtoras, mineradoras e indústrias do país.</div>
+        </div>
+      </div>
+      <div class="diff-item reveal reveal-d3">
+        <span class="diff-num">04</span>
+        <div>
+          <div class="diff-item-title">Turmas reduzidas</div>
+          <div class="diff-item-desc">Atendimento individualizado para garantir que cada aluno esteja completamente preparado para atuar com segurança.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section class="contact-section" id="contato">
+  <div class="contact-inner">
+    <div>
+      <div class="section-tag reveal">Entre em contato</div>
+      <h2 class="contact-title reveal reveal-d1">PRONTO PARA<br>SE <span>CERTIFICAR</span>?</h2>
+      <p class="contact-lead reveal reveal-d2">
+        Entre em contato pelo WhatsApp e saiba tudo sobre datas, valores e como garantir sua vaga no próximo treinamento.
+      </p>
+      <div class="contact-info-list">
+        <div class="contact-info-item reveal reveal-d3">
+          <div class="contact-icon">📍</div>
+          <div>
+            <div class="contact-info-label">Localização</div>
+            <div class="contact-info-val">Consulte o endereço via WhatsApp</div>
+          </div>
+        </div>
+        <div class="contact-info-item reveal reveal-d4">
+          <div class="contact-icon">📱</div>
+          <div>
+            <div class="contact-info-label">WhatsApp</div>
+            <div class="contact-info-val">Resposta rápida — fale agora com nossa equipe</div>
+          </div>
+        </div>
+        <div class="contact-info-item reveal reveal-d5">
+          <div class="contact-icon">📋</div>
+          <div>
+            <div class="contact-info-label">Matrículas</div>
+            <div class="contact-info-val">Novas turmas formadas por demanda. Garanta sua vaga antecipadamente.</div>
+          </div>
+        </div>
+      </div>
+      <a href="https://wa.me/55" target="_blank" rel="noopener" class="wa-cta-big reveal">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="white">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        Falar no WhatsApp agora
+      </a>
+    </div>
+    <div>
+      <div class="hours-card reveal">
+        <div class="hours-title">⏰ Horários de atendimento</div>
+        <div class="hours-row">
+          <span class="hours-day">Segunda a Sexta</span>
+          <span class="hours-time">08:00 – 18:00</span>
+        </div>
+        <div class="hours-row">
+          <span class="hours-day">Sábado</span>
+          <span class="hours-time">08:00 – 12:00</span>
+        </div>
+        <div class="hours-row" style="border-bottom:none;">
+          <span class="hours-day">Domingo</span>
+          <span class="hours-time closed">Fechado</span>
+        </div>
+        <div class="turmas-note">
+          <div class="turmas-label">Próximas turmas</div>
+          <div class="turmas-text">
+            Novas turmas formadas conforme demanda.<br>
+            Entre em contato via WhatsApp para verificar<br>
+            disponibilidade e garantir sua vaga.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">CEN<span>MAR</span> Cursos e Treinamentos</div>
+  <div class="footer-copy">© 2025 CENMAR. Todos os direitos reservados.</div>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/55" target="_blank" rel="noopener" class="wa-float" aria-label="Fale no WhatsApp">
+  <svg viewBox="0 0 24 24">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+
+<script>
+  // Scroll reveal
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  // Nav border on scroll
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    nav.style.borderBottomColor = window.scrollY > 50
+      ? 'rgba(245,166,35,.12)'
+      : 'rgba(245,166,35,.2)';
+  });
+</script>
+</body>
+</html>
