@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Douglas do Reco — Cantor</title>
+  <meta name="description" content="Douglas do Reco — cantor de raízes brasileiras. Shows, músicas e contato.">
+  <meta property="og:title" content="Douglas do Reco — Cantor">
+  <meta property="og:description" content="Música de raiz com alma. Shows e contato.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎵</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,400;1,9..144,700;1,9..144,900&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0A0807;
+      --surface: #141210;
+      --surface2: #1E1A16;
+      --primary: #C9913A;
+      --accent: #F0B429;
+      --text: #F2EDE4;
+      --muted: #8A7E74;
+      --border: rgba(201,145,58,0.18);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 20px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(to bottom, rgba(10,8,7,0.95) 0%, transparent 100%);
+    }
+
+    .nav-logo {
+      font-family: 'Fraunces', serif;
+      font-weight: 900;
+      font-size: 1.1rem;
+      letter-spacing: 0.04em;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.82rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+    }
+
+    /* ─── HERO ─── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 32px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 80% at 50% 0%, rgba(201,145,58,0.22) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 50% at 20% 100%, rgba(201,145,58,0.1) 0%, transparent 60%),
+        var(--bg);
+    }
+
+    .hero-noise {
+      position: absolute;
+      inset: 0;
+      opacity: 0.04;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+    }
+
+    .hero-line-top {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(to right, transparent, var(--primary), transparent);
+      opacity: 0;
+      animation: fadeIn 1.2s ease 0.3s forwards;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 900px;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: slideUp 0.8s ease 0.4s forwards;
+    }
+
+    .hero-title {
+      font-family: 'Fraunces', serif;
+      font-weight: 900;
+      font-size: clamp(3.8rem, 10vw, 8.5rem);
+      line-height: 0.92;
+      letter-spacing: -0.02em;
+      overflow: hidden;
+    }
+
+    .hero-title-line {
+      display: block;
+      opacity: 0;
+      clip-path: inset(0 0 100% 0);
+      animation: revealLine 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .hero-title-line:nth-child(1) { animation-delay: 0.55s; }
+    .hero-title-line:nth-child(2) {
+      animation-delay: 0.75s;
+      font-style: italic;
+      color: var(--primary);
+      font-size: clamp(4.2rem, 11vw, 9.5rem);
+    }
+
+    .hero-sub {
+      margin-top: 36px;
+      font-size: 1.05rem;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+      max-width: 400px;
+      line-height: 1.7;
+      opacity: 0;
+      animation: slideUp 0.8s ease 1.2s forwards;
+    }
+
+    .hero-cta {
+      margin-top: 48px;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: slideUp 0.8s ease 1.4s forwards;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      padding: 16px 36px;
+      background: var(--primary);
+      color: #0A0807;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 500;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.3s, transform 0.3s;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .btn-ghost {
+      display: inline-block;
+      padding: 16px 36px;
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 400;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: border-color 0.3s, color 0.3s;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 40px;
+      right: 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      animation: fadeIn 1s ease 2s forwards;
+    }
+
+    .hero-scroll span {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      writing-mode: vertical-rl;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, var(--primary), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    /* ─── SECTION BASE ─── */
+    section {
+      padding: 100px 32px;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 16px;
+    }
+
+    /* ─── ABOUT ─── */
+    #sobre {
+      background: var(--surface);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #sobre::before {
+      content: '';
+      position: absolute;
+      top: -2px; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(to right, var(--primary), transparent);
+    }
+
+    .sobre-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    @media (max-width: 768px) {
+      .sobre-inner { grid-template-columns: 1fr; gap: 48px; }
+    }
+
+    .sobre-visual {
+      position: relative;
+    }
+
+    .sobre-photo-frame {
+      aspect-ratio: 3/4;
+      background: var(--surface2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sobre-photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .sobre-photo-frame::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(201,145,58,0.15) 0%, transparent 60%);
+    }
+
+    .sobre-accent-line {
+      position: absolute;
+      bottom: -24px;
+      right: -24px;
+      width: 80px;
+      height: 80px;
+      border-right: 2px solid var(--primary);
+      border-bottom: 2px solid var(--primary);
+    }
+
+    .sobre-number {
+      position: absolute;
+      top: -24px;
+      left: -16px;
+      font-family: 'Fraunces', serif;
+      font-weight: 900;
+      font-size: 7rem;
+      line-height: 1;
+      color: var(--primary);
+      opacity: 0.08;
+      pointer-events: none;
+    }
+
+    .sobre-text h2 {
+      font-family: 'Fraunces', serif;
+      font-weight: 900;
+      font-size: clamp(2.4rem, 5vw, 3.6rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 32px;
+    }
+
+    .sobre-text h2 em {
+      font-style: italic;
+      color: var(--primary);
+    }
+
+    .sobre-text p {
+      font-size: 1rem;
+      line-height: 1.85;
+      color: var(--muted);
+      margin-bottom: 20px;
+    }
+
+    .sobre-stats {
+      display: flex;
+      gap: 40px;
+      margin-top: 48px;
+      padding-top: 40px;
+      border-top: 1px solid var(--border);
+    }
+
+    .stat-item strong {
+      display: block;
+      font-family: 'Fraunces', serif;
+      font-weight: 900;
+      font-size: 2.4rem;
+      color: var(--primary);
+      line-height: 1;
+    }
+
+    .stat-item span {
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-top: 6px;
+      display: block;
+    }
+
+    /* ─── MÚSICA ─── */
+    #musica {
+      background: var(--bg);
+    }
+
+    .musica-header {
+      max-width: 1100px;
+      margin: 0 auto 64px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    @media (max-width: 600px) {
+      .musica-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+    }
+
+    .musica-title {
+      font-family: 'Fraunces', serif;
+      font-weight: 900;
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+    }
+
+    .musica-title em {
+      font-style: italic;
+      color: var(--primary);
+    }
+
+    .musica-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    @media (max-width: 768px) {
+      .musica-grid { grid-template-columns: 1fr; }
+    }
+
+    .musica-card {
+      background: var(--surface);
+      padding: 40px 32px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.4s;
+    }
+
+    .musica-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      height: 2px;
+      width: 0;
+      background: var(--primary);
+      transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .musica-card:hover { background: var(--surface2); }
+    .musica-card:hover::before { width: 100%; }
+
+    .musica-card-icon {
+      font-size: 2rem;
+      margin-bottom: 24px;
+      display: block;
+    }
+
+    .musica-card h3 {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-size: 1.4rem;
+      margin-bottom: 16px;
+      letter-spacing: -0.01em;
+    }
+
+    .musica-card p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ─── GALERIA ─── */
+    #galeria {
+      background: var(--surface);
+      padding: 100px 32px;
+    }
+
+    .galeria-header {
+      max-width: 1100px;
+      margin: 0 auto 48px;
+    }
+
+    .galeria-title {
+      font-family: 'Fraunces', serif;
+      font-weight: 900;
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+    }
+
+    .galeria-bento {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: repeat(2, 280px);
+      gap: 6px;
+    }
+
+    @media (max-width: 768px) {
+      .galeria-bento {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, 200px);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .galeria-bento {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+      }
+    }
+
+    .bento-item {
+      background: var(--surface2);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .bento-item:first-child {
+      grid-column: span 2;
+    }
+
+    .bento-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      filter: saturate(0.7);
+    }
+
+    .bento-item:hover img {
+      transform: scale(1.05);
+      filter: saturate(1);
+    }
+
+    .bento-item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(10,8,7,0.5) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    /* ─── SHOWS ─── */
+    #shows {
+      background: var(--bg);
+      padding: 100px 32px;
+    }
+
+    .shows-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .shows-title {
+      font-family: 'Fraunces', serif;
+      font-weight: 900;
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      margin-bottom: 64px;
+    }
+
+    .shows-title em {
+      font-style: italic;
+      color: var(--primary);
+    }
+
+    .shows-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .show-item {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      padding: 32px 0;
+      border-top: 1px solid var(--border);
+      transition: padding 0.3s;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .show-item:last-child { border-bottom: 1px solid var(--border); }
+
+    .show-item:hover { padding-left: 16px; }
+
+    .show-date {
+      min-width: 80px;
+      text-align: center;
+    }
+
+    .show-date .day {
+      font-family: 'Fraunces', serif;
+      font-weight: 900;
+      font-size: 2.4rem;
+      color: var(--primary);
+      line-height: 1;
+    }
+
+    .show-date .month {
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .show-divider {
+      width: 1px;
+      height: 48px;
+      background: var(--border);
+    }
+
+    .show-info h3 {
+      font-size: 1.1rem;
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+
+    .show-info p {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .show-cta {
+      margin-left: auto;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--primary);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .show-item:hover .show-cta { opacity: 1; }
+
+    /* ─── CONTATO ─── */
+    #contato {
+      background: var(--surface);
+      padding: 120px 32px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #contato::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--primary), transparent);
+    }
+
+    .contato-bg-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Fraunces', serif;
+      font-weight: 900;
+      font-size: clamp(8rem, 20vw, 18rem);
+      color: var(--primary);
+      opacity: 0.03;
+      pointer-events: none;
+      white-space: nowrap;
+      letter-spacing: -0.04em;
+    }
+
+    .contato-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .contato-inner h2 {
+      font-family: 'Fraunces', serif;
+      font-weight: 900;
+      font-size: clamp(2.6rem, 6vw, 4.8rem);
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      margin-bottom: 24px;
+    }
+
+    .contato-inner h2 em {
+      font-style: italic;
+      color: var(--primary);
+    }
+
+    .contato-inner p {
+      font-size: 1.05rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 48px;
+    }
+
+    .btn-whatsapp {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 20px 48px;
+      background: #25D366;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      letter-spacing: 0.04em;
+      transition: transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 0 40px rgba(37,211,102,0.25);
+    }
+
+    .btn-whatsapp:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 50px rgba(37,211,102,0.4);
+    }
+
+    .btn-whatsapp svg {
+      width: 22px;
+      height: 22px;
+      fill: currentColor;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--bg);
+      padding: 40px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 600px) {
+      footer { flex-direction: column; gap: 16px; text-align: center; }
+    }
+
+    .footer-logo {
+      font-family: 'Fraunces', serif;
+      font-weight: 900;
+      font-size: 1.2rem;
+      color: var(--primary);
+    }
+
+    .footer-copy {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    /* ─── WHATSAPP FLOAT ─── */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 999;
+      width: 60px;
+      height: 60px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.45);
+      text-decoration: none;
+      animation: waPulse 3s ease-in-out infinite;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .whatsapp-float:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 30px rgba(37,211,102,0.6);
+      animation: none;
+    }
+
+    .whatsapp-float svg {
+      width: 28px;
+      height: 28px;
+      fill: white;
+    }
+
+    /* ─── REVEAL ANIMATION ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ─── KEYFRAMES ─── */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes revealLine {
+      from {
+        opacity: 0;
+        clip-path: inset(0 0 100% 0);
+      }
+      to {
+        opacity: 1;
+        clip-path: inset(0 0 0% 0);
+      }
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { transform: scaleY(1); opacity: 1; }
+      50% { transform: scaleY(0.5); opacity: 0.4; }
+    }
+
+    @keyframes waPulse {
+      0%, 100% { box-shadow: 0 4px 20px rgba(37,211,102,0.45); }
+      50% { box-shadow: 0 4px 40px rgba(37,211,102,0.75); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="nav-logo">Douglas do Reco</a>
+    <ul class="nav-links">
+      <li><a href="#sobre">Sobre</a></li>
+      <li><a href="#musica">Música</a></li>
+      <li><a href="#shows">Shows</a></li>
+      <li><a href="#contato">Contato</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-noise"></div>
+    <div class="hero-line-top"></div>
+
+    <div class="hero-content">
+      <p class="hero-eyebrow">Cantor · Raízes Brasileiras</p>
+      <h1 class="hero-title">
+        <span class="hero-title-line">Douglas</span>
+        <span class="hero-title-line">do Reco</span>
+      </h1>
+      <p class="hero-sub">Música que vem do chão, que faz tremer o coração. Shows, emoção e muita raiz.</p>
+      <div class="hero-cta">
+        <a href="#shows" class="btn-primary">Ver Shows</a>
+        <a href="#contato" class="btn-ghost">Falar com Douglas</a>
+      </div>
+    </div>
+
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- SOBRE -->
+  <section id="sobre">
+    <div class="sobre-inner">
+      <div class="sobre-visual reveal">
+        <div class="sobre-number">01</div>
+        <div class="sobre-photo-frame">
+          <img
+            src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=600&h=800&fit=crop&crop=face"
+            alt="Douglas do Reco"
+            loading="lazy"
+          >
+        </div>
+        <div class="sobre-accent-line"></div>
+      </div>
+      <div class="sobre-text">
+        <p class="section-label reveal">Quem é</p>
+        <h2 class="reveal reveal-delay-1">
+          Alma de palco,<br>voz de <em>raiz</em>
+        </h2>
+        <p class="reveal reveal-delay-2">
+          Douglas do Reco é um cantor apaixonado pela música brasileira de raíz. Com uma voz marcante e presença de palco inconfundível, ele leva emoção e autenticidade em cada apresentação.
+        </p>
+        <p class="reveal reveal-delay-3">
+          Nascido para o palco, Douglas conquista seu público com repertório que celebra as mais belas tradições da música popular brasileira — do forró ao sertanejo de raiz, sempre com o coração na mão.
+        </p>
+        <div class="sobre-stats reveal reveal-delay-4">
+          <div class="stat-item">
+            <strong>+200</strong>
+            <span>Shows realizados</span>
+          </div>
+          <div class="stat-item">
+            <strong>10+</strong>
+            <span>Anos de estrada</span>
+          </div>
+          <div class="stat-item">
+            <strong>∞</strong>
+            <span>Paixão pela música</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MÚSICA -->
+  <section id="musica">
+    <div class="musica-header reveal">
+      <div>
+        <p class="section-label">O que você vai ouvir</p>
+        <h2 class="musica-title">Estilos &amp; <em>Repertório</em></h2>
+      </div>
+    </div>
+    <div class="musica-grid">
+      <div class="musica-card reveal">
+        <span class="musica-card-icon">🪗</span>
+        <h3>Forró de Raiz</h3>
+        <p>Os clássicos que todo brasileiro conhece de cor. Do Luiz Gonzaga ao forró pé de serra com sanfona, zabumba e triângulo.</p>
+      </div>
+      <div class="musica-card reveal reveal-delay-1">
+        <span class="musica-card-icon">🤠</span>
+        <h3>Sertanejo Raiz</h3>
+        <p>Aquela música que fala de saudade, de estrada e de amor. Repertório que atravessa gerações com emoção genuína.</p>
+      </div>
+      <div class="musica-card reveal reveal-delay-2">
+        <span class="musica-card-icon">🎵</span>
+        <h3>MPB &amp; Sofrência</h3>
+        <p>As canções que deixam a plateia no silêncio total ou em coro. Interpretação com alma e entrega total no palco.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALERIA -->
+  <section id="galeria">
+    <div class="galeria-header reveal">
+      <p class="section-label">Momentos</p>
+      <h2 class="galeria-title">No palco &amp;<br>nos bastidores</h2>
+    </div>
+    <div class="galeria-bento">
+      <div class="bento-item reveal">
+        <img
+          src="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=800&h=560&fit=crop"
+          alt="Show ao vivo"
+          loading="lazy"
+        >
+      </div>
+      <div class="bento-item reveal reveal-delay-1">
+        <img
+          src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=400&h=560&fit=crop"
+          alt="Douglas no palco"
+          loading="lazy"
+        >
+      </div>
+      <div class="bento-item reveal reveal-delay-2">
+        <img
+          src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=400&h=280&fit=crop"
+          alt="Plateia"
+          loading="lazy"
+        >
+      </div>
+      <div class="bento-item reveal reveal-delay-3">
+        <img
+          src="https://images.unsplash.com/photo-1415201364774-f6f0bb35f28f?w=400&h=280&fit=crop"
+          alt="Ensaio"
+          loading="lazy"
+        >
+      </div>
+      <div class="bento-item reveal reveal-delay-4">
+        <img
+          src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&h=280&fit=crop"
+          alt="Bastidores"
+          loading="lazy"
+        >
+      </div>
+    </div>
+  </section>
+
+  <!-- SHOWS -->
+  <section id="shows">
+    <div class="shows-inner">
+      <p class="section-label reveal">Agenda</p>
+      <h2 class="shows-title reveal">Próximos <em>Shows</em></h2>
+      <div class="shows-list">
+        <div class="show-item reveal">
+          <div class="show-date">
+            <div class="day">10</div>
+            <div class="month">Maio</div>
+          </div>
+          <div class="show-divider"></div>
+          <div class="show-info">
+            <h3>Festa Junina do Bairro</h3>
+            <p>Quadra principal · Portão aberto às 19h</p>
+          </div>
+          <span class="show-cta">Reservar →</span>
+        </div>
+        <div class="show-item reveal reveal-delay-1">
+          <div class="show-date">
+            <div class="day">24</div>
+            <div class="month">Maio</div>
+          </div>
+          <div class="show-divider"></div>
+          <div class="show-info">
+            <h3>Show Especial — Dia das Mães</h3>
+            <p>Bar &amp; Restaurante · Às 20h</p>
+          </div>
+          <span class="show-cta">Reservar →</span>
+        </div>
+        <div class="show-item reveal reveal-delay-2">
+          <div class="show-date">
+            <div class="day">14</div>
+            <div class="month">Jun</div>
+          </div>
+          <div class="show-divider"></div>
+          <div class="show-info">
+            <h3>São João — Forró na Praça</h3>
+            <p>Praça Central · Gratuito</p>
+          </div>
+          <span class="show-cta">Reservar →</span>
+        </div>
+        <div class="show-item reveal reveal-delay-3">
+          <div class="show-date">
+            <div class="day">29</div>
+            <div class="month">Jun</div>
+          </div>
+          <div class="show-divider"></div>
+          <div class="show-info">
+            <h3>Festival de Verão</h3>
+            <p>Arena ao ar livre · Ingressos limitados</p>
+          </div>
+          <span class="show-cta">Reservar →</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTATO -->
+  <section id="contato">
+    <div class="contato-bg-text">Reco</div>
+    <div class="contato-inner">
+      <p class="section-label reveal">Fale comigo</p>
+      <h2 class="reveal reveal-delay-1">Quer me <em>contratar?</em></h2>
+      <p class="reveal reveal-delay-2">
+        Para shows, eventos, festas e casamentos — entre em contato diretamente pelo WhatsApp e vamos conversar sobre a sua festa!
+      </p>
+      <a
+        href="https://wa.me/55119999999999"
+        class="btn-whatsapp reveal reveal-delay-3"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        Chamar no WhatsApp
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Douglas do Reco</div>
+    <p class="footer-copy">© 2026 · Todos os direitos reservados</p>
+  </footer>
+
+  <!-- WHATSAPP FLOAT -->
+  <a
+    href="https://wa.me/55119999999999"
+    class="whatsapp-float"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="WhatsApp"
+  >
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+
+  <script>
+    // Scroll reveal
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+    revealEls.forEach(el => observer.observe(el));
+
+    // Show items link to WhatsApp
+    document.querySelectorAll('.show-item').forEach(item => {
+      item.style.cursor = 'pointer';
+      item.addEventListener('click', () => {
+        window.open('https://wa.me/55119999999999', '_blank');
+      });
+    });
+  </script>
+</body>
+</html>
