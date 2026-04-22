@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eneas Arte Móveis Planejados | Marcenaria Sob Medida</title>
+  <meta name="description" content="Eneas Arte Móveis Planejados — Transformamos madeira em arte. Cozinhas, dormitórios, escritórios e mais sob medida. Solicite seu orçamento pelo WhatsApp.">
+  <meta property="og:title" content="Eneas Arte Móveis Planejados">
+  <meta property="og:description" content="Móveis planejados sob medida com qualidade e elegância. Solicite seu orçamento.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪵</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary:    #1A110A;
+      --accent:     #C9963A;
+      --wood:       #6B3F1F;
+      --bg:         #F6F3EE;
+      --bg-dark:    #120C07;
+      --text:       #1A110A;
+      --text-muted: #8C7B6E;
+      --text-light: #F6F3EE;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(18, 12, 7, 0.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(201,150,58,0.12);
+    }
+    .nav-logo {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--accent);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .nav-logo em {
+      font-style: italic;
+      font-weight: 300;
+      color: rgba(246,243,238,0.5);
+    }
+    .nav-cta {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-decoration: none;
+      border: 1px solid rgba(201,150,58,0.5);
+      padding: 0.5rem 1.1rem;
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+    .nav-cta:hover { background: var(--accent); color: var(--primary); }
+
+    /* ─── HERO ─── */
+    #hero {
+      min-height: 100svh;
+      background: var(--bg-dark);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 2rem 1.5rem 3.5rem;
+      overflow: hidden;
+    }
+    .hero-bg-img {
+      position: absolute;
+      inset: 0;
+      background: url('https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1400&q=80') center/cover no-repeat;
+      opacity: 0.16;
+    }
+    .hero-noise {
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      opacity: 1;
+      pointer-events: none;
+    }
+    .hero-gradient {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 75%;
+      background: linear-gradient(to top, var(--bg-dark) 25%, transparent);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      position: relative;
+      z-index: 2;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      opacity: 0;
+      transform: translateY(18px);
+      animation: fadeUp 0.8s 0.25s ease forwards;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 2.5rem;
+      height: 1px;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+    .hero-headline {
+      position: relative;
+      z-index: 2;
+      margin-bottom: 1.5rem;
+    }
+    .hl-big {
+      font-family: 'Fraunces', serif;
+      font-weight: 900;
+      font-size: clamp(4rem, 20vw, 10rem);
+      line-height: 0.86;
+      color: var(--bg);
+      display: block;
+      opacity: 0;
+      transform: translateY(50px);
+      animation: fadeUp 1s 0.4s cubic-bezier(0.16,1,0.3,1) forwards;
+    }
+    .hl-big:nth-child(2) { animation-delay: 0.52s; }
+    .hl-sub {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(1.6rem, 7vw, 3.5rem);
+      line-height: 1.15;
+      color: var(--accent);
+      display: block;
+      margin-top: 0.25rem;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 0.9s 0.65s ease forwards;
+    }
+    .hero-body {
+      position: relative;
+      z-index: 2;
+      font-size: 0.875rem;
+      font-weight: 400;
+      color: rgba(246,243,238,0.5);
+      line-height: 1.7;
+      max-width: 30rem;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      transform: translateY(18px);
+      animation: fadeUp 0.8s 0.8s ease forwards;
+    }
+    .hero-actions {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      gap: 0.875rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      transform: translateY(18px);
+      animation: fadeUp 0.8s 0.95s ease forwards;
+    }
+    .btn-gold {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--accent);
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 1rem 1.75rem;
+      border-radius: 2px;
+      min-height: 52px;
+      transition: all 0.3s;
+    }
+    .btn-gold:hover {
+      background: #dfa83f;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(201,150,58,0.35);
+    }
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: 1px solid rgba(246,243,238,0.25);
+      color: rgba(246,243,238,0.7);
+      font-weight: 500;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 1rem 1.75rem;
+      border-radius: 2px;
+      min-height: 52px;
+      transition: all 0.3s;
+    }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* scroll indicator */
+    .hero-scroll {
+      position: absolute;
+      bottom: 2rem;
+      right: 1.5rem;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      opacity: 0;
+      animation: fadeIn 1s 1.4s forwards;
+    }
+    .hero-scroll span {
+      font-size: 0.55rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(246,243,238,0.25);
+      writing-mode: vertical-rl;
+    }
+    .scroll-bar {
+      width: 1px;
+      height: 3.5rem;
+      background: linear-gradient(to bottom, rgba(201,150,58,0.7), transparent);
+      animation: scrollAnim 2.2s 1.8s infinite;
+    }
+
+    /* ─── SECTION COMMONS ─── */
+    section { padding: 5rem 1.5rem; }
+
+    .tag {
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    .tag::before {
+      content: '';
+      display: block;
+      width: 1.5rem;
+      height: 1px;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+    .section-h2 {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      line-height: 1.05;
+      margin-bottom: 2rem;
+    }
+    .italic-light {
+      font-style: italic;
+      font-weight: 300;
+    }
+
+    /* ─── ABOUT ─── */
+    #sobre { background: var(--bg); }
+    .about-wrap {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+    .about-visual {
+      position: relative;
+    }
+    .about-img {
+      width: 100%;
+      height: 22rem;
+      object-fit: cover;
+      border-radius: 2px;
+      display: block;
+    }
+    .about-frame {
+      position: absolute;
+      bottom: -1rem;
+      right: -0.75rem;
+      width: 55%;
+      height: 45%;
+      border: 2px solid var(--accent);
+      border-radius: 2px;
+      pointer-events: none;
+    }
+    .about-badge {
+      position: absolute;
+      top: 1.5rem;
+      left: 1.5rem;
+      background: var(--accent);
+      color: var(--primary);
+      font-family: 'Fraunces', serif;
+      font-weight: 900;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.5rem 0.875rem;
+      border-radius: 2px;
+    }
+    blockquote.pull {
+      border-left: 3px solid var(--accent);
+      padding-left: 1.25rem;
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+      margin-bottom: 1.25rem;
+    }
+    .about-body {
+      font-size: 0.9rem;
+      line-height: 1.85;
+      color: #4A3728;
+      margin-bottom: 1rem;
+    }
+    .about-stats {
+      display: flex;
+      gap: 2.5rem;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(26,17,10,0.08);
+    }
+    .stat-num {
+      font-family: 'Fraunces', serif;
+      font-weight: 900;
+      font-size: 3rem;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 0.25rem;
+    }
+
+    /* ─── SERVICES ─── */
+    #servicos {
+      background: var(--primary);
+    }
+    #servicos .tag { color: rgba(201,150,58,0.7); }
+    #servicos .tag::before { background: rgba(201,150,58,0.4); }
+    #servicos .section-h2 { color: var(--bg); }
+    .services-intro {
+      font-size: 0.9rem;
+      color: rgba(246,243,238,0.45);
+      line-height: 1.7;
+      max-width: 28rem;
+      margin-bottom: 3rem;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1px;
+      background: rgba(201,150,58,0.08);
+      border: 1px solid rgba(201,150,58,0.08);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .srv-card {
+      background: rgba(26,17,10,0.75);
+      padding: 2rem 1.75rem;
+      position: relative;
+      overflow: hidden;
+      cursor: default;
+      transition: background 0.35s;
+    }
+    .srv-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width 0.4s ease;
+    }
+    .srv-card:hover { background: rgba(107,63,31,0.28); }
+    .srv-card:hover::after { width: 100%; }
+    .srv-icon {
+      font-size: 1.75rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .srv-name {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: var(--bg);
+      margin-bottom: 0.5rem;
+    }
+    .srv-desc {
+      font-size: 0.82rem;
+      color: rgba(246,243,238,0.45);
+      line-height: 1.65;
+      margin-bottom: 1.25rem;
+    }
+    .srv-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-decoration: none;
+      transition: gap 0.2s;
+    }
+    .srv-link:hover { gap: 0.7rem; }
+
+    /* ─── DIFERENCIAIS ─── */
+    #diferenciais { background: var(--bg); }
+    .dif-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-top: 0;
+    }
+    .dif-card {
+      background: white;
+      padding: 2rem 1.75rem;
+      border-radius: 3px;
+      box-shadow: 0 2px 20px rgba(26,17,10,0.06);
+      border-bottom: 3px solid var(--accent);
+      transition: transform 0.35s, box-shadow 0.35s;
+    }
+    .dif-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 14px 36px rgba(26,17,10,0.1);
+    }
+    .dif-num {
+      font-family: 'Fraunces', serif;
+      font-weight: 900;
+      font-size: 4rem;
+      color: var(--accent);
+      opacity: 0.2;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .dif-title {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+    }
+    .dif-body {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.75;
+    }
+
+    /* ─── GALLERY ─── */
+    #galeria {
+      background: var(--bg-dark);
+      padding-bottom: 5rem;
+    }
+    #galeria .tag { color: rgba(201,150,58,0.7); }
+    #galeria .tag::before { background: rgba(201,150,58,0.4); }
+    #galeria .section-h2 { color: var(--bg); }
+    .gal-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+      margin-top: 2.5rem;
+    }
+    .gal-item {
+      overflow: hidden;
+      border-radius: 2px;
+      position: relative;
+    }
+    .gal-item.tall { grid-row: span 2; }
+    .gal-item img {
+      width: 100%;
+      height: 100%;
+      min-height: 9rem;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+    .gal-item:hover img { transform: scale(1.06); }
+    .gal-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(18,12,7,0.7) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.35s;
+      display: flex;
+      align-items: flex-end;
+      padding: 0.875rem;
+    }
+    .gal-item:hover .gal-overlay { opacity: 1; }
+    .gal-label {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--bg);
+    }
+
+    /* ─── CONTATO ─── */
+    #contato {
+      background: var(--primary);
+      text-align: center;
+    }
+    #contato .tag { justify-content: center; }
+    #contato .tag::before { display: none; }
+    #contato .section-h2 { color: var(--bg); }
+    .ctt-body {
+      font-size: 0.9rem;
+      color: rgba(246,243,238,0.5);
+      max-width: 26rem;
+      margin: 0 auto 2.5rem;
+      line-height: 1.75;
+    }
+    .btn-wpp {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.625rem;
+      background: #25D366;
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      padding: 1.1rem 2.25rem;
+      border-radius: 2px;
+      min-height: 56px;
+      transition: all 0.3s;
+    }
+    .btn-wpp:hover {
+      background: #1fbb57;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(37,211,102,0.35);
+    }
+    .ctt-details {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(201,150,58,0.12);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+    .ctt-detail {
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+      font-size: 0.78rem;
+      color: rgba(246,243,238,0.35);
+    }
+    .ctt-detail svg { flex-shrink: 0; }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--bg-dark);
+      padding: 1.5rem;
+      text-align: center;
+      border-top: 1px solid rgba(201,150,58,0.07);
+    }
+    footer p {
+      font-size: 0.68rem;
+      color: rgba(246,243,238,0.18);
+      letter-spacing: 0.05em;
+    }
+
+    /* ─── WHATSAPP FLOAT ─── */
+    .wpp-fab {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 999;
+      width: 60px;
+      height: 60px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.28);
+      text-decoration: none;
+      animation: wppPulse 3s 2.5s infinite;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .wpp-fab:hover {
+      transform: scale(1.12);
+      box-shadow: 0 6px 24px rgba(37,211,102,0.5);
+      animation: none;
+    }
+    .wpp-fab svg { width: 28px; height: 28px; fill: #fff; }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+    @keyframes scrollAnim {
+      0%   { transform: scaleY(0) translateY(0); transform-origin: top; opacity: 1; }
+      50%  { transform: scaleY(1) translateY(0); transform-origin: top; opacity: 1; }
+      100% { transform: scaleY(1) translateY(0); transform-origin: bottom; opacity: 0; }
+    }
+    @keyframes wppPulse {
+      0%, 100% { box-shadow: 0 4px 16px rgba(0,0,0,0.28), 0 0 0 0 rgba(37,211,102,0.45); }
+      60%       { box-shadow: 0 4px 16px rgba(0,0,0,0.28), 0 0 0 14px rgba(37,211,102,0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+    .rd1 { transition-delay: 0.1s; }
+    .rd2 { transition-delay: 0.2s; }
+    .rd3 { transition-delay: 0.3s; }
+    .rd4 { transition-delay: 0.4s; }
+    .rd5 { transition-delay: 0.5s; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (min-width: 768px) {
+      section { padding: 7rem 4rem; }
+      nav { padding: 1.25rem 3rem; }
+      #hero { padding: 2.5rem 4rem 5rem; }
+
+      .about-wrap {
+        grid-template-columns: 1fr 1fr;
+        gap: 5rem;
+        align-items: center;
+      }
+      .about-img { height: 30rem; }
+
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .dif-grid { grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+
+      .gal-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.75rem;
+      }
+      .gal-item img { min-height: 14rem; }
+    }
+
+    @media (min-width: 1200px) {
+      section { padding: 9rem 6rem; }
+      nav { padding: 1.25rem 5rem; }
+      #hero { padding: 2.5rem 6rem 6rem; }
+      .services-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─ NAV ─ -->
+<nav>
+  <div class="nav-logo">Eneas Arte <em>Móveis</em></div>
+  <a href="https://wa.me/5500000000000?text=Ol%C3%A1!%20Gostaria%20de%20fazer%20um%20or%C3%A7amento%20de%20m%C3%B3veis%20planejados." class="nav-cta" target="_blank" rel="noopener">Orçamento</a>
+</nav>
+
+<!-- ─ HERO ─ -->
+<section id="hero">
+  <div class="hero-bg-img"></div>
+  <div class="hero-noise"></div>
+  <div class="hero-gradient"></div>
+
+  <p class="hero-eyebrow">Marcenaria sob medida &nbsp;·&nbsp; Qualidade premium</p>
+
+  <div class="hero-headline">
+    <span class="hl-big">ENEAS</span>
+    <span class="hl-big">ARTE</span>
+    <span class="hl-sub">Móveis Planejados</span>
+  </div>
+
+  <p class="hero-body">
+    Transformamos madeira em arte. Criamos ambientes únicos com móveis planejados sob medida,
+    feitos com materiais de alta qualidade e acabamento impecável.
+  </p>
+
+  <div class="hero-actions">
+    <a href="https://wa.me/5500000000000?text=Ol%C3%A1!%20Gostaria%20de%20fazer%20um%20or%C3%A7amento%20de%20m%C3%B3veis%20planejados." class="btn-gold" target="_blank" rel="noopener">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Solicitar Orçamento
+    </a>
+    <a href="#servicos" class="btn-ghost">Ver Serviços ↓</a>
+  </div>
+
+  <div class="hero-scroll">
+    <div class="scroll-bar"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ─ SOBRE ─ -->
+<section id="sobre">
+  <div class="about-wrap">
+    <div class="about-visual reveal">
+      <img class="about-img" src="https://images.unsplash.com/photo-1581539250439-c96689b516dd?w=800&q=80" alt="Marcenaria Eneas Arte — detalhe" loading="lazy">
+      <div class="about-frame"></div>
+      <div class="about-badge">Feito sob medida</div>
+    </div>
+    <div>
+      <p class="tag reveal">Sobre nós</p>
+      <h2 class="section-h2 reveal rd1">Arte e precisão<br><span class="italic-light" style="color: var(--accent)">em cada detalhe</span></h2>
+      <blockquote class="pull reveal rd2">"Cada projeto é único. Cada peça é feita para durar."</blockquote>
+      <p class="about-body reveal rd3">
+        A Eneas Arte nasceu da paixão pela marcenaria e pelo desejo de criar ambientes que realmente
+        refletem a personalidade de cada cliente. Trabalhamos com móveis planejados sob medida para
+        residências e empresas, unindo design moderno com qualidade construtiva.
+      </p>
+      <p class="about-body reveal rd3">
+        Do projeto ao acabamento final, cada etapa é conduzida com cuidado artesanal e rigor técnico.
+        Seu ambiente merece o melhor — e é isso que entregamos.
+      </p>
+      <div class="about-stats reveal rd4">
+        <div>
+          <div class="stat-num">10+</div>
+          <div class="stat-label">Anos de experiência</div>
+        </div>
+        <div>
+          <div class="stat-num">500+</div>
+          <div class="stat-label">Projetos entregues</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─ SERVIÇOS ─ -->
+<section id="servicos">
+  <p class="tag reveal">O que fazemos</p>
+  <h2 class="section-h2 reveal rd1">Soluções completas<br><span class="italic-light">para seu lar</span></h2>
+  <p class="services-intro reveal rd2">Do projeto à instalação, entregamos móveis que se encaixam perfeitamente no seu espaço e no seu estilo de vida.</p>
+  <div class="services-grid">
+    <div class="srv-card reveal">
+      <span class="srv-icon">🍳</span>
+      <div class="srv-name">Cozinhas Planejadas</div>
+      <p class="srv-desc">Cozinhas funcionais e elegantes, otimizando cada centímetro com design inteligente e acabamento premium.</p>
+      <a href="https://wa.me/5500000000000?text=Ol%C3%A1!%20Tenho%20interesse%20em%20cozinha%20planejada." class="srv-link" target="_blank" rel="noopener">Solicitar orçamento →</a>
+    </div>
+    <div class="srv-card reveal rd1">
+      <span class="srv-icon">🛏️</span>
+      <div class="srv-name">Dormitórios</div>
+      <p class="srv-desc">Quartos com armários sob medida, cabeceiras e móveis que aproveitam cada espaço com elegância.</p>
+      <a href="https://wa.me/5500000000000?text=Ol%C3%A1!%20Tenho%20interesse%20em%20dorm%C3%B3rio%20planejado." class="srv-link" target="_blank" rel="noopener">Solicitar orçamento →</a>
+    </div>
+    <div class="srv-card reveal rd2">
+      <span class="srv-icon">💼</span>
+      <div class="srv-name">Escritórios</div>
+      <p class="srv-desc">Ambientes de trabalho produtivos com marcenaria que alia estética, ergonomia e funcionalidade.</p>
+      <a href="https://wa.me/5500000000000?text=Ol%C3%A1!%20Tenho%20interesse%20em%20escrit%C3%B3rio%20planejado." class="srv-link" target="_blank" rel="noopener">Solicitar orçamento →</a>
+    </div>
+    <div class="srv-card reveal rd3">
+      <span class="srv-icon">🛋️</span>
+      <div class="srv-name">Sala de Estar</div>
+      <p class="srv-desc">Painéis de TV, estantes e racks que transformam sua sala em um ambiente de design e personalidade.</p>
+      <a href="https://wa.me/5500000000000?text=Ol%C3%A1!%20Tenho%20interesse%20em%20sala%20planejada." class="srv-link" target="_blank" rel="noopener">Solicitar orçamento →</a>
+    </div>
+    <div class="srv-card reveal rd4">
+      <span class="srv-icon">🪞</span>
+      <div class="srv-name">Banheiros</div>
+      <p class="srv-desc">Armários e gabinetes para banheiro que combinam praticidade com acabamento luxuoso e duradouro.</p>
+      <a href="https://wa.me/5500000000000?text=Ol%C3%A1!%20Tenho%20interesse%20em%20banheiro%20planejado." class="srv-link" target="_blank" rel="noopener">Solicitar orçamento →</a>
+    </div>
+    <div class="srv-card reveal rd5">
+      <span class="srv-icon">🏢</span>
+      <div class="srv-name">Projetos Corporativos</div>
+      <p class="srv-desc">Mobiliário sob medida para empresas, lojas e espaços comerciais de todos os portes.</p>
+      <a href="https://wa.me/5500000000000?text=Ol%C3%A1!%20Tenho%20interesse%20em%20projeto%20corporativo." class="srv-link" target="_blank" rel="noopener">Solicitar orçamento →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ─ DIFERENCIAIS ─ -->
+<section id="diferenciais">
+  <p class="tag reveal">Por que nos escolher</p>
+  <h2 class="section-h2 reveal rd1">Nossos<br><span class="italic-light" style="color: var(--accent)">diferenciais</span></h2>
+  <div class="dif-grid" style="margin-top: 3rem;">
+    <div class="dif-card reveal rd1">
+      <div class="dif-num">01</div>
+      <div class="dif-title">100% Personalizado</div>
+      <p class="dif-body">Cada projeto é criado exclusivamente para você. Nada de pronto — tudo planejado de acordo com seu espaço, gosto e necessidade.</p>
+    </div>
+    <div class="dif-card reveal rd2">
+      <div class="dif-num">02</div>
+      <div class="dif-title">Alta Qualidade</div>
+      <p class="dif-body">Utilizamos materiais de primeira linha: MDF, MDP, madeira maciça e ferragens premium para garantir durabilidade e beleza.</p>
+    </div>
+    <div class="dif-card reveal rd3">
+      <div class="dif-num">03</div>
+      <div class="dif-title">Prazo Garantido</div>
+      <p class="dif-body">Cumprimos o combinado. Do orçamento à instalação, trabalhamos com seriedade e pontualidade para respeitar seu tempo.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─ GALERIA ─ -->
+<section id="galeria">
+  <p class="tag reveal">Nossos projetos</p>
+  <h2 class="section-h2 reveal rd1">Galeria de<br><span class="italic-light">trabalhos</span></h2>
+  <div class="gal-grid">
+    <div class="gal-item tall reveal">
+      <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=700&q=80" alt="Cozinha planejada" loading="lazy">
+      <div class="gal-overlay"><span class="gal-label">Cozinha</span></div>
+    </div>
+    <div class="gal-item reveal rd1">
+      <img src="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?w=700&q=80" alt="Dormitório planejado" loading="lazy">
+      <div class="gal-overlay"><span class="gal-label">Dormitório</span></div>
+    </div>
+    <div class="gal-item reveal rd2">
+      <img src="https://images.unsplash.com/photo-1554774853-719586f82d77?w=700&q=80" alt="Home Office" loading="lazy">
+      <div class="gal-overlay"><span class="gal-label">Home Office</span></div>
+    </div>
+    <div class="gal-item reveal rd3">
+      <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=700&q=80" alt="Sala de estar" loading="lazy">
+      <div class="gal-overlay"><span class="gal-label">Sala de Estar</span></div>
+    </div>
+    <div class="gal-item tall reveal rd4">
+      <img src="https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=700&q=80" alt="Armário planejado" loading="lazy">
+      <div class="gal-overlay"><span class="gal-label">Armário</span></div>
+    </div>
+    <div class="gal-item reveal rd5">
+      <img src="https://images.unsplash.com/photo-1540574163026-643ea20ade25?w=700&q=80" alt="Banheiro planejado" loading="lazy">
+      <div class="gal-overlay"><span class="gal-label">Banheiro</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─ CONTATO ─ -->
+<section id="contato">
+  <p class="tag reveal">Fale conosco</p>
+  <h2 class="section-h2 reveal rd1">Vamos criar seu<br><span class="italic-light">projeto ideal</span></h2>
+  <p class="ctt-body reveal rd2">
+    Entre em contato pelo WhatsApp. Respondemos rapidamente e realizamos visita técnica gratuita para seu orçamento.
+  </p>
+  <a href="https://wa.me/5500000000000?text=Ol%C3%A1!%20Gostaria%20de%20fazer%20um%20or%C3%A7amento%20de%20m%C3%B3veis%20planejados." class="btn-wpp reveal rd3" target="_blank" rel="noopener">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Conversar no WhatsApp
+  </a>
+  <div class="ctt-details reveal rd4">
+    <div class="ctt-detail">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+      Atendemos toda a região
+    </div>
+    <div class="ctt-detail">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      Seg–Sex: 8h–18h &nbsp;·&nbsp; Sáb: 8h–12h
+    </div>
+    <div class="ctt-detail">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      Visita técnica gratuita
+    </div>
+  </div>
+</section>
+
+<!-- ─ FOOTER ─ -->
+<footer>
+  <p>© 2026 Eneas Arte Móveis Planejados · Todos os direitos reservados</p>
+</footer>
+
+<!-- ─ WhatsApp FAB ─ -->
+<a href="https://wa.me/5500000000000?text=Ol%C3%A1!%20Gostaria%20de%20fazer%20um%20or%C3%A7amento%20de%20m%C3%B3veis%20planejados." class="wpp-fab" target="_blank" rel="noopener" aria-label="Fale conosco no WhatsApp">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+  // Scroll reveal via IntersectionObserver
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(el => io.observe(el));
+</script>
+</body>
+</html>
