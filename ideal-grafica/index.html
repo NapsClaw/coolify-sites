@@ -861,6 +861,13 @@
                 📄 Gerar Recibo Rápido
               </button>
             </div>
+            <div id="off-post-add" style="display:none;margin-top:12px;padding:14px;background:rgba(74,222,128,0.1);border:1px solid rgba(74,222,128,0.3);border-radius:10px;text-align:center;">
+              <div style="font-size:13px;font-weight:600;color:#4ade80;margin-bottom:10px;" id="off-post-add-msg">✅ Item adicionado ao orçamento!</div>
+              <div style="display:flex;flex-direction:column;gap:8px;">
+                <button class="btn btn-outline btn-full" onclick="addOutroOrcamentoOffset()">➕ Adicionar outro orçamento</button>
+                <button class="btn btn-primary btn-full" onclick="navTo('recibo')">📋 Ver orçamento completo</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1067,6 +1074,13 @@
               <button class="btn btn-success btn-full" onclick="gerarReciboDigital()" id="btn-recibo-dig" disabled>
                 📄 Gerar Recibo Rápido
               </button>
+            </div>
+            <div id="dig-post-add" style="display:none;margin-top:12px;padding:14px;background:rgba(74,222,128,0.1);border:1px solid rgba(74,222,128,0.3);border-radius:10px;text-align:center;">
+              <div style="font-size:13px;font-weight:600;color:#4ade80;margin-bottom:10px;" id="dig-post-add-msg">✅ Item adicionado ao orçamento!</div>
+              <div style="display:flex;flex-direction:column;gap:8px;">
+                <button class="btn btn-outline btn-full" onclick="addOutroOrcamentoDigital()">➕ Adicionar outro orçamento</button>
+                <button class="btn btn-primary btn-full" onclick="navTo('recibo')">📋 Ver orçamento completo</button>
+              </div>
             </div>
           </div>
         </div>
@@ -1475,6 +1489,7 @@ function calcOffset() {
 }
 
 function clearOffset() {
+  el('off-post-add').style.display = 'none';
   ['off-cliente','off-papel-valor','off-papel-qtd','off-chapas-manual','off-tintas','off-insumos','off-energia','off-outros','off-custo-manual'].forEach(id => { if(el(id)) el(id).value = ''; });
   el('off-produto').value = '';
   el('off-qtd').value = '';
@@ -1588,6 +1603,7 @@ function calcDigital() {
 }
 
 function clearDigital() {
+  el('dig-post-add').style.display = 'none';
   ['dig-cliente','dig-qtd','dig-art-w','dig-art-h','dig-custo-adesivo','dig-custo-tinta','dig-custo-acabamento','dig-custo-mao','dig-custo-outros','dig-custo-manual'].forEach(id => { if(el(id)) el(id).value = ''; });
   el('dig-produto').value = '';
   el('dig-mat-largura').value = '1.60';
@@ -1622,8 +1638,15 @@ function addOffsetToCart() {
   });
   updateCartBadge();
   addHistory({ tipo: 'offset', cliente: lastOffsetData.cliente, produto: lastOffsetData.produto, total: priceMap[offSelectedOpt] });
+  el('off-post-add-msg').textContent = `✅ Item ${cart.length} adicionado ao orçamento!`;
+  el('off-post-add').style.display = 'block';
   showToast(`🛒 Item adicionado! (${cart.length} no orçamento)`);
   renderCartPage();
+}
+
+function addOutroOrcamentoOffset() {
+  el('off-post-add').style.display = 'none';
+  clearOffset();
 }
 
 function addDigitalToCart() {
@@ -1641,8 +1664,15 @@ function addDigitalToCart() {
   });
   updateCartBadge();
   addHistory({ tipo: 'digital', cliente: lastDigitalData.cliente, produto: lastDigitalData.produto, total: priceMap[digSelectedOpt] });
+  el('dig-post-add-msg').textContent = `✅ Item ${cart.length} adicionado ao orçamento!`;
+  el('dig-post-add').style.display = 'block';
   showToast(`🛒 Item adicionado! (${cart.length} no orçamento)`);
   renderCartPage();
+}
+
+function addOutroOrcamentoDigital() {
+  el('dig-post-add').style.display = 'none';
+  clearDigital();
 }
 
 function removeFromCart(id) {
