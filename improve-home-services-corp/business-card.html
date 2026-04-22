@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Business Card — Improve Home Services Corp</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #0d1b2a;
+      --navy-mid: #162436;
+      --gold: #c8a96e;
+      --gold-light: #e2c98a;
+      --white: #ffffff;
+      --off-white: #f7f5f1;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #2a2a2a;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      gap: 40px;
+      padding: 40px 20px;
+    }
+
+    .label {
+      color: rgba(255,255,255,0.4);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-family: 'Inter', sans-serif;
+      margin-bottom: -30px;
+    }
+
+    /* Card container — standard 3.5" × 2" ratio at 96dpi = 336 × 192px → scaled 2× */
+    .card {
+      width: 672px;
+      height: 384px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.6);
+      position: relative;
+    }
+
+    /* ── FRONT ── */
+    .card-front {
+      background: var(--navy);
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 42px 50px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* decorative corner accent */
+    .card-front::before {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle at top right, rgba(200,169,110,0.18) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    /* bottom-left accent line */
+    .card-front::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold) 0%, transparent 60%);
+    }
+
+    .front-top {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .gold-bar {
+      width: 4px;
+      height: 52px;
+      background: var(--gold);
+      border-radius: 2px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .brand-block .brand-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1.15;
+      letter-spacing: 0.01em;
+    }
+
+    .brand-block .brand-sub {
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      margin-top: 5px;
+    }
+
+    .front-bottom {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .person-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 0.01em;
+      line-height: 1.1;
+    }
+
+    .person-title {
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-top: 2px;
+      margin-bottom: 14px;
+    }
+
+    .contact-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: rgba(255,255,255,0.75);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+    }
+
+    .contact-row + .contact-row {
+      margin-top: 6px;
+    }
+
+    .contact-icon {
+      width: 18px;
+      height: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .contact-icon svg {
+      width: 14px;
+      height: 14px;
+      fill: var(--gold);
+    }
+
+    /* ── BACK ── */
+    .card-back {
+      background: var(--off-white);
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-back::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(135deg, rgba(13,27,42,0.04) 25%, transparent 25%) -20px 0,
+        linear-gradient(225deg, rgba(13,27,42,0.04) 25%, transparent 25%) -20px 0,
+        linear-gradient(315deg, rgba(13,27,42,0.04) 25%, transparent 25%),
+        linear-gradient(45deg,  rgba(13,27,42,0.04) 25%, transparent 25%);
+      background-size: 40px 40px;
+      background-color: var(--off-white);
+    }
+
+    .card-back::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--navy) 0%, var(--gold) 50%, var(--navy) 100%);
+    }
+
+    .back-inner {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .back-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--navy);
+      line-height: 1.15;
+      letter-spacing: 0.01em;
+    }
+
+    .back-logo em {
+      font-style: normal;
+      color: var(--gold);
+    }
+
+    .back-divider {
+      width: 40px;
+      height: 2px;
+      background: var(--gold);
+      border-radius: 1px;
+    }
+
+    .back-tagline {
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--navy);
+      opacity: 0.55;
+    }
+
+    /* print helpers */
+    @media print {
+      body {
+        background: white;
+        padding: 0;
+        gap: 0;
+      }
+      .label { display: none; }
+      .card {
+        width: 3.5in;
+        height: 2in;
+        border-radius: 0;
+        box-shadow: none;
+        page-break-after: always;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <p class="label">Front</p>
+
+  <!-- FRONT -->
+  <div class="card">
+    <div class="card-front">
+
+      <div class="front-top">
+        <div class="gold-bar"></div>
+        <div class="brand-block">
+          <div class="brand-name">Improve Home<br>Services Corp</div>
+          <div class="brand-sub">Bath &amp; Kitchen Remodeling</div>
+        </div>
+      </div>
+
+      <div class="front-bottom">
+        <div class="person-name">Ricardo Dos Santos</div>
+        <div class="person-title">Home Improvement Specialist</div>
+
+        <div class="contact-row">
+          <span class="contact-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.01-.24c1.12.37 2.33.57 3.58.57a1 1 0 011 1V20a1 1 0 01-1 1C10.06 21 3 13.94 3 5a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.46.57 3.58a1 1 0 01-.24 1.01l-2.21 2.2z"/>
+            </svg>
+          </span>
+          <span>954-655-0967</span>
+        </div>
+
+        <div class="contact-row">
+          <span class="contact-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 2l-8 5-8-5h16zm0 12H4V9l8 5 8-5v9z"/>
+            </svg>
+          </span>
+          <span>Improve10@hotmail.com</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <p class="label">Back</p>
+
+  <!-- BACK -->
+  <div class="card">
+    <div class="card-back">
+      <div class="back-inner">
+        <div class="back-logo"><em>Improve</em> Home<br>Services Corp</div>
+        <div class="back-divider"></div>
+        <div class="back-tagline">Bath &amp; Kitchen Remodeling</div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
