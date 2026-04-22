@@ -1,0 +1,1524 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TH Construções — Gerenciamento e Planejamento de Obras</title>
+  <meta name="description" content="TH Construções: especialistas em gerenciamento e planejamento de obras. Entregamos projetos dentro do prazo e do orçamento com excelência técnica." />
+  <meta property="og:title" content="TH Construções — Gerenciamento e Planejamento de Obras" />
+  <meta property="og:description" content="Especialistas em gerenciamento e planejamento de obras. Precisão técnica, resultado garantido." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏗</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,700;12..96,800;12..96,900&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ========================
+       RESET & VARIABLES
+    ======================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #0C0C0C;
+      --surface:     #141414;
+      --surface-2:   #1E1E1E;
+      --primary:     #E8A020;
+      --primary-dim: rgba(232, 160, 32, 0.12);
+      --primary-glow:rgba(232, 160, 32, 0.35);
+      --accent:      #FF6B2B;
+      --text:        #F0EDE8;
+      --text-muted:  #7A7570;
+      --text-light:  #B0AC A6;
+      --border:      rgba(232, 160, 32, 0.18);
+      --radius:      4px;
+
+      --font-display: 'Bricolage Grotesque', sans-serif;
+      --font-body:    'Plus Jakarta Sans', sans-serif;
+
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Noise texture overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+      opacity: 0.6;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+
+    /* ========================
+       SCROLL REVEAL
+    ======================== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
+    }
+    .reveal.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    .reveal-delay-5 { transition-delay: 0.5s; }
+
+    /* ========================
+       TYPOGRAPHY
+    ======================== */
+    .eyebrow {
+      font-family: var(--font-display);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--primary);
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: var(--text);
+    }
+
+    .section-title.large {
+      font-size: clamp(40px, 7vw, 80px);
+    }
+
+    .section-title.medium {
+      font-size: clamp(32px, 5vw, 56px);
+    }
+
+    /* ========================
+       LAYOUT
+    ======================== */
+    .container {
+      width: 100%;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    section {
+      padding: 96px 0;
+    }
+
+    @media (max-width: 768px) {
+      section { padding: 64px 0; }
+    }
+
+    /* ========================
+       NAVBAR
+    ======================== */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 20px 0;
+      transition: background 0.3s, padding 0.3s, border-bottom 0.3s;
+    }
+
+    nav.scrolled {
+      background: rgba(12, 12, 12, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 22px;
+      letter-spacing: -0.03em;
+      color: var(--text);
+    }
+
+    .nav-logo span {
+      color: var(--primary);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta {
+      background: var(--primary);
+      color: #0C0C0C !important;
+      font-weight: 700 !important;
+      padding: 10px 22px;
+      border-radius: var(--radius);
+      letter-spacing: 0.02em !important;
+      transition: background 0.2s, transform 0.2s !important;
+    }
+
+    .nav-cta:hover {
+      background: #F5B535 !important;
+      transform: translateY(-1px);
+      color: #0C0C0C !important;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+    }
+
+    /* ========================
+       HERO
+    ======================== */
+    #hero {
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding-bottom: 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom, rgba(12,12,12,0.2) 0%, rgba(12,12,12,0.7) 60%, rgba(12,12,12,1) 100%),
+        url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1800&q=80') center/cover no-repeat;
+      transform-origin: center;
+      animation: hero-zoom 14s ease-out forwards;
+    }
+
+    @keyframes hero-zoom {
+      from { transform: scale(1.08); }
+      to   { transform: scale(1.0); }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: fade-up 0.8s var(--ease-out-expo) 0.3s forwards;
+    }
+
+    .hero-tag-line {
+      width: 32px;
+      height: 1px;
+      background: var(--primary);
+    }
+
+    .hero-tag-text {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--primary);
+    }
+
+    .hero-headline {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: clamp(52px, 10vw, 120px);
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      color: var(--text);
+      margin-bottom: 28px;
+      overflow: hidden;
+    }
+
+    .hero-headline .line {
+      display: block;
+      opacity: 0;
+      transform: translateY(100%);
+      animation: line-reveal 0.9s var(--ease-out-expo) forwards;
+    }
+
+    .hero-headline .line:nth-child(1) { animation-delay: 0.5s; }
+    .hero-headline .line:nth-child(2) { animation-delay: 0.65s; color: var(--primary); }
+    .hero-headline .line:nth-child(3) { animation-delay: 0.8s; }
+
+    @keyframes line-reveal {
+      from { opacity: 0; transform: translateY(100%); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-sub {
+      font-size: clamp(15px, 2vw, 18px);
+      font-weight: 300;
+      color: rgba(240, 237, 232, 0.65);
+      max-width: 480px;
+      margin-bottom: 48px;
+      opacity: 0;
+      animation: fade-up 0.8s var(--ease-out-expo) 1s forwards;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fade-up 0.8s var(--ease-out-expo) 1.15s forwards;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--primary);
+      color: #0C0C0C;
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 700;
+      padding: 16px 32px;
+      border-radius: var(--radius);
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+      min-height: 54px;
+      white-space: nowrap;
+    }
+
+    .btn-primary:hover {
+      background: #F5B535;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(232, 160, 32, 0.35);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: transparent;
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 500;
+      padding: 16px 32px;
+      border-radius: var(--radius);
+      border: 1px solid rgba(240, 237, 232, 0.2);
+      transition: border-color 0.2s, background 0.2s;
+      min-height: 54px;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--primary);
+      background: var(--primary-dim);
+    }
+
+    .hero-scroll-hint {
+      position: absolute;
+      bottom: 28px;
+      right: 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      opacity: 0;
+      animation: fade-up 0.8s var(--ease-out-expo) 1.5s forwards;
+    }
+
+    .hero-scroll-hint span {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      writing-mode: vertical-rl;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, var(--primary), transparent);
+      animation: scroll-pulse 2s ease-in-out 2s infinite;
+    }
+
+    @keyframes scroll-pulse {
+      0%, 100% { opacity: 1; transform: scaleY(1); }
+      50% { opacity: 0.4; transform: scaleY(0.6); }
+    }
+
+    /* ========================
+       NUMBERS / STRIP
+    ======================== */
+    #numbers {
+      padding: 64px 0;
+      background: var(--primary);
+      overflow: hidden;
+    }
+
+    .numbers-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+
+    @media (max-width: 768px) {
+      .numbers-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .number-item {
+      padding: 32px 24px;
+      text-align: center;
+      border-right: 1px solid rgba(12, 12, 12, 0.15);
+    }
+
+    .number-item:last-child { border-right: none; }
+
+    @media (max-width: 768px) {
+      .number-item:nth-child(2) { border-right: none; }
+      .number-item:nth-child(3) { border-right: 1px solid rgba(12,12,12,0.15); border-top: 1px solid rgba(12,12,12,0.15); }
+      .number-item:nth-child(4) { border-top: 1px solid rgba(12,12,12,0.15); border-right: none; }
+    }
+
+    .number-value {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: clamp(40px, 6vw, 64px);
+      letter-spacing: -0.04em;
+      color: #0C0C0C;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .number-label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(12, 12, 12, 0.65);
+    }
+
+    /* ========================
+       SOBRE
+    ======================== */
+    #sobre {
+      background: var(--bg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #sobre::before {
+      content: 'TH';
+      position: absolute;
+      top: -20px;
+      right: -40px;
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: clamp(160px, 25vw, 320px);
+      letter-spacing: -0.05em;
+      color: rgba(232, 160, 32, 0.04);
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .sobre-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    @media (max-width: 900px) {
+      .sobre-grid {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+    }
+
+    .sobre-image {
+      position: relative;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .sobre-image img {
+      width: 100%;
+      height: 520px;
+      object-fit: cover;
+      border-radius: 2px;
+      transition: transform 0.8s var(--ease-out-expo);
+    }
+
+    .sobre-image:hover img { transform: scale(1.03); }
+
+    .sobre-image-badge {
+      position: absolute;
+      bottom: -24px;
+      right: -24px;
+      width: 140px;
+      height: 140px;
+      background: var(--primary);
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 16px 40px rgba(232, 160, 32, 0.4);
+    }
+
+    @media (max-width: 900px) {
+      .sobre-image-badge {
+        bottom: 16px;
+        right: 16px;
+      }
+    }
+
+    .badge-number {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 36px;
+      color: #0C0C0C;
+      line-height: 1;
+    }
+
+    .badge-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(12,12,12,0.7);
+      text-align: center;
+      line-height: 1.3;
+    }
+
+    .sobre-text { position: relative; }
+
+    .sobre-text p {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: rgba(240, 237, 232, 0.7);
+      margin-bottom: 20px;
+    }
+
+    .sobre-text p strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .sobre-divider {
+      width: 48px;
+      height: 2px;
+      background: var(--primary);
+      margin: 32px 0;
+    }
+
+    .sobre-destaque {
+      font-family: var(--font-display);
+      font-size: clamp(18px, 2.5vw, 24px);
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.4;
+      border-left: 3px solid var(--primary);
+      padding-left: 20px;
+    }
+
+    /* ========================
+       SERVIÇOS
+    ======================== */
+    #servicos {
+      background: var(--surface);
+      position: relative;
+    }
+
+    .servicos-header {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: 64px;
+    }
+
+    .servicos-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    @media (max-width: 900px) {
+      .servicos-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (min-width: 901px) and (max-width: 1100px) {
+      .servicos-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .servico-card {
+      background: var(--surface-2);
+      padding: 40px 36px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s, transform 0.3s;
+      cursor: default;
+    }
+
+    .servico-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--primary);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s var(--ease-out-expo);
+    }
+
+    .servico-card:hover {
+      background: #222;
+      transform: translateY(-4px);
+    }
+
+    .servico-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .servico-number {
+      font-family: var(--font-display);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      color: var(--primary);
+      margin-bottom: 24px;
+    }
+
+    .servico-icon {
+      width: 52px;
+      height: 52px;
+      background: var(--primary-dim);
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-bottom: 24px;
+      transition: background 0.3s;
+    }
+
+    .servico-card:hover .servico-icon {
+      background: var(--primary-glow);
+    }
+
+    .servico-titulo {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 22px;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 14px;
+    }
+
+    .servico-desc {
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--text-muted);
+    }
+
+    /* ========================
+       DIFERENCIAIS
+    ======================== */
+    #diferenciais {
+      background: var(--bg);
+    }
+
+    .dif-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      .dif-grid { grid-template-columns: 1fr; gap: 48px; }
+    }
+
+    .dif-visual {
+      position: relative;
+    }
+
+    .dif-visual-img {
+      width: 100%;
+      height: 560px;
+      object-fit: cover;
+      border-radius: 2px;
+    }
+
+    .dif-visual-overlay {
+      position: absolute;
+      top: 32px;
+      left: 32px;
+      right: 32px;
+      bottom: 32px;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      pointer-events: none;
+    }
+
+    .dif-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .dif-item {
+      padding: 28px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .dif-item:first-child { padding-top: 0; }
+
+    .dif-check {
+      width: 28px;
+      height: 28px;
+      background: var(--primary-dim);
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+    }
+
+    .dif-check svg {
+      width: 14px;
+      height: 14px;
+      stroke: var(--primary);
+    }
+
+    .dif-titulo {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 17px;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .dif-desc {
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--text-muted);
+    }
+
+    /* ========================
+       DEPOIMENTOS
+    ======================== */
+    #depoimentos {
+      background: var(--surface);
+      overflow: hidden;
+    }
+
+    .dep-header {
+      margin-bottom: 56px;
+    }
+
+    .dep-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    @media (max-width: 900px) {
+      .dep-grid { grid-template-columns: 1fr; }
+    }
+
+    .dep-card {
+      background: var(--surface-2);
+      padding: 40px 36px;
+      position: relative;
+    }
+
+    .dep-quote-mark {
+      font-family: var(--font-display);
+      font-size: 80px;
+      line-height: 0.7;
+      color: var(--primary);
+      opacity: 0.6;
+      margin-bottom: 20px;
+      font-weight: 900;
+    }
+
+    .dep-text {
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.75;
+      color: rgba(240, 237, 232, 0.75);
+      font-style: italic;
+      margin-bottom: 28px;
+    }
+
+    .dep-author {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .dep-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--primary-dim);
+      border: 2px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 16px;
+      color: var(--primary);
+      flex-shrink: 0;
+    }
+
+    .dep-name {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--text);
+    }
+
+    .dep-role {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .dep-stars {
+      margin-bottom: 16px;
+      color: var(--primary);
+      font-size: 14px;
+      letter-spacing: 2px;
+    }
+
+    /* ========================
+       CONTATO
+    ======================== */
+    #contato {
+      background: var(--bg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #contato::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(ellipse 60% 60% at 80% 50%, rgba(232, 160, 32, 0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .contato-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      .contato-grid { grid-template-columns: 1fr; gap: 48px; }
+    }
+
+    .contato-info p {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: rgba(240, 237, 232, 0.65);
+      margin-bottom: 40px;
+    }
+
+    .contato-items {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .contato-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .contato-item-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--primary-dim);
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .contato-item-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+
+    .contato-item-value {
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--text);
+    }
+
+    .contato-cta-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 48px;
+    }
+
+    .cta-box-title {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: clamp(28px, 4vw, 40px);
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+
+    .cta-box-sub {
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--text-muted);
+      margin-bottom: 36px;
+      line-height: 1.6;
+    }
+
+    .btn-whatsapp {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: #25D366;
+      color: #fff;
+      font-family: var(--font-body);
+      font-size: 16px;
+      font-weight: 700;
+      padding: 18px 36px;
+      border-radius: var(--radius);
+      width: 100%;
+      justify-content: center;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+      min-height: 56px;
+    }
+
+    .btn-whatsapp:hover {
+      background: #22C55E;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(37, 211, 102, 0.35);
+    }
+
+    .btn-whatsapp svg {
+      width: 22px;
+      height: 22px;
+      fill: #fff;
+    }
+
+    /* ========================
+       FOOTER
+    ======================== */
+    footer {
+      background: #080808;
+      border-top: 1px solid rgba(255,255,255,0.04);
+      padding: 40px 0;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-logo {
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 18px;
+      letter-spacing: -0.03em;
+      color: var(--text);
+    }
+
+    .footer-logo span { color: var(--primary); }
+
+    .footer-copy {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    /* ========================
+       WHATSAPP FLUTUANTE
+    ======================== */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      width: 60px;
+      height: 60px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 500;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25), 0 0 0 0 rgba(37, 211, 102, 0.5);
+      animation: whatsapp-pulse 2.5s ease-in-out infinite;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .whatsapp-float:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3), 0 0 0 6px rgba(37, 211, 102, 0.2);
+      animation: none;
+    }
+
+    .whatsapp-float svg {
+      width: 28px;
+      height: 28px;
+      fill: #fff;
+    }
+
+    @keyframes whatsapp-pulse {
+      0%, 100% { box-shadow: 0 4px 12px rgba(0,0,0,0.25), 0 0 0 0 rgba(37,211,102,0.5); }
+      50%       { box-shadow: 0 4px 12px rgba(0,0,0,0.25), 0 0 0 10px rgba(37,211,102,0); }
+    }
+
+    /* ========================
+       MARQUEE STRIP
+    ======================== */
+    .marquee-section {
+      padding: 20px 0;
+      background: var(--primary);
+      overflow: hidden;
+    }
+
+    .marquee-track {
+      display: flex;
+      gap: 0;
+      animation: marquee 20s linear infinite;
+      white-space: nowrap;
+      width: max-content;
+    }
+
+    .marquee-item {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 0 32px;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #0C0C0C;
+    }
+
+    .marquee-dot {
+      width: 5px;
+      height: 5px;
+      background: rgba(12,12,12,0.4);
+      border-radius: 50%;
+    }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav id="navbar">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="#hero" class="nav-logo">TH <span>CONSTRUÇÕES</span></a>
+        <div class="nav-links">
+          <a href="#sobre">Sobre</a>
+          <a href="#servicos">Serviços</a>
+          <a href="#diferenciais">Diferenciais</a>
+          <a href="#contato" class="nav-cta">Fale Conosco</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="container">
+      <div class="hero-content">
+        <div class="hero-tag">
+          <div class="hero-tag-line"></div>
+          <span class="hero-tag-text">Gerenciamento &amp; Planejamento de Obras</span>
+        </div>
+        <h1 class="hero-headline">
+          <span class="line">OBRAS QUE</span>
+          <span class="line">CHEGAM</span>
+          <span class="line" style="color: var(--text);">NO PRAZO.</span>
+        </h1>
+        <p class="hero-sub">
+          Gerenciamento técnico completo para sua construção — do planejamento à entrega, com controle total de prazo, custo e qualidade.
+        </p>
+        <div class="hero-actions">
+          <a href="https://wa.me/5511999999999?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20os%20serviços%20da%20TH%20Construções." class="btn-primary">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Solicitar Orçamento
+          </a>
+          <a href="#servicos" class="btn-secondary">Ver Serviços</a>
+        </div>
+      </div>
+    </div>
+    <div class="hero-scroll-hint">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- NUMBERS STRIP -->
+  <div id="numbers">
+    <div class="container">
+      <div class="numbers-grid">
+        <div class="number-item">
+          <div class="number-value" data-target="180">0</div>
+          <div class="number-label">Obras Concluídas</div>
+        </div>
+        <div class="number-item">
+          <div class="number-value" data-target="15">0</div>
+          <div class="number-label">Anos de Experiência</div>
+        </div>
+        <div class="number-item">
+          <div class="number-value" data-target="98">0</div>
+          <div class="number-label">% Dentro do Prazo</div>
+        </div>
+        <div class="number-item">
+          <div class="number-value" data-target="240">0</div>
+          <div class="number-label">Clientes Satisfeitos</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MARQUEE -->
+  <div class="marquee-section" aria-hidden="true">
+    <div class="marquee-track">
+      <div class="marquee-item">Gerenciamento de Obras<div class="marquee-dot"></div></div>
+      <div class="marquee-item">Planejamento Estratégico<div class="marquee-dot"></div></div>
+      <div class="marquee-item">Controle de Custos<div class="marquee-dot"></div></div>
+      <div class="marquee-item">Supervisão Técnica<div class="marquee-dot"></div></div>
+      <div class="marquee-item">Cronograma Preciso<div class="marquee-dot"></div></div>
+      <div class="marquee-item">Qualidade Garantida<div class="marquee-dot"></div></div>
+      <div class="marquee-item">Gerenciamento de Obras<div class="marquee-dot"></div></div>
+      <div class="marquee-item">Planejamento Estratégico<div class="marquee-dot"></div></div>
+      <div class="marquee-item">Controle de Custos<div class="marquee-dot"></div></div>
+      <div class="marquee-item">Supervisão Técnica<div class="marquee-dot"></div></div>
+      <div class="marquee-item">Cronograma Preciso<div class="marquee-dot"></div></div>
+      <div class="marquee-item">Qualidade Garantida<div class="marquee-dot"></div></div>
+    </div>
+  </div>
+
+  <!-- SOBRE -->
+  <section id="sobre">
+    <div class="container">
+      <div class="sobre-grid">
+        <div class="sobre-image reveal">
+          <img
+            src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=800&q=80"
+            alt="Obra gerenciada pela TH Construções"
+            loading="lazy"
+          />
+          <div class="sobre-image-badge">
+            <div class="badge-number">15+</div>
+            <div class="badge-label">Anos no<br>Mercado</div>
+          </div>
+        </div>
+        <div class="sobre-text">
+          <p class="eyebrow reveal">Quem Somos</p>
+          <h2 class="section-title medium reveal reveal-delay-1" style="margin: 12px 0 28px;">
+            Precisão técnica em cada etapa da sua obra
+          </h2>
+          <div class="sobre-divider reveal reveal-delay-2"></div>
+          <p class="reveal reveal-delay-2">
+            A <strong>TH Construções</strong> é especializada em gerenciamento e planejamento de obras, atuando com rigor técnico e comprometimento para que cada projeto seja entregue <strong>dentro do prazo e do orçamento</strong>.
+          </p>
+          <p class="reveal reveal-delay-3">
+            Nossa equipe multidisciplinar integra engenharia, gestão de projetos e controle de qualidade para garantir que sua construção seja conduzida com <strong>máxima eficiência</strong> — desde o levantamento inicial até a entrega das chaves.
+          </p>
+          <blockquote class="sobre-destaque reveal reveal-delay-4">
+            "Transformamos projetos complexos em entregas precisas. Essa é a nossa missão."
+          </blockquote>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVIÇOS -->
+  <section id="servicos">
+    <div class="container">
+      <div class="servicos-header">
+        <span class="eyebrow reveal">O Que Fazemos</span>
+        <h2 class="section-title large reveal reveal-delay-1">Nossos Serviços</h2>
+      </div>
+      <div class="servicos-grid">
+        <div class="servico-card reveal">
+          <div class="servico-number">01</div>
+          <div class="servico-icon">🏗</div>
+          <h3 class="servico-titulo">Gerenciamento de Obras</h3>
+          <p class="servico-desc">Gestão completa do canteiro de obras, coordenando equipes, subcontratados e fornecedores para máxima eficiência operacional.</p>
+        </div>
+        <div class="servico-card reveal reveal-delay-1">
+          <div class="servico-number">02</div>
+          <div class="servico-icon">📋</div>
+          <h3 class="servico-titulo">Planejamento de Projetos</h3>
+          <p class="servico-desc">Elaboração de cronogramas detalhados, EAP (Estrutura Analítica de Projetos) e linha de base com metodologias MS Project e PMBOK.</p>
+        </div>
+        <div class="servico-card reveal reveal-delay-2">
+          <div class="servico-number">03</div>
+          <div class="servico-icon">💰</div>
+          <h3 class="servico-titulo">Controle de Custos</h3>
+          <p class="servico-desc">Orçamentação precisa, controle de medições e relatórios financeiros para manter sua obra dentro do budget aprovado.</p>
+        </div>
+        <div class="servico-card reveal reveal-delay-3">
+          <div class="servico-number">04</div>
+          <div class="servico-icon">🔍</div>
+          <h3 class="servico-titulo">Supervisão Técnica</h3>
+          <p class="servico-desc">Inspeção e fiscalização permanente de serviços, garantindo conformidade com projetos, normas ABNT e especificações técnicas.</p>
+        </div>
+        <div class="servico-card reveal reveal-delay-4">
+          <div class="servico-number">05</div>
+          <div class="servico-icon">📊</div>
+          <h3 class="servico-titulo">Relatórios e BI de Obras</h3>
+          <p class="servico-desc">Dashboards gerenciais com indicadores em tempo real — avanço físico, avanço financeiro e desvios de prazo com visibilidade total.</p>
+        </div>
+        <div class="servico-card reveal reveal-delay-5">
+          <div class="servico-number">06</div>
+          <div class="servico-icon">🤝</div>
+          <h3 class="servico-titulo">Consultoria em Construção</h3>
+          <p class="servico-desc">Diagnóstico de obras em andamento, revisão de cronogramas e suporte para recuperação de projetos com atrasos ou desvios.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIFERENCIAIS -->
+  <section id="diferenciais">
+    <div class="container">
+      <div class="dif-grid">
+        <div class="dif-visual reveal">
+          <img
+            class="dif-visual-img"
+            src="https://images.unsplash.com/photo-1590642916589-592bca10dfed?w=800&q=80"
+            alt="Equipe técnica TH Construções"
+            loading="lazy"
+          />
+          <div class="dif-visual-overlay" aria-hidden="true"></div>
+        </div>
+        <div>
+          <span class="eyebrow reveal">Por Que nos Escolher</span>
+          <h2 class="section-title medium reveal reveal-delay-1" style="margin: 12px 0 40px;">
+            Diferenciais que fazem a diferença
+          </h2>
+          <div class="dif-list">
+            <div class="dif-item reveal reveal-delay-1">
+              <div class="dif-check">
+                <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 8l3.5 3.5L13 4.5"/>
+                </svg>
+              </div>
+              <div>
+                <div class="dif-titulo">Metodologia Comprovada</div>
+                <div class="dif-desc">Utilizamos PMBOK, PRINCE2 e práticas ágeis adaptadas à construção civil para garantir previsibilidade e controle total.</div>
+              </div>
+            </div>
+            <div class="dif-item reveal reveal-delay-2">
+              <div class="dif-check">
+                <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 8l3.5 3.5L13 4.5"/>
+                </svg>
+              </div>
+              <div>
+                <div class="dif-titulo">Equipe Técnica Qualificada</div>
+                <div class="dif-desc">Engenheiros civis, arquitetos e gestores de projeto com vasta experiência em obras residenciais, comerciais e industriais.</div>
+              </div>
+            </div>
+            <div class="dif-item reveal reveal-delay-3">
+              <div class="dif-check">
+                <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 8l3.5 3.5L13 4.5"/>
+                </svg>
+              </div>
+              <div>
+                <div class="dif-titulo">Transparência Total</div>
+                <div class="dif-desc">Relatórios semanais detalhados, acesso ao dashboard em tempo real e comunicação direta com o gestor responsável pela sua obra.</div>
+              </div>
+            </div>
+            <div class="dif-item reveal reveal-delay-4">
+              <div class="dif-check">
+                <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 8l3.5 3.5L13 4.5"/>
+                </svg>
+              </div>
+              <div>
+                <div class="dif-titulo">Compromisso com Prazos</div>
+                <div class="dif-desc">98% das nossas obras são entregues no prazo contratado. Nosso modelo de gestão proativo identifica riscos antes que virem problemas.</div>
+              </div>
+            </div>
+            <div class="dif-item reveal reveal-delay-5">
+              <div class="dif-check">
+                <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 8l3.5 3.5L13 4.5"/>
+                </svg>
+              </div>
+              <div>
+                <div class="dif-titulo">Atendimento Personalizado</div>
+                <div class="dif-desc">Cada projeto recebe um gerente dedicado. Você tem acesso direto à tomada de decisões, sem intermediários desnecessários.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEPOIMENTOS -->
+  <section id="depoimentos">
+    <div class="container">
+      <div class="dep-header">
+        <span class="eyebrow reveal">Depoimentos</span>
+        <h2 class="section-title large reveal reveal-delay-1">O que dizem nossos clientes</h2>
+      </div>
+      <div class="dep-grid">
+        <div class="dep-card reveal">
+          <div class="dep-stars">★★★★★</div>
+          <div class="dep-quote-mark">"</div>
+          <p class="dep-text">A TH Construções transformou a gestão do nosso galpão logístico. Entregaram no prazo exato com um controle de custos impecável. Recomendo sem reservas.</p>
+          <div class="dep-author">
+            <div class="dep-avatar">RM</div>
+            <div>
+              <div class="dep-name">Ricardo Moura</div>
+              <div class="dep-role">Diretor de Operações — Grupo Moura Logística</div>
+            </div>
+          </div>
+        </div>
+        <div class="dep-card reveal reveal-delay-1">
+          <div class="dep-stars">★★★★★</div>
+          <div class="dep-quote-mark">"</div>
+          <p class="dep-text">Contratamos para gerenciar a reforma de 3 andares do nosso escritório. Transparência total, relatórios detalhados toda semana e resultado acima do esperado.</p>
+          <div class="dep-author">
+            <div class="dep-avatar">AC</div>
+            <div>
+              <div class="dep-name">Ana Carvalho</div>
+              <div class="dep-role">Gerente Administrativa — Carvalho &amp; Associados</div>
+            </div>
+          </div>
+        </div>
+        <div class="dep-card reveal reveal-delay-2">
+          <div class="dep-stars">★★★★★</div>
+          <div class="dep-quote-mark">"</div>
+          <p class="dep-text">Nossa obra residencial de alto padrão foi entregue com 12 dias de antecedência e 8% abaixo do orçamento. Profissionalismo raro no setor.</p>
+          <div class="dep-author">
+            <div class="dep-avatar">FS</div>
+            <div>
+              <div class="dep-name">Fernando Souza</div>
+              <div class="dep-role">Cliente — Residência Alto Padrão São Paulo</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTATO -->
+  <section id="contato">
+    <div class="container">
+      <div class="contato-grid">
+        <div class="contato-info">
+          <span class="eyebrow reveal">Fale Conosco</span>
+          <h2 class="section-title medium reveal reveal-delay-1" style="margin: 12px 0 20px;">
+            Pronto para colocar sua obra nos trilhos?
+          </h2>
+          <p class="reveal reveal-delay-2">
+            Entre em contato agora mesmo. Nossa equipe técnica está disponível para analisar seu projeto e apresentar a melhor solução em gerenciamento.
+          </p>
+          <div class="contato-items">
+            <div class="contato-item reveal reveal-delay-3">
+              <div class="contato-item-icon">📱</div>
+              <div>
+                <div class="contato-item-label">WhatsApp</div>
+                <div class="contato-item-value">(11) 99999-9999</div>
+              </div>
+            </div>
+            <div class="contato-item reveal reveal-delay-4">
+              <div class="contato-item-icon">✉️</div>
+              <div>
+                <div class="contato-item-label">Email</div>
+                <div class="contato-item-value">contato@thconstrucoes.com.br</div>
+              </div>
+            </div>
+            <div class="contato-item reveal reveal-delay-5">
+              <div class="contato-item-icon">⏰</div>
+              <div>
+                <div class="contato-item-label">Horário de Atendimento</div>
+                <div class="contato-item-value">Seg–Sex, 8h às 18h</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="contato-cta-box reveal reveal-delay-2">
+          <h3 class="cta-box-title">Solicite um orçamento gratuito</h3>
+          <p class="cta-box-sub">Fale com um de nossos especialistas agora mesmo. Respondemos em até 1 hora durante o horário comercial.</p>
+          <a
+            href="https://wa.me/5511999999999?text=Olá!%20Gostaria%20de%20solicitar%20um%20orçamento%20para%20gerenciamento%20de%20obra."
+            class="btn-whatsapp"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            Conversar no WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-logo">TH <span>CONSTRUÇÕES</span></div>
+        <p class="footer-copy">© 2026 TH Construções. Gerenciamento e Planejamento de Obras.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WHATSAPP FLOAT -->
+  <a
+    href="https://wa.me/5511999999999?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20os%20serviços%20da%20TH%20Construções."
+    class="whatsapp-float"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Conversar no WhatsApp"
+  >
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+
+  <script>
+    // ========================
+    // NAVBAR SCROLL
+    // ========================
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    // ========================
+    // SCROLL REVEAL
+    // ========================
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    revealEls.forEach(el => observer.observe(el));
+
+    // ========================
+    // ANIMATED COUNTERS
+    // ========================
+    const counters = document.querySelectorAll('[data-target]');
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const target = parseInt(el.getAttribute('data-target'), 10);
+          const suffix = el.getAttribute('data-suffix') || '';
+          let current = 0;
+          const duration = 1800;
+          const step = target / (duration / 16);
+
+          const update = () => {
+            current = Math.min(current + step, target);
+            el.textContent = Math.floor(current) + suffix;
+            if (current < target) requestAnimationFrame(update);
+          };
+
+          requestAnimationFrame(update);
+          counterObserver.unobserve(el);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    counters.forEach(el => counterObserver.observe(el));
+  </script>
+</body>
+</html>
