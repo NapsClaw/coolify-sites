@@ -896,10 +896,11 @@
                 </div>
                 <div class="form-group">
                   <label>Tipo de Produto</label>
-                  <select id="dig-produto">
+                  <select id="dig-produto" onchange="onDigProdutoChange()">
                     <option value="">Selecionar...</option>
                     <option>Adesivo Recortado</option>
                     <option>Adesivo Chapado</option>
+                    <option>Adesivo Leitoso</option>
                     <option>Adesivo Perfurado (Jateado)</option>
                     <option>Bandeira</option>
                     <option>Lona</option>
@@ -912,7 +913,7 @@
                   <label>Quantidade de Peças</label>
                   <input type="text" id="dig-qtd" class="qty-formatted" placeholder="Ex: 50" oninput="handleQtyInput(this); calcDigital();" onblur="handleQtyBlur(this); calcDigital();">
                 </div>
-                <div class="form-group">
+                <div class="form-group" id="dig-mat-largura-group">
                   <label>Largura do Material (m)</label>
                   <select id="dig-mat-largura" onchange="calcDigital()">
                     <option value="1.60">1,60 m (padrão)</option>
@@ -922,80 +923,129 @@
                   </select>
                 </div>
                 <div class="form-group" id="dig-custom-largura-group" style="display:none;">
-                  <label>Largura customizada (m)</label>
+                  <label>Largura customizada (m) — use vírgula: ex 1,40</label>
                   <div class="input-suffix">
-                    <input type="number" id="dig-mat-custom" placeholder="Ex: 1.40" step="0.01" min="0.1" oninput="calcDigital()">
+                    <input type="text" inputmode="decimal" id="dig-mat-custom" placeholder="Ex: 1,40" oninput="calcDigital()">
                     <span>m</span>
                   </div>
                 </div>
               </div>
 
-              <div class="divider"><span>Medidas da Arte / Peça</span></div>
-              <div class="form-grid-3">
-                <div class="form-group">
-                  <label>Largura da Arte (m)</label>
-                  <div class="input-suffix">
-                    <input type="number" id="dig-art-w" placeholder="0,50" step="0.01" min="0.01" oninput="calcDigital()">
-                    <span>m</span>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label>Altura da Arte (m)</label>
-                  <div class="input-suffix">
-                    <input type="number" id="dig-art-h" placeholder="0,80" step="0.01" min="0.01" oninput="calcDigital()">
-                    <span>m</span>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label>Área / Peça (m²)</label>
-                  <input type="text" id="dig-area-peca" readonly style="background:#f9fafb;font-family:var(--font-mono);font-weight:600;" value="—">
+              <!-- MODO DE PRECIFICAÇÃO -->
+              <div class="option-selector" style="margin-top:14px;">
+                <div class="option-selector-label">Modo de precificação</div>
+                <div class="option-btn-group">
+                  <button class="option-btn" id="dig-mode-btn-peca" onclick="setDigMode('peca')">
+                    Por peça<small>preço unitário</small>
+                  </button>
+                  <button class="option-btn active-opt2" id="dig-mode-btn-metro" onclick="setDigMode('metro')">
+                    Por metro / m²<small>calcular dimensões</small>
+                  </button>
                 </div>
               </div>
 
-              <div id="dig-calc-detail" class="calc-detail" style="display:none;">
-                <div class="calc-detail-title">📐 Cálculo de Material</div>
-                <div class="calc-detail-row"><span>Peças por fileira (mat.largura ÷ arte.largura)</span><span id="dd-peca-fileira">—</span></div>
-                <div class="calc-detail-row"><span>Fileiras necessárias</span><span id="dd-fileiras">—</span></div>
-                <div class="calc-detail-row"><span>Metros lineares necessários</span><span id="dd-metros">—</span></div>
-                <div class="calc-detail-row"><span>Área total utilizada</span><span id="dd-area-total">—</span></div>
+              <!-- METRO MODE: dimensões -->
+              <div id="dig-metro-section">
+                <div class="divider"><span>Medidas da Arte / Peça</span></div>
+                <div style="font-size:12px;color:var(--text-muted);margin-bottom:10px;">Use vírgula para decimais: ex <strong>1,26</strong> ou <strong>0,50</strong></div>
+                <div class="form-grid-3">
+                  <div class="form-group">
+                    <label>Largura da Arte (m)</label>
+                    <div class="input-suffix">
+                      <input type="text" inputmode="decimal" id="dig-art-w" placeholder="ex: 1,26" oninput="calcDigital()">
+                      <span>m</span>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label>Altura da Arte (m)</label>
+                    <div class="input-suffix">
+                      <input type="text" inputmode="decimal" id="dig-art-h" placeholder="ex: 0,80" oninput="calcDigital()">
+                      <span>m</span>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label>Área / Peça (m²)</label>
+                    <input type="text" id="dig-area-peca" readonly style="background:#f9fafb;font-family:var(--font-mono);font-weight:600;" value="—">
+                  </div>
+                </div>
+
+                <div id="dig-calc-detail" class="calc-detail" style="display:none;">
+                  <div class="calc-detail-title">📐 Cálculo de Material</div>
+                  <div class="calc-detail-row"><span>Peças por fileira (mat.largura ÷ arte.largura)</span><span id="dd-peca-fileira">—</span></div>
+                  <div class="calc-detail-row"><span>Fileiras necessárias</span><span id="dd-fileiras">—</span></div>
+                  <div class="calc-detail-row"><span>Metros lineares necessários</span><span id="dd-metros">—</span></div>
+                  <div class="calc-detail-row"><span>Área total utilizada</span><span id="dd-area-total">—</span></div>
+                </div>
               </div>
 
               <div class="divider"><span>Custos</span></div>
-              <div class="cost-section">
-                <div class="cost-section-title">Lançar custos (por m²)</div>
-                <div class="cost-row">
-                  <span class="cost-label">🎞️ Custo do Adesivo / Material</span>
-                  <div class="cost-input-wrap input-prefix">
-                    <span>R$</span>
-                    <input type="number" id="dig-custo-adesivo" placeholder="0,00" step="0.01" min="0" oninput="calcDigital()">
+
+              <!-- CUSTOS MODO: POR PEÇA (simples) -->
+              <div id="dig-peca-costs" style="display:none;">
+                <div class="cost-section">
+                  <div class="cost-section-title">Custos totais do lote (R$)</div>
+                  <div class="cost-row">
+                    <span class="cost-label">🎞️ Material / Adesivo (total do lote)</span>
+                    <div class="cost-input-wrap input-prefix">
+                      <span>R$</span>
+                      <input type="number" id="dig-custo-peca-mat" placeholder="0,00" step="0.01" min="0" oninput="calcDigital()">
+                    </div>
+                  </div>
+                  <div class="cost-row">
+                    <span class="cost-label">👷 Mão de obra (total do lote)</span>
+                    <div class="cost-input-wrap input-prefix">
+                      <span>R$</span>
+                      <input type="number" id="dig-custo-peca-mao" placeholder="0,00" step="0.01" min="0" oninput="calcDigital()">
+                    </div>
+                  </div>
+                  <div class="cost-row">
+                    <span class="cost-label">➕ Outros custos</span>
+                    <div class="cost-input-wrap input-prefix">
+                      <span>R$</span>
+                      <input type="number" id="dig-custo-peca-outros" placeholder="0,00" step="0.01" min="0" oninput="calcDigital()">
+                    </div>
                   </div>
                 </div>
-                <div class="cost-row">
-                  <span class="cost-label">🖨️ Custo da Tinta / Impressão</span>
-                  <div class="cost-input-wrap input-prefix">
-                    <span>R$</span>
-                    <input type="number" id="dig-custo-tinta" placeholder="0,00" step="0.01" min="0" oninput="calcDigital()">
+              </div>
+
+              <!-- CUSTOS MODO: POR METRO / M² -->
+              <div id="dig-metro-costs">
+                <div class="cost-section">
+                  <div class="cost-section-title">Custos totais do serviço (R$) — informe o valor real pago</div>
+                  <div class="cost-row">
+                    <span class="cost-label">🎞️ Material / Adesivo (custo total)</span>
+                    <div class="cost-input-wrap input-prefix">
+                      <span>R$</span>
+                      <input type="number" id="dig-custo-adesivo" placeholder="0,00" step="0.01" min="0" oninput="calcDigital()">
+                    </div>
                   </div>
-                </div>
-                <div class="cost-row">
-                  <span class="cost-label">✂️ Custo de Acabamento / Corte</span>
-                  <div class="cost-input-wrap input-prefix">
-                    <span>R$</span>
-                    <input type="number" id="dig-custo-acabamento" placeholder="0,00" step="0.01" min="0" oninput="calcDigital()">
+                  <div class="cost-row">
+                    <span class="cost-label">🖨️ Impressão / Tinta (custo total)</span>
+                    <div class="cost-input-wrap input-prefix">
+                      <span>R$</span>
+                      <input type="number" id="dig-custo-tinta" placeholder="0,00" step="0.01" min="0" oninput="calcDigital()">
+                    </div>
                   </div>
-                </div>
-                <div class="cost-row">
-                  <span class="cost-label">👷 Mão de obra</span>
-                  <div class="cost-input-wrap input-prefix">
-                    <span>R$</span>
-                    <input type="number" id="dig-custo-mao" placeholder="0,00" step="0.01" min="0" oninput="calcDigital()">
+                  <div class="cost-row">
+                    <span class="cost-label">✂️ Acabamento / Corte (custo total)</span>
+                    <div class="cost-input-wrap input-prefix">
+                      <span>R$</span>
+                      <input type="number" id="dig-custo-acabamento" placeholder="0,00" step="0.01" min="0" oninput="calcDigital()">
+                    </div>
                   </div>
-                </div>
-                <div class="cost-row">
-                  <span class="cost-label">➕ Outros</span>
-                  <div class="cost-input-wrap input-prefix">
-                    <span>R$</span>
-                    <input type="number" id="dig-custo-outros" placeholder="0,00" step="0.01" min="0" oninput="calcDigital()">
+                  <div class="cost-row">
+                    <span class="cost-label">👷 Mão de obra</span>
+                    <div class="cost-input-wrap input-prefix">
+                      <span>R$</span>
+                      <input type="number" id="dig-custo-mao" placeholder="0,00" step="0.01" min="0" oninput="calcDigital()">
+                    </div>
+                  </div>
+                  <div class="cost-row">
+                    <span class="cost-label">➕ Outros</span>
+                    <div class="cost-input-wrap input-prefix">
+                      <span>R$</span>
+                      <input type="number" id="dig-custo-outros" placeholder="0,00" step="0.01" min="0" oninput="calcDigital()">
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1260,6 +1310,7 @@ let lastDigitalData = null;
 let offSelectedOpt = 1;
 let digSelectedOpt = 1;
 let offChapaMode = null; // null | 4 | 5 | 'manual'
+let digMode = 'metro'; // 'peca' | 'metro'
 let cart = [];
 
 // =================== UTILS ===================
@@ -1512,52 +1563,102 @@ function clearOffset() {
   selectOffOpt(1);
 }
 
+// =================== DIGITAL MODE ===================
+function parseDecimal(id) {
+  const raw = (el(id)?.value || '').replace(',', '.');
+  return parseFloat(raw) || 0;
+}
+
+function setDigMode(mode) {
+  digMode = mode;
+  el('dig-mode-btn-peca').className = 'option-btn' + (mode === 'peca' ? ' active-opt1' : '');
+  el('dig-mode-btn-metro').className = 'option-btn' + (mode === 'metro' ? ' active-opt2' : '');
+  const isMetro = mode === 'metro';
+  el('dig-metro-section').style.display = isMetro ? 'block' : 'none';
+  el('dig-mat-largura-group').style.display = isMetro ? '' : 'none';
+  el('dig-peca-costs').style.display = mode === 'peca' ? 'block' : 'none';
+  el('dig-metro-costs').style.display = isMetro ? 'block' : 'none';
+  calcDigital();
+}
+
+function onDigProdutoChange() {
+  const p = vStr('dig-produto');
+  if (p === 'Adesivo Recortado') {
+    setDigMode('peca');
+  } else {
+    setDigMode('metro');
+  }
+}
+
 // =================== DIGITAL ===================
 function getMatLargura() {
   const sel = el('dig-mat-largura').value;
-  if (sel === 'custom') return parseFloat(el('dig-mat-custom').value) || 0;
+  if (sel === 'custom') return parseDecimal('dig-mat-custom');
   return parseFloat(sel);
 }
 
 function calcDigital() {
   const qtd = parseQty('dig-qtd') || 0;
-  const matW = getMatLargura();
-  const artW = v('dig-art-w');
-  const artH = v('dig-art-h');
-
-  let metros = 0, pecasPorFileira = 0, fileiras = 0, areaTotal = 0;
-
-  if (artW > 0 && artH > 0 && matW > 0 && qtd > 0) {
-    pecasPorFileira = Math.floor(matW / artW);
-    if (pecasPorFileira < 1) pecasPorFileira = 1;
-    fileiras = Math.ceil(qtd / pecasPorFileira);
-    metros = fileiras * artH;
-    areaTotal = metros * matW;
-
-    el('dig-calc-detail').style.display = 'block';
-    el('dd-peca-fileira').textContent = pecasPorFileira + ' peça(s)';
-    el('dd-fileiras').textContent = fileiras;
-    el('dd-metros').textContent = metros.toFixed(2) + ' m';
-    el('dd-area-total').textContent = areaTotal.toFixed(2) + ' m²';
-    el('dig-area-peca').value = (artW * artH).toFixed(4) + ' m²';
-  } else {
-    el('dig-calc-detail').style.display = 'none';
-    el('dig-area-peca').value = '—';
-  }
-
   const manual = v('dig-custo-manual');
   let total = 0;
+  let metros = 0, areaTotal = 0;
+  const items = [];
 
-  if (manual > 0) {
-    total = manual;
+  if (digMode === 'peca') {
+    if (manual > 0) {
+      total = manual;
+      items.push({ label: 'Custo manual informado', value: manual });
+    } else {
+      const mat = v('dig-custo-peca-mat');
+      const mao = v('dig-custo-peca-mao');
+      const outros = v('dig-custo-peca-outros');
+      total = mat + mao + outros;
+      if (mat > 0)    items.push({ label: 'Material / Adesivo', value: mat });
+      if (mao > 0)    items.push({ label: 'Mão de obra', value: mao });
+      if (outros > 0) items.push({ label: 'Outros', value: outros });
+    }
   } else {
-    const costPerM2 = v('dig-custo-adesivo') + v('dig-custo-tinta');
-    const fixedCosts = v('dig-custo-acabamento') + v('dig-custo-mao') + v('dig-custo-outros');
-    total = (areaTotal * costPerM2) + fixedCosts;
+    // metro mode
+    const matW = getMatLargura();
+    const artW = parseDecimal('dig-art-w');
+    const artH = parseDecimal('dig-art-h');
+
+    if (artW > 0 && artH > 0 && matW > 0 && qtd > 0) {
+      let pecasPorFileira = Math.floor(matW / artW);
+      if (pecasPorFileira < 1) pecasPorFileira = 1;
+      const fileiras = Math.ceil(qtd / pecasPorFileira);
+      metros = fileiras * artH;
+      areaTotal = metros * matW;
+      el('dig-calc-detail').style.display = 'block';
+      el('dd-peca-fileira').textContent = pecasPorFileira + ' peça(s)';
+      el('dd-fileiras').textContent = fileiras;
+      el('dd-metros').textContent = metros.toFixed(2) + ' m';
+      el('dd-area-total').textContent = areaTotal.toFixed(2) + ' m²';
+      el('dig-area-peca').value = (artW * artH).toFixed(4) + ' m²';
+    } else {
+      el('dig-calc-detail').style.display = 'none';
+      el('dig-area-peca').value = '—';
+    }
+
+    if (manual > 0) {
+      total = manual;
+      items.push({ label: 'Custo manual informado', value: manual });
+    } else {
+      const f = [
+        ['dig-custo-adesivo','Material / Adesivo'],
+        ['dig-custo-tinta','Impressão / Tinta'],
+        ['dig-custo-acabamento','Acabamento / Corte'],
+        ['dig-custo-mao','Mão de obra'],
+        ['dig-custo-outros','Outros'],
+      ];
+      f.forEach(([id, label]) => {
+        const val = v(id);
+        if (val > 0) { total += val; items.push({ label, value: val }); }
+      });
+    }
   }
 
   const custoPeca = qtd > 0 ? total / qtd : 0;
-
   el('dig-total-val').textContent = fmt(total);
   el('dig-custo-peca').textContent = fmtBRL(custoPeca) + ' / peça';
   el('dig-price-25').textContent = fmtBRL(total * 2.5);
@@ -1566,9 +1667,10 @@ function calcDigital() {
   el('dig-result').style.opacity = total > 0 ? '1' : '0.4';
 
   if (metros > 0) {
+    const matW = getMatLargura();
     el('dig-metros-info').innerHTML = `📏 Material: <strong>${metros.toFixed(2)}m lineares</strong> × ${matW}m = <strong>${areaTotal.toFixed(2)}m²</strong>`;
   } else {
-    el('dig-metros-info').textContent = 'Informe as medidas para ver o detalhamento.';
+    el('dig-metros-info').textContent = digMode === 'peca' ? 'Modo por peça — informe os custos totais do lote.' : 'Informe as medidas para ver o detalhamento.';
   }
 
   const enabled = total > 0;
@@ -1579,20 +1681,6 @@ function calcDigital() {
     const cliente = vStr('dig-cliente');
     const produto = vStr('dig-produto');
     const qtdStr = qtd > 0 ? qtd.toLocaleString('pt-BR') + ' unid.' : '—';
-    const items = [];
-    const f = [
-      ['dig-custo-adesivo','Adesivo / Material (por m²)'],
-      ['dig-custo-tinta','Tinta / Impressão (por m²)'],
-      ['dig-custo-acabamento','Acabamento / Corte'],
-      ['dig-custo-mao','Mão de obra'],
-      ['dig-custo-outros','Outros'],
-    ];
-    f.forEach(([id, label]) => {
-      const val = v(id);
-      if (val > 0) items.push({ label, value: val });
-    });
-    if (manual > 0) items.push({ label: 'Custo manual informado', value: manual });
-
     lastDigitalData = {
       tipo: 'Digital / Plota',
       cliente, produto, qtd: qtdStr, total, items,
@@ -1604,7 +1692,10 @@ function calcDigital() {
 
 function clearDigital() {
   el('dig-post-add').style.display = 'none';
-  ['dig-cliente','dig-qtd','dig-art-w','dig-art-h','dig-custo-adesivo','dig-custo-tinta','dig-custo-acabamento','dig-custo-mao','dig-custo-outros','dig-custo-manual'].forEach(id => { if(el(id)) el(id).value = ''; });
+  ['dig-cliente','dig-qtd','dig-art-w','dig-art-h',
+   'dig-custo-adesivo','dig-custo-tinta','dig-custo-acabamento','dig-custo-mao','dig-custo-outros',
+   'dig-custo-peca-mat','dig-custo-peca-mao','dig-custo-peca-outros',
+   'dig-custo-manual','dig-mat-custom'].forEach(id => { if(el(id)) el(id).value = ''; });
   el('dig-produto').value = '';
   el('dig-mat-largura').value = '1.60';
   el('dig-calc-detail').style.display = 'none';
@@ -1620,6 +1711,7 @@ function clearDigital() {
   el('btn-cart-dig').disabled = true;
   lastDigitalData = null;
   selectDigOpt(1);
+  setDigMode('metro');
 }
 
 // =================== CART ===================
