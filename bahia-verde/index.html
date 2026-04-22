@@ -1,0 +1,1601 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bahia Verde | Jardinagem, Paisagismo e Plantas | Bahia</title>
+  <meta name="description" content="Bahia Verde — especialistas em jardinagem, manutenção de jardins, paisagismo e comércio de plantas na Bahia. Transforme seu espaço verde." />
+  <meta property="og:title" content="Bahia Verde | Jardinagem e Paisagismo" />
+  <meta property="og:description" content="Jardinagem, manutenção, paisagismo e comércio de plantas. Natureza que transforma." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ============================================
+       CSS VARIABLES & RESET
+    ============================================ */
+    :root {
+      --primary: #2A4D0F;
+      --primary-light: #3D6B1A;
+      --accent: #7AB648;
+      --accent-bright: #9CD656;
+      --earth: #8B6A1A;
+      --earth-light: #C9A247;
+      --bg: #F4F6EE;
+      --bg-warm: #EDEEE6;
+      --bg-dark: #141F09;
+      --bg-dark2: #1E2E0D;
+      --text: #1A2A08;
+      --text-muted: #5A6B42;
+      --white: #FDFFE8;
+      --border: rgba(42, 77, 15, 0.12);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    /* ============================================
+       ANIMATIONS
+    ============================================ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    @keyframes slideRight {
+      from { opacity: 0; transform: translateX(-60px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes slideLeft {
+      from { opacity: 0; transform: translateX(60px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.88); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes revealLine {
+      from { transform: scaleX(0); }
+      to   { transform: scaleX(1); }
+    }
+
+    @keyframes pulse-wp {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.5); }
+      50%       { box-shadow: 0 0 0 14px rgba(37, 211, 102, 0); }
+    }
+
+    @keyframes floatLeaf {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      33%       { transform: translateY(-12px) rotate(3deg); }
+      66%       { transform: translateY(-6px) rotate(-2deg); }
+    }
+
+    @keyframes gradientShift {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(48px);
+      transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-48px);
+      transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .reveal-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(48px);
+      transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .reveal-right.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* ============================================
+       HEADER / NAV
+    ============================================ */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.4s, backdrop-filter 0.4s, padding 0.4s;
+    }
+
+    header.scrolled {
+      background: rgba(20, 31, 9, 0.92);
+      backdrop-filter: blur(12px);
+      padding: 14px 24px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .logo-mark {
+      width: 38px;
+      height: 38px;
+      background: var(--accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      animation: floatLeaf 4s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+
+    .logo-text {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 20px;
+      color: var(--white);
+      letter-spacing: 0.02em;
+    }
+
+    nav {
+      display: none;
+    }
+
+    .nav-cta {
+      display: none;
+      background: var(--accent);
+      color: var(--text);
+      padding: 10px 22px;
+      border-radius: 100px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .nav-cta:hover {
+      background: var(--accent-bright);
+      transform: scale(1.04);
+    }
+
+    /* ============================================
+       HERO
+    ============================================ */
+    #hero {
+      position: relative;
+      height: 100svh;
+      min-height: 600px;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=1600&q=80&auto=format&fit=crop');
+      background-size: cover;
+      background-position: center 30%;
+      transform: scale(1.08);
+      animation: scaleIn 1.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        160deg,
+        rgba(14, 22, 5, 0.72) 0%,
+        rgba(20, 35, 8, 0.55) 50%,
+        rgba(42, 77, 15, 0.35) 100%
+      );
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 24px 64px;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(122, 182, 72, 0.2);
+      border: 1px solid rgba(122, 182, 72, 0.4);
+      color: var(--accent-bright);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 20px;
+      width: fit-content;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--accent-bright);
+      border-radius: 50%;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 900;
+      font-size: clamp(52px, 14vw, 88px);
+      line-height: 0.95;
+      color: var(--white);
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--accent-bright);
+    }
+
+    .hero-subtitle {
+      font-size: 16px;
+      font-weight: 300;
+      color: rgba(253, 255, 232, 0.8);
+      line-height: 1.6;
+      max-width: 340px;
+      margin-bottom: 36px;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: var(--accent);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      padding: 18px 32px;
+      border-radius: 100px;
+      text-decoration: none;
+      min-height: 56px;
+      transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
+      width: 100%;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-bright);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(122, 182, 72, 0.4);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: transparent;
+      color: var(--white);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      padding: 18px 32px;
+      border-radius: 100px;
+      text-decoration: none;
+      border: 1.5px solid rgba(253, 255, 232, 0.35);
+      min-height: 56px;
+      transition: border-color 0.25s, background 0.25s;
+      width: 100%;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(253, 255, 232, 0.08);
+      border-color: rgba(253, 255, 232, 0.6);
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 24px;
+      right: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      color: rgba(253, 255, 232, 0.5);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fadeIn 1s 1.4s forwards;
+    }
+
+    .hero-scroll::after {
+      content: '';
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, rgba(253, 255, 232, 0.4), transparent);
+    }
+
+    /* ============================================
+       STRIP / TAGS
+    ============================================ */
+    .tag-strip {
+      background: var(--primary);
+      overflow: hidden;
+      padding: 0;
+    }
+
+    .tag-strip-inner {
+      display: flex;
+      gap: 0;
+      white-space: nowrap;
+    }
+
+    .tag-strip-track {
+      display: flex;
+      gap: 0;
+      animation: marquee 22s linear infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    .tag-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 32px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(122, 182, 72, 0.7);
+    }
+
+    .tag-item span {
+      color: var(--accent);
+      font-size: 18px;
+    }
+
+    /* ============================================
+       ABOUT
+    ============================================ */
+    #sobre {
+      padding: 80px 24px;
+      overflow: hidden;
+    }
+
+    .about-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+
+    .about-visual {
+      position: relative;
+    }
+
+    .about-img-main {
+      width: 100%;
+      height: 340px;
+      object-fit: cover;
+      border-radius: 16px;
+      display: block;
+    }
+
+    .about-badge {
+      position: absolute;
+      bottom: -20px;
+      right: 20px;
+      background: var(--earth);
+      color: var(--white);
+      padding: 16px 20px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(139, 106, 26, 0.4);
+    }
+
+    .about-badge-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      font-weight: 900;
+      line-height: 1;
+      display: block;
+    }
+
+    .about-badge-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.85;
+    }
+
+    .about-text {
+      padding-top: 24px;
+    }
+
+    .section-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .section-eyebrow::before {
+      content: '';
+      width: 24px;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: clamp(32px, 8vw, 52px);
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+
+    .section-title em {
+      font-style: italic;
+      color: var(--primary-light);
+    }
+
+    .about-description {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+    }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .stat-item {
+      padding: 20px;
+      background: var(--bg-warm);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      font-weight: 900;
+      color: var(--primary);
+      line-height: 1;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    /* ============================================
+       SERVICES
+    ============================================ */
+    #servicos {
+      padding: 80px 24px;
+      background: var(--bg-dark);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #servicos::before {
+      content: '';
+      position: absolute;
+      top: -60px;
+      left: -60px;
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(42, 77, 15, 0.6) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    #servicos::after {
+      content: '';
+      position: absolute;
+      bottom: -80px;
+      right: -80px;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(122, 182, 72, 0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .services-header {
+      margin-bottom: 52px;
+    }
+
+    .services-header .section-eyebrow {
+      color: var(--accent);
+    }
+
+    .services-header .section-eyebrow::before {
+      background: var(--accent);
+    }
+
+    .services-header .section-title {
+      color: var(--white);
+    }
+
+    .services-header .section-title em {
+      color: var(--accent);
+    }
+
+    .services-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .service-card {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(122, 182, 72, 0.15);
+      border-radius: 16px;
+      padding: 28px 24px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.35s, border-color 0.35s, transform 0.35s, box-shadow 0.35s;
+      cursor: default;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(122, 182, 72, 0.08) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.35s;
+    }
+
+    .service-card:hover {
+      background: rgba(255, 255, 255, 0.07);
+      border-color: rgba(122, 182, 72, 0.45);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    }
+
+    .service-card:hover::before {
+      opacity: 1;
+    }
+
+    .service-icon {
+      width: 52px;
+      height: 52px;
+      background: rgba(122, 182, 72, 0.15);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      margin-bottom: 18px;
+      transition: background 0.35s, transform 0.35s;
+    }
+
+    .service-card:hover .service-icon {
+      background: rgba(122, 182, 72, 0.25);
+      transform: scale(1.08) rotate(-4deg);
+    }
+
+    .service-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 10px;
+    }
+
+    .service-desc {
+      font-size: 14px;
+      font-weight: 300;
+      color: rgba(253, 255, 232, 0.6);
+      line-height: 1.7;
+    }
+
+    .service-arrow {
+      position: absolute;
+      top: 28px;
+      right: 24px;
+      width: 32px;
+      height: 32px;
+      border: 1px solid rgba(122, 182, 72, 0.3);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      font-size: 14px;
+      transition: background 0.3s, border-color 0.3s, transform 0.3s;
+    }
+
+    .service-card:hover .service-arrow {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--text);
+      transform: rotate(45deg);
+    }
+
+    /* ============================================
+       GALLERY
+    ============================================ */
+    #galeria {
+      padding: 80px 24px;
+      overflow: hidden;
+    }
+
+    .gallery-header {
+      margin-bottom: 40px;
+    }
+
+    .gallery-bento {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 200px 200px 200px;
+      gap: 10px;
+    }
+
+    .gallery-item {
+      overflow: hidden;
+      border-radius: 12px;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .gallery-item:first-child {
+      grid-column: 1 / 3;
+      grid-row: 1 / 2;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.08);
+    }
+
+    .gallery-item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(20, 31, 9, 0.4), transparent 50%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .gallery-item:hover::after {
+      opacity: 1;
+    }
+
+    /* ============================================
+       WHY US
+    ============================================ */
+    #diferenciais {
+      padding: 80px 24px;
+      background: var(--bg-warm);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .diferenciais-header {
+      margin-bottom: 48px;
+    }
+
+    .diff-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .diff-item {
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+    }
+
+    .diff-num {
+      flex-shrink: 0;
+      font-family: 'Playfair Display', serif;
+      font-size: 42px;
+      font-weight: 900;
+      color: var(--border);
+      line-height: 1;
+      min-width: 44px;
+      transition: color 0.3s;
+    }
+
+    .diff-item:hover .diff-num {
+      color: var(--accent);
+    }
+
+    .diff-body {
+      padding-top: 6px;
+    }
+
+    .diff-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 19px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .diff-text {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    /* ============================================
+       TESTIMONIAL
+    ============================================ */
+    #depoimento {
+      padding: 80px 24px;
+      background: var(--primary);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #depoimento::before {
+      content: '"';
+      position: absolute;
+      top: -20px;
+      left: 8px;
+      font-family: 'Playfair Display', serif;
+      font-size: 240px;
+      font-weight: 900;
+      color: rgba(122, 182, 72, 0.08);
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .testimonial-quote {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(22px, 6vw, 34px);
+      font-weight: 400;
+      font-style: italic;
+      color: var(--white);
+      line-height: 1.5;
+      margin-bottom: 32px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .author-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .author-name {
+      font-weight: 600;
+      color: var(--white);
+      font-size: 15px;
+    }
+
+    .author-role {
+      font-size: 13px;
+      font-weight: 300;
+      color: rgba(253, 255, 232, 0.6);
+    }
+
+    .testimonial-stars {
+      display: flex;
+      gap: 3px;
+      margin-bottom: 20px;
+    }
+
+    .testimonial-stars span {
+      color: var(--earth-light);
+      font-size: 18px;
+    }
+
+    /* ============================================
+       CONTACT
+    ============================================ */
+    #contato {
+      padding: 80px 24px 100px;
+      background: var(--bg-dark2);
+      position: relative;
+      overflow: hidden;
+    }
+
+    #contato::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--accent), transparent);
+    }
+
+    .contact-header {
+      margin-bottom: 48px;
+    }
+
+    .contact-header .section-eyebrow {
+      color: var(--accent);
+    }
+
+    .contact-header .section-eyebrow::before {
+      background: var(--accent);
+    }
+
+    .contact-header .section-title {
+      color: var(--white);
+    }
+
+    .contact-header .section-title em {
+      color: var(--accent);
+    }
+
+    .contact-desc {
+      font-size: 15px;
+      font-weight: 300;
+      color: rgba(253, 255, 232, 0.6);
+      line-height: 1.7;
+      margin-top: 16px;
+    }
+
+    .contact-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 40px;
+    }
+
+    .contact-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 20px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(122, 182, 72, 0.12);
+      border-radius: 12px;
+    }
+
+    .contact-card-icon {
+      width: 42px;
+      height: 42px;
+      background: rgba(122, 182, 72, 0.12);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .contact-card-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 2px;
+    }
+
+    .contact-card-value {
+      font-size: 14px;
+      font-weight: 400;
+      color: rgba(253, 255, 232, 0.8);
+    }
+
+    .btn-whatsapp-big {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: #25D366;
+      color: #111;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      padding: 20px 32px;
+      border-radius: 100px;
+      text-decoration: none;
+      min-height: 60px;
+      width: 100%;
+      transition: background 0.25s, transform 0.25s, box-shadow 0.25s;
+    }
+
+    .btn-whatsapp-big:hover {
+      background: #20bf5b;
+      transform: translateY(-2px);
+      box-shadow: 0 16px 40px rgba(37, 211, 102, 0.35);
+    }
+
+    .btn-whatsapp-big svg {
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+    }
+
+    /* ============================================
+       FOOTER
+    ============================================ */
+    footer {
+      background: var(--bg-dark);
+      padding: 32px 24px;
+      border-top: 1px solid rgba(122, 182, 72, 0.08);
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+
+    .footer-logo em {
+      color: var(--accent);
+      font-style: italic;
+    }
+
+    .footer-tagline {
+      font-size: 13px;
+      color: rgba(253, 255, 232, 0.4);
+      margin-bottom: 20px;
+    }
+
+    .footer-copy {
+      font-size: 12px;
+      color: rgba(253, 255, 232, 0.25);
+    }
+
+    /* ============================================
+       WHATSAPP FLOAT BUTTON
+    ============================================ */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 28px;
+      right: 24px;
+      z-index: 999;
+      width: 60px;
+      height: 60px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+      animation: pulse-wp 2.5s ease-in-out infinite;
+      text-decoration: none;
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+
+    .whatsapp-float:hover {
+      transform: scale(1.12);
+      box-shadow: 0 8px 24px rgba(37, 211, 102, 0.5);
+      animation: none;
+    }
+
+    .whatsapp-float svg {
+      width: 30px;
+      height: 30px;
+    }
+
+    /* ============================================
+       DESKTOP BREAKPOINTS
+    ============================================ */
+    @media (min-width: 768px) {
+      header {
+        padding: 24px 48px;
+      }
+
+      header.scrolled {
+        padding: 16px 48px;
+      }
+
+      nav {
+        display: flex;
+        align-items: center;
+        gap: 32px;
+      }
+
+      nav a {
+        font-size: 14px;
+        font-weight: 500;
+        color: rgba(253, 255, 232, 0.75);
+        text-decoration: none;
+        transition: color 0.2s;
+      }
+
+      nav a:hover {
+        color: var(--white);
+      }
+
+      .nav-cta {
+        display: inline-flex;
+      }
+
+      .hero-content {
+        padding: 0 48px 80px;
+        max-width: 660px;
+      }
+
+      .hero-actions {
+        flex-direction: row;
+      }
+
+      .btn-primary,
+      .btn-secondary {
+        width: auto;
+        min-width: 200px;
+      }
+
+      #sobre {
+        padding: 120px 48px;
+      }
+
+      .about-grid {
+        flex-direction: row;
+        align-items: center;
+        gap: 64px;
+      }
+
+      .about-visual {
+        flex: 1;
+      }
+
+      .about-text {
+        flex: 1;
+        padding-top: 0;
+      }
+
+      .about-img-main {
+        height: 480px;
+      }
+
+      #servicos {
+        padding: 120px 48px;
+      }
+
+      .services-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 20px;
+      }
+
+      #galeria {
+        padding: 120px 48px;
+      }
+
+      .gallery-bento {
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: 280px 280px;
+        gap: 14px;
+      }
+
+      .gallery-item:first-child {
+        grid-column: 1 / 3;
+        grid-row: 1 / 2;
+      }
+
+      .gallery-item:nth-child(4) {
+        grid-column: 3 / 5;
+        grid-row: 2 / 3;
+      }
+
+      #diferenciais {
+        padding: 120px 48px;
+      }
+
+      .diff-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px 60px;
+      }
+
+      #depoimento {
+        padding: 120px 48px;
+      }
+
+      .testimonial-inner {
+        max-width: 760px;
+      }
+
+      #contato {
+        padding: 120px 48px 140px;
+      }
+
+      .contact-cards {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+
+      .btn-whatsapp-big {
+        max-width: 400px;
+        margin: 0 auto;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .hero-content {
+        padding: 0 80px 100px;
+        max-width: 720px;
+      }
+
+      #sobre { padding: 140px 80px; }
+      #servicos { padding: 140px 80px; }
+      #galeria { padding: 140px 80px; }
+      #diferenciais { padding: 140px 80px; }
+      #depoimento { padding: 140px 80px; }
+      #contato { padding: 140px 80px 160px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header id="main-header">
+    <a href="#hero" class="logo">
+      <div class="logo-mark">🌿</div>
+      <span class="logo-text">Bahia Verde</span>
+    </a>
+    <nav>
+      <a href="#sobre">Sobre</a>
+      <a href="#servicos">Serviços</a>
+      <a href="#galeria">Galeria</a>
+      <a href="#contato">Contato</a>
+    </nav>
+    <a href="https://wa.me/5571999999999" target="_blank" rel="noopener" class="nav-cta">
+      Solicitar Orçamento
+    </a>
+  </header>
+
+  <!-- ===== HERO ===== -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Bahia Verde · Paisagismo</div>
+      <h1 class="hero-title">
+        Natureza<br />
+        que <em>transforma</em>
+      </h1>
+      <p class="hero-subtitle">
+        Jardinagem, manutenção, paisagismo e comércio de plantas. Cuidamos do verde do seu espaço com dedicação e expertise.
+      </p>
+      <div class="hero-actions">
+        <a href="https://wa.me/5571999999999" target="_blank" rel="noopener" class="btn-primary">
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Falar no WhatsApp
+        </a>
+        <a href="#servicos" class="btn-secondary">
+          Ver Serviços
+        </a>
+      </div>
+    </div>
+    <div class="hero-scroll">scroll</div>
+  </section>
+
+  <!-- ===== TAG STRIP ===== -->
+  <div class="tag-strip">
+    <div class="tag-strip-inner">
+      <div class="tag-strip-track">
+        <div class="tag-item"><span>🌱</span> Paisagismo</div>
+        <div class="tag-item"><span>✂️</span> Manutenção</div>
+        <div class="tag-item"><span>🌿</span> Jardinagem</div>
+        <div class="tag-item"><span>🪴</span> Comércio de Plantas</div>
+        <div class="tag-item"><span>🌳</span> Projetos Verdes</div>
+        <div class="tag-item"><span>💚</span> Qualidade e Cuidado</div>
+        <div class="tag-item"><span>🌻</span> Natureza que Transforma</div>
+        <div class="tag-item"><span>🌱</span> Paisagismo</div>
+        <div class="tag-item"><span>✂️</span> Manutenção</div>
+        <div class="tag-item"><span>🌿</span> Jardinagem</div>
+        <div class="tag-item"><span>🪴</span> Comércio de Plantas</div>
+        <div class="tag-item"><span>🌳</span> Projetos Verdes</div>
+        <div class="tag-item"><span>💚</span> Qualidade e Cuidado</div>
+        <div class="tag-item"><span>🌻</span> Natureza que Transforma</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== ABOUT ===== -->
+  <section id="sobre">
+    <div class="about-grid">
+      <div class="about-visual reveal-left">
+        <img
+          class="about-img-main"
+          src="https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?w=800&q=80&auto=format&fit=crop"
+          alt="Equipe Bahia Verde trabalhando no jardim"
+          loading="lazy"
+        />
+        <div class="about-badge">
+          <span class="about-badge-num">10+</span>
+          <span class="about-badge-label">Anos de Experiência</span>
+        </div>
+      </div>
+      <div class="about-text reveal-right">
+        <div class="section-eyebrow">Quem Somos</div>
+        <h2 class="section-title">
+          Especialistas em<br />
+          <em>espaços verdes</em>
+        </h2>
+        <p class="about-description">
+          A Bahia Verde nasceu da paixão pelo verde e pelo cuidado com a natureza. Atuamos com jardinagem, manutenção de jardins, projetos de paisagismo e comércio de plantas, levando beleza e vida a cada espaço que tocamos.
+        </p>
+        <p class="about-description" style="margin-top: -12px;">
+          Do projeto à execução, nosso time cuida de cada detalhe para que seu jardim seja exatamente o refúgio verde que você sempre sonhou.
+        </p>
+        <div class="about-stats">
+          <div class="stat-item">
+            <span class="stat-num">500+</span>
+            <span class="stat-label">Projetos Realizados</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-num">100%</span>
+            <span class="stat-label">Satisfação Garantida</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-num">50+</span>
+            <span class="stat-label">Espécies Disponíveis</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-num">BA</span>
+            <span class="stat-label">Toda a Bahia</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SERVICES ===== -->
+  <section id="servicos">
+    <div class="services-header reveal">
+      <div class="section-eyebrow">O Que Fazemos</div>
+      <h2 class="section-title">Nossos <em>Serviços</em></h2>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal" style="transition-delay: 0.1s">
+        <div class="service-icon">🌱</div>
+        <div class="service-arrow">→</div>
+        <div class="service-name">Jardinagem</div>
+        <p class="service-desc">Cuidado completo do seu jardim: plantio, adubação, irrigação e tudo que o verde precisa para florescer com saúde.</p>
+      </div>
+      <div class="service-card reveal" style="transition-delay: 0.2s">
+        <div class="service-icon">✂️</div>
+        <div class="service-arrow">→</div>
+        <div class="service-name">Manutenção</div>
+        <p class="service-desc">Serviço regular de poda, capina, adubação e conservação para que seu jardim esteja sempre impecável.</p>
+      </div>
+      <div class="service-card reveal" style="transition-delay: 0.3s">
+        <div class="service-icon">🏡</div>
+        <div class="service-arrow">→</div>
+        <div class="service-name">Paisagismo</div>
+        <p class="service-desc">Projetos completos de paisagismo que harmonizam natureza, espaço e estética para transformar ambientes internos e externos.</p>
+      </div>
+      <div class="service-card reveal" style="transition-delay: 0.4s">
+        <div class="service-icon">🪴</div>
+        <div class="service-arrow">→</div>
+        <div class="service-name">Comércio de Plantas</div>
+        <p class="service-desc">Venda de plantas ornamentais, suculentas, arbustos, árvores frutíferas e muito mais. Grande variedade de espécies.</p>
+      </div>
+      <div class="service-card reveal" style="transition-delay: 0.5s">
+        <div class="service-icon">💧</div>
+        <div class="service-arrow">→</div>
+        <div class="service-name">Irrigação</div>
+        <p class="service-desc">Instalação e manutenção de sistemas de irrigação automatizados para manter seu jardim sempre hidratado.</p>
+      </div>
+      <div class="service-card reveal" style="transition-delay: 0.6s">
+        <div class="service-icon">🌳</div>
+        <div class="service-arrow">→</div>
+        <div class="service-name">Arborização</div>
+        <p class="service-desc">Plantio e cuidado de árvores para criar sombra, beleza e um ambiente mais saudável no seu espaço externo.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== GALLERY ===== -->
+  <section id="galeria">
+    <div class="gallery-header reveal">
+      <div class="section-eyebrow">Nosso Trabalho</div>
+      <h2 class="section-title">
+        Cada espaço,<br />
+        uma <em>obra verde</em>
+      </h2>
+    </div>
+    <div class="gallery-bento">
+      <div class="gallery-item reveal">
+        <img
+          src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200&q=80&auto=format&fit=crop"
+          alt="Jardim paisagismo Bahia Verde"
+          loading="lazy"
+        />
+      </div>
+      <div class="gallery-item reveal" style="transition-delay: 0.1s">
+        <img
+          src="https://images.unsplash.com/photo-1416879595882-3373a0480b5b?w=600&q=80&auto=format&fit=crop"
+          alt="Jardim tropical"
+          loading="lazy"
+        />
+      </div>
+      <div class="gallery-item reveal" style="transition-delay: 0.2s">
+        <img
+          src="https://images.unsplash.com/photo-1459156212016-c812468e2115?w=600&q=80&auto=format&fit=crop"
+          alt="Plantas ornamentais"
+          loading="lazy"
+        />
+      </div>
+      <div class="gallery-item reveal" style="transition-delay: 0.3s">
+        <img
+          src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800&q=80&auto=format&fit=crop"
+          alt="Paisagismo jardim moderno"
+          loading="lazy"
+        />
+      </div>
+      <div class="gallery-item reveal" style="transition-delay: 0.4s">
+        <img
+          src="https://images.unsplash.com/photo-1599598425947-5202edd56bdb?w=600&q=80&auto=format&fit=crop"
+          alt="Plantas e flores"
+          loading="lazy"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== DIFERENCIAIS ===== -->
+  <section id="diferenciais">
+    <div class="diferenciais-header reveal">
+      <div class="section-eyebrow">Por Que Escolher</div>
+      <h2 class="section-title">
+        O que nos<br />
+        <em>diferencia</em>
+      </h2>
+    </div>
+    <div class="diff-grid">
+      <div class="diff-item reveal" style="transition-delay: 0.1s">
+        <span class="diff-num">01</span>
+        <div class="diff-body">
+          <h3 class="diff-title">Equipe Especializada</h3>
+          <p class="diff-text">Profissionais treinados e apaixonados por plantas, com conhecimento técnico e habilidade artística para criar jardins únicos.</p>
+        </div>
+      </div>
+      <div class="diff-item reveal" style="transition-delay: 0.2s">
+        <span class="diff-num">02</span>
+        <div class="diff-body">
+          <h3 class="diff-title">Atendimento Personalizado</h3>
+          <p class="diff-text">Cada cliente recebe um projeto pensado especialmente para seu espaço, estilo de vida e necessidades específicas.</p>
+        </div>
+      </div>
+      <div class="diff-item reveal" style="transition-delay: 0.3s">
+        <span class="diff-num">03</span>
+        <div class="diff-body">
+          <h3 class="diff-title">Plantas de Qualidade</h3>
+          <p class="diff-text">Trabalhamos apenas com mudas e plantas saudáveis, selecionadas criteriosamente para garantir beleza duradoura.</p>
+        </div>
+      </div>
+      <div class="diff-item reveal" style="transition-delay: 0.4s">
+        <span class="diff-num">04</span>
+        <div class="diff-body">
+          <h3 class="diff-title">Compromisso Ambiental</h3>
+          <p class="diff-text">Usamos práticas sustentáveis, priorizamos espécies nativas da Bahia e respeitamos o ecossistema local.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TESTIMONIAL ===== -->
+  <section id="depoimento">
+    <div class="testimonial-inner reveal">
+      <div class="testimonial-stars">
+        <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+      </div>
+      <p class="testimonial-quote">
+        "A Bahia Verde transformou completamente o meu jardim. O cuidado, a atenção aos detalhes e o profissionalismo da equipe são incomparáveis. Meu espaço virou um verdadeiro paraíso verde."
+      </p>
+      <div class="testimonial-author">
+        <div class="author-avatar">🌸</div>
+        <div>
+          <div class="author-name">Cliente Satisfeita</div>
+          <div class="author-role">Salvador, Bahia</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT ===== -->
+  <section id="contato">
+    <div class="contact-header reveal">
+      <div class="section-eyebrow">Fale Conosco</div>
+      <h2 class="section-title">
+        Vamos criar seu<br />
+        jardim <em>dos sonhos</em>
+      </h2>
+      <p class="contact-desc">
+        Entre em contato pelo WhatsApp para solicitar um orçamento gratuito. Atendemos em toda a Bahia.
+      </p>
+    </div>
+    <div class="contact-cards reveal" style="transition-delay: 0.15s">
+      <div class="contact-card">
+        <div class="contact-card-icon">📍</div>
+        <div>
+          <div class="contact-card-label">Localização</div>
+          <div class="contact-card-value">Bahia, Brasil</div>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-card-icon">🕐</div>
+        <div>
+          <div class="contact-card-label">Horário</div>
+          <div class="contact-card-value">Seg–Sáb: 7h às 18h</div>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-card-icon">🌿</div>
+        <div>
+          <div class="contact-card-label">Especialidade</div>
+          <div class="contact-card-value">Paisagismo & Jardinagem</div>
+        </div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-card-icon">💬</div>
+        <div>
+          <div class="contact-card-label">Orçamento</div>
+          <div class="contact-card-value">Grátis e sem compromisso</div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal" style="transition-delay: 0.3s">
+      <a href="https://wa.me/5571999999999" target="_blank" rel="noopener" class="btn-whatsapp-big">
+        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        Solicitar Orçamento Grátis
+      </a>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="footer-logo">Bahia <em>Verde</em></div>
+    <p class="footer-tagline">Natureza que transforma · Bahia, Brasil</p>
+    <p class="footer-copy">© 2025 Bahia Verde. Todos os direitos reservados.</p>
+  </footer>
+
+  <!-- ===== WHATSAPP FLOAT ===== -->
+  <a href="https://wa.me/5571999999999" target="_blank" rel="noopener" class="whatsapp-float" aria-label="Falar no WhatsApp">
+    <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+
+  <!-- ===== JS ===== -->
+  <script>
+    // Header scroll effect
+    const header = document.getElementById('main-header');
+    const onScroll = () => {
+      header.classList.toggle('scrolled', window.scrollY > 60);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    // Scroll reveal
+    const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.12,
+      rootMargin: '0px 0px -40px 0px'
+    });
+
+    revealEls.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
