@@ -3,34 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RPC Rádio Para Cristo — A melhor com louvor | Gospel 24h</title>
-  <meta name="description" content="RadioRPC.net — Rádio Para Cristo. A melhor com louvor. Música gospel nacional e internacional 24 horas. Transmissão ao vivo com qualidade de FM!">
-  <meta property="og:title" content="RPC Rádio Para Cristo — A melhor com louvor">
-  <meta property="og:description" content="A melhor com louvor. Rádio Para Cristo, gospel nacional e internacional 24 horas. Transmissão ao vivo com qualidade de FM.">
+  <title>RadioRPC.net — A melhor com louvor | Gospel 24h ao Vivo</title>
+  <meta name="description" content="RadioRPC.net — Rádio Para Cristo. A melhor com louvor. Gospel nacional e internacional 24 horas. Ouça ao vivo, participe e concorra a brindes!">
+  <meta property="og:title" content="RadioRPC.net — A melhor com louvor">
+  <meta property="og:description" content="A melhor com louvor. Gospel nacional e internacional 24h. Participe, peça músicas e concorra a brindes!">
   <meta property="og:type" content="website">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📻</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,700;12..96,800;12..96,900&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,700;0,800;0,900;1,700;1,900&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #07070F;
-      --surface: #0E0E1C;
-      --surface2: #14142A;
-      --primary: #D4960A;
-      --primary-light: #F0B020;
-      --accent: #C41230;
-      --text: #F2EDDF;
-      --muted: #7A7590;
-      --border: rgba(212, 150, 10, 0.2);
+      --bg:        #07070D;
+      --surface:   #0E0E1A;
+      --surface2:  #151524;
+      --primary:   #CC1127;
+      --primary-d: #9E0C1E;
+      --primary-l: #E8253D;
+      --accent:    #E8A30A;
+      --accent-l:  #F5BC2C;
+      --text:      #F2EDDF;
+      --muted:     #7A7595;
+      --border:    rgba(204,17,39,0.18);
+      --border-a:  rgba(232,163,10,0.18);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
 
     body {
-      background-color: var(--bg);
+      background: var(--bg);
       color: var(--text);
       font-family: 'Plus Jakarta Sans', sans-serif;
       font-weight: 300;
@@ -38,76 +40,135 @@
     }
 
     h1, h2, h3, h4 {
-      font-family: 'Bricolage Grotesque', sans-serif;
+      font-family: 'Barlow Condensed', sans-serif;
       font-optical-sizing: auto;
     }
 
-    /* NOISE TEXTURE */
+    /* ── NOISE ── */
     body::after {
       content: '';
       position: fixed;
       inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
       pointer-events: none;
       z-index: 9998;
-      opacity: 0.5;
+      opacity: 0.45;
     }
 
-    /* NAV */
+    /* ── TICKER ── */
+    .ticker-wrap {
+      background: var(--primary);
+      overflow: hidden;
+      padding: 9px 0;
+      position: relative;
+      z-index: 200;
+    }
+
+    .ticker-inner {
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+      animation: ticker-scroll 42s linear infinite;
+    }
+
+    .ticker-inner:hover { animation-play-state: paused; }
+
+    .ticker-item {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: white;
+      padding-right: 60px;
+    }
+
+    .ticker-item::before {
+      content: '▶';
+      margin-right: 10px;
+      opacity: 0.6;
+      font-size: 0.6rem;
+    }
+
+    .ticker-badge {
+      background: rgba(0,0,0,0.25);
+      padding: 2px 10px;
+      border-radius: 2px;
+      margin-right: 6px;
+      font-size: 0.68rem;
+    }
+
+    @keyframes ticker-scroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ── NAV ── */
     nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
+      position: sticky;
+      top: 0;
       z-index: 100;
-      padding: 18px 24px;
+      padding: 16px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: linear-gradient(to bottom, rgba(7,7,15,0.98), transparent);
-      backdrop-filter: blur(10px);
-      transition: background 0.3s;
+      background: rgba(7,7,13,0.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
     }
 
     .nav-logo {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
       text-decoration: none;
     }
 
     .nav-logo-img {
-      height: 38px;
+      height: 36px;
       width: auto;
       object-fit: contain;
       background: white;
       border-radius: 5px;
-      padding: 4px 8px;
+      padding: 3px 8px;
     }
 
-    .nav-logo-slogan {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-weight: 400;
-      font-size: 0.65rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--muted);
+    .nav-logo-text {
       display: none;
     }
 
     @media (min-width: 480px) {
-      .nav-logo-slogan { display: block; }
+      .nav-logo-text {
+        display: flex;
+        flex-direction: column;
+      }
+      .nav-logo-name {
+        font-family: 'Barlow Condensed', sans-serif;
+        font-weight: 900;
+        font-size: 1.1rem;
+        letter-spacing: 0.04em;
+        color: var(--text);
+        line-height: 1;
+      }
+      .nav-logo-sub {
+        font-size: 0.6rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
     }
 
-    .on-air {
+    .on-air-badge {
       display: flex;
       align-items: center;
       gap: 8px;
-      background: var(--accent);
-      padding: 6px 14px;
-      border-radius: 4px;
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-weight: 700;
-      font-size: 0.72rem;
-      letter-spacing: 0.18em;
+      background: var(--primary);
+      padding: 7px 16px;
+      border-radius: 3px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 0.82rem;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
     }
 
@@ -115,21 +176,21 @@
       width: 7px; height: 7px;
       border-radius: 50%;
       background: white;
-      animation: pulse-dot 1.3s ease-in-out infinite;
+      animation: blink-dot 1.4s ease-in-out infinite;
     }
 
-    @keyframes pulse-dot {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.35; transform: scale(0.65); }
+    @keyframes blink-dot {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.2; }
     }
 
-    /* HERO */
+    /* ── HERO ── */
     #hero {
       min-height: 100svh;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      padding: 0 24px 64px;
+      padding: 0 24px 72px;
       position: relative;
       overflow: hidden;
     }
@@ -138,36 +199,88 @@
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(ellipse 90% 60% at 50% 0%, rgba(212,150,10,0.13) 0%, transparent 55%),
-        radial-gradient(ellipse 70% 50% at 80% 85%, rgba(196,18,48,0.09) 0%, transparent 50%),
-        radial-gradient(ellipse 40% 40% at 10% 60%, rgba(212,150,10,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse 100% 65% at 50% -10%, rgba(204,17,39,0.22) 0%, transparent 55%),
+        radial-gradient(ellipse 60% 45% at 85% 90%, rgba(232,163,10,0.07) 0%, transparent 50%),
         var(--bg);
     }
 
-    /* Decorative frequency lines */
-    .freq-lines {
+    /* Big decorative "RPC" behind */
+    .hero-bg-text {
       position: absolute;
-      inset: 0;
-      overflow: hidden;
-      z-index: 0;
-      opacity: 0.07;
+      bottom: -60px;
+      right: -20px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-style: italic;
+      font-size: clamp(220px, 40vw, 420px);
+      line-height: 1;
+      color: rgba(204,17,39,0.04);
+      user-select: none;
+      pointer-events: none;
+      letter-spacing: -0.04em;
     }
 
-    .freq-lines::before {
-      content: '';
+    /* Signal waves decorative */
+    .hero-waves {
       position: absolute;
       top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 200%;
-      height: 200%;
-      background: repeating-linear-gradient(
-        90deg,
-        transparent,
-        transparent 40px,
-        rgba(212,150,10,0.3) 40px,
-        rgba(212,150,10,0.3) 41px
-      );
+      right: -60px;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      opacity: 0.06;
+      pointer-events: none;
+    }
+
+    .hero-wave {
+      height: 2px;
+      border-radius: 2px;
+      background: var(--primary);
+      animation: wave-pulse 2.8s ease-in-out infinite;
+    }
+
+    .hero-wave:nth-child(1) { width: 180px; animation-delay: 0s; }
+    .hero-wave:nth-child(2) { width: 140px; animation-delay: 0.3s; }
+    .hero-wave:nth-child(3) { width: 100px; animation-delay: 0.6s; }
+    .hero-wave:nth-child(4) { width: 70px; animation-delay: 0.9s; }
+    .hero-wave:nth-child(5) { width: 45px; animation-delay: 1.2s; }
+
+    @keyframes wave-pulse {
+      0%, 100% { opacity: 0.3; transform: scaleX(0.7); }
+      50% { opacity: 1; transform: scaleX(1); }
+    }
+
+    /* Signal bars (right) */
+    .hero-signal {
+      position: absolute;
+      right: 24px;
+      bottom: 80px;
+      display: flex;
+      align-items: flex-end;
+      gap: 6px;
+      opacity: 0;
+      animation: fade-in 1s ease forwards 1.4s;
+    }
+
+    .signal-bar {
+      width: 9px;
+      border-radius: 2px;
+      background: var(--primary);
+      animation: signal-anim 1.6s ease-in-out infinite;
+    }
+
+    .signal-bar:nth-child(1) { height: 12px; animation-delay: 0s; }
+    .signal-bar:nth-child(2) { height: 22px; animation-delay: 0.2s; }
+    .signal-bar:nth-child(3) { height: 36px; animation-delay: 0.1s; }
+    .signal-bar:nth-child(4) { height: 26px; animation-delay: 0.3s; }
+    .signal-bar:nth-child(5) { height: 44px; animation-delay: 0.05s; }
+    .signal-bar:nth-child(6) { height: 30px; animation-delay: 0.25s; }
+    .signal-bar:nth-child(7) { height: 18px; animation-delay: 0.15s; }
+
+    @keyframes signal-anim {
+      0%, 100% { opacity: 0.3; transform: scaleY(0.5); }
+      50% { opacity: 1; transform: scaleY(1); }
     }
 
     .hero-content {
@@ -176,70 +289,71 @@
     }
 
     .hero-eyebrow {
-      font-family: 'Bricolage Grotesque', sans-serif;
+      font-family: 'Barlow Condensed', sans-serif;
       font-weight: 700;
-      font-size: 0.68rem;
+      font-size: 0.7rem;
       letter-spacing: 0.32em;
       text-transform: uppercase;
-      color: var(--primary);
-      margin-bottom: 18px;
-      opacity: 0;
-      animation: slide-up 0.8s ease forwards 0.3s;
-    }
-
-    .hero-title {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-weight: 900;
-      font-size: clamp(3.2rem, 15vw, 8rem);
-      line-height: 0.88;
-      letter-spacing: -0.04em;
-      color: var(--text);
-      margin-bottom: 24px;
-      opacity: 0;
-      animation: slide-up 0.9s ease forwards 0.5s;
-    }
-
-    .hero-title .word-rpc { color: var(--primary); }
-    .hero-title .word-net {
-      display: block;
-      color: rgba(242,237,223,0.35);
-      font-style: italic;
-      font-size: 0.7em;
-    }
-
-    .hero-slogan {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-weight: 700;
-      font-size: clamp(1rem, 4vw, 1.4rem);
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
       color: var(--accent);
-      margin-bottom: 16px;
-      opacity: 0;
-      animation: slide-up 0.9s ease forwards 0.65s;
+      margin-bottom: 20px;
       display: flex;
       align-items: center;
       gap: 10px;
+      opacity: 0;
+      animation: slide-up 0.8s ease forwards 0.4s;
     }
 
-    .hero-slogan::before {
+    .hero-eyebrow::before {
       content: '';
       display: inline-block;
-      width: 28px;
+      width: 22px;
       height: 2px;
       background: var(--accent);
-      flex-shrink: 0;
+    }
+
+    .hero-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: clamp(4.5rem, 22vw, 10rem);
+      line-height: 0.85;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: slide-up 0.9s ease forwards 0.55s;
+    }
+
+    .hero-title .rpc { color: var(--primary); }
+    .hero-title .net {
+      display: block;
+      font-style: italic;
+      font-size: 0.35em;
+      color: rgba(242,237,223,0.3);
+      letter-spacing: 0.02em;
+    }
+
+    .hero-slogan {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-style: italic;
+      font-size: clamp(1.1rem, 4.5vw, 1.8rem);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+      opacity: 0;
+      animation: slide-up 0.9s ease forwards 0.7s;
     }
 
     .hero-tagline {
-      font-size: 1rem;
+      font-size: 0.95rem;
       font-weight: 300;
-      color: rgba(242,237,223,0.6);
-      max-width: 340px;
-      line-height: 1.7;
-      margin-bottom: 36px;
+      color: rgba(242,237,223,0.55);
+      max-width: 360px;
+      line-height: 1.75;
+      margin-bottom: 40px;
       opacity: 0;
-      animation: slide-up 0.9s ease forwards 0.8s;
+      animation: slide-up 0.9s ease forwards 0.85s;
     }
 
     .hero-cta {
@@ -247,57 +361,25 @@
       gap: 12px;
       flex-wrap: wrap;
       opacity: 0;
-      animation: slide-up 0.9s ease forwards 0.9s;
-    }
-
-    /* Vertical signal bar decorations */
-    .hero-signal {
-      position: absolute;
-      right: 24px;
-      bottom: 80px;
-      display: flex;
-      align-items: flex-end;
-      gap: 5px;
-      opacity: 0;
-      animation: fade-in 1s ease forwards 1.2s;
-    }
-
-    .signal-bar {
-      width: 8px;
-      border-radius: 2px;
-      background: var(--primary);
-      animation: signal-anim 1.5s ease-in-out infinite;
-    }
-
-    .signal-bar:nth-child(1) { height: 12px; animation-delay: 0s; }
-    .signal-bar:nth-child(2) { height: 20px; animation-delay: 0.2s; }
-    .signal-bar:nth-child(3) { height: 32px; animation-delay: 0.1s; }
-    .signal-bar:nth-child(4) { height: 24px; animation-delay: 0.3s; }
-    .signal-bar:nth-child(5) { height: 40px; animation-delay: 0.05s; }
-    .signal-bar:nth-child(6) { height: 28px; animation-delay: 0.25s; }
-    .signal-bar:nth-child(7) { height: 16px; animation-delay: 0.15s; }
-
-    @keyframes signal-anim {
-      0%, 100% { opacity: 0.4; transform: scaleY(0.6); }
-      50% { opacity: 1; transform: scaleY(1); }
+      animation: slide-up 0.9s ease forwards 1s;
     }
 
     @keyframes slide-up {
-      from { opacity: 0; transform: translateY(28px); }
-      to { opacity: 1; transform: translateY(0); }
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
     @keyframes fade-in {
       from { opacity: 0; }
-      to { opacity: 0.8; }
+      to   { opacity: 0.8; }
     }
 
-    /* PLAYER */
+    /* ── PLAYER ── */
     #player {
       background: var(--surface);
-      padding: 40px 24px;
+      padding: 44px 24px;
       border-top: 1px solid var(--border);
-      border-bottom: 1px solid rgba(255,255,255,0.04);
+      border-bottom: 1px solid rgba(255,255,255,0.03);
       position: relative;
       overflow: hidden;
     }
@@ -306,37 +388,38 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(212,150,10,0.06) 0%, transparent 50%);
+      background: linear-gradient(135deg, rgba(204,17,39,0.06) 0%, transparent 55%);
     }
 
     .player-inner {
-      max-width: 600px;
+      max-width: 640px;
       margin: 0 auto;
       position: relative;
     }
 
     .player-label {
-      font-family: 'Bricolage Grotesque', sans-serif;
+      font-family: 'Barlow Condensed', sans-serif;
       font-weight: 700;
-      font-size: 0.62rem;
+      font-size: 0.68rem;
       letter-spacing: 0.28em;
       text-transform: uppercase;
       color: var(--primary);
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .player-title {
-      font-family: 'Bricolage Grotesque', sans-serif;
+      font-family: 'Barlow Condensed', sans-serif;
       font-weight: 900;
-      font-size: 1.5rem;
-      letter-spacing: -0.02em;
-      margin-bottom: 4px;
+      font-size: 1.8rem;
+      letter-spacing: -0.01em;
+      margin-bottom: 2px;
+      line-height: 1;
     }
 
     .player-sub {
       font-size: 0.78rem;
       color: var(--muted);
-      margin-bottom: 20px;
+      margin-bottom: 22px;
     }
 
     /* Equalizer */
@@ -344,22 +427,22 @@
       display: flex;
       align-items: flex-end;
       gap: 3px;
-      height: 44px;
-      margin-bottom: 24px;
+      height: 48px;
+      margin-bottom: 26px;
     }
 
     .eq-bar {
       flex: 1;
       max-width: 10px;
       border-radius: 2px 2px 0 0;
-      background: linear-gradient(to top, var(--primary), var(--primary-light));
+      background: linear-gradient(to top, var(--primary), var(--primary-l));
       animation: eq-dance var(--spd, 0.7s) ease-in-out infinite alternate;
       transform-origin: bottom;
     }
 
     @keyframes eq-dance {
-      from { transform: scaleY(0.15); }
-      to { transform: scaleY(1); }
+      from { transform: scaleY(0.12); }
+      to   { transform: scaleY(1); }
     }
 
     .eq-bar:nth-child(1)  { --spd: 0.65s; height: 55%; animation-delay: 0s; }
@@ -379,16 +462,16 @@
     .eq-bar:nth-child(15) { --spd: 0.62s; height: 72%; animation-delay: 0.20s; }
     .eq-bar:nth-child(16) { --spd: 0.55s; height: 88%; animation-delay: 0.14s; }
 
-    .eq-bar.paused { animation-play-state: paused !important; transform: scaleY(0.1) !important; }
+    .eq-bar.paused { animation-play-state: paused !important; transform: scaleY(0.08) !important; }
 
     .player-controls {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 18px;
     }
 
     .play-btn {
-      width: 58px; height: 58px;
+      width: 62px; height: 62px;
       border-radius: 50%;
       background: var(--primary);
       border: none;
@@ -398,22 +481,37 @@
       justify-content: center;
       transition: all 0.3s ease;
       flex-shrink: 0;
+      position: relative;
+    }
+
+    .play-btn::after {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      border: 2px solid rgba(204,17,39,0.3);
+      animation: play-ring 2s ease-in-out infinite;
+    }
+
+    @keyframes play-ring {
+      0%, 100% { transform: scale(1); opacity: 0.3; }
+      50% { transform: scale(1.15); opacity: 0; }
     }
 
     .play-btn:hover {
-      background: var(--primary-light);
+      background: var(--primary-l);
       transform: scale(1.1);
-      box-shadow: 0 0 28px rgba(212,150,10,0.55);
+      box-shadow: 0 0 32px rgba(204,17,39,0.55);
     }
 
-    .play-btn svg { width: 22px; height: 22px; fill: #07070F; }
+    .play-btn svg { width: 24px; height: 24px; fill: white; }
 
     .player-status { flex: 1; }
 
     .status-live {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-weight: 700;
-      font-size: 0.72rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 0.8rem;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--accent);
@@ -423,7 +521,7 @@
     .status-sub {
       font-size: 0.72rem;
       color: var(--muted);
-      margin-top: 2px;
+      margin-top: 3px;
     }
 
     .vol-wrap {
@@ -452,38 +550,38 @@
 
     audio { display: none; }
 
-    /* SECTION COMMON */
+    /* ── SECTION COMMON ── */
     .section-eyebrow {
-      font-family: 'Bricolage Grotesque', sans-serif;
+      font-family: 'Barlow Condensed', sans-serif;
       font-weight: 700;
-      font-size: 0.62rem;
+      font-size: 0.65rem;
       letter-spacing: 0.32em;
       text-transform: uppercase;
-      color: var(--primary);
+      color: var(--accent);
       margin-bottom: 10px;
       display: block;
     }
 
     .section-title {
-      font-family: 'Bricolage Grotesque', sans-serif;
+      font-family: 'Barlow Condensed', sans-serif;
       font-weight: 900;
-      font-size: clamp(2rem, 8vw, 3.5rem);
-      line-height: 1;
-      letter-spacing: -0.03em;
-      margin-bottom: 20px;
+      font-size: clamp(2.4rem, 9vw, 4.5rem);
+      line-height: 0.9;
+      letter-spacing: -0.01em;
+      margin-bottom: 24px;
     }
 
-    /* PROPOSTA */
+    /* ── PROPOSTA ── */
     #proposta {
-      padding: 80px 24px;
+      padding: 88px 24px;
     }
 
-    .proposta-grid { display: grid; gap: 48px; }
+    .proposta-grid { display: grid; gap: 56px; }
 
     .proposta-text {
-      font-size: 1.05rem;
-      line-height: 1.8;
-      color: rgba(242,237,223,0.72);
+      font-size: 1rem;
+      line-height: 1.85;
+      color: rgba(242,237,223,0.68);
     }
 
     .proposta-text strong { color: var(--text); font-weight: 600; }
@@ -491,17 +589,22 @@
     .stats-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-top: 8px;
+      gap: 10px;
     }
 
     .stat-card {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 10px;
+      border-radius: 8px;
       padding: 22px 18px;
       position: relative;
       overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .stat-card:hover {
+      border-color: rgba(204,17,39,0.4);
+      transform: translateY(-3px);
     }
 
     .stat-card::before {
@@ -510,13 +613,12 @@
       top: 0; left: 0;
       width: 3px; height: 100%;
       background: var(--primary);
-      border-radius: 3px 0 0 3px;
     }
 
     .stat-number {
-      font-family: 'Bricolage Grotesque', sans-serif;
+      font-family: 'Barlow Condensed', sans-serif;
       font-weight: 900;
-      font-size: 2.2rem;
+      font-size: 2.6rem;
       color: var(--primary);
       display: block;
       line-height: 1;
@@ -530,39 +632,39 @@
       line-height: 1.4;
     }
 
-    /* PROGRAMAS */
+    /* ── PROGRAMAS ── */
     #programas {
-      padding: 80px 24px;
+      padding: 88px 24px;
       background: var(--surface);
       border-top: 1px solid var(--border);
       position: relative;
+      overflow: hidden;
     }
 
     #programas::before {
       content: '';
       position: absolute;
-      top: 0; right: 0;
-      width: 300px; height: 300px;
-      background: radial-gradient(circle at top right, rgba(212,150,10,0.08), transparent 60%);
+      top: -80px; right: -80px;
+      width: 380px; height: 380px;
+      background: radial-gradient(circle, rgba(204,17,39,0.07), transparent 60%);
       pointer-events: none;
     }
 
     .programas-grid {
       display: grid;
       gap: 8px;
-      margin-top: 40px;
+      margin-top: 44px;
     }
 
     .programa-card {
       background: var(--bg);
       border: 1px solid rgba(255,255,255,0.04);
-      border-radius: 10px;
-      padding: 22px 20px;
+      border-radius: 8px;
+      padding: 20px 18px;
       display: flex;
-      gap: 16px;
+      gap: 14px;
       align-items: flex-start;
-      transition: all 0.35s ease;
-      cursor: default;
+      transition: all 0.3s ease;
       position: relative;
       overflow: hidden;
     }
@@ -574,32 +676,32 @@
       width: 3px;
       background: var(--primary);
       transform: scaleY(0);
-      transition: transform 0.35s ease;
+      transition: transform 0.3s ease;
       transform-origin: bottom;
-      border-radius: 0 3px 3px 0;
     }
 
     .programa-card:hover::after { transform: scaleY(1); }
 
     .programa-card:hover {
       border-color: var(--border);
-      transform: translateX(6px);
+      transform: translateX(5px);
     }
 
     .prog-icon {
-      width: 46px; height: 46px;
-      border-radius: 10px;
+      width: 44px; height: 44px;
+      border-radius: 8px;
       background: var(--surface);
       border: 1px solid var(--border);
       display: flex; align-items: center; justify-content: center;
-      font-size: 1.35rem;
+      font-size: 1.3rem;
       flex-shrink: 0;
     }
 
     .prog-name {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-weight: 700;
-      font-size: 0.98rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: 0.01em;
       margin-bottom: 4px;
     }
 
@@ -610,9 +712,9 @@
     }
 
     .prog-time {
-      font-family: 'Bricolage Grotesque', sans-serif;
+      font-family: 'Barlow Condensed', sans-serif;
       font-weight: 700;
-      font-size: 0.67rem;
+      font-size: 0.68rem;
       color: var(--accent);
       letter-spacing: 0.08em;
       text-transform: uppercase;
@@ -620,33 +722,24 @@
       display: block;
     }
 
-    /* GOSPEL */
+    /* ── GOSPEL ── */
     #gospel {
-      padding: 80px 24px;
+      padding: 88px 24px;
       position: relative;
       overflow: hidden;
-    }
-
-    .gospel-orb {
-      position: absolute;
-      top: -120px; right: -120px;
-      width: 400px; height: 400px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(212,150,10,0.08), transparent 65%);
-      pointer-events: none;
     }
 
     .gospel-grid {
       display: grid;
       gap: 10px;
-      margin-top: 40px;
+      margin-top: 44px;
     }
 
     .gospel-card {
       background: var(--surface);
       border: 1px solid rgba(255,255,255,0.05);
-      border-radius: 12px;
-      padding: 24px;
+      border-radius: 10px;
+      padding: 26px 22px;
       position: relative;
       overflow: hidden;
       transition: all 0.4s ease;
@@ -656,7 +749,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(212,150,10,0.07) 0%, transparent 60%);
+      background: linear-gradient(135deg, rgba(204,17,39,0.07) 0%, transparent 60%);
       opacity: 0;
       transition: opacity 0.4s;
     }
@@ -666,27 +759,28 @@
     .gospel-card:hover {
       border-color: var(--border);
       transform: translateY(-4px);
-      box-shadow: 0 16px 48px rgba(0,0,0,0.5);
+      box-shadow: 0 18px 52px rgba(0,0,0,0.5);
     }
 
     .gospel-tag {
       display: inline-block;
-      background: rgba(212,150,10,0.12);
+      background: rgba(204,17,39,0.1);
       border: 1px solid var(--border);
-      border-radius: 4px;
+      border-radius: 3px;
       padding: 3px 10px;
-      font-size: 0.62rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.65rem;
       font-weight: 700;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--primary);
-      margin-bottom: 12px;
+      color: var(--primary-l);
+      margin-bottom: 14px;
     }
 
     .gospel-card h3 {
-      font-family: 'Bricolage Grotesque', sans-serif;
+      font-family: 'Barlow Condensed', sans-serif;
       font-weight: 800;
-      font-size: 1.1rem;
+      font-size: 1.3rem;
       margin-bottom: 8px;
     }
 
@@ -694,7 +788,7 @@
       font-size: 0.8rem;
       color: var(--muted);
       line-height: 1.65;
-      margin-bottom: 14px;
+      margin-bottom: 16px;
     }
 
     .artist-pills {
@@ -709,116 +803,191 @@
       border-radius: 20px;
       padding: 4px 12px;
       font-size: 0.7rem;
-      color: rgba(242,237,223,0.55);
+      color: rgba(242,237,223,0.5);
     }
 
-    /* PARTICIPAÇÃO */
+    /* ── PARTICIPAÇÃO ── */
     #participacao {
-      padding: 80px 24px;
-      background: var(--surface);
-      border-top: 1px solid var(--border);
+      padding: 0;
+      background: var(--primary);
+      position: relative;
+      overflow: hidden;
     }
 
-    .participacao-inner { max-width: 520px; margin: 0 auto; text-align: center; }
+    #participacao::before {
+      content: '';
+      position: absolute;
+      top: -80px; left: -80px;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.05);
+      pointer-events: none;
+    }
 
-    .big-icon { font-size: 2.8rem; margin-bottom: 16px; display: block; }
+    #participacao::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; right: -60px;
+      width: 280px; height: 280px;
+      border-radius: 50%;
+      background: rgba(0,0,0,0.12);
+      pointer-events: none;
+    }
+
+    .participacao-inner {
+      padding: 88px 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .part-headline {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-style: italic;
+      font-size: clamp(2.8rem, 12vw, 5.5rem);
+      line-height: 0.88;
+      letter-spacing: -0.02em;
+      color: white;
+      margin-bottom: 16px;
+    }
+
+    .part-sub {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.75;
+      max-width: 480px;
+      margin-bottom: 44px;
+    }
 
     .part-options {
       display: grid;
       gap: 10px;
-      margin-top: 32px;
-      text-align: left;
     }
 
     .part-option {
-      background: var(--bg);
-      border: 1px solid rgba(255,255,255,0.05);
-      border-radius: 10px;
+      background: rgba(255,255,255,0.09);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 8px;
       padding: 18px 20px;
       display: flex;
       gap: 14px;
       align-items: center;
       transition: all 0.3s ease;
+      backdrop-filter: blur(4px);
     }
 
     .part-option:hover {
-      border-color: var(--border);
+      background: rgba(255,255,255,0.14);
+      border-color: rgba(255,255,255,0.3);
       transform: translateY(-2px);
     }
 
-    .part-option-icon { font-size: 1.4rem; flex-shrink: 0; }
+    .part-option-icon { font-size: 1.5rem; flex-shrink: 0; }
 
-    .part-label {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-size: 0.92rem;
-      font-weight: 700;
+    .part-opt-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 1rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      color: white;
       margin-bottom: 2px;
     }
 
-    .part-sub { font-size: 0.78rem; color: var(--muted); line-height: 1.5; }
+    .part-opt-sub { font-size: 0.78rem; color: rgba(255,255,255,0.65); line-height: 1.5; }
 
-    /* PROMOÇÕES */
-    #promocoes {
-      padding: 80px 24px;
+    .part-cta {
+      margin-top: 36px;
     }
 
-    .promo-card {
-      background: linear-gradient(135deg, #8B0D22 0%, var(--accent) 60%, #D4200E 100%);
-      border-radius: 14px;
-      padding: 40px 28px;
-      margin-top: 40px;
+    /* ── PROMOÇÕES ── */
+    #promocoes {
+      padding: 88px 24px;
+      background: var(--bg);
       position: relative;
       overflow: hidden;
     }
 
-    .promo-card::before {
+    #promocoes::before {
       content: '';
       position: absolute;
-      top: -60px; right: -60px;
-      width: 240px; height: 240px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.06);
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 50% at 50% 100%, rgba(232,163,10,0.06) 0%, transparent 60%);
+      pointer-events: none;
     }
 
-    .promo-card::after {
-      content: '';
+    .promo-main {
+      background: linear-gradient(135deg, #0D0D00 0%, #1A1400 50%, #0D0A00 100%);
+      border: 1px solid rgba(232,163,10,0.25);
+      border-radius: 14px;
+      padding: 44px 28px;
+      margin-top: 44px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .promo-main::before {
+      content: '★';
       position: absolute;
-      bottom: -40px; left: -40px;
-      width: 180px; height: 180px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.04);
+      top: -30px; right: -10px;
+      font-size: 200px;
+      color: rgba(232,163,10,0.04);
+      pointer-events: none;
+      line-height: 1;
     }
 
-    .promo-card h3 {
-      font-family: 'Bricolage Grotesque', sans-serif;
+    .promo-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: #07070D;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 3px;
+      margin-bottom: 20px;
+    }
+
+    .promo-main h3 {
+      font-family: 'Barlow Condensed', sans-serif;
       font-weight: 900;
-      font-size: 1.9rem;
-      line-height: 1.1;
-      margin-bottom: 14px;
+      font-size: clamp(1.9rem, 7vw, 3rem);
+      line-height: 1;
+      color: var(--accent);
+      margin-bottom: 16px;
       position: relative; z-index: 1;
     }
 
-    .promo-card p {
-      font-size: 0.88rem;
-      line-height: 1.7;
-      color: rgba(255,255,255,0.82);
-      margin-bottom: 28px;
+    .promo-main p {
+      font-size: 0.9rem;
+      line-height: 1.75;
+      color: rgba(242,237,223,0.65);
+      margin-bottom: 32px;
+      max-width: 480px;
       position: relative; z-index: 1;
-      max-width: 440px;
     }
 
-    .promo-actions { position: relative; z-index: 1; display: flex; gap: 12px; flex-wrap: wrap; }
+    .promo-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      position: relative; z-index: 1;
+    }
 
-    /* CONTATO */
+    /* ── CONTATO ── */
     #contato {
-      padding: 80px 24px;
-      background: var(--bg);
+      padding: 88px 24px;
+      background: var(--surface);
       border-top: 1px solid var(--border);
     }
 
-    .contato-grid { display: grid; gap: 32px; margin-top: 40px; }
+    .contato-grid { display: grid; gap: 36px; margin-top: 44px; }
 
-    .contato-info { display: grid; gap: 16px; }
+    .contato-info { display: grid; gap: 14px; }
 
     .contato-row {
       display: flex;
@@ -829,119 +998,158 @@
     .contato-icon-box {
       width: 44px; height: 44px;
       border-radius: 8px;
-      background: var(--surface);
+      background: var(--bg);
       border: 1px solid var(--border);
       display: flex; align-items: center; justify-content: center;
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       flex-shrink: 0;
     }
 
     .contato-lbl {
-      font-size: 0.68rem;
+      font-size: 0.65rem;
       color: var(--muted);
       text-transform: uppercase;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.12em;
       font-weight: 600;
       margin-bottom: 4px;
     }
 
     .contato-val {
-      font-family: 'Bricolage Grotesque', sans-serif;
+      font-family: 'Barlow Condensed', sans-serif;
       font-weight: 700;
-      font-size: 0.98rem;
+      font-size: 1rem;
+      letter-spacing: 0.01em;
     }
 
     .comercial-box {
-      background: var(--surface);
+      background: var(--bg);
       border: 1px solid var(--border);
-      border-radius: 14px;
+      border-radius: 12px;
       padding: 32px 24px;
       text-align: center;
     }
 
     .comercial-box h3 {
-      font-family: 'Bricolage Grotesque', sans-serif;
+      font-family: 'Barlow Condensed', sans-serif;
       font-weight: 900;
-      font-size: 1.5rem;
-      margin-bottom: 8px;
+      font-size: 1.8rem;
+      margin-bottom: 10px;
     }
 
     .comercial-box p {
-      font-size: 0.83rem;
+      font-size: 0.82rem;
       color: var(--muted);
-      line-height: 1.65;
-      margin-bottom: 24px;
+      line-height: 1.7;
+      margin-bottom: 28px;
     }
 
-    /* FOOTER */
+    /* ── FOOTER ── */
     footer {
-      padding: 40px 24px;
+      padding: 48px 24px 36px;
       border-top: 1px solid rgba(255,255,255,0.04);
       text-align: center;
     }
 
-    .footer-logo {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-weight: 900;
-      font-size: 1.65rem;
-      letter-spacing: -0.03em;
-      margin-bottom: 8px;
+    .footer-logo-img {
+      height: 52px;
+      width: auto;
+      object-fit: contain;
+      background: white;
+      border-radius: 6px;
+      padding: 5px 12px;
+      margin-bottom: 16px;
     }
 
-    .footer-logo span { color: var(--primary); }
+    .footer-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 1.1rem;
+      letter-spacing: 0.06em;
+      color: rgba(242,237,223,0.5);
+      margin-bottom: 6px;
+    }
+
+    .footer-name span { color: var(--primary); }
 
     .footer-tagline {
-      font-size: 0.75rem;
+      font-size: 0.73rem;
       color: var(--muted);
-      margin-bottom: 24px;
+      margin-bottom: 28px;
     }
 
     .footer-nav {
       display: flex;
-      gap: 20px;
+      gap: 18px;
       justify-content: center;
       flex-wrap: wrap;
       margin-bottom: 28px;
     }
 
     .footer-nav a {
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       color: var(--muted);
       text-decoration: none;
       transition: color 0.2s;
     }
 
-    .footer-nav a:hover { color: var(--primary); }
+    .footer-nav a:hover { color: var(--accent); }
 
     .footer-copy {
-      font-size: 0.67rem;
-      color: rgba(122,117,144,0.4);
+      font-size: 0.65rem;
+      color: rgba(122,117,149,0.4);
     }
 
-    /* BUTTONS */
+    /* ── BUTTONS ── */
     .btn-primary {
       display: inline-flex;
       align-items: center;
       gap: 8px;
       background: var(--primary);
-      color: #07070F;
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-weight: 700;
-      font-size: 0.88rem;
-      padding: 14px 26px;
-      border-radius: 6px;
+      color: white;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 0.95rem;
+      letter-spacing: 0.06em;
+      padding: 14px 28px;
+      border-radius: 5px;
       text-decoration: none;
       border: none;
       cursor: pointer;
       transition: all 0.3s ease;
-      min-height: 48px;
+      min-height: 50px;
       justify-content: center;
     }
 
     .btn-primary:hover {
-      background: var(--primary-light);
+      background: var(--primary-l);
       transform: translateY(-2px);
-      box-shadow: 0 8px 28px rgba(212,150,10,0.35);
+      box-shadow: 0 10px 32px rgba(204,17,39,0.4);
+    }
+
+    .btn-accent {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: #07070D;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 0.95rem;
+      letter-spacing: 0.06em;
+      padding: 14px 28px;
+      border-radius: 5px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-height: 50px;
+      justify-content: center;
+    }
+
+    .btn-accent:hover {
+      background: var(--accent-l);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 32px rgba(232,163,10,0.4);
     }
 
     .btn-outline {
@@ -950,22 +1158,23 @@
       gap: 8px;
       background: transparent;
       color: var(--text);
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-weight: 700;
-      font-size: 0.88rem;
-      padding: 13px 26px;
-      border-radius: 6px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 0.95rem;
+      letter-spacing: 0.06em;
+      padding: 13px 28px;
+      border-radius: 5px;
       border: 1px solid rgba(255,255,255,0.18);
       text-decoration: none;
       cursor: pointer;
       transition: all 0.3s ease;
-      min-height: 48px;
+      min-height: 50px;
       justify-content: center;
     }
 
     .btn-outline:hover {
-      border-color: var(--primary);
-      color: var(--primary);
+      border-color: var(--accent);
+      color: var(--accent);
     }
 
     .btn-whatsapp {
@@ -974,81 +1183,29 @@
       gap: 10px;
       background: #25D366;
       color: white;
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-weight: 700;
-      font-size: 0.88rem;
-      padding: 14px 24px;
-      border-radius: 6px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 0.95rem;
+      letter-spacing: 0.06em;
+      padding: 14px 26px;
+      border-radius: 5px;
       text-decoration: none;
       transition: all 0.3s ease;
-      min-height: 48px;
+      min-height: 50px;
       justify-content: center;
     }
 
     .btn-whatsapp:hover {
       background: #1EBE5A;
       transform: translateY(-2px);
-      box-shadow: 0 8px 28px rgba(37,211,102,0.35);
+      box-shadow: 0 10px 32px rgba(37,211,102,0.4);
     }
 
-    .btn-white {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: white;
-      color: var(--accent);
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-weight: 700;
-      font-size: 0.88rem;
-      padding: 14px 24px;
-      border-radius: 6px;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      min-height: 48px;
-      justify-content: center;
-    }
-
-    .btn-white:hover {
-      background: #f0f0f0;
-      transform: translateY(-2px);
-    }
-
-    /* FAB WhatsApp */
-    .wa-fab {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      width: 60px; height: 60px;
-      border-radius: 50%;
-      background: #25D366;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-      text-decoration: none;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.3);
-      animation: fab-pulse 3s ease-in-out infinite;
-      transition: transform 0.3s ease;
-    }
-
-    .wa-fab:hover {
-      transform: scale(1.12);
-      animation: none;
-      box-shadow: 0 8px 24px rgba(37,211,102,0.5);
-    }
-
-    @keyframes fab-pulse {
-      0%, 100% { box-shadow: 0 4px 14px rgba(0,0,0,0.3), 0 0 0 0 rgba(37,211,102,0.5); }
-      60% { box-shadow: 0 4px 14px rgba(0,0,0,0.3), 0 0 0 14px rgba(37,211,102,0); }
-    }
-
-    .wa-fab svg { width: 30px; height: 30px; fill: white; }
-
-    /* SCROLL REVEAL */
+    /* ── SCROLL REVEAL ── */
     .reveal {
       opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
+      transform: translateY(22px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
     }
 
     .reveal.visible { opacity: 1; transform: translateY(0); }
@@ -1057,39 +1214,70 @@
     .reveal-d3 { transition-delay: 0.3s; }
     .reveal-d4 { transition-delay: 0.4s; }
 
-    /* DIVIDER */
+    /* ── WHATSAPP FAB ── */
+    .wa-fab {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 62px; height: 62px;
+      border-radius: 50%;
+      background: #25D366;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      text-decoration: none;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.35);
+      animation: fab-pulse 3.5s ease-in-out infinite;
+      transition: transform 0.3s ease;
+    }
+
+    .wa-fab:hover {
+      transform: scale(1.12);
+      animation: none;
+      box-shadow: 0 8px 28px rgba(37,211,102,0.55);
+    }
+
+    @keyframes fab-pulse {
+      0%, 100% { box-shadow: 0 4px 16px rgba(0,0,0,0.3), 0 0 0 0 rgba(37,211,102,0.5); }
+      65% { box-shadow: 0 4px 16px rgba(0,0,0,0.3), 0 0 0 16px rgba(37,211,102,0); }
+    }
+
+    .wa-fab svg { width: 30px; height: 30px; fill: white; }
+
+    /* ── DIVIDER ── */
     .section-divider {
       display: flex;
       align-items: center;
       gap: 14px;
-      margin-bottom: 40px;
+      margin-bottom: 44px;
     }
 
     .div-line { flex: 1; height: 1px; background: var(--border); }
-    .div-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--primary); }
+    .div-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
 
-    /* DESKTOP */
+    /* ── DESKTOP ── */
     @media (min-width: 768px) {
-      nav { padding: 22px 48px; }
-      #hero { padding: 0 48px 96px; }
-      .hero-signal { right: 48px; bottom: 100px; }
+      nav { padding: 18px 52px; }
+      #hero { padding: 0 52px 104px; }
+      .hero-signal { right: 52px; bottom: 112px; }
 
-      #player { padding: 52px 48px; }
-      #proposta { padding: 100px 48px; }
-      #programas { padding: 100px 48px; }
-      #gospel { padding: 100px 48px; }
-      #participacao { padding: 100px 48px; }
-      #promocoes { padding: 100px 48px; }
-      #contato { padding: 100px 48px; }
+      #player { padding: 56px 52px; }
+      #proposta { padding: 112px 52px; }
+      #programas { padding: 112px 52px; }
+      #gospel { padding: 112px 52px; }
+      .participacao-inner { padding: 112px 52px; }
+      #promocoes { padding: 112px 52px; }
+      #contato { padding: 112px 52px; }
 
-      .proposta-grid { grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+      .proposta-grid { grid-template-columns: 1fr 1fr; gap: 72px; align-items: center; }
       .stats-grid { grid-template-columns: repeat(4, 1fr); }
       .programas-grid { grid-template-columns: 1fr 1fr; }
       .gospel-grid { grid-template-columns: 1fr 1fr; }
       .part-options { grid-template-columns: 1fr 1fr; }
       .contato-grid { grid-template-columns: 1fr 1fr; align-items: start; }
-      .promo-card { padding: 56px 48px; }
-      .promo-card h3 { font-size: 2.4rem; }
+      .promo-main { padding: 60px 52px; }
+      .promo-main h3 { font-size: 2.8rem; }
     }
 
     @media (min-width: 1024px) {
@@ -1099,13 +1287,30 @@
 </head>
 <body>
 
+  <!-- TICKER -->
+  <div class="ticker-wrap">
+    <div class="ticker-inner">
+      <span class="ticker-item"><span class="ticker-badge">AO VIVO</span> RadioRPC.net — A melhor com louvor</span>
+      <span class="ticker-item"><span class="ticker-badge">PARTICIPE</span> Peça sua música pelo WhatsApp: (28) 99951-2088</span>
+      <span class="ticker-item"><span class="ticker-badge">BRINDES</span> Fique ligado nas promoções — concorra a prêmios!</span>
+      <span class="ticker-item"><span class="ticker-badge">GOSPEL</span> Nacional e Internacional 24 horas por dia</span>
+      <span class="ticker-item"><span class="ticker-badge">AO VIVO</span> RadioRPC.net — A melhor com louvor</span>
+      <span class="ticker-item"><span class="ticker-badge">PARTICIPE</span> Peça sua música pelo WhatsApp: (28) 99951-2088</span>
+      <span class="ticker-item"><span class="ticker-badge">BRINDES</span> Fique ligado nas promoções — concorra a prêmios!</span>
+      <span class="ticker-item"><span class="ticker-badge">GOSPEL</span> Nacional e Internacional 24 horas por dia</span>
+    </div>
+  </div>
+
   <!-- NAV -->
   <nav id="navbar">
-    <div class="nav-logo">
-      <img src="referencias/logo-rpc.jpg" alt="RPC Rádio Para Cristo" class="nav-logo-img">
-      <span class="nav-logo-slogan">A melhor com louvor</span>
-    </div>
-    <div class="on-air">
+    <a href="#hero" class="nav-logo">
+      <img src="../referencias/logo-rpc.jpg" alt="RPC Rádio Para Cristo" class="nav-logo-img">
+      <div class="nav-logo-text">
+        <span class="nav-logo-name">RadioRPC.net</span>
+        <span class="nav-logo-sub">A melhor com louvor</span>
+      </div>
+    </a>
+    <div class="on-air-badge">
       <span class="on-air-dot"></span>
       Ao Vivo
     </div>
@@ -1114,9 +1319,16 @@
   <!-- HERO -->
   <section id="hero">
     <div class="hero-bg"></div>
-    <div class="freq-lines"></div>
+    <div class="hero-bg-text">RPC</div>
 
-    <!-- Decorative signal bars -->
+    <div class="hero-waves">
+      <div class="hero-wave"></div>
+      <div class="hero-wave"></div>
+      <div class="hero-wave"></div>
+      <div class="hero-wave"></div>
+      <div class="hero-wave"></div>
+    </div>
+
     <div class="hero-signal">
       <div class="signal-bar"></div>
       <div class="signal-bar"></div>
@@ -1128,19 +1340,19 @@
     </div>
 
     <div class="hero-content">
-      <p class="hero-eyebrow">■ Rádio Para Cristo · Transmissão ao vivo · 24 horas</p>
+      <p class="hero-eyebrow">Rádio Para Cristo · Transmissão 24h · Gospel do Brasil e do Mundo</p>
       <h1 class="hero-title">
-        Radio<span class="word-rpc">RPC</span>
-        <span class="word-net">.net</span>
+        Radio<span class="rpc">RPC</span>
+        <span class="net">.net</span>
       </h1>
       <p class="hero-slogan">A melhor com louvor</p>
-      <p class="hero-tagline">Gospel que soa como uma grande emissora FM. Música que transforma — com a força e o alcance de um sinal profissional.</p>
+      <p class="hero-tagline">O som do gospel com a força de uma grande emissora FM. Música que transforma, participação que emociona, promoções que surpreendem.</p>
       <div class="hero-cta">
         <a href="#player" class="btn-primary">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="#07070F"><path d="M8 5v14l11-7z"/></svg>
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="white"><path d="M8 5v14l11-7z"/></svg>
           Ouvir Agora
         </a>
-        <a href="#contato" class="btn-outline">Comercial</a>
+        <a href="#participacao" class="btn-outline">Participar</a>
       </div>
     </div>
   </section>
@@ -1148,9 +1360,9 @@
   <!-- PLAYER -->
   <section id="player">
     <div class="player-inner">
-      <div class="player-label">■ Transmissão ao vivo</div>
+      <div class="player-label">■ Transmissão ao vivo — Gospel 24h</div>
       <div class="player-title">RPC — Rádio Para Cristo</div>
-      <div class="player-sub">A melhor com louvor · Gospel Nacional &amp; Internacional · HD</div>
+      <div class="player-sub">A melhor com louvor · Gospel Nacional &amp; Internacional · Alta Qualidade</div>
 
       <div class="equalizer" id="eq">
         <div class="eq-bar paused"></div>
@@ -1177,7 +1389,7 @@
         </button>
         <div class="player-status">
           <span class="status-live" id="statusText">▶ TOQUE PARA OUVIR</span>
-          <span class="status-sub">Gospel que transforma</span>
+          <span class="status-sub">Gospel que transforma vidas</span>
         </div>
         <div class="vol-wrap">
           <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
@@ -1198,9 +1410,9 @@
     <div class="proposta-grid">
       <div>
         <span class="section-eyebrow reveal">Sobre a Rádio</span>
-        <h2 class="section-title reveal">Somos a voz do <em style="color:var(--primary);">gospel</em> brasileiro</h2>
-        <p class="proposta-text reveal">A RadioRPC.net nasceu com a missão de levar a <strong>melhor música gospel</strong> do Brasil e do mundo a ouvintes de norte a sul do país. Com programação cuidadosamente selecionada, entregamos <strong>entretenimento de qualidade, fé e emoção</strong> — no padrão das grandes emissoras FM.</p>
-        <p class="proposta-text reveal" style="margin-top:16px;">Sem cara de rádio de igreja. Sem amadorismo. A RadioRPC.net é uma <strong>emissora profissional</strong> — com a potência do evangelho e a linguagem das grandes rádios.</p>
+        <h2 class="section-title reveal">A voz do gospel <span style="color:var(--primary);">no Brasil</span></h2>
+        <p class="proposta-text reveal">A RadioRPC.net nasceu com uma missão clara: <strong>levar o melhor do gospel nacional e internacional</strong> com a qualidade e o profissionalismo de uma grande emissora FM. Programação selecionada, locução profissional e transmissão 24 horas.</p>
+        <p class="proposta-text reveal" style="margin-top:16px;">Sem amadorismo. Sem cara de interior. A RadioRPC.net é uma <strong>emissora de verdade</strong> — com a energia do Transamérica e o coração do evangelho.</p>
       </div>
       <div>
         <div class="stats-grid reveal">
@@ -1210,7 +1422,7 @@
           </div>
           <div class="stat-card">
             <span class="stat-number">100%</span>
-            <span class="stat-label">Gospel</span>
+            <span class="stat-label">Gospel puro</span>
           </div>
           <div class="stat-card">
             <span class="stat-number">HD</span>
@@ -1218,7 +1430,7 @@
           </div>
           <div class="stat-card">
             <span class="stat-number">∞</span>
-            <span class="stat-label">Ouvintes pelo Brasil</span>
+            <span class="stat-label">Ouvintes no Brasil</span>
           </div>
         </div>
       </div>
@@ -1227,14 +1439,16 @@
 
   <!-- PROGRAMAS -->
   <section id="programas">
-    <span class="section-eyebrow reveal">Grade de Programação</span>
-    <h2 class="section-title reveal">Nossos <span style="color:var(--primary);">programas</span></h2>
+    <div>
+      <span class="section-eyebrow reveal">Grade de Programação</span>
+      <h2 class="section-title reveal">Nossos <span style="color:var(--primary);">programas</span></h2>
+    </div>
     <div class="programas-grid">
       <div class="programa-card reveal">
         <div class="prog-icon">🌅</div>
         <div>
           <div class="prog-name">Despertar Gospel</div>
-          <div class="prog-desc">Comece o dia com louvor e adoração. Músicas e mensagens para energizar sua manhã com fé.</div>
+          <div class="prog-desc">Comece o dia com louvor e adoração. Músicas e energia para sua manhã.</div>
           <span class="prog-time">Seg–Sex · 06:00–10:00</span>
         </div>
       </div>
@@ -1242,7 +1456,7 @@
         <div class="prog-icon">☀️</div>
         <div>
           <div class="prog-name">Gospel em Destaque</div>
-          <div class="prog-desc">Os maiores hits do gospel nacional e internacional. Novidades e clássicos reunidos.</div>
+          <div class="prog-desc">Os maiores hits do gospel nacional e internacional. Novidades e clássicos.</div>
           <span class="prog-time">Seg–Sex · 10:00–14:00</span>
         </div>
       </div>
@@ -1250,7 +1464,7 @@
         <div class="prog-icon">🌍</div>
         <div>
           <div class="prog-name">Gospel Internacional</div>
-          <div class="prog-desc">O melhor do worship americano, africano e europeu. Hillsong, Elevation, Chris Tomlin e muito mais.</div>
+          <div class="prog-desc">O melhor do worship americano, africano e europeu. Hillsong, Elevation e mais.</div>
           <span class="prog-time">Seg–Sex · 14:00–18:00</span>
         </div>
       </div>
@@ -1258,7 +1472,7 @@
         <div class="prog-icon">🌙</div>
         <div>
           <div class="prog-name">Noite de Adoração</div>
-          <div class="prog-desc">Um repertório especial para encerrar o dia com músicas de adoração íntima e louvor profundo.</div>
+          <div class="prog-desc">Músicas de adoração e louvor para encerrar o dia com emoção e fé.</div>
           <span class="prog-time">Seg–Dom · 20:00–24:00</span>
         </div>
       </div>
@@ -1266,16 +1480,16 @@
         <div class="prog-icon">🎙️</div>
         <div>
           <div class="prog-name">Top Gospel</div>
-          <div class="prog-desc">O ranking das músicas gospel mais tocadas no Brasil. Vote na sua favorita e mande pedido!</div>
+          <div class="prog-desc">O ranking dos maiores hits gospel. Vote na sua favorita e mande pedido!</div>
           <span class="prog-time">Sáb · 12:00–15:00</span>
         </div>
       </div>
       <div class="programa-card reveal reveal-d1">
-        <div class="prog-icon">🙏</div>
+        <div class="prog-icon">🎁</div>
         <div>
-          <div class="prog-name">Domingo de Louvor</div>
-          <div class="prog-desc">Programação especial de domingo com os maiores louvores e reflexões para toda a família.</div>
-          <span class="prog-time">Dom · 09:00–18:00</span>
+          <div class="prog-name">Hora dos Brindes</div>
+          <div class="prog-desc">Promoções, sorteios e surpresas ao vivo. Participe e ganhe com a RPC!</div>
+          <span class="prog-time">Sáb–Dom · Todo dia</span>
         </div>
       </div>
     </div>
@@ -1283,19 +1497,18 @@
 
   <!-- GOSPEL -->
   <section id="gospel">
-    <div class="gospel-orb"></div>
     <div class="section-divider">
       <div class="div-line"></div>
       <div class="div-dot"></div>
       <div class="div-line"></div>
     </div>
-    <span class="section-eyebrow reveal">Nossa Curadoria Musical</span>
+    <span class="section-eyebrow reveal">Curadoria Musical</span>
     <h2 class="section-title reveal">Gospel <span style="color:var(--primary);">Nacional</span><br>&amp; <span style="color:var(--accent);">Internacional</span></h2>
     <div class="gospel-grid">
       <div class="gospel-card reveal">
         <span class="gospel-tag">Nacional</span>
         <h3>Gigantes do Gospel BR</h3>
-        <p>Os maiores artistas do gospel brasileiro em destaque diário na nossa programação.</p>
+        <p>Os maiores artistas do gospel brasileiro em destaque na nossa programação diária.</p>
         <div class="artist-pills">
           <span class="pill">Eyshila</span>
           <span class="pill">Fernandinho</span>
@@ -1321,7 +1534,7 @@
       <div class="gospel-card reveal reveal-d2">
         <span class="gospel-tag">Clássicos</span>
         <h3>A Memória do Evangelho</h3>
-        <p>Os hinos e músicas que marcaram décadas de fé — a trilha sonora da história gospel brasileira.</p>
+        <p>Os hinos que marcaram décadas — a trilha sonora da história gospel brasileira.</p>
         <div class="artist-pills">
           <span class="pill">Cassiane</span>
           <span class="pill">Aline Barros</span>
@@ -1336,44 +1549,43 @@
   <!-- PARTICIPAÇÃO -->
   <section id="participacao">
     <div class="participacao-inner">
-      <span class="big-icon">🎙️</span>
-      <span class="section-eyebrow" style="display:block;">Interação com Ouvintes</span>
-      <h2 class="section-title reveal">Faça parte <span style="color:var(--primary);">da rádio</span></h2>
-      <p class="reveal" style="color:var(--muted);font-size:0.88rem;line-height:1.75;max-width:400px;margin:0 auto;">Você é o nosso ouvinte VIP. Entre em contato, peça uma música, compartilhe seu testemunho ou simplesmente diga que está ouvindo!</p>
+      <p style="font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:0.68rem;letter-spacing:0.32em;text-transform:uppercase;color:rgba(255,255,255,0.55);margin-bottom:14px;">Interação com Ouvintes</p>
+      <h2 class="part-headline">VOCÊ FAZ<br>PARTE DA RPC!</h2>
+      <p class="part-sub">Peça uma música, mande seu testemunho, divulgue seu evento ou simplesmente diga que está ouvindo. A RadioRPC.net é a rádio do ouvinte — sua voz também é a nossa!</p>
       <div class="part-options">
-        <div class="part-option reveal">
+        <div class="part-option">
           <span class="part-option-icon">🎵</span>
           <div>
-            <div class="part-label">Pedido de Música</div>
-            <div class="part-sub">Mande o nome do artista e da música pelo WhatsApp</div>
+            <div class="part-opt-name">Pedido de Música</div>
+            <div class="part-opt-sub">Mande o artista e a música pelo WhatsApp — a gente toca pra você!</div>
           </div>
         </div>
-        <div class="part-option reveal reveal-d1">
+        <div class="part-option">
           <span class="part-option-icon">🙌</span>
           <div>
-            <div class="part-label">Testemunho</div>
-            <div class="part-sub">Compartilhe o que Deus tem feito na sua vida</div>
+            <div class="part-opt-name">Seu Testemunho</div>
+            <div class="part-opt-sub">Compartilhe o que Deus tem feito na sua vida — inspire outros ouvintes!</div>
           </div>
         </div>
-        <div class="part-option reveal reveal-d2">
+        <div class="part-option">
           <span class="part-option-icon">📣</span>
           <div>
-            <div class="part-label">Aviso Evangelístico</div>
-            <div class="part-sub">Divulgue seu evento ou ministério gratuitamente</div>
+            <div class="part-opt-name">Aviso Evangelístico</div>
+            <div class="part-opt-sub">Divulgue seu evento ou ministério. Ajudamos a espalhar a mensagem!</div>
           </div>
         </div>
-        <div class="part-option reveal reveal-d3">
+        <div class="part-option">
           <span class="part-option-icon">💌</span>
           <div>
-            <div class="part-label">Mensagem ao Locutor</div>
-            <div class="part-sub">Mande um salve pra nossa equipe ao vivo!</div>
+            <div class="part-opt-name">Salve ao Vivo!</div>
+            <div class="part-opt-sub">Mande um salve pra equipe — pode ser lido ao vivo na programação!</div>
           </div>
         </div>
       </div>
-      <div style="margin-top:32px;" class="reveal">
-        <a href="https://wa.me/5528999512088?text=Olá!%20Estou%20ouvindo%20a%20RadioRPC.net%20e%20quero%20participar!" class="btn-whatsapp" style="width:100%;">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          Participar pelo WhatsApp
+      <div class="part-cta">
+        <a href="https://wa.me/5528999512088?text=Olá!%20Estou%20ouvindo%20a%20RadioRPC.net%20e%20quero%20participar!" class="btn-accent" style="width:100%;">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="#07070D"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Participar pelo WhatsApp Agora
         </a>
       </div>
     </div>
@@ -1382,16 +1594,19 @@
   <!-- PROMOÇÕES -->
   <section id="promocoes">
     <span class="section-eyebrow reveal">Promoções &amp; Brindes</span>
-    <h2 class="section-title reveal">Ganhe com a <span style="color:var(--accent);">RadioRPC</span></h2>
-    <div class="promo-card reveal">
-      <h3>🎁 Fique ligado nas nossas promoções!</h3>
-      <p>A RadioRPC.net ama presentear os ouvintes fiéis. Sorteios, brindes e surpresas especiais pra quem está sempre sintonizado. Siga nossas redes, ouça nossa programação e não perca nenhuma promoção!</p>
+    <h2 class="section-title reveal">Ganhe com a <span style="color:var(--accent);">RadioRPC!</span></h2>
+    <div class="promo-main reveal">
+      <div class="promo-badge">
+        🎁 Promoções ao Vivo
+      </div>
+      <h3>VOCÊ PODE GANHAR<br>BRINDES ESPECIAIS!</h3>
+      <p>A RadioRPC.net ama premiar os ouvintes fiéis! Fique de olho na nossa programação para participar de sorteios, concursos e promoções exclusivas. Só perde quem não está ouvindo — e você está!</p>
       <div class="promo-actions">
-        <a href="https://wa.me/5528999512088?text=Oi!%20Quero%20participar%20das%20promoções%20da%20RadioRPC!" class="btn-white">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="var(--accent)"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-          Quero Participar
+        <a href="https://wa.me/5528999512088?text=Oi!%20Quero%20participar%20das%20promoções%20da%20RadioRPC!%20Me%20inscreve!" class="btn-accent">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="#07070D"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Quero Participar!
         </a>
-        <a href="#player" class="btn-outline" style="border-color:rgba(255,255,255,0.3);color:white;">Ouvir Agora</a>
+        <a href="#player" class="btn-outline" style="border-color:rgba(232,163,10,0.3);color:var(--accent);">Ouvir ao Vivo</a>
       </div>
     </div>
   </section>
@@ -1433,7 +1648,7 @@
       </div>
       <div class="comercial-box reveal">
         <h3>Anuncie na RadioRPC</h3>
-        <p>Alcance milhares de ouvintes gospel em todo o Brasil. Planos acessíveis para todo tamanho de negócio. Vinhetas, spots, patrocínio de programas e mais.</p>
+        <p>Alcance ouvintes gospel em todo o Brasil. Vinhetas, spots, patrocínio de programas — planos para todo tipo de negócio.</p>
         <a href="https://wa.me/5528999512088?text=Olá!%20Quero%20saber%20sobre%20publicidade%20na%20RadioRPC.net" class="btn-primary" style="width:100%;">
           Solicitar Proposta Comercial
         </a>
@@ -1443,10 +1658,10 @@
 
   <!-- FOOTER -->
   <footer>
-    <div style="display:flex;justify-content:center;margin-bottom:12px;">
-      <img src="referencias/logo-rpc.jpg" alt="RPC Rádio Para Cristo" style="height:52px;width:auto;object-fit:contain;background:white;border-radius:6px;padding:5px 12px;">
+    <div style="display:flex;justify-content:center;">
+      <img src="../referencias/logo-rpc.jpg" alt="RPC Rádio Para Cristo" class="footer-logo-img">
     </div>
-    <div class="footer-logo" style="font-size:1rem;letter-spacing:0.06em;">Rádio Para Cristo · <span>radiorpc.net</span></div>
+    <div class="footer-name">Rádio Para Cristo · <span>radiorpc.net</span></div>
     <div class="footer-tagline">A melhor com louvor · Espírito Santo, Brasil</div>
     <nav class="footer-nav">
       <a href="#hero">Início</a>
@@ -1466,7 +1681,7 @@
   </a>
 
   <script>
-    // ─── PLAYER ───
+    // ── PLAYER ──
     const audio = document.getElementById('radioAudio');
     const playIcon = document.getElementById('playIcon');
     const statusText = document.getElementById('statusText');
@@ -1495,15 +1710,7 @@
 
     function setVol(v) { audio.volume = parseFloat(v); }
 
-    // ─── NAV SCROLL ───
-    window.addEventListener('scroll', () => {
-      const nav = document.getElementById('navbar');
-      nav.style.background = window.scrollY > 60
-        ? 'rgba(7,7,15,0.98)'
-        : 'linear-gradient(to bottom, rgba(7,7,15,0.98), transparent)';
-    });
-
-    // ─── SCROLL REVEAL ───
+    // ── SCROLL REVEAL ──
     const observer = new IntersectionObserver(entries => {
       entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.08 });
