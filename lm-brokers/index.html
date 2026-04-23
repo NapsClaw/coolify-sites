@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LM Brokers — Imobiliária Premium | São Paulo</title>
+  <meta name="description" content="LM Brokers — Imobiliária especializada em imóveis de alto padrão em São Paulo. Encontre casas, apartamentos e terrenos com assessoria completa e exclusiva.">
+  <meta property="og:title" content="LM Brokers — Imobiliária Premium">
+  <meta property="og:description" content="Encontre o imóvel dos seus sonhos com a LM Brokers. +500 imóveis negociados, 10 anos de mercado.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏛</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --primary: #0D1C38;
+      --primary-mid: #162847;
+      --accent: #C4934A;
+      --accent-light: #E8C88A;
+      --bg: #F6F4EE;
+      --bg-off: #EFECE3;
+      --text: #1A1A1A;
+      --text-muted: #6B6461;
+      --white: #FDFCF9;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* Subtle noise texture */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9990;
+      opacity: 0.5;
+    }
+
+    h1, h2, h3, h4 { font-family: 'Fraunces', serif; }
+
+    /* ═══ ANIMATIONS ═══ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(44px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes slideRight {
+      from { opacity: 0; transform: translateX(-60px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes heroZoom {
+      from { transform: scale(1.1); }
+      to   { transform: scale(1.0); }
+    }
+    @keyframes pulseWA {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(37,211,102,0.55); }
+      60%       { box-shadow: 0 0 0 16px rgba(37,211,102,0); }
+    }
+    @keyframes scrollBounce {
+      0%, 100% { transform: translateY(0); opacity: 0.6; }
+      50%       { transform: translateY(8px); opacity: 1; }
+    }
+
+    /* ═══ SCROLL REVEAL ═══ */
+    .reveal, .reveal-left, .reveal-right {
+      opacity: 0;
+      transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+    .reveal        { transform: translateY(32px); }
+    .reveal-left   { transform: translateX(-48px); }
+    .reveal-right  { transform: translateX(48px); }
+    .reveal.visible,
+    .reveal-left.visible,
+    .reveal-right.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ═══ NAV ═══ */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 22px 32px;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: background 0.4s, padding 0.4s, box-shadow 0.4s;
+    }
+    nav.scrolled {
+      background: rgba(13,28,56,0.96);
+      backdrop-filter: blur(14px);
+      padding: 14px 32px;
+      box-shadow: 0 2px 28px rgba(0,0,0,0.35);
+    }
+    .nav-logo {
+      font-family: 'Fraunces', serif;
+      font-size: 1.5rem; font-weight: 700;
+      color: var(--white); letter-spacing: -0.02em;
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links {
+      display: none; gap: 32px; list-style: none;
+    }
+    @media (min-width: 768px) { .nav-links { display: flex; } }
+    .nav-links a {
+      color: rgba(255,255,255,0.7); text-decoration: none;
+      font-size: 0.8rem; font-weight: 500;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--accent-light); }
+    .nav-cta {
+      background: var(--accent); color: var(--primary);
+      padding: 10px 22px; border-radius: 2px;
+      font-size: 0.75rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .nav-cta:hover { background: var(--accent-light); transform: translateY(-1px); }
+
+    /* ═══ HERO ═══ */
+    #hero {
+      position: relative; height: 100vh; min-height: 620px;
+      display: flex; align-items: center; overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1800&q=80&auto=format&fit=crop') center/cover no-repeat;
+      animation: heroZoom 10s ease-out forwards;
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(108deg,
+        rgba(13,28,56,0.9) 0%,
+        rgba(13,28,56,0.6) 45%,
+        rgba(13,28,56,0.2) 100%);
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      max-width: 1200px; margin: 0 auto;
+      padding: 0 32px; width: 100%;
+    }
+    .hero-eyebrow {
+      display: flex; align-items: center; gap: 14px;
+      margin-bottom: 28px;
+      animation: slideRight 0.9s ease 0.2s both;
+    }
+    .hero-eyebrow-line { width: 44px; height: 1px; background: var(--accent); }
+    .hero-eyebrow-text {
+      font-size: 0.7rem; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--accent-light);
+      font-weight: 500;
+    }
+    .hero-title {
+      font-size: clamp(3.2rem, 8vw, 7rem);
+      font-weight: 900; color: var(--white);
+      line-height: 0.95; letter-spacing: -0.03em;
+      margin-bottom: 28px;
+      animation: fadeUp 1s ease 0.4s both;
+    }
+    .hero-title em { font-style: italic; color: var(--accent-light); }
+    .hero-sub {
+      font-size: 1.05rem; color: rgba(255,255,255,0.65);
+      max-width: 440px; line-height: 1.75;
+      font-weight: 300; margin-bottom: 48px;
+      animation: fadeUp 1s ease 0.6s both;
+    }
+    .hero-ctas {
+      display: flex; gap: 14px; flex-wrap: wrap;
+      animation: fadeUp 1s ease 0.8s both;
+    }
+    .btn-gold {
+      background: var(--accent); color: var(--primary);
+      padding: 16px 38px; font-weight: 700;
+      font-size: 0.85rem; letter-spacing: 0.07em;
+      text-transform: uppercase; text-decoration: none;
+      border-radius: 2px;
+      transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+      display: inline-block;
+    }
+    .btn-gold:hover {
+      background: var(--accent-light); transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(196,147,74,0.45);
+    }
+    .btn-ghost {
+      border: 1px solid rgba(255,255,255,0.35); color: var(--white);
+      padding: 15px 32px; font-size: 0.85rem; font-weight: 500;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      text-decoration: none; border-radius: 2px;
+      transition: border-color 0.3s, background 0.3s;
+      display: inline-block;
+    }
+    .btn-ghost:hover {
+      border-color: var(--accent);
+      background: rgba(196,147,74,0.12);
+    }
+    .hero-scroll-ind {
+      position: absolute; bottom: 36px; left: 50%;
+      transform: translateX(-50%); z-index: 2;
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      animation: fadeIn 1s ease 1.2s both;
+    }
+    .hero-scroll-ind span {
+      font-size: 0.6rem; letter-spacing: 0.22em;
+      color: rgba(255,255,255,0.45); text-transform: uppercase;
+    }
+    .scroll-arrow {
+      width: 20px; height: 20px;
+      border-right: 1px solid rgba(255,255,255,0.4);
+      border-bottom: 1px solid rgba(255,255,255,0.4);
+      transform: rotate(45deg);
+      animation: scrollBounce 2s ease infinite;
+    }
+
+    /* ═══ SECTION COMMON ═══ */
+    .sec-label {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 16px;
+    }
+    .sec-label-line { width: 40px; height: 1px; background: var(--accent); }
+    .sec-label-text {
+      font-size: 0.68rem; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--accent);
+      font-weight: 600;
+    }
+    .sec-title {
+      font-size: clamp(2.2rem, 5vw, 3.8rem);
+      font-weight: 900; line-height: 1.0;
+      letter-spacing: -0.025em; color: var(--primary);
+    }
+    .sec-title.light { color: var(--white); }
+
+    /* ═══ SOBRE ═══ */
+    #sobre { padding: 108px 32px 100px; }
+    .sobre-wrap { max-width: 1200px; margin: 0 auto; }
+    .sobre-grid {
+      display: grid; grid-template-columns: 1fr;
+      gap: 60px; align-items: center;
+    }
+    @media (min-width: 768px) {
+      .sobre-grid { grid-template-columns: 1fr 1fr; gap: 84px; }
+    }
+    .sobre-img-wrap { position: relative; }
+    .sobre-img {
+      width: 100%; height: 500px;
+      object-fit: cover; border-radius: 2px; display: block;
+    }
+    .sobre-badge {
+      position: absolute; bottom: -28px; right: -20px;
+      background: var(--accent); color: var(--primary);
+      padding: 22px 28px; border-radius: 2px; text-align: center;
+    }
+    .sobre-badge-num {
+      font-family: 'Fraunces', serif;
+      font-size: 2.8rem; font-weight: 900;
+      line-height: 1; display: block;
+    }
+    .sobre-badge-label {
+      font-size: 0.65rem; font-family: 'Plus Jakarta Sans', sans-serif;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      font-weight: 600; display: block; margin-top: 4px;
+    }
+    .sobre-text p {
+      color: var(--text-muted); line-height: 1.85;
+      margin-bottom: 18px; font-size: 1rem; font-weight: 300;
+    }
+    .sobre-text p strong { color: var(--text); font-weight: 600; }
+    .pillars {
+      display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px;
+    }
+    .pillar {
+      border: 1px solid rgba(196,147,74,0.35);
+      padding: 7px 15px; border-radius: 2px;
+      font-size: 0.75rem; color: var(--accent);
+      font-weight: 500; letter-spacing: 0.04em;
+    }
+
+    /* ═══ STATS ═══ */
+    #stats {
+      background: var(--primary);
+      padding: 80px 32px;
+      position: relative; overflow: hidden;
+    }
+    #stats::before {
+      content: '';
+      position: absolute; top: -100px; right: -100px;
+      width: 500px; height: 500px; border-radius: 50%;
+      border: 1px solid rgba(196,147,74,0.12);
+      pointer-events: none;
+    }
+    .stats-grid {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(2,1fr); gap: 48px;
+    }
+    @media (min-width: 768px) { .stats-grid { grid-template-columns: repeat(4,1fr); } }
+    .stat { text-align: center; }
+    .stat-num {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2.8rem, 5vw, 4.2rem);
+      font-weight: 900; color: var(--accent);
+      line-height: 1; letter-spacing: -0.03em; display: block;
+    }
+    .stat-lbl {
+      font-size: 0.72rem; color: rgba(255,255,255,0.5);
+      letter-spacing: 0.12em; text-transform: uppercase;
+      margin-top: 10px; display: block;
+    }
+
+    /* ═══ IMÓVEIS ═══ */
+    #imoveis {
+      background: var(--bg-off);
+      padding: 100px 32px;
+    }
+    .imoveis-wrap { max-width: 1200px; margin: 0 auto; }
+    .imoveis-hdr {
+      display: flex; justify-content: space-between;
+      align-items: flex-end; margin-bottom: 56px;
+      gap: 24px; flex-wrap: wrap;
+    }
+    .ver-todos {
+      font-size: 0.8rem; color: var(--accent);
+      text-decoration: none; letter-spacing: 0.06em;
+      font-weight: 600; white-space: nowrap;
+      display: flex; align-items: center; gap: 6px;
+      transition: gap 0.3s;
+    }
+    .ver-todos:hover { gap: 10px; }
+    .imoveis-grid {
+      display: grid; grid-template-columns: 1fr; gap: 24px;
+    }
+    @media (min-width: 640px) { .imoveis-grid { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 1024px) { .imoveis-grid { grid-template-columns: repeat(3,1fr); } }
+
+    .card {
+      background: var(--white); border-radius: 2px;
+      overflow: hidden; cursor: pointer;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 28px 64px rgba(196,147,74,0.22), 0 8px 24px rgba(0,0,0,0.08);
+    }
+    .card-img-wrap { position: relative; overflow: hidden; height: 268px; }
+    .card-img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+      transition: transform 0.65s ease;
+    }
+    .card:hover .card-img { transform: scale(1.07); }
+    .card-tag {
+      position: absolute; top: 16px; left: 16px;
+      background: var(--accent); color: var(--primary);
+      font-size: 0.62rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 5px 12px; border-radius: 2px;
+    }
+    .card-body { padding: 28px 24px 24px; }
+    .card-tipo {
+      font-size: 0.67rem; color: var(--text-muted);
+      letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 8px;
+    }
+    .card-nome {
+      font-family: 'Fraunces', serif;
+      font-size: 1.35rem; font-weight: 700;
+      color: var(--primary); line-height: 1.2; margin-bottom: 10px;
+    }
+    .card-local {
+      font-size: 0.82rem; color: var(--text-muted);
+      margin-bottom: 20px; display: flex; align-items: center; gap: 5px;
+    }
+    .card-specs {
+      display: flex; gap: 20px;
+      padding: 14px 0; border-top: 1px solid var(--bg-off);
+      border-bottom: 1px solid var(--bg-off); margin-bottom: 20px;
+    }
+    .spec { display: flex; flex-direction: column; gap: 3px; }
+    .spec-v { font-size: 0.95rem; font-weight: 600; color: var(--text); }
+    .spec-l { font-size: 0.62rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+    .card-price {
+      font-family: 'Fraunces', serif;
+      font-size: 1.5rem; font-weight: 800;
+      color: var(--primary); letter-spacing: -0.02em;
+    }
+    .card-price span {
+      font-size: 0.78rem; font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--text-muted); font-weight: 400;
+    }
+
+    /* ═══ DIFERENCIAIS ═══ */
+    #diferenciais { padding: 100px 32px; }
+    .difs-wrap { max-width: 1200px; margin: 0 auto; }
+    .difs-hdr { text-align: center; margin-bottom: 64px; }
+    .difs-hdr .sec-label { justify-content: center; }
+    .difs-grid {
+      display: grid; grid-template-columns: 1fr; gap: 24px;
+    }
+    @media (min-width: 640px) { .difs-grid { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 1024px) { .difs-grid { grid-template-columns: repeat(4,1fr); } }
+
+    .dif {
+      padding: 36px 28px; border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 2px; background: var(--white);
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    }
+    .dif:hover {
+      border-color: var(--accent);
+      transform: translateY(-5px);
+      box-shadow: 0 18px 44px rgba(196,147,74,0.13);
+    }
+    .dif-icon {
+      width: 52px; height: 52px;
+      background: rgba(196,147,74,0.1); border-radius: 2px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; margin-bottom: 24px;
+      transition: background 0.3s;
+    }
+    .dif:hover .dif-icon { background: rgba(196,147,74,0.22); }
+    .dif-title {
+      font-family: 'Fraunces', serif;
+      font-size: 1.2rem; font-weight: 700;
+      color: var(--primary); margin-bottom: 12px;
+    }
+    .dif-text { font-size: 0.88rem; color: var(--text-muted); line-height: 1.75; }
+
+    /* ═══ DEPOIMENTOS ═══ */
+    #depoimentos {
+      background: var(--primary);
+      padding: 100px 32px; position: relative; overflow: hidden;
+    }
+    .dep-bg-word {
+      position: absolute; top: -40px; left: -16px;
+      font-family: 'Fraunces', serif; font-size: 22vw;
+      font-weight: 900; color: rgba(255,255,255,0.025);
+      pointer-events: none; user-select: none; line-height: 1;
+    }
+    .deps-wrap { max-width: 1200px; margin: 0 auto; position: relative; z-index: 2; }
+    .deps-hdr { text-align: center; margin-bottom: 64px; }
+    .deps-hdr .sec-label { justify-content: center; }
+    .deps-grid {
+      display: grid; grid-template-columns: 1fr; gap: 20px;
+    }
+    @media (min-width: 768px) { .deps-grid { grid-template-columns: repeat(3,1fr); } }
+
+    .dep-card {
+      background: rgba(255,255,255,0.055);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 40px 32px; border-radius: 2px;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .dep-card:hover {
+      background: rgba(255,255,255,0.09);
+      border-color: rgba(196,147,74,0.45);
+    }
+    .dep-quote {
+      font-family: 'Fraunces', serif; font-size: 5.5rem;
+      color: var(--accent); line-height: 0.6;
+      margin-bottom: 18px; display: block; opacity: 0.55;
+    }
+    .dep-text {
+      color: rgba(255,255,255,0.72); font-size: 0.92rem;
+      line-height: 1.82; font-style: italic; margin-bottom: 28px;
+    }
+    .dep-author { display: flex; align-items: center; gap: 14px; }
+    .dep-avatar {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--accent); display: flex; align-items: center;
+      justify-content: center; font-family: 'Fraunces', serif;
+      font-size: 1.1rem; color: var(--primary); font-weight: 700;
+      flex-shrink: 0;
+    }
+    .dep-name { font-weight: 600; color: var(--white); font-size: 0.9rem; }
+    .dep-role { font-size: 0.73rem; color: rgba(255,255,255,0.42); letter-spacing: 0.05em; }
+
+    /* ═══ CTA STRIP ═══ */
+    #cta-strip {
+      background: var(--bg-off);
+      padding: 88px 32px;
+    }
+    .cta-center { max-width: 680px; margin: 0 auto; text-align: center; }
+    .cta-center h2 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2.1rem, 4.5vw, 3.2rem);
+      font-weight: 900; color: var(--primary);
+      line-height: 1.08; margin-bottom: 18px;
+    }
+    .cta-center h2 em { font-style: italic; color: var(--accent); }
+    .cta-center p {
+      color: var(--text-muted); font-size: 1.0rem;
+      line-height: 1.75; margin-bottom: 36px;
+    }
+
+    /* ═══ CONTATO ═══ */
+    #contato {
+      background: var(--primary);
+      padding: 100px 32px 88px;
+    }
+    .contato-wrap { max-width: 1200px; margin: 0 auto; }
+    .contato-grid {
+      display: grid; grid-template-columns: 1fr; gap: 64px;
+    }
+    @media (min-width: 768px) {
+      .contato-grid { grid-template-columns: 1fr 1fr; gap: 88px; }
+    }
+    .contato-info p {
+      color: rgba(255,255,255,0.58); font-size: 0.95rem;
+      line-height: 1.82; margin-bottom: 40px;
+    }
+    .c-items { display: flex; flex-direction: column; gap: 22px; }
+    .c-item { display: flex; align-items: flex-start; gap: 16px; }
+    .c-icon {
+      width: 42px; height: 42px;
+      background: rgba(196,147,74,0.15); border-radius: 2px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; flex-shrink: 0;
+    }
+    .c-item strong {
+      display: block; color: var(--white);
+      font-size: 0.88rem; font-weight: 600; margin-bottom: 4px;
+    }
+    .c-item span {
+      color: rgba(255,255,255,0.5); font-size: 0.83rem; line-height: 1.6;
+    }
+    .form { display: flex; flex-direction: column; gap: 16px; }
+    .f-field { display: flex; flex-direction: column; gap: 7px; }
+    .f-field label {
+      font-size: 0.68rem; letter-spacing: 0.12em;
+      text-transform: uppercase; color: rgba(255,255,255,0.45);
+      font-weight: 500;
+    }
+    .f-field input,
+    .f-field textarea,
+    .f-field select {
+      background: rgba(255,255,255,0.055);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 2px; padding: 13px 15px;
+      color: var(--white);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.9rem; outline: none;
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .f-field input::placeholder,
+    .f-field textarea::placeholder { color: rgba(255,255,255,0.28); }
+    .f-field input:focus,
+    .f-field textarea:focus,
+    .f-field select:focus {
+      border-color: var(--accent);
+      background: rgba(255,255,255,0.09);
+    }
+    .f-field textarea { resize: vertical; min-height: 112px; }
+    .f-field select option { background: var(--primary); color: var(--white); }
+    .btn-send {
+      background: var(--accent); color: var(--primary);
+      border: none; padding: 16px; width: 100%;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700; font-size: 0.83rem;
+      letter-spacing: 0.09em; text-transform: uppercase;
+      cursor: pointer; border-radius: 2px; margin-top: 4px;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .btn-send:hover { background: var(--accent-light); transform: translateY(-1px); }
+
+    /* ═══ FOOTER ═══ */
+    footer { background: #07101F; padding: 52px 32px 32px; }
+    .footer-wrap { max-width: 1200px; margin: 0 auto; }
+    .footer-top {
+      display: flex; justify-content: space-between;
+      align-items: flex-start; gap: 40px; flex-wrap: wrap;
+      padding-bottom: 40px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      margin-bottom: 30px;
+    }
+    .footer-logo {
+      font-family: 'Fraunces', serif;
+      font-size: 1.6rem; font-weight: 700; color: var(--white);
+      margin-bottom: 10px;
+    }
+    .footer-logo span { color: var(--accent); }
+    .footer-tag { font-size: 0.77rem; color: rgba(255,255,255,0.35); }
+    .footer-nav { display: flex; flex-direction: column; gap: 10px; }
+    .footer-nav a {
+      color: rgba(255,255,255,0.45); text-decoration: none;
+      font-size: 0.84rem; transition: color 0.3s;
+    }
+    .footer-nav a:hover { color: var(--accent-light); }
+    .footer-bottom {
+      display: flex; justify-content: space-between;
+      align-items: center; flex-wrap: wrap; gap: 12px;
+    }
+    .footer-copy, .footer-creci {
+      font-size: 0.72rem; color: rgba(255,255,255,0.28);
+    }
+
+    /* ═══ WHATSAPP ═══ */
+    .wa-fab {
+      position: fixed; bottom: 28px; right: 28px; z-index: 999;
+      width: 60px; height: 60px; background: #25D366;
+      border-radius: 50%; display: flex; align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.28);
+      animation: pulseWA 2.8s ease infinite;
+      transition: transform 0.25s, box-shadow 0.25s;
+      text-decoration: none;
+    }
+    .wa-fab:hover {
+      transform: scale(1.14);
+      box-shadow: 0 8px 28px rgba(37,211,102,0.55);
+      animation: none;
+    }
+    .wa-fab svg { width: 28px; height: 28px; fill: white; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">LM <span>Brokers</span></a>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#imoveis">Imóveis</a></li>
+    <li><a href="#diferenciais">Diferenciais</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ul>
+  <a href="https://wa.me/5511999999999" target="_blank" rel="noopener" class="nav-cta">Falar com Corretor</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <div class="hero-eyebrow-line"></div>
+      <span class="hero-eyebrow-text">Imobiliária Premium • São Paulo</span>
+    </div>
+    <h1 class="hero-title">
+      O imóvel<br>
+      <em>certo</em> para<br>
+      você.
+    </h1>
+    <p class="hero-sub">
+      Mais de 10 anos conectando pessoas ao imóvel dos seus sonhos.
+      Assessoria completa, portfólio exclusivo e atendimento personalizado.
+    </p>
+    <div class="hero-ctas">
+      <a href="#imoveis" class="btn-gold">Ver Imóveis →</a>
+      <a href="#contato" class="btn-ghost">Falar com Especialista</a>
+    </div>
+  </div>
+  <div class="hero-scroll-ind">
+    <span>Scroll</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section id="sobre">
+  <div class="sobre-wrap">
+    <div class="sobre-grid">
+      <div class="reveal-left">
+        <div class="sobre-img-wrap">
+          <img
+            src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=900&q=80&auto=format&fit=crop"
+            alt="Equipe LM Brokers"
+            class="sobre-img"
+            loading="lazy"
+          >
+          <div class="sobre-badge">
+            <span class="sobre-badge-num">+500</span>
+            <span class="sobre-badge-label">Imóveis<br>Negociados</span>
+          </div>
+        </div>
+      </div>
+      <div class="reveal-right">
+        <div class="sec-label">
+          <div class="sec-label-line"></div>
+          <span class="sec-label-text">Quem Somos</span>
+        </div>
+        <h2 class="sec-title" style="margin-bottom:28px; margin-top:12px;">
+          Experiência que<br>gera confiança.
+        </h2>
+        <p>
+          A <strong>LM Brokers</strong> é uma imobiliária especializada em oferecer as melhores oportunidades do mercado — seja para quem busca o lar dos sonhos, um investimento estratégico ou o imóvel comercial ideal.
+        </p>
+        <p>
+          Nossa equipe de corretores certificados combina profundo conhecimento de mercado com atendimento humanizado e personalizado. Cada cliente é único, e cada negociação recebe atenção total até a assinatura do contrato.
+        </p>
+        <div class="pillars">
+          <span class="pillar">Corretores Certificados</span>
+          <span class="pillar">Portfólio Exclusivo</span>
+          <span class="pillar">Financiamento Facilitado</span>
+          <span class="pillar">Assessoria Jurídica</span>
+          <span class="pillar">Pós-venda</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="stats-grid">
+    <div class="stat reveal">
+      <span class="stat-num">+500</span>
+      <span class="stat-lbl">Imóveis Vendidos</span>
+    </div>
+    <div class="stat reveal" style="transition-delay:.1s">
+      <span class="stat-num">10+</span>
+      <span class="stat-lbl">Anos de Mercado</span>
+    </div>
+    <div class="stat reveal" style="transition-delay:.2s">
+      <span class="stat-num">98%</span>
+      <span class="stat-lbl">Satisfação dos Clientes</span>
+    </div>
+    <div class="stat reveal" style="transition-delay:.3s">
+      <span class="stat-num">30d</span>
+      <span class="stat-lbl">Tempo Médio de Venda</span>
+    </div>
+  </div>
+</section>
+
+<!-- IMÓVEIS EM DESTAQUE -->
+<section id="imoveis">
+  <div class="imoveis-wrap">
+    <div class="imoveis-hdr">
+      <div class="reveal">
+        <div class="sec-label">
+          <div class="sec-label-line"></div>
+          <span class="sec-label-text">Portfólio</span>
+        </div>
+        <h2 class="sec-title" style="margin-top:12px;">Imóveis em<br>Destaque</h2>
+      </div>
+      <a href="#contato" class="ver-todos reveal">Ver todos os imóveis →</a>
+    </div>
+    <div class="imoveis-grid">
+      <!-- Card 1 -->
+      <div class="card reveal">
+        <div class="card-img-wrap">
+          <img
+            src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=720&q=80&auto=format&fit=crop"
+            alt="Casa de Alto Padrão"
+            class="card-img" loading="lazy"
+          >
+          <span class="card-tag">Destaque</span>
+        </div>
+        <div class="card-body">
+          <div class="card-tipo">Casa • Alto Padrão</div>
+          <div class="card-nome">Residência Contemporânea</div>
+          <div class="card-local">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Jardins, São Paulo — SP
+          </div>
+          <div class="card-specs">
+            <div class="spec"><span class="spec-v">320m²</span><span class="spec-l">Área</span></div>
+            <div class="spec"><span class="spec-v">4</span><span class="spec-l">Quartos</span></div>
+            <div class="spec"><span class="spec-v">3</span><span class="spec-l">Banheiros</span></div>
+            <div class="spec"><span class="spec-v">3</span><span class="spec-l">Vagas</span></div>
+          </div>
+          <div class="card-price">R$ 2.850.000 <span>/ venda</span></div>
+        </div>
+      </div>
+      <!-- Card 2 -->
+      <div class="card reveal" style="transition-delay:.12s">
+        <div class="card-img-wrap">
+          <img
+            src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=720&q=80&auto=format&fit=crop"
+            alt="Apartamento Moderno"
+            class="card-img" loading="lazy"
+          >
+          <span class="card-tag">Novo</span>
+        </div>
+        <div class="card-body">
+          <div class="card-tipo">Apartamento • Superior</div>
+          <div class="card-nome">Studio de Luxo</div>
+          <div class="card-local">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Pinheiros, São Paulo — SP
+          </div>
+          <div class="card-specs">
+            <div class="spec"><span class="spec-v">95m²</span><span class="spec-l">Área</span></div>
+            <div class="spec"><span class="spec-v">2</span><span class="spec-l">Quartos</span></div>
+            <div class="spec"><span class="spec-v">2</span><span class="spec-l">Banheiros</span></div>
+            <div class="spec"><span class="spec-v">2</span><span class="spec-l">Vagas</span></div>
+          </div>
+          <div class="card-price">R$ 890.000 <span>/ venda</span></div>
+        </div>
+      </div>
+      <!-- Card 3 -->
+      <div class="card reveal" style="transition-delay:.24s">
+        <div class="card-img-wrap">
+          <img
+            src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=720&q=80&auto=format&fit=crop"
+            alt="Casa em Condomínio"
+            class="card-img" loading="lazy"
+          >
+          <span class="card-tag">Exclusivo</span>
+        </div>
+        <div class="card-body">
+          <div class="card-tipo">Casa • Condomínio Fechado</div>
+          <div class="card-nome">Mansão em Alphaville</div>
+          <div class="card-local">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Alphaville, Barueri — SP
+          </div>
+          <div class="card-specs">
+            <div class="spec"><span class="spec-v">280m²</span><span class="spec-l">Área</span></div>
+            <div class="spec"><span class="spec-v">4</span><span class="spec-l">Quartos</span></div>
+            <div class="spec"><span class="spec-v">4</span><span class="spec-l">Banheiros</span></div>
+            <div class="spec"><span class="spec-v">4</span><span class="spec-l">Vagas</span></div>
+          </div>
+          <div class="card-price">R$ 1.950.000 <span>/ venda</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIFERENCIAIS -->
+<section id="diferenciais">
+  <div class="difs-wrap">
+    <div class="difs-hdr reveal">
+      <div class="sec-label">
+        <div class="sec-label-line"></div>
+        <span class="sec-label-text">Por que a LM Brokers</span>
+      </div>
+      <h2 class="sec-title" style="margin-top:12px;">Nossos<br>Diferenciais</h2>
+    </div>
+    <div class="difs-grid">
+      <div class="dif reveal">
+        <div class="dif-icon">🏆</div>
+        <div class="dif-title">Corretores Premiados</div>
+        <p class="dif-text">Equipe com histórico comprovado de excelência, reconhecida no mercado por negociações bem-sucedidas e satisfação total dos clientes.</p>
+      </div>
+      <div class="dif reveal" style="transition-delay:.1s">
+        <div class="dif-icon">🔍</div>
+        <div class="dif-title">Busca Personalizada</div>
+        <p class="dif-text">Entendemos exatamente o que você precisa. Nossa abordagem consultiva garante que você veja apenas imóveis que realmente se encaixam no seu perfil.</p>
+      </div>
+      <div class="dif reveal" style="transition-delay:.2s">
+        <div class="dif-icon">📋</div>
+        <div class="dif-title">Assessoria Jurídica</div>
+        <p class="dif-text">Suporte jurídico completo em todo o processo. Documentação, análise de contrato e segurança em cada etapa da negociação.</p>
+      </div>
+      <div class="dif reveal" style="transition-delay:.3s">
+        <div class="dif-icon">💰</div>
+        <div class="dif-title">Financiamento Facilitado</div>
+        <p class="dif-text">Parceria com os principais bancos para as melhores condições. Simulamos e buscamos a taxa ideal para o seu perfil e orçamento.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEPOIMENTOS -->
+<section id="depoimentos">
+  <div class="dep-bg-word">LM</div>
+  <div class="deps-wrap">
+    <div class="deps-hdr">
+      <div class="sec-label">
+        <div class="sec-label-line"></div>
+        <span class="sec-label-text">Depoimentos</span>
+      </div>
+      <h2 class="sec-title light" style="margin-top:12px;">O que dizem<br>nossos clientes</h2>
+    </div>
+    <div class="deps-grid">
+      <div class="dep-card reveal">
+        <span class="dep-quote">"</span>
+        <p class="dep-text">A LM Brokers foi fundamental na compra do meu apartamento. Profissionalismo impecável do início ao fim. Encontraram exatamente o que eu precisava, dentro do meu orçamento.</p>
+        <div class="dep-author">
+          <div class="dep-avatar">M</div>
+          <div>
+            <div class="dep-name">Marcos Oliveira</div>
+            <div class="dep-role">Comprador · São Paulo</div>
+          </div>
+        </div>
+      </div>
+      <div class="dep-card reveal" style="transition-delay:.15s">
+        <span class="dep-quote">"</span>
+        <p class="dep-text">Vendi minha casa em menos de 45 dias pelo preço que eu queria. A equipe foi transparente, eficiente e sempre disponível. Recomendo sem hesitar!</p>
+        <div class="dep-author">
+          <div class="dep-avatar">A</div>
+          <div>
+            <div class="dep-name">Ana Paula Costa</div>
+            <div class="dep-role">Vendedora · Barueri</div>
+          </div>
+        </div>
+      </div>
+      <div class="dep-card reveal" style="transition-delay:.3s">
+        <span class="dep-quote">"</span>
+        <p class="dep-text">Busquei um imóvel comercial por meses sem sucesso. Em 3 semanas com a LM Brokers já estava assinando o contrato. Atendimento diferenciado e muito conhecimento de mercado.</p>
+        <div class="dep-author">
+          <div class="dep-avatar">R</div>
+          <div>
+            <div class="dep-name">Ricardo Mendes</div>
+            <div class="dep-role">Investidor · Alphaville</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA STRIP -->
+<section id="cta-strip">
+  <div class="cta-center">
+    <div class="sec-label reveal" style="justify-content:center;">
+      <div class="sec-label-line"></div>
+      <span class="sec-label-text">Pronto para começar?</span>
+    </div>
+    <h2 class="reveal" style="margin-top:16px;">
+      Encontre seu próximo<br><em>imóvel</em> hoje.
+    </h2>
+    <p class="reveal">
+      Fale agora com um de nossos especialistas e descubra as melhores oportunidades. Atendimento rápido, sem burocracia.
+    </p>
+    <a href="https://wa.me/5511999999999" target="_blank" rel="noopener" class="btn-gold reveal" style="font-size:.95rem; padding:18px 52px;">
+      Falar no WhatsApp →
+    </a>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section id="contato">
+  <div class="contato-wrap">
+    <div class="contato-grid">
+      <div class="contato-info">
+        <div class="sec-label reveal">
+          <div class="sec-label-line"></div>
+          <span class="sec-label-text">Contato</span>
+        </div>
+        <h2 class="sec-title light reveal" style="margin-top:14px; margin-bottom:22px;">
+          Fale com<br>nossa equipe.
+        </h2>
+        <p class="reveal">
+          Estamos prontos para ajudá-lo a encontrar o imóvel ideal ou vender com as melhores condições do mercado. Entre em contato agora.
+        </p>
+        <div class="c-items">
+          <div class="c-item reveal">
+            <div class="c-icon">📱</div>
+            <div>
+              <strong>WhatsApp</strong>
+              <span>(11) 9 9999-9999<br>Seg a Sáb, 8h – 20h</span>
+            </div>
+          </div>
+          <div class="c-item reveal" style="transition-delay:.1s">
+            <div class="c-icon">📧</div>
+            <div>
+              <strong>E-mail</strong>
+              <span>contato@lmbrokers.com.br</span>
+            </div>
+          </div>
+          <div class="c-item reveal" style="transition-delay:.2s">
+            <div class="c-icon">📍</div>
+            <div>
+              <strong>Localização</strong>
+              <span>São Paulo, SP<br>Atendemos toda a Grande SP</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal-right">
+        <div class="form">
+          <div class="f-field">
+            <label>Seu nome</label>
+            <input type="text" placeholder="Ex: João Silva">
+          </div>
+          <div class="f-field">
+            <label>WhatsApp / Telefone</label>
+            <input type="tel" placeholder="(11) 9 0000-0000">
+          </div>
+          <div class="f-field">
+            <label>E-mail</label>
+            <input type="email" placeholder="seu@email.com">
+          </div>
+          <div class="f-field">
+            <label>Interesse</label>
+            <select>
+              <option value="">Selecione...</option>
+              <option>Comprar imóvel</option>
+              <option>Vender imóvel</option>
+              <option>Alugar imóvel</option>
+              <option>Investimento</option>
+              <option>Imóvel Comercial</option>
+            </select>
+          </div>
+          <div class="f-field">
+            <label>Mensagem</label>
+            <textarea placeholder="Conte-nos mais sobre o que você procura..."></textarea>
+          </div>
+          <button class="btn-send" onclick="window.open('https://wa.me/5511999999999','_blank')">
+            Enviar pelo WhatsApp →
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-wrap">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">LM <span>Brokers</span></div>
+        <div class="footer-tag">Imóveis com propósito. Negócios com confiança.</div>
+      </div>
+      <nav class="footer-nav">
+        <a href="#sobre">Sobre</a>
+        <a href="#imoveis">Imóveis</a>
+        <a href="#diferenciais">Diferenciais</a>
+        <a href="#depoimentos">Depoimentos</a>
+        <a href="#contato">Contato</a>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2025 LM Brokers. Todos os direitos reservados.</span>
+      <span class="footer-creci">CRECI/SP · Imobiliária Licenciada</span>
+    </div>
+  </div>
+</footer>
+
+<!-- WHATSAPP FAB -->
+<a href="https://wa.me/5511999999999" target="_blank" rel="noopener" class="wa-fab" aria-label="Falar no WhatsApp">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+
+<script>
+  // Nav scroll
+  const nav = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Scroll reveal
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
