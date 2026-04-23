@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Family Grill — Marmitex Caseiro | Comida de Verdade Todo Dia</title>
+  <meta name="description" content="Family Grill: marmitex caseiro feito com ingredientes frescos e tempero de casa. Peça pelo WhatsApp e receba na porta." />
+  <meta property="og:title" content="Family Grill — Marmitex Caseiro" />
+  <meta property="og:description" content="Comida de verdade, feita em casa. Marmitex todos os dias com sabor e carinho." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍱</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800;12..96,900&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --primary: #C94B2C;
+      --primary-dark: #A33A1F;
+      --accent: #F7A825;
+      --accent-light: #FBCA6B;
+      --bg-dark: #1C0D07;
+      --bg-mid: #2E1608;
+      --bg-light: #FDF6EE;
+      --bg-warm: #F5EDE0;
+      --text-light: #FDF6EE;
+      --text-muted: #C4A882;
+      --text-dark: #1C0D07;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg-light);
+      color: var(--text-dark);
+      overflow-x: hidden;
+    }
+
+    /* ─── PAGE REVEAL ─── */
+    .page-reveal {
+      position: fixed;
+      inset: 0;
+      background: var(--bg-dark);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: revealOut 0.7s cubic-bezier(0.76,0,0.24,1) 1.6s forwards;
+    }
+
+    .page-reveal-logo {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      color: var(--text-light);
+      letter-spacing: -0.03em;
+      opacity: 0;
+      animation: logoFade 0.6s ease 0.3s forwards;
+    }
+
+    .page-reveal-logo span { color: var(--accent); }
+
+    @keyframes logoFade {
+      to { opacity: 1; }
+    }
+
+    @keyframes revealOut {
+      to { transform: translateY(-100%); }
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(to bottom, rgba(28,13,7,0.9) 0%, transparent 100%);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .nav-logo {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: 1.4rem;
+      color: var(--text-light);
+      letter-spacing: -0.03em;
+      text-decoration: none;
+    }
+
+    .nav-logo span { color: var(--accent); }
+
+    .nav-cta {
+      background: var(--primary);
+      color: var(--text-light);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      font-size: 0.85rem;
+      padding: 10px 20px;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+      white-space: nowrap;
+    }
+
+    .nav-cta:hover {
+      background: var(--primary-dark);
+      transform: scale(1.04);
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+
+    .hero-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transform: scale(1.08);
+      animation: heroZoom 8s ease forwards 1.8s;
+    }
+
+    @keyframes heroZoom {
+      to { transform: scale(1); }
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(28,13,7,0.3) 0%,
+        rgba(28,13,7,0.1) 40%,
+        rgba(28,13,7,0.85) 100%
+      );
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 100px 24px 60px;
+      width: 100%;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(247,168,37,0.15);
+      border: 1px solid rgba(247,168,37,0.4);
+      color: var(--accent-light);
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: slideUp 0.6s ease 2s forwards;
+    }
+
+    .hero-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: clamp(3.2rem, 14vw, 8rem);
+      line-height: 0.92;
+      color: var(--text-light);
+      letter-spacing: -0.04em;
+      margin-bottom: 24px;
+    }
+
+    .hero-title .line1 {
+      display: block;
+      opacity: 0;
+      transform: translateY(40px);
+      animation: slideUp 0.7s cubic-bezier(0.16,1,0.3,1) 2.1s forwards;
+    }
+
+    .hero-title .line2 {
+      display: block;
+      color: var(--accent);
+      opacity: 0;
+      transform: translateY(40px);
+      animation: slideUp 0.7s cubic-bezier(0.16,1,0.3,1) 2.25s forwards;
+    }
+
+    .hero-title .line3 {
+      display: block;
+      opacity: 0;
+      transform: translateY(40px);
+      animation: slideUp 0.7s cubic-bezier(0.16,1,0.3,1) 2.4s forwards;
+    }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: rgba(253,246,238,0.75);
+      max-width: 360px;
+      line-height: 1.6;
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: slideUp 0.6s ease 2.6s forwards;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      opacity: 0;
+      animation: slideUp 0.6s ease 2.75s forwards;
+    }
+
+    .btn-primary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: var(--primary);
+      color: var(--text-light);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      font-size: 1rem;
+      padding: 16px 28px;
+      border-radius: 12px;
+      text-decoration: none;
+      transition: all 0.25s;
+      border: none;
+      min-height: 52px;
+      letter-spacing: -0.01em;
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(201,75,44,0.4);
+    }
+
+    .btn-secondary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: rgba(253,246,238,0.1);
+      color: var(--text-light);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      font-size: 0.95rem;
+      padding: 16px 28px;
+      border-radius: 12px;
+      text-decoration: none;
+      border: 1px solid rgba(253,246,238,0.25);
+      transition: all 0.25s;
+      min-height: 52px;
+      backdrop-filter: blur(8px);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(253,246,238,0.18);
+      border-color: rgba(253,246,238,0.4);
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 28px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(253,246,238,0.15);
+      margin-top: 40px;
+      opacity: 0;
+      animation: slideUp 0.6s ease 2.9s forwards;
+    }
+
+    .stat-num {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      font-size: 1.8rem;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 0.78rem;
+      color: rgba(253,246,238,0.55);
+      margin-top: 4px;
+      letter-spacing: 0.04em;
+    }
+
+    @keyframes slideUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── SCROLL REVEAL ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.16,1,0.3,1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── SECTION BASE ─── */
+    section { overflow: hidden; }
+
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--primary);
+      border-radius: 2px;
+    }
+
+    /* ─── SOBRE ─── */
+    .sobre {
+      background: var(--bg-dark);
+      padding: 80px 24px;
+      position: relative;
+    }
+
+    .sobre::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--primary), transparent);
+    }
+
+    .sobre-grid {
+      display: grid;
+      gap: 40px;
+    }
+
+    .sobre-img-wrap {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+    }
+
+    .sobre-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .sobre-img-wrap:hover img { transform: scale(1.04); }
+
+    .sobre-badge {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      background: var(--accent);
+      color: var(--bg-dark);
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      font-size: 0.85rem;
+      padding: 8px 16px;
+      border-radius: 100px;
+      letter-spacing: -0.01em;
+    }
+
+    .sobre-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: clamp(2rem, 8vw, 3.2rem);
+      color: var(--text-light);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
+    }
+
+    .sobre-title em {
+      color: var(--accent);
+      font-style: normal;
+    }
+
+    .sobre-text {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.75;
+    }
+
+    .sobre-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 24px;
+    }
+
+    .pill {
+      background: rgba(201,75,44,0.15);
+      border: 1px solid rgba(201,75,44,0.3);
+      color: #E8806A;
+      font-size: 0.8rem;
+      padding: 6px 14px;
+      border-radius: 100px;
+    }
+
+    /* ─── CARDÁPIO ─── */
+    .cardapio {
+      background: var(--bg-light);
+      padding: 80px 24px;
+    }
+
+    .cardapio-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: clamp(2rem, 8vw, 3.5rem);
+      color: var(--text-dark);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      margin-bottom: 8px;
+    }
+
+    .cardapio-sub {
+      font-size: 1rem;
+      font-weight: 300;
+      color: #7A5C45;
+      margin-bottom: 40px;
+    }
+
+    .cardapio-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .card-item {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(28,13,7,0.08);
+      transition: all 0.35s cubic-bezier(0.16,1,0.3,1);
+      cursor: default;
+    }
+
+    .card-item:hover {
+      transform: translateY(-6px) scale(1.01);
+      box-shadow: 0 20px 48px rgba(201,75,44,0.18), 0 4px 16px rgba(28,13,7,0.12);
+    }
+
+    .card-img-wrap {
+      position: relative;
+      aspect-ratio: 16/9;
+      overflow: hidden;
+    }
+
+    .card-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .card-item:hover .card-img-wrap img { transform: scale(1.06); }
+
+    .card-tag {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: var(--accent);
+      color: var(--bg-dark);
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      border-radius: 100px;
+      letter-spacing: 0.02em;
+    }
+
+    .card-body {
+      padding: 20px;
+    }
+
+    .card-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      font-size: 1.15rem;
+      color: var(--text-dark);
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+
+    .card-desc {
+      font-size: 0.875rem;
+      font-weight: 300;
+      color: #7A5C45;
+      line-height: 1.6;
+    }
+
+    .card-price {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid #F0E6D8;
+    }
+
+    .price-val {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: 1.4rem;
+      color: var(--primary);
+      letter-spacing: -0.03em;
+    }
+
+    .price-label {
+      font-size: 0.7rem;
+      color: #B09070;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .card-btn {
+      background: var(--bg-dark);
+      color: var(--text-light);
+      font-size: 0.78rem;
+      font-weight: 500;
+      padding: 8px 16px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+
+    .card-btn:hover { background: var(--primary); }
+
+    /* ─── MARQUEE ─── */
+    .marquee-strip {
+      background: var(--primary);
+      padding: 14px 0;
+      overflow: hidden;
+      display: flex;
+    }
+
+    .marquee-track {
+      display: flex;
+      gap: 32px;
+      animation: marquee 18s linear infinite;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .marquee-item {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      font-size: 0.85rem;
+      color: var(--text-light);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .marquee-dot {
+      width: 5px;
+      height: 5px;
+      background: var(--accent);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ─── GALERIA ─── */
+    .galeria {
+      background: var(--bg-warm);
+      padding: 80px 24px;
+    }
+
+    .galeria-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: clamp(2rem, 8vw, 3.5rem);
+      color: var(--text-dark);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      margin-bottom: 40px;
+    }
+
+    .galeria-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto auto;
+      gap: 8px;
+    }
+
+    .gal-item {
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .gal-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .gal-item:hover img { transform: scale(1.06); }
+
+    .gal-item:first-child {
+      grid-column: 1 / -1;
+      aspect-ratio: 16/9;
+    }
+
+    .gal-item:not(:first-child) {
+      aspect-ratio: 1;
+    }
+
+    /* ─── DEPOIMENTOS ─── */
+    .depoimentos {
+      background: var(--bg-dark);
+      padding: 80px 24px;
+      position: relative;
+    }
+
+    .depoimentos::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(247,168,37,0.4), transparent);
+    }
+
+    .dep-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: clamp(2rem, 8vw, 3.2rem);
+      color: var(--text-light);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      margin-bottom: 40px;
+    }
+
+    .dep-title em {
+      color: var(--accent);
+      font-style: normal;
+    }
+
+    .dep-cards {
+      display: grid;
+      gap: 16px;
+    }
+
+    .dep-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 28px 24px;
+      transition: all 0.35s ease;
+    }
+
+    .dep-card:hover {
+      background: rgba(255,255,255,0.07);
+      border-color: rgba(247,168,37,0.25);
+      transform: translateY(-3px);
+    }
+
+    .dep-stars {
+      color: var(--accent);
+      font-size: 0.9rem;
+      letter-spacing: 3px;
+      margin-bottom: 14px;
+    }
+
+    .dep-text {
+      font-size: 0.975rem;
+      font-weight: 300;
+      font-style: italic;
+      color: rgba(253,246,238,0.8);
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .dep-text::before {
+      content: '"';
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--primary);
+      line-height: 0;
+      vertical-align: -0.6em;
+      margin-right: 6px;
+      font-style: normal;
+    }
+
+    .dep-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .dep-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .dep-name {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--text-light);
+    }
+
+    .dep-role {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* ─── CONTATO ─── */
+    .contato {
+      background: var(--bg-dark);
+      padding: 80px 24px 60px;
+      position: relative;
+    }
+
+    .contato-inner {
+      background: var(--primary);
+      border-radius: 24px;
+      padding: 48px 28px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contato-inner::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 200px; height: 200px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 50%;
+    }
+
+    .contato-inner::after {
+      content: '';
+      position: absolute;
+      bottom: -40px; left: -40px;
+      width: 150px; height: 150px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 50%;
+    }
+
+    .contato-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: clamp(1.8rem, 7vw, 3rem);
+      color: var(--text-light);
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      margin-bottom: 12px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .contato-sub {
+      font-size: 1rem;
+      font-weight: 300;
+      color: rgba(253,246,238,0.8);
+      margin-bottom: 32px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .contato-wpp {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: #25D366;
+      color: white;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      font-size: 1.05rem;
+      padding: 18px 32px;
+      border-radius: 14px;
+      text-decoration: none;
+      transition: all 0.25s;
+      min-height: 56px;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    }
+
+    .contato-wpp:hover {
+      background: #1EB055;
+      transform: translateY(-3px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.25);
+    }
+
+    .info-grid {
+      display: grid;
+      gap: 16px;
+      margin-top: 40px;
+    }
+
+    .info-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 14px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .info-icon {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .info-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .info-val {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text-light);
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--bg-mid);
+      padding: 28px 24px;
+      text-align: center;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .footer-logo {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: 1.2rem;
+      color: var(--text-light);
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+    }
+
+    .footer-logo span { color: var(--accent); }
+
+    .footer-copy {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    /* ─── WHATSAPP FLOAT ─── */
+    .wpp-float {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 999;
+      width: 60px;
+      height: 60px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      box-shadow: 0 4px 16px rgba(37,211,102,0.4), 0 2px 8px rgba(0,0,0,0.2);
+      animation: wppPulse 2.5s ease-in-out infinite;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .wpp-float:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 24px rgba(37,211,102,0.5), 0 4px 12px rgba(0,0,0,0.2);
+      animation: none;
+    }
+
+    .wpp-float svg {
+      width: 30px;
+      height: 30px;
+      fill: white;
+    }
+
+    @keyframes wppPulse {
+      0%, 100% { box-shadow: 0 4px 16px rgba(37,211,102,0.4), 0 2px 8px rgba(0,0,0,0.2); }
+      50% { box-shadow: 0 4px 28px rgba(37,211,102,0.7), 0 2px 12px rgba(0,0,0,0.25); }
+    }
+
+    /* ─── DESKTOP ─── */
+    @media (min-width: 768px) {
+      nav { padding: 24px 48px; }
+
+      .hero-content { padding: 120px 48px 80px; max-width: 680px; }
+
+      .hero-actions { flex-direction: row; }
+
+      .btn-primary, .btn-secondary { width: auto; min-width: 200px; }
+
+      .sobre { padding: 100px 48px; }
+
+      .sobre-grid {
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        gap: 60px;
+      }
+
+      .cardapio { padding: 100px 48px; }
+
+      .cardapio-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .galeria { padding: 100px 48px; }
+
+      .galeria-grid {
+        grid-template-columns: 2fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+      }
+
+      .gal-item:first-child {
+        grid-column: 1;
+        grid-row: 1 / -1;
+        aspect-ratio: auto;
+      }
+
+      .gal-item:not(:first-child) {
+        aspect-ratio: 4/3;
+      }
+
+      .depoimentos { padding: 100px 48px; }
+
+      .dep-cards { grid-template-columns: 1fr 1fr 1fr; }
+
+      .contato { padding: 100px 48px 80px; }
+
+      .info-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (min-width: 1024px) {
+      .cardapio-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Page Reveal -->
+  <div class="page-reveal">
+    <div class="page-reveal-logo">Family<span>Grill</span></div>
+  </div>
+
+  <!-- WhatsApp Float -->
+  <a href="https://wa.me/5511999999999?text=Ol%C3%A1!%20Quero%20fazer%20um%20pedido%20de%20marmitex%20%F0%9F%8D1" class="wpp-float" target="_blank" rel="noopener" aria-label="Pedir pelo WhatsApp">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="#" class="nav-logo">Family<span>Grill</span></a>
+    <a href="https://wa.me/5511999999999?text=Ol%C3%A1!%20Quero%20fazer%20um%20pedido%20de%20marmitex%20%F0%9F%8D1" class="nav-cta" target="_blank" rel="noopener">Fazer Pedido</a>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <img
+      class="hero-img"
+      src="https://images.unsplash.com/photo-1574484284002-952d92456975?w=1600&q=80&auto=format&fit=crop"
+      alt="Marmitex Family Grill"
+      loading="eager"
+    />
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">🍱 Marmitex Caseiro · Feito com Amor</div>
+      <h1 class="hero-title">
+        <span class="line1">Comida</span>
+        <span class="line2">de Verdade</span>
+        <span class="line3">Todo Dia.</span>
+      </h1>
+      <p class="hero-sub">Marmitex fresquinho, temperado na hora, com o sabor de casa que você merece. Peça e receba rapidinho.</p>
+      <div class="hero-actions">
+        <a href="https://wa.me/5511999999999?text=Ol%C3%A1!%20Quero%20fazer%20um%20pedido%20de%20marmitex%20%F0%9F%8D1" class="btn-primary" target="_blank" rel="noopener">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Pedir pelo WhatsApp
+        </a>
+        <a href="#cardapio" class="btn-secondary">
+          Ver Cardápio
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num">500+</div>
+          <div class="stat-label">Marmitas por semana</div>
+        </div>
+        <div>
+          <div class="stat-num">4.9★</div>
+          <div class="stat-label">Avaliação média</div>
+        </div>
+        <div>
+          <div class="stat-num">3 anos</div>
+          <div class="stat-label">Alimentando a cidade</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Marquee -->
+  <div class="marquee-strip" aria-hidden="true">
+    <div class="marquee-track">
+      <span class="marquee-item"><span class="marquee-dot"></span>Arroz Fresquinho</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>Feijão Temperado</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>Carne do Dia</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>Salada Variada</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>Entrega Rápida</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>Comida Caseira</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>Feito com Amor</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>Arroz Fresquinho</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>Feijão Temperado</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>Carne do Dia</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>Salada Variada</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>Entrega Rápida</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>Comida Caseira</span>
+      <span class="marquee-item"><span class="marquee-dot"></span>Feito com Amor</span>
+    </div>
+  </div>
+
+  <!-- Sobre -->
+  <section class="sobre" id="sobre">
+    <div class="sobre-grid">
+      <div class="sobre-img-wrap reveal">
+        <img
+          src="https://images.unsplash.com/photo-1547592180-85f173990554?w=900&q=80&auto=format&fit=crop"
+          alt="Cozinha Family Grill"
+          loading="lazy"
+        />
+        <div class="sobre-badge">🍳 Feito na hora</div>
+      </div>
+      <div class="reveal" style="transition-delay: 0.15s">
+        <div class="section-label">Nossa história</div>
+        <h2 class="sobre-title">Tempero<br/>de <em>casa.</em><br/>Sabor de sempre.</h2>
+        <p class="sobre-text">
+          O Family Grill nasceu da vontade de levar comida de verdade para quem não tem tempo de cozinhar, mas não abre mão do sabor. Cada marmitex é preparado com ingredientes frescos, escolhidos diariamente, com o capricho de uma refeição feita em casa.
+        </p>
+        <p class="sobre-text" style="margin-top: 14px;">
+          Cardápio renovado todo dia, com opções que mudam para você nunca enjoar. Do arroz bem soltinho ao feijão bem temperado — é a memória afetiva que você merece no almoço.
+        </p>
+        <div class="sobre-pills">
+          <span class="pill">🥩 Proteínas variadas</span>
+          <span class="pill">🥗 Salada fresca</span>
+          <span class="pill">🍚 Arroz e feijão</span>
+          <span class="pill">🚚 Entrega rápida</span>
+          <span class="pill">❤️ Feito com carinho</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cardápio -->
+  <section class="cardapio" id="cardapio">
+    <div class="reveal">
+      <div class="section-label">O que tem hoje</div>
+      <h2 class="cardapio-title">Cardápio<br/>do Dia</h2>
+      <p class="cardapio-sub">Cardápio rotativo — sempre fresquinho, nunca enjoa.</p>
+    </div>
+    <div class="cardapio-grid">
+      <div class="card-item reveal" style="transition-delay: 0.1s">
+        <div class="card-img-wrap">
+          <img src="https://images.unsplash.com/photo-1555939594-58329b348462?w=600&q=80&auto=format&fit=crop" alt="Marmitex Frango Grelhado" loading="lazy" />
+          <span class="card-tag">Popular</span>
+        </div>
+        <div class="card-body">
+          <div class="card-title">Frango Grelhado</div>
+          <p class="card-desc">Filé de frango grelhado na chapa, arroz, feijão, salada e farofa da casa.</p>
+          <div class="card-price">
+            <div>
+              <div class="price-label">a partir de</div>
+              <div class="price-val">R$ 18</div>
+            </div>
+            <a href="https://wa.me/5511999999999?text=Quero%20um%20marmitex%20de%20Frango%20Grelhado!" class="card-btn" target="_blank" rel="noopener">Pedir</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-item reveal" style="transition-delay: 0.2s">
+        <div class="card-img-wrap">
+          <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=600&q=80&auto=format&fit=crop" alt="Marmitex Picadinho" loading="lazy" />
+          <span class="card-tag">Especial</span>
+        </div>
+        <div class="card-body">
+          <div class="card-title">Picadinho de Carne</div>
+          <p class="card-desc">Picadinho de carne moída com legumes, arroz, feijão, salada e macarrão.</p>
+          <div class="card-price">
+            <div>
+              <div class="price-label">a partir de</div>
+              <div class="price-val">R$ 19</div>
+            </div>
+            <a href="https://wa.me/5511999999999?text=Quero%20um%20marmitex%20de%20Picadinho!" class="card-btn" target="_blank" rel="noopener">Pedir</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-item reveal" style="transition-delay: 0.3s">
+        <div class="card-img-wrap">
+          <img src="https://images.unsplash.com/photo-1540189549336-e6e99eb4b951?w=600&q=80&auto=format&fit=crop" alt="Marmitex Strogonoff" loading="lazy" />
+        </div>
+        <div class="card-body">
+          <div class="card-title">Strogonoff de Frango</div>
+          <p class="card-desc">Strogonoff cremoso com arroz, batata palha crocante e salada da estação.</p>
+          <div class="card-price">
+            <div>
+              <div class="price-label">a partir de</div>
+              <div class="price-val">R$ 20</div>
+            </div>
+            <a href="https://wa.me/5511999999999?text=Quero%20um%20marmitex%20de%20Strogonoff!" class="card-btn" target="_blank" rel="noopener">Pedir</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Galeria -->
+  <section class="galeria" id="galeria">
+    <div class="reveal">
+      <div class="section-label">Galeria</div>
+      <h2 class="galeria-title">Feito com<br/>muito carinho.</h2>
+    </div>
+    <div class="galeria-grid reveal" style="transition-delay: 0.15s">
+      <div class="gal-item">
+        <img src="https://images.unsplash.com/photo-1567620905732-2d1995941447?w=900&q=80&auto=format&fit=crop" alt="Almoço Family Grill" loading="lazy" />
+      </div>
+      <div class="gal-item">
+        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600&q=80&auto=format&fit=crop" alt="Prato Family Grill" loading="lazy" />
+      </div>
+      <div class="gal-item">
+        <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=600&q=80&auto=format&fit=crop" alt="Salada Family Grill" loading="lazy" />
+      </div>
+      <div class="gal-item">
+        <img src="https://images.unsplash.com/photo-1559847844-5315695dadae?w=600&q=80&auto=format&fit=crop" alt="Comida caseira" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Depoimentos -->
+  <section class="depoimentos" id="depoimentos">
+    <div class="reveal">
+      <div class="section-label" style="color: var(--accent);">
+        <span style="background: var(--accent); width:24px; height:2px; display:inline-block; border-radius:2px;"></span>
+        O que dizem
+      </div>
+      <h2 class="dep-title">Quem prova,<br/><em>vira cliente.</em></h2>
+    </div>
+    <div class="dep-cards">
+      <div class="dep-card reveal" style="transition-delay: 0.1s">
+        <div class="dep-stars">★★★★★</div>
+        <p class="dep-text">Melhor marmitex que já comi! Comida gostosa, temperada de verdade, porção generosa e ainda chega quente. Todo dia peço daqui!</p>
+        <div class="dep-author">
+          <div class="dep-avatar">A</div>
+          <div>
+            <div class="dep-name">Ana Paula</div>
+            <div class="dep-role">Cliente fiel há 2 anos</div>
+          </div>
+        </div>
+      </div>
+      <div class="dep-card reveal" style="transition-delay: 0.2s">
+        <div class="dep-stars">★★★★★</div>
+        <p class="dep-text">Finalmente uma marmitex que parece comida de casa mesmo. Arroz soltinho, feijão bem temperado, carne macia. Recomendo demais!</p>
+        <div class="dep-author">
+          <div class="dep-avatar">R</div>
+          <div>
+            <div class="dep-name">Rodrigo S.</div>
+            <div class="dep-role">Pedindo toda semana</div>
+          </div>
+        </div>
+      </div>
+      <div class="dep-card reveal" style="transition-delay: 0.3s">
+        <div class="dep-stars">★★★★★</div>
+        <p class="dep-text">Preço justo, porção boa e sabor incrível. Eles têm o cardápio variado, então nunca enjoa. Meu almoço de todo dia durante a semana!</p>
+        <div class="dep-author">
+          <div class="dep-avatar">C</div>
+          <div>
+            <div class="dep-name">Carol M.</div>
+            <div class="dep-role">Seguidora nas redes</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contato -->
+  <section class="contato" id="contato">
+    <div class="contato-inner reveal">
+      <h2 class="contato-title">Bora pedir<br/>sua marmitex?</h2>
+      <p class="contato-sub">Mande uma mensagem e receba seu pedido rapidinho.</p>
+      <a href="https://wa.me/5511999999999?text=Ol%C3%A1!%20Quero%20fazer%20um%20pedido%20de%20marmitex%20%F0%9F%8D1" class="contato-wpp" target="_blank" rel="noopener">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Fazer Pedido pelo WhatsApp
+      </a>
+    </div>
+
+    <div class="info-grid">
+      <div class="info-card reveal" style="transition-delay: 0.1s">
+        <span class="info-icon">⏰</span>
+        <div class="info-label">Horário</div>
+        <div class="info-val">Seg–Sex · 10h às 14h</div>
+      </div>
+      <div class="info-card reveal" style="transition-delay: 0.2s">
+        <span class="info-icon">🚚</span>
+        <div class="info-label">Entrega</div>
+        <div class="info-val">Consulte a região</div>
+      </div>
+      <div class="info-card reveal" style="transition-delay: 0.3s">
+        <span class="info-icon">💳</span>
+        <div class="info-label">Pagamento</div>
+        <div class="info-val">Pix · Dinheiro · Cartão</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-logo">Family<span>Grill</span></div>
+    <p class="footer-copy">© 2024 Family Grill · Marmitex Caseiro · Todos os direitos reservados.</p>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    revealEls.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
