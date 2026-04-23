@@ -1,0 +1,1751 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Planeta Mídia Notícias | Seu Portal de Informação</title>
+  <meta name="description" content="Planeta Mídia Notícias — as últimas notícias do Brasil e do mundo. Política, economia, esportes, tecnologia e muito mais." />
+  <meta property="og:title" content="Planeta Mídia Notícias" />
+  <meta property="og:description" content="As últimas notícias do Brasil e do mundo em um só lugar." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1200&q=80" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Bebas+Neue&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --primary: #C8162C;
+      --primary-dark: #9E0E20;
+      --gold: #D4A017;
+      --ink: #0D0D0D;
+      --ink-soft: #1A1A1A;
+      --newsprint: #F2EDE4;
+      --newsprint-dark: #E8E0D4;
+      --text: #111111;
+      --text-muted: #666666;
+      --text-light: #999999;
+      --white: #FFFFFF;
+      --border: #D8D0C4;
+      --card-bg: #FDFBF8;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--newsprint);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ─── NOISE TEXTURE ─── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.4;
+    }
+
+    /* ─── TICKER ─── */
+    .ticker-bar {
+      background: var(--primary);
+      color: var(--white);
+      padding: 8px 0;
+      overflow: hidden;
+      position: relative;
+      z-index: 100;
+    }
+
+    .ticker-inner {
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+
+    .ticker-label {
+      background: var(--ink);
+      color: var(--white);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 13px;
+      letter-spacing: 2px;
+      padding: 0 16px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      z-index: 2;
+      position: relative;
+    }
+
+    .ticker-label::after {
+      content: '';
+      position: absolute;
+      right: -10px;
+      top: 0;
+      border-left: 10px solid var(--ink);
+      border-top: 16px solid transparent;
+      border-bottom: 16px solid transparent;
+    }
+
+    .ticker-dot {
+      width: 7px;
+      height: 7px;
+      background: var(--primary);
+      border-radius: 50%;
+      animation: pulse-dot 1.2s infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    .ticker-scroll-wrap {
+      overflow: hidden;
+      flex: 1;
+      padding-left: 20px;
+    }
+
+    .ticker-scroll {
+      display: flex;
+      gap: 60px;
+      animation: ticker-move 40s linear infinite;
+      white-space: nowrap;
+    }
+
+    .ticker-scroll:hover { animation-play-state: paused; }
+
+    @keyframes ticker-move {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .ticker-item {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+    }
+
+    .ticker-item::before {
+      content: '◆';
+      margin-right: 12px;
+      font-size: 8px;
+      opacity: 0.7;
+    }
+
+    /* ─── HEADER ─── */
+    header {
+      background: var(--ink);
+      color: var(--white);
+      border-bottom: 3px solid var(--primary);
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      animation: slideDown 0.5s ease forwards;
+    }
+
+    @keyframes slideDown {
+      from { transform: translateY(-100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .header-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .logo {
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+      text-decoration: none;
+    }
+
+    .logo-main {
+      font-family: 'Fraunces', serif;
+      font-weight: 900;
+      font-size: 22px;
+      color: var(--white);
+      letter-spacing: -0.5px;
+    }
+
+    .logo-sub {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 11px;
+      letter-spacing: 4px;
+      color: var(--primary);
+      margin-top: -2px;
+    }
+
+    nav {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+    }
+
+    nav a {
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 6px 12px;
+      border-radius: 3px;
+      transition: all 0.2s;
+    }
+
+    nav a:hover {
+      color: var(--white);
+      background: rgba(255,255,255,0.1);
+    }
+
+    nav a.active {
+      color: var(--white);
+      background: var(--primary);
+    }
+
+    .header-search {
+      display: flex;
+      align-items: center;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 4px;
+      padding: 6px 12px;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .header-search:hover {
+      background: rgba(255,255,255,0.15);
+    }
+
+    .header-search span {
+      color: rgba(255,255,255,0.6);
+      font-size: 12px;
+    }
+
+    /* ─── DATE BAR ─── */
+    .date-bar {
+      background: var(--newsprint-dark);
+      border-bottom: 1px solid var(--border);
+      padding: 8px 24px;
+    }
+
+    .date-bar-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .date-bar-inner span {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    .edition-badge {
+      background: var(--ink);
+      color: var(--gold);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 11px;
+      letter-spacing: 2px;
+      padding: 3px 10px;
+      border-radius: 2px;
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative;
+      height: 90vh;
+      min-height: 560px;
+      max-height: 760px;
+      overflow: hidden;
+      animation: fadeIn 0.8s ease 0.3s both;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .hero-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform-origin: center;
+      animation: zoomIn 12s ease-in-out infinite alternate;
+    }
+
+    @keyframes zoomIn {
+      from { transform: scale(1); }
+      to { transform: scale(1.05); }
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(0,0,0,0.92) 0%,
+        rgba(0,0,0,0.6) 40%,
+        rgba(0,0,0,0.2) 70%,
+        transparent 100%
+      );
+    }
+
+    .hero-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 48px 24px 56px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--primary);
+      color: var(--white);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      margin-bottom: 20px;
+      animation: slideUp 0.7s ease 0.5s both;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .hero-title {
+      font-family: 'Fraunces', serif;
+      font-weight: 900;
+      font-size: clamp(36px, 6vw, 72px);
+      line-height: 1.05;
+      color: var(--white);
+      max-width: 900px;
+      margin-bottom: 20px;
+      animation: slideUp 0.7s ease 0.6s both;
+    }
+
+    .hero-excerpt {
+      color: rgba(255,255,255,0.8);
+      font-size: 18px;
+      font-weight: 300;
+      max-width: 620px;
+      line-height: 1.7;
+      margin-bottom: 28px;
+      animation: slideUp 0.7s ease 0.7s both;
+    }
+
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      animation: slideUp 0.7s ease 0.8s both;
+    }
+
+    .hero-author {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .author-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--primary);
+    }
+
+    .author-name {
+      color: rgba(255,255,255,0.9);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .hero-time {
+      color: rgba(255,255,255,0.5);
+      font-size: 13px;
+    }
+
+    .hero-read-btn {
+      background: var(--primary);
+      color: var(--white);
+      border: none;
+      padding: 12px 28px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.25s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .hero-read-btn:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+
+    .hero-side-stories {
+      position: absolute;
+      right: 24px;
+      bottom: 56px;
+      width: 260px;
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    .hero-side-item {
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(8px);
+      border-left: 3px solid var(--primary);
+      padding: 14px 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .hero-side-item:hover {
+      background: rgba(200,22,44,0.2);
+      transform: translateX(-4px);
+    }
+
+    .side-tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+
+    .side-headline {
+      font-family: 'Fraunces', serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.3;
+    }
+
+    /* ─── MAIN LAYOUT ─── */
+    .main-wrap {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ─── SECTION HEADER ─── */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 48px 0 28px;
+    }
+
+    .section-header h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28px;
+      letter-spacing: 2px;
+      color: var(--ink);
+    }
+
+    .section-line {
+      flex: 1;
+      height: 2px;
+      background: linear-gradient(to right, var(--primary), transparent);
+    }
+
+    .section-more {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .section-more:hover { border-color: var(--primary); }
+
+    /* ─── NEWS GRID ─── */
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-template-rows: auto;
+      gap: 2px;
+      background: var(--border);
+    }
+
+    .news-card {
+      background: var(--card-bg);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .news-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+      z-index: 2;
+    }
+
+    .news-card:hover .card-img-inner {
+      transform: scale(1.06);
+    }
+
+    .card-img-wrap {
+      overflow: hidden;
+      position: relative;
+    }
+
+    .card-img-inner {
+      transition: transform 0.6s ease;
+    }
+
+    .card-img-inner img {
+      width: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .card-category-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      z-index: 2;
+    }
+
+    .badge-politica { background: #1A3A6B; color: #fff; }
+    .badge-economia { background: #D4A017; color: #000; }
+    .badge-mundo { background: #1B5E20; color: #fff; }
+    .badge-esportes { background: #C8162C; color: #fff; }
+    .badge-tecnologia { background: #6A1E9E; color: #fff; }
+    .badge-cultura { background: #BF360C; color: #fff; }
+    .badge-saude { background: #00695C; color: #fff; }
+    .badge-breaking { background: #C8162C; color: #fff; animation: blink-bg 1.5s infinite; }
+
+    @keyframes blink-bg {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    .card-body { padding: 20px; }
+
+    .card-headline {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      line-height: 1.25;
+      color: var(--ink);
+      margin-bottom: 10px;
+      transition: color 0.2s;
+    }
+
+    .news-card:hover .card-headline { color: var(--primary); }
+
+    .card-excerpt {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 16px;
+      font-weight: 300;
+    }
+
+    .card-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--text-light);
+      border-top: 1px solid var(--border);
+      padding-top: 12px;
+    }
+
+    .card-meta-author { font-weight: 600; color: var(--text-muted); }
+
+    /* Grid placement */
+    .card-featured { grid-column: span 8; }
+    .card-secondary { grid-column: span 4; }
+    .card-third { grid-column: span 4; }
+    .card-quarter { grid-column: span 3; }
+
+    .card-featured .card-img-inner img { height: 360px; }
+    .card-featured .card-headline { font-size: 28px; }
+    .card-secondary .card-img-inner img { height: 200px; }
+    .card-secondary .card-headline { font-size: 18px; }
+    .card-third .card-img-inner img { height: 200px; }
+    .card-third .card-headline { font-size: 16px; }
+    .card-quarter .card-img-inner img { height: 160px; }
+    .card-quarter .card-headline { font-size: 15px; }
+    .card-quarter .card-excerpt { display: none; }
+
+    /* ─── CATEGORIES STRIP ─── */
+    .categories-strip {
+      background: var(--ink);
+      padding: 48px 0;
+      margin: 48px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .categories-strip::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(to right, var(--primary), var(--gold), var(--primary));
+    }
+
+    .categories-strip .main-wrap { padding: 0 24px; }
+
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 2px;
+    }
+
+    .category-card {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      cursor: pointer;
+    }
+
+    .category-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease, filter 0.3s ease;
+      filter: brightness(0.5) saturate(0.8);
+    }
+
+    .category-card:hover img {
+      transform: scale(1.1);
+      filter: brightness(0.35) saturate(1.2);
+    }
+
+    .category-label {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .category-icon {
+      font-size: 28px;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.5));
+    }
+
+    .category-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px;
+      letter-spacing: 3px;
+      color: var(--white);
+      text-shadow: 0 2px 12px rgba(0,0,0,0.6);
+    }
+
+    .category-count {
+      font-size: 11px;
+      color: rgba(255,255,255,0.6);
+      font-weight: 500;
+      letter-spacing: 1px;
+    }
+
+    .category-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .cat-politica::after { background: #1A3A6B; }
+    .cat-economia::after { background: #D4A017; }
+    .cat-mundo::after { background: #1B5E20; }
+    .cat-esportes::after { background: #C8162C; }
+    .cat-tecnologia::after { background: #6A1E9E; }
+    .cat-cultura::after { background: #BF360C; }
+
+    .category-card:hover::after { transform: scaleX(1); }
+
+    /* ─── BOTTOM GRID ─── */
+    .bottom-grid {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 2px;
+      background: var(--border);
+      margin-bottom: 0;
+    }
+
+    .bottom-main { }
+    .bottom-side { background: var(--card-bg); }
+
+    /* ─── LIST NEWS ─── */
+    .list-news { background: var(--card-bg); }
+
+    .list-item {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 16px;
+      padding: 20px;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .list-item:last-child { border-bottom: none; }
+    .list-item:hover { background: var(--newsprint-dark); }
+
+    .list-item-img {
+      aspect-ratio: 16/10;
+      object-fit: cover;
+      transition: transform 0.4s;
+    }
+
+    .list-item:hover .list-item-img { transform: scale(1.03); }
+
+    .list-item-body { }
+
+    .list-item-tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+
+    .list-item-headline {
+      font-family: 'Fraunces', serif;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.3;
+      color: var(--ink);
+      margin-bottom: 6px;
+      transition: color 0.2s;
+    }
+
+    .list-item:hover .list-item-headline { color: var(--primary); }
+
+    .list-item-meta {
+      font-size: 12px;
+      color: var(--text-light);
+    }
+
+    /* ─── SIDEBAR ─── */
+    .sidebar-section { padding: 20px; border-bottom: 1px solid var(--border); }
+
+    .sidebar-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18px;
+      letter-spacing: 2px;
+      color: var(--ink);
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--primary);
+    }
+
+    /* Most read */
+    .most-read-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+    }
+
+    .most-read-item:last-child { border-bottom: none; }
+
+    .most-read-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 36px;
+      line-height: 1;
+      color: var(--newsprint-dark);
+      flex-shrink: 0;
+      width: 32px;
+      transition: color 0.2s;
+    }
+
+    .most-read-item:hover .most-read-num { color: var(--primary); }
+
+    .most-read-title {
+      font-family: 'Fraunces', serif;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.3;
+      color: var(--ink);
+      transition: color 0.2s;
+    }
+
+    .most-read-item:hover .most-read-title { color: var(--primary); }
+
+    /* Newsletter */
+    .newsletter-box {
+      background: var(--ink);
+      padding: 28px 20px;
+    }
+
+    .newsletter-box .sidebar-title { color: var(--white); border-color: var(--gold); }
+
+    .newsletter-desc {
+      font-size: 13px;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 16px;
+      line-height: 1.6;
+    }
+
+    .newsletter-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .newsletter-input {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: var(--white);
+      padding: 12px 16px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .newsletter-input::placeholder { color: rgba(255,255,255,0.4); }
+    .newsletter-input:focus { border-color: var(--gold); }
+
+    .newsletter-btn {
+      background: var(--primary);
+      color: var(--white);
+      border: none;
+      padding: 12px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .newsletter-btn:hover { background: var(--primary-dark); }
+
+    /* ─── ABOUT ─── */
+    .about-section {
+      background: var(--ink-soft);
+      padding: 72px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-section::before {
+      content: '"';
+      position: absolute;
+      top: -40px;
+      left: 40px;
+      font-family: 'Fraunces', serif;
+      font-size: 400px;
+      color: rgba(255,255,255,0.02);
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .about-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .about-tag {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 12px;
+      letter-spacing: 4px;
+      color: var(--primary);
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .about-title {
+      font-family: 'Fraunces', serif;
+      font-weight: 900;
+      font-size: clamp(36px, 4vw, 56px);
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 28px;
+    }
+
+    .about-title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .about-text {
+      font-size: 16px;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.8;
+      margin-bottom: 20px;
+      font-weight: 300;
+    }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-top: 40px;
+    }
+
+    .stat-card {
+      background: rgba(255,255,255,0.05);
+      padding: 20px;
+      text-align: center;
+      border-top: 2px solid transparent;
+      transition: border-color 0.3s, background 0.3s;
+    }
+
+    .stat-card:hover {
+      border-color: var(--primary);
+      background: rgba(200,22,44,0.08);
+    }
+
+    .stat-number {
+      font-family: 'Fraunces', serif;
+      font-weight: 900;
+      font-size: 40px;
+      color: var(--white);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 1px;
+      margin-top: 4px;
+    }
+
+    .about-visual {
+      position: relative;
+    }
+
+    .about-img-main {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      display: block;
+    }
+
+    .about-img-accent {
+      position: absolute;
+      bottom: -24px;
+      left: -24px;
+      width: 48%;
+      aspect-ratio: 3/2;
+      object-fit: cover;
+      border: 4px solid var(--ink-soft);
+    }
+
+    .about-badge {
+      position: absolute;
+      top: 24px;
+      right: -12px;
+      background: var(--primary);
+      color: var(--white);
+      padding: 12px 20px;
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-size: 13px;
+      line-height: 1.4;
+      max-width: 160px;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: #080808;
+      color: rgba(255,255,255,0.7);
+      padding: 56px 24px 32px;
+      border-top: 3px solid var(--primary);
+    }
+
+    .footer-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 48px;
+    }
+
+    .footer-brand .logo-main { font-size: 26px; margin-bottom: 4px; display: block; }
+    .footer-brand .logo-sub { font-size: 12px; letter-spacing: 4px; margin-bottom: 16px; display: block; }
+
+    .footer-desc {
+      font-size: 14px;
+      color: rgba(255,255,255,0.45);
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 10px;
+    }
+
+    .social-link {
+      width: 36px;
+      height: 36px;
+      border: 1px solid rgba(255,255,255,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+
+    .social-link:hover {
+      background: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .footer-col-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 16px;
+      letter-spacing: 2px;
+      color: var(--white);
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .footer-links { list-style: none; }
+
+    .footer-links li { margin-bottom: 10px; }
+
+    .footer-links a {
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--primary); }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      color: rgba(255,255,255,0.3);
+    }
+
+    /* ─── SCROLL REVEAL ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Stagger */
+    .reveal-1 { transition-delay: 0.1s; }
+    .reveal-2 { transition-delay: 0.2s; }
+    .reveal-3 { transition-delay: 0.3s; }
+    .reveal-4 { transition-delay: 0.4s; }
+
+    /* ─── MOBILE ─── */
+    @media (max-width: 900px) {
+      nav { display: none; }
+      .hero-side-stories { display: none; }
+      .hero-content { padding: 24px 20px 40px; }
+      .hero-title { font-size: 28px; }
+      .hero-excerpt { font-size: 15px; }
+
+      .news-grid { grid-template-columns: 1fr; background: transparent; gap: 16px; }
+      .card-featured, .card-secondary, .card-third, .card-quarter { grid-column: span 1; }
+      .card-featured .card-img-inner img,
+      .card-secondary .card-img-inner img,
+      .card-third .card-img-inner img,
+      .card-quarter .card-img-inner img { height: 220px; }
+      .card-featured .card-headline { font-size: 22px; }
+      .card-quarter .card-excerpt { display: block; }
+
+      .categories-grid { grid-template-columns: repeat(3, 1fr); }
+
+      .bottom-grid { grid-template-columns: 1fr; }
+
+      .about-inner { grid-template-columns: 1fr; gap: 40px; }
+      .about-img-accent { display: none; }
+      .about-badge { right: 12px; }
+
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+
+      .header-inner { padding: 0 16px; }
+      .header-search span { display: none; }
+    }
+
+    @media (max-width: 560px) {
+      .categories-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-top { grid-template-columns: 1fr; }
+      .date-bar-inner { flex-direction: column; gap: 4px; align-items: flex-start; }
+      .about-stats { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TICKER -->
+  <div class="ticker-bar" role="marquee" aria-label="Últimas notícias">
+    <div class="ticker-inner">
+      <div class="ticker-label">
+        <span class="ticker-dot"></span>
+        URGENTE
+      </div>
+      <div class="ticker-scroll-wrap">
+        <div class="ticker-scroll" id="ticker">
+          <span class="ticker-item">Senado aprova projeto de reforma tributária por ampla maioria</span>
+          <span class="ticker-item">Bolsa de valores fecha em alta de 1,8% com otimismo do mercado</span>
+          <span class="ticker-item">Brasil avança para semifinais da Copa América após vitória por 3 a 1</span>
+          <span class="ticker-item">Governo anuncia novo pacote de investimentos em infraestrutura</span>
+          <span class="ticker-item">Chuvas intensas causam alertas em seis estados do Sul e Sudeste</span>
+          <span class="ticker-item">Novo medicamento contra diabetes recebe aprovação da ANVISA</span>
+          <span class="ticker-item">Tecnologia brasileira é destaque em feira internacional de inovação</span>
+          <!-- duplicate for seamless loop -->
+          <span class="ticker-item">Senado aprova projeto de reforma tributária por ampla maioria</span>
+          <span class="ticker-item">Bolsa de valores fecha em alta de 1,8% com otimismo do mercado</span>
+          <span class="ticker-item">Brasil avança para semifinais da Copa América após vitória por 3 a 1</span>
+          <span class="ticker-item">Governo anuncia novo pacote de investimentos em infraestrutura</span>
+          <span class="ticker-item">Chuvas intensas causam alertas em seis estados do Sul e Sudeste</span>
+          <span class="ticker-item">Novo medicamento contra diabetes recebe aprovação da ANVISA</span>
+          <span class="ticker-item">Tecnologia brasileira é destaque em feira internacional de inovação</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-inner">
+      <a href="#" class="logo" aria-label="Planeta Mídia Notícias">
+        <span class="logo-main">Planeta Mídia</span>
+        <span class="logo-sub">Notícias</span>
+      </a>
+      <nav aria-label="Categorias">
+        <a href="#politica">Política</a>
+        <a href="#economia">Economia</a>
+        <a href="#mundo">Mundo</a>
+        <a href="#esportes" class="active">Esportes</a>
+        <a href="#tecnologia">Tecnologia</a>
+        <a href="#cultura">Cultura</a>
+        <a href="#saude">Saúde</a>
+      </nav>
+      <div class="header-search" role="search" aria-label="Buscar">
+        <svg width="15" height="15" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <span>Buscar</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- DATE BAR -->
+  <div class="date-bar">
+    <div class="date-bar-inner">
+      <span id="current-date">Quarta-feira, 23 de abril de 2026</span>
+      <span class="edition-badge">EDIÇÃO ONLINE</span>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero" aria-label="Notícia em destaque">
+    <div class="card-img-inner">
+      <img
+        src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=1600&q=85&auto=format&fit=crop"
+        alt="Câmara dos Deputados em sessão plenária"
+        class="hero-img"
+        loading="eager"
+      />
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content main-wrap">
+      <div class="hero-tag">
+        <span style="font-size:8px;">●</span>
+        COBERTURA ESPECIAL
+      </div>
+      <h1 class="hero-title">
+        Reforma Tributária: O que muda para o cidadão e as empresas a partir de 2026
+      </h1>
+      <p class="hero-excerpt">
+        Especialistas detalham os impactos da nova legislação aprovada pelo Senado, que promete simplificar o sistema fiscal brasileiro após décadas de debate.
+      </p>
+      <div class="hero-meta">
+        <div class="hero-author">
+          <img
+            src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&q=80&auto=format&fit=crop"
+            alt="Jornalista"
+            class="author-avatar"
+          />
+          <span class="author-name">Por Carlos Mendes</span>
+        </div>
+        <span class="hero-time">há 2 horas</span>
+        <a href="#" class="hero-read-btn">Ler matéria completa</a>
+      </div>
+    </div>
+    <div class="hero-side-stories" aria-label="Outras notícias em destaque">
+      <div class="hero-side-item">
+        <div class="side-tag">Esportes</div>
+        <div class="side-headline">Seleção Brasileira vence Argentina e garante semifinal</div>
+      </div>
+      <div class="hero-side-item">
+        <div class="side-tag">Economia</div>
+        <div class="side-headline">Dólar recua e bolsa registra maior alta em dois meses</div>
+      </div>
+      <div class="hero-side-item">
+        <div class="side-tag">Mundo</div>
+        <div class="side-headline">Cúpula do G20 termina com acordo histórico sobre clima</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ÚLTIMAS NOTÍCIAS -->
+  <section class="main-wrap" aria-labelledby="ultimas-titulo">
+    <div class="section-header">
+      <h2 id="ultimas-titulo">Últimas Notícias</h2>
+      <div class="section-line"></div>
+      <a href="#" class="section-more">Ver tudo →</a>
+    </div>
+
+    <div class="news-grid reveal">
+      <!-- Featured -->
+      <article class="news-card card-featured">
+        <div class="card-img-wrap">
+          <div class="card-img-inner">
+            <img
+              src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=900&q=80&auto=format&fit=crop"
+              alt="Mercado financeiro"
+              loading="lazy"
+            />
+          </div>
+          <span class="card-category-badge badge-economia">Economia</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-headline">Banco Central mantém taxa de juros e surpreende analistas do mercado financeiro</h3>
+          <p class="card-excerpt">A decisão unânime do Copom de manter a Selic em 10,75% ao ano gerou repercussão entre economistas, que esperavam um corte de pelo menos meio ponto percentual.</p>
+          <div class="card-meta">
+            <span class="card-meta-author">Equipe Econômica</span>
+            <span>há 45 min</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Secondary -->
+      <article class="news-card card-secondary">
+        <div class="card-img-wrap">
+          <div class="card-img-inner">
+            <img
+              src="https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=500&q=80&auto=format&fit=crop"
+              alt="Congresso Nacional"
+              loading="lazy"
+            />
+          </div>
+          <span class="card-category-badge badge-politica">Política</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-headline">Câmara vota pacote anticrime em sessão extraordinária nesta semana</h3>
+          <p class="card-excerpt">Projeto reúne 15 medidas de combate à corrupção e ao crime organizado.</p>
+          <div class="card-meta">
+            <span class="card-meta-author">Fernanda Lima</span>
+            <span>há 1h</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Third row -->
+      <article class="news-card card-third">
+        <div class="card-img-wrap">
+          <div class="card-img-inner">
+            <img
+              src="https://images.unsplash.com/photo-1517649763962-0c623066013b?w=500&q=80&auto=format&fit=crop"
+              alt="Esportes"
+              loading="lazy"
+            />
+          </div>
+          <span class="card-category-badge badge-esportes">Esportes</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-headline">Flamengo anuncia contratação de atacante europeu por €18 milhões</h3>
+          <div class="card-meta">
+            <span class="card-meta-author">Redação Esportes</span>
+            <span>há 2h</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="news-card card-third">
+        <div class="card-img-wrap">
+          <div class="card-img-inner">
+            <img
+              src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=500&q=80&auto=format&fit=crop"
+              alt="Tecnologia"
+              loading="lazy"
+            />
+          </div>
+          <span class="card-category-badge badge-tecnologia">Tecnologia</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-headline">Startup brasileira de IA levanta R$ 200 milhões em rodada série B</h3>
+          <div class="card-meta">
+            <span class="card-meta-author">Tech Reporter</span>
+            <span>há 3h</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="news-card card-third">
+        <div class="card-img-wrap">
+          <div class="card-img-inner">
+            <img
+              src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=500&q=80&auto=format&fit=crop"
+              alt="Saúde"
+              loading="lazy"
+            />
+          </div>
+          <span class="card-category-badge badge-saude">Saúde</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-headline">Pesquisa identifica novo marcador genético associado ao Alzheimer precoce</h3>
+          <div class="card-meta">
+            <span class="card-meta-author">Ciência & Saúde</span>
+            <span>há 4h</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Quarter cards -->
+      <article class="news-card card-quarter">
+        <div class="card-img-wrap">
+          <div class="card-img-inner">
+            <img
+              src="https://images.unsplash.com/photo-1470115636492-6d2b56f9146d?w=400&q=80&auto=format&fit=crop"
+              alt="Mundo"
+              loading="lazy"
+            />
+          </div>
+          <span class="card-category-badge badge-mundo">Mundo</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-headline">ONU convoca reunião emergencial sobre tensões no Oriente Médio</h3>
+          <div class="card-meta">
+            <span>há 5h</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="news-card card-quarter">
+        <div class="card-img-wrap">
+          <div class="card-img-inner">
+            <img
+              src="https://images.unsplash.com/photo-1568454537842-d933259bb258?w=400&q=80&auto=format&fit=crop"
+              alt="Cultura"
+              loading="lazy"
+            />
+          </div>
+          <span class="card-category-badge badge-cultura">Cultura</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-headline">Festival de cinema brasileiro bate recorde de público com 3 milhões de visitantes</h3>
+          <div class="card-meta">
+            <span>há 6h</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="news-card card-quarter">
+        <div class="card-img-wrap">
+          <div class="card-img-inner">
+            <img
+              src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=400&q=80&auto=format&fit=crop"
+              alt="Negócios"
+              loading="lazy"
+            />
+          </div>
+          <span class="card-category-badge badge-economia">Negócios</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-headline">Exportações do agronegócio crescem 22% no primeiro trimestre</h3>
+          <div class="card-meta">
+            <span>há 7h</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="news-card card-quarter">
+        <div class="card-img-wrap">
+          <div class="card-img-inner">
+            <img
+              src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=400&q=80&auto=format&fit=crop"
+              alt="Educação"
+              loading="lazy"
+            />
+          </div>
+          <span class="card-category-badge badge-breaking">Urgente</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-headline">MEC anuncia expansão do ProUni com mais 120 mil bolsas para 2026</h3>
+          <div class="card-meta">
+            <span>há 8h</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- CATEGORIES STRIP -->
+  <section class="categories-strip" aria-labelledby="cats-titulo">
+    <div class="main-wrap">
+      <div class="section-header" style="margin-top:0; margin-bottom:24px;">
+        <h2 id="cats-titulo" style="color:var(--white);">Navegue por Categoria</h2>
+        <div class="section-line" style="background: linear-gradient(to right, var(--gold), transparent);"></div>
+      </div>
+      <div class="categories-grid reveal">
+        <div class="category-card cat-politica">
+          <img src="https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=400&q=75&auto=format&fit=crop" alt="Política" loading="lazy" />
+          <div class="category-label">
+            <span class="category-icon">🏛️</span>
+            <span class="category-name">Política</span>
+            <span class="category-count">248 matérias</span>
+          </div>
+        </div>
+        <div class="category-card cat-economia">
+          <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=400&q=75&auto=format&fit=crop" alt="Economia" loading="lazy" />
+          <div class="category-label">
+            <span class="category-icon">📈</span>
+            <span class="category-name">Economia</span>
+            <span class="category-count">195 matérias</span>
+          </div>
+        </div>
+        <div class="category-card cat-mundo">
+          <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=400&q=75&auto=format&fit=crop" alt="Mundo" loading="lazy" />
+          <div class="category-label">
+            <span class="category-icon">🌍</span>
+            <span class="category-name">Mundo</span>
+            <span class="category-count">312 matérias</span>
+          </div>
+        </div>
+        <div class="category-card cat-esportes">
+          <img src="https://images.unsplash.com/photo-1517649763962-0c623066013b?w=400&q=75&auto=format&fit=crop" alt="Esportes" loading="lazy" />
+          <div class="category-label">
+            <span class="category-icon">⚽</span>
+            <span class="category-name">Esportes</span>
+            <span class="category-count">407 matérias</span>
+          </div>
+        </div>
+        <div class="category-card cat-tecnologia">
+          <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=400&q=75&auto=format&fit=crop" alt="Tecnologia" loading="lazy" />
+          <div class="category-label">
+            <span class="category-icon">💡</span>
+            <span class="category-name">Tecnologia</span>
+            <span class="category-count">167 matérias</span>
+          </div>
+        </div>
+        <div class="category-card cat-cultura">
+          <img src="https://images.unsplash.com/photo-1568454537842-d933259bb258?w=400&q=75&auto=format&fit=crop" alt="Cultura" loading="lazy" />
+          <div class="category-label">
+            <span class="category-icon">🎭</span>
+            <span class="category-name">Cultura</span>
+            <span class="category-count">142 matérias</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOTTOM SECTION: LIST + SIDEBAR -->
+  <section class="main-wrap" aria-labelledby="mais-titulo">
+    <div class="section-header">
+      <h2 id="mais-titulo">Mais Notícias</h2>
+      <div class="section-line"></div>
+      <a href="#" class="section-more">Ver tudo →</a>
+    </div>
+
+    <div class="bottom-grid">
+      <!-- List -->
+      <div class="list-news reveal">
+        <article class="list-item">
+          <img src="https://images.unsplash.com/photo-1473445730015-841f29a9490b?w=280&q=75&auto=format&fit=crop" alt="Amazônia" loading="lazy" class="list-item-img" />
+          <div class="list-item-body">
+            <div class="list-item-tag">Meio Ambiente</div>
+            <h3 class="list-item-headline">Desmatamento na Amazônia cai 34% em comparação ao mesmo período do ano anterior</h3>
+            <div class="list-item-meta">Por André Ferreira · há 3h</div>
+          </div>
+        </article>
+        <article class="list-item">
+          <img src="https://images.unsplash.com/photo-1588681664899-f142ff2dc9b1?w=280&q=75&auto=format&fit=crop" alt="Saúde Pública" loading="lazy" class="list-item-img" />
+          <div class="list-item-body">
+            <div class="list-item-tag">Saúde Pública</div>
+            <h3 class="list-item-headline">SUS registra recorde de cirurgias eletivas realizadas no primeiro trimestre de 2026</h3>
+            <div class="list-item-meta">Por Marina Costa · há 4h</div>
+          </div>
+        </article>
+        <article class="list-item">
+          <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?w=280&q=75&auto=format&fit=crop" alt="Energia" loading="lazy" class="list-item-img" />
+          <div class="list-item-body">
+            <div class="list-item-tag">Energia</div>
+            <h3 class="list-item-headline">Brasil ultrapassa meta de energia renovável e se torna referência global no setor</h3>
+            <div class="list-item-meta">Por Lucas Tavares · há 5h</div>
+          </div>
+        </article>
+        <article class="list-item">
+          <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=280&q=75&auto=format&fit=crop" alt="Infraestrutura" loading="lazy" class="list-item-img" />
+          <div class="list-item-body">
+            <div class="list-item-tag">Infraestrutura</div>
+            <h3 class="list-item-headline">Governo lança programa de R$ 40 bilhões para modernização de rodovias federais</h3>
+            <div class="list-item-meta">Por Paula Ramos · há 6h</div>
+          </div>
+        </article>
+        <article class="list-item">
+          <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=280&q=75&auto=format&fit=crop" alt="Educação" loading="lazy" class="list-item-img" />
+          <div class="list-item-body">
+            <div class="list-item-tag">Educação</div>
+            <h3 class="list-item-headline">Universidades públicas registram maior taxa de formandos desde a criação do ENEM</h3>
+            <div class="list-item-meta">Por João Alves · há 7h</div>
+          </div>
+        </article>
+      </div>
+
+      <!-- Sidebar -->
+      <aside class="bottom-side reveal reveal-2" aria-label="Sidebar">
+        <div class="sidebar-section">
+          <h3 class="sidebar-title">Mais Lidas</h3>
+          <div class="most-read-item">
+            <span class="most-read-num">01</span>
+            <span class="most-read-title">Reforma tributária: perguntas e respostas sobre o novo imposto único</span>
+          </div>
+          <div class="most-read-item">
+            <span class="most-read-num">02</span>
+            <span class="most-read-title">Neymar anuncia retorno ao futebol brasileiro em clube surpreendente</span>
+          </div>
+          <div class="most-read-item">
+            <span class="most-read-num">03</span>
+            <span class="most-read-title">Brasileira vence Prêmio Nobel de Medicina por pesquisa em células-tronco</span>
+          </div>
+          <div class="most-read-item">
+            <span class="most-read-num">04</span>
+            <span class="most-read-title">Crise hídrica: especialistas alertam para risco de desabastecimento em 2027</span>
+          </div>
+          <div class="most-read-item">
+            <span class="most-read-num">05</span>
+            <span class="most-read-title">Prefeitura de São Paulo aprova projeto de metrô que liga 12 bairros periféricos</span>
+          </div>
+        </div>
+
+        <div class="newsletter-box">
+          <h3 class="sidebar-title">Fique por dentro</h3>
+          <p class="newsletter-desc">Receba as principais notícias do dia diretamente no seu e-mail, todos os dias às 7h da manhã.</p>
+          <form class="newsletter-form" onsubmit="return false;">
+            <input type="email" class="newsletter-input" placeholder="Seu melhor e-mail" aria-label="E-mail para newsletter" />
+            <button class="newsletter-btn" type="submit">Quero receber →</button>
+          </form>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about-section" aria-labelledby="sobre-titulo">
+    <div class="about-inner">
+      <div>
+        <span class="about-tag">Sobre o Portal</span>
+        <h2 class="about-title" id="sobre-titulo">
+          Informação que <em>transforma</em> — do Brasil para o mundo
+        </h2>
+        <p class="about-text">
+          O Planeta Mídia Notícias nasceu com uma missão: entregar jornalismo de qualidade, ágil e acessível para todos os brasileiros. Cobrimos os acontecimentos que moldam o país e o mundo com responsabilidade, apuração rigorosa e compromisso com a verdade.
+        </p>
+        <p class="about-text">
+          Nossa equipe de jornalistas está espalhada por todas as regiões do Brasil, garantindo que nenhuma história importante fique sem cobertura.
+        </p>
+        <div class="about-stats">
+          <div class="stat-card">
+            <div class="stat-number">2.8M</div>
+            <div class="stat-label">Leitores Mensais</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">120+</div>
+            <div class="stat-label">Jornalistas</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">24h</div>
+            <div class="stat-label">Cobertura Ininterrupta</div>
+          </div>
+        </div>
+      </div>
+      <div class="about-visual reveal">
+        <img
+          src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=700&q=85&auto=format&fit=crop"
+          alt="Redação do Planeta Mídia"
+          class="about-img-main"
+          loading="lazy"
+        />
+        <img
+          src="https://images.unsplash.com/photo-1557804506-669a67965ba0?w=400&q=80&auto=format&fit=crop"
+          alt="Equipe de jornalismo"
+          class="about-img-accent"
+          loading="lazy"
+        />
+        <div class="about-badge">
+          Jornalismo independente desde 2010
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <span class="logo-main" style="font-family:'Fraunces',serif; font-weight:900; font-size:26px; color:#fff;">Planeta Mídia</span>
+          <span class="logo-sub" style="font-family:'Bebas Neue',sans-serif; font-size:11px; letter-spacing:4px; color:var(--primary);">Notícias</span>
+          <p class="footer-desc">
+            Portal de notícias independente com cobertura completa do Brasil e do mundo. Informação verificada, 24 horas por dia.
+          </p>
+          <div class="social-links" aria-label="Redes sociais">
+            <a href="#" class="social-link" aria-label="Instagram">📷</a>
+            <a href="#" class="social-link" aria-label="Facebook">📘</a>
+            <a href="#" class="social-link" aria-label="Twitter/X">🐦</a>
+            <a href="#" class="social-link" aria-label="YouTube">▶️</a>
+          </div>
+        </div>
+        <div>
+          <h4 class="footer-col-title">Editorias</h4>
+          <ul class="footer-links">
+            <li><a href="#">Política</a></li>
+            <li><a href="#">Economia</a></li>
+            <li><a href="#">Mundo</a></li>
+            <li><a href="#">Esportes</a></li>
+            <li><a href="#">Tecnologia</a></li>
+            <li><a href="#">Cultura</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-col-title">Portal</h4>
+          <ul class="footer-links">
+            <li><a href="#">Sobre nós</a></li>
+            <li><a href="#">Equipe editorial</a></li>
+            <li><a href="#">Anuncie conosco</a></li>
+            <li><a href="#">Newsletter</a></li>
+            <li><a href="#">Podcast</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="footer-col-title">Suporte</h4>
+          <ul class="footer-links">
+            <li><a href="#">Contato</a></li>
+            <li><a href="#">Política de Privacidade</a></li>
+            <li><a href="#">Termos de Uso</a></li>
+            <li><a href="#">Denuncie um erro</a></li>
+            <li><a href="#">Transparência</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Planeta Mídia Notícias. Todos os direitos reservados.</span>
+        <span>Feito com 🌍 no Brasil</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ─── SCROLL REVEAL ───
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+    reveals.forEach(el => observer.observe(el));
+
+    // ─── DATE UPDATE ───
+    const dateEl = document.getElementById('current-date');
+    if (dateEl) {
+      const now = new Date();
+      const opts = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      const formatted = now.toLocaleDateString('pt-BR', opts);
+      dateEl.textContent = formatted.charAt(0).toUpperCase() + formatted.slice(1);
+    }
+
+    // ─── SMOOTH CARD STAGGER on load ───
+    window.addEventListener('load', () => {
+      const cards = document.querySelectorAll('.news-card');
+      cards.forEach((card, i) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = `opacity 0.5s ease ${i * 0.07}s, transform 0.5s ease ${i * 0.07}s`;
+        setTimeout(() => {
+          card.style.opacity = '1';
+          card.style.transform = 'translateY(0)';
+        }, 200 + i * 70);
+      });
+    });
+  </script>
+</body>
+</html>
