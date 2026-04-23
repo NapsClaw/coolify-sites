@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preciostyle — Moda Feminina | Estilo que Define Você</title>
+  <meta name="description" content="Preciostyle — loja de roupas femininas com curadoria especial. Moda contemporânea, looks exclusivos e estilo que define você.">
+  <meta property="og:title" content="Preciostyle — Moda Feminina">
+  <meta property="og:description" content="Estilo que define você. Roupas femininas com curadoria especial.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👗</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,700;1,9..144,900&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --bg: #141412;
+      --bg-alt: #1E1C19;
+      --bg-light: #2A2823;
+      --primary: #F2EDE4;
+      --muted: #9A9186;
+      --accent: #B85C38;
+      --accent-light: #D4704A;
+      --border: #2E2C28;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--bg);
+      color: var(--primary);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 400;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* CUSTOM CURSOR */
+    .cursor {
+      width: 10px; height: 10px;
+      background: var(--accent);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.1s ease;
+      mix-blend-mode: normal;
+    }
+    .cursor-ring {
+      width: 36px; height: 36px;
+      border: 1px solid rgba(178,92,56,0.5);
+      border-radius: 50%;
+      position: fixed;
+      pointer-events: none;
+      z-index: 9998;
+      transition: transform 0.15s ease, width 0.2s, height 0.2s, border-color 0.2s;
+    }
+    body.hovering .cursor-ring { width: 52px; height: 52px; border-color: var(--accent); }
+
+    /* TYPOGRAPHY */
+    .font-display { font-family: 'Fraunces', serif; }
+    .text-display-xl { font-size: clamp(3.5rem, 12vw, 10rem); font-weight: 900; line-height: 0.9; letter-spacing: -0.02em; }
+    .text-display-lg { font-size: clamp(2.5rem, 6vw, 5.5rem); font-weight: 900; line-height: 1; letter-spacing: -0.02em; }
+    .text-display-md { font-size: clamp(1.8rem, 4vw, 3.5rem); font-weight: 700; line-height: 1.1; }
+    .text-label { font-size: 0.7rem; letter-spacing: 0.25em; text-transform: uppercase; font-weight: 600; color: var(--muted); }
+    .text-body { font-size: 1rem; line-height: 1.7; color: var(--muted); font-weight: 300; }
+
+    /* NOISE OVERLAY */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.4;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.4s ease, padding 0.3s ease;
+    }
+    nav.scrolled {
+      background: rgba(20,20,18,0.92);
+      backdrop-filter: blur(12px);
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Fraunces', serif;
+      font-size: 1.4rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      color: var(--primary);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--primary); }
+    @media (max-width: 640px) { .nav-links { display: none; } }
+
+    /* HERO */
+    .hero {
+      min-height: 100svh;
+      display: grid;
+      grid-template-columns: 1fr;
+      position: relative;
+      overflow: hidden;
+    }
+    @media (min-width: 768px) { .hero { grid-template-columns: 1fr 1fr; } }
+
+    .hero-content {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 2rem 2rem 3rem;
+      position: relative;
+      z-index: 2;
+    }
+    @media (min-width: 768px) { .hero-content { padding: 8rem 3rem 4rem; justify-content: center; } }
+
+    .hero-image {
+      position: relative;
+      overflow: hidden;
+    }
+    @media (max-width: 767px) {
+      .hero-image {
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+      }
+      .hero-image::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, rgba(20,20,18,0.95) 30%, rgba(20,20,18,0.3) 70%);
+      }
+      .hero-content { justify-content: flex-end; }
+    }
+
+    .hero-image img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transform: scale(1.08);
+      transition: transform 8s ease;
+    }
+    .hero-image img.loaded { transform: scale(1); }
+
+    /* HERO ANIMATIONS */
+    .hero-tag { opacity: 0; transform: translateY(20px); animation: fadeUp 0.7s ease forwards 0.3s; }
+    .hero-title { overflow: hidden; }
+    .hero-title-line {
+      display: block;
+      opacity: 0;
+      transform: translateY(100%);
+      animation: slideUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .hero-title-line:nth-child(1) { animation-delay: 0.5s; }
+    .hero-title-line:nth-child(2) { animation-delay: 0.65s; }
+    .hero-title-line:nth-child(3) { animation-delay: 0.8s; }
+    .hero-sub { opacity: 0; transform: translateY(20px); animation: fadeUp 0.7s ease forwards 1s; }
+    .hero-cta { opacity: 0; transform: translateY(20px); animation: fadeUp 0.7s ease forwards 1.2s; }
+    .hero-scroll { opacity: 0; animation: fadeUp 0.7s ease forwards 1.5s; }
+
+    @keyframes slideUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* MARQUEE */
+    .marquee-track {
+      display: flex;
+      gap: 0;
+      animation: marquee 20s linear infinite;
+      white-space: nowrap;
+    }
+    .marquee-track:hover { animation-play-state: paused; }
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .marquee-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 0 2rem;
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-size: 1.1rem;
+      font-weight: 300;
+      color: var(--muted);
+    }
+    .marquee-dot { width: 4px; height: 4px; background: var(--accent); border-radius: 50%; flex-shrink: 0; }
+
+    /* BUTTONS */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--accent);
+      color: var(--primary);
+      padding: 0.9rem 2rem;
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.25s, transform 0.2s, gap 0.2s;
+      border: none;
+      cursor: none;
+    }
+    .btn-primary:hover { background: var(--accent-light); gap: 1.25rem; }
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      border: 1px solid var(--border);
+      color: var(--primary);
+      padding: 0.9rem 2rem;
+      font-size: 0.8rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-weight: 600;
+      text-decoration: none;
+      transition: border-color 0.25s, gap 0.2s;
+      cursor: none;
+    }
+    .btn-outline:hover { border-color: var(--primary); gap: 1.25rem; }
+
+    /* SECTION REVEAL */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ABOUT */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+    @media (min-width: 768px) {
+      .about-grid { grid-template-columns: 5fr 4fr; align-items: center; gap: 5rem; }
+    }
+
+    /* ABOUT IMAGE */
+    .about-img-wrap {
+      position: relative;
+      aspect-ratio: 3/4;
+      overflow: hidden;
+    }
+    .about-img-wrap::after {
+      content: '';
+      position: absolute;
+      bottom: -1px; right: -1px;
+      width: 50%; height: 50%;
+      border-bottom: 2px solid var(--accent);
+      border-right: 2px solid var(--accent);
+    }
+    .about-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; }
+    .about-img-wrap:hover img { transform: scale(1.04); }
+
+    /* STAT BOX */
+    .stat-box {
+      position: absolute;
+      background: var(--accent);
+      padding: 1.2rem 1.5rem;
+      bottom: 2rem; left: -1.5rem;
+    }
+    @media (max-width: 767px) { .stat-box { left: 1rem; } }
+
+    /* COLLECTIONS */
+    .collection-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+    @media (min-width: 768px) {
+      .collection-grid { grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+    }
+
+    .collection-card {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 3/4;
+      cursor: none;
+    }
+    .collection-card img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .collection-card:hover img { transform: scale(1.06); }
+    .collection-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(20,20,18,0.9) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    .collection-card:hover .collection-overlay { opacity: 1; }
+    .collection-info {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 1.5rem;
+      transform: translateY(10px);
+      opacity: 0;
+      transition: transform 0.4s ease, opacity 0.4s ease;
+    }
+    .collection-card:hover .collection-info { transform: translateY(0); opacity: 1; }
+    .collection-tag {
+      position: absolute;
+      top: 1rem; left: 1rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      background: var(--bg);
+      color: var(--muted);
+      padding: 0.3rem 0.6rem;
+    }
+
+    /* FEATURED (large collection) */
+    .featured-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    @media (min-width: 768px) {
+      .featured-grid { grid-template-columns: 2fr 1fr; gap: 1.5rem; }
+    }
+
+    /* GALLERY */
+    .gallery-bento {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto;
+      gap: 0.75rem;
+    }
+    @media (min-width: 768px) {
+      .gallery-bento {
+        grid-template-columns: 2fr 1fr 1fr;
+        grid-template-rows: 280px 280px;
+        gap: 1rem;
+      }
+      .gallery-item:first-child { grid-row: 1 / 3; }
+    }
+
+    .gallery-item {
+      overflow: hidden;
+      position: relative;
+    }
+    .gallery-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      aspect-ratio: 1/1;
+      transition: transform 0.6s ease;
+    }
+    @media (min-width: 768px) { .gallery-item img { aspect-ratio: unset; } }
+    .gallery-item:hover img { transform: scale(1.05); }
+    .gallery-item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(178,92,56,0);
+      transition: background 0.3s ease;
+    }
+    .gallery-item:hover::after { background: rgba(178,92,56,0.15); }
+
+    /* DIVIDER */
+    .divider { height: 1px; background: var(--border); }
+    .divider-accent { height: 1px; background: linear-gradient(to right, var(--accent), transparent); }
+
+    /* CONTACT */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+    @media (min-width: 768px) {
+      .contact-grid { grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+    }
+
+    .contact-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* WHATSAPP */
+    .whatsapp-fab {
+      position: fixed;
+      bottom: 1.5rem; right: 1.5rem;
+      width: 60px; height: 60px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 500;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      animation: pulse-wa 3s ease-in-out infinite;
+      cursor: none;
+    }
+    .whatsapp-fab:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 28px rgba(37,211,102,0.5);
+      animation: none;
+    }
+    @keyframes pulse-wa {
+      0%, 100% { box-shadow: 0 4px 20px rgba(37,211,102,0.4); }
+      50% { box-shadow: 0 4px 30px rgba(37,211,102,0.65), 0 0 0 8px rgba(37,211,102,0.1); }
+    }
+
+    /* FOOTER */
+    footer {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: center;
+    }
+    @media (min-width: 768px) { footer { flex-direction: row; justify-content: space-between; } }
+
+    /* ACCENT LINE */
+    .accent-line {
+      width: 40px; height: 2px;
+      background: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    /* HOVER INTERACTABLE */
+    a, button, .collection-card, .gallery-item { cursor: none; }
+  </style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <a href="#" class="nav-logo">Precio<span>style</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">A Marca</a></li>
+    <li><a href="#colecoes">Coleções</a></li>
+    <li><a href="#galeria">Galeria</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-content">
+    <div class="hero-tag mb-6" style="display:flex;align-items:center;gap:0.75rem;">
+      <div style="width:24px;height:1px;background:var(--accent);"></div>
+      <span class="text-label">Nova Coleção 2025</span>
+    </div>
+    <h1 class="hero-title text-display-xl font-display mb-6">
+      <span class="hero-title-line">Veste</span>
+      <span class="hero-title-line" style="color:var(--accent);font-style:italic;">quem</span>
+      <span class="hero-title-line">você é.</span>
+    </h1>
+    <p class="hero-sub text-body mb-8" style="max-width:360px;">
+      Moda feminina com curadoria especial — peças que contam histórias e definem identidades.
+    </p>
+    <div class="hero-cta" style="display:flex;gap:1rem;flex-wrap:wrap;">
+      <a href="#colecoes" class="btn-primary">
+        Ver Coleção
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="#about" class="btn-outline">Sobre Nós</a>
+    </div>
+    <div class="hero-scroll" style="margin-top:3rem;display:flex;align-items:center;gap:0.75rem;">
+      <div style="width:1px;height:40px;background:var(--border);"></div>
+      <span class="text-label">Scroll para explorar</span>
+    </div>
+  </div>
+
+  <div class="hero-image">
+    <img
+      src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1400&q=80"
+      alt="Preciostyle moda feminina"
+      loading="eager"
+      onload="this.classList.add('loaded')"
+    >
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div style="background:var(--bg-alt);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:1.2rem 0;overflow:hidden;">
+  <div class="marquee-track">
+    <!-- duplicated for seamless loop -->
+    <span class="marquee-item">Moda Feminina <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Coleção 2025 <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Estilo Exclusivo <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Novidades Semanais <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Peças Únicas <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Looks Completos <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Consultoria de Estilo <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Moda Feminina <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Coleção 2025 <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Estilo Exclusivo <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Novidades Semanais <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Peças Únicas <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Looks Completos <span class="marquee-dot"></span></span>
+    <span class="marquee-item">Consultoria de Estilo <span class="marquee-dot"></span></span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about" style="padding: 5rem 2rem; background: var(--bg);">
+  <div style="max-width: 1200px; margin: 0 auto;">
+    <div class="about-grid">
+      <div class="reveal">
+        <div class="about-img-wrap">
+          <img
+            src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=900&q=80"
+            alt="A essência da Preciostyle"
+            loading="lazy"
+          >
+          <div class="stat-box">
+            <div class="font-display" style="font-size:2.2rem;font-weight:900;color:var(--primary);line-height:1;">+500</div>
+            <div style="font-size:0.7rem;letter-spacing:0.1em;color:rgba(242,237,228,0.7);text-transform:uppercase;margin-top:0.2rem;">Peças em Estoque</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;justify-content:center;">
+        <div class="reveal">
+          <div class="accent-line"></div>
+          <span class="text-label" style="display:block;margin-bottom:1rem;">A Nossa Marca</span>
+          <h2 class="text-display-md font-display" style="margin-bottom:1.5rem;">
+            Onde moda encontra <em style="color:var(--accent);">identidade</em>
+          </h2>
+        </div>
+        <div class="reveal reveal-delay-1">
+          <p class="text-body" style="margin-bottom:1.2rem;">
+            A Preciostyle nasceu da crença de que roupas são mais do que tecido — são expressão. Cada peça em nosso acervo foi escolhida com atenção às tendências, ao caimento e à história que você quer contar.
+          </p>
+          <p class="text-body" style="margin-bottom:2rem;">
+            Aqui você encontra desde o básico elegante até a peça que transforma seu dia em editorial. Com atendimento personalizado e renovação semanal de estoque, a Preciostyle é o guarda-roupa que você merecia.
+          </p>
+        </div>
+        <div class="reveal reveal-delay-2" style="display:flex;gap:2rem;">
+          <div>
+            <div class="font-display" style="font-size:2.5rem;font-weight:900;color:var(--primary);line-height:1;">5+</div>
+            <div class="text-label" style="margin-top:0.3rem;">Anos de Estilo</div>
+          </div>
+          <div style="width:1px;background:var(--border);"></div>
+          <div>
+            <div class="font-display" style="font-size:2.5rem;font-weight:900;color:var(--accent);line-height:1;">∞</div>
+            <div class="text-label" style="margin-top:0.3rem;">Looks Possíveis</div>
+          </div>
+          <div style="width:1px;background:var(--border);"></div>
+          <div>
+            <div class="font-display" style="font-size:2.5rem;font-weight:900;color:var(--primary);line-height:1;">100%</div>
+            <div class="text-label" style="margin-top:0.3rem;">Satisfação</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COLLECTIONS -->
+<section id="colecoes" style="padding: 5rem 2rem; background: var(--bg-alt);">
+  <div style="max-width: 1200px; margin: 0 auto;">
+    <div class="reveal" style="margin-bottom:3rem;">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:1rem;">
+        <div>
+          <div class="accent-line"></div>
+          <span class="text-label" style="display:block;margin-bottom:0.75rem;">Nossas Coleções</span>
+          <h2 class="text-display-md font-display">
+            Curadoria <em style="color:var(--accent);">exclusiva</em>
+          </h2>
+        </div>
+        <a href="#contato" class="btn-outline" style="align-self:flex-end;">
+          Ver Tudo
+          <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Featured row -->
+    <div class="featured-grid reveal" style="margin-bottom:1rem;">
+      <div class="collection-card" style="aspect-ratio:16/9;">
+        <img
+          src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=1200&q=80"
+          alt="Coleção Verão"
+          loading="lazy"
+        >
+        <div class="collection-overlay"></div>
+        <div class="collection-tag">Destaque</div>
+        <div class="collection-info">
+          <div class="text-label" style="color:rgba(242,237,228,0.6);margin-bottom:0.4rem;">Coleção Principal</div>
+          <div class="font-display" style="font-size:1.5rem;font-weight:700;">Verão Quente</div>
+        </div>
+      </div>
+      <div class="collection-card" style="">
+        <img
+          src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&q=80"
+          alt="Editorial"
+          loading="lazy"
+        >
+        <div class="collection-overlay"></div>
+        <div class="collection-tag">Novo</div>
+        <div class="collection-info">
+          <div class="text-label" style="color:rgba(242,237,228,0.6);margin-bottom:0.4rem;">Edição Limitada</div>
+          <div class="font-display" style="font-size:1.5rem;font-weight:700;">Editorial</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grid row -->
+    <div class="collection-grid reveal reveal-delay-1">
+      <div class="collection-card">
+        <img
+          src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=600&q=80"
+          alt="Casual Chic"
+          loading="lazy"
+        >
+        <div class="collection-overlay"></div>
+        <div class="collection-tag">Casual</div>
+        <div class="collection-info">
+          <div class="font-display" style="font-size:1.2rem;font-weight:700;">Casual Chic</div>
+        </div>
+      </div>
+      <div class="collection-card">
+        <img
+          src="https://images.unsplash.com/photo-1509631179647-0177331693ae?w=600&q=80"
+          alt="Trabalho & Poder"
+          loading="lazy"
+        >
+        <div class="collection-overlay"></div>
+        <div class="collection-tag">Trabalho</div>
+        <div class="collection-info">
+          <div class="font-display" style="font-size:1.2rem;font-weight:700;">Poder & Elegância</div>
+        </div>
+      </div>
+      <div class="collection-card">
+        <img
+          src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=600&q=80"
+          alt="Noite & Festa"
+          loading="lazy"
+        >
+        <div class="collection-overlay"></div>
+        <div class="collection-tag">Festa</div>
+        <div class="collection-info">
+          <div class="font-display" style="font-size:1.2rem;font-weight:700;">Noite & Festa</div>
+        </div>
+      </div>
+      <div class="collection-card">
+        <img
+          src="https://images.unsplash.com/photo-1551698618-1dfe5d97d256?w=600&q=80"
+          alt="Dia a Dia"
+          loading="lazy"
+        >
+        <div class="collection-overlay"></div>
+        <div class="collection-tag">Cotidiano</div>
+        <div class="collection-info">
+          <div class="font-display" style="font-size:1.2rem;font-weight:700;">Dia a Dia</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES / DIFERENCIAIS -->
+<section style="padding: 5rem 2rem; background: var(--bg);">
+  <div style="max-width: 1200px; margin: 0 auto;">
+    <div class="reveal" style="text-align:center;margin-bottom:3.5rem;">
+      <div class="accent-line" style="margin:0 auto 1rem;"></div>
+      <span class="text-label" style="display:block;margin-bottom:0.75rem;">O que nos define</span>
+      <h2 class="text-display-md font-display">
+        Por que a <em style="color:var(--accent);">Preciostyle?</em>
+      </h2>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem;">
+      <div class="reveal" style="padding:2rem;border:1px solid var(--border);position:relative;overflow:hidden;transition:border-color 0.3s;">
+        <div style="position:absolute;top:0;left:0;width:3px;height:0;background:var(--accent);transition:height 0.4s ease;" class="card-accent-line"></div>
+        <div style="font-size:2rem;margin-bottom:1rem;">✦</div>
+        <h3 class="font-display" style="font-size:1.3rem;font-weight:700;margin-bottom:0.75rem;">Curadoria Semanal</h3>
+        <p class="text-body" style="font-size:0.9rem;">Novos looks chegam toda semana — você sempre encontra algo novo que combina com seu estilo.</p>
+      </div>
+      <div class="reveal reveal-delay-1" style="padding:2rem;border:1px solid var(--border);position:relative;overflow:hidden;transition:border-color 0.3s;">
+        <div style="position:absolute;top:0;left:0;width:3px;height:0;background:var(--accent);transition:height 0.4s ease;" class="card-accent-line"></div>
+        <div style="font-size:2rem;margin-bottom:1rem;">◈</div>
+        <h3 class="font-display" style="font-size:1.3rem;font-weight:700;margin-bottom:0.75rem;">Consultoria Pessoal</h3>
+        <p class="text-body" style="font-size:0.9rem;">Nossa equipe te ajuda a montar o look perfeito para cada ocasião, do casual ao social.</p>
+      </div>
+      <div class="reveal reveal-delay-2" style="padding:2rem;border:1px solid var(--border);position:relative;overflow:hidden;transition:border-color 0.3s;">
+        <div style="position:absolute;top:0;left:0;width:3px;height:0;background:var(--accent);transition:height 0.4s ease;" class="card-accent-line"></div>
+        <div style="font-size:2rem;margin-bottom:1rem;">❋</div>
+        <h3 class="font-display" style="font-size:1.3rem;font-weight:700;margin-bottom:0.75rem;">Tamanhos Inclusivos</h3>
+        <p class="text-body" style="font-size:0.9rem;">Do PP ao GG+, acreditamos que estilo não tem tamanho. Todas as mulheres merecem se sentir lindas.</p>
+      </div>
+      <div class="reveal reveal-delay-3" style="padding:2rem;border:1px solid var(--border);position:relative;overflow:hidden;transition:border-color 0.3s;">
+        <div style="position:absolute;top:0;left:0;width:3px;height:0;background:var(--accent);transition:height 0.4s ease;" class="card-accent-line"></div>
+        <div style="font-size:2rem;margin-bottom:1rem;">◉</div>
+        <h3 class="font-display" style="font-size:1.3rem;font-weight:700;margin-bottom:0.75rem;">Entrega Rápida</h3>
+        <p class="text-body" style="font-size:0.9rem;">Compre pelo WhatsApp e receba em casa. Entregamos com agilidade e cuidado para você arrasar mais rápido.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="galeria" style="padding: 5rem 2rem; background: var(--bg-alt);">
+  <div style="max-width: 1200px; margin: 0 auto;">
+    <div class="reveal" style="margin-bottom:2.5rem;">
+      <div class="accent-line"></div>
+      <span class="text-label" style="display:block;margin-bottom:0.75rem;">Inspiração</span>
+      <h2 class="text-display-md font-display">
+        Looks que <em style="color:var(--accent);">inspiram</em>
+      </h2>
+    </div>
+
+    <div class="gallery-bento reveal">
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1581338834647-b0fb40704e21?w=800&q=80" alt="Look 1" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?w=600&q=80" alt="Look 2" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=600&q=80" alt="Look 3" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=600&q=80" alt="Look 4" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1550614000-4895a10e1bfd?w=600&q=80" alt="Look 5" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section style="padding: 5rem 2rem; background: var(--bg); overflow: hidden;">
+  <div style="max-width: 1200px; margin: 0 auto;">
+    <div class="reveal" style="text-align:center;margin-bottom:3rem;">
+      <div class="accent-line" style="margin:0 auto 1rem;"></div>
+      <span class="text-label" style="display:block;margin-bottom:0.75rem;">O que dizem sobre nós</span>
+      <h2 class="text-display-md font-display">
+        Clientes que <em style="color:var(--accent);">amam</em>
+      </h2>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;">
+      <div class="reveal" style="padding:2rem;background:var(--bg-alt);border:1px solid var(--border);">
+        <div style="font-family:'Fraunces',serif;font-size:4rem;color:var(--accent);line-height:0.8;margin-bottom:1rem;">"</div>
+        <p style="font-size:0.95rem;line-height:1.7;color:var(--primary);font-style:italic;margin-bottom:1.5rem;">A Preciostyle mudou minha relação com moda. Cada vez que entro, saio com peças que realmente combinam comigo. Atendimento impecável!</p>
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+          <div style="width:36px;height:36px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-weight:900;font-size:1rem;">A</div>
+          <div>
+            <div style="font-weight:600;font-size:0.85rem;">Ana Clara M.</div>
+            <div class="text-label" style="font-size:0.65rem;">Cliente fiel</div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal reveal-delay-1" style="padding:2rem;background:var(--accent);border:1px solid var(--accent);">
+        <div style="font-family:'Fraunces',serif;font-size:4rem;color:rgba(242,237,228,0.3);line-height:0.8;margin-bottom:1rem;">"</div>
+        <p style="font-size:0.95rem;line-height:1.7;color:var(--primary);font-style:italic;margin-bottom:1.5rem;">Compro pelo WhatsApp há 2 anos. Super prático, entrega rápida e as peças são lindas! Já indiquei para todas as amigas.</p>
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+          <div style="width:36px;height:36px;border-radius:50%;background:var(--bg);display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-weight:900;font-size:1rem;color:var(--primary);">J</div>
+          <div>
+            <div style="font-weight:600;font-size:0.85rem;">Juliana R.</div>
+            <div style="font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(242,237,228,0.7);">Cliente desde 2022</div>
+          </div>
+        </div>
+      </div>
+      <div class="reveal reveal-delay-2" style="padding:2rem;background:var(--bg-alt);border:1px solid var(--border);">
+        <div style="font-family:'Fraunces',serif;font-size:4rem;color:var(--accent);line-height:0.8;margin-bottom:1rem;">"</div>
+        <p style="font-size:0.95rem;line-height:1.7;color:var(--primary);font-style:italic;margin-bottom:1.5rem;">Sempre encontro o que procuro aqui. A curadoria é diferenciada, não é aquele básico de todo lugar. Vale cada centavo!</p>
+        <div style="display:flex;align-items:center;gap:0.75rem;">
+          <div style="width:36px;height:36px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-family:'Fraunces',serif;font-weight:900;font-size:1rem;">M</div>
+          <div>
+            <div style="font-weight:600;font-size:0.85rem;">Mariana T.</div>
+            <div class="text-label" style="font-size:0.65rem;">Cliente premium</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contato" style="padding: 5rem 2rem; background: var(--bg-light);">
+  <div style="max-width: 1200px; margin: 0 auto;">
+    <div class="contact-grid">
+      <div>
+        <div class="reveal">
+          <div class="accent-line"></div>
+          <span class="text-label" style="display:block;margin-bottom:0.75rem;">Fale Conosco</span>
+          <h2 class="text-display-md font-display" style="margin-bottom:1.5rem;">
+            Seu próximo <em style="color:var(--accent);">look</em> começa aqui
+          </h2>
+          <p class="text-body" style="margin-bottom:2rem;">
+            Entre em contato pelo WhatsApp para ver nosso catálogo completo, tirar dúvidas sobre tamanhos ou montar o look perfeito com nossa equipe.
+          </p>
+          <a href="https://wa.me/5511999999999" class="btn-primary" style="display:inline-flex;gap:0.75rem;align-items:center;font-size:0.9rem;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Chamar no WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <div class="reveal reveal-delay-1" style="display:flex;flex-direction:column;gap:1.5rem;">
+        <div class="contact-item">
+          <span class="text-label">Horário de Funcionamento</span>
+          <div style="font-family:'Fraunces',serif;font-size:1.1rem;font-weight:700;margin-top:0.5rem;">Seg–Sex: 09h às 20h</div>
+          <div style="font-size:0.85rem;color:var(--muted);">Sábado: 09h às 18h · Domingo: 10h às 16h</div>
+        </div>
+        <div class="contact-item">
+          <span class="text-label">WhatsApp</span>
+          <a href="https://wa.me/5511999999999" style="font-family:'Fraunces',serif;font-size:1.1rem;font-weight:700;color:var(--primary);text-decoration:none;margin-top:0.5rem;display:block;">(11) 99999-9999</a>
+          <div style="font-size:0.85rem;color:var(--muted);">Atendimento rápido e personalizado</div>
+        </div>
+        <div class="contact-item">
+          <span class="text-label">Instagram</span>
+          <a href="#" style="font-family:'Fraunces',serif;font-size:1.1rem;font-weight:700;color:var(--primary);text-decoration:none;margin-top:0.5rem;display:block;">@preciostyle</a>
+          <div style="font-size:0.85rem;color:var(--muted);">Novidades diárias e inspirações</div>
+        </div>
+        <div>
+          <span class="text-label" style="display:block;margin-bottom:0.75rem;">Nos Siga</span>
+          <div style="display:flex;gap:1rem;">
+            <a href="#" style="width:44px;height:44px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--muted);text-decoration:none;transition:border-color 0.2s,color 0.2s;" onmouseenter="this.style.borderColor='var(--accent)';this.style.color='var(--primary)'" onmouseleave="this.style.borderColor='var(--border)';this.style.color='var(--muted)'">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            </a>
+            <a href="#" style="width:44px;height:44px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--muted);text-decoration:none;transition:border-color 0.2s,color 0.2s;" onmouseenter="this.style.borderColor='var(--accent)';this.style.color='var(--primary)'" onmouseleave="this.style.borderColor='var(--border)';this.style.color='var(--muted)'">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.21 8.21 0 004.84 1.56V6.82a4.85 4.85 0 01-1.07-.13z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHATSAPP FAB -->
+<a href="https://wa.me/5511999999999" class="whatsapp-fab" aria-label="WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<!-- FOOTER -->
+<footer>
+  <div style="font-family:'Fraunces',serif;font-size:1.2rem;font-weight:900;color:var(--primary);">
+    Precio<span style="color:var(--accent);">style</span>
+  </div>
+  <div style="font-size:0.75rem;color:var(--muted);text-align:center;">
+    © 2025 Preciostyle. Todos os direitos reservados.
+  </div>
+  <div style="font-size:0.75rem;color:var(--muted);">
+    Feito com <span style="color:var(--accent);">♥</span>
+  </div>
+</footer>
+
+<script>
+  // CURSOR
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.transform = `translate(${mx - 5}px, ${my - 5}px)`;
+  });
+
+  function animateRing() {
+    rx += (mx - rx - 18) * 0.15;
+    ry += (my - ry - 18) * 0.15;
+    ring.style.transform = `translate(${rx}px, ${ry}px)`;
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  document.querySelectorAll('a, button, .collection-card, .gallery-item').forEach(el => {
+    el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+    el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+  });
+
+  // NAV SCROLL
+  const nav = document.getElementById('mainNav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  // SCROLL REVEAL
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // CARD HOVER ACCENT LINES
+  document.querySelectorAll('[style*="card-accent-line"]').forEach(card => {
+    const line = card.querySelector('.card-accent-line');
+    if (line) {
+      card.addEventListener('mouseenter', () => line.style.height = '100%');
+      card.addEventListener('mouseleave', () => line.style.height = '0');
+    }
+  });
+
+  // SERVICE CARD HOVER
+  document.querySelectorAll('section[style*="var(--bg)"] > div > div > div[style*="border:1px"]').forEach(card => {
+    const line = card.querySelector('div[style*="height:0"]');
+    if (line) {
+      card.addEventListener('mouseenter', () => { line.style.height = '100%'; card.style.borderColor = 'var(--accent)'; });
+      card.addEventListener('mouseleave', () => { line.style.height = '0'; card.style.borderColor = 'var(--border)'; });
+    }
+  });
+</script>
+</body>
+</html>
