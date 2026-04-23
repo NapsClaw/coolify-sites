@@ -64,7 +64,7 @@
 
     /* ─── HERO ─── */
     .hero{min-height:100svh;position:relative;display:flex;align-items:flex-end;padding:0 24px 72px}
-    .hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1565087162739-a3c38abccd61?w=1600&q=85&auto=format&fit=crop') center/cover no-repeat;animation:slowZoom 14s ease-in-out infinite alternate}
+    .hero-bg{position:absolute;inset:0;background:url('./servico-2.jpg') center/cover no-repeat;animation:slowZoom 14s ease-in-out infinite alternate}
     .hero-ov{position:absolute;inset:0;background:linear-gradient(125deg,rgba(6,13,20,.95) 0%,rgba(6,13,20,.78) 55%,rgba(13,27,42,.9) 100%)}
     /* scanline effect */
     .hero-scan{position:absolute;inset:0;overflow:hidden;pointer-events:none}
@@ -142,9 +142,34 @@
     .srv-name{font-size:20px;font-weight:800;line-height:1.1;color:#fff;text-transform:uppercase;margin-bottom:10px}
     .srv-desc{font-size:13px;color:var(--muted);line-height:1.75;font-weight:300}
 
+    /* ─── GALLERY ─── */
+    .gallery{background:#040B12;position:relative;overflow:hidden}
+    .gallery::before{content:'';position:absolute;inset:0;background:url('./media/servico-5.jpg') center/cover no-repeat;opacity:.04}
+    .bento{display:grid;grid-template-columns:1fr;gap:3px;margin-top:52px}
+    @media(min-width:640px){.bento{grid-template-columns:repeat(2,1fr)}}
+    @media(min-width:900px){.bento{grid-template-columns:repeat(3,1fr)}}
+    @media(min-width:1100px){.bento{grid-template-columns:repeat(4,1fr)}}
+    .bento-item{position:relative;overflow:hidden;background:var(--surface)}
+    .bento-item img,.bento-item video{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease,filter .4s}
+    .bento-item:hover img,.bento-item:hover video{transform:scale(1.06);filter:brightness(.75) contrast(1.1)}
+    .bento-item::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(6,13,20,.6) 0%,transparent 50%);opacity:0;transition:opacity .4s}
+    .bento-item:hover::after{opacity:1}
+    .bento-tall{grid-row:span 2}
+    .bento-wide{grid-column:span 2}
+    .bento-sq{aspect-ratio:1/1}
+    .bento-rect{aspect-ratio:4/3}
+    .bento-tall-inner{height:100%;min-height:360px}
+    .bento-label{position:absolute;bottom:0;left:0;right:0;padding:14px 16px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.8);z-index:2;transform:translateY(4px);opacity:0;transition:all .35s}
+    .bento-item:hover .bento-label{transform:translateY(0);opacity:1}
+    .vid-featured{position:relative;grid-column:span 2;background:#000}
+    @media(max-width:639px){.vid-featured{grid-column:span 1}}
+    .vid-featured video{width:100%;height:100%;min-height:280px;object-fit:cover;display:block}
+    .vid-badge{position:absolute;top:12px;left:12px;background:var(--accent);color:var(--surface);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:5px 12px;display:flex;align-items:center;gap:6px;z-index:3}
+    .vid-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--surface);animation:pulseWa 1.5s infinite}
+
     /* ─── WHY ─── */
     .why{background:var(--surface-2);position:relative;overflow:hidden}
-    .why::before{content:'';position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1581092334651-ddf19d979b3f?w=1400&q=50&auto=format&fit=crop') center/cover no-repeat;opacity:.06}
+    .why::before{content:'';position:absolute;inset:0;background:url('./servico-6.jpg') center/cover no-repeat;opacity:.06}
     .why-grid{display:grid;grid-template-columns:1fr;gap:0;margin-top:56px;border:1px solid rgba(255,255,255,.06)}
     @media(min-width:560px){.why-grid{grid-template-columns:repeat(2,1fr)}}
     @media(min-width:1024px){.why-grid{grid-template-columns:repeat(4,1fr)}}
@@ -171,6 +196,38 @@
     .btn-wa{display:flex;align-items:center;justify-content:center;gap:12px;background:#25D366;color:#fff;font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:17px;letter-spacing:.06em;text-transform:uppercase;padding:18px 32px;text-decoration:none;transition:all .25s;margin-bottom:14px}
     .btn-wa:hover{background:#1EB85A;transform:translateY(-2px);box-shadow:0 10px 28px rgba(37,211,102,.35)}
     .cta-fine{font-size:12px;color:var(--muted);font-weight:300}
+
+    /* ─── GALLERY ─── */
+    .gallery{background:var(--bg);padding:88px 0 0}
+    @media(min-width:768px){.gallery{padding:112px 0 0}}
+    .gallery-hdr{padding:0 24px 56px}
+    @media(min-width:768px){.gallery-hdr{padding:0 48px 64px}}
+    @media(min-width:1024px){.gallery-hdr{padding:0 80px 72px}}
+    /* bento grid */
+    .bento{display:grid;grid-template-columns:repeat(2,1fr);gap:3px}
+    @media(min-width:640px){.bento{grid-template-columns:repeat(3,1fr)}}
+    @media(min-width:1024px){.bento{grid-template-columns:repeat(4,1fr)}}
+    .bento-item{position:relative;overflow:hidden;background:var(--surface);cursor:pointer}
+    .bento-item img,.bento-item video{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease,filter .4s ease;filter:brightness(.85) saturate(.9)}
+    .bento-item:hover img,.bento-item:hover video{transform:scale(1.06);filter:brightness(1) saturate(1.1)}
+    .bento-item::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(6,13,20,.7) 0%,transparent 50%);opacity:0;transition:opacity .35s}
+    .bento-item:hover::after{opacity:1}
+    /* sizing variants */
+    .bento-tall{aspect-ratio:3/4}
+    .bento-wide{aspect-ratio:16/9}
+    .bento-square{aspect-ratio:1/1}
+    /* span variants on larger screens */
+    @media(min-width:1024px){
+      .bento-span2{grid-column:span 2}
+      .bento-row2{grid-row:span 2}
+      .bento-featured{grid-column:span 2;grid-row:span 2}
+    }
+    /* video badge */
+    .vid-badge{position:absolute;top:12px;left:12px;background:rgba(245,166,35,.9);color:var(--surface);font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:4px 10px;z-index:2}
+    /* gallery cta strip */
+    .gallery-cta{background:var(--accent);padding:32px 24px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px}
+    @media(min-width:640px){.gallery-cta{flex-direction:row;justify-content:center;gap:32px}}
+    .gallery-cta p{font-family:'Barlow Condensed',sans-serif;font-size:20px;font-weight:800;text-transform:uppercase;color:var(--surface);letter-spacing:.04em}
 
     /* ─── FOOTER ─── */
     footer{background:var(--bg);border-top:1px solid rgba(255,255,255,.05);padding:36px 24px;text-align:center}
@@ -265,7 +322,7 @@
   <div class="wrap">
     <div class="about-grid">
       <div class="about-img sr">
-        <img src="./foto-servico-1.jpg" alt="Equipe técnica ENGENTECH em campo" loading="lazy">
+        <img src="./servico-1.jpg" alt="Equipe técnica ENGENTECH em campo" loading="lazy">
       </div>
       <div>
         <div class="sec-label sr">Quem Somos</div>
@@ -409,7 +466,7 @@
 
 <!-- PROOF PHOTO — EM CAMPO -->
 <section style="position:relative;height:min(70vh,560px);overflow:hidden">
-  <img src="./foto-servico-1.jpg" alt="ENGENTECH em operação — serviços industriais" loading="lazy"
+  <img src="./servico-7.jpg" alt="ENGENTECH em operação — serviços industriais" loading="lazy"
     style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;filter:brightness(.72) contrast(1.08)">
   <div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,13,20,.88) 0%,rgba(6,13,20,.3) 60%,transparent 100%)"></div>
   <div style="position:absolute;top:0;left:0;bottom:0;width:3px;background:var(--accent)"></div>
@@ -420,6 +477,84 @@
       <p style="font-size:15px;font-weight:300;color:rgba(228,232,237,.8);line-height:1.75;margin-bottom:28px">Equipe e equipamentos prontos para atender demandas industriais de qualquer porte — do serviço pontual às grandes montagens.</p>
       <a href="#contato" class="btn-cta" style="display:inline-flex;max-width:260px">Solicitar Orçamento</a>
     </div>
+  </div>
+</section>
+
+<!-- GALLERY / PROOF OF WORK -->
+<section class="gallery sr" id="galeria">
+  <div class="gallery-hdr wrap">
+    <div class="sec-label sr">Nossos Projetos</div>
+    <h2 class="sec-title sr">Execução <em>real</em><br>em campo</h2>
+    <p class="sec-body sr">Registros reais dos nossos serviços — elétrica industrial, automação, painéis, refrigeração e infraestrutura de energia.</p>
+  </div>
+
+  <div class="bento">
+    <!-- Row 1: featured + 2 -->
+    <div class="bento-item bento-featured bento-square sr">
+      <img src="./servico-5.jpg" alt="Instalação industrial ENGENTECH" loading="lazy">
+    </div>
+    <div class="bento-item bento-square sr sr-d1">
+      <img src="./servico-3.jpg" alt="Elétrica industrial" loading="lazy">
+    </div>
+    <div class="bento-item bento-square sr sr-d2">
+      <img src="./servico-4.jpg" alt="Painel elétrico industrial" loading="lazy">
+    </div>
+
+    <!-- Row 2 -->
+    <div class="bento-item bento-square sr sr-d1">
+      <img src="./servico-8.jpg" alt="Manutenção industrial" loading="lazy">
+    </div>
+    <div class="bento-item bento-square bento-span2 sr sr-d2">
+      <img src="./servico-6.jpg" alt="Automação e controle" loading="lazy">
+    </div>
+    <div class="bento-item bento-square sr sr-d3">
+      <img src="./servico-9.jpg" alt="Serviço eletromecânico" loading="lazy">
+    </div>
+
+    <!-- Video feature -->
+    <div class="bento-item bento-square bento-span2 sr sr-d1" style="position:relative">
+      <div class="vid-badge">▶ Vídeo</div>
+      <video src="./servico-16.mp4" autoplay muted loop playsinline></video>
+    </div>
+    <div class="bento-item bento-square sr sr-d2">
+      <img src="./servico-10.jpg" alt="Instalação de equipamentos" loading="lazy">
+    </div>
+    <div class="bento-item bento-square sr sr-d3">
+      <img src="./servico-11.jpg" alt="Montagem industrial" loading="lazy">
+    </div>
+
+    <!-- Row 4 -->
+    <div class="bento-item bento-square sr">
+      <img src="./servico-12.jpg" alt="Subestação de energia" loading="lazy">
+    </div>
+    <div class="bento-item bento-square sr sr-d1">
+      <img src="./servico-13.jpg" alt="Refrigeração industrial" loading="lazy">
+    </div>
+    <div class="bento-item bento-square sr sr-d2">
+      <img src="./servico-14.jpg" alt="Gerador de energia" loading="lazy">
+    </div>
+    <div class="bento-item bento-square sr sr-d3">
+      <img src="./servico-15.jpg" alt="Sistema elétrico" loading="lazy">
+    </div>
+
+    <!-- Row 5 -->
+    <div class="bento-item bento-square bento-span2 sr sr-d1">
+      <img src="./servico-17.jpg" alt="Infraestrutura industrial" loading="lazy">
+    </div>
+    <div class="bento-item bento-square sr sr-d2">
+      <img src="./servico-18.jpg" alt="Trabalho técnico em campo" loading="lazy">
+    </div>
+    <div class="bento-item bento-square sr sr-d3">
+      <img src="./servico-19.jpg" alt="Equipe ENGENTECH" loading="lazy">
+    </div>
+  </div>
+
+  <div class="gallery-cta">
+    <p>Quer um projeto assim para a sua empresa?</p>
+    <a href="https://wa.me/5541992481238?text=Olá!%20Vi%20os%20projetos%20da%20ENGENTECH%20e%20gostaria%20de%20solicitar%20um%20orçamento." class="btn-wa" style="margin:0;max-width:340px;width:100%;background:var(--surface);color:var(--accent)" target="_blank" rel="noopener">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Solicitar Orçamento
+    </a>
   </div>
 </section>
 
