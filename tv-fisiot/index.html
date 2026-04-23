@@ -675,52 +675,66 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Plus Jakarta Sans'
   </div>
 </div>
 <div class="sl" id="s41" style="background:linear-gradient(135deg,#0a0005 0%,#1a0008 60%,#0a0005 100%);padding:0;overflow:hidden;">
-  <div style="width:100%;height:100%;display:flex;flex-direction:column;padding:24px 32px;box-sizing:border-box;">
-    <div style="text-align:center;margin-bottom:18px;">
-      <div style="font-size:11px;font-weight:800;color:#FFD700;text-transform:uppercase;letter-spacing:4px;margin-bottom:6px;">&#128197; Agenda dos Profissionais</div>
-      <div style="font-size:clamp(20px,2.8vw,34px);font-weight:900;color:#fff;font-family:'Playfair Display',serif;">Quem est&#225; atendendo hoje?</div>
+  <style>
+    .ag-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;flex:1;min-height:0;}
+    .ag-panel{background:rgba(255,255,255,0.05);border:1px solid rgba(255,200,0,0.3);border-radius:12px;padding:12px 14px;display:flex;flex-direction:column;gap:7px;overflow:hidden;}
+    .ag-turn{font-size:10px;font-weight:800;color:#FFD700;text-transform:uppercase;letter-spacing:2px;margin-bottom:4px;}
+    .ag-row{background:rgba(204,0,0,0.12);border-radius:8px;padding:7px 10px;display:flex;flex-direction:column;gap:3px;}
+    .ag-top{display:flex;justify-content:space-between;align-items:center;gap:6px;}
+    .ag-name{font-size:clamp(11px,1.25vw,14px);color:#fff;font-weight:700;white-space:nowrap;}
+    .ag-badge{font-size:9px;background:#CC0000;color:#fff;padding:2px 7px;border-radius:20px;font-weight:700;white-space:nowrap;flex-shrink:0;}
+    .ag-days{font-size:9px;color:rgba(255,220,100,0.75);font-style:italic;}
+    .ag-times{display:flex;flex-wrap:wrap;gap:3px;margin-top:1px;}
+    .ag-t{font-size:clamp(9px,1vw,11px);background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.85);padding:2px 6px;border-radius:5px;font-weight:600;}
+    @media(max-width:600px){.ag-grid{grid-template-columns:1fr;}}</style>
+  <div style="width:100%;height:100%;display:flex;flex-direction:column;padding:18px 22px;box-sizing:border-box;">
+    <div style="text-align:center;margin-bottom:12px;">
+      <div style="font-size:10px;font-weight:800;color:#FFD700;text-transform:uppercase;letter-spacing:4px;margin-bottom:4px;">&#128197; Agenda dos Profissionais</div>
+      <div style="font-size:clamp(16px,2.4vw,28px);font-weight:900;color:#fff;font-family:'Playfair Display',serif;">Pacientes da — chamar em cada hor&#225;rio</div>
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;flex:1;">
-      <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,200,0,0.3);border-radius:14px;padding:16px;">
-        <div style="font-size:11px;font-weight:800;color:#FFD700;text-transform:uppercase;letter-spacing:2px;margin-bottom:12px;">&#127749; TURNO MANH&#195;</div>
-        <div style="display:flex;flex-direction:column;gap:8px;">
-          <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(204,0,0,0.15);border-radius:8px;padding:8px 12px;">
-            <span style="font-size:clamp(11px,1.3vw,15px);color:#fff;font-weight:600;">Dra. B&#225;rbara Viana</span>
-            <span style="font-size:10px;background:#CC0000;color:#fff;padding:3px 8px;border-radius:20px;font-weight:700;">Gin&#225;sio 1</span>
-          </div>
-          <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(204,0,0,0.15);border-radius:8px;padding:8px 12px;">
-            <span style="font-size:clamp(11px,1.3vw,15px);color:#fff;font-weight:600;">Dra. L&#237;via Nascimento</span>
-            <span style="font-size:10px;background:#CC0000;color:#fff;padding:3px 8px;border-radius:20px;font-weight:700;">Gin&#225;sio 2</span>
-          </div>
-          <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(204,0,0,0.15);border-radius:8px;padding:8px 12px;">
-            <div><span style="font-size:clamp(11px,1.3vw,15px);color:#fff;font-weight:600;">Dra. Priscila Teles</span><div style="font-size:9px;color:rgba(255,255,255,0.5);">Seg Qua Sex</div></div>
-            <span style="font-size:10px;background:#CC0000;color:#fff;padding:3px 8px;border-radius:20px;font-weight:700;">Gin&#225;sio 3</span>
-          </div>
-          <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(204,0,0,0.15);border-radius:8px;padding:8px 12px;">
-            <div><span style="font-size:clamp(11px,1.3vw,15px);color:#fff;font-weight:600;">Dra. Daniela Silva</span><div style="font-size:9px;color:rgba(255,255,255,0.5);">Neuro - Ter Qui</div></div>
-            <span style="font-size:10px;background:#CC0000;color:#fff;padding:3px 8px;border-radius:20px;font-weight:700;">Gin&#225;sio 3</span>
-          </div>
+    <div class="ag-grid">
+      <!-- MANHÃ -->
+      <div class="ag-panel">
+        <div class="ag-turn">&#127749; MANH&#195;</div>
+        <div class="ag-row">
+          <div class="ag-top"><span class="ag-name">Dra. B&#225;rbara</span><span class="ag-badge">Gin&#225;sio 1</span></div>
+          <div class="ag-times"><span class="ag-t">7h</span><span class="ag-t">7:40h</span><span class="ag-t">8:20h</span><span class="ag-t">9h</span><span class="ag-t">9:40h</span><span class="ag-t">10:20h</span></div>
+        </div>
+        <div class="ag-row">
+          <div class="ag-top"><span class="ag-name">Dra. L&#237;via</span><span class="ag-badge">Gin&#225;sio 2</span></div>
+          <div class="ag-times"><span class="ag-t">7:20h</span><span class="ag-t">8h</span><span class="ag-t">8:40h</span><span class="ag-t">9:20h</span><span class="ag-t">10h</span><span class="ag-t">10:40h</span></div>
+        </div>
+        <div class="ag-row">
+          <div class="ag-top"><span class="ag-name">Dra. Priscila</span><span class="ag-badge">Gin&#225;sio 3</span></div>
+          <div class="ag-days">Segunda, quarta e sexta</div>
+          <div class="ag-times"><span class="ag-t">7h</span><span class="ag-t">7:20h</span><span class="ag-t">8h</span></div>
+        </div>
+        <div class="ag-row">
+          <div class="ag-top"><span class="ag-name">Dra. Daniela</span><span class="ag-badge">Gin&#225;sio 3</span></div>
+          <div class="ag-days">Ter&#231;a e quinta</div>
+          <div class="ag-times"><span class="ag-t">7:40h</span><span class="ag-t">8:20h</span><span class="ag-t">9h</span><span class="ag-t">9:40h</span><span class="ag-t">10:20h</span><span class="ag-t">11h</span></div>
         </div>
       </div>
-      <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,200,0,0.3);border-radius:14px;padding:16px;">
-        <div style="font-size:11px;font-weight:800;color:#FFD700;text-transform:uppercase;letter-spacing:2px;margin-bottom:12px;">&#127964; TURNO TARDE</div>
-        <div style="display:flex;flex-direction:column;gap:8px;">
-          <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(204,0,0,0.15);border-radius:8px;padding:8px 12px;">
-            <div><span style="font-size:clamp(11px,1.3vw,15px);color:#fff;font-weight:600;">Dra. Natália Morais</span><div style="font-size:9px;color:rgba(255,255,255,0.5);">Seg Qua Sex</div></div>
-            <span style="font-size:10px;background:#CC0000;color:#fff;padding:3px 8px;border-radius:20px;font-weight:700;">Gin&#225;sio 1</span>
-          </div>
-          <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(204,0,0,0.15);border-radius:8px;padding:8px 12px;">
-            <div><span style="font-size:clamp(11px,1.3vw,15px);color:#fff;font-weight:600;">Dra. K&#234;nia Melo</span><div style="font-size:9px;color:rgba(255,255,255,0.5);">Ter Qui</div></div>
-            <span style="font-size:10px;background:#CC0000;color:#fff;padding:3px 8px;border-radius:20px;font-weight:700;">Gin&#225;sio 1</span>
-          </div>
-          <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(204,0,0,0.15);border-radius:8px;padding:8px 12px;">
-            <span style="font-size:clamp(11px,1.3vw,15px);color:#fff;font-weight:600;">Dra. Mirian Marinho</span>
-            <span style="font-size:10px;background:#CC0000;color:#fff;padding:3px 8px;border-radius:20px;font-weight:700;">Gin&#225;sio 2</span>
-          </div>
+      <!-- TARDE -->
+      <div class="ag-panel">
+        <div class="ag-turn">&#127964; TARDE</div>
+        <div class="ag-row">
+          <div class="ag-top"><span class="ag-name">Dra. Nathalia</span><span class="ag-badge">Gin&#225;sio 1</span></div>
+          <div class="ag-days">Segunda, quarta e sexta</div>
+          <div class="ag-times"><span class="ag-t">13h</span><span class="ag-t">13:40h</span><span class="ag-t">14:20h</span><span class="ag-t">15h</span><span class="ag-t">15:40h</span><span class="ag-t">16:20h</span><span class="ag-t">17h</span></div>
+        </div>
+        <div class="ag-row">
+          <div class="ag-top"><span class="ag-name">Dra. B&#225;rbara</span><span class="ag-badge">Gin&#225;sio 1</span></div>
+          <div class="ag-days">Ter&#231;a e quinta</div>
+          <div class="ag-times"><span class="ag-t">15h</span><span class="ag-t">15:40h</span><span class="ag-t">16:20h</span><span class="ag-t">17h</span></div>
+        </div>
+        <div class="ag-row">
+          <div class="ag-top"><span class="ag-name">Dra. Mirian</span><span class="ag-badge">Gin&#225;sio 2</span></div>
+          <div class="ag-times"><span class="ag-t">13h</span><span class="ag-t">13:40h</span><span class="ag-t">14:20h</span><span class="ag-t">15h</span><span class="ag-t">15:40h</span><span class="ag-t">16:20h</span></div>
         </div>
       </div>
     </div>
-    <div style="text-align:center;margin-top:12px;font-size:11px;color:rgba(255,255,255,0.4);">Para agendar: (31) 98337-7662</div>
+    <div style="text-align:center;margin-top:10px;font-size:10px;color:rgba(255,255,255,0.4);">Para agendar: (31) 98337-7662</div>
   </div>
 </div>
 <div class="sl" id="s42" style="background:#0a0005;padding:0;overflow:hidden;">
