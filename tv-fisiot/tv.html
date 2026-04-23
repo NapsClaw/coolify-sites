@@ -171,13 +171,14 @@ function updateClock(){
 // Chamada paciente
 function updateChamada(){
   try {
-    var p = localStorage.getItem('fisiot_patients');
-    if(p){
-      var list = JSON.parse(p);
-      if(list && list.length > 0){
-        var last = list[list.length-1];
-        document.getElementById('chamada-txt').innerHTML =
-          (last.name||'Paciente') + ' &mdash; ' + (last.room||'Consultório') + ' &mdash; ' + (last.prof||'');
+    var c = localStorage.getItem('fisiot_chamada');
+    if(c){
+      var data = JSON.parse(c);
+      if(data && data.timestamp && (Date.now() - data.timestamp) < 30000){
+        var txt = (data.ginasio||'Ginásio');
+        if(data.profissional) txt += ' &mdash; ' + data.profissional;
+        if(data.horario) txt += ' &mdash; ' + data.horario;
+        document.getElementById('chamada-txt').innerHTML = txt;
       }
     }
   } catch(e){}

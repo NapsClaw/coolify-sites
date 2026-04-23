@@ -46,7 +46,7 @@
     .pac-item.chamado{border-left-color:#4CAF50;background:#0a1a0a;opacity:.55}
     .pac-item.pendente{border-left-color:rgba(204,0,0,.4)}
     .pac-num{font-size:.7rem;font-weight:800;color:rgba(255,255,255,.3);min-width:16px;text-align:center}
-    .pac-nome{flex:1;font-size:.88rem;font-weight:700}
+    .pac-nome{flex:1;font-size:.88rem;font-weight:700;color:rgba(255,255,255,.55)}
     .pac-status{font-size:.65rem;padding:2px 7px;border-radius:12px;font-weight:700;white-space:nowrap}
     .pac-status.ok{background:rgba(76,175,80,.2);color:#4CAF50}
     .pac-status.atual{background:rgba(255,215,0,.2);color:#FFD700}
@@ -57,9 +57,7 @@
     /* Adicionar inline */
     .add-inline{padding:8px 12px;border-top:1px solid rgba(255,255,255,.05)}
     .add-inline-row{display:flex;gap:6px}
-    .add-inline input{flex:1;background:#0d0d1a;border:1px solid rgba(255,255,255,.1);border-radius:7px;padding:7px 10px;font-size:.82rem;color:#fff;font-family:inherit;outline:none}
-    .add-inline input:focus{border-color:#CC0000}
-    .add-inline button{background:#CC0000;color:#fff;border:none;border-radius:7px;padding:7px 12px;font-size:.8rem;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap}
+    .add-inline button{background:#CC0000;color:#fff;border:none;border-radius:7px;padding:7px 16px;font-size:.82rem;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;width:100%}
     .add-inline button:hover{background:#a80000}
     /* Banner chamada */
     .chamada-banner{display:none;position:fixed;top:16px;right:16px;background:#0a2010;border:2px solid #4CAF50;border-radius:12px;padding:14px 18px;max-width:300px;z-index:999;animation:slidein .3s ease}
@@ -123,10 +121,6 @@
 <div id="aba2" style="display:none">
   <div class="form-card">
     <h2>📢 Chamar Agora</h2>
-    <div class="field">
-      <label>Nome do Paciente</label>
-      <input type="text" id="now-nome" placeholder="Ex: João Silva" autocomplete="off">
-    </div>
     <div class="field">
       <label>Ginásio</label>
       <select id="now-gin" onchange="atualizarProfNow()">
@@ -264,12 +258,12 @@ function setChamado(ginId, hora, idx) {
   saveAgenda(a);
 }
 
-function addPaciente(ginId, hora, nome) {
+function addPaciente(ginId, hora) {
   const a = getAgenda();
   if (!a[ginId]) a[ginId] = {};
   if (!a[ginId][hora]) a[ginId][hora] = [];
   if (a[ginId][hora].length >= CFG[ginId].maxPorGrupo) return false;
-  a[ginId][hora].push(nome);
+  a[ginId][hora].push(a[ginId][hora].length + 1); // store slot number
   saveAgenda(a);
   return true;
 }
@@ -329,7 +323,7 @@ function renderAgenda() {
       const max = CFG[ginId].maxPorGrupo;
       const isAtual = hora === h;
 
-      const pacHTML = pacs.length ? pacs.map((nome, i) => {
+      const pacHTML = pacs.length ? pacs.map((_, i) => {
         const key = hora+'_'+i;
         const chamado = chamados[key];
         let cls = chamado ? 'chamado' : (isAtual && !chamado ? 'atual' : 'pendente');
@@ -337,7 +331,7 @@ function renderAgenda() {
         let stxt = chamado ? '✅' : (isAtual ? '🔔' : '⏳');
         return `<div class="pac-item ${cls}">
           <div class="pac-num">${i+1}</div>
-          <div class="pac-nome">${nome}</div>
+          <div class="pac-nome">Paciente ${i+1}</div>
           <span class="pac-status ${scls}">${stxt}</span>
           ${!chamado ? `<button class="pac-btn" onclick="chamarPac('${ginId}','${hora}',${i})">📢</button>` : ''}
           <button class="pac-del" onclick="removerErender('${ginId}','${hora}',${i})">✕</button>
@@ -348,8 +342,7 @@ function renderAgenda() {
       const addHTML = podeAdicionar ? `
         <div class="add-inline">
           <div class="add-inline-row">
-            <input type="text" id="inp-${ginId}-${hora.replace(':','')}" placeholder="Nome do paciente ${count+1}..." autocomplete="off" onkeydown="if(event.key==='Enter')addPacBtn('${ginId}','${hora}')">
-            <button onclick="addPacBtn('${ginId}','${hora}')">+ Adicionar</button>
+            <button onclick="addPacBtn('${ginId}','${hora}')">＋ Adicionar paciente</button>
           </div>
         </div>` : '';
 
@@ -389,21 +382,11 @@ function removerErender(ginId, hora, idx) {
 }
 
 function addPacBtn(ginId, hora) {
-  const inp = document.getElementById('inp-'+ginId+'-'+hora.replace(':',''));
-  if (!inp) return;
-  const nome = inp.value.trim();
-  if (!nome) { inp.focus(); return; }
-  if (!addPaciente(ginId, hora, nome)) {
+  if (!addPaciente(ginId, hora)) {
     alert('Máximo de 6 pacientes por grupo!');
     return;
   }
-  inp.value = '';
   renderAgenda();
-  // Re-focar no próximo input se existir
-  setTimeout(() => {
-    const ni = document.getElementById('inp-'+ginId+'-'+hora.replace(':',''));
-    if (ni) ni.focus();
-  }, 100);
 }
 
 // ============================================================
@@ -432,15 +415,15 @@ function mostrarBanner(txt) {
 
 function chamarPac(ginId, hora, idx) {
   const pacs = getPacientes(ginId, hora);
-  if (!pacs[idx]) return;
-  const nome = pacs[idx];
+  if (idx >= pacs.length) return;
   const periodo = getPeriodo(hora);
   const prof = getProfissional(ginId, periodo);
   const gin = CFG[ginId].nome;
-  const msg = `Atenção! Paciente ${nome}, por favor dirija-se ao ${gin}.`;
+  const num = idx + 1;
+  const msg = `Atenção! Próximo paciente, por favor dirija-se ao ${gin}.`;
   falar(msg);
-  mostrarBanner(`<span>${nome}</span> → ${gin} · ${prof}`);
-  localStorage.setItem('fisiot_chamada', JSON.stringify({nome,ginasio:gin,profissional:prof,horario:hora,msg,timestamp:Date.now()}));
+  mostrarBanner(`Paciente ${num} → ${gin} · ${prof}`);
+  localStorage.setItem('fisiot_chamada', JSON.stringify({ginasio:gin,profissional:prof,horario:hora,num,msg,timestamp:Date.now()}));
   setChamado(ginId, hora, idx);
   renderAgenda();
 }
@@ -468,15 +451,14 @@ function chamarTodosSequencia(ginId, hora) {
   renderAgenda();
 
   // Chamar cada paciente individualmente em sequência
-  // Formato: "[Nome], Ginásio X, [Profissional]"
   let i = 0;
   function falarProximo() {
     if (i >= pendentes.length) return;
     const idx = pendentes[i];
-    const nome = pacs[idx];
-    const msg = `${nome}. ${gin}. ${prof}.`;
-    mostrarBanner(`<span>${nome}</span> → ${gin} · ${prof}`);
-    localStorage.setItem('fisiot_chamada', JSON.stringify({nome,ginasio:gin,profissional:prof,horario:hora,msg,timestamp:Date.now()}));
+    const num = idx + 1;
+    const msg = `Próximo paciente. ${gin}. ${prof}.`;
+    mostrarBanner(`Paciente ${num} → ${gin} · ${prof}`);
+    localStorage.setItem('fisiot_chamada', JSON.stringify({ginasio:gin,profissional:prof,horario:hora,num,msg,timestamp:Date.now()}));
 
     if (!('speechSynthesis' in window)) { i++; setTimeout(falarProximo, 1500); return; }
     window.speechSynthesis.cancel();
@@ -495,20 +477,17 @@ function chamarTodosSequencia(ginId, hora) {
 }
 
 function chamarAgora() {
-  const nome = document.getElementById('now-nome').value.trim();
   const ginId = document.getElementById('now-gin').value;
-  if (!nome) { alert('Digite o nome!'); return; }
   const h = getHoraAtual();
   const periodo = getPeriodo(h);
   const prof = getProfissional(ginId, periodo);
   const gin = CFG[ginId].nome;
-  const msg = `Atenção! Paciente ${nome}, por favor dirija-se ao ${gin}.`;
+  const msg = `Atenção! Próximo paciente, por favor dirija-se ao ${gin}.`;
   falar(msg);
-  mostrarBanner(`<span>${nome}</span> → ${gin} · ${prof||''}`);
-  localStorage.setItem('fisiot_chamada', JSON.stringify({nome,ginasio:gin,profissional:prof,horario:h,msg,timestamp:Date.now()}));
+  mostrarBanner(`Próximo paciente → ${gin} · ${prof||''}`);
+  localStorage.setItem('fisiot_chamada', JSON.stringify({ginasio:gin,profissional:prof,horario:h,msg,timestamp:Date.now()}));
   document.getElementById('now-ok').style.display = 'block';
   setTimeout(()=>document.getElementById('now-ok').style.display='none', 3000);
-  document.getElementById('now-nome').value = '';
 }
 
 function atualizarProfNow() {
