@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BKL AWONASA — Moda Feminina em Fibras Naturais Brasileiras</title>
+  <meta name="description" content="BKL AWONASA é uma marca de moda feminina criada a partir de fibras naturais da flora brasileira. Peças únicas, sustentáveis e com alma." />
+  <meta property="og:title" content="BKL AWONASA — Fibras da Flora Brasileira" />
+  <meta property="og:description" content="Moda feminina artesanal com fibras naturais da flora do Brasil." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=DM+Sans:ital,opsz,wght@0,9..40,300..500;1,9..40,300..400&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --primary:   #1C1410;
+      --accent:    #D4A853;
+      --accent-lt: #E8C87A;
+      --bg:        #F2EDE6;
+      --surface:   #E8DDD2;
+      --surface2:  #D9CBBA;
+      --text:      #1C1410;
+      --text-muted:#6B5B4E;
+      --white:     #FAF8F5;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* Noise texture overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.35;
+    }
+
+    /* Typography */
+    .font-display { font-family: 'Fraunces', serif; }
+
+    /* Animations */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+    @keyframes slideRight {
+      from { opacity: 0; transform: translateX(-60px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes lineGrow {
+      from { transform: scaleX(0); }
+      to   { transform: scaleX(1); }
+    }
+    @keyframes pulse-soft {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(37,211,102,0.4); }
+      50% { box-shadow: 0 0 0 10px rgba(37,211,102,0); }
+    }
+    @keyframes heroZoom {
+      from { transform: scale(1.08); }
+      to   { transform: scale(1); }
+    }
+    @keyframes letterReveal {
+      from { opacity: 0; transform: translateY(100%); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-60px);
+      transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(60px);
+      transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal-right.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      mix-blend-mode: multiply;
+      animation: fadeIn 1s ease 0.2s both;
+    }
+    nav .logo {
+      font-family: 'Fraunces', serif;
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      color: var(--white);
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+    nav .nav-links {
+      display: none;
+      gap: 32px;
+      list-style: none;
+    }
+    nav .nav-links a {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--white);
+      text-decoration: none;
+      opacity: 0.85;
+      transition: opacity 0.2s;
+    }
+    nav .nav-links a:hover { opacity: 1; }
+    @media (min-width: 768px) {
+      nav .nav-links { display: flex; }
+    }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      height: 100svh;
+      min-height: 600px;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+    }
+    .hero-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      animation: heroZoom 8s ease both;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(28,20,16,0.92) 0%,
+        rgba(28,20,16,0.55) 40%,
+        rgba(28,20,16,0.15) 80%,
+        transparent 100%
+      );
+    }
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      padding: 0 24px 48px;
+      width: 100%;
+    }
+    .hero-eyebrow {
+      display: block;
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+      animation: fadeIn 1s ease 0.6s both;
+    }
+    .hero-title {
+      overflow: hidden;
+    }
+    .hero-title-line {
+      display: block;
+      overflow: hidden;
+    }
+    .hero-title-line span {
+      display: block;
+      font-family: 'Fraunces', serif;
+      font-size: clamp(3.5rem, 14vw, 9rem);
+      font-weight: 900;
+      line-height: 0.9;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      animation: letterReveal 1s cubic-bezier(0.16,1,0.3,1) both;
+    }
+    .hero-title-line:nth-child(1) span { animation-delay: 0.5s; }
+    .hero-title-line:nth-child(2) span {
+      animation-delay: 0.65s;
+      font-style: italic;
+      color: var(--accent);
+    }
+    .hero-sub {
+      margin-top: 20px;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: rgba(250,248,245,0.75);
+      max-width: 320px;
+      animation: fadeUp 1s ease 1s both;
+    }
+    .hero-cta {
+      margin-top: 28px;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--accent);
+      color: var(--primary);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 16px 28px;
+      border-radius: 2px;
+      animation: fadeUp 1s ease 1.1s both;
+      transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+    }
+    .hero-cta:hover {
+      background: var(--accent-lt);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(212,168,83,0.35);
+    }
+    .hero-scroll {
+      position: absolute;
+      bottom: 32px;
+      right: 24px;
+      writing-mode: vertical-rl;
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(250,248,245,0.5);
+      animation: fadeIn 1.5s ease 1.5s both;
+    }
+
+    /* MANIFESTO */
+    .manifesto {
+      background: var(--primary);
+      padding: 80px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .manifesto::before {
+      content: '';
+      position: absolute;
+      top: -60px;
+      right: -60px;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(212,168,83,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .manifesto-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .manifesto-label::before {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 1px;
+      background: var(--accent);
+      transform-origin: left;
+    }
+    .manifesto-quote {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(1.8rem, 6vw, 3.5rem);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.25;
+      color: var(--white);
+      max-width: 700px;
+    }
+    .manifesto-quote em {
+      color: var(--accent);
+      font-style: normal;
+      font-weight: 700;
+    }
+    .manifesto-body {
+      margin-top: 32px;
+      font-size: 0.95rem;
+      line-height: 1.75;
+      color: rgba(250,248,245,0.65);
+      max-width: 520px;
+    }
+
+    /* SOBRE */
+    .sobre {
+      padding: 80px 24px;
+      background: var(--bg);
+    }
+    .sobre-inner {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 48px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    @media (min-width: 768px) {
+      .sobre-inner {
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        gap: 80px;
+      }
+    }
+    .sobre-img-wrap {
+      position: relative;
+    }
+    .sobre-img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      border-radius: 2px;
+      display: block;
+    }
+    .sobre-img-accent {
+      position: absolute;
+      bottom: -20px;
+      right: -20px;
+      width: 60%;
+      aspect-ratio: 1;
+      border: 2px solid var(--accent);
+      border-radius: 2px;
+      pointer-events: none;
+    }
+    .sobre-text-tag {
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+    .sobre-title {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+    .sobre-body {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: var(--text-muted);
+    }
+    .sobre-body + .sobre-body { margin-top: 16px; }
+    .sobre-divider {
+      width: 48px;
+      height: 2px;
+      background: var(--accent);
+      margin: 28px 0;
+    }
+
+    /* FIBRAS */
+    .fibras {
+      background: var(--surface);
+      padding: 80px 24px;
+      overflow: hidden;
+    }
+    .fibras-header {
+      max-width: 1100px;
+      margin: 0 auto 56px;
+    }
+    .section-tag {
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      font-weight: 800;
+      line-height: 1.1;
+    }
+    .fibras-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    @media (min-width: 640px) { .fibras-grid { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 1024px) { .fibras-grid { grid-template-columns: repeat(4, 1fr); } }
+    .fibra-card {
+      background: var(--bg);
+      padding: 36px 28px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.4s ease, transform 0.4s cubic-bezier(0.16,1,0.3,1);
+      cursor: default;
+    }
+    .fibra-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+    }
+    .fibra-card:hover {
+      background: var(--primary);
+      transform: translateY(-4px);
+    }
+    .fibra-card:hover::before { transform: scaleX(1); }
+    .fibra-card:hover .fibra-name,
+    .fibra-card:hover .fibra-desc { color: var(--white); }
+    .fibra-card:hover .fibra-icon { color: var(--accent); }
+    .fibra-icon {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      transition: color 0.4s;
+    }
+    .fibra-name {
+      font-family: 'Fraunces', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      transition: color 0.4s;
+    }
+    .fibra-desc {
+      font-size: 0.85rem;
+      line-height: 1.7;
+      color: var(--text-muted);
+      transition: color 0.4s;
+    }
+
+    /* COLECAO */
+    .colecao {
+      padding: 80px 24px;
+      background: var(--bg);
+    }
+    .colecao-header {
+      max-width: 1100px;
+      margin: 0 auto 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    @media (min-width: 768px) {
+      .colecao-header {
+        flex-direction: row;
+        align-items: flex-end;
+        justify-content: space-between;
+      }
+    }
+    .colecao-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    @media (min-width: 640px) {
+      .colecao-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    @media (min-width: 1024px) {
+      .colecao-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    .peca-card {
+      position: relative;
+      overflow: hidden;
+      border-radius: 2px;
+      background: var(--surface);
+      cursor: pointer;
+    }
+    .peca-card-img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.7s cubic-bezier(0.16,1,0.3,1);
+    }
+    .peca-card:hover .peca-card-img { transform: scale(1.06); }
+    .peca-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(28,20,16,0.85) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    .peca-card:hover .peca-overlay { opacity: 1; }
+    .peca-info {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 24px 20px;
+      transform: translateY(20px);
+      opacity: 0;
+      transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), opacity 0.4s;
+    }
+    .peca-card:hover .peca-info {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    .peca-name {
+      font-family: 'Fraunces', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+    .peca-fibra {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-top: 4px;
+    }
+    .peca-tag {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: var(--accent);
+      color: var(--primary);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 5px 10px;
+      border-radius: 1px;
+    }
+
+    /* GALERIA */
+    .galeria {
+      padding: 80px 24px;
+      background: var(--primary);
+    }
+    .galeria-header {
+      max-width: 1100px;
+      margin: 0 auto 48px;
+    }
+    .galeria-header .section-title { color: var(--white); }
+    .galeria-header .section-tag { color: var(--accent); }
+    .bento {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto;
+      gap: 6px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    @media (min-width: 768px) {
+      .bento {
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: 280px 280px;
+      }
+      .bento-tall { grid-row: span 2; }
+      .bento-wide { grid-column: span 2; }
+    }
+    .bento-item {
+      overflow: hidden;
+      border-radius: 2px;
+      position: relative;
+    }
+    .bento-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s cubic-bezier(0.16,1,0.3,1);
+    }
+    @media (min-width: 768px) {
+      .bento-img { height: 100%; }
+    }
+    .bento-item:hover .bento-img { transform: scale(1.05); }
+
+    /* VALORES */
+    .valores {
+      background: var(--surface);
+      padding: 80px 24px;
+    }
+    .valores-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .valores-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2px;
+      margin-top: 48px;
+    }
+    @media (min-width: 768px) { .valores-grid { grid-template-columns: repeat(3, 1fr); } }
+    .valor-item {
+      background: var(--bg);
+      padding: 40px 32px;
+      border-top: 3px solid transparent;
+      transition: border-color 0.3s, background 0.3s;
+    }
+    .valor-item:hover {
+      border-color: var(--accent);
+      background: var(--white);
+    }
+    .valor-num {
+      font-family: 'Fraunces', serif;
+      font-size: 3rem;
+      font-weight: 900;
+      color: var(--surface2);
+      line-height: 1;
+      margin-bottom: 20px;
+      transition: color 0.3s;
+    }
+    .valor-item:hover .valor-num { color: var(--accent); }
+    .valor-title {
+      font-family: 'Fraunces', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .valor-desc {
+      font-size: 0.9rem;
+      line-height: 1.75;
+      color: var(--text-muted);
+    }
+
+    /* CONTATO */
+    .contato {
+      background: var(--primary);
+      padding: 80px 24px 96px;
+      position: relative;
+      overflow: hidden;
+    }
+    .contato::before {
+      content: '';
+      position: absolute;
+      top: -100px;
+      left: -100px;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(212,168,83,0.1) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .contato::after {
+      content: '';
+      position: absolute;
+      bottom: -80px;
+      right: -80px;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(212,168,83,0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .contato-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    .contato-title {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2.5rem, 10vw, 6rem);
+      font-weight: 900;
+      line-height: 0.95;
+      color: var(--white);
+      margin-bottom: 48px;
+    }
+    .contato-title em {
+      color: var(--accent);
+      font-style: italic;
+    }
+    .contato-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+    @media (min-width: 768px) { .contato-grid { grid-template-columns: 1fr 1fr; gap: 80px; } }
+    .contato-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+    .contato-info {
+      font-size: 0.95rem;
+      line-height: 2;
+      color: rgba(250,248,245,0.7);
+    }
+    .contato-info strong {
+      color: var(--white);
+      font-weight: 500;
+    }
+    .contato-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--accent);
+      color: var(--primary);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 18px 32px;
+      border-radius: 2px;
+      margin-top: 32px;
+      transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+    }
+    .contato-cta:hover {
+      background: var(--accent-lt);
+      transform: translateY(-3px);
+      box-shadow: 0 16px 40px rgba(212,168,83,0.3);
+    }
+    .contato-cta svg { width: 20px; height: 20px; flex-shrink: 0; }
+
+    /* FOOTER */
+    footer {
+      background: #0E0B08;
+      padding: 32px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      text-align: center;
+    }
+    @media (min-width: 768px) {
+      footer {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+    }
+    .footer-logo {
+      font-family: 'Fraunces', serif;
+      font-size: 1.1rem;
+      font-weight: 800;
+      letter-spacing: 0.2em;
+      color: var(--white);
+    }
+    .footer-copy {
+      font-size: 0.75rem;
+      color: rgba(250,248,245,0.4);
+      letter-spacing: 0.05em;
+    }
+    .footer-accent {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    /* WHATSAPP FLOAT */
+    .wa-float {
+      position: fixed;
+      bottom: 28px;
+      right: 24px;
+      z-index: 998;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: #25D366;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+      animation: pulse-soft 2.5s infinite;
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1), box-shadow 0.3s;
+    }
+    .wa-float:hover {
+      transform: scale(1.12);
+      box-shadow: 0 8px 28px rgba(37,211,102,0.45);
+      animation: none;
+    }
+    .wa-float svg { width: 28px; height: 28px; }
+
+    /* DIVISOR DECORATIVO */
+    .divider-leaf {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 8px 0;
+      color: var(--accent);
+    }
+    .divider-leaf::before,
+    .divider-leaf::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--surface2);
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">BKL AWONASA</a>
+  <ul class="nav-links">
+    <li><a href="#sobre">A Marca</a></li>
+    <li><a href="#fibras">Fibras</a></li>
+    <li><a href="#colecao">Coleção</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <img
+    class="hero-img"
+    src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=1400&q=85&fit=crop"
+    alt="BKL AWONASA — Moda natural brasileira"
+    loading="eager"
+  />
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <span class="hero-eyebrow">Flora Brasileira · Moda Feminina · Fibras Naturais</span>
+    <h1 class="hero-title">
+      <span class="hero-title-line"><span>BKL</span></span>
+      <span class="hero-title-line"><span>AWONASA</span></span>
+    </h1>
+    <p class="hero-sub">Peças femininas nascidas da terra — tecidas com as fibras vivas da flora do Brasil.</p>
+    <a href="https://wa.me/5511999999999" class="hero-cta" target="_blank" rel="noopener">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+      Fale Conosco
+    </a>
+  </div>
+  <span class="hero-scroll">Rolar ↓</span>
+</section>
+
+<!-- MANIFESTO -->
+<section class="manifesto">
+  <div style="max-width:1100px;margin:0 auto;">
+    <div class="manifesto-label reveal">Manifesto</div>
+    <p class="manifesto-quote reveal">
+      Cada peça é uma <em>homenagem</em> à flora que nos sustenta — tecida com cuidado, usada com orgulho.
+    </p>
+    <p class="manifesto-body reveal">
+      Acreditamos que a moda mais bela é aquela que nasce da terra. BKL AWONASA cria roupas femininas usando fibras extraídas diretamente da flora brasileira — um ato de amor pela natureza e pela mulher que a veste.
+    </p>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section class="sobre" id="sobre">
+  <div class="sobre-inner">
+    <div class="sobre-img-wrap reveal-left">
+      <img
+        class="sobre-img"
+        src="https://images.unsplash.com/photo-1509631179647-0177331693ae?w=800&q=80&fit=crop"
+        alt="Artesã trabalhando com fibras naturais"
+        loading="lazy"
+      />
+      <div class="sobre-img-accent"></div>
+    </div>
+    <div class="reveal-right">
+      <p class="sobre-text-tag">A Marca</p>
+      <h2 class="sobre-title">Da flora<br/>brasileira<br/>para você</h2>
+      <div class="sobre-divider"></div>
+      <p class="sobre-body">
+        BKL AWONASA nasceu do desejo de celebrar a riqueza da flora brasileira através da moda. Criamos peças femininas exclusivas utilizando fibras naturais extraídas de plantas nativas do Brasil — algodão orgânico, buriti, juta e tucum são apenas algumas das matérias-primas que dão vida às nossas criações.
+      </p>
+      <p class="sobre-body">
+        Cada peça carrega a história de um processo artesanal, do campo ao armário, conectando a mulher moderna às raízes mais profundas da nossa terra. Moda com alma, com propósito, com Brasil.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- FIBRAS -->
+<section class="fibras" id="fibras">
+  <div class="fibras-header reveal">
+    <p class="section-tag">Nossas Matérias-Primas</p>
+    <h2 class="section-title">Fibras da<br/>flora brasileira</h2>
+  </div>
+  <div class="fibras-grid">
+    <div class="fibra-card reveal">
+      <div class="fibra-icon">🌾</div>
+      <h3 class="fibra-name">Algodão Orgânico</h3>
+      <p class="fibra-desc">Cultivado sem agrotóxicos em solos brasileiros, oferece maciez incomparável e respirabilidade natural para o clima tropical.</p>
+    </div>
+    <div class="fibra-card reveal">
+      <div class="fibra-icon">🌴</div>
+      <h3 class="fibra-name">Buriti</h3>
+      <p class="fibra-desc">Extraída das folhas do buriti, árvore símbolo do cerrado brasileiro, esta fibra artesanal traz textura única e conexão com a savana.</p>
+    </div>
+    <div class="fibra-card reveal">
+      <div class="fibra-icon">🌿</div>
+      <h3 class="fibra-name">Juta Natural</h3>
+      <p class="fibra-desc">Uma das fibras vegetais mais sustentáveis do mundo, cultivada no Brasil com respeito ao solo e às comunidades locais.</p>
+    </div>
+    <div class="fibra-card reveal">
+      <div class="fibra-icon">🪴</div>
+      <h3 class="fibra-name">Tucum</h3>
+      <p class="fibra-desc">Fibra extraída da palmeira tucum, tradicional na Amazônia. Resistente, natural e carregada de sabedoria indígena brasileira.</p>
+    </div>
+  </div>
+</section>
+
+<!-- COLEÇÃO -->
+<section class="colecao" id="colecao">
+  <div class="colecao-header">
+    <div class="reveal">
+      <p class="section-tag">Coleção</p>
+      <h2 class="section-title">Peças<br/>exclusivas</h2>
+    </div>
+    <p class="reveal" style="font-size:0.9rem;color:var(--text-muted);max-width:300px;line-height:1.6;">Cada peça é única — resultado do encontro entre a natureza brasileira e o design contemporâneo feminino.</p>
+  </div>
+  <div class="colecao-grid">
+    <div class="peca-card reveal">
+      <span class="peca-tag">Nova</span>
+      <img
+        class="peca-card-img"
+        src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&q=80&fit=crop"
+        alt="Vestido em fibra natural"
+        loading="lazy"
+      />
+      <div class="peca-overlay"></div>
+      <div class="peca-info">
+        <p class="peca-name">Vestido Terra</p>
+        <p class="peca-fibra">Algodão Orgânico Brasileiro</p>
+      </div>
+    </div>
+    <div class="peca-card reveal">
+      <img
+        class="peca-card-img"
+        src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=600&q=80&fit=crop"
+        alt="Blusa artesanal"
+        loading="lazy"
+      />
+      <div class="peca-overlay"></div>
+      <div class="peca-info">
+        <p class="peca-name">Blusa Cerrado</p>
+        <p class="peca-fibra">Fibra de Buriti</p>
+      </div>
+    </div>
+    <div class="peca-card reveal">
+      <span class="peca-tag">Especial</span>
+      <img
+        class="peca-card-img"
+        src="https://images.unsplash.com/photo-1583846783214-7229a91b20ed?w=600&q=80&fit=crop"
+        alt="Saia natural"
+        loading="lazy"
+      />
+      <div class="peca-overlay"></div>
+      <div class="peca-info">
+        <p class="peca-name">Saia Amazônia</p>
+        <p class="peca-fibra">Tucum & Juta Natural</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALERIA -->
+<section class="galeria" id="galeria">
+  <div class="galeria-header reveal">
+    <p class="section-tag" style="color:var(--accent)">Galeria</p>
+    <h2 class="section-title" style="color:var(--white)">A beleza<br/>natural</h2>
+  </div>
+  <div class="bento">
+    <div class="bento-item bento-tall reveal">
+      <img class="bento-img" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&q=80&fit=crop&crop=faces" alt="Moda natural" loading="lazy" />
+    </div>
+    <div class="bento-item reveal">
+      <img class="bento-img" src="https://images.unsplash.com/photo-1568702846914-96b305d2aaeb?w=600&q=80&fit=crop" alt="Fibras naturais" loading="lazy" />
+    </div>
+    <div class="bento-item reveal">
+      <img class="bento-img" src="https://images.unsplash.com/photo-1606760227091-3dd870d97f1d?w=600&q=80&fit=crop" alt="Roupa feminina" loading="lazy" />
+    </div>
+    <div class="bento-item bento-wide reveal">
+      <img class="bento-img" src="https://images.unsplash.com/photo-1551854716-8b811be39e7e?w=900&q=80&fit=crop" alt="Coleção natural" loading="lazy" />
+    </div>
+  </div>
+</section>
+
+<!-- VALORES -->
+<section class="valores">
+  <div class="valores-inner">
+    <div class="reveal">
+      <p class="section-tag">Por que AWONASA</p>
+      <h2 class="section-title">Moda com<br/>propósito</h2>
+    </div>
+    <div class="valores-grid">
+      <div class="valor-item reveal">
+        <div class="valor-num">01</div>
+        <h3 class="valor-title">Sustentável</h3>
+        <p class="valor-desc">Toda nossa cadeia produtiva é pensada para minimizar o impacto ambiental. Do campo ao ateliê, cada etapa respeita a natureza.</p>
+      </div>
+      <div class="valor-item reveal">
+        <div class="valor-num">02</div>
+        <h3 class="valor-title">Artesanal</h3>
+        <p class="valor-desc">Nossas peças são criadas por artesãs brasileiras com décadas de tradição, garantindo acabamento único e história em cada costura.</p>
+      </div>
+      <div class="valor-item reveal">
+        <div class="valor-num">03</div>
+        <h3 class="valor-title">Exclusivo</h3>
+        <p class="valor-desc">Produção em pequenas séries — você veste uma peça única, criada com cuidado e atenção, não reproduzida em massa.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section class="contato" id="contato">
+  <div class="contato-inner">
+    <h2 class="contato-title reveal">
+      Vamos<br/><em>conversar</em>
+    </h2>
+    <div class="contato-grid">
+      <div class="reveal">
+        <p class="contato-label">Atendimento</p>
+        <div class="contato-info">
+          <p><strong>WhatsApp</strong><br/>Fale diretamente com nossa equipe<br/>para dúvidas e encomendas</p>
+        </div>
+        <a href="https://wa.me/5511999999999" class="contato-cta" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          Chamar no WhatsApp
+        </a>
+      </div>
+      <div class="reveal">
+        <p class="contato-label">Encomendas &amp; Parcerias</p>
+        <div class="contato-info">
+          <p><strong>Peças Sob Medida</strong><br/>Desenvolvemos coleções personalizadas para marcas, eventos e ocasiões especiais com fibras naturais exclusivas.</p>
+          <br/>
+          <p><strong>Atacado</strong><br/>Consulte disponibilidade para revendedores e lojas multimarca comprometidas com a moda sustentável.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">BKL AWONASA</span>
+  <span class="footer-copy">© 2025 BKL AWONASA · Todos os direitos reservados</span>
+  <span class="footer-accent">Flora · Fibra · Feminino</span>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<a href="https://wa.me/5511999999999" class="wa-float" target="_blank" rel="noopener" aria-label="Contato WhatsApp">
+  <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+</a>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach((el, i) => {
+    el.style.transitionDelay = `${(i % 4) * 0.08}s`;
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>
