@@ -545,6 +545,84 @@
       line-height: 1.6;
     }
 
+    /* ---- GALLERY ---- */
+    #galeria {
+      background: var(--primary);
+      padding: 80px 24px;
+    }
+    #galeria .section-title { color: #fff; }
+    .gallery-bento {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto;
+      gap: 4px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    @media (min-width: 768px) {
+      .gallery-bento {
+        grid-template-columns: repeat(12, 1fr);
+        grid-template-rows: 280px 280px 280px;
+      }
+      .gb-1 { grid-column: 1 / 6; grid-row: 1; }
+      .gb-2 { grid-column: 6 / 9; grid-row: 1; }
+      .gb-3 { grid-column: 9 / 13; grid-row: 1; }
+      .gb-4 { grid-column: 1 / 5; grid-row: 2; }
+      .gb-5 { grid-column: 5 / 9; grid-row: 2; }
+      .gb-6 { grid-column: 9 / 13; grid-row: 2; }
+      .gb-7 { grid-column: 1 / 4; grid-row: 3; }
+      .gb-8 { grid-column: 4 / 8; grid-row: 3; }
+      .gb-9 { grid-column: 8 / 13; grid-row: 3; }
+    }
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      cursor: pointer;
+    }
+    @media (min-width: 768px) {
+      .gallery-item { aspect-ratio: unset; }
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(.22,1,.36,1), filter 0.4s;
+      filter: grayscale(20%) brightness(0.85);
+    }
+    .gallery-item:hover img {
+      transform: scale(1.06);
+      filter: grayscale(0%) brightness(1);
+    }
+    .gallery-item-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(12,12,12,0.6) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    .gallery-item:hover .gallery-item-overlay {
+      opacity: 1;
+    }
+    .gallery-item-label {
+      position: absolute;
+      bottom: 16px;
+      left: 16px;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.9);
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.3s, transform 0.3s;
+    }
+    .gallery-item:hover .gallery-item-label {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     /* ---- CONTACT ---- */
     #contato {
       background: var(--primary);
@@ -905,6 +983,69 @@
           <div class="diff-title">Residencial e comercial</div>
           <div class="diff-text">Atendemos desde casas até grandes galpões comerciais e industriais com a mesma dedicação.</div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="galeria">
+    <div style="max-width:1400px;margin:0 auto">
+      <div class="reveal" style="margin-bottom:48px">
+        <p class="section-label">Trabalhos realizados</p>
+        <h2 class="section-title">Nosso<br/>portfólio</h2>
+      </div>
+      <div class="gallery-bento">
+        <div class="gallery-item gb-1 reveal reveal-delay-1">
+          <img src="trabalho-01.jpg" alt="Instalação de rufos e calhas em telhado metálico" loading="lazy" />
+          <div class="gallery-item-overlay"></div>
+          <div class="gallery-item-label">Cobertura metálica</div>
+        </div>
+        <div class="gallery-item gb-2 reveal reveal-delay-2">
+          <img src="trabalho-02.jpg" alt="Acabamento de rufo em cobertura" loading="lazy" />
+          <div class="gallery-item-overlay"></div>
+          <div class="gallery-item-label">Rufos e calhas</div>
+        </div>
+        <div class="gallery-item gb-3 reveal reveal-delay-3">
+          <img src="trabalho-03.jpg" alt="Estrutura de telhado com acabamento em metal" loading="lazy" />
+          <div class="gallery-item-overlay"></div>
+          <div class="gallery-item-label">Estrutura metálica</div>
+        </div>
+        <div class="gallery-item gb-4 reveal reveal-delay-1">
+          <img src="trabalho-04.jpg" alt="Detalhes da instalação em telhado" loading="lazy" />
+          <div class="gallery-item-overlay"></div>
+          <div class="gallery-item-label">Serralheria</div>
+        </div>
+        <div class="gallery-item gb-5 reveal reveal-delay-2">
+          <img src="trabalho-05.jpg" alt="Acabamento em chapa metálica no telhado" loading="lazy" />
+          <div class="gallery-item-overlay"></div>
+          <div class="gallery-item-label">Funilaria</div>
+        </div>
+        <div class="gallery-item gb-6 reveal reveal-delay-3">
+          <img src="trabalho-06.jpg" alt="Cobertura curva em garagem com fechamento translúcido" loading="lazy" />
+          <div class="gallery-item-overlay"></div>
+          <div class="gallery-item-label">Cobertura em arco</div>
+        </div>
+        <div class="gallery-item gb-7 reveal reveal-delay-1">
+          <img src="trabalho-07.jpg" alt="Estrutura curva em metal com telha translúcida" loading="lazy" />
+          <div class="gallery-item-overlay"></div>
+          <div class="gallery-item-label">Estrutura curva</div>
+        </div>
+        <div class="gallery-item gb-8 reveal reveal-delay-2">
+          <img src="trabalho-08.jpg" alt="Garagem com cobertura metálica e fechamento lateral" loading="lazy" />
+          <div class="gallery-item-overlay"></div>
+          <div class="gallery-item-label">Garagem coberta</div>
+        </div>
+        <div class="gallery-item gb-9 reveal reveal-delay-3">
+          <img src="trabalho-09.jpg" alt="Vista completa de cobertura metálica instalada" loading="lazy" />
+          <div class="gallery-item-overlay"></div>
+          <div class="gallery-item-label">Acabamento final</div>
+        </div>
+      </div>
+      <div class="reveal" style="text-align:center;margin-top:48px">
+        <a href="https://wa.me/5551999480449" class="btn-primary" style="display:inline-flex">
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Quero um trabalho igual
+        </a>
       </div>
     </div>
   </section>
