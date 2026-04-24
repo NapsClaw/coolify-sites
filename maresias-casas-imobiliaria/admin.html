@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Maresias Casas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary:   #0A3D52;
+      --accent:    #C9956A;
+      --accent-dk: #a8734e;
+      --bg:        #F6F3ED;
+      --sand:      #EDE7DC;
+      --border:    rgba(0,0,0,.1);
+      --text:      #1C1C1C;
+      --muted:     #6B7280;
+      --danger:    #DC2626;
+      --success:   #16A34A;
+      --venda-bg:  #EFF6FF;
+      --venda-bd:  #BFDBFE;
+      --temp-bg:   #FFF7ED;
+      --temp-bd:   #FED7AA;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); }
+
+    /* ── LOCK SCREEN ── */
+    #lock-screen {
+      position: fixed; inset: 0; z-index: 1000;
+      background: var(--primary);
+      display: flex; align-items: center; justify-content: center;
+    }
+    #lock-screen.hidden { display: none; }
+    .lock-box {
+      background: #fff; padding: 52px 48px; max-width: 400px; width: 90%;
+      text-align: center;
+    }
+    .lock-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem; font-weight: 600; color: var(--primary);
+      margin-bottom: 6px;
+    }
+    .lock-sub {
+      font-size: .72rem; letter-spacing: .2em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 36px;
+    }
+    .lock-label {
+      display: block; text-align: left;
+      font-size: .72rem; letter-spacing: .1em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 8px;
+    }
+    .lock-input {
+      width: 100%; padding: 14px 16px;
+      border: 1px solid var(--border); background: var(--bg);
+      font-family: 'DM Sans', sans-serif; font-size: .95rem; color: var(--text);
+      outline: none; transition: border-color .2s;
+    }
+    .lock-input:focus { border-color: var(--primary); }
+    .lock-btn {
+      width: 100%; margin-top: 16px; padding: 15px;
+      background: var(--primary); color: #fff; border: none; cursor: pointer;
+      font-family: 'DM Sans', sans-serif; font-size: .8rem;
+      letter-spacing: .14em; text-transform: uppercase; font-weight: 500;
+      transition: background .2s;
+    }
+    .lock-btn:hover { background: #0d4f6a; }
+    .lock-error {
+      margin-top: 12px; font-size: .82rem; color: var(--danger);
+      display: none;
+    }
+    .lock-error.visible { display: block; }
+
+    /* ── APP ── */
+    #app { display: none; min-height: 100vh; }
+    #app.visible { display: block; }
+
+    /* HEADER */
+    .app-header {
+      background: var(--primary); color: #fff;
+      padding: 20px 32px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .app-brand {
+      font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 600;
+    }
+    .app-brand span {
+      font-family: 'DM Sans', sans-serif; font-size: .62rem;
+      letter-spacing: .22em; text-transform: uppercase; color: var(--accent);
+      display: block; margin-top: 1px;
+    }
+    .header-actions { display: flex; gap: 10px; align-items: center; }
+    .btn-sm {
+      padding: 9px 18px; font-size: .72rem;
+      letter-spacing: .1em; text-transform: uppercase; font-weight: 500;
+      border: none; cursor: pointer; font-family: 'DM Sans', sans-serif;
+      transition: opacity .2s, background .2s;
+    }
+    .btn-sm:hover { opacity: .85; }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-ghost-w { background: rgba(255,255,255,.12); color: #fff; }
+    .btn-danger  { background: var(--danger); color: #fff; }
+    .view-site-link {
+      color: rgba(255,255,255,.55); font-size: .72rem;
+      letter-spacing: .12em; text-transform: uppercase;
+      text-decoration: none; transition: color .2s;
+    }
+    .view-site-link:hover { color: var(--accent); }
+
+    /* MAIN LAYOUT */
+    .app-main { max-width: 1200px; margin: 0 auto; padding: 32px 24px 80px; }
+
+    /* STATS BAR */
+    .admin-stats {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 12px;
+      margin-bottom: 32px;
+    }
+    .admin-stat {
+      background: #fff; padding: 20px 22px;
+      border: 1px solid var(--border); border-left: 3px solid var(--primary);
+    }
+    .admin-stat.stat-venda { border-left-color: var(--primary); }
+    .admin-stat.stat-temp  { border-left-color: var(--accent); }
+    .admin-stat.stat-total { border-left-color: #10B981; }
+    .stat-count {
+      font-family: 'Cormorant Garamond', serif; font-size: 2.2rem;
+      font-weight: 600; color: var(--primary); line-height: 1;
+    }
+    .stat-label { font-size: .72rem; color: var(--muted); margin-top: 4px; letter-spacing: .06em; }
+
+    /* ADD FORM */
+    .form-card {
+      background: #fff; border: 1px solid var(--border);
+      margin-bottom: 32px; overflow: hidden;
+    }
+    .form-card-header {
+      padding: 18px 24px; background: var(--sand);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .form-card-title { font-size: .82rem; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--primary); }
+    .collapse-btn {
+      background: none; border: none; cursor: pointer; color: var(--muted);
+      font-size: 1.1rem; padding: 4px 8px; transition: color .2s;
+    }
+    .collapse-btn:hover { color: var(--primary); }
+    .form-body { padding: 24px; }
+    .form-body.collapsed { display: none; }
+
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group.full { grid-column: 1/-1; }
+    label {
+      font-size: .72rem; font-weight: 500;
+      letter-spacing: .08em; text-transform: uppercase; color: var(--muted);
+    }
+    .req { color: var(--danger); }
+    input[type="text"], input[type="number"], input[type="url"], select, textarea {
+      padding: 11px 14px; border: 1px solid var(--border);
+      background: var(--bg); color: var(--text);
+      font-family: 'DM Sans', sans-serif; font-size: .92rem;
+      outline: none; transition: border-color .2s; width: 100%;
+    }
+    input:focus, select:focus, textarea:focus { border-color: var(--primary); }
+    textarea { resize: vertical; min-height: 72px; }
+    select { appearance: none; cursor: pointer; }
+
+    .img-preview-wrap { margin-top: 8px; }
+    .img-preview {
+      width: 100%; height: 160px; object-fit: cover;
+      border: 1px solid var(--border); display: none;
+    }
+    .img-preview.visible { display: block; }
+    .img-status { font-size: .76rem; margin-top: 4px; }
+    .img-ok   { color: var(--success); }
+    .img-fail { color: var(--danger); }
+
+    .form-actions { display: flex; gap: 10px; margin-top: 20px; }
+    .btn-save {
+      padding: 13px 28px; background: var(--primary); color: #fff; border: none;
+      cursor: pointer; font-family: 'DM Sans', sans-serif;
+      font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; font-weight: 500;
+      transition: background .2s;
+    }
+    .btn-save:hover { background: #0d4f6a; }
+    .btn-cancel {
+      padding: 13px 24px; background: transparent;
+      border: 1px solid var(--border); color: var(--muted); cursor: pointer;
+      font-family: 'DM Sans', sans-serif; font-size: .78rem;
+      letter-spacing: .12em; text-transform: uppercase;
+      transition: border-color .2s, color .2s;
+    }
+    .btn-cancel:hover { border-color: var(--primary); color: var(--primary); }
+
+    /* PROPERTIES LIST */
+    .list-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .list-title {
+      font-family: 'Cormorant Garamond', serif; font-size: 1.5rem;
+      font-weight: 600; color: var(--primary);
+    }
+    .list-filter { display: flex; gap: 0; }
+    .filter-btn {
+      padding: 9px 18px; font-size: .72rem;
+      letter-spacing: .1em; text-transform: uppercase; font-weight: 500;
+      border: 1px solid var(--border); background: transparent; color: var(--muted);
+      cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all .2s;
+    }
+    .filter-btn:first-child { border-right: none; }
+    .filter-btn:last-child { border-left: none; }
+    .filter-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+    /* PROPERTY ROW */
+    #prop-list { display: flex; flex-direction: column; gap: 10px; }
+    .prop-row {
+      background: #fff; border: 1px solid var(--border);
+      display: grid; grid-template-columns: 90px 1fr auto;
+      gap: 16px; align-items: center; padding: 14px 18px;
+      transition: box-shadow .2s;
+    }
+    .prop-row:hover { box-shadow: 0 2px 16px rgba(0,0,0,.07); }
+    .prop-row.hidden-row { display: none; }
+    .row-img {
+      width: 90px; height: 64px; object-fit: cover;
+      border: 1px solid var(--border);
+    }
+    .row-info {}
+    .row-name { font-weight: 500; font-size: .95rem; color: var(--primary); margin-bottom: 4px; }
+    .row-meta { font-size: .78rem; color: var(--muted); display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+    .row-badge {
+      font-size: .6rem; letter-spacing: .12em; text-transform: uppercase;
+      font-weight: 600; padding: 3px 10px; border-radius: 2px;
+    }
+    .badge-v { background: var(--venda-bg); color: var(--primary); border: 1px solid var(--venda-bd); }
+    .badge-t { background: var(--temp-bg);  color: var(--accent-dk); border: 1px solid var(--temp-bd); }
+    .row-price { color: var(--accent); font-weight: 500; }
+    .row-actions { display: flex; gap: 8px; align-items: center; }
+    .action-btn {
+      padding: 8px 14px; font-size: .7rem; font-weight: 500;
+      letter-spacing: .08em; text-transform: uppercase; border: none; cursor: pointer;
+      font-family: 'DM Sans', sans-serif; transition: opacity .2s;
+    }
+    .action-btn:hover { opacity: .8; }
+    .btn-edit { background: var(--sand); color: var(--primary); }
+    .btn-del  { background: #FEE2E2; color: var(--danger); }
+
+    .empty-state {
+      text-align: center; padding: 52px 24px;
+      font-family: 'Cormorant Garamond', serif; font-size: 1.3rem;
+      font-weight: 300; color: var(--muted);
+      border: 2px dashed var(--border);
+    }
+
+    /* BACKUP BAR */
+    .backup-bar {
+      background: #fff; border: 1px solid var(--border);
+      padding: 16px 22px; margin-top: 32px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+    }
+    .backup-title { font-size: .78rem; font-weight: 500; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+    .backup-actions { display: flex; gap: 8px; }
+    .btn-backup {
+      padding: 9px 16px; font-size: .72rem;
+      letter-spacing: .1em; text-transform: uppercase; font-weight: 500;
+      border: 1px solid var(--border); background: var(--bg); color: var(--text);
+      cursor: pointer; font-family: 'DM Sans', sans-serif; transition: border-color .2s;
+    }
+    .btn-backup:hover { border-color: var(--primary); color: var(--primary); }
+
+    /* NOTIFICATION */
+    .notif {
+      position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+      background: var(--primary); color: #fff;
+      padding: 14px 26px; font-size: .82rem; font-weight: 500;
+      box-shadow: 0 8px 32px rgba(0,0,0,.22);
+      z-index: 500; opacity: 0; pointer-events: none;
+      transition: opacity .3s;
+    }
+    .notif.show { opacity: 1; }
+    .notif.success { background: var(--success); }
+    .notif.error   { background: var(--danger); }
+
+    /* TOAST for editing indicator */
+    .editing-banner {
+      display: none; background: #FEF3C7; border: 1px solid #FCD34D;
+      padding: 12px 20px; margin-bottom: 16px;
+      font-size: .83rem; color: #92400E;
+      align-items: center; justify-content: space-between; gap: 12px;
+    }
+    .editing-banner.visible { display: flex; }
+
+    @media (max-width: 700px) {
+      .form-grid { grid-template-columns: 1fr; }
+      .form-group.full { grid-column: 1; }
+      .admin-stats { grid-template-columns: 1fr; }
+      .prop-row { grid-template-columns: 64px 1fr; }
+      .row-actions { grid-column: 1/-1; justify-content: flex-end; }
+      .app-header { flex-direction: column; gap: 12px; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LOCK SCREEN -->
+  <div id="lock-screen">
+    <div class="lock-box">
+      <div class="lock-logo">Maresias Casas</div>
+      <div class="lock-sub">Painel Administrativo</div>
+      <label class="lock-label" for="pwd-input">Senha de acesso</label>
+      <input type="password" id="pwd-input" class="lock-input" placeholder="Digite a senha" autocomplete="current-password">
+      <button class="lock-btn" id="lock-btn">Entrar</button>
+      <div class="lock-error" id="lock-error">Senha incorreta. Tente novamente.</div>
+    </div>
+  </div>
+
+  <!-- APP -->
+  <div id="app">
+
+    <!-- HEADER -->
+    <header class="app-header">
+      <div>
+        <div class="app-brand">
+          Maresias Casas
+          <span>Painel Administrativo</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <a href="/index.html" target="_blank" class="view-site-link">Ver site ao vivo →</a>
+        <button class="btn-sm btn-primary" id="open-form-btn">+ Novo imóvel</button>
+        <button class="btn-sm btn-ghost-w" id="logout-btn">Sair</button>
+      </div>
+    </header>
+
+    <div class="app-main">
+
+      <!-- STATS -->
+      <div class="admin-stats">
+        <div class="admin-stat stat-total">
+          <div class="stat-count" id="count-total">0</div>
+          <div class="stat-label">Imóveis cadastrados</div>
+        </div>
+        <div class="admin-stat stat-venda">
+          <div class="stat-count" id="count-venda">0</div>
+          <div class="stat-label">À venda</div>
+        </div>
+        <div class="admin-stat stat-temp">
+          <div class="stat-count" id="count-temp">0</div>
+          <div class="stat-label">Temporada</div>
+        </div>
+      </div>
+
+      <!-- EDITING BANNER -->
+      <div class="editing-banner" id="editing-banner">
+        <span id="editing-text">Editando imóvel...</span>
+        <button class="btn-cancel" id="cancel-edit-btn" style="padding:6px 14px;font-size:.7rem;">Cancelar edição</button>
+      </div>
+
+      <!-- FORM -->
+      <div class="form-card" id="form-card" style="display:none;">
+        <div class="form-card-header">
+          <span class="form-card-title" id="form-title">Novo imóvel</span>
+          <button class="collapse-btn" id="close-form-btn" title="Fechar">&#x2715;</button>
+        </div>
+        <div class="form-body" id="form-body">
+          <form id="prop-form" autocomplete="off">
+            <input type="hidden" id="edit-id">
+            <div class="form-grid">
+
+              <div class="form-group full">
+                <label for="f-name">Nome do imóvel <span class="req">*</span></label>
+                <input type="text" id="f-name" placeholder="Ex: Casa à Beira-Mar com Piscina" required>
+              </div>
+
+              <div class="form-group">
+                <label for="f-type">Tipo <span class="req">*</span></label>
+                <select id="f-type" required>
+                  <option value="">Selecione...</option>
+                  <option value="venda">À Venda</option>
+                  <option value="temporada">Locação de Temporada</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="f-price">Preço / Valor <span class="req">*</span></label>
+                <input type="text" id="f-price" placeholder="Ex: R$ 1.200.000 ou R$ 800 / noite">
+              </div>
+
+              <div class="form-group">
+                <label for="f-bedrooms">Quartos</label>
+                <input type="number" id="f-bedrooms" min="0" max="20" placeholder="Ex: 3">
+              </div>
+
+              <div class="form-group">
+                <label for="f-bathrooms">Banheiros</label>
+                <input type="number" id="f-bathrooms" min="0" max="20" placeholder="Ex: 2">
+              </div>
+
+              <div class="form-group">
+                <label for="f-area">Área</label>
+                <input type="text" id="f-area" placeholder="Ex: 150 m²">
+              </div>
+
+              <div class="form-group">
+                <label for="f-whatsapp">WhatsApp (somente números)</label>
+                <input type="text" id="f-whatsapp" placeholder="Ex: 5512999999999">
+              </div>
+
+              <div class="form-group full">
+                <label for="f-extras">Características / Destaques</label>
+                <input type="text" id="f-extras" placeholder="Ex: Piscina · Vista mar · Churrasqueira">
+              </div>
+
+              <div class="form-group full">
+                <label for="f-image">URL da foto principal <span class="req">*</span></label>
+                <input type="url" id="f-image" placeholder="https://..." required>
+                <div class="img-preview-wrap">
+                  <img id="img-preview" class="img-preview" alt="Pré-visualização">
+                  <div id="img-status" class="img-status"></div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn-save" id="save-btn">Salvar imóvel</button>
+              <button type="button" class="btn-cancel" id="cancel-form-btn">Cancelar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- LIST -->
+      <div class="list-header">
+        <div class="list-title">Imóveis cadastrados</div>
+        <div class="list-filter">
+          <button class="filter-btn active" data-filter="all">Todos</button>
+          <button class="filter-btn" data-filter="venda">Venda</button>
+          <button class="filter-btn" data-filter="temporada">Temporada</button>
+        </div>
+      </div>
+
+      <div id="prop-list"></div>
+
+      <!-- BACKUP -->
+      <div class="backup-bar">
+        <span class="backup-title">Backup dos dados</span>
+        <div class="backup-actions">
+          <button class="btn-backup" id="export-btn">Exportar JSON</button>
+          <button class="btn-backup" id="import-btn">Importar JSON</button>
+          <input type="file" id="import-file" accept=".json" style="display:none">
+          <button class="btn-backup" id="reset-btn" style="color:var(--danger);">Restaurar padrão</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- NOTIFICATION -->
+  <div class="notif" id="notif"></div>
+
+  <script>
+    /* ═══════════════════════════════════════════════════════════════
+       CONFIGURAÇÃO — altere a senha aqui se necessário
+       ═══════════════════════════════════════════════════════════════ */
+    const ADMIN_PASSWORD = 'maresias2025';
+    const STORAGE_KEY    = 'maresias_properties';
+    const SESSION_KEY    = 'maresias_admin_ok';
+
+    /* ── DEFAULT PROPERTIES (mesmas do index.html) ── */
+    const DEFAULT_PROPERTIES = [
+      { id:'1', type:'venda',     name:'Casa Térrea à Beira-Mar',    image:'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=900&q=80', price:'R$ 2.800.000',     bedrooms:4, bathrooms:3, area:'280 m²', extras:'Piscina · Vista mar · Garagem',        whatsapp:'5512999999999' },
+      { id:'2', type:'temporada', name:'Villa Moderna com Piscina',  image:'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=900&q=80', price:'R$ 1.800 / noite', bedrooms:3, bathrooms:2, area:'180 m²', extras:'Piscina · Churrasqueira · Wi-Fi',        whatsapp:'5512999999999' },
+      { id:'3', type:'venda',     name:'Chalé Contemporâneo',        image:'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=900&q=80', price:'R$ 850.000',       bedrooms:2, bathrooms:1, area:'120 m²', extras:'Jardim · Varanda · Ar-cond.',           whatsapp:'5512999999999' },
+      { id:'4', type:'temporada', name:'Cobertura Vista Mar',        image:'https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=900&q=80', price:'R$ 2.200 / noite', bedrooms:3, bathrooms:2, area:'140 m²', extras:'Vista mar · Terraço · Condomínio fechado', whatsapp:'5512999999999' },
+      { id:'5', type:'venda',     name:'Casa Familiar no Verde',     image:'https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?auto=format&fit=crop&w=900&q=80', price:'R$ 1.450.000',     bedrooms:4, bathrooms:2, area:'195 m²', extras:'Jardim amplo · Garagem dupla',          whatsapp:'5512999999999' },
+      { id:'6', type:'temporada', name:'Casa Aconchegante na Praia', image:'https://images.unsplash.com/photo-1571939228382-b2f2b585ce15?auto=format&fit=crop&w=900&q=80', price:'R$ 890 / noite',   bedrooms:2, bathrooms:1, area:'95 m²',  extras:'Frente ao mar · Ar-cond. · Cozinha completa', whatsapp:'5512999999999' }
+    ];
+
+    /* ── STATE ── */
+    let properties = [];
+    let listFilter = 'all';
+    let editingId  = null;
+    let imgCheckTimer = null;
+
+    /* ── STORAGE ── */
+    function save() { localStorage.setItem(STORAGE_KEY, JSON.stringify(properties)); }
+    function load() {
+      try {
+        const d = localStorage.getItem(STORAGE_KEY);
+        if (d) { const p = JSON.parse(d); if (Array.isArray(p) && p.length > 0) return p; }
+      } catch(e) {}
+      return JSON.parse(JSON.stringify(DEFAULT_PROPERTIES));
+    }
+    function genId() { return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
+
+    /* ── NOTIFICATION ── */
+    let notifTimer;
+    function notify(msg, type = '') {
+      const n = document.getElementById('notif');
+      n.textContent = msg;
+      n.className = 'notif show ' + type;
+      clearTimeout(notifTimer);
+      notifTimer = setTimeout(() => { n.className = 'notif'; }, 3000);
+    }
+
+    /* ── LOCK ── */
+    function checkAuth() {
+      if (sessionStorage.getItem(SESSION_KEY) === '1') {
+        showApp();
+      }
+    }
+    function showApp() {
+      document.getElementById('lock-screen').classList.add('hidden');
+      document.getElementById('app').classList.add('visible');
+      properties = load();
+      renderList();
+      updateStats();
+    }
+    function logout() {
+      sessionStorage.removeItem(SESSION_KEY);
+      document.getElementById('lock-screen').classList.remove('hidden');
+      document.getElementById('app').classList.remove('visible');
+    }
+
+    document.getElementById('lock-btn').addEventListener('click', tryLogin);
+    document.getElementById('pwd-input').addEventListener('keydown', e => { if (e.key === 'Enter') tryLogin(); });
+    function tryLogin() {
+      const val = document.getElementById('pwd-input').value;
+      const err = document.getElementById('lock-error');
+      if (val === ADMIN_PASSWORD) {
+        sessionStorage.setItem(SESSION_KEY, '1');
+        err.classList.remove('visible');
+        showApp();
+      } else {
+        err.classList.add('visible');
+        document.getElementById('pwd-input').select();
+      }
+    }
+
+    document.getElementById('logout-btn').addEventListener('click', logout);
+
+    /* ── STATS ── */
+    function updateStats() {
+      document.getElementById('count-total').textContent = properties.length;
+      document.getElementById('count-venda').textContent = properties.filter(p => p.type === 'venda').length;
+      document.getElementById('count-temp').textContent  = properties.filter(p => p.type === 'temporada').length;
+    }
+
+    /* ── FORM ── */
+    const formCard = document.getElementById('form-card');
+    const formBody = document.getElementById('form-body');
+
+    function openForm(p = null) {
+      editingId = p ? p.id : null;
+      document.getElementById('form-title').textContent = p ? 'Editar imóvel' : 'Novo imóvel';
+      document.getElementById('save-btn').textContent   = p ? 'Salvar alterações' : 'Salvar imóvel';
+
+      document.getElementById('edit-id').value      = p ? p.id : '';
+      document.getElementById('f-name').value        = p ? p.name : '';
+      document.getElementById('f-type').value        = p ? p.type : '';
+      document.getElementById('f-price').value       = p ? p.price : '';
+      document.getElementById('f-bedrooms').value    = p ? (p.bedrooms || '') : '';
+      document.getElementById('f-bathrooms').value   = p ? (p.bathrooms || '') : '';
+      document.getElementById('f-area').value        = p ? (p.area || '') : '';
+      document.getElementById('f-whatsapp').value    = p ? (p.whatsapp || '') : '';
+      document.getElementById('f-extras').value      = p ? (p.extras || '') : '';
+      document.getElementById('f-image').value       = p ? p.image : '';
+
+      if (p && p.image) previewImage(p.image);
+      else clearPreview();
+
+      if (p) {
+        document.getElementById('editing-banner').classList.add('visible');
+        document.getElementById('editing-text').textContent = `Editando: "${p.name}"`;
+      } else {
+        document.getElementById('editing-banner').classList.remove('visible');
+      }
+
+      formCard.style.display = 'block';
+      formBody.classList.remove('collapsed');
+      formCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      document.getElementById('f-name').focus();
+    }
+
+    function closeForm() {
+      formCard.style.display = 'none';
+      editingId = null;
+      document.getElementById('prop-form').reset();
+      document.getElementById('editing-banner').classList.remove('visible');
+      clearPreview();
+    }
+
+    document.getElementById('open-form-btn').addEventListener('click', () => openForm());
+    document.getElementById('close-form-btn').addEventListener('click', closeForm);
+    document.getElementById('cancel-form-btn').addEventListener('click', closeForm);
+    document.getElementById('cancel-edit-btn').addEventListener('click', closeForm);
+
+    /* IMAGE PREVIEW */
+    function clearPreview() {
+      const img = document.getElementById('img-preview');
+      img.src = ''; img.classList.remove('visible');
+      document.getElementById('img-status').textContent = '';
+    }
+    function previewImage(url) {
+      if (!url) { clearPreview(); return; }
+      const img = document.getElementById('img-preview');
+      const status = document.getElementById('img-status');
+      status.textContent = 'Verificando imagem...'; status.className = 'img-status';
+      img.onload  = () => { img.classList.add('visible'); status.textContent = 'Imagem válida.'; status.className = 'img-status img-ok'; };
+      img.onerror = () => { img.classList.remove('visible'); status.textContent = 'URL inválida ou imagem não encontrada.'; status.className = 'img-status img-fail'; };
+      img.src = url;
+    }
+    document.getElementById('f-image').addEventListener('input', function() {
+      clearTimeout(imgCheckTimer);
+      imgCheckTimer = setTimeout(() => previewImage(this.value.trim()), 600);
+    });
+
+    /* FORM SUBMIT */
+    document.getElementById('prop-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name  = document.getElementById('f-name').value.trim();
+      const type  = document.getElementById('f-type').value;
+      const price = document.getElementById('f-price').value.trim();
+      const image = document.getElementById('f-image').value.trim();
+
+      if (!name || !type || !price || !image) {
+        notify('Preencha todos os campos obrigatórios.', 'error'); return;
+      }
+
+      const prop = {
+        id:        editingId || genId(),
+        type,
+        name,
+        image,
+        price,
+        bedrooms:  parseInt(document.getElementById('f-bedrooms').value) || 0,
+        bathrooms: parseInt(document.getElementById('f-bathrooms').value) || 0,
+        area:      document.getElementById('f-area').value.trim(),
+        whatsapp:  document.getElementById('f-whatsapp').value.trim() || '5512999999999',
+        extras:    document.getElementById('f-extras').value.trim(),
+      };
+
+      if (editingId) {
+        const idx = properties.findIndex(p => p.id === editingId);
+        if (idx !== -1) properties[idx] = prop;
+        notify('Imóvel atualizado com sucesso!', 'success');
+      } else {
+        properties.unshift(prop);
+        notify('Imóvel cadastrado com sucesso!', 'success');
+      }
+
+      save();
+      closeForm();
+      renderList();
+      updateStats();
+    });
+
+    /* ── LIST ── */
+    function renderList() {
+      const container = document.getElementById('prop-list');
+      const filtered  = listFilter === 'all' ? properties : properties.filter(p => p.type === listFilter);
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<div class="empty-state">Nenhum imóvel cadastrado${listFilter !== 'all' ? ' nesta categoria' : ''}.</div>`;
+        return;
+      }
+
+      container.innerHTML = filtered.map(p => {
+        const badgeClass = p.type === 'venda' ? 'badge-v' : 'badge-t';
+        const badgeLabel = p.type === 'venda' ? 'Venda' : 'Temporada';
+        const meta = [
+          p.bedrooms ? `${p.bedrooms} qts` : '',
+          p.bathrooms ? `${p.bathrooms} ban.` : '',
+          p.area || ''
+        ].filter(Boolean).join(' · ');
+
+        return `
+          <div class="prop-row" data-id="${p.id}" data-type="${p.type}">
+            <img src="${p.image}" alt="${p.name}" class="row-img" loading="lazy"
+                 onerror="this.style.background='#eee';this.src='';">
+            <div class="row-info">
+              <div class="row-name">${p.name}</div>
+              <div class="row-meta">
+                <span class="row-badge ${badgeClass}">${badgeLabel}</span>
+                <span class="row-price">${p.price}</span>
+                ${meta ? `<span>${meta}</span>` : ''}
+                ${p.extras ? `<span>${p.extras}</span>` : ''}
+              </div>
+            </div>
+            <div class="row-actions">
+              <button class="action-btn btn-edit" onclick="startEdit('${p.id}')">Editar</button>
+              <button class="action-btn btn-del"  onclick="deleteItem('${p.id}', '${p.name.replace(/'/g,"\\'")}')">Excluir</button>
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    function startEdit(id) {
+      const p = properties.find(p => p.id === id);
+      if (p) openForm(p);
+    }
+
+    function deleteItem(id, name) {
+      if (!confirm(`Excluir "${name}"? Esta ação não pode ser desfeita.`)) return;
+      properties = properties.filter(p => p.id !== id);
+      save(); renderList(); updateStats();
+      notify('Imóvel excluído.', '');
+    }
+
+    /* LIST FILTER */
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        listFilter = btn.dataset.filter;
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderList();
+      });
+    });
+
+    /* ── BACKUP ── */
+    document.getElementById('export-btn').addEventListener('click', () => {
+      const blob = new Blob([JSON.stringify(properties, null, 2)], { type: 'application/json' });
+      const url  = URL.createObjectURL(blob);
+      const a    = document.createElement('a');
+      a.href = url; a.download = 'maresias-imoveis-backup.json'; a.click();
+      URL.revokeObjectURL(url);
+      notify('Backup exportado com sucesso!', 'success');
+    });
+
+    document.getElementById('import-btn').addEventListener('click', () => {
+      document.getElementById('import-file').click();
+    });
+    document.getElementById('import-file').addEventListener('change', function() {
+      const file = this.files[0]; if (!file) return;
+      const reader = new FileReader();
+      reader.onload = e => {
+        try {
+          const data = JSON.parse(e.target.result);
+          if (!Array.isArray(data)) throw new Error('Formato inválido');
+          if (!confirm(`Importar ${data.length} imóveis? Os dados atuais serão substituídos.`)) return;
+          properties = data; save(); renderList(); updateStats();
+          notify(`${data.length} imóveis importados!`, 'success');
+        } catch(err) {
+          notify('Erro ao importar: arquivo inválido.', 'error');
+        }
+      };
+      reader.readAsText(file);
+      this.value = '';
+    });
+
+    document.getElementById('reset-btn').addEventListener('click', () => {
+      if (!confirm('Restaurar os imóveis padrão? Todos os imóveis cadastrados serão perdidos.')) return;
+      properties = JSON.parse(JSON.stringify(DEFAULT_PROPERTIES));
+      save(); renderList(); updateStats();
+      notify('Dados restaurados para o padrão.', '');
+    });
+
+    /* ── INIT ── */
+    checkAuth();
+  </script>
+
+</body>
+</html>
