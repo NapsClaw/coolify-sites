@@ -922,6 +922,309 @@
       #info-strip { padding: 18px 80px; }
       #special { padding: 72px 80px; }
     }
+
+    /* ================================
+       ADMIN SYSTEM
+       ================================ */
+    #admin-btn-trigger {
+      background: none;
+      border: none;
+      color: rgba(240,236,232,.06);
+      font-size: 11px;
+      cursor: pointer;
+      padding: 6px 10px;
+      margin-left: 8px;
+      transition: color .4s;
+      letter-spacing: 1px;
+    }
+    #admin-btn-trigger:hover { color: rgba(240,236,232,.35); }
+
+    #admin-bar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 9990;
+      background: rgba(180,30,50,.97);
+      backdrop-filter: blur(12px);
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 24px;
+      gap: 14px;
+      border-bottom: 1px solid rgba(255,255,255,.12);
+    }
+    #admin-bar.visible { display: flex; }
+    .admin-bar-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.8);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .admin-bar-actions { display: flex; align-items: center; gap: 8px; }
+    .btn-admin-bar {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 8px 18px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      transition: transform .15s, opacity .15s;
+    }
+    .btn-admin-bar:hover { transform: translateY(-1px); opacity: .9; }
+    .btn-admin-edit { background: #fff; color: #b41e32; }
+    .btn-admin-logout { background: rgba(255,255,255,.18); color: #fff; }
+
+    /* Admin login overlay */
+    #admin-login-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(5,5,8,.9);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 10020;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .25s ease;
+    }
+    #admin-login-overlay.open { opacity: 1; pointer-events: all; }
+    #admin-login-box {
+      background: #13131F;
+      border: 1px solid rgba(200,39,62,.3);
+      border-radius: 16px;
+      padding: 40px 32px 36px;
+      width: min(380px, 92vw);
+      animation: modalIn .32s cubic-bezier(.16,1,.3,1);
+    }
+    .admin-login-eyebrow {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+    .admin-login-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 30px;
+      text-transform: uppercase;
+      letter-spacing: -1px;
+      margin-bottom: 24px;
+    }
+    .admin-login-error {
+      font-size: 13px;
+      color: var(--primary);
+      margin-top: 10px;
+      display: none;
+    }
+    .admin-login-error.show { display: block; }
+    .admin-login-actions { display: flex; gap: 10px; margin-top: 20px; }
+    .btn-admin-confirm {
+      flex: 1;
+      background: var(--primary);
+      color: #fff;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 13px 20px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      transition: background .15s, transform .15s;
+    }
+    .btn-admin-confirm:hover { background: var(--accent); transform: translateY(-1px); }
+    .btn-admin-cancel-login {
+      background: rgba(255,255,255,.07);
+      color: rgba(240,236,232,.6);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 13px 18px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+    }
+
+    /* Admin panel overlay */
+    #admin-panel-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(5,5,8,.88);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 10015;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .25s ease;
+    }
+    #admin-panel-overlay.open { opacity: 1; pointer-events: all; }
+    #admin-panel-box {
+      background: #0D0D18;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 16px;
+      width: min(720px, 96vw);
+      max-height: 88svh;
+      display: flex;
+      flex-direction: column;
+      animation: modalIn .3s cubic-bezier(.16,1,.3,1);
+    }
+    .admin-panel-hdr {
+      padding: 18px 24px 14px;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .admin-panel-ttl {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900;
+      font-size: 22px;
+      text-transform: uppercase;
+      letter-spacing: -.5px;
+    }
+    #admin-panel-body {
+      overflow-y: auto;
+      flex: 1;
+      padding: 0 20px 24px;
+    }
+    .admin-cat-blk {
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 10px;
+      margin-top: 14px;
+      overflow: hidden;
+    }
+    .admin-cat-hdr {
+      background: rgba(200,39,62,.1);
+      padding: 11px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .admin-cat-nm {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 17px;
+      text-transform: uppercase;
+    }
+    .admin-cat-acts { display: flex; gap: 6px; }
+    .admin-item-rw {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 14px;
+      border-top: 1px solid rgba(255,255,255,.05);
+      transition: background .15s;
+    }
+    .admin-item-rw:hover { background: rgba(255,255,255,.025); }
+    .admin-item-rw-info { flex: 1; min-width: 0; }
+    .admin-item-rw-name { font-weight: 600; font-size: 14px; }
+    .admin-item-rw-price { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 15px; color: var(--gold); margin-top: 1px; }
+    .admin-item-rw-acts { display: flex; gap: 6px; flex-shrink: 0; }
+    .asmbtn {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: .7px;
+      text-transform: uppercase;
+      padding: 5px 10px;
+      border-radius: 4px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: transform .12s;
+      white-space: nowrap;
+    }
+    .asmbtn:hover { transform: scale(1.05); }
+    .asmbtn.ed { background: rgba(232,184,75,.12); color: var(--gold); border-color: rgba(232,184,75,.22); }
+    .asmbtn.rm { background: rgba(200,39,62,.12); color: var(--primary); border-color: rgba(200,39,62,.22); }
+    .asmbtn.add { background: rgba(37,211,102,.1); color: var(--green); border-color: rgba(37,211,102,.2); }
+    .asmbtn.save { background: var(--primary); color: #fff; border-color: var(--primary); font-size: 14px; padding: 8px 18px; }
+    .asmbtn.cnc { background: rgba(255,255,255,.07); color: rgba(240,236,232,.6); font-size: 14px; padding: 8px 14px; }
+
+    /* Inline item editor */
+    .admin-item-editor-wrap {
+      background: #13131F;
+      border: 1px solid rgba(200,39,62,.25);
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin: 4px 14px 14px;
+    }
+    .aef-title {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 16px;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 14px;
+    }
+    .aef-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .aef-full { grid-column: 1 / -1; }
+    .aef-lbl {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 9px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 5px;
+    }
+    .aef-inp {
+      width: 100%;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 6px;
+      padding: 9px 11px;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      outline: none;
+      transition: border-color .15s;
+      -webkit-appearance: none;
+      resize: vertical;
+    }
+    .aef-inp:focus { border-color: var(--primary); }
+    .aef-check-row { display: flex; align-items: center; gap: 8px; margin-top: 10px; }
+    .aef-check-row input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--gold); cursor: pointer; }
+    .aef-check-row label { font-size: 13px; cursor: pointer; color: rgba(240,236,232,.75); }
+    .aef-actions { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+
+    /* Add category form */
+    .admin-addcat-form {
+      background: rgba(255,255,255,.02);
+      border: 1px dashed rgba(255,255,255,.1);
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin-top: 14px;
+    }
+    .admin-addcat-ttl {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
   </style>
 </head>
 <body>
@@ -1074,13 +1377,56 @@
     <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
     Fazer Pedido pelo WhatsApp
   </a>
-  <div class="footer-bar">© 2025 Fitness Burguer Maré Alta · Camocim, Ceará · Todos os direitos reservados</div>
+  <div class="footer-bar">© 2025 Fitness Burguer Maré Alta · Camocim, Ceará · Todos os direitos reservados<button id="admin-btn-trigger" onclick="adminLogin()" title="Admin">⚙</button></div>
 </section>
 
 <!-- WA FLOAT -->
 <a id="wa-float" href="https://wa.me/558893369082" target="_blank" rel="noopener" aria-label="Fale pelo WhatsApp">
   <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
+
+<!-- ============================================================
+     ADMIN BAR (fixed top, visible only when logged in)
+     ============================================================ -->
+<div id="admin-bar">
+  <div class="admin-bar-label">🔐 Modo Admin</div>
+  <div class="admin-bar-actions">
+    <button class="btn-admin-bar btn-admin-edit" onclick="openAdminPanel()">✏ Editar Cardápio</button>
+    <button class="btn-admin-bar btn-admin-logout" onclick="adminLogout()">Sair</button>
+  </div>
+</div>
+
+<!-- ============================================================
+     ADMIN LOGIN MODAL
+     ============================================================ -->
+<div id="admin-login-overlay" role="dialog" aria-modal="true" aria-label="Login de administrador">
+  <div id="admin-login-box">
+    <div class="admin-login-eyebrow">Área Restrita</div>
+    <div class="admin-login-title">Acesso Admin</div>
+    <div class="modal-step-label" style="margin-bottom:8px;">🔑 Senha</div>
+    <input id="admin-password-input" class="modal-input" type="password" placeholder="Digite a senha de administrador" autocomplete="current-password">
+    <div id="admin-login-error" class="admin-login-error">Senha incorreta. Tente novamente.</div>
+    <div class="admin-login-actions">
+      <button class="btn-admin-confirm" onclick="submitAdminLogin()">Entrar</button>
+      <button class="btn-admin-cancel-login" onclick="closeAdminLogin()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     ADMIN PANEL MODAL
+     ============================================================ -->
+<div id="admin-panel-overlay" role="dialog" aria-modal="true" aria-label="Painel de administração">
+  <div id="admin-panel-box">
+    <div class="admin-panel-hdr">
+      <div class="admin-panel-ttl">✏ Editar Cardápio</div>
+      <button class="modal-close" onclick="closeAdminPanel()" aria-label="Fechar">✕</button>
+    </div>
+    <div id="admin-panel-body">
+      <!-- rendered by renderAdminPanel() -->
+    </div>
+  </div>
+</div>
 
 <!-- ============================================================
      ORDER MODAL
@@ -1393,7 +1739,7 @@ function renderMenu() {
   const container = document.getElementById('menu-render');
   let html = '';
 
-  MENU_DATA.forEach((cat, ci) => {
+  LIVE_MENU.forEach((cat, ci) => {
     const delay = ci === 0 ? '' : ` reveal-d${Math.min(ci, 5)}`;
     html += `<div class="menu-cat reveal${delay}">
       <div class="cat-header">
@@ -1453,6 +1799,26 @@ function renderMenu() {
 
   container.innerHTML = html;
 }
+
+/* ================================================================
+   LIVE_MENU — loads from localStorage if saved, else uses defaults
+================================================================ */
+function loadMenuData() {
+  try {
+    const stored = localStorage.getItem('fbma_menu');
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+    }
+  } catch (e) {}
+  return null;
+}
+function saveMenuData() {
+  localStorage.setItem('fbma_menu', JSON.stringify(LIVE_MENU));
+}
+
+const _stored = loadMenuData();
+let LIVE_MENU = _stored ? _stored : JSON.parse(JSON.stringify(MENU_DATA));
 
 renderMenu();
 
@@ -1579,6 +1945,282 @@ function copyPix(key, btn) {
     setTimeout(() => { btn.textContent = 'Copiar'; }, 2000);
   });
 }
+
+/* ================================================================
+   ADMIN SYSTEM
+================================================================ */
+const ADMIN_HASH = '7e162f5d3fe1ce7e647e0b63ba45cee425ec574bc896b563bb4951b6cd4097c8';
+const ADMIN_SESSION_KEY = 'fbma_admin_active';
+
+function isAdminLoggedIn() {
+  return sessionStorage.getItem(ADMIN_SESSION_KEY) === '1';
+}
+
+/* ---- Authentication ---- */
+function adminLogin() {
+  if (isAdminLoggedIn()) { showAdminBar(); return; }
+  document.getElementById('admin-login-error').classList.remove('show');
+  document.getElementById('admin-password-input').value = '';
+  document.getElementById('admin-login-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  setTimeout(() => document.getElementById('admin-password-input').focus(), 300);
+}
+
+function closeAdminLogin() {
+  document.getElementById('admin-login-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+async function submitAdminLogin() {
+  const pw = document.getElementById('admin-password-input').value;
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pw));
+  const hex = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+  if (hex === ADMIN_HASH) {
+    sessionStorage.setItem(ADMIN_SESSION_KEY, '1');
+    closeAdminLogin();
+    showAdminBar();
+  } else {
+    document.getElementById('admin-login-error').classList.add('show');
+    document.getElementById('admin-password-input').value = '';
+    document.getElementById('admin-password-input').focus();
+  }
+}
+
+document.getElementById('admin-password-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') submitAdminLogin();
+});
+
+function showAdminBar() {
+  document.getElementById('admin-bar').classList.add('visible');
+}
+
+function adminLogout() {
+  sessionStorage.removeItem(ADMIN_SESSION_KEY);
+  document.getElementById('admin-bar').classList.remove('visible');
+  closeAdminPanel();
+}
+
+/* ---- Admin Panel ---- */
+let _editCtx = null; // { catIdx, itemIdx } — null means new item
+
+function openAdminPanel() {
+  _editCtx = null;
+  renderAdminPanel();
+  document.getElementById('admin-panel-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeAdminPanel() {
+  document.getElementById('admin-panel-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('admin-panel-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeAdminPanel();
+});
+
+function _esc(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function renderAdminPanel() {
+  const body = document.getElementById('admin-panel-body');
+  let html = '';
+
+  LIVE_MENU.forEach((cat, ci) => {
+    html += `<div class="admin-cat-blk">
+      <div class="admin-cat-hdr">
+        <div class="admin-cat-nm">${_esc(cat.emoji)} ${_esc(cat.name)}</div>
+        <div class="admin-cat-acts">
+          <button class="asmbtn add" onclick="showItemEditor(${ci}, null)">+ Item</button>
+          <button class="asmbtn rm" onclick="adminDeleteCat(${ci})">✕ Cat</button>
+        </div>
+      </div>`;
+
+    cat.items.forEach((item, ii) => {
+      html += `<div class="admin-item-rw">
+        <div class="admin-item-rw-info">
+          <div class="admin-item-rw-name">${_esc(item.emoji||'')} ${_esc(item.name)}</div>
+          <div class="admin-item-rw-price">R$${item.price},00${item.gold ? ' ⭐' : ''}</div>
+        </div>
+        <div class="admin-item-rw-acts">
+          <button class="asmbtn ed" onclick="showItemEditor(${ci}, ${ii})">✏</button>
+          <button class="asmbtn rm" onclick="adminDeleteItem(${ci}, ${ii})">✕</button>
+        </div>
+      </div>`;
+    });
+
+    html += `</div>`;
+  });
+
+  /* Add category form */
+  html += `<div class="admin-addcat-form">
+    <div class="admin-addcat-ttl">+ Nova Categoria</div>
+    <div class="aef-grid">
+      <div>
+        <div class="aef-lbl">Nome da categoria</div>
+        <input class="aef-inp" id="nc-name" placeholder="Ex: Bebidas">
+      </div>
+      <div>
+        <div class="aef-lbl">Emoji</div>
+        <input class="aef-inp" id="nc-emoji" placeholder="🥤">
+      </div>
+      <div>
+        <div class="aef-lbl">Rótulo (ex: Categoria 04)</div>
+        <input class="aef-inp" id="nc-label" placeholder="Categoria 04">
+      </div>
+      <div>
+        <div class="aef-lbl">URL imagem de capa</div>
+        <input class="aef-inp" id="nc-img" placeholder="https://...">
+      </div>
+    </div>
+    <div style="margin-top:12px;">
+      <button class="asmbtn save" onclick="adminAddCat()">Adicionar Categoria</button>
+    </div>
+  </div>`;
+
+  body.innerHTML = html;
+
+  /* If there's an active edit context, re-open editor */
+  if (_editCtx !== null) {
+    const { catIdx, itemIdx } = _editCtx;
+    _injectItemEditor(catIdx, itemIdx);
+  }
+}
+
+function showItemEditor(catIdx, itemIdx) {
+  _editCtx = { catIdx, itemIdx };
+  renderAdminPanel();
+}
+
+function _injectItemEditor(catIdx, itemIdx) {
+  const isNew = itemIdx === null;
+  const item = isNew ? null : LIVE_MENU[catIdx].items[itemIdx];
+  const catBlocks = document.querySelectorAll('.admin-cat-blk');
+  const targetBlock = catBlocks[catIdx];
+  if (!targetBlock) return;
+
+  const form = document.createElement('div');
+  form.className = 'admin-item-editor-wrap';
+  form.innerHTML = `
+    <div class="aef-title">${isNew ? '+ Novo Item' : '✏ Editar Item'}</div>
+    <div class="aef-grid">
+      <div>
+        <div class="aef-lbl">Nome *</div>
+        <input class="aef-inp" id="aef-name" value="${_esc(item?.name||'')}" placeholder="Nome do item">
+      </div>
+      <div>
+        <div class="aef-lbl">Emoji</div>
+        <input class="aef-inp" id="aef-emoji" value="${_esc(item?.emoji||'')}" placeholder="🍔">
+      </div>
+      <div class="aef-full">
+        <div class="aef-lbl">Descrição curta</div>
+        <input class="aef-inp" id="aef-desc" value="${_esc(item?.desc||'')}" placeholder="Descrição breve do item">
+      </div>
+      <div class="aef-full">
+        <div class="aef-lbl">Inclui</div>
+        <textarea class="aef-inp" id="aef-includes" rows="2" placeholder="O que vem no item...">${_esc(item?.includes||'')}</textarea>
+      </div>
+      <div class="aef-full">
+        <div class="aef-lbl">Não inclui (opcional)</div>
+        <input class="aef-inp" id="aef-excludes" value="${_esc(item?.excludes||'')}" placeholder="O que NÃO vem...">
+      </div>
+      <div class="aef-full">
+        <div class="aef-lbl">Observação especial (opcional)</div>
+        <input class="aef-inp" id="aef-note" value="${_esc(item?.note||'')}" placeholder="⚠ Ex: escolher opção ao pedir">
+      </div>
+      <div>
+        <div class="aef-lbl">Preço (R$) *</div>
+        <input class="aef-inp" id="aef-price" type="number" min="1" step="0.5" value="${item?.price||''}" placeholder="0">
+      </div>
+    </div>
+    <div class="aef-check-row">
+      <input type="checkbox" id="aef-gold" ${item?.gold ? 'checked' : ''}>
+      <label for="aef-gold">Destaque dourado ⭐ (item especial / premium)</label>
+    </div>
+    <div class="aef-actions">
+      <button class="asmbtn save" onclick="adminSaveItem(${catIdx}, ${itemIdx !== null ? itemIdx : 'null'})">💾 Salvar</button>
+      <button class="asmbtn cnc" onclick="adminCancelEdit()">Cancelar</button>
+    </div>`;
+
+  targetBlock.appendChild(form);
+  document.getElementById('aef-name').focus();
+}
+
+function adminCancelEdit() {
+  _editCtx = null;
+  renderAdminPanel();
+}
+
+function adminSaveItem(catIdx, itemIdx) {
+  const name = (document.getElementById('aef-name').value || '').trim();
+  const priceRaw = document.getElementById('aef-price').value;
+  const price = parseFloat(priceRaw);
+  if (!name || isNaN(price) || price <= 0) {
+    alert('Nome e preço são obrigatórios.');
+    return;
+  }
+
+  const itemData = {
+    emoji: (document.getElementById('aef-emoji').value || '').trim() || '🍔',
+    name,
+    desc: (document.getElementById('aef-desc').value || '').trim(),
+    includes: (document.getElementById('aef-includes').value || '').trim(),
+  };
+  const ex = (document.getElementById('aef-excludes').value || '').trim();
+  const nt = (document.getElementById('aef-note').value || '').trim();
+  const gld = document.getElementById('aef-gold').checked;
+  if (ex) itemData.excludes = ex;
+  if (nt) itemData.note = nt;
+  itemData.price = price;
+  if (gld) itemData.gold = true;
+
+  if (itemIdx === null) {
+    LIVE_MENU[catIdx].items.push(itemData);
+  } else {
+    LIVE_MENU[catIdx].items[itemIdx] = itemData;
+  }
+
+  saveMenuData();
+  _editCtx = null;
+  renderMenu();
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  renderAdminPanel();
+}
+
+function adminDeleteItem(catIdx, itemIdx) {
+  const item = LIVE_MENU[catIdx].items[itemIdx];
+  if (!confirm(`Excluir "${item.name}"?`)) return;
+  LIVE_MENU[catIdx].items.splice(itemIdx, 1);
+  saveMenuData();
+  renderMenu();
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  renderAdminPanel();
+}
+
+function adminAddCat() {
+  const name = (document.getElementById('nc-name').value || '').trim();
+  if (!name) { alert('Nome da categoria é obrigatório.'); return; }
+  const emoji = (document.getElementById('nc-emoji').value || '').trim() || '🍽️';
+  const label = (document.getElementById('nc-label').value || '').trim() || `Categoria ${String(LIVE_MENU.length + 1).padStart(2,'0')}`;
+  const img = (document.getElementById('nc-img').value || '').trim() || 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=1200&q=80';
+  LIVE_MENU.push({ label, name, emoji, img, items: [] });
+  saveMenuData();
+  renderMenu();
+  renderAdminPanel();
+}
+
+function adminDeleteCat(catIdx) {
+  const cat = LIVE_MENU[catIdx];
+  if (!confirm(`Excluir a categoria "${cat.name}" e todos os seus ${cat.items.length} itens?`)) return;
+  LIVE_MENU.splice(catIdx, 1);
+  saveMenuData();
+  renderMenu();
+  renderAdminPanel();
+}
+
+/* Restore admin bar if session still active */
+if (isAdminLoggedIn()) showAdminBar();
 </script>
 
 </body>
