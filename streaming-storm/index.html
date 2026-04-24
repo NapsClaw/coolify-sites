@@ -1,0 +1,1435 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Streaming Storm — IPTV Premium | Assista Tudo Sem Limites</title>
+  <meta name="description" content="Streaming Storm: o melhor serviço de IPTV do Brasil. Mais de 10.000 canais, filmes, séries e esportes em HD e 4K. Assine agora via WhatsApp.">
+  <meta property="og:title" content="Streaming Storm — IPTV Premium">
+  <meta property="og:description" content="Mais de 10.000 canais, filmes, séries e esportes em HD e 4K. Sem travar, sem limite.">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23080c14'/><path d='M19 4L9 18h8l-4 10 14-16h-9z' fill='%2300e5ff'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #080c14;
+      --bg2: #0d1220;
+      --bg3: #111827;
+      --primary: #00e5ff;
+      --purple: #6c3aff;
+      --text: #e8edf5;
+      --muted: #8694a8;
+      --border: rgba(0,229,255,0.15);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'IBM Plex Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* Custom cursor */
+    .cursor {
+      position: fixed;
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      background: var(--primary);
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s, opacity 0.2s;
+      mix-blend-mode: screen;
+    }
+    .cursor-ring {
+      position: fixed;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      border: 1px solid rgba(0,229,255,0.4);
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: transform 0.15s ease, width 0.2s, height 0.2s;
+    }
+
+    /* Noise overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0.6;
+    }
+
+    /* =================== NAV =================== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(to bottom, rgba(8,12,20,0.95), transparent);
+      backdrop-filter: blur(2px);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .nav-logo-icon {
+      width: 36px; height: 36px;
+    }
+    .nav-logo-text {
+      font-family: 'Chakra Petch', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--text);
+      letter-spacing: 0.05em;
+    }
+    .nav-logo-text span { color: var(--primary); }
+
+    .nav-cta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--primary);
+      color: #000;
+      font-family: 'Chakra Petch', sans-serif;
+      font-weight: 600;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 10px 20px;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: all 0.2s;
+      box-shadow: 0 0 20px rgba(0,229,255,0.3);
+    }
+    .nav-cta:hover {
+      background: #fff;
+      box-shadow: 0 0 30px rgba(0,229,255,0.5);
+      transform: translateY(-1px);
+    }
+
+    /* =================== HERO =================== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 120px 24px 80px;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    /* Animated grid background */
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,229,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,229,255,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      animation: gridMove 20s linear infinite;
+    }
+
+    @keyframes gridMove {
+      from { transform: translateY(0); }
+      to { transform: translateY(60px); }
+    }
+
+    /* Lightning bolt decorative */
+    .hero-bolt {
+      position: absolute;
+      top: 10%;
+      right: 8%;
+      font-size: 0;
+      opacity: 0.12;
+      animation: boltPulse 3s ease-in-out infinite;
+    }
+    .hero-bolt svg { width: 120px; height: 200px; }
+
+    .hero-bolt-left {
+      position: absolute;
+      top: 30%;
+      left: 5%;
+      opacity: 0.07;
+      animation: boltPulse 4s ease-in-out infinite 1.5s;
+    }
+    .hero-bolt-left svg { width: 80px; height: 140px; }
+
+    @keyframes boltPulse {
+      0%, 100% { opacity: 0.07; transform: scale(1); }
+      50% { opacity: 0.18; transform: scale(1.05); }
+    }
+
+    /* Gradient orbs */
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+    }
+    .orb-1 {
+      width: 400px; height: 400px;
+      background: rgba(108,58,255,0.2);
+      top: -100px; left: -100px;
+      animation: orbFloat 8s ease-in-out infinite;
+    }
+    .orb-2 {
+      width: 500px; height: 500px;
+      background: rgba(0,229,255,0.1);
+      bottom: -150px; right: -150px;
+      animation: orbFloat 10s ease-in-out infinite 2s;
+    }
+    .orb-3 {
+      width: 300px; height: 300px;
+      background: rgba(108,58,255,0.12);
+      top: 40%; right: 15%;
+      animation: orbFloat 7s ease-in-out infinite 4s;
+    }
+
+    @keyframes orbFloat {
+      0%, 100% { transform: translate(0, 0); }
+      33% { transform: translate(30px, -20px); }
+      66% { transform: translate(-20px, 20px); }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 760px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(0,229,255,0.08);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 6px 16px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 32px;
+      animation: fadeSlideDown 0.8s ease both;
+    }
+    .hero-badge-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--primary);
+      animation: dotPulse 1.5s ease-in-out infinite;
+    }
+    @keyframes dotPulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.7); }
+    }
+
+    .hero-headline {
+      font-family: 'Chakra Petch', sans-serif;
+      font-weight: 700;
+      font-size: clamp(2.8rem, 9vw, 6.5rem);
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      animation: fadeSlideUp 0.9s ease 0.2s both;
+    }
+    .headline-line1 { display: block; color: var(--text); }
+    .headline-line2 {
+      display: block;
+      background: linear-gradient(135deg, var(--primary), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 520px;
+      margin: 0 auto 40px;
+      animation: fadeSlideUp 0.9s ease 0.35s both;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeSlideUp 0.9s ease 0.5s both;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--primary);
+      color: #000;
+      font-family: 'Chakra Petch', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 16px 32px;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: all 0.25s;
+      box-shadow: 0 0 30px rgba(0,229,255,0.35), 0 4px 20px rgba(0,0,0,0.4);
+      min-height: 52px;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 50px rgba(0,229,255,0.5), 0 8px 30px rgba(0,0,0,0.5);
+    }
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: transparent;
+      color: var(--text);
+      font-family: 'Chakra Petch', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 16px 32px;
+      border-radius: 4px;
+      border: 1px solid rgba(255,255,255,0.15);
+      text-decoration: none;
+      transition: all 0.25s;
+      min-height: 52px;
+    }
+    .btn-ghost:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      box-shadow: 0 0 20px rgba(0,229,255,0.1);
+    }
+
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 48px;
+      margin-top: 72px;
+      padding-top: 48px;
+      border-top: 1px solid var(--border);
+      animation: fadeSlideUp 0.9s ease 0.65s both;
+      flex-wrap: wrap;
+      gap: 32px;
+    }
+    .stat-item { text-align: center; }
+    .stat-value {
+      font-family: 'Chakra Petch', sans-serif;
+      font-weight: 700;
+      font-size: 2.2rem;
+      color: var(--primary);
+      display: block;
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.78rem;
+      font-weight: 400;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-top: 6px;
+      display: block;
+    }
+
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeSlideDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* =================== BENEFITS =================== */
+    .section {
+      padding: 100px 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: var(--primary);
+    }
+
+    .section-title {
+      font-family: 'Chakra Petch', sans-serif;
+      font-weight: 700;
+      font-size: clamp(1.8rem, 5vw, 3.2rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      margin-bottom: 64px;
+    }
+    .section-title em {
+      font-style: normal;
+      color: var(--primary);
+    }
+
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+
+    .benefit-card {
+      background: var(--bg2);
+      padding: 36px;
+      display: flex;
+      gap: 28px;
+      align-items: flex-start;
+      border: 1px solid transparent;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    .benefit-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(0,229,255,0.04), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .benefit-card:hover {
+      border-color: var(--border);
+      background: #111827;
+    }
+    .benefit-card:hover::before { opacity: 1; }
+    .benefit-card:hover .benefit-icon {
+      background: rgba(0,229,255,0.15);
+      border-color: rgba(0,229,255,0.3);
+      box-shadow: 0 0 20px rgba(0,229,255,0.2);
+    }
+
+    .benefit-icon {
+      width: 52px;
+      height: 52px;
+      min-width: 52px;
+      border-radius: 10px;
+      background: rgba(0,229,255,0.06);
+      border: 1px solid rgba(0,229,255,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+    }
+    .benefit-icon svg { width: 24px; height: 24px; }
+
+    .benefit-body h3 {
+      font-family: 'Chakra Petch', sans-serif;
+      font-weight: 600;
+      font-size: 1.05rem;
+      margin-bottom: 8px;
+      letter-spacing: 0.02em;
+    }
+    .benefit-body p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* =================== PLANS =================== */
+    .plans-section {
+      padding: 100px 24px;
+      background: var(--bg2);
+      position: relative;
+      overflow: hidden;
+    }
+    .plans-section::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--primary), transparent);
+      opacity: 0.4;
+    }
+    .plans-section::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--purple), transparent);
+      opacity: 0.3;
+    }
+
+    .plans-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .plans-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      margin-top: 64px;
+    }
+
+    .plan-card {
+      background: var(--bg);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px;
+      padding: 40px 32px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.35s;
+    }
+    .plan-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary), var(--purple));
+      opacity: 0;
+      transition: opacity 0.35s;
+    }
+    .plan-card:hover {
+      border-color: rgba(0,229,255,0.2);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 40px rgba(0,229,255,0.05);
+    }
+    .plan-card:hover::before { opacity: 1; }
+
+    .plan-card.featured {
+      border-color: rgba(0,229,255,0.3);
+      background: linear-gradient(135deg, rgba(0,229,255,0.04), rgba(108,58,255,0.04));
+    }
+    .plan-card.featured::before { opacity: 1; }
+
+    .plan-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--primary), var(--purple));
+      color: #000;
+      font-family: 'Chakra Petch', sans-serif;
+      font-weight: 700;
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 100px;
+      margin-bottom: 20px;
+    }
+
+    .plan-name {
+      font-family: 'Chakra Petch', sans-serif;
+      font-weight: 700;
+      font-size: 1.4rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+
+    .plan-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-bottom: 28px;
+      line-height: 1.6;
+    }
+
+    .plan-price {
+      margin-bottom: 32px;
+    }
+    .plan-price-amount {
+      font-family: 'Chakra Petch', sans-serif;
+      font-weight: 700;
+      font-size: 3rem;
+      color: var(--primary);
+      line-height: 1;
+    }
+    .plan-price-period {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .plan-divider {
+      height: 1px;
+      background: rgba(255,255,255,0.06);
+      margin-bottom: 28px;
+    }
+
+    .plan-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 36px;
+    }
+    .plan-features li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.9rem;
+      color: var(--text);
+    }
+    .plan-features li svg {
+      width: 16px;
+      height: 16px;
+      min-width: 16px;
+      color: var(--primary);
+    }
+
+    .plan-cta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 15px;
+      border-radius: 6px;
+      font-family: 'Chakra Petch', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.25s;
+    }
+    .plan-cta-outline {
+      border: 1px solid rgba(255,255,255,0.15);
+      color: var(--text);
+    }
+    .plan-cta-outline:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+    .plan-cta-filled {
+      background: var(--primary);
+      color: #000;
+      box-shadow: 0 0 30px rgba(0,229,255,0.3);
+    }
+    .plan-cta-filled:hover {
+      box-shadow: 0 0 50px rgba(0,229,255,0.5);
+      transform: translateY(-1px);
+    }
+
+    /* =================== HOW IT WORKS =================== */
+    .how-section {
+      padding: 100px 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+      margin-top: 64px;
+      position: relative;
+    }
+
+    .step {
+      display: flex;
+      gap: 28px;
+      padding: 36px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      align-items: flex-start;
+    }
+    .step:last-child { border-bottom: none; }
+
+    .step-num {
+      font-family: 'Chakra Petch', sans-serif;
+      font-weight: 700;
+      font-size: 4rem;
+      color: rgba(0,229,255,0.08);
+      line-height: 1;
+      min-width: 64px;
+      letter-spacing: -0.04em;
+    }
+
+    .step-content h3 {
+      font-family: 'Chakra Petch', sans-serif;
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .step-content p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 420px;
+    }
+
+    /* =================== DEVICES =================== */
+    .devices-section {
+      padding: 80px 24px;
+      background: linear-gradient(to right, rgba(108,58,255,0.08), rgba(0,229,255,0.06));
+      border-top: 1px solid rgba(255,255,255,0.04);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      overflow: hidden;
+    }
+
+    .devices-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .devices-content {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+
+    .devices-text .section-title { margin-bottom: 24px; }
+    .devices-text p {
+      font-size: 1rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 480px;
+    }
+
+    .devices-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 32px;
+    }
+    .device-tag {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 10px 18px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    .device-tag:hover {
+      border-color: var(--border);
+      background: rgba(0,229,255,0.05);
+    }
+    .device-tag svg { width: 18px; height: 18px; color: var(--primary); }
+
+    .devices-visual {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      align-items: flex-end;
+    }
+
+    .mock-screen {
+      background: var(--bg);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      position: relative;
+      overflow: hidden;
+    }
+    .mock-tv {
+      width: 200px; height: 120px;
+      border-radius: 6px;
+    }
+    .mock-phone {
+      width: 70px; height: 130px;
+      border-radius: 12px;
+    }
+    .mock-tablet {
+      width: 140px; height: 100px;
+      border-radius: 8px;
+      align-self: flex-end;
+    }
+
+    .mock-inner {
+      width: 100%; height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, rgba(108,58,255,0.2), rgba(0,229,255,0.1));
+    }
+    .mock-play {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: rgba(0,229,255,0.2);
+      border: 1px solid rgba(0,229,255,0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .mock-play svg { width: 12px; height: 12px; color: var(--primary); margin-left: 2px; }
+
+    /* =================== CTA SECTION =================== */
+    .cta-section {
+      padding: 120px 24px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(108,58,255,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .cta-title {
+      font-family: 'Chakra Petch', sans-serif;
+      font-weight: 700;
+      font-size: clamp(2rem, 6vw, 4rem);
+      text-transform: uppercase;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+    }
+    .cta-title em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--primary), var(--purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .cta-sub {
+      color: var(--muted);
+      font-size: 1rem;
+      margin-bottom: 48px;
+      line-height: 1.6;
+    }
+
+    .cta-wa-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      background: #25D366;
+      color: #fff;
+      font-family: 'Chakra Petch', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 20px 40px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: all 0.25s;
+      box-shadow: 0 0 40px rgba(37,211,102,0.3), 0 8px 30px rgba(0,0,0,0.4);
+    }
+    .cta-wa-btn svg { width: 24px; height: 24px; }
+    .cta-wa-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 0 60px rgba(37,211,102,0.5), 0 12px 40px rgba(0,0,0,0.5);
+    }
+
+    /* =================== FOOTER =================== */
+    footer {
+      padding: 48px 24px;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      text-align: center;
+    }
+
+    footer .nav-logo-text {
+      font-size: 1rem;
+    }
+
+    .footer-copy {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    /* =================== WHATSAPP FLOAT =================== */
+    .wa-float {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: #25D366;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      z-index: 200;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.4), 0 0 0 0 rgba(37,211,102,0.3);
+      animation: waPulse 2.5s ease-in-out infinite;
+      transition: transform 0.2s;
+    }
+    .wa-float:hover {
+      transform: scale(1.1);
+      animation: none;
+      box-shadow: 0 6px 28px rgba(37,211,102,0.6);
+    }
+    .wa-float svg { width: 28px; height: 28px; }
+
+    @keyframes waPulse {
+      0%, 100% { box-shadow: 0 4px 20px rgba(37,211,102,0.4), 0 0 0 0 rgba(37,211,102,0.3); }
+      50% { box-shadow: 0 4px 20px rgba(37,211,102,0.4), 0 0 0 12px rgba(37,211,102,0); }
+    }
+
+    /* =================== SCROLL REVEAL =================== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* =================== RESPONSIVE =================== */
+    @media (min-width: 640px) {
+      .benefits-grid { grid-template-columns: 1fr 1fr; }
+      .plans-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (min-width: 768px) {
+      nav { padding: 24px 48px; }
+      .section { padding: 120px 48px; }
+      .plans-section { padding: 120px 48px; }
+      .how-section { padding: 120px 48px; }
+      .devices-content { flex-direction: row; align-items: center; }
+      .devices-visual { flex: 1; }
+    }
+
+    @media (min-width: 1024px) {
+      .benefits-grid { grid-template-columns: 1fr 1fr 1fr; }
+      .plans-grid { grid-template-columns: 1fr 1fr 1fr; }
+      .steps-grid { grid-template-columns: 1fr 1fr 1fr; gap: 0; }
+      .step {
+        flex-direction: column;
+        gap: 12px;
+        padding: 0 48px 0 0;
+        border-bottom: none;
+        border-right: 1px solid rgba(255,255,255,0.05);
+      }
+      .step:last-child { border-right: none; padding-right: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Custom cursor -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <svg class="nav-logo-icon" viewBox="0 0 36 36" fill="none">
+        <rect width="36" height="36" rx="8" fill="#080c14"/>
+        <rect x="0.5" y="0.5" width="35" height="35" rx="7.5" stroke="rgba(0,229,255,0.2)"/>
+        <path d="M22 5L11 20h9l-5 11 16-18h-10z" fill="url(#logoGrad)"/>
+        <defs>
+          <linearGradient id="logoGrad" x1="11" y1="5" x2="22" y2="31" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#00e5ff"/>
+            <stop offset="1" stop-color="#6c3aff"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <span class="nav-logo-text">Streaming <span>Storm</span></span>
+    </a>
+    <a href="https://wa.me/5524992172206" class="nav-cta" target="_blank" rel="noopener">
+      <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Assinar Agora
+    </a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <div class="hero-bolt">
+      <svg viewBox="0 0 120 200" fill="none">
+        <path d="M90 10L30 100h50L20 190 110 80H60z" fill="#00e5ff"/>
+      </svg>
+    </div>
+    <div class="hero-bolt-left">
+      <svg viewBox="0 0 80 140" fill="none">
+        <path d="M60 5L20 70h35L10 135 75 60H42z" fill="#6c3aff"/>
+      </svg>
+    </div>
+
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span class="hero-badge-dot"></span>
+        IPTV Premium — Disponível Agora
+      </div>
+
+      <h1 class="hero-headline">
+        <span class="headline-line1">Entretenimento</span>
+        <span class="headline-line2">Sem Limites</span>
+      </h1>
+
+      <p class="hero-sub">
+        Mais de 10.000 canais ao vivo, filmes e séries em HD e 4K, transmitido direto para qualquer dispositivo. Sem travar. Sem complicação.
+      </p>
+
+      <div class="hero-actions">
+        <a href="https://wa.me/5524992172206" class="btn-primary" target="_blank" rel="noopener">
+          <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Assinar via WhatsApp
+        </a>
+        <a href="#planos" class="btn-ghost">
+          Ver Planos
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat-item">
+          <span class="stat-value">10K+</span>
+          <span class="stat-label">Canais ao vivo</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">4K</span>
+          <span class="stat-label">Qualidade máxima</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">24h</span>
+          <span class="stat-label">Suporte ativo</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">99%</span>
+          <span class="stat-label">Uptime garantido</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BENEFITS -->
+  <section class="section">
+    <p class="section-label reveal">Vantagens</p>
+    <h2 class="section-title reveal reveal-delay-1">Por que escolher a <em>Storm</em></h2>
+
+    <div class="benefits-grid">
+      <div class="benefit-card reveal">
+        <div class="benefit-icon">
+          <svg fill="none" stroke="#00e5ff" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z"/></svg>
+        </div>
+        <div class="benefit-body">
+          <h3>+10.000 Canais ao Vivo</h3>
+          <p>Canais nacionais e internacionais, esportes, notícias, entretenimento e muito mais — tudo em tempo real.</p>
+        </div>
+      </div>
+
+      <div class="benefit-card reveal reveal-delay-1">
+        <div class="benefit-icon">
+          <svg fill="none" stroke="#00e5ff" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.375 19.5h17.25m-17.25 0a1.125 1.125 0 01-1.125-1.125M3.375 19.5h1.5C5.496 19.5 6 18.996 6 18.375m-3.75 0V5.625m0 12.75v-1.5c0-.621.504-1.125 1.125-1.125m18.375 2.625V5.625m0 12.75c0 .621-.504 1.125-1.125 1.125m1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125m0 3.75h-1.5A1.125 1.125 0 0118 18.375M20.625 4.5H3.375m17.25 0c.621 0 1.125.504 1.125 1.125M20.625 4.5h-1.5C18.504 4.5 18 5.004 18 5.625m3.75 0v1.5c0 .621-.504 1.125-1.125 1.125M3.375 4.5c-.621 0-1.125.504-1.125 1.125M3.375 4.5h1.5C5.496 4.5 6 5.004 6 5.625m-3.75 0v1.5c0 .621.504 1.125 1.125 1.125m0 0h1.5m-1.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125m1.5-3.75C5.496 8.25 6 8.754 6 9.375v1.5m0-5.25v5.25m0-5.25C6 5.004 6.504 4.5 7.125 4.5h9.75c.621 0 1.125.504 1.125 1.125m1.125 2.625h1.5m-1.5 0A1.125 1.125 0 0118 7.875v1.5m1.5-3.75C19.496 5.004 20 5.508 20 6.129v1.5c0 .621-.504 1.125-1.125 1.125M18 5.625v5.25M7.125 12h9.75m-9.75 0A1.125 1.125 0 016 10.875M7.125 12C6.504 12 6 12.504 6 13.125v1.5c0 .621.504 1.125 1.125 1.125m9.75-3.75c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-9.75 0h9.75"/></svg>
+        </div>
+        <div class="benefit-body">
+          <h3>Qualidade HD e 4K</h3>
+          <p>Imagem nítida e fluida em qualquer tela. Compatível com resoluções até 4K para uma experiência cinematográfica.</p>
+        </div>
+      </div>
+
+      <div class="benefit-card reveal reveal-delay-2">
+        <div class="benefit-icon">
+          <svg fill="none" stroke="#00e5ff" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg>
+        </div>
+        <div class="benefit-body">
+          <h3>Sinal Estável, Sem Travar</h3>
+          <p>Infraestrutura robusta com 99% de uptime. Chega de buffering e quedas na hora do jogo ou da série favorita.</p>
+        </div>
+      </div>
+
+      <div class="benefit-card reveal reveal-delay-3">
+        <div class="benefit-icon">
+          <svg fill="none" stroke="#00e5ff" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <div class="benefit-body">
+          <h3>Filmes e Séries Sob Demanda</h3>
+          <p>Acervo completo de VOD com os lançamentos mais recentes e clássicos do cinema e da televisão.</p>
+        </div>
+      </div>
+
+      <div class="benefit-card reveal reveal-delay-1">
+        <div class="benefit-icon">
+          <svg fill="none" stroke="#00e5ff" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3"/></svg>
+        </div>
+        <div class="benefit-body">
+          <h3>Qualquer Dispositivo</h3>
+          <p>Funciona em Smart TV, celular, tablet, PC e Fire Stick. Uma assinatura, múltiplos aparelhos.</p>
+        </div>
+      </div>
+
+      <div class="benefit-card reveal reveal-delay-2">
+        <div class="benefit-icon">
+          <svg fill="none" stroke="#00e5ff" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z"/></svg>
+        </div>
+        <div class="benefit-body">
+          <h3>Suporte 24h no WhatsApp</h3>
+          <p>Atendimento humano e ágil pelo WhatsApp. Problemas resolvidos na hora, sem fila, sem chatbot.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLANS -->
+  <section class="plans-section" id="planos">
+    <div class="plans-inner">
+      <p class="section-label reveal">Planos</p>
+      <h2 class="section-title reveal reveal-delay-1">Escolha o seu <em>plano</em></h2>
+
+      <div class="plans-grid">
+
+        <!-- Plan 1 -->
+        <div class="plan-card reveal">
+          <p class="plan-name">Mensal</p>
+          <p class="plan-desc">Perfeito para testar e curtir sem compromisso.</p>
+          <div class="plan-price">
+            <div class="plan-price-amount">Consulte</div>
+            <div class="plan-price-period">Valor via WhatsApp</div>
+          </div>
+          <div class="plan-divider"></div>
+          <ul class="plan-features">
+            <li>
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+              +10.000 canais ao vivo
+            </li>
+            <li>
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+              Filmes e séries VOD
+            </li>
+            <li>
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+              Qualidade HD
+            </li>
+            <li>
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+              1 tela simultânea
+            </li>
+            <li>
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+              Suporte WhatsApp
+            </li>
+          </ul>
+          <a href="https://wa.me/5524992172206?text=Quero%20o%20plano%20mensal%20da%20Streaming%20Storm" class="plan-cta plan-cta-outline" target="_blank" rel="noopener">
+            Assinar Mensal
+          </a>
+        </div>
+
+        <!-- Plan 2 — FEATURED -->
+        <div class="plan-card featured reveal reveal-delay-1">
+          <span class="plan-badge">Mais Popular</span>
+          <p class="plan-name">Trimestral</p>
+          <p class="plan-desc">A melhor relação custo-benefício para quem quer economizar.</p>
+          <div class="plan-price">
+            <div class="plan-price-amount">Consulte</div>
+            <div class="plan-price-period">Valor via WhatsApp</div>
+          </div>
+          <div class="plan-divider"></div>
+          <ul class="plan-features">
+            <li>
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+              +10.000 canais ao vivo
+            </li>
+            <li>
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+              Filmes e séries VOD
+            </li>
+            <li>
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+              Qualidade HD + 4K
+            </li>
+            <li>
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+              2 telas simultâneas
+            </li>
+            <li>
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+              Suporte prioritário
+            </li>
+            <li>
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+              Economia de 3 meses
+            </li>
+          </ul>
+          <a href="https://wa.me/5524992172206?text=Quero%20o%20plano%20trimestral%20da%20Streaming%20Storm" class="plan-cta plan-cta-filled" target="_blank" rel="noopener">
+            Assinar Trimestral
+          </a>
+        </div>
+
+        <!-- Plan 3 -->
+        <div class="plan-card reveal reveal-delay-2">
+          <p class="plan-name">Anual</p>
+          <p class="plan-desc">Máxima economia para quem quer curtir o ano todo.</p>
+          <div class="plan-price">
+            <div class="plan-price-amount">Consulte</div>
+            <div class="plan-price-period">Valor via WhatsApp</div>
+          </div>
+          <div class="plan-divider"></div>
+          <ul class="plan-features">
+            <li>
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+              +10.000 canais ao vivo
+            </li>
+            <li>
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+              Filmes, séries e PPV
+            </li>
+            <li>
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+              Qualidade HD + 4K
+            </li>
+            <li>
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+              3 telas simultâneas
+            </li>
+            <li>
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+              Suporte VIP 24h
+            </li>
+            <li>
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>
+              Maior economia do ano
+            </li>
+          </ul>
+          <a href="https://wa.me/5524992172206?text=Quero%20o%20plano%20anual%20da%20Streaming%20Storm" class="plan-cta plan-cta-outline" target="_blank" rel="noopener">
+            Assinar Anual
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how-section">
+    <p class="section-label reveal">Como funciona</p>
+    <h2 class="section-title reveal reveal-delay-1">Pronto em <em>minutos</em></h2>
+
+    <div class="steps-grid">
+      <div class="step reveal">
+        <div class="step-num">01</div>
+        <div class="step-content">
+          <h3>Escolha seu plano</h3>
+          <p>Selecione o plano ideal para você e entre em contato via WhatsApp. Sem burocracia, sem contrato complicado.</p>
+        </div>
+      </div>
+      <div class="step reveal reveal-delay-1">
+        <div class="step-num">02</div>
+        <div class="step-content">
+          <h3>Receba o acesso</h3>
+          <p>Em poucos minutos enviamos suas credenciais de acesso e o link de instalação direto no seu WhatsApp.</p>
+        </div>
+      </div>
+      <div class="step reveal reveal-delay-2">
+        <div class="step-num">03</div>
+        <div class="step-content">
+          <h3>Assista imediatamente</h3>
+          <p>Instale em qualquer dispositivo e comece a curtir seus canais favoritos na mesma hora. É simples assim.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEVICES -->
+  <section class="devices-section">
+    <div class="devices-inner">
+      <div class="devices-content">
+        <div class="devices-text">
+          <p class="section-label reveal">Compatibilidade</p>
+          <h2 class="section-title reveal reveal-delay-1">Em qualquer <em>tela</em></h2>
+          <p class="reveal reveal-delay-2">Funciona em todos os seus dispositivos preferidos. Uma única assinatura para toda a família, em qualquer lugar.</p>
+          <div class="devices-list reveal reveal-delay-3">
+            <span class="device-tag">
+              <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 20.25h12m-7.5-3v3m3-3v3m-10.125-3h17.25c.621 0 1.125-.504 1.125-1.125V4.875c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125z"/></svg>
+              Smart TV
+            </span>
+            <span class="device-tag">
+              <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3"/></svg>
+              Celular
+            </span>
+            <span class="device-tag">
+              <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5h3m-6.75 2.25h10.5a2.25 2.25 0 002.25-2.25v-15a2.25 2.25 0 00-2.25-2.25H6.75A2.25 2.25 0 004.5 4.5v15a2.25 2.25 0 002.25 2.25z"/></svg>
+              Tablet
+            </span>
+            <span class="device-tag">
+              <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0H3"/></svg>
+              PC / Mac
+            </span>
+            <span class="device-tag">
+              <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg>
+              Fire Stick
+            </span>
+          </div>
+        </div>
+
+        <div class="devices-visual">
+          <div class="mock-screen mock-tv">
+            <div class="mock-inner">
+              <div class="mock-play">
+                <svg fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="mock-screen mock-phone">
+            <div class="mock-inner">
+              <div class="mock-play">
+                <svg fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              </div>
+            </div>
+          </div>
+          <div class="mock-screen mock-tablet">
+            <div class="mock-inner">
+              <div class="mock-play">
+                <svg fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="cta-section">
+    <div class="cta-inner">
+      <h2 class="cta-title reveal">Pronto para <em>desligar</em> a antenna?</h2>
+      <p class="cta-sub reveal reveal-delay-1">Fale com a gente agora pelo WhatsApp e comece a assistir em minutos. Atendimento rápido, sem enrolação.</p>
+      <div class="reveal reveal-delay-2">
+        <a href="https://wa.me/5524992172206?text=Ol%C3%A1!%20Quero%20assinar%20o%20Streaming%20Storm" class="cta-wa-btn" target="_blank" rel="noopener">
+          <svg fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Falar no WhatsApp
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <a href="#" class="nav-logo" style="justify-content:center;">
+      <svg width="28" height="28" viewBox="0 0 36 36" fill="none">
+        <rect width="36" height="36" rx="8" fill="#080c14"/>
+        <rect x="0.5" y="0.5" width="35" height="35" rx="7.5" stroke="rgba(0,229,255,0.2)"/>
+        <path d="M22 5L11 20h9l-5 11 16-18h-10z" fill="url(#logoGrad2)"/>
+        <defs>
+          <linearGradient id="logoGrad2" x1="11" y1="5" x2="22" y2="31" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#00e5ff"/>
+            <stop offset="1" stop-color="#6c3aff"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <span class="nav-logo-text">Streaming <span>Storm</span></span>
+    </a>
+    <p class="footer-copy">&copy; 2025 Streaming Storm. Todos os direitos reservados.</p>
+  </footer>
+
+  <!-- WhatsApp Float -->
+  <a href="https://wa.me/5524992172206" class="wa-float" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <svg fill="white" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+  <script>
+    // Custom cursor
+    const cursor = document.getElementById('cursor');
+    const cursorRing = document.getElementById('cursorRing');
+    let mouseX = 0, mouseY = 0;
+    let ringX = 0, ringY = 0;
+
+    document.addEventListener('mousemove', e => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      cursor.style.left = mouseX + 'px';
+      cursor.style.top = mouseY + 'px';
+    });
+
+    function animateRing() {
+      ringX += (mouseX - ringX) * 0.12;
+      ringY += (mouseY - ringY) * 0.12;
+      cursorRing.style.left = ringX + 'px';
+      cursorRing.style.top = ringY + 'px';
+      requestAnimationFrame(animateRing);
+    }
+    animateRing();
+
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursor.style.transform = 'translate(-50%,-50%) scale(1.8)';
+        cursorRing.style.width = '60px';
+        cursorRing.style.height = '60px';
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.style.transform = 'translate(-50%,-50%) scale(1)';
+        cursorRing.style.width = '36px';
+        cursorRing.style.height = '36px';
+      });
+    });
+
+    // Hide cursor on mobile
+    if ('ontouchstart' in window) {
+      cursor.style.display = 'none';
+      cursorRing.style.display = 'none';
+      document.body.style.cursor = 'auto';
+    }
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    reveals.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
