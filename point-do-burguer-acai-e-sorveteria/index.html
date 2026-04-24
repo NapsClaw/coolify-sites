@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Point do Burguer Açaí e Sorveteria | Hamburgueria Artesanal</title>
+  <meta name="description" content="Point do Burguer — hambúrgueres artesanais, açaí premium batido na hora e sorvetes especiais. Sabor de verdade em cada mordida. Peça pelo WhatsApp!">
+  <meta property="og:title" content="Point do Burguer Açaí e Sorveteria">
+  <meta property="og:description" content="Hambúrgueres artesanais, açaí premium e sorvetes especiais. O melhor sabor da cidade.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1200&q=80">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🍔</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,700;12..96,800&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --primary: #D42B2B;
+      --primary-dark: #A81E1E;
+      --accent: #6B21A8;
+      --bg: #FAF6F0;
+      --text: #1A0A0A;
+      --muted: #7A6060;
+      --dark: #170808;
+      --dark-2: #0F0404;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      font-weight: 400;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, .display {
+      font-family: 'Bricolage Grotesque', sans-serif;
+    }
+
+    /* ── KEYFRAMES ─────────────────────────── */
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(48px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes zoomOut {
+      from { transform: scale(1.12); }
+      to   { transform: scale(1); }
+    }
+    @keyframes pulseWa {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(37,211,102,0.55); }
+      60%       { box-shadow: 0 0 0 14px rgba(37,211,102,0); }
+    }
+    @keyframes slideIn {
+      from { transform: translateX(-60px); opacity: 0; }
+      to   { transform: translateX(0); opacity: 1; }
+    }
+    @keyframes badgePop {
+      from { transform: scale(0.7); opacity: 0; }
+      to   { transform: scale(1); opacity: 1; }
+    }
+
+    /* ── SCROLL REVEAL ─────────────────────── */
+    .reveal         { opacity: 0; transform: translateY(32px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal-left    { opacity: 0; transform: translateX(-40px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal-right   { opacity: 0; transform: translateX(40px);  transition: opacity .7s ease, transform .7s ease; }
+    .reveal-scale   { opacity: 0; transform: scale(.94);         transition: opacity .65s ease, transform .65s ease; }
+
+    .reveal.vis, .reveal-left.vis, .reveal-right.vis, .reveal-scale.vis {
+      opacity: 1; transform: none;
+    }
+
+    /* ── NAV ───────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 18px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: background .35s ease, backdrop-filter .35s ease, padding .35s ease;
+    }
+    nav.scrolled {
+      background: rgba(23, 8, 8, 0.92);
+      backdrop-filter: blur(16px);
+      padding: 12px 24px;
+    }
+    .nav-logo {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 20px; font-weight: 800;
+      color: #fff; text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+    .nav-logo span { color: var(--primary); }
+    .nav-cta {
+      background: var(--primary); color: #fff;
+      padding: 10px 22px; border-radius: 100px;
+      font-size: 14px; font-weight: 500; text-decoration: none;
+      transition: background .2s, transform .2s;
+    }
+    .nav-cta:hover { background: var(--primary-dark); transform: scale(1.05); }
+
+    /* ── HERO ──────────────────────────────── */
+    #hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex; align-items: flex-end;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=1400&q=85');
+      background-size: cover; background-position: center 30%;
+      animation: zoomOut 1.8s ease forwards;
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(23,8,8,.96) 0%,
+        rgba(23,8,8,.65) 45%,
+        rgba(23,8,8,.18) 100%
+      );
+    }
+    /* Texture grain on hero */
+    .hero-overlay::after {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+      opacity: .06; pointer-events: none;
+    }
+    .hero-content {
+      position: relative; z-index: 10;
+      padding: 0 24px 64px; width: 100%;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(212,43,43,.18);
+      border: 1px solid rgba(212,43,43,.4);
+      color: #FFB3B3;
+      font-size: 12px; font-weight: 500;
+      letter-spacing: .12em; text-transform: uppercase;
+      padding: 6px 16px; border-radius: 100px;
+      margin-bottom: 22px;
+      animation: badgePop .6s cubic-bezier(.34,1.56,.64,1) .3s both;
+    }
+    .hero-title {
+      font-size: clamp(56px, 14vw, 128px);
+      font-weight: 800; color: #fff;
+      line-height: .9; letter-spacing: -.03em;
+    }
+    .hero-title .line1 { animation: fadeSlideUp .65s ease .45s both; display: block; }
+    .hero-title .line2 { animation: fadeSlideUp .65s ease .6s  both; display: block; }
+    .hero-title .line3 {
+      animation: fadeSlideUp .65s ease .75s both; display: block;
+      color: var(--primary);
+      -webkit-text-stroke: 0px; /* no stroke */
+    }
+    .hero-sub {
+      font-size: clamp(15px, 3.5vw, 19px);
+      color: rgba(255,255,255,.68); font-weight: 300;
+      margin-top: 20px; max-width: 420px; line-height: 1.6;
+      animation: fadeSlideUp .65s ease .9s both;
+    }
+    .hero-actions {
+      display: flex; flex-direction: column; gap: 12px;
+      margin-top: 32px;
+      animation: fadeSlideUp .65s ease 1.05s both;
+    }
+    @media (min-width: 480px) {
+      .hero-actions { flex-direction: row; }
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      background: #25D366; color: #fff;
+      font-family: 'Outfit', sans-serif; font-size: 15px; font-weight: 600;
+      padding: 16px 28px; border-radius: 100px; text-decoration: none;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .btn-primary:hover { transform: scale(1.04); box-shadow: 0 8px 24px rgba(37,211,102,.4); }
+    .btn-outline {
+      display: inline-flex; align-items: center; justify-content: center;
+      border: 1.5px solid rgba(255,255,255,.3); color: rgba(255,255,255,.8);
+      font-family: 'Outfit', sans-serif; font-size: 15px; font-weight: 400;
+      padding: 15px 28px; border-radius: 100px; text-decoration: none;
+      transition: border-color .2s, color .2s;
+    }
+    .btn-outline:hover { border-color: #fff; color: #fff; }
+
+    /* ── MARQUEE STRIP ─────────────────────── */
+    .marquee-wrap {
+      background: var(--primary);
+      overflow: hidden; white-space: nowrap;
+      padding: 12px 0;
+    }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .marquee-track {
+      display: inline-block;
+      animation: marquee 18s linear infinite;
+    }
+    .marquee-item {
+      display: inline-flex; align-items: center; gap: 12px;
+      color: #fff; font-size: 13px; font-weight: 500;
+      letter-spacing: .08em; text-transform: uppercase;
+      padding: 0 32px;
+    }
+    .marquee-dot { width: 4px; height: 4px; background: rgba(255,255,255,.6); border-radius: 50%; }
+
+    /* ── SECTION SHARED ────────────────────── */
+    .section-label {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: .2em; text-transform: uppercase;
+      color: var(--primary); margin-bottom: 10px;
+    }
+    .divider {
+      width: 40px; height: 3px;
+      background: var(--primary); border-radius: 2px;
+      margin-bottom: 20px;
+    }
+    .section-title {
+      font-size: clamp(34px, 6vw, 58px);
+      font-weight: 800; line-height: 1.04; letter-spacing: -.025em;
+      margin-bottom: 20px;
+    }
+    .section-body {
+      font-size: 16px; line-height: 1.75; color: var(--muted);
+    }
+
+    /* ── ABOUT ─────────────────────────────── */
+    #about {
+      padding: 96px 24px;
+      max-width: 1160px; margin: 0 auto;
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 56px; align-items: center;
+    }
+    @media (min-width: 780px) {
+      .about-grid { grid-template-columns: 5fr 6fr; gap: 80px; }
+    }
+    .about-img-wrap {
+      position: relative;
+    }
+    .about-img {
+      width: 100%; aspect-ratio: 4/5;
+      object-fit: cover; border-radius: 8px; display: block;
+    }
+    .about-accent-block {
+      position: absolute; bottom: -24px; right: -24px;
+      width: 55%; aspect-ratio: 1;
+      background: var(--primary); border-radius: 8px;
+      z-index: -1; opacity: .9;
+    }
+    .about-tag {
+      position: absolute; top: 24px; left: -16px;
+      background: var(--dark); color: #fff;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 13px; font-weight: 700;
+      padding: 8px 16px; border-radius: 6px;
+      display: flex; align-items: center; gap: 8px;
+      box-shadow: 0 8px 24px rgba(0,0,0,.3);
+    }
+    .stats-row {
+      display: flex; gap: 32px; margin-top: 40px;
+      flex-wrap: wrap;
+    }
+    .stat-val {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 38px; font-weight: 800; color: var(--primary);
+      line-height: 1;
+    }
+    .stat-label { font-size: 13px; color: var(--muted); margin-top: 4px; }
+
+    /* ── MENU ──────────────────────────────── */
+    #menu {
+      background: var(--dark);
+      padding: 96px 24px;
+      position: relative; overflow: hidden;
+    }
+    /* Decorative blobs */
+    #menu::before {
+      content: '';
+      position: absolute; top: -120px; right: -120px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(212,43,43,.12) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    #menu::after {
+      content: '';
+      position: absolute; bottom: -80px; left: -80px;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(107,33,168,.1) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .menu-inner { max-width: 1160px; margin: 0 auto; position: relative; z-index: 1; }
+    .menu-header {
+      display: flex; flex-direction: column; gap: 24px;
+      margin-bottom: 40px;
+    }
+    @media (min-width: 640px) {
+      .menu-header { flex-direction: row; align-items: flex-end; justify-content: space-between; }
+    }
+    .menu-title {
+      font-size: clamp(40px, 8vw, 68px);
+      font-weight: 800; color: #fff;
+      line-height: .95; letter-spacing: -.025em;
+    }
+    .menu-title span { color: var(--primary); }
+    .tab-row {
+      display: flex; gap: 8px;
+      overflow-x: auto; -ms-overflow-style: none; scrollbar-width: none;
+      margin-bottom: 36px;
+    }
+    .tab-row::-webkit-scrollbar { display: none; }
+    .tab {
+      flex-shrink: 0;
+      padding: 10px 22px; border-radius: 100px;
+      border: 1.5px solid rgba(255,255,255,.18);
+      background: transparent; color: rgba(255,255,255,.55);
+      font-family: 'Outfit', sans-serif; font-size: 14px; font-weight: 500;
+      cursor: pointer; transition: all .2s ease;
+    }
+    .tab.active { background: var(--primary); border-color: var(--primary); color: #fff; }
+    .tab:hover:not(.active) { border-color: rgba(255,255,255,.4); color: rgba(255,255,255,.85); }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    @media (min-width: 560px) { .cards-grid { grid-template-columns: repeat(2,1fr); } }
+    @media (min-width: 960px) { .cards-grid { grid-template-columns: repeat(3,1fr); } }
+
+    .menu-card {
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 14px; overflow: hidden;
+      transition: transform .3s ease, background .3s ease, box-shadow .3s ease, border-color .3s ease;
+      cursor: default;
+    }
+    .menu-card:hover {
+      transform: translateY(-8px) scale(1.015);
+      background: rgba(255,255,255,.08);
+      border-color: rgba(212,43,43,.3);
+      box-shadow: 0 24px 48px rgba(0,0,0,.45), 0 0 0 1px rgba(212,43,43,.15);
+    }
+    .menu-card-img {
+      width: 100%; aspect-ratio: 16/10; object-fit: cover; display: block;
+      transition: transform .5s ease;
+    }
+    .menu-card:hover .menu-card-img { transform: scale(1.06); }
+    .menu-card-body { padding: 20px 22px 22px; }
+    .menu-card-name {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 8px;
+    }
+    .menu-card-desc {
+      font-size: 13.5px; color: rgba(255,255,255,.46); line-height: 1.55; margin-bottom: 18px;
+    }
+    .menu-card-footer {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .menu-card-price {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 24px; font-weight: 800; color: var(--primary);
+    }
+    .menu-card-badge {
+      font-size: 11px; font-weight: 600; letter-spacing: .1em;
+      text-transform: uppercase; color: rgba(255,255,255,.35);
+      border: 1px solid rgba(255,255,255,.15);
+      padding: 4px 10px; border-radius: 100px;
+    }
+
+    /* ── GALLERY ───────────────────────────── */
+    #gallery {
+      padding: 96px 24px;
+      max-width: 1160px; margin: 0 auto;
+    }
+    .bento {
+      display: grid;
+      grid-template-columns: repeat(2,1fr);
+      gap: 10px; margin-top: 48px;
+    }
+    @media (min-width: 720px) {
+      .bento {
+        grid-template-columns: repeat(3,1fr);
+        grid-template-rows: 260px 260px;
+        gap: 12px;
+      }
+      .b1 { grid-column: 1 / 3; }
+      .b2 { grid-column: 3; grid-row: 1 / 3; }
+      .b3 { grid-column: 1; }
+      .b4 { grid-column: 2; }
+    }
+    .bento-cell {
+      overflow: hidden; border-radius: 12px;
+      aspect-ratio: 1;
+    }
+    @media (min-width: 720px) { .bento-cell { aspect-ratio: auto; } }
+    .bento-cell img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform .55s ease;
+    }
+    .bento-cell:hover img { transform: scale(1.08); }
+
+    /* ── REVIEWS ───────────────────────────── */
+    #reviews {
+      background: #F0EBE3;
+      padding: 96px 24px;
+    }
+    .reviews-inner { max-width: 1160px; margin: 0 auto; }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px; margin-top: 48px;
+    }
+    @media (min-width: 600px) { .reviews-grid { grid-template-columns: repeat(2,1fr); } }
+    @media (min-width: 960px) { .reviews-grid { grid-template-columns: repeat(3,1fr); } }
+    .review-card {
+      background: #fff; border-radius: 14px;
+      padding: 28px; position: relative;
+      box-shadow: 0 2px 16px rgba(0,0,0,.06);
+      transition: transform .25s, box-shadow .25s;
+    }
+    .review-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,.1); }
+    .review-quote {
+      font-size: 56px; font-weight: 800; line-height: .6;
+      color: var(--primary); opacity: .18;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      position: absolute; top: 20px; right: 22px;
+    }
+    .review-text {
+      font-size: 15px; line-height: 1.65; color: #4A3030;
+      font-style: italic; margin-bottom: 20px;
+    }
+    .review-stars { color: #F59E0B; font-size: 16px; margin-bottom: 14px; letter-spacing: 2px; }
+    .review-author { font-family: 'Bricolage Grotesque', sans-serif; font-size: 15px; font-weight: 700; }
+    .review-role { font-size: 13px; color: var(--muted); }
+
+    /* ── CONTACT ───────────────────────────── */
+    #contact {
+      background: var(--dark);
+      padding: 96px 24px;
+      position: relative; overflow: hidden;
+    }
+    #contact::before {
+      content: '';
+      position: absolute; top: -150px; right: -100px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(212,43,43,.13) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .contact-inner { max-width: 1160px; margin: 0 auto; position: relative; z-index: 1; }
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr; gap: 56px;
+    }
+    @media (min-width: 780px) {
+      .contact-grid { grid-template-columns: 1fr 1fr; align-items: start; gap: 72px; }
+    }
+    .contact-title {
+      font-size: clamp(38px, 7vw, 62px);
+      font-weight: 800; color: #fff; line-height: 1; letter-spacing: -.025em;
+      margin-bottom: 36px;
+    }
+    .contact-title span { color: var(--primary); }
+    .contact-items { display: flex; flex-direction: column; gap: 22px; }
+    .ci { display: flex; gap: 16px; align-items: flex-start; }
+    .ci-icon {
+      width: 46px; height: 46px; flex-shrink: 0;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+    }
+    .ci-lbl {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 11px; font-weight: 700; color: rgba(255,255,255,.4);
+      text-transform: uppercase; letter-spacing: .12em; margin-bottom: 4px;
+    }
+    .ci-val { color: #fff; font-size: 16px; line-height: 1.5; }
+    .wa-big {
+      display: flex; align-items: center; justify-content: center; gap: 12px;
+      background: #25D366; color: #fff;
+      font-family: 'Outfit', sans-serif; font-size: 16px; font-weight: 600;
+      padding: 18px 32px; border-radius: 14px;
+      text-decoration: none; margin-top: 36px;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .wa-big:hover { transform: translateY(-3px); box-shadow: 0 14px 32px rgba(37,211,102,.32); }
+    .hours-card {
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 14px; padding: 28px;
+    }
+    .hours-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 20px;
+    }
+    .hours-row {
+      display: flex; justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      font-size: 14px;
+    }
+    .hours-row:last-child { border-bottom: none; }
+    .hours-day { color: rgba(255,255,255,.5); }
+    .hours-time { color: #fff; font-weight: 500; }
+    .hours-time.closed { color: rgba(255,255,255,.3); }
+    .map-placeholder {
+      margin-top: 20px;
+      background: rgba(255,255,255,.04);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 12px; padding: 24px;
+      text-align: center;
+    }
+    .map-placeholder .emoji { font-size: 36px; margin-bottom: 10px; }
+    .map-placeholder .addr { font-size: 14px; color: rgba(255,255,255,.55); line-height: 1.5; }
+    .map-link {
+      display: inline-block; margin-top: 14px;
+      color: var(--primary); font-size: 14px; font-weight: 600;
+      text-decoration: none; transition: opacity .2s;
+    }
+    .map-link:hover { opacity: .75; }
+
+    /* ── FOOTER ────────────────────────────── */
+    footer {
+      background: var(--dark-2);
+      padding: 36px 24px;
+      text-align: center;
+    }
+    .foot-logo {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 22px; font-weight: 800; color: #fff;
+      margin-bottom: 6px;
+    }
+    .foot-logo span { color: var(--primary); }
+    .foot-copy { font-size: 12.5px; color: rgba(255,255,255,.28); }
+
+    /* ── WhatsApp Float ────────────────────── */
+    .wa-float {
+      position: fixed; bottom: 28px; right: 28px;
+      width: 60px; height: 60px;
+      background: #25D366; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 999;
+      box-shadow: 0 4px 14px rgba(0,0,0,.28);
+      animation: pulseWa 2.8s ease infinite;
+      transition: transform .2s, animation .2s;
+      text-decoration: none;
+    }
+    .wa-float:hover { transform: scale(1.12); animation: none; box-shadow: 0 8px 24px rgba(37,211,102,.5); }
+    .wa-float svg { width: 30px; height: 30px; fill: #fff; }
+  </style>
+</head>
+<body>
+
+  <!-- ───── NAV ───── -->
+  <nav id="mainnav">
+    <a href="#" class="nav-logo">Point<span>.</span></a>
+    <a href="https://wa.me/5511999999999" class="nav-cta">Pedir Agora</a>
+  </nav>
+
+  <!-- ───── HERO ───── -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-badge">🍔 Hambúrgueres &nbsp;·&nbsp; Açaí &nbsp;·&nbsp; Sorvetes</div>
+      <h1 class="hero-title">
+        <span class="line1">Point</span>
+        <span class="line2">do</span>
+        <span class="line3">Burguer</span>
+      </h1>
+      <p class="hero-sub">Sabor artesanal em cada mordida. Do smash clássico ao açaí cremoso batido na hora — aqui tem de tudo pra você.</p>
+      <div class="hero-actions">
+        <a href="https://wa.me/5511999999999" class="btn-primary">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.122 1.532 5.857L0 24l6.334-1.518A11.934 11.934 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818c-1.95 0-3.764-.527-5.318-1.442l-.38-.226-3.753.899.935-3.645-.249-.394A9.818 9.818 0 012.182 12C2.182 6.578 6.578 2.182 12 2.182S21.818 6.578 21.818 12 17.422 21.818 12 21.818z"/></svg>
+          Falar no WhatsApp
+        </a>
+        <a href="#menu" class="btn-outline">Ver Cardápio</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───── MARQUEE ───── -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span class="marquee-item">🍔 Smash Burguer<span class="marquee-dot"></span></span>
+      <span class="marquee-item">🍧 Açaí Premium<span class="marquee-dot"></span></span>
+      <span class="marquee-item">🍦 Sorvetes Artesanais<span class="marquee-dot"></span></span>
+      <span class="marquee-item">🥓 Bacon Crocante<span class="marquee-dot"></span></span>
+      <span class="marquee-item">⭐ Avaliação 4.9<span class="marquee-dot"></span></span>
+      <span class="marquee-item">🍔 Smash Burguer<span class="marquee-dot"></span></span>
+      <span class="marquee-item">🍧 Açaí Premium<span class="marquee-dot"></span></span>
+      <span class="marquee-item">🍦 Sorvetes Artesanais<span class="marquee-dot"></span></span>
+      <span class="marquee-item">🥓 Bacon Crocante<span class="marquee-dot"></span></span>
+      <span class="marquee-item">⭐ Avaliação 4.9<span class="marquee-dot"></span></span>
+    </div>
+  </div>
+
+  <!-- ───── ABOUT ───── -->
+  <section id="about">
+    <div class="about-grid">
+      <div class="about-img-wrap reveal-left">
+        <img class="about-img"
+          src="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=800&q=80"
+          alt="Ambiente do Point do Burguer" loading="lazy">
+        <div class="about-accent-block"></div>
+        <div class="about-tag">🔥 Feito na hora</div>
+      </div>
+
+      <div class="reveal-right">
+        <p class="section-label">Nossa história</p>
+        <div class="divider"></div>
+        <h2 class="section-title">Feito com paixão,<br>servido com orgulho</h2>
+        <p class="section-body">
+          O Point do Burguer nasceu da vontade simples de servir algo diferente. Hambúrgueres artesanais com blend exclusivo de carnes nobres, açaí batido na hora com frutas selecionadas, e sorvetes cremosos que fazem qualquer dia ficar melhor.
+        </p>
+        <p class="section-body" style="margin-top:14px;">
+          Cada detalhe é pensado pra você ter a melhor experiência — do atendimento acolhedor ao sabor que fica gravado na memória.
+        </p>
+
+        <div class="stats-row">
+          <div>
+            <div class="stat-val">+5k</div>
+            <div class="stat-label">clientes felizes</div>
+          </div>
+          <div>
+            <div class="stat-val">20+</div>
+            <div class="stat-label">opções no cardápio</div>
+          </div>
+          <div>
+            <div class="stat-val">★ 4.9</div>
+            <div class="stat-label">avaliação média</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───── MENU ───── -->
+  <section id="menu">
+    <div class="menu-inner">
+      <div class="menu-header">
+        <h2 class="menu-title reveal">Nosso<br><span>Cardápio</span></h2>
+        <p style="color:rgba(255,255,255,.45); font-size:15px; max-width:280px; line-height:1.6;" class="reveal">
+          Do clássico ao especial — tudo feito com ingredientes selecionados.
+        </p>
+      </div>
+
+      <div class="tab-row">
+        <button class="tab active" data-cat="burgers">🍔 Burgers</button>
+        <button class="tab" data-cat="acai">🍧 Açaí</button>
+        <button class="tab" data-cat="sorvetes">🍦 Sorvetes</button>
+        <button class="tab" data-cat="combos">🎉 Combos</button>
+      </div>
+
+      <!-- BURGERS -->
+      <div class="cards-grid" id="cat-burgers">
+        <div class="menu-card reveal">
+          <img class="menu-card-img" src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80" alt="Classic Smash" loading="lazy">
+          <div class="menu-card-body">
+            <div class="menu-card-name">Classic Smash</div>
+            <div class="menu-card-desc">Blend artesanal 180g, queijo americano, picles crocante, mostarda e ketchup defumado no brioche tostado.</div>
+            <div class="menu-card-footer">
+              <div class="menu-card-price">R$ 29,90</div>
+              <div class="menu-card-badge">Popular</div>
+            </div>
+          </div>
+        </div>
+        <div class="menu-card reveal" style="transition-delay:.1s">
+          <img class="menu-card-img" src="https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?auto=format&fit=crop&w=600&q=80" alt="Double Bacon" loading="lazy">
+          <div class="menu-card-body">
+            <div class="menu-card-name">Double Bacon</div>
+            <div class="menu-card-desc">Dois blends de 150g, bacon crocante, cheddar fundido, cebola roxa e molho barbecue da casa.</div>
+            <div class="menu-card-footer">
+              <div class="menu-card-price">R$ 39,90</div>
+              <div class="menu-card-badge">Favorito</div>
+            </div>
+          </div>
+        </div>
+        <div class="menu-card reveal" style="transition-delay:.2s">
+          <img class="menu-card-img" src="https://images.unsplash.com/photo-1565299507177-b0ac66763828?auto=format&fit=crop&w=600&q=80" alt="Point Especial" loading="lazy">
+          <div class="menu-card-body">
+            <div class="menu-card-name">Point Especial</div>
+            <div class="menu-card-desc">O carro-chefe: blend 220g, ovo frito, cebola caramelizada, rúcula fresca e maionese trufada.</div>
+            <div class="menu-card-footer">
+              <div class="menu-card-price">R$ 45,90</div>
+              <div class="menu-card-badge">Destaque</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AÇAÍ (hidden by default) -->
+      <div class="cards-grid" id="cat-acai" style="display:none">
+        <div class="menu-card reveal">
+          <img class="menu-card-img" src="https://images.unsplash.com/photo-1590301157890-4810ed352733?auto=format&fit=crop&w=600&q=80" alt="Açaí Tradicional" loading="lazy">
+          <div class="menu-card-body">
+            <div class="menu-card-name">Açaí Tradicional</div>
+            <div class="menu-card-desc">Açaí puro batido na hora, granola crocante, banana e mel. 400ml.</div>
+            <div class="menu-card-footer">
+              <div class="menu-card-price">R$ 18,90</div>
+              <div class="menu-card-badge">Clássico</div>
+            </div>
+          </div>
+        </div>
+        <div class="menu-card reveal" style="transition-delay:.1s">
+          <img class="menu-card-img" src="https://images.unsplash.com/photo-1590301157890-4810ed352733?auto=format&fit=crop&w=600&q=80" alt="Açaí Premium" loading="lazy">
+          <div class="menu-card-body">
+            <div class="menu-card-name">Açaí Premium</div>
+            <div class="menu-card-desc">Açaí com leite condensado, morango fresco, granola, Nutella e leite em pó. 500ml.</div>
+            <div class="menu-card-footer">
+              <div class="menu-card-price">R$ 26,90</div>
+              <div class="menu-card-badge">Premium</div>
+            </div>
+          </div>
+        </div>
+        <div class="menu-card reveal" style="transition-delay:.2s">
+          <img class="menu-card-img" src="https://images.unsplash.com/photo-1590301157890-4810ed352733?auto=format&fit=crop&w=600&q=80" alt="Açaí Fit" loading="lazy">
+          <div class="menu-card-body">
+            <div class="menu-card-name">Açaí Fit</div>
+            <div class="menu-card-desc">Açaí puro sem adição de açúcar, granola sem glúten, blueberry e chia. 400ml.</div>
+            <div class="menu-card-footer">
+              <div class="menu-card-price">R$ 22,90</div>
+              <div class="menu-card-badge">Saudável</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SORVETES (hidden) -->
+      <div class="cards-grid" id="cat-sorvetes" style="display:none">
+        <div class="menu-card reveal">
+          <img class="menu-card-img" src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=600&q=80" alt="Sorvete Artesanal" loading="lazy">
+          <div class="menu-card-body">
+            <div class="menu-card-name">Casquinha Dupla</div>
+            <div class="menu-card-desc">Duas bolas de sorvete artesanal à sua escolha na casquinha crocante. +15 sabores.</div>
+            <div class="menu-card-footer">
+              <div class="menu-card-price">R$ 12,90</div>
+              <div class="menu-card-badge">Clássico</div>
+            </div>
+          </div>
+        </div>
+        <div class="menu-card reveal" style="transition-delay:.1s">
+          <img class="menu-card-img" src="https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=600&q=80" alt="Milkshake" loading="lazy">
+          <div class="menu-card-body">
+            <div class="menu-card-name">Milkshake Especial</div>
+            <div class="menu-card-desc">Shake cremoso feito com sorvete artesanal e leite gelado. Sabores: chocolate, morango e baunilha.</div>
+            <div class="menu-card-footer">
+              <div class="menu-card-price">R$ 19,90</div>
+              <div class="menu-card-badge">Favorito</div>
+            </div>
+          </div>
+        </div>
+        <div class="menu-card reveal" style="transition-delay:.2s">
+          <img class="menu-card-img" src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=600&q=80" alt="Sundae" loading="lazy">
+          <div class="menu-card-body">
+            <div class="menu-card-name">Sundae da Casa</div>
+            <div class="menu-card-desc">Sorvete artesanal com calda quente de chocolate, amendoim torrado e chantilly.</div>
+            <div class="menu-card-footer">
+              <div class="menu-card-price">R$ 16,90</div>
+              <div class="menu-card-badge">Especial</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- COMBOS (hidden) -->
+      <div class="cards-grid" id="cat-combos" style="display:none">
+        <div class="menu-card reveal">
+          <img class="menu-card-img" src="https://images.unsplash.com/photo-1553979459-d2229ba7433b?auto=format&fit=crop&w=600&q=80" alt="Combo Família" loading="lazy">
+          <div class="menu-card-body">
+            <div class="menu-card-name">Combo Família</div>
+            <div class="menu-card-desc">2 Classic Smash + 2 porções de fritas + 2 refris. Perfeito pra compartilhar.</div>
+            <div class="menu-card-footer">
+              <div class="menu-card-price">R$ 79,90</div>
+              <div class="menu-card-badge">Economia</div>
+            </div>
+          </div>
+        </div>
+        <div class="menu-card reveal" style="transition-delay:.1s">
+          <img class="menu-card-img" src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80" alt="Combo Point" loading="lazy">
+          <div class="menu-card-body">
+            <div class="menu-card-name">Combo Point</div>
+            <div class="menu-card-desc">Point Especial + fritas crocantes + açaí 300ml. A combinação perfeita.</div>
+            <div class="menu-card-footer">
+              <div class="menu-card-price">R$ 59,90</div>
+              <div class="menu-card-badge">Destaque</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───── GALLERY ───── -->
+  <section id="gallery">
+    <p class="section-label reveal">Galeria</p>
+    <div class="divider"></div>
+    <h2 class="section-title reveal">Cada foto conta<br>uma <span style="color:var(--primary)">história</span></h2>
+
+    <div class="bento">
+      <div class="bento-cell b1 reveal">
+        <img src="https://images.unsplash.com/photo-1553979459-d2229ba7433b?auto=format&fit=crop&w=1000&q=80" alt="Hambúrguer artesanal" loading="lazy">
+      </div>
+      <div class="bento-cell b2 reveal" style="transition-delay:.12s">
+        <img src="https://images.unsplash.com/photo-1590301157890-4810ed352733?auto=format&fit=crop&w=600&q=80" alt="Açaí premium" loading="lazy">
+      </div>
+      <div class="bento-cell b3 reveal" style="transition-delay:.24s">
+        <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=600&q=80" alt="Sorvete artesanal" loading="lazy">
+      </div>
+      <div class="bento-cell b4 reveal" style="transition-delay:.36s">
+        <img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=600&q=80" alt="Milkshake especial" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- ───── REVIEWS ───── -->
+  <section id="reviews">
+    <div class="reviews-inner">
+      <p class="section-label reveal">Depoimentos</p>
+      <div class="divider"></div>
+      <h2 class="section-title reveal">O que os clientes<br><span style="color:var(--primary)">falam de nós</span></h2>
+
+      <div class="reviews-grid">
+        <div class="review-card reveal">
+          <div class="review-quote">"</div>
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"O melhor hambúrguer que já comi! O blend de carne é incrível e a maionese trufada faz toda a diferença. Virei cliente fiel!"</p>
+          <div class="review-author">Ana Paula S.</div>
+          <div class="review-role">Cliente desde 2023</div>
+        </div>
+        <div class="review-card reveal" style="transition-delay:.1s">
+          <div class="review-quote">"</div>
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"Fui pro açaí e acabei pedindo o burger também — não me arrependo! Tudo fresquíssimo e o atendimento é nota 10."</p>
+          <div class="review-author">Carlos M.</div>
+          <div class="review-role">Cliente desde 2024</div>
+        </div>
+        <div class="review-card reveal" style="transition-delay:.2s">
+          <div class="review-quote">"</div>
+          <div class="review-stars">★★★★★</div>
+          <p class="review-text">"O sorvete artesanal deles é uma coisa à parte. O milkshake de chocolate é de outro nível. Indico demais pra todo mundo!"</p>
+          <div class="review-author">Fernanda R.</div>
+          <div class="review-role">Cliente desde 2023</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───── CONTACT ───── -->
+  <section id="contact">
+    <div class="contact-inner">
+      <div class="contact-grid">
+
+        <div class="reveal-left">
+          <p class="section-label" style="color:rgba(255,255,255,.38)">Onde estamos</p>
+          <h2 class="contact-title">Venha nos<br><span>visitar</span></h2>
+
+          <div class="contact-items">
+            <div class="ci">
+              <div class="ci-icon">📍</div>
+              <div>
+                <div class="ci-lbl">Endereço</div>
+                <div class="ci-val">Rua dos Sabores, 123<br>Centro — Sua Cidade, SP</div>
+              </div>
+            </div>
+            <div class="ci">
+              <div class="ci-icon">📱</div>
+              <div>
+                <div class="ci-lbl">WhatsApp / Telefone</div>
+                <div class="ci-val">(11) 99999-9999</div>
+              </div>
+            </div>
+            <div class="ci">
+              <div class="ci-icon">📸</div>
+              <div>
+                <div class="ci-lbl">Instagram</div>
+                <div class="ci-val">@pointdoburguer</div>
+              </div>
+            </div>
+          </div>
+
+          <a href="https://wa.me/5511999999999" class="wa-big">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.122 1.532 5.857L0 24l6.334-1.518A11.934 11.934 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818c-1.95 0-3.764-.527-5.318-1.442l-.38-.226-3.753.899.935-3.645-.249-.394A9.818 9.818 0 012.182 12C2.182 6.578 6.578 2.182 12 2.182S21.818 6.578 21.818 12 17.422 21.818 12 21.818z"/></svg>
+            Pedir pelo WhatsApp
+          </a>
+        </div>
+
+        <div class="reveal-right">
+          <div class="hours-card">
+            <div class="hours-title">Horários de funcionamento</div>
+            <div class="hours-row"><span class="hours-day">Segunda-feira</span><span class="hours-time closed">Fechado</span></div>
+            <div class="hours-row"><span class="hours-day">Terça – Quinta</span><span class="hours-time">18h – 23h</span></div>
+            <div class="hours-row"><span class="hours-day">Sexta-feira</span><span class="hours-time">17h – 00h</span></div>
+            <div class="hours-row"><span class="hours-day">Sábado</span><span class="hours-time">12h – 00h</span></div>
+            <div class="hours-row"><span class="hours-day">Domingo</span><span class="hours-time">12h – 22h</span></div>
+          </div>
+
+          <div class="map-placeholder">
+            <div class="emoji">📍</div>
+            <div class="addr">Rua dos Sabores, 123<br>Centro — Sua Cidade, SP</div>
+            <a href="https://maps.google.com" target="_blank" rel="noopener" class="map-link">Abrir no Google Maps →</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ───── FOOTER ───── -->
+  <footer>
+    <div class="foot-logo">Point<span>.</span></div>
+    <p class="foot-copy">© 2025 Point do Burguer Açaí e Sorveteria — Todos os direitos reservados</p>
+  </footer>
+
+  <!-- ───── WhatsApp Float ───── -->
+  <a href="https://wa.me/5511999999999" class="wa-float" target="_blank" aria-label="Fale pelo WhatsApp">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.122 1.532 5.857L0 24l6.334-1.518A11.934 11.934 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818c-1.95 0-3.764-.527-5.318-1.442l-.38-.226-3.753.899.935-3.645-.249-.394A9.818 9.818 0 012.182 12C2.182 6.578 6.578 2.182 12 2.182S21.818 6.578 21.818 12 17.422 21.818 12 21.818z"/>
+    </svg>
+  </a>
+
+  <script>
+    // ── Nav scroll
+    const nav = document.getElementById('mainnav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 50);
+    }, { passive: true });
+
+    // ── Scroll reveal
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('vis'); }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
+
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale')
+      .forEach(el => obs.observe(el));
+
+    // ── Menu tabs
+    const tabs = document.querySelectorAll('.tab');
+    const cats = { burgers: 'cat-burgers', acai: 'cat-acai', sorvetes: 'cat-sorvetes', combos: 'cat-combos' };
+
+    tabs.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        btn.classList.add('active');
+        const cat = btn.dataset.cat;
+        Object.values(cats).forEach(id => {
+          document.getElementById(id).style.display = 'none';
+        });
+        const target = document.getElementById(cats[cat]);
+        target.style.display = 'grid';
+        // Re-trigger reveal for newly visible cards
+        target.querySelectorAll('.reveal').forEach(el => {
+          el.classList.remove('vis');
+          setTimeout(() => obs.observe(el), 10);
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>
