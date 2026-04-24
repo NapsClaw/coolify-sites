@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mello's Serviços — Serralheria, Funilaria e Portões Automáticos</title>
+  <meta name="description" content="Mello's Serviços: serralheria, funilaria, automatizador de portão e portas automáticas de enrolar. Qualidade e resistência em metal. Fale com Manoel Mello." />
+  <meta property="og:title" content="Mello's Serviços — Serralheria & Portões Automáticos" />
+  <meta property="og:description" content="Serralheria, funilaria, automatizador de portão e portas automáticas de enrolar. Orçamento no WhatsApp." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚙️</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,600;12..96,800;12..96,900&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --primary: #0C0C0C;
+      --accent: #E85D04;
+      --accent-light: #F97316;
+      --bg: #F2EDE6;
+      --bg-2: #E8E0D5;
+      --text: #0C0C0C;
+      --steel: #6B7280;
+      --steel-light: #9CA3AF;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-weight: 300;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, .display {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+    }
+
+    /* ---- Noise texture overlay ---- */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.35;
+    }
+
+    /* ---- Scroll reveal ---- */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s cubic-bezier(.22,1,.36,1), transform 0.7s cubic-bezier(.22,1,.36,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ---- NAV ---- */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(to bottom, rgba(12,12,12,0.85) 0%, transparent 100%);
+      backdrop-filter: blur(2px);
+    }
+    .nav-logo {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: 1.1rem;
+      color: #fff;
+      letter-spacing: -0.02em;
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--accent-light); }
+    .nav-cta {
+      background: var(--accent);
+      color: #fff;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 10px 20px;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .nav-cta:hover { background: var(--accent-light); transform: translateY(-1px); }
+
+    /* ---- HERO ---- */
+    #hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 24px 64px;
+      overflow: hidden;
+      background: var(--primary);
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1400&q=80');
+      background-size: cover;
+      background-position: center 40%;
+      opacity: 0.4;
+      animation: heroZoom 12s ease-out forwards;
+    }
+    @keyframes heroZoom {
+      from { transform: scale(1.08); }
+      to { transform: scale(1); }
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        170deg,
+        rgba(12,12,12,0.2) 0%,
+        rgba(12,12,12,0.6) 60%,
+        rgba(12,12,12,0.95) 100%
+      );
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 900px;
+    }
+    .hero-tag {
+      display: inline-block;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-weight: 500;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      border: 1px solid rgba(249,115,22,0.4);
+      padding: 6px 14px;
+      border-radius: 1px;
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeSlideUp 0.8s 0.3s cubic-bezier(.22,1,.36,1) forwards;
+    }
+    .hero-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: clamp(3rem, 12vw, 8rem);
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      color: #fff;
+      margin-bottom: 24px;
+      opacity: 0;
+      animation: fadeSlideUp 0.8s 0.5s cubic-bezier(.22,1,.36,1) forwards;
+    }
+    .hero-title em {
+      font-style: normal;
+      color: var(--accent-light);
+      display: block;
+    }
+    .hero-sub {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.6);
+      font-weight: 300;
+      max-width: 420px;
+      line-height: 1.6;
+      margin-bottom: 40px;
+      opacity: 0;
+      animation: fadeSlideUp 0.8s 0.7s cubic-bezier(.22,1,.36,1) forwards;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeSlideUp 0.8s 0.9s cubic-bezier(.22,1,.36,1) forwards;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--accent);
+      color: #fff;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 16px 32px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+      min-height: 52px;
+    }
+    .btn-primary:hover {
+      background: var(--accent-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(232,93,4,0.4);
+    }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: transparent;
+      color: rgba(255,255,255,0.8);
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 16px 32px;
+      border: 1px solid rgba(255,255,255,0.2);
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+      min-height: 52px;
+    }
+    .btn-secondary:hover { border-color: rgba(255,255,255,0.6); color: #fff; }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 32px;
+      right: 24px;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      animation: fadeIn 1s 1.5s forwards;
+    }
+    .hero-scroll span {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      writing-mode: vertical-rl;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.3), transparent);
+      animation: scrollLine 2s 2s ease-in-out infinite;
+    }
+    @keyframes scrollLine {
+      0%, 100% { transform: scaleY(1); opacity: 0.5; }
+      50% { transform: scaleY(0.4); opacity: 0.2; }
+    }
+
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* ---- STRIPE ---- */
+    .accent-stripe {
+      background: var(--accent);
+      padding: 14px 24px;
+      overflow: hidden;
+    }
+    .stripe-track {
+      display: flex;
+      gap: 48px;
+      animation: marquee 20s linear infinite;
+      white-space: nowrap;
+    }
+    .stripe-item {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .stripe-item::before { content: '⚙ '; }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ---- SERVICES ---- */
+    #servicos {
+      background: var(--primary);
+      padding: 80px 24px;
+    }
+    .section-label {
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-weight: 500;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: clamp(2rem, 7vw, 4rem);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: #fff;
+      margin-bottom: 56px;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+    @media (min-width: 640px) {
+      .services-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (min-width: 1024px) {
+      .services-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+    .service-card {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 3/4;
+      cursor: pointer;
+      group: '';
+    }
+    .service-card-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(.22,1,.36,1);
+      filter: grayscale(60%) brightness(0.6);
+    }
+    .service-card:hover .service-card-img {
+      transform: scale(1.05);
+      filter: grayscale(20%) brightness(0.7);
+    }
+    .service-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(12,12,12,0.95) 0%, rgba(12,12,12,0.3) 60%, transparent 100%);
+      transition: background 0.4s;
+    }
+    .service-card:hover .service-card-overlay {
+      background: linear-gradient(to top, rgba(232,93,4,0.7) 0%, rgba(12,12,12,0.5) 60%, transparent 100%);
+    }
+    .service-card-content {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 28px 24px;
+    }
+    .service-number {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      color: var(--accent-light);
+      margin-bottom: 10px;
+    }
+    .service-name {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: 1.3rem;
+      color: #fff;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+    }
+    .service-desc {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.5;
+      font-weight: 300;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, opacity 0.4s;
+      opacity: 0;
+    }
+    .service-card:hover .service-desc {
+      max-height: 80px;
+      opacity: 1;
+    }
+
+    /* ---- ABOUT ---- */
+    #sobre {
+      background: var(--bg);
+      padding: 80px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    #sobre::before {
+      content: 'METAL';
+      position: absolute;
+      right: -40px;
+      top: 50%;
+      transform: translateY(-50%) rotate(90deg);
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: clamp(6rem, 20vw, 14rem);
+      color: rgba(12,12,12,0.04);
+      letter-spacing: -0.05em;
+      pointer-events: none;
+      user-select: none;
+    }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 48px;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    @media (min-width: 768px) {
+      .about-grid { grid-template-columns: 1fr 1fr; gap: 80px; }
+    }
+    .about-img-wrap {
+      position: relative;
+    }
+    .about-img {
+      width: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      filter: grayscale(30%);
+    }
+    .about-img-accent {
+      position: absolute;
+      bottom: -16px;
+      right: -16px;
+      width: 100px;
+      height: 100px;
+      background: var(--accent);
+      z-index: -1;
+    }
+    .about-badge {
+      position: absolute;
+      top: 24px;
+      left: -12px;
+      background: var(--primary);
+      color: #fff;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 10px 18px;
+    }
+    .about-text .section-label { color: var(--accent); }
+    .about-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-bottom: 24px;
+    }
+    .about-body {
+      font-size: 0.95rem;
+      line-height: 1.75;
+      color: #4B5563;
+      margin-bottom: 32px;
+    }
+    .about-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      border-top: 1px solid var(--bg-2);
+      padding-top: 32px;
+    }
+    .stat-num {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: 2rem;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--steel);
+      letter-spacing: 0.05em;
+      font-weight: 400;
+      margin-top: 4px;
+    }
+
+    /* ---- DIFERENCIAIS ---- */
+    #diferenciais {
+      background: var(--bg-2);
+      padding: 64px 24px;
+    }
+    .diff-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    @media (min-width: 640px) {
+      .diff-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 1024px) {
+      .diff-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    .diff-item {
+      background: var(--bg);
+      padding: 36px 28px;
+      border-left: 3px solid transparent;
+      transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    }
+    .diff-item:hover {
+      border-left-color: var(--accent);
+      transform: translateX(4px);
+      box-shadow: -4px 0 0 var(--accent), 4px 8px 24px rgba(12,12,12,0.08);
+    }
+    .diff-icon {
+      font-size: 1.8rem;
+      margin-bottom: 16px;
+    }
+    .diff-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      font-size: 1.05rem;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+    .diff-text {
+      font-size: 0.85rem;
+      color: var(--steel);
+      line-height: 1.6;
+    }
+
+    /* ---- CONTACT ---- */
+    #contato {
+      background: var(--primary);
+      padding: 80px 24px 64px;
+      position: relative;
+      overflow: hidden;
+    }
+    #contato::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--accent);
+    }
+    .contact-inner {
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .contact-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: clamp(2rem, 8vw, 4.5rem);
+      line-height: 1;
+      letter-spacing: -0.03em;
+      color: #fff;
+      margin-bottom: 24px;
+    }
+    .contact-title span { color: var(--accent-light); }
+    .contact-sub {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.7;
+      margin-bottom: 48px;
+    }
+    .contact-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      background: #25D366;
+      color: #fff;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      padding: 20px 44px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+      min-height: 64px;
+    }
+    .contact-btn:hover {
+      background: #1ebe5d;
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(37,211,102,0.35);
+    }
+    .contact-info {
+      margin-top: 56px;
+      padding-top: 40px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      text-align: left;
+    }
+    @media (min-width: 600px) {
+      .contact-info { grid-template-columns: repeat(2, 1fr); }
+    }
+    .contact-info-item {
+      display: flex;
+      gap: 14px;
+    }
+    .contact-info-icon {
+      width: 40px;
+      height: 40px;
+      background: rgba(255,255,255,0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 1.1rem;
+    }
+    .contact-info-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 4px;
+    }
+    .contact-info-value {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.75);
+      font-weight: 400;
+    }
+
+    /* ---- FOOTER ---- */
+    footer {
+      background: #070707;
+      padding: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: gap;
+      gap: 12px;
+    }
+    .footer-logo {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.3);
+    }
+    .footer-logo span { color: var(--accent); }
+    .footer-copy {
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.2);
+    }
+
+    /* ---- WhatsApp FAB ---- */
+    .whatsapp-fab {
+      position: fixed;
+      bottom: 28px;
+      right: 24px;
+      z-index: 999;
+      width: 60px;
+      height: 60px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      animation: waPulse 3s 2s ease-in-out infinite;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .whatsapp-fab:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 24px rgba(37,211,102,0.5);
+      animation: none;
+    }
+    .whatsapp-fab svg { width: 28px; height: 28px; }
+    @keyframes waPulse {
+      0%, 100% { box-shadow: 0 4px 12px rgba(0,0,0,0.25), 0 0 0 0 rgba(37,211,102,0.4); }
+      50% { box-shadow: 0 4px 12px rgba(0,0,0,0.25), 0 0 0 12px rgba(37,211,102,0); }
+    }
+
+    /* ---- Responsive ---- */
+    @media (min-width: 768px) {
+      #hero { padding: 0 48px 80px; }
+      #servicos { padding: 100px 48px; }
+      #sobre { padding: 100px 48px; }
+      #diferenciais { padding: 80px 48px; }
+      #contato { padding: 100px 48px 80px; }
+    }
+    @media (min-width: 1280px) {
+      #hero { padding: 0 80px 100px; }
+      #servicos { padding: 120px 80px; }
+      #sobre { padding: 120px 80px; }
+      #diferenciais { padding: 100px 80px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">MELLO'S<span>.</span></a>
+    <a href="https://wa.me/555192787279" class="nav-cta">Orçamento grátis</a>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-tag">Serralheria & Automação</div>
+      <h1 class="hero-title">
+        Mello's
+        <em>Serviços</em>
+      </h1>
+      <p class="hero-sub">Serralheria, funilaria e portões automáticos — trabalho em metal com precisão e durabilidade.</p>
+      <div class="hero-actions">
+        <a href="https://wa.me/555192787279" class="btn-primary">
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Pedir orçamento
+        </a>
+        <a href="#servicos" class="btn-secondary">Ver serviços</a>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      <span>scroll</span>
+    </div>
+  </section>
+
+  <!-- STRIPE -->
+  <div class="accent-stripe">
+    <div class="stripe-track">
+      <span class="stripe-item">Serralheria</span>
+      <span class="stripe-item">Funilaria</span>
+      <span class="stripe-item">Portão Automático</span>
+      <span class="stripe-item">Portas de Enrolar</span>
+      <span class="stripe-item">Atendimento Rápido</span>
+      <span class="stripe-item">Orçamento Grátis</span>
+      <span class="stripe-item">Serralheria</span>
+      <span class="stripe-item">Funilaria</span>
+      <span class="stripe-item">Portão Automático</span>
+      <span class="stripe-item">Portas de Enrolar</span>
+      <span class="stripe-item">Atendimento Rápido</span>
+      <span class="stripe-item">Orçamento Grátis</span>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section id="servicos">
+    <div style="max-width:1400px;margin:0 auto">
+      <div class="reveal">
+        <p class="section-label">O que fazemos</p>
+        <h2 class="section-title">Nossos<br/>serviços</h2>
+      </div>
+      <div class="services-grid">
+        <div class="service-card reveal reveal-delay-1">
+          <img
+            class="service-card-img"
+            src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=600&q=80"
+            alt="Serralheria"
+            loading="lazy"
+          />
+          <div class="service-card-overlay"></div>
+          <div class="service-card-content">
+            <div class="service-number">01</div>
+            <div class="service-name">Serralheria</div>
+            <div class="service-desc">Grades, portões, escadas, corrimãos e estruturas metálicas sob medida com acabamento de qualidade.</div>
+          </div>
+        </div>
+        <div class="service-card reveal reveal-delay-2">
+          <img
+            class="service-card-img"
+            src="https://images.unsplash.com/photo-1590959651373-a3db0f38a961?w=600&q=80"
+            alt="Funilaria"
+            loading="lazy"
+          />
+          <div class="service-card-overlay"></div>
+          <div class="service-card-content">
+            <div class="service-number">02</div>
+            <div class="service-name">Funilaria</div>
+            <div class="service-desc">Calhas, rufos, forros metálicos e coberturas em chapa galvanizada com instalação precisa.</div>
+          </div>
+        </div>
+        <div class="service-card reveal reveal-delay-3">
+          <img
+            class="service-card-img"
+            src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80"
+            alt="Automatizador de Portão"
+            loading="lazy"
+          />
+          <div class="service-card-overlay"></div>
+          <div class="service-card-content">
+            <div class="service-number">03</div>
+            <div class="service-name">Automatizador de Portão</div>
+            <div class="service-desc">Instalação e manutenção de motores e kits de automação para portões deslizantes e basculantes.</div>
+          </div>
+        </div>
+        <div class="service-card reveal reveal-delay-4">
+          <img
+            class="service-card-img"
+            src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=600&q=80"
+            alt="Portas Automáticas de Enrolar"
+            loading="lazy"
+          />
+          <div class="service-card-overlay"></div>
+          <div class="service-card-content">
+            <div class="service-number">04</div>
+            <div class="service-name">Portas de Enrolar</div>
+            <div class="service-desc">Portas automáticas de enrolar para garagens, comércios e galpões — resistentes e de fácil operação.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="sobre">
+    <div class="about-grid">
+      <div class="about-img-wrap reveal">
+        <div class="about-badge">Manoel Mello</div>
+        <img
+          class="about-img"
+          src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=700&q=80"
+          alt="Manoel Mello — Mello's Serviços"
+          loading="lazy"
+        />
+        <div class="about-img-accent"></div>
+      </div>
+      <div class="about-text reveal reveal-delay-1">
+        <p class="section-label">Quem somos</p>
+        <h2 class="about-title">Precisão no metal,<br/>qualidade garantida</h2>
+        <p class="about-body">
+          A Mello's Serviços é especializada em trabalhos de serralheria, funilaria e automação de portões e portas. Liderada por Manoel Mello, a empresa atende residências, comércios e indústrias com agilidade, materiais de primeira linha e acabamento impecável.
+        </p>
+        <p class="about-body">
+          Do projeto à instalação, cada detalhe é executado com cuidado para garantir durabilidade e a satisfação total do cliente.
+        </p>
+        <div class="about-stats">
+          <div>
+            <div class="stat-num">+8</div>
+            <div class="stat-label">Anos de<br/>experiência</div>
+          </div>
+          <div>
+            <div class="stat-num">+500</div>
+            <div class="stat-label">Projetos<br/>entregues</div>
+          </div>
+          <div>
+            <div class="stat-num">100%</div>
+            <div class="stat-label">Garantia no<br/>serviço</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIFERENCIAIS -->
+  <section id="diferenciais">
+    <div style="max-width:1200px;margin:0 auto">
+      <div class="reveal" style="text-align:center;margin-bottom:48px">
+        <p class="section-label" style="color:var(--accent);text-align:center">Por que nos escolher</p>
+        <h2 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:900;font-size:clamp(1.8rem,5vw,3rem);letter-spacing:-0.03em;color:var(--text)">Nossos diferenciais</h2>
+      </div>
+      <div class="diff-grid">
+        <div class="diff-item reveal reveal-delay-1">
+          <div class="diff-icon">⚡</div>
+          <div class="diff-title">Atendimento rápido</div>
+          <div class="diff-text">Orçamento sem compromisso e prazo de execução ágil para não deixar você esperando.</div>
+        </div>
+        <div class="diff-item reveal reveal-delay-2">
+          <div class="diff-icon">🔩</div>
+          <div class="diff-title">Materiais de qualidade</div>
+          <div class="diff-text">Utilizamos apenas materiais de primeira linha, garantindo resistência e durabilidade no longo prazo.</div>
+        </div>
+        <div class="diff-item reveal reveal-delay-3">
+          <div class="diff-icon">🛡️</div>
+          <div class="diff-title">Garantia no serviço</div>
+          <div class="diff-text">Todo serviço executado tem garantia. Qualquer problema, a gente resolve sem custo adicional.</div>
+        </div>
+        <div class="diff-item reveal reveal-delay-1">
+          <div class="diff-icon">📐</div>
+          <div class="diff-title">Trabalho sob medida</div>
+          <div class="diff-text">Fabricamos e instalamos conforme as dimensões exatas do seu espaço. Sem adaptações, sem gambiarra.</div>
+        </div>
+        <div class="diff-item reveal reveal-delay-2">
+          <div class="diff-icon">💬</div>
+          <div class="diff-title">Comunicação direta</div>
+          <div class="diff-text">Você fala diretamente com o responsável. Sem intermediários, sem ruído na comunicação.</div>
+        </div>
+        <div class="diff-item reveal reveal-delay-3">
+          <div class="diff-icon">🏠</div>
+          <div class="diff-title">Residencial e comercial</div>
+          <div class="diff-text">Atendemos desde casas até grandes galpões comerciais e industriais com a mesma dedicação.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contato">
+    <div class="contact-inner">
+      <div class="reveal">
+        <p class="section-label" style="color:var(--accent-light);text-align:center;margin-bottom:16px">Fale conosco</p>
+        <h2 class="contact-title">Peça seu<br/><span>orçamento</span></h2>
+        <p class="contact-sub">Mande uma mensagem agora mesmo. Atendemos rapidamente e sem compromisso.</p>
+        <a href="https://wa.me/555192787279" class="contact-btn">
+          <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Chamar no WhatsApp
+        </a>
+      </div>
+      <div class="contact-info reveal reveal-delay-1">
+        <div class="contact-info-item">
+          <div class="contact-info-icon">📱</div>
+          <div>
+            <div class="contact-info-label">WhatsApp / Telefone</div>
+            <div class="contact-info-value">(51) 92787-279</div>
+          </div>
+        </div>
+        <div class="contact-info-item">
+          <div class="contact-info-icon">⚙️</div>
+          <div>
+            <div class="contact-info-label">Especialidades</div>
+            <div class="contact-info-value">Serralheria · Funilaria · Automação</div>
+          </div>
+        </div>
+        <div class="contact-info-item">
+          <div class="contact-info-icon">🕐</div>
+          <div>
+            <div class="contact-info-label">Horário</div>
+            <div class="contact-info-value">Seg–Sex 8h–18h · Sáb 8h–12h</div>
+          </div>
+        </div>
+        <div class="contact-info-item">
+          <div class="contact-info-icon">🏙️</div>
+          <div>
+            <div class="contact-info-label">Atendimento</div>
+            <div class="contact-info-value">Região de Porto Alegre / RS</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">MELLO'S<span>.</span></div>
+    <div class="footer-copy">© 2025 Mello's Serviços. Todos os direitos reservados.</div>
+  </footer>
+
+  <!-- WhatsApp FAB -->
+  <a href="https://wa.me/555192787279" class="whatsapp-fab" aria-label="Chamar no WhatsApp">
+    <svg fill="#fff" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+
+  <script>
+    // Scroll reveal
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
