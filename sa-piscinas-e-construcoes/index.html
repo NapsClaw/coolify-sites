@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>S.A Piscinas e Construções | Piscinas, Reformas e Equipamentos</title>
+  <meta name="description" content="S.A Piscinas e Construções — construção de piscinas, venda de equipamentos e reformas em geral. Qualidade e confiança em cada projeto." />
+  <meta property="og:title" content="S.A Piscinas e Construções" />
+  <meta property="og:description" content="Construção de piscinas, equipamentos e reformas. Transformamos espaços com qualidade e dedicação." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏊</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,700;1,9..144,900&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    :root {
+      --bg: #EEF0EB;
+      --dark: #0B1821;
+      --navy: #112337;
+      --accent: #1EC8B8;
+      --accent-dim: rgba(30,200,184,0.15);
+      --gold: #C9A057;
+      --text: #0B1821;
+      --text-muted: #556070;
+      --border: rgba(11,24,33,0.10);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE TEXTURE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      opacity: 0.4;
+    }
+
+    /* ── TYPOGRAPHY ── */
+    .display { font-family: 'Fraunces', serif; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; } to { opacity: 1; }
+    }
+    @keyframes waterShimmer {
+      0%, 100% { background-position: 0% 50%; }
+      50%       { background-position: 100% 50%; }
+    }
+    @keyframes pulse-wa {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(37,211,102,0.5); }
+      50%       { box-shadow: 0 0 0 14px rgba(37,211,102,0); }
+    }
+    @keyframes lineGrow {
+      from { width: 0; } to { width: 64px; }
+    }
+    @keyframes heroFloat {
+      0%, 100% { transform: scale(1.05) translateY(0); }
+      50%       { transform: scale(1.05) translateY(-8px); }
+    }
+    @keyframes revealMask {
+      from { clip-path: inset(0 100% 0 0); }
+      to   { clip-path: inset(0 0% 0 0); }
+    }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      padding: 18px 32px;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: background 0.4s ease, backdrop-filter 0.4s ease;
+    }
+    nav.scrolled {
+      background: rgba(11,24,33,0.92);
+      backdrop-filter: blur(12px);
+    }
+    .nav-logo {
+      font-family: 'Fraunces', serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.02em;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links {
+      display: flex; gap: 32px; list-style: none;
+    }
+    .nav-links a {
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    @media (max-width: 640px) {
+      nav { padding: 16px 20px; }
+      .nav-links { display: none; }
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative; height: 100dvh; min-height: 600px;
+      overflow: hidden; display: flex; align-items: flex-end;
+    }
+    .hero-img {
+      position: absolute; inset: 0;
+      background: url('https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+      animation: heroFloat 12s ease-in-out infinite;
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(11,24,33,0.92) 0%,
+        rgba(11,24,33,0.45) 50%,
+        rgba(11,24,33,0.1) 100%
+      );
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      padding: 0 24px 60px;
+      max-width: 900px;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--accent);
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: fadeUp 0.6s ease 0.3s forwards;
+    }
+    .hero-eyebrow::before {
+      content: ''; display: block; width: 32px; height: 1px; background: var(--accent);
+    }
+    .hero-title {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2.8rem, 8vw, 6.5rem);
+      font-weight: 900;
+      line-height: 1.0;
+      color: #fff;
+      letter-spacing: -0.03em;
+      margin-bottom: 24px;
+    }
+    .hero-title em {
+      font-style: italic;
+      font-weight: 300;
+      color: var(--accent);
+    }
+    .hero-title .line-1 {
+      display: block; opacity: 0;
+      animation: fadeUp 0.7s ease 0.5s forwards;
+    }
+    .hero-title .line-2 {
+      display: block; opacity: 0;
+      animation: fadeUp 0.7s ease 0.7s forwards;
+    }
+    .hero-sub {
+      font-size: clamp(0.95rem, 2vw, 1.1rem);
+      color: rgba(255,255,255,0.65);
+      font-weight: 300;
+      max-width: 480px;
+      line-height: 1.7;
+      margin-bottom: 36px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.9s forwards;
+    }
+    .hero-cta {
+      display: flex; gap: 16px; flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 1.1s forwards;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--accent);
+      color: var(--dark);
+      font-weight: 700; font-size: 0.85rem;
+      letter-spacing: 0.04em; text-transform: uppercase;
+      padding: 16px 32px;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
+    }
+    .btn-primary:hover {
+      background: #fff;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(30,200,184,0.35);
+    }
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 10px;
+      border: 1px solid rgba(255,255,255,0.3);
+      color: #fff;
+      font-weight: 500; font-size: 0.85rem;
+      letter-spacing: 0.04em; text-transform: uppercase;
+      padding: 16px 32px;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: border-color 0.25s, background 0.25s;
+    }
+    .btn-outline:hover {
+      border-color: var(--accent);
+      background: rgba(30,200,184,0.08);
+    }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      background: var(--dark);
+      padding: 28px 24px;
+    }
+    .stats-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+    }
+    .stat-item {
+      text-align: center;
+      padding: 12px 20px;
+      border-right: 1px solid rgba(255,255,255,0.08);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-number {
+      font-family: 'Fraunces', serif;
+      font-size: 2.2rem; font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.72rem; font-weight: 500;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      margin-top: 6px;
+    }
+
+    /* ── SECTION LAYOUT ── */
+    section { position: relative; z-index: 1; }
+
+    .section-tag {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+    .section-tag::before {
+      content: ''; display: block; width: 24px; height: 1px; background: var(--accent);
+    }
+
+    /* ── ABOUT ── */
+    .about {
+      padding: 96px 24px;
+      max-width: 1100px; margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .about-text h2 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 900;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--dark);
+      margin-bottom: 24px;
+    }
+    .about-text h2 em {
+      font-style: italic; font-weight: 300; color: var(--gold);
+    }
+    .about-text p {
+      font-size: 1rem; line-height: 1.8;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    .about-line {
+      width: 0; height: 2px; background: var(--accent);
+      margin-bottom: 28px;
+      transition: width 1s ease 0.3s;
+    }
+    .about-line.visible { width: 64px; }
+    .about-img-wrap {
+      position: relative;
+    }
+    .about-img-wrap::before {
+      content: '';
+      position: absolute;
+      top: -16px; right: -16px;
+      width: 100%; height: 100%;
+      border: 2px solid var(--accent);
+      border-radius: 2px;
+      z-index: 0;
+      opacity: 0.4;
+    }
+    .about-img {
+      position: relative; z-index: 1;
+      width: 100%; aspect-ratio: 4/5; object-fit: cover;
+      border-radius: 2px;
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      .about { grid-template-columns: 1fr; gap: 40px; }
+      .about-img-wrap { order: -1; }
+      .about-img { aspect-ratio: 16/9; }
+    }
+
+    /* ── SERVICES ── */
+    .services-section {
+      background: var(--dark);
+      padding: 96px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .services-section::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    }
+    .services-bg-text {
+      position: absolute;
+      top: 50%; left: 50%; transform: translate(-50%, -50%);
+      font-family: 'Fraunces', serif;
+      font-size: clamp(6rem, 18vw, 18rem);
+      font-weight: 900; font-style: italic;
+      color: rgba(255,255,255,0.02);
+      white-space: nowrap;
+      pointer-events: none;
+      user-select: none;
+      letter-spacing: -0.04em;
+    }
+    .services-inner {
+      max-width: 1100px; margin: 0 auto; position: relative;
+    }
+    .services-header {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      margin-bottom: 56px; flex-wrap: wrap; gap: 20px;
+    }
+    .services-title {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+    .services-title em { font-style: italic; font-weight: 300; color: var(--accent); }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    @media (max-width: 768px) {
+      .services-grid { grid-template-columns: 1fr; }
+    }
+
+    .service-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      padding: 40px 32px;
+      cursor: default;
+      position: relative; overflow: hidden;
+      transition: background 0.3s, border-color 0.3s, transform 0.3s;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+      background: var(--accent);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+    .service-card::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at bottom left, rgba(30,200,184,0.08), transparent 70%);
+      opacity: 0; transition: opacity 0.4s;
+    }
+    .service-card:hover {
+      background: rgba(30,200,184,0.05);
+      border-color: rgba(30,200,184,0.2);
+      transform: translateY(-4px);
+    }
+    .service-card:hover::before { transform: scaleX(1); }
+    .service-card:hover::after { opacity: 1; }
+    .service-card:hover .service-icon { transform: scale(1.1) rotate(-5deg); color: var(--accent); }
+
+    .service-number {
+      font-family: 'Fraunces', serif;
+      font-size: 0.72rem; font-weight: 700;
+      color: rgba(30,200,184,0.4);
+      letter-spacing: 0.2em;
+      margin-bottom: 24px;
+    }
+    .service-icon {
+      font-size: 2.2rem; margin-bottom: 20px;
+      display: block; width: fit-content;
+      transition: transform 0.3s, color 0.3s;
+      color: rgba(255,255,255,0.5);
+    }
+    .service-name {
+      font-family: 'Fraunces', serif;
+      font-size: 1.5rem; font-weight: 700;
+      color: #fff;
+      margin-bottom: 14px;
+      line-height: 1.2;
+    }
+    .service-desc {
+      font-size: 0.9rem; line-height: 1.7;
+      color: rgba(255,255,255,0.45);
+    }
+    .service-tags {
+      margin-top: 24px; display: flex; flex-wrap: wrap; gap: 8px;
+    }
+    .service-tag {
+      font-size: 0.7rem; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 4px 10px;
+      border: 1px solid rgba(30,200,184,0.2);
+      color: rgba(30,200,184,0.7);
+      border-radius: 1px;
+    }
+
+    /* ── GALLERY ── */
+    .gallery-section {
+      padding: 96px 24px;
+      max-width: 1100px; margin: 0 auto;
+    }
+    .gallery-header {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      margin-bottom: 48px; flex-wrap: wrap; gap: 16px;
+    }
+    .gallery-title {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      color: var(--dark);
+      line-height: 1.1;
+    }
+    .gallery-title em { font-style: italic; font-weight: 300; color: var(--text-muted); }
+
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-template-rows: auto;
+      gap: 8px;
+    }
+    .bento-item {
+      overflow: hidden; border-radius: 2px;
+      position: relative;
+    }
+    .bento-item img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform 0.6s ease;
+    }
+    .bento-item:hover img { transform: scale(1.05); }
+    .bento-item::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(11,24,33,0.4), transparent 50%);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .bento-item:hover::after { opacity: 1; }
+
+    .bento-1 { grid-column: 1 / 8; grid-row: 1; min-height: 320px; }
+    .bento-2 { grid-column: 8 / 13; grid-row: 1; min-height: 320px; }
+    .bento-3 { grid-column: 1 / 5; grid-row: 2; min-height: 240px; }
+    .bento-4 { grid-column: 5 / 9; grid-row: 2; min-height: 240px; }
+    .bento-5 { grid-column: 9 / 13; grid-row: 2; min-height: 240px; }
+
+    @media (max-width: 640px) {
+      .bento-grid { grid-template-columns: 1fr 1fr; }
+      .bento-1 { grid-column: 1 / 3; min-height: 220px; }
+      .bento-2 { grid-column: 1 / 3; min-height: 180px; }
+      .bento-3 { grid-column: 1 / 2; min-height: 160px; }
+      .bento-4 { grid-column: 2 / 3; min-height: 160px; }
+      .bento-5 { grid-column: 1 / 3; min-height: 160px; }
+    }
+
+    /* ── WHY SECTION ── */
+    .why-section {
+      background: var(--navy);
+      padding: 80px 24px;
+      position: relative; overflow: hidden;
+    }
+    .why-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 2fr;
+      gap: 64px; align-items: center;
+    }
+    .why-text h2 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 900; font-style: italic;
+      color: #fff;
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+    }
+    .why-text h2 span { color: var(--accent); font-style: normal; }
+    .why-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+    .why-item {}
+    .why-icon {
+      font-size: 1.6rem; margin-bottom: 10px; display: block;
+    }
+    .why-item h3 {
+      font-family: 'Fraunces', serif;
+      font-size: 1.1rem; font-weight: 700;
+      color: #fff; margin-bottom: 8px;
+    }
+    .why-item p {
+      font-size: 0.85rem; line-height: 1.7;
+      color: rgba(255,255,255,0.45);
+    }
+
+    @media (max-width: 768px) {
+      .why-inner { grid-template-columns: 1fr; gap: 40px; }
+      .why-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 480px) {
+      .why-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── CONTACT / CTA ── */
+    .contact-section {
+      background: var(--dark);
+      padding: 100px 24px;
+      position: relative; overflow: hidden;
+    }
+    .contact-section::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+    .contact-bg {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 100%, rgba(30,200,184,0.06), transparent);
+      pointer-events: none;
+    }
+    .contact-inner {
+      max-width: 900px; margin: 0 auto;
+      text-align: center; position: relative; z-index: 1;
+    }
+    .contact-inner h2 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(2.2rem, 6vw, 5rem);
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
+    }
+    .contact-inner h2 em {
+      font-style: italic; font-weight: 300; color: var(--accent);
+    }
+    .contact-inner p {
+      font-size: 1rem; color: rgba(255,255,255,0.5);
+      max-width: 460px; margin: 0 auto 40px;
+      line-height: 1.7;
+    }
+    .contact-info {
+      display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;
+      margin-bottom: 40px;
+    }
+    .contact-chip {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.65);
+      font-size: 0.85rem; font-weight: 400;
+      padding: 10px 20px; border-radius: 999px;
+    }
+    .btn-wa-large {
+      display: inline-flex; align-items: center; gap: 14px;
+      background: #25D366;
+      color: #fff;
+      font-weight: 700; font-size: 1rem;
+      letter-spacing: 0.02em;
+      padding: 20px 48px;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
+      box-shadow: 0 8px 32px rgba(37,211,102,0.25);
+    }
+    .btn-wa-large:hover {
+      background: #1ebe5c;
+      transform: translateY(-3px);
+      box-shadow: 0 16px 40px rgba(37,211,102,0.35);
+    }
+    .btn-wa-large svg { flex-shrink: 0; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #060e15;
+      padding: 32px 24px;
+      text-align: center;
+    }
+    footer p {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.2);
+    }
+    footer strong {
+      color: rgba(255,255,255,0.4);
+      font-weight: 600;
+    }
+
+    /* ── WHATSAPP FLOAT ── */
+    .wa-float {
+      position: fixed; bottom: 28px; right: 24px; z-index: 999;
+      width: 60px; height: 60px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+      text-decoration: none;
+      animation: pulse-wa 2.5s ease-in-out infinite;
+      transition: transform 0.2s;
+    }
+    .wa-float:hover {
+      transform: scale(1.1);
+      animation: none;
+      box-shadow: 0 8px 24px rgba(37,211,102,0.4);
+    }
+
+    /* ── WATER LINE DIVIDER ── */
+    .water-divider {
+      height: 4px;
+      background: linear-gradient(90deg, var(--dark), var(--accent), var(--dark));
+      background-size: 200% 100%;
+      animation: waterShimmer 4s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <div class="nav-logo">S.A <span>Piscinas</span></div>
+    <ul class="nav-links">
+      <li><a href="#sobre">Sobre</a></li>
+      <li><a href="#servicos">Serviços</a></li>
+      <li><a href="#galeria">Galeria</a></li>
+      <li><a href="#contato">Contato</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-img"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Construção &amp; Piscinas</div>
+      <h1 class="hero-title display">
+        <span class="line-1">Transformamos</span>
+        <span class="line-2">espaços em <em>sonhos</em></span>
+      </h1>
+      <p class="hero-sub">
+        Piscinas sob medida, reformas completas e equipamentos de qualidade — do projeto à entrega, cuidamos de cada detalhe do seu espaço.
+      </p>
+      <div class="hero-cta">
+        <a href="https://wa.me/5500000000000" class="btn-primary">
+          Solicitar Orçamento
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#servicos" class="btn-outline">Ver Serviços</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stats-inner">
+      <div class="stat-item reveal">
+        <div class="stat-number display">200+</div>
+        <div class="stat-label">Piscinas Entregues</div>
+      </div>
+      <div class="stat-item reveal reveal-delay-1">
+        <div class="stat-number display">10+</div>
+        <div class="stat-label">Anos de Experiência</div>
+      </div>
+      <div class="stat-item reveal reveal-delay-2">
+        <div class="stat-number display">100%</div>
+        <div class="stat-label">Clientes Satisfeitos</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="water-divider"></div>
+
+  <!-- ABOUT -->
+  <section id="sobre" style="padding: 0 0 0 0;">
+    <div class="about">
+      <div class="about-text">
+        <div class="section-tag reveal">Quem Somos</div>
+        <div class="about-line reveal"></div>
+        <h2 class="reveal display">
+          Qualidade que você <em>vê e sente</em>
+        </h2>
+        <p class="reveal reveal-delay-1">
+          A S.A Piscinas e Construções nasceu da paixão por transformar espaços. Atuamos na construção de piscinas personalizadas, venda de equipamentos especializados e execução de reformas com alto padrão de acabamento.
+        </p>
+        <p class="reveal reveal-delay-2">
+          Cada projeto é tratado com atenção única — do primeiro rascunho à entrega final, garantimos prazo, qualidade e total transparência em cada etapa.
+        </p>
+        <div style="margin-top: 32px;" class="reveal reveal-delay-3">
+          <a href="https://wa.me/5500000000000" class="btn-primary" style="display: inline-flex; background: var(--dark); color: #fff;">
+            Fale Conosco
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="about-img-wrap reveal reveal-delay-2">
+        <img
+          class="about-img"
+          src="https://images.unsplash.com/photo-1588880331179-bc9b93a8cb5e?auto=format&fit=crop&w=800&q=80"
+          alt="Piscina construída pela S.A Piscinas"
+          loading="lazy"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="servicos" class="services-section">
+    <div class="services-bg-text">Piscinas</div>
+    <div class="services-inner">
+      <div class="services-header">
+        <div>
+          <div class="section-tag reveal" style="color: var(--accent);">O que fazemos</div>
+          <h2 class="services-title display reveal reveal-delay-1">
+            Nossos <em>Serviços</em>
+          </h2>
+        </div>
+      </div>
+      <div class="services-grid">
+
+        <div class="service-card reveal">
+          <div class="service-number">01</div>
+          <span class="service-icon">🏊</span>
+          <div class="service-name display">Construção de Piscinas</div>
+          <div class="service-desc">
+            Projetamos e construímos piscinas sob medida para residências e condomínios. Do traçado ao acabamento, com materiais de alto desempenho e estética superior.
+          </div>
+          <div class="service-tags">
+            <span class="service-tag">Alvenaria</span>
+            <span class="service-tag">Fibra</span>
+            <span class="service-tag">Vinil</span>
+          </div>
+        </div>
+
+        <div class="service-card reveal reveal-delay-1">
+          <div class="service-number">02</div>
+          <span class="service-icon">⚙️</span>
+          <div class="service-name display">Equipamentos</div>
+          <div class="service-desc">
+            Venda e instalação de bombas, filtros, aquecedores, iluminação e acessórios para manter sua piscina sempre limpa, segura e eficiente.
+          </div>
+          <div class="service-tags">
+            <span class="service-tag">Bombas</span>
+            <span class="service-tag">Filtros</span>
+            <span class="service-tag">LED</span>
+          </div>
+        </div>
+
+        <div class="service-card reveal reveal-delay-2">
+          <div class="service-number">03</div>
+          <span class="service-icon">🏗️</span>
+          <div class="service-name display">Reformas Gerais</div>
+          <div class="service-desc">
+            Reformas completas em residências e espaços comerciais — pintura, revestimentos, estrutura e acabamento. Renovamos seu espaço com qualidade garantida.
+          </div>
+          <div class="service-tags">
+            <span class="service-tag">Pintura</span>
+            <span class="service-tag">Alvenaria</span>
+            <span class="service-tag">Revestimento</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="galeria" class="gallery-section">
+    <div class="gallery-header">
+      <div>
+        <div class="section-tag reveal">Nosso Portfólio</div>
+        <h2 class="gallery-title display reveal reveal-delay-1">
+          Projetos <em>realizados</em>
+        </h2>
+      </div>
+    </div>
+    <div class="bento-grid">
+      <div class="bento-item bento-1 reveal">
+        <img src="https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?auto=format&fit=crop&w=1000&q=80" alt="Piscina resort" loading="lazy" />
+      </div>
+      <div class="bento-item bento-2 reveal reveal-delay-1">
+        <img src="https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?auto=format&fit=crop&w=700&q=80" alt="Piscina com vista" loading="lazy" />
+      </div>
+      <div class="bento-item bento-3 reveal reveal-delay-1">
+        <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=700&q=80" alt="Piscina noturna" loading="lazy" />
+      </div>
+      <div class="bento-item bento-4 reveal reveal-delay-2">
+        <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=700&q=80" alt="Construção" loading="lazy" />
+      </div>
+      <div class="bento-item bento-5 reveal reveal-delay-3">
+        <img src="https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=700&q=80" alt="Reforma residencial" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY US -->
+  <section class="why-section">
+    <div class="why-inner">
+      <div class="why-text reveal">
+        <h2 class="display">Por que nos <span>escolher?</span></h2>
+      </div>
+      <div class="why-grid">
+        <div class="why-item reveal reveal-delay-1">
+          <span class="why-icon">🎯</span>
+          <h3>Projetos Personalizados</h3>
+          <p>Cada piscina é única — criamos do zero de acordo com o espaço e a preferência do cliente.</p>
+        </div>
+        <div class="why-item reveal reveal-delay-2">
+          <span class="why-icon">🔧</span>
+          <h3>Equipe Especializada</h3>
+          <p>Profissionais com anos de experiência em construção e manutenção de piscinas.</p>
+        </div>
+        <div class="why-item reveal reveal-delay-3">
+          <span class="why-icon">📋</span>
+          <h3>Orçamento Transparente</h3>
+          <p>Sem surpresas: apresentamos todos os custos antes de iniciar qualquer serviço.</p>
+        </div>
+        <div class="why-item reveal reveal-delay-4">
+          <span class="why-icon">✅</span>
+          <h3>Garantia de Qualidade</h3>
+          <p>Entregamos com garantia e suporte pós-obra para sua total tranquilidade.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contato" class="contact-section">
+    <div class="contact-bg"></div>
+    <div class="contact-inner">
+      <div class="section-tag reveal" style="justify-content: center; color: var(--accent);">Fale Conosco</div>
+      <h2 class="display reveal reveal-delay-1">
+        Pronto para<br/><em>transformar</em> seu espaço?
+      </h2>
+      <p class="reveal reveal-delay-2">
+        Entre em contato agora mesmo e receba um orçamento gratuito para o seu projeto de piscina ou reforma.
+      </p>
+      <a href="https://wa.me/5500000000000" class="btn-wa-large reveal reveal-delay-3">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.570-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.570-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Falar no WhatsApp
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p><strong>S.A Piscinas e Construções</strong> — Construção de piscinas, equipamentos e reformas em geral. Todos os direitos reservados.</p>
+  </footer>
+
+  <!-- WHATSAPP FLOAT -->
+  <a href="https://wa.me/5500000000000" class="wa-float" aria-label="WhatsApp" target="_blank" rel="noopener">
+    <svg width="30" height="30" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.570-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.570-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.890-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+  <script>
+    // ── NAV SCROLL ──
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    // ── SCROLL REVEAL ──
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          // Special case: about-line
+          if (entry.target.classList.contains('about-line')) {
+            entry.target.classList.add('visible');
+          }
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // ── SMOOTH ANCHOR SCROLL ──
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', (e) => {
+        const target = document.querySelector(anchor.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
