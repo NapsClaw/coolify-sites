@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tony Diniz Personal Training — Rio de Janeiro</title>
+  <meta name="description" content="Tony Diniz Personal Trainer no Rio de Janeiro. Treinos personalizados para emagrecimento, ganho de massa e condicionamento físico. Agende sua avaliação.">
+  <meta property="og:title" content="Tony Diniz Personal Training — Rio de Janeiro">
+  <meta property="og:description" content="Transforme seu corpo com treinos personalizados. Tony Diniz — Personal Trainer, Rio de Janeiro.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230A0A08' rx='16'/><rect x='18' y='44' width='64' height='12' fill='%23C8FF00' rx='3'/><rect x='38' y='20' width='24' height='60' fill='%23C8FF00' rx='3'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800;12..96,900&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --bg: #0A0A08;
+      --bg2: #111110;
+      --surface: #1A1A17;
+      --surface2: #222220;
+      --primary: #C8FF00;
+      --primary-dim: rgba(200,255,0,0.12);
+      --text: #F0EFE8;
+      --text-muted: #8A8A78;
+      --border: rgba(200,255,0,0.15);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* Noise texture overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0.6;
+    }
+
+    /* Typography */
+    .display {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      line-height: 0.9;
+      letter-spacing: -0.03em;
+    }
+
+    .display-sm {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+
+    /* Animations */
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(48px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideLeft {
+      from { opacity: 0; transform: translateX(-64px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    @keyframes lineExpand {
+      from { width: 0; }
+      to   { width: 100%; }
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(200,255,0,0.4); }
+      50%       { box-shadow: 0 0 0 14px rgba(200,255,0,0); }
+    }
+
+    @keyframes floatBadge {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-8px); }
+    }
+
+    @keyframes counterUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s cubic-bezier(.16,1,.3,1), transform 0.7s cubic-bezier(.16,1,.3,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-40px);
+      transition: opacity 0.7s cubic-bezier(.16,1,.3,1), transform 0.7s cubic-bezier(.16,1,.3,1);
+    }
+    .reveal-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(40px);
+      transition: opacity 0.7s cubic-bezier(.16,1,.3,1), transform 0.7s cubic-bezier(.16,1,.3,1);
+    }
+    .reveal-right.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.2s; }
+    .delay-3 { transition-delay: 0.3s; }
+    .delay-4 { transition-delay: 0.4s; }
+
+    /* ===== HERO ===== */
+    #hero {
+      min-height: 100svh;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 24px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 80% at 70% 30%, rgba(200,255,0,0.06) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 20% 80%, rgba(200,255,0,0.04) 0%, transparent 60%);
+    }
+
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(200,255,0,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(200,255,0,0.04) 1px, transparent 1px);
+      background-size: 64px 64px;
+      mask-image: linear-gradient(to bottom, transparent 0%, black 30%, black 70%, transparent 100%);
+    }
+
+    .hero-eyebrow {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 500;
+      font-size: 12px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 20px;
+      opacity: 0;
+      animation: slideUp 0.6s cubic-bezier(.16,1,.3,1) 0.2s forwards;
+    }
+
+    .hero-title-line {
+      display: block;
+      overflow: hidden;
+    }
+
+    .hero-title-inner {
+      display: block;
+      opacity: 0;
+      animation: slideUp 0.8s cubic-bezier(.16,1,.3,1) forwards;
+    }
+
+    .hero-title-inner.l1 { animation-delay: 0.35s; }
+    .hero-title-inner.l2 { animation-delay: 0.5s; }
+    .hero-title-inner.l3 { animation-delay: 0.65s; }
+
+    .hero-sub {
+      margin-top: 24px;
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--text-muted);
+      max-width: 400px;
+      line-height: 1.6;
+      opacity: 0;
+      animation: slideUp 0.7s cubic-bezier(.16,1,.3,1) 0.8s forwards;
+    }
+
+    .hero-cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 40px;
+      opacity: 0;
+      animation: slideUp 0.7s cubic-bezier(.16,1,.3,1) 1s forwards;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--primary);
+      color: #0A0A08;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      font-size: 14px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 16px 32px;
+      text-decoration: none;
+      transition: all 0.25s cubic-bezier(.16,1,.3,1);
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-primary::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.15);
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+    }
+    .btn-primary:hover::after { transform: translateX(0); }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(200,255,0,0.35); }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: transparent;
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 500;
+      font-size: 14px;
+      padding: 16px 28px;
+      text-decoration: none;
+      border: 1px solid rgba(240,239,232,0.15);
+      transition: all 0.25s ease;
+    }
+    .btn-ghost:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .hero-badge {
+      position: absolute;
+      top: 32px;
+      right: 24px;
+      width: 100px;
+      height: 100px;
+      opacity: 0;
+      animation: fadeIn 0.6s ease 1.2s forwards, floatBadge 4s ease-in-out 1.8s infinite;
+    }
+    .hero-badge svg { width: 100%; height: 100%; }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 32px;
+      right: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      animation: fadeIn 0.6s ease 1.4s forwards;
+    }
+    .hero-scroll span {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      writing-mode: vertical-rl;
+    }
+    .hero-scroll-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, var(--primary), transparent);
+      animation: lineExpand 1s ease 1.6s both;
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 20px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(to bottom, rgba(10,10,8,0.9), transparent);
+      backdrop-filter: blur(0px);
+      transition: backdrop-filter 0.3s, background 0.3s;
+    }
+    nav.scrolled {
+      background: rgba(10,10,8,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: 18px;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--primary); }
+
+    .nav-cta {
+      display: none;
+      background: var(--primary);
+      color: #0A0A08;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 10px 20px;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* ===== MARQUEE ===== */
+    .marquee-section {
+      background: var(--primary);
+      padding: 16px 0;
+      overflow: hidden;
+      position: relative;
+    }
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      animation: marquee 20s linear infinite;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .marquee-item {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: 14px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #0A0A08;
+      padding: 0 32px;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+    }
+    .marquee-dot {
+      width: 6px;
+      height: 6px;
+      background: rgba(10,10,8,0.4);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* ===== STATS ===== */
+    .stats-section {
+      padding: 64px 24px;
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+    }
+    .stat-item {
+      background: var(--bg2);
+      padding: 32px 24px;
+    }
+    .stat-number {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: 52px;
+      line-height: 1;
+      color: var(--primary);
+      letter-spacing: -0.03em;
+    }
+    .stat-label {
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--text-muted);
+      margin-top: 8px;
+      letter-spacing: 0.02em;
+    }
+
+    /* ===== ABOUT ===== */
+    #about {
+      padding: 96px 24px;
+      background: var(--bg);
+    }
+    .about-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 24px;
+    }
+    .about-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: 40px;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      margin-bottom: 32px;
+    }
+    .about-text {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.75;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+    .about-highlight {
+      color: var(--text);
+      font-weight: 400;
+    }
+    .about-signature {
+      margin-top: 40px;
+      padding-top: 32px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .about-sig-line {
+      width: 48px;
+      height: 2px;
+      background: var(--primary);
+    }
+    .about-sig-text {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      font-size: 18px;
+      letter-spacing: -0.01em;
+    }
+    .about-sig-role {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    .about-visual {
+      margin-top: 48px;
+      position: relative;
+    }
+    .about-img-wrapper {
+      position: relative;
+      background: var(--surface);
+      overflow: hidden;
+    }
+    .about-img-wrapper img {
+      width: 100%;
+      height: 320px;
+      object-fit: cover;
+      display: block;
+      filter: grayscale(20%) contrast(1.1);
+    }
+    .about-img-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent 60%, rgba(200,255,0,0.15) 100%);
+    }
+    .about-corner {
+      position: absolute;
+      bottom: -20px;
+      right: -10px;
+      background: var(--primary);
+      color: #0A0A08;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 14px 20px;
+      z-index: 2;
+    }
+
+    /* ===== SERVICES ===== */
+    #services {
+      padding: 96px 24px;
+      background: var(--bg2);
+    }
+    .section-header {
+      margin-bottom: 56px;
+    }
+    .section-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: 40px;
+      line-height: 1;
+      letter-spacing: -0.02em;
+    }
+
+    .services-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: var(--border);
+    }
+    .service-item {
+      background: var(--bg2);
+      padding: 32px 24px;
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 20px;
+      align-items: start;
+      cursor: default;
+      transition: background 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .service-item::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 0;
+      background: var(--primary-dim);
+      transition: width 0.4s cubic-bezier(.16,1,.3,1);
+    }
+    .service-item:hover::after { width: 100%; }
+    .service-item:hover .service-num { color: var(--primary); }
+    .service-item:hover .service-icon-box { border-color: var(--primary); background: var(--primary-dim); }
+    .service-item:hover .service-icon-box svg { color: var(--primary); }
+
+    .service-num {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: 13px;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      padding-top: 4px;
+      position: relative;
+      z-index: 1;
+      transition: color 0.3s;
+    }
+    .service-content { position: relative; z-index: 1; }
+    .service-icon-box {
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      transition: all 0.3s ease;
+    }
+    .service-icon-box svg {
+      width: 22px;
+      height: 22px;
+      color: var(--text-muted);
+      transition: color 0.3s;
+    }
+    .service-name {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      font-size: 22px;
+      letter-spacing: -0.01em;
+      margin-bottom: 10px;
+    }
+    .service-desc {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ===== HOW IT WORKS ===== */
+    #how {
+      padding: 96px 24px;
+      background: var(--bg);
+    }
+    .steps-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-top: 56px;
+    }
+    .step {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 24px;
+      padding: 32px 0;
+      border-bottom: 1px solid var(--border);
+      align-items: start;
+    }
+    .step:first-child { border-top: 1px solid var(--border); }
+    .step-num-col {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+    }
+    .step-num {
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: 16px;
+      color: var(--primary);
+      flex-shrink: 0;
+    }
+    .step-connector {
+      width: 1px;
+      height: 100%;
+      min-height: 48px;
+      background: linear-gradient(to bottom, var(--border), transparent);
+      margin-top: 8px;
+    }
+    .step-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      font-size: 20px;
+      letter-spacing: -0.01em;
+      margin-bottom: 10px;
+      padding-top: 8px;
+    }
+    .step-desc {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    /* ===== TESTIMONIALS ===== */
+    #testimonials {
+      padding: 96px 24px;
+      background: var(--surface);
+    }
+    .testimonials-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 48px;
+    }
+    .testimonial-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      padding: 32px 24px;
+      position: relative;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .testimonial-card:hover {
+      border-color: rgba(200,255,0,0.4);
+      transform: translateY(-4px);
+    }
+    .testimonial-quote {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: 64px;
+      line-height: 0.6;
+      color: var(--primary);
+      margin-bottom: 20px;
+      display: block;
+    }
+    .testimonial-text {
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--text);
+      font-style: italic;
+      margin-bottom: 24px;
+    }
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .author-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--surface2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: 16px;
+      color: var(--primary);
+      flex-shrink: 0;
+    }
+    .author-name {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      font-size: 15px;
+    }
+    .author-detail {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .stars {
+      display: flex;
+      gap: 3px;
+      margin-bottom: 16px;
+    }
+    .star {
+      width: 14px;
+      height: 14px;
+    }
+
+    /* ===== CONTACT ===== */
+    #contact {
+      padding: 96px 24px;
+      background: var(--bg);
+    }
+    .contact-big {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: 56px;
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      margin-bottom: 40px;
+    }
+    .contact-big span { color: var(--primary); }
+    .contact-divider {
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+      margin: 40px 0;
+    }
+    .contact-info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+    .contact-info-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+    .contact-info-value {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 1.4;
+      color: var(--text);
+    }
+
+    .cta-final {
+      margin-top: 56px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 40px 24px;
+      text-align: center;
+    }
+    .cta-final-label {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+    .cta-final-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: 32px;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+    .cta-final-sub {
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--text-muted);
+      margin-bottom: 32px;
+    }
+    .whatsapp-cta-big {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: #25D366;
+      color: #fff;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      font-size: 16px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 18px 36px;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      width: 100%;
+      justify-content: center;
+    }
+    .whatsapp-cta-big:hover {
+      background: #1fba58;
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(37,211,102,0.35);
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      padding: 32px 24px;
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .footer-logo {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: 20px;
+      letter-spacing: -0.02em;
+    }
+    .footer-logo span { color: var(--primary); }
+    .footer-copy {
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--text-muted);
+    }
+
+    /* ===== WHATSAPP FLOAT ===== */
+    .wa-float {
+      position: fixed;
+      bottom: 28px;
+      right: 24px;
+      z-index: 998;
+      width: 60px;
+      height: 60px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      box-shadow: 0 4px 12px rgba(37,211,102,0.4);
+      animation: pulseGlow 3s ease-in-out infinite;
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .wa-float:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 24px rgba(37,211,102,0.6);
+      animation: none;
+    }
+    .wa-float svg { width: 28px; height: 28px; }
+
+    /* ===== RESPONSIVE — TABLET+ ===== */
+    @media (min-width: 640px) {
+      #hero { padding: 0 40px 64px; }
+      nav { padding: 24px 40px; }
+      .nav-cta { display: inline-block; }
+      .hero-badge { right: 40px; top: 40px; width: 120px; height: 120px; }
+      .stats-grid { grid-template-columns: repeat(4, 1fr); }
+      #about { padding: 120px 40px; }
+      .about-title { font-size: 52px; }
+      #services { padding: 120px 40px; }
+      .section-title { font-size: 52px; }
+      #how { padding: 120px 40px; }
+      #testimonials { padding: 120px 40px; }
+      .testimonials-grid { display: grid; grid-template-columns: 1fr 1fr; }
+      #contact { padding: 120px 40px; }
+      .contact-big { font-size: 80px; }
+      footer { flex-direction: row; justify-content: space-between; align-items: center; padding: 32px 40px; }
+    }
+
+    @media (min-width: 1024px) {
+      #hero { padding: 0 80px 80px; }
+      nav { padding: 28px 80px; }
+      .hero-badge { right: 80px; }
+      .hero-sub { font-size: 18px; }
+      .hero-cta-row { gap: 20px; }
+      #about { padding: 160px 80px; }
+      .about-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+      .about-visual { margin-top: 0; }
+      .about-img-wrapper img { height: 500px; }
+      .about-title { font-size: 60px; }
+      #services { padding: 160px 80px; }
+      .services-list { display: grid; grid-template-columns: 1fr 1fr; background: var(--border); gap: 1px; }
+      .service-item { background: var(--bg2); }
+      .section-title { font-size: 60px; }
+      #how { padding: 160px 80px; }
+      #testimonials { padding: 160px 80px; }
+      .testimonials-grid { grid-template-columns: repeat(3, 1fr); }
+      #contact { padding: 160px 80px; }
+      .contact-big { font-size: 100px; }
+      footer { padding: 40px 80px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <a href="#" class="nav-logo">TONY <span>DINIZ</span></a>
+    <a href="https://wa.me/5521975340558?text=Olá%20Tony,%20quero%20saber%20mais%20sobre%20o%20personal%20training!" class="nav-cta" target="_blank" rel="noopener">Agendar avaliação</a>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+
+    <!-- Floating badge -->
+    <div class="hero-badge">
+      <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="60" cy="60" r="58" fill="none" stroke="rgba(200,255,0,0.25)" stroke-width="1"/>
+        <path id="circlePath" fill="none" d="M 60,60 m -45,0 a 45,45 0 1,1 90,0 a 45,45 0 1,1 -90,0"/>
+        <text fill="#C8FF00" font-family="'Plus Jakarta Sans', sans-serif" font-size="10.5" font-weight="500" letter-spacing="2.5">
+          <textPath href="#circlePath">PERSONAL TRAINER · RIO DE JANEIRO · </textPath>
+        </text>
+        <text x="60" y="55" text-anchor="middle" fill="#C8FF00" font-family="'Bricolage Grotesque', sans-serif" font-size="10" font-weight="900" letter-spacing="1">TONY</text>
+        <text x="60" y="68" text-anchor="middle" fill="#F0EFE8" font-family="'Bricolage Grotesque', sans-serif" font-size="10" font-weight="900" letter-spacing="1">DINIZ</text>
+      </svg>
+    </div>
+
+    <div style="position: relative; z-index: 2;">
+      <p class="hero-eyebrow">Personal Trainer · Rio de Janeiro</p>
+
+      <h1 class="display" style="font-size: clamp(72px, 18vw, 160px);">
+        <span class="hero-title-line"><span class="hero-title-inner l1">TREINE</span></span>
+        <span class="hero-title-line"><span class="hero-title-inner l2" style="color: var(--primary);">DIFERENTE</span></span>
+        <span class="hero-title-line"><span class="hero-title-inner l3">VIVA MAIS</span></span>
+      </h1>
+
+      <p class="hero-sub">
+        Transformação real começa com um método personalizado.<br>
+        Com Tony Diniz, cada treino é construído para o seu corpo, sua rotina e seus objetivos.
+      </p>
+
+      <div class="hero-cta-row">
+        <a href="https://wa.me/5521975340558?text=Olá%20Tony,%20quero%20marcar%20minha%20avaliação%20gratuita!" class="btn-primary" target="_blank" rel="noopener">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+          Avaliação gratuita
+        </a>
+        <a href="#services" class="btn-ghost">
+          Ver modalidades
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-scroll" style="display: none;">
+      <span>Scroll</span>
+      <div class="hero-scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-section">
+    <div class="marquee-track">
+      <!-- duplicated for seamless loop -->
+      <div class="marquee-item">Personal Training<span class="marquee-dot"></span></div>
+      <div class="marquee-item">Emagrecimento<span class="marquee-dot"></span></div>
+      <div class="marquee-item">Ganho de Massa<span class="marquee-dot"></span></div>
+      <div class="marquee-item">Condicionamento<span class="marquee-dot"></span></div>
+      <div class="marquee-item">Qualidade de Vida<span class="marquee-dot"></span></div>
+      <div class="marquee-item">Rio de Janeiro<span class="marquee-dot"></span></div>
+      <div class="marquee-item">Personal Training<span class="marquee-dot"></span></div>
+      <div class="marquee-item">Emagrecimento<span class="marquee-dot"></span></div>
+      <div class="marquee-item">Ganho de Massa<span class="marquee-dot"></span></div>
+      <div class="marquee-item">Condicionamento<span class="marquee-dot"></span></div>
+      <div class="marquee-item">Qualidade de Vida<span class="marquee-dot"></span></div>
+      <div class="marquee-item">Rio de Janeiro<span class="marquee-dot"></span></div>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-section">
+    <div class="stats-grid">
+      <div class="stat-item reveal delay-1">
+        <div class="stat-number">+500</div>
+        <div class="stat-label">Alunos transformados</div>
+      </div>
+      <div class="stat-item reveal delay-2">
+        <div class="stat-number">8+</div>
+        <div class="stat-label">Anos de experiência</div>
+      </div>
+      <div class="stat-item reveal delay-3">
+        <div class="stat-number">98%</div>
+        <div class="stat-label">Satisfação dos alunos</div>
+      </div>
+      <div class="stat-item reveal delay-4">
+        <div class="stat-number">100%</div>
+        <div class="stat-label">Treinos personalizados</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-inner">
+      <div class="reveal-left">
+        <p class="about-label">Sobre Tony Diniz</p>
+        <h2 class="about-title">O método que transforma.</h2>
+        <p class="about-text">
+          Personal trainer com mais de <span class="about-highlight">8 anos de experiência</span> no Rio de Janeiro, Tony Diniz construiu sua carreira sobre um princípio simples: cada corpo é único e merece um método próprio.
+        </p>
+        <p class="about-text">
+          Especialista em <span class="about-highlight">emagrecimento, hipertrofia e condicionamento físico</span>, Tony acompanha cada aluno do primeiro dia até a conquista dos resultados — com ciência, dedicação e uma metodologia que realmente funciona.
+        </p>
+        <p class="about-text">
+          Seja no treino funcional, na musculação ou nos exercícios ao ar livre, o foco é sempre o mesmo: <span class="about-highlight">resultados reais, sem achismos</span>.
+        </p>
+        <div class="about-signature">
+          <div class="about-sig-line"></div>
+          <div>
+            <div class="about-sig-text">Tony Diniz</div>
+            <div class="about-sig-role">CREF · Personal Trainer · Rio de Janeiro</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-visual reveal-right">
+        <div class="about-img-wrapper">
+          <img
+            src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=800&q=80&auto=format&fit=crop"
+            alt="Personal trainer Tony Diniz em treino"
+            loading="lazy"
+          >
+          <div class="about-img-overlay"></div>
+          <div class="about-corner">Personal Trainer</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="section-header reveal">
+      <p class="section-label">Modalidades</p>
+      <h2 class="section-title">O que Tony oferece.</h2>
+    </div>
+
+    <div class="services-list">
+      <div class="service-item reveal delay-1">
+        <div class="service-num">01</div>
+        <div class="service-content">
+          <div class="service-icon-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M3 12h3m15 0h-3M6 12a6 6 0 1 0 12 0 6 6 0 0 0-12 0"/>
+              <path d="M6 5l-3 7 3 7M18 5l3 7-3 7" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="service-name">Personal Training</div>
+          <p class="service-desc">Treinos 100% individualizados conforme sua avaliação física, objetivos e rotina. Acompanhamento presencial com foco em máxima eficiência.</p>
+        </div>
+      </div>
+
+      <div class="service-item reveal delay-2">
+        <div class="service-num">02</div>
+        <div class="service-content">
+          <div class="service-icon-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+              <path d="M8 12l2 2 4-4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="service-name">Emagrecimento</div>
+          <p class="service-desc">Protocolo estruturado para perda de gordura com preservação de massa muscular. Treino e orientação nutricional integrados para resultados duradouros.</p>
+        </div>
+      </div>
+
+      <div class="service-item reveal delay-3">
+        <div class="service-num">03</div>
+        <div class="service-content">
+          <div class="service-icon-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
+          <div class="service-name">Ganho de Massa</div>
+          <p class="service-desc">Programação de hipertrofia baseada em periodização científica. Periodização estratégica com sobrecarga progressiva para resultados consistentes.</p>
+        </div>
+      </div>
+
+      <div class="service-item reveal delay-4">
+        <div class="service-num">04</div>
+        <div class="service-content">
+          <div class="service-icon-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M13 10V3L4 14h7v7l9-11h-7z" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="service-name">Condicionamento Físico</div>
+          <p class="service-desc">Programas para atletas amadores e profissionais que buscam melhorar resistência, performance e capacidade cardiovascular com treinos funcionais e de alta intensidade.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how">
+    <div class="section-header reveal">
+      <p class="section-label">Como funciona</p>
+      <h2 class="section-title">Do primeiro contato<br>aos primeiros resultados.</h2>
+    </div>
+
+    <div class="steps-list">
+      <div class="step reveal delay-1">
+        <div class="step-num-col">
+          <div class="step-num">1</div>
+          <div class="step-connector"></div>
+        </div>
+        <div>
+          <div class="step-title">Avaliação física gratuita</div>
+          <p class="step-desc">Tudo começa com uma avaliação completa: histórico de saúde, composição corporal, testes de força, resistência e mobilidade. Sem custo, sem compromisso.</p>
+        </div>
+      </div>
+
+      <div class="step reveal delay-2">
+        <div class="step-num-col">
+          <div class="step-num">2</div>
+          <div class="step-connector"></div>
+        </div>
+        <div>
+          <div class="step-title">Plano totalmente personalizado</div>
+          <p class="step-desc">Com base nos seus dados e objetivos, Tony monta um plano de treino e orientação alimentar específico para você — nada de planilha genérica.</p>
+        </div>
+      </div>
+
+      <div class="step reveal delay-3">
+        <div class="step-num-col">
+          <div class="step-num">3</div>
+          <div class="step-connector"></div>
+        </div>
+        <div>
+          <div class="step-title">Treinos com acompanhamento real</div>
+          <p class="step-desc">Cada sessão é supervisionada com atenção à técnica, intensidade e progressão. Tony acompanha de perto para garantir segurança e evolução contínua.</p>
+        </div>
+      </div>
+
+      <div class="step reveal delay-4">
+        <div class="step-num-col">
+          <div class="step-num">4</div>
+        </div>
+        <div>
+          <div class="step-title">Resultados mensuráveis</div>
+          <p class="step-desc">Reavaliações periódicas para acompanhar sua evolução em dados concretos: fotos, medidas, composição corporal. Você vê a transformação acontecer.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials">
+    <div class="section-header reveal">
+      <p class="section-label">Depoimentos</p>
+      <h2 class="section-title">O que os alunos dizem.</h2>
+    </div>
+
+    <div class="testimonials-grid">
+      <div class="testimonial-card reveal delay-1">
+        <div class="stars">
+          <svg class="star" viewBox="0 0 24 24" fill="#C8FF00"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="star" viewBox="0 0 24 24" fill="#C8FF00"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="star" viewBox="0 0 24 24" fill="#C8FF00"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="star" viewBox="0 0 24 24" fill="#C8FF00"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="star" viewBox="0 0 24 24" fill="#C8FF00"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <span class="testimonial-quote">"</span>
+        <p class="testimonial-text">Em 4 meses com o Tony emagreci 12kg e ganhei uma condição física que eu nunca tive. O diferencial é que ele realmente personaliza tudo — não é treino de academia genérico.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">M</div>
+          <div>
+            <div class="author-name">Mariana Costa</div>
+            <div class="author-detail">Aluna há 1 ano · Emagrecimento</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card reveal delay-2">
+        <div class="stars">
+          <svg class="star" viewBox="0 0 24 24" fill="#C8FF00"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="star" viewBox="0 0 24 24" fill="#C8FF00"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="star" viewBox="0 0 24 24" fill="#C8FF00"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="star" viewBox="0 0 24 24" fill="#C8FF00"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="star" viewBox="0 0 24 24" fill="#C8FF00"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <span class="testimonial-quote">"</span>
+        <p class="testimonial-text">Nunca me adaptei a academia convencional. Com o Tony aprendi a treinar com inteligência. Hoje consigo equilibrar o treino com a minha rotina puxada de trabalho sem desculpas.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">R</div>
+          <div>
+            <div class="author-name">Rodrigo Alves</div>
+            <div class="author-detail">Aluno há 8 meses · Personal Training</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card reveal delay-3">
+        <div class="stars">
+          <svg class="star" viewBox="0 0 24 24" fill="#C8FF00"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="star" viewBox="0 0 24 24" fill="#C8FF00"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="star" viewBox="0 0 24 24" fill="#C8FF00"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="star" viewBox="0 0 24 24" fill="#C8FF00"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <svg class="star" viewBox="0 0 24 24" fill="#C8FF00"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </div>
+        <span class="testimonial-quote">"</span>
+        <p class="testimonial-text">Fui indicada por uma amiga e não me arrependo. Tony tem uma didática incrível, sempre explica o porquê de cada exercício. Em 6 meses ganhei massa e melhorei minha postura completamente.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">J</div>
+          <div>
+            <div class="author-name">Juliana Ferreira</div>
+            <div class="author-detail">Aluna há 6 meses · Ganho de Massa</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="reveal">
+      <p class="section-label">Contato</p>
+      <h2 class="contact-big">Pronto para <span>mudar</span>?</h2>
+    </div>
+
+    <div class="contact-info-grid reveal delay-1">
+      <div>
+        <div class="contact-info-label">WhatsApp</div>
+        <div class="contact-info-value">(21) 97534-0558</div>
+      </div>
+      <div>
+        <div class="contact-info-label">Cidade</div>
+        <div class="contact-info-value">Rio de Janeiro, RJ</div>
+      </div>
+      <div>
+        <div class="contact-info-label">Atendimento</div>
+        <div class="contact-info-value">Presencial<br>Online</div>
+      </div>
+      <div>
+        <div class="contact-info-label">Avaliação</div>
+        <div class="contact-info-value">Gratuita<br>Sem compromisso</div>
+      </div>
+    </div>
+
+    <div class="contact-divider reveal"></div>
+
+    <div class="cta-final reveal">
+      <p class="cta-final-label">Comece hoje mesmo</p>
+      <h3 class="cta-final-title">Agende sua avaliação gratuita</h3>
+      <p class="cta-final-sub">Resposta em minutos · Sem custo · Sem compromisso</p>
+      <a
+        href="https://wa.me/5521975340558?text=Olá%20Tony!%20Quero%20agendar%20minha%20avaliação%20física%20gratuita."
+        class="whatsapp-cta-big"
+        target="_blank"
+        rel="noopener"
+      >
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        Falar com Tony no WhatsApp
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">TONY <span>DINIZ</span></div>
+    <div class="footer-copy">© 2025 Tony Diniz Personal Training · Rio de Janeiro</div>
+  </footer>
+
+  <!-- WHATSAPP FLOAT -->
+  <a
+    href="https://wa.me/5521975340558?text=Olá%20Tony,%20vim%20pelo%20site%20e%20quero%20saber%20mais!"
+    class="wa-float"
+    target="_blank"
+    rel="noopener"
+    aria-label="Falar com Tony pelo WhatsApp"
+  >
+    <svg viewBox="0 0 24 24" fill="white">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+
+  <script>
+    // Nav scroll effect
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => {
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
