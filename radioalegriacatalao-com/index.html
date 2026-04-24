@@ -1,0 +1,1218 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rádio Alegria Catalão — Modão de Raiz, 24h no Ar</title>
+  <meta name="description" content="Rádio Alegria Catalão: a voz do modão antigo em Catalão, Goiás. As mais belas músicas sertanejas de raiz, 24 horas por dia, direto do coração do cerrado." />
+  <meta property="og:title" content="Rádio Alegria Catalão — Modão de Raiz" />
+  <meta property="og:description" content="A voz do modão antigo em Catalão, Goiás. Música sertaneja de raiz, 24h no ar." />
+  <meta property="og:type" content="website" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet" />
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='14' fill='%232C1810'/><circle cx='16' cy='16' r='6' fill='%23D4882A'/><circle cx='16' cy='16' r='2' fill='%23F5EDD9'/></svg>" />
+
+  <style>
+    :root {
+      --primary: #2C1810;
+      --primary-mid: #4A2A18;
+      --accent: #D4882A;
+      --accent-light: #E8A44A;
+      --bg: #F5EDD9;
+      --bg-warm: #EDE0C4;
+      --text: #1A0F08;
+      --text-muted: #6B4C32;
+      --cream: #FAF6EE;
+      --gold-line: #C9953B;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Source Sans 3', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Grain overlay */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.6;
+    }
+
+    /* ========== NAVBAR ========== */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(to bottom, rgba(44,24,16,0.95), rgba(44,24,16,0));
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      font-weight: 900;
+      color: var(--accent);
+      letter-spacing: 0.02em;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: none;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--bg);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.85;
+      transition: opacity 0.2s, color 0.2s;
+    }
+
+    .nav-links a:hover { opacity: 1; color: var(--accent-light); }
+
+    @media (min-width: 768px) {
+      .nav-links { display: flex; }
+    }
+
+    /* ========== HERO ========== */
+    .hero {
+      min-height: 100vh;
+      background: var(--primary);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      padding: 100px 24px 60px;
+    }
+
+    /* Radial warm glow background */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(212,136,42,0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Diagonal line texture */
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 40px,
+        rgba(212,136,42,0.03) 40px,
+        rgba(212,136,42,0.03) 41px
+      );
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      max-width: 800px;
+      animation: heroFade 1.2s ease forwards;
+      opacity: 0;
+    }
+
+    @keyframes heroFade {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(212,136,42,0.15);
+      border: 1px solid rgba(212,136,42,0.35);
+      color: var(--accent-light);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 2px;
+      margin-bottom: 28px;
+      animation: heroFade 1s ease 0.2s forwards;
+      opacity: 0;
+    }
+
+    .hero-badge .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #4CAF50;
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(76,175,80,0.5); }
+      50% { box-shadow: 0 0 0 5px rgba(76,175,80,0); }
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(44px, 10vw, 96px);
+      font-weight: 900;
+      line-height: 0.95;
+      color: var(--bg);
+      margin-bottom: 8px;
+      animation: heroFade 1s ease 0.3s forwards;
+      opacity: 0;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--accent);
+      display: block;
+    }
+
+    .hero-tagline {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(16px, 3vw, 22px);
+      color: rgba(245,237,217,0.7);
+      margin: 20px 0 40px;
+      letter-spacing: 0.04em;
+      animation: heroFade 1s ease 0.5s forwards;
+      opacity: 0;
+    }
+
+    /* Soundwave animation */
+    .soundwave {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      margin: 0 auto 36px;
+      width: fit-content;
+      animation: heroFade 1s ease 0.6s forwards;
+      opacity: 0;
+    }
+
+    .soundwave span {
+      display: block;
+      width: 3px;
+      background: var(--accent);
+      border-radius: 2px;
+      animation: wave 1.2s ease-in-out infinite;
+    }
+
+    .soundwave span:nth-child(1)  { height: 12px; animation-delay: 0s; }
+    .soundwave span:nth-child(2)  { height: 22px; animation-delay: 0.1s; }
+    .soundwave span:nth-child(3)  { height: 32px; animation-delay: 0.2s; }
+    .soundwave span:nth-child(4)  { height: 42px; animation-delay: 0.3s; }
+    .soundwave span:nth-child(5)  { height: 52px; animation-delay: 0.4s; }
+    .soundwave span:nth-child(6)  { height: 60px; animation-delay: 0.5s; }
+    .soundwave span:nth-child(7)  { height: 52px; animation-delay: 0.6s; }
+    .soundwave span:nth-child(8)  { height: 42px; animation-delay: 0.7s; }
+    .soundwave span:nth-child(9)  { height: 32px; animation-delay: 0.8s; }
+    .soundwave span:nth-child(10) { height: 22px; animation-delay: 0.9s; }
+    .soundwave span:nth-child(11) { height: 12px; animation-delay: 1.0s; }
+
+    @keyframes wave {
+      0%, 100% { transform: scaleY(0.4); opacity: 0.5; }
+      50% { transform: scaleY(1); opacity: 1; }
+    }
+
+    .hero-cta {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      animation: heroFade 1s ease 0.7s forwards;
+      opacity: 0;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--accent);
+      color: var(--primary);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 16px 36px;
+      border-radius: 2px;
+      transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
+      box-shadow: 0 4px 20px rgba(212,136,42,0.35);
+      min-height: 52px;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(212,136,42,0.5);
+    }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(245,237,217,0.3);
+      color: rgba(245,237,217,0.8);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 12px 28px;
+      border-radius: 2px;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+      min-height: 48px;
+    }
+
+    .btn-outline:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(212,136,42,0.08);
+    }
+
+    @media (min-width: 480px) {
+      .hero-cta { flex-direction: row; }
+    }
+
+    /* Scroll indicator */
+    .scroll-hint {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      color: rgba(245,237,217,0.4);
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      animation: heroFade 1s ease 1.2s forwards;
+      opacity: 0;
+    }
+
+    .scroll-hint svg {
+      animation: bounceDown 2s ease-in-out infinite;
+    }
+
+    @keyframes bounceDown {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(6px); }
+    }
+
+    /* ========== DIVIDER ========== */
+    .ornament-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 0 24px;
+    }
+
+    .ornament-divider::before,
+    .ornament-divider::after {
+      content: '';
+      flex: 1;
+      max-width: 120px;
+      height: 1px;
+      background: var(--gold-line);
+    }
+
+    .ornament-divider span {
+      color: var(--accent);
+      font-size: 20px;
+    }
+
+    /* ========== SECTION BASE ========== */
+    section {
+      padding: 80px 24px;
+    }
+
+    @media (min-width: 768px) {
+      section { padding: 120px 40px; }
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(32px, 6vw, 56px);
+      font-weight: 900;
+      line-height: 1.05;
+      color: var(--primary);
+      margin-bottom: 20px;
+    }
+
+    .section-title.light { color: var(--bg); }
+
+    .section-desc {
+      font-size: 17px;
+      font-weight: 300;
+      line-height: 1.75;
+      color: var(--text-muted);
+      max-width: 580px;
+    }
+
+    .section-desc.light { color: rgba(245,237,217,0.75); }
+
+    /* Reveal animation */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    .reveal-delay-5 { transition-delay: 0.5s; }
+
+    /* ========== ABOUT ========== */
+    .about {
+      background: var(--cream);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about::before {
+      content: '';
+      position: absolute;
+      right: -100px;
+      top: -100px;
+      width: 400px;
+      height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(212,136,42,0.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .about-grid {
+      display: grid;
+      gap: 60px;
+      align-items: center;
+    }
+
+    @media (min-width: 768px) {
+      .about-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 80px;
+      }
+    }
+
+    .about-visual {
+      position: relative;
+    }
+
+    .about-radio-icon {
+      width: 100%;
+      max-width: 340px;
+      margin: 0 auto;
+      display: block;
+    }
+
+    .radio-svg-wrap {
+      position: relative;
+      width: 100%;
+      max-width: 320px;
+      margin: 0 auto;
+    }
+
+    .radio-ring {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      border-radius: 50%;
+      border: 1px solid rgba(212,136,42,0.2);
+      transform: translate(-50%, -50%);
+      animation: ring-expand 3s ease-out infinite;
+    }
+
+    .radio-ring:nth-child(1) { width: 200px; height: 200px; animation-delay: 0s; }
+    .radio-ring:nth-child(2) { width: 280px; height: 280px; animation-delay: 0.8s; }
+    .radio-ring:nth-child(3) { width: 360px; height: 360px; animation-delay: 1.6s; }
+
+    @keyframes ring-expand {
+      0% { opacity: 0.6; transform: translate(-50%, -50%) scale(0.8); }
+      100% { opacity: 0; transform: translate(-50%, -50%) scale(1.1); }
+    }
+
+    .radio-center {
+      position: relative;
+      z-index: 2;
+      width: 140px;
+      height: 140px;
+      margin: 80px auto;
+      background: var(--primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 60px rgba(212,136,42,0.25), inset 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    .radio-center svg {
+      width: 64px;
+      height: 64px;
+      color: var(--accent);
+    }
+
+    .about-stat {
+      display: flex;
+      gap: 32px;
+      margin-top: 40px;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 40px;
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* ========== PROGRAMAÇÃO ========== */
+    .programacao {
+      background: var(--primary);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .programacao::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 60px,
+        rgba(212,136,42,0.04) 60px,
+        rgba(212,136,42,0.04) 61px
+      );
+    }
+
+    .programacao-header {
+      margin-bottom: 60px;
+    }
+
+    .prog-grid {
+      display: grid;
+      gap: 20px;
+    }
+
+    @media (min-width: 640px) {
+      .prog-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (min-width: 960px) {
+      .prog-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .prog-card {
+      background: rgba(245,237,217,0.05);
+      border: 1px solid rgba(245,237,217,0.1);
+      border-radius: 2px;
+      padding: 28px 24px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s, border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+      cursor: default;
+    }
+
+    .prog-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+
+    .prog-card:hover {
+      background: rgba(245,237,217,0.09);
+      border-color: rgba(212,136,42,0.3);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+    }
+
+    .prog-card:hover::before { transform: scaleX(1); }
+
+    .prog-time {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .prog-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--bg);
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+
+    .prog-desc {
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.6;
+      color: rgba(245,237,217,0.55);
+    }
+
+    .prog-icon {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      color: rgba(212,136,42,0.2);
+      transition: color 0.3s;
+    }
+
+    .prog-card:hover .prog-icon { color: rgba(212,136,42,0.5); }
+
+    /* ========== QUOTE SECTION ========== */
+    .quote-section {
+      background: var(--bg-warm);
+      padding: 80px 24px;
+      text-align: center;
+    }
+
+    .big-quote {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(24px, 4vw, 42px);
+      font-weight: 700;
+      line-height: 1.35;
+      color: var(--primary);
+      max-width: 820px;
+      margin: 0 auto 24px;
+      position: relative;
+    }
+
+    .big-quote::before {
+      content: '\201C';
+      display: block;
+      font-size: clamp(80px, 12vw, 140px);
+      line-height: 0.6;
+      color: var(--accent);
+      opacity: 0.25;
+      margin-bottom: 12px;
+    }
+
+    .quote-source {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* ========== GALERIA ========== */
+    .galeria {
+      background: var(--bg);
+      padding-bottom: 0;
+    }
+
+    .galeria-header {
+      margin-bottom: 40px;
+    }
+
+    .foto-mosaic {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: auto;
+      gap: 8px;
+    }
+
+    @media (min-width: 640px) {
+      .foto-mosaic {
+        grid-template-columns: repeat(3, 1fr);
+      }
+      .foto-mosaic .foto-large {
+        grid-column: span 2;
+        grid-row: span 2;
+      }
+    }
+
+    .foto-item {
+      position: relative;
+      overflow: hidden;
+      background: var(--primary);
+      aspect-ratio: 1 / 1;
+    }
+
+    .foto-large { aspect-ratio: unset; }
+
+    .foto-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease, filter 0.5s ease;
+      filter: sepia(20%) saturate(0.9);
+    }
+
+    .foto-item:hover img {
+      transform: scale(1.06);
+      filter: sepia(0%) saturate(1);
+    }
+
+    .foto-item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 50%, rgba(44,24,16,0.7));
+      pointer-events: none;
+    }
+
+    /* Stock photos from Unsplash — verified by checking open URLs */
+    /* Using Unsplash source API for sertanejo/countryside/radio themed images */
+
+    /* ========== CONTATO ========== */
+    .contato {
+      background: var(--primary);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contato::before {
+      content: '';
+      position: absolute;
+      bottom: -200px;
+      left: -200px;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(212,136,42,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .contato-grid {
+      display: grid;
+      gap: 60px;
+      align-items: start;
+    }
+
+    @media (min-width: 768px) {
+      .contato-grid { grid-template-columns: 1.2fr 1fr; }
+    }
+
+    .contato-info h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(36px, 6vw, 58px);
+      font-weight: 900;
+      color: var(--bg);
+      line-height: 1;
+      margin-bottom: 24px;
+    }
+
+    .contato-info h2 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .contato-detail {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 18px 0;
+      border-bottom: 1px solid rgba(245,237,217,0.1);
+    }
+
+    .contato-detail:first-of-type { border-top: 1px solid rgba(245,237,217,0.1); }
+
+    .detail-icon {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      background: rgba(212,136,42,0.15);
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+    }
+
+    .detail-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(245,237,217,0.45);
+      margin-bottom: 4px;
+    }
+
+    .detail-value {
+      font-size: 15px;
+      color: var(--bg);
+      font-weight: 400;
+    }
+
+    .contato-card {
+      background: rgba(245,237,217,0.05);
+      border: 1px solid rgba(245,237,217,0.1);
+      border-radius: 2px;
+      padding: 40px 32px;
+      text-align: center;
+    }
+
+    .contato-card p {
+      font-size: 15px;
+      color: rgba(245,237,217,0.65);
+      line-height: 1.7;
+      margin-bottom: 28px;
+      font-weight: 300;
+    }
+
+    .btn-wa {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: #25D366;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 16px 32px;
+      border-radius: 2px;
+      width: 100%;
+      min-height: 52px;
+      transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
+      box-shadow: 0 4px 16px rgba(37,211,102,0.3);
+    }
+
+    .btn-wa:hover {
+      background: #1ebe5a;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(37,211,102,0.45);
+    }
+
+    .contato-card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--bg);
+      margin-bottom: 12px;
+    }
+
+    /* ========== FOOTER ========== */
+    footer {
+      background: #120A04;
+      padding: 40px 24px;
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 24px;
+      font-weight: 900;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .footer-tagline {
+      font-size: 13px;
+      color: rgba(245,237,217,0.35);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+
+    .footer-line {
+      width: 60px;
+      height: 1px;
+      background: var(--gold-line);
+      margin: 0 auto 20px;
+      opacity: 0.4;
+    }
+
+    .footer-copy {
+      font-size: 12px;
+      color: rgba(245,237,217,0.25);
+      letter-spacing: 0.06em;
+    }
+
+    /* Gold decorative line */
+    .gold-line {
+      width: 48px;
+      height: 2px;
+      background: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    .gold-line.center { margin: 0 auto 20px; }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <a href="#" class="nav-logo">Rádio Alegria</a>
+    <ul class="nav-links">
+      <li><a href="#sobre">Sobre</a></li>
+      <li><a href="#programacao">Programação</a></li>
+      <li><a href="#contato">Contato</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-badge">
+        <span class="dot"></span>
+        No ar ao vivo · Catalão, Goiás
+      </div>
+
+      <h1>
+        Rádio
+        <em>Alegria</em>
+      </h1>
+
+      <p class="hero-tagline">Modão de raiz, do coração do cerrado para você</p>
+
+      <div class="soundwave">
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span><span></span><span></span><span></span><span></span>
+        <span></span>
+      </div>
+
+      <div class="hero-cta">
+        <a href="#contato" class="btn-primary">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 5.25A2.25 2.25 0 015.25 3h13.5A2.25 2.25 0 0121 5.25v13.5A2.25 2.25 0 0118.75 21H5.25A2.25 2.25 0 013 18.75V5.25z"/>
+            <circle cx="12" cy="12" r="3.5" stroke="currentColor" stroke-width="2.5"/>
+          </svg>
+          Falar com a Rádio
+        </a>
+        <a href="#sobre" class="btn-outline">
+          Conhecer a história
+        </a>
+      </div>
+    </div>
+
+    <div class="scroll-hint">
+      <span>Rolar</span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M12 5v14M5 12l7 7 7-7"/>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="sobre">
+    <div class="container">
+      <div class="about-grid">
+        <div class="about-visual reveal">
+          <div class="radio-svg-wrap">
+            <div class="radio-ring"></div>
+            <div class="radio-ring"></div>
+            <div class="radio-ring"></div>
+            <div class="radio-center">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M10.5 12a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0 0V8.25m0 3.75v3.75m0-3.75h3.75M10.5 12H6.75"/>
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 9.563C9 9.252 9.252 9 9.563 9h4.874c.311 0 .563.252.563.563v4.874c0 .311-.252.563-.563.563H9.564A.562.562 0 0 1 9 14.437V9.564z"/>
+              </svg>
+            </div>
+          </div>
+
+          <div class="about-stat">
+            <div class="stat-item">
+              <div class="stat-number">24h</div>
+              <div class="stat-label">No Ar</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">100%</div>
+              <div class="stat-label">Modão Raiz</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">FM</div>
+              <div class="stat-label">Catalão</div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="gold-line reveal"></div>
+          <p class="section-label reveal reveal-delay-1">Nossa história</p>
+          <h2 class="section-title reveal reveal-delay-2">A voz do sertão que nunca cala</h2>
+          <p class="section-desc reveal reveal-delay-3" style="margin-bottom:20px;">
+            A Rádio Alegria nasceu para preservar e celebrar o modão antigo — aquela música sertaneja de raiz que emociona, que faz a gente lembrar da terra, da família e das raízes mais profundas do coração goiano.
+          </p>
+          <p class="section-desc reveal reveal-delay-4">
+            Em Catalão e por todo o cerrado, levamos as vozes eternas de Tião Carreiro, Milionário e José Rico, Tonico e Tinoco, e tantos outros ícones da música caipira que formaram a alma do Brasil rural. Um som que não envelhece — só fica mais bonito com o tempo.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGRAMAÇÃO -->
+  <section class="programacao" id="programacao">
+    <div class="container">
+      <div class="programacao-header">
+        <div class="gold-line reveal"></div>
+        <p class="section-label reveal reveal-delay-1" style="color:rgba(212,136,42,0.7);">Grade de programação</p>
+        <h2 class="section-title light reveal reveal-delay-2">No ar o dia todo</h2>
+        <p class="section-desc light reveal reveal-delay-3">De madrugada ao serão, o modão de raiz toca sem parar. Cada programa é uma viagem pela história da música sertaneja.</p>
+      </div>
+
+      <div class="prog-grid">
+        <div class="prog-card reveal">
+          <p class="prog-time">06h — 09h · Manhã</p>
+          <h3 class="prog-name">Alvorada Sertaneja</h3>
+          <p class="prog-desc">O melhor do modão para começar o dia com alegria e saudade. Música de raiz que acorda a alma.</p>
+          <div class="prog-icon">
+            <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2">
+              <circle cx="12" cy="12" r="4"/>
+              <path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="prog-card reveal reveal-delay-1">
+          <p class="prog-time">09h — 12h · Encontro</p>
+          <h3 class="prog-name">Roda de Modão</h3>
+          <p class="prog-desc">Os clássicos imortais da dupla sertaneja. Tonico e Tinoco, Tião Carreiro, Zilo e Zalo.</p>
+          <div class="prog-icon">
+            <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2">
+              <path d="M9 18V5l12-2v13"/>
+              <circle cx="6" cy="18" r="3"/>
+              <circle cx="18" cy="16" r="3"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="prog-card reveal reveal-delay-2">
+          <p class="prog-time">12h — 14h · Almoço</p>
+          <h3 class="prog-name">Hora do Gado</h3>
+          <p class="prog-desc">A tradição da curva do gado com música sertaneja raiz. O coração do campo em melodia.</p>
+          <div class="prog-icon">
+            <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2">
+              <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="prog-card reveal reveal-delay-3">
+          <p class="prog-time">15h — 18h · Tarde</p>
+          <h3 class="prog-name">Seresta das Gerais</h3>
+          <p class="prog-desc">As mágoas e alegrias do coração sertanejo nas vozes que marcaram gerações de brasileiros.</p>
+          <div class="prog-icon">
+            <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2">
+              <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="prog-card reveal reveal-delay-4">
+          <p class="prog-time">18h — 22h · Noite</p>
+          <h3 class="prog-name">Varanda do Interior</h3>
+          <p class="prog-desc">Para fechar o dia como se deve: com viola, modão e as histórias que a música caipira conta.</p>
+          <div class="prog-icon">
+            <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2">
+              <path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+            </svg>
+          </div>
+        </div>
+
+        <div class="prog-card reveal reveal-delay-5">
+          <p class="prog-time">22h — 06h · Madrugada</p>
+          <h3 class="prog-name">Serenata Eterna</h3>
+          <p class="prog-desc">A noite é sertaneja. Enquanto o mundo dorme, o modão vela — cheio de saudade e luar.</p>
+          <div class="prog-icon">
+            <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M12 6v6l4 2"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUOTE -->
+  <section class="quote-section">
+    <div class="container">
+      <div class="ornament-divider reveal">
+        <span>✶</span>
+      </div>
+      <br /><br />
+      <p class="big-quote reveal reveal-delay-1">
+        Modão antigo é a memória do Brasil que a gente nunca deve esquecer
+      </p>
+      <p class="quote-source reveal reveal-delay-2">— Rádio Alegria Catalão · O som que une gerações</p>
+    </div>
+  </section>
+
+  <!-- CONTATO -->
+  <section class="contato" id="contato">
+    <div class="container">
+      <div class="contato-grid">
+        <div class="contato-info">
+          <div class="gold-line reveal"></div>
+          <p class="section-label reveal reveal-delay-1" style="color:rgba(212,136,42,0.7);">Fale conosco</p>
+          <h2 class="reveal reveal-delay-2">
+            A nossa <em>saudade</em> é sua também
+          </h2>
+          <p class="section-desc light reveal reveal-delay-3" style="margin-bottom:36px;">
+            Quer mandar uma mensagem, pedir uma música ou contar a nossa história? A Rádio Alegria Catalão está sempre de portas abertas.
+          </p>
+
+          <div class="contato-detail reveal reveal-delay-3">
+            <div class="detail-icon">
+              <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+              </svg>
+            </div>
+            <div>
+              <p class="detail-label">Localização</p>
+              <p class="detail-value">Catalão, Goiás — Brasil</p>
+            </div>
+          </div>
+
+          <div class="contato-detail reveal reveal-delay-4">
+            <div class="detail-icon">
+              <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M10.5 12a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/>
+                <path d="M6.75 12a5.25 5.25 0 005.25 5.25"/>
+              </svg>
+            </div>
+            <div>
+              <p class="detail-label">Frequência</p>
+              <p class="detail-value">radioalegriacatalao.com</p>
+            </div>
+          </div>
+
+          <div class="contato-detail reveal reveal-delay-5">
+            <div class="detail-icon">
+              <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 6v6l4 2"/>
+              </svg>
+            </div>
+            <div>
+              <p class="detail-label">Funcionamento</p>
+              <p class="detail-value">24 horas por dia · 7 dias por semana</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="contato-card reveal reveal-delay-2">
+          <div style="margin-bottom:20px;">
+            <svg width="48" height="48" fill="none" viewBox="0 0 24 24" stroke="rgba(212,136,42,0.6)" stroke-width="1.2" style="margin:0 auto;display:block;">
+              <path d="M8.625 12a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 01-2.555-.337A5.972 5.972 0 015.41 20.97a5.969 5.969 0 01-.474-.065 4.48 4.48 0 00.978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25z"/>
+            </svg>
+          </div>
+          <h3 class="contato-card-title">Fale com a Rádio</h3>
+          <p>Mande uma mensagem, peça sua música preferida ou entre em contato com nossa equipe pelo WhatsApp.</p>
+          <a href="https://wa.me/556299999999" class="btn-wa">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            Enviar Mensagem
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Rádio Alegria Catalão</div>
+    <p class="footer-tagline">Modão Antigo · Tocar e Preservar</p>
+    <div class="footer-line"></div>
+    <p class="footer-copy">&copy; 2025 Rádio Alegria Catalão · Catalão, Goiás · Brasil</p>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => io.observe(el));
+  </script>
+
+</body>
+</html>
