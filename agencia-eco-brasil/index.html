@@ -1,0 +1,1734 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Agência Eco Brasil — Ecoturismo, Mapas e Experiências na Natureza</title>
+  <meta name="description" content="Agência Eco Brasil: ecoturismo receptivo, mapas turísticos digitais, organização de eventos e publicações temáticas. Descubra o Brasil natural com quem conhece cada trilha." />
+  <meta property="og:title" content="Agência Eco Brasil — Ecoturismo e Natureza" />
+  <meta property="og:description" content="Experiências autênticas na natureza brasileira. Ecoturismo, mapas digitais, eventos e publicações temáticas." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,700&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%231A3A2A'/%3E%3Cpath d='M50 20 C35 20 25 35 25 50 C25 65 35 75 50 80 C65 75 75 65 75 50 C75 35 65 20 50 20Z' fill='%23C9913D' opacity='0.9'/%3E%3Cpath d='M50 30 L50 70 M35 45 L65 45' stroke='%231A3A2A' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E" />
+
+  <style>
+    :root {
+      --forest: #1A3A2A;
+      --forest-dark: #0D1A11;
+      --forest-mid: #2A5040;
+      --amber: #C9913D;
+      --amber-light: #E0A84A;
+      --cream: #F4EFE8;
+      --cream-dark: #EDE5D8;
+      --sand: #D4C5A9;
+      --text: #1C1C1A;
+      --text-muted: #5A5A52;
+      --white: #FAFAF7;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── TYPOGRAPHY ── */
+    h1, h2, h3, h4 {
+      font-family: 'Fraunces', serif;
+      font-optical-sizing: auto;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.4s, padding 0.3s;
+    }
+    nav.scrolled {
+      background: rgba(13, 26, 17, 0.96);
+      backdrop-filter: blur(12px);
+      padding: 14px 24px;
+    }
+    .nav-logo {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--white);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .nav-logo span {
+      font-weight: 300;
+      font-style: italic;
+      color: var(--amber);
+    }
+    .nav-links {
+      display: none;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--amber); }
+    .nav-cta {
+      display: none;
+      background: var(--amber);
+      color: var(--forest-dark);
+      padding: 10px 22px;
+      border-radius: 2px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .nav-cta:hover { background: var(--amber-light); transform: translateY(-1px); }
+    .nav-hamburger {
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding: 4px;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--white);
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-hamburger.open span:nth-child(2) { opacity: 0; }
+    .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Mobile menu */
+    .mobile-menu {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: var(--forest-dark);
+      z-index: 99;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .mobile-menu.open { opacity: 1; pointer-events: auto; }
+    .mobile-menu a {
+      font-family: 'Fraunces', serif;
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--white);
+      text-decoration: none;
+      font-style: italic;
+      transition: color 0.2s;
+    }
+    .mobile-menu a:hover { color: var(--amber); }
+
+    @media (min-width: 768px) {
+      .nav-links { display: flex; }
+      .nav-cta { display: inline-block; }
+      .nav-hamburger { display: none; }
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+      padding-bottom: 80px;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=1600&q=85&fit=crop');
+      background-size: cover;
+      background-position: center 30%;
+      transform: scale(1.05);
+      animation: heroZoom 12s ease-out forwards;
+    }
+    @keyframes heroZoom {
+      from { transform: scale(1.05); }
+      to { transform: scale(1.0); }
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(13,26,17,0.2) 0%,
+        rgba(13,26,17,0.1) 40%,
+        rgba(13,26,17,0.75) 80%,
+        rgba(13,26,17,0.92) 100%
+      );
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 16px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.7s 0.3s ease forwards;
+    }
+    .hero-title {
+      font-family: 'Fraunces', serif;
+      font-weight: 900;
+      font-size: clamp(52px, 10vw, 120px);
+      line-height: 0.9;
+      color: var(--white);
+      letter-spacing: -0.03em;
+      margin-bottom: 24px;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 0.8s 0.5s ease forwards;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--amber);
+    }
+    .hero-subtitle {
+      font-size: clamp(15px, 2.5vw, 18px);
+      font-weight: 300;
+      color: rgba(244,239,232,0.85);
+      max-width: 480px;
+      line-height: 1.6;
+      margin-bottom: 36px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.7s 0.8s ease forwards;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.7s 1.0s ease forwards;
+    }
+    .btn-primary {
+      background: var(--amber);
+      color: var(--forest-dark);
+      padding: 16px 32px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+      display: inline-block;
+    }
+    .btn-primary:hover {
+      background: var(--amber-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(201,145,61,0.35);
+    }
+    .btn-ghost {
+      color: var(--white);
+      padding: 16px 32px;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.35);
+      border-radius: 2px;
+      transition: border-color 0.2s, background 0.2s;
+      display: inline-block;
+    }
+    .btn-ghost:hover {
+      border-color: var(--amber);
+      background: rgba(201,145,61,0.1);
+    }
+    .hero-scroll {
+      position: absolute;
+      bottom: 28px;
+      right: 28px;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      opacity: 0;
+      animation: fadeUp 0.6s 1.4s ease forwards;
+    }
+    .hero-scroll span {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      writing-mode: vertical-rl;
+    }
+    .hero-scroll-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, var(--amber), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.1); }
+    }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── STATS BAR ── */
+    .stats-bar {
+      background: var(--forest-dark);
+      padding: 28px 24px;
+    }
+    .stats-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+    .stat-item {
+      text-align: center;
+      border-right: 1px solid rgba(255,255,255,0.08);
+      padding: 0 16px;
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-number {
+      font-family: 'Fraunces', serif;
+      font-size: 36px;
+      font-weight: 900;
+      color: var(--amber);
+      display: block;
+      letter-spacing: -0.02em;
+    }
+    .stat-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(244,239,232,0.5);
+      margin-top: 4px;
+    }
+
+    @media (min-width: 640px) {
+      .stats-inner { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    /* ── ABOUT ── */
+    .about {
+      padding: 96px 24px;
+      background: var(--cream);
+      position: relative;
+      overflow: hidden;
+    }
+    .about::before {
+      content: '';
+      position: absolute;
+      top: -60px;
+      left: 0; right: 0;
+      height: 120px;
+      background: var(--forest-dark);
+      clip-path: ellipse(55% 100% at 50% 0%);
+    }
+    .about-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      gap: 48px;
+    }
+    .about-visual {
+      position: relative;
+    }
+    .about-img-main {
+      width: 100%;
+      height: 360px;
+      object-fit: cover;
+      border-radius: 4px;
+      display: block;
+    }
+    .about-img-badge {
+      position: absolute;
+      bottom: -20px;
+      right: 20px;
+      background: var(--amber);
+      color: var(--forest-dark);
+      padding: 20px 24px;
+      border-radius: 2px;
+      font-family: 'Fraunces', serif;
+      font-size: 13px;
+      font-weight: 700;
+      font-style: italic;
+      line-height: 1.3;
+      text-align: center;
+      box-shadow: 0 12px 32px rgba(0,0,0,0.2);
+    }
+    .about-img-badge strong {
+      display: block;
+      font-size: 32px;
+      font-style: normal;
+    }
+    .about-text {
+      padding-top: 28px;
+    }
+    .section-eyebrow {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-eyebrow::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--amber);
+      flex-shrink: 0;
+    }
+    .section-title {
+      font-family: 'Fraunces', serif;
+      font-weight: 900;
+      font-size: clamp(36px, 5vw, 64px);
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+      color: var(--forest-dark);
+      margin-bottom: 24px;
+    }
+    .section-title em {
+      font-style: italic;
+      color: var(--forest-mid);
+    }
+    .body-text {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    .about-manifesto {
+      margin-top: 32px;
+      padding: 24px;
+      border-left: 3px solid var(--amber);
+      background: rgba(201,145,61,0.06);
+    }
+    .about-manifesto p {
+      font-family: 'Fraunces', serif;
+      font-size: 20px;
+      font-style: italic;
+      font-weight: 300;
+      line-height: 1.6;
+      color: var(--forest);
+    }
+
+    @media (min-width: 900px) {
+      .about-inner {
+        grid-template-columns: 1fr 1fr;
+        align-items: start;
+        gap: 80px;
+      }
+    }
+
+    /* ── SERVICES ── */
+    .services {
+      padding: 96px 24px;
+      background: var(--forest-dark);
+      position: relative;
+      clip-path: polygon(0 5%, 100% 0, 100% 95%, 0 100%);
+      margin: -5vw 0;
+      padding-top: calc(96px + 5vw);
+      padding-bottom: calc(96px + 5vw);
+    }
+    .services-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .services .section-title { color: var(--white); }
+    .services .body-text { color: rgba(244,239,232,0.6); max-width: 560px; }
+    .services-grid {
+      margin-top: 56px;
+      display: grid;
+      gap: 2px;
+    }
+    .service-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      padding: 40px 36px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.4s, border-color 0.4s, transform 0.3s;
+      cursor: pointer;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--forest-mid) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+    .service-card:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(201,145,61,0.3);
+      transform: translateX(4px);
+    }
+    .service-card:hover::before { opacity: 1; }
+    .service-number {
+      font-family: 'Fraunces', serif;
+      font-size: 56px;
+      font-weight: 900;
+      color: rgba(255,255,255,0.06);
+      position: absolute;
+      top: 16px;
+      right: 24px;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      transition: color 0.4s;
+    }
+    .service-card:hover .service-number { color: rgba(201,145,61,0.15); }
+    .service-icon {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 20px;
+      color: var(--amber);
+    }
+    .service-name {
+      font-family: 'Fraunces', serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+    .service-desc {
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: rgba(244,239,232,0.55);
+    }
+    .service-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--amber);
+      text-decoration: none;
+      transition: gap 0.2s;
+    }
+    .service-link:hover { gap: 14px; }
+
+    @media (min-width: 640px) {
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 1024px) {
+      .services-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    /* ── EXPERIENCES ── */
+    .experiences {
+      padding: 96px 24px;
+      background: var(--cream);
+    }
+    .experiences-inner { max-width: 1200px; margin: 0 auto; }
+    .experiences-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+    .bento-grid {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: 1fr;
+    }
+    .bento-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 4px;
+      background: var(--forest-dark);
+      cursor: pointer;
+    }
+    .bento-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+    .bento-item:hover img { transform: scale(1.06); }
+    .bento-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(13,26,17,0.9) 0%, rgba(13,26,17,0.1) 60%);
+      transition: background 0.4s;
+    }
+    .bento-item:hover .bento-overlay {
+      background: linear-gradient(to top, rgba(13,26,17,0.95) 0%, rgba(13,26,17,0.2) 60%);
+    }
+    .bento-label {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 20px 20px 24px;
+      z-index: 2;
+    }
+    .bento-tag {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 6px;
+    }
+    .bento-name {
+      font-family: 'Fraunces', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.2;
+    }
+    .bento-detail {
+      font-size: 13px;
+      color: rgba(244,239,232,0.6);
+      margin-top: 6px;
+      font-weight: 300;
+    }
+
+    @media (min-width: 640px) {
+      .bento-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+      }
+      .bento-item-large {
+        grid-column: span 2;
+        min-height: 360px;
+      }
+      .bento-item-tall {
+        grid-row: span 2;
+      }
+      .bento-item { min-height: 260px; }
+    }
+
+    @media (min-width: 1024px) {
+      .bento-grid { grid-template-columns: repeat(3, 1fr); }
+      .bento-item-large { grid-column: span 2; }
+    }
+
+    /* ── MAPS ── */
+    .maps {
+      padding: 96px 24px;
+      background: var(--forest);
+      position: relative;
+      overflow: hidden;
+    }
+    .maps::before {
+      content: 'MAPAS';
+      position: absolute;
+      font-family: 'Fraunces', serif;
+      font-size: clamp(100px, 20vw, 220px);
+      font-weight: 900;
+      color: rgba(255,255,255,0.03);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      white-space: nowrap;
+      pointer-events: none;
+      letter-spacing: -0.04em;
+    }
+    .maps-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    .maps .section-title { color: var(--white); }
+    .maps .body-text { color: rgba(244,239,232,0.6); }
+    .maps-layout {
+      margin-top: 56px;
+      display: grid;
+      gap: 32px;
+    }
+    .map-showcase {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 4px;
+      overflow: hidden;
+      position: relative;
+    }
+    .map-img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      display: block;
+      opacity: 0.8;
+    }
+    .map-overlay-bar {
+      background: rgba(13,26,17,0.9);
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .map-tag {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--amber);
+    }
+    .map-name {
+      font-family: 'Fraunces', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--white);
+      margin-top: 4px;
+    }
+    .map-btn {
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 1px solid var(--amber);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--amber);
+      transition: background 0.2s;
+      text-decoration: none;
+    }
+    .map-btn:hover { background: var(--amber); color: var(--forest-dark); }
+    .maps-features {
+      display: grid;
+      gap: 20px;
+    }
+    .map-feature {
+      padding: 24px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 4px;
+      transition: border-color 0.3s;
+    }
+    .map-feature:hover { border-color: rgba(201,145,61,0.3); }
+    .map-feature-title {
+      font-family: 'Fraunces', serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+    .map-feature-text {
+      font-size: 13px;
+      color: rgba(244,239,232,0.5);
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    @media (min-width: 900px) {
+      .maps-layout { grid-template-columns: 1.4fr 1fr; align-items: start; gap: 48px; }
+    }
+
+    /* ── EVENTS ── */
+    .events {
+      padding: 96px 24px;
+      background: var(--cream-dark);
+    }
+    .events-inner { max-width: 1200px; margin: 0 auto; }
+    .events-grid {
+      margin-top: 48px;
+      display: grid;
+      gap: 16px;
+    }
+    .event-card {
+      background: var(--white);
+      border-radius: 4px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+      transition: box-shadow 0.3s, transform 0.3s;
+    }
+    .event-card:hover {
+      box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+      transform: translateY(-4px);
+    }
+    .event-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+    }
+    .event-body { padding: 28px; flex: 1; }
+    .event-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .event-date {
+      background: var(--forest-dark);
+      color: var(--white);
+      padding: 6px 12px;
+      border-radius: 2px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .event-type {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--amber);
+    }
+    .event-title {
+      font-family: 'Fraunces', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--forest-dark);
+      line-height: 1.3;
+      margin-bottom: 10px;
+    }
+    .event-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      font-weight: 300;
+    }
+    .event-footer {
+      padding: 0 28px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .event-location {
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .event-cta {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--forest);
+      text-decoration: none;
+      border-bottom: 1px solid var(--forest);
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .event-cta:hover { color: var(--amber); border-color: var(--amber); }
+
+    @media (min-width: 640px) {
+      .events-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 1024px) {
+      .events-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    /* ── PUBLICATIONS ── */
+    .publications {
+      padding: 96px 24px;
+      background: var(--forest-dark);
+    }
+    .publications-inner { max-width: 1200px; margin: 0 auto; }
+    .publications .section-title { color: var(--white); }
+    .publications .body-text { color: rgba(244,239,232,0.55); }
+    .pub-grid {
+      margin-top: 48px;
+      display: grid;
+      gap: 2px;
+    }
+    .pub-card {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      padding: 24px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      cursor: pointer;
+      transition: padding-left 0.3s;
+    }
+    .pub-card:hover { padding-left: 12px; }
+    .pub-card:first-child { border-top: 1px solid rgba(255,255,255,0.07); }
+    .pub-thumb {
+      width: 80px;
+      height: 80px;
+      flex-shrink: 0;
+      object-fit: cover;
+      border-radius: 2px;
+      filter: grayscale(30%);
+      transition: filter 0.3s;
+    }
+    .pub-card:hover .pub-thumb { filter: none; }
+    .pub-body { flex: 1; }
+    .pub-cat {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 6px;
+    }
+    .pub-title {
+      font-family: 'Fraunces', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.3;
+      margin-bottom: 6px;
+    }
+    .pub-date {
+      font-size: 12px;
+      color: rgba(244,239,232,0.35);
+      font-weight: 300;
+    }
+    .pub-arrow {
+      color: rgba(255,255,255,0.2);
+      transition: color 0.3s, transform 0.3s;
+      flex-shrink: 0;
+    }
+    .pub-card:hover .pub-arrow {
+      color: var(--amber);
+      transform: translateX(4px);
+    }
+
+    /* ── GALLERY ── */
+    .gallery {
+      padding: 96px 24px;
+      background: var(--cream);
+    }
+    .gallery-inner { max-width: 1200px; margin: 0 auto; }
+    .gallery-grid {
+      margin-top: 48px;
+      display: grid;
+      gap: 8px;
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 2px;
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+    .gallery-item:hover img { transform: scale(1.08); }
+    .gallery-item:nth-child(1),
+    .gallery-item:nth-child(4) { grid-column: span 2; }
+    .gallery-item:nth-child(1) img,
+    .gallery-item:nth-child(4) img { height: 280px; }
+
+    @media (min-width: 768px) {
+      .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+      .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+      .gallery-item:nth-child(1) img { height: 100%; min-height: 360px; }
+      .gallery-item:nth-child(4) { grid-column: span 1; }
+      .gallery-item:nth-child(4) img { height: 180px; }
+      .gallery-item img { height: 220px; }
+    }
+
+    /* ── CONTACT ── */
+    .contact {
+      padding: 96px 24px;
+      background: var(--forest-dark);
+      position: relative;
+      overflow: hidden;
+    }
+    .contact::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: -200px;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(42,80,64,0.3) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .contact-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      gap: 64px;
+      position: relative;
+      z-index: 1;
+    }
+    .contact .section-title { color: var(--white); }
+    .contact .body-text { color: rgba(244,239,232,0.55); }
+    .contact-details {
+      display: grid;
+      gap: 20px;
+      margin-top: 32px;
+    }
+    .contact-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 20px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 2px;
+      transition: border-color 0.3s;
+    }
+    .contact-item:hover { border-color: rgba(201,145,61,0.3); }
+    .contact-icon {
+      width: 40px;
+      height: 40px;
+      flex-shrink: 0;
+      color: var(--amber);
+    }
+    .contact-label {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(244,239,232,0.35);
+      margin-bottom: 4px;
+    }
+    .contact-value {
+      font-family: 'Fraunces', serif;
+      font-size: 17px;
+      font-weight: 400;
+      color: var(--white);
+    }
+    .contact-cta-block {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 24px;
+    }
+    .contact-big-title {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(40px, 6vw, 72px);
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+    }
+    .contact-big-title em {
+      font-style: italic;
+      color: var(--amber);
+    }
+    .btn-whatsapp-large {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      background: #25D366;
+      color: #fff;
+      padding: 18px 36px;
+      border-radius: 2px;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-whatsapp-large:hover {
+      background: #20b858;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(37,211,102,0.3);
+    }
+    .contact-disclaimer {
+      font-size: 12px;
+      color: rgba(244,239,232,0.3);
+      font-weight: 300;
+    }
+
+    @media (min-width: 900px) {
+      .contact-inner { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #060f08;
+      padding: 40px 24px 32px;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-logo {
+      font-family: 'Fraunces', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--white);
+      text-decoration: none;
+    }
+    .footer-logo span {
+      font-weight: 300;
+      font-style: italic;
+      color: var(--amber);
+    }
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      list-style: none;
+    }
+    .footer-links a {
+      font-size: 12px;
+      color: rgba(255,255,255,0.35);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--amber); }
+    .footer-copy {
+      font-size: 11px;
+      color: rgba(255,255,255,0.2);
+      letter-spacing: 0.04em;
+    }
+
+    /* ── WHATSAPP FLOAT ── */
+    .wa-float {
+      position: fixed;
+      bottom: 28px;
+      right: 24px;
+      z-index: 999;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: #25D366;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      text-decoration: none;
+      animation: waPulse 3s ease-in-out infinite;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .wa-float:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 24px rgba(37,211,102,0.4);
+      animation: none;
+    }
+    @keyframes waPulse {
+      0%, 100% { box-shadow: 0 4px 12px rgba(0,0,0,0.25), 0 0 0 0 rgba(37,211,102,0.5); }
+      50% { box-shadow: 0 4px 12px rgba(0,0,0,0.25), 0 0 0 12px rgba(37,211,102,0); }
+    }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ── NOISE TEXTURE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.025;
+      pointer-events: none;
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <a href="#" class="nav-logo">Eco <span>Brasil</span></a>
+    <ul class="nav-links">
+      <li><a href="#sobre">Sobre</a></li>
+      <li><a href="#servicos">Servicos</a></li>
+      <li><a href="#experiencias">Experiencias</a></li>
+      <li><a href="#eventos">Eventos</a></li>
+      <li><a href="#publicacoes">Publicacoes</a></li>
+      <li><a href="#contato">Contato</a></li>
+    </ul>
+    <a href="https://wa.me/5500000000000" class="nav-cta" target="_blank" rel="noopener">Fale Conosco</a>
+    <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#sobre" class="mobile-link">Sobre</a>
+    <a href="#servicos" class="mobile-link">Servicos</a>
+    <a href="#experiencias" class="mobile-link">Experiencias</a>
+    <a href="#eventos" class="mobile-link">Eventos</a>
+    <a href="#publicacoes" class="mobile-link">Publicacoes</a>
+    <a href="#contato" class="mobile-link">Contato</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Ecoturismo Receptivo no Brasil</p>
+      <h1 class="hero-title">Onde a<br/><em>Natureza</em><br/>te chama</h1>
+      <p class="hero-subtitle">Experiencias autênticas na natureza brasileira. Trilhas, mapas digitais, eventos e publicacoes para quem vive o turismo de verdade.</p>
+      <div class="hero-actions">
+        <a href="#experiencias" class="btn-primary">Ver Experiencias</a>
+        <a href="#servicos" class="btn-ghost">Nossos Servicos</a>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <div class="hero-scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar">
+    <div class="stats-inner">
+      <div class="stat-item reveal">
+        <span class="stat-number">200+</span>
+        <p class="stat-label">Destinos mapeados</p>
+      </div>
+      <div class="stat-item reveal reveal-delay-1">
+        <span class="stat-number">8k+</span>
+        <p class="stat-label">Viajantes atendidos</p>
+      </div>
+      <div class="stat-item reveal reveal-delay-2">
+        <span class="stat-number">14</span>
+        <p class="stat-label">Estados cobertos</p>
+      </div>
+      <div class="stat-item reveal reveal-delay-3">
+        <span class="stat-number">60+</span>
+        <p class="stat-label">Publicacoes lancadas</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section class="about" id="sobre">
+    <div class="about-inner">
+      <div class="about-visual reveal">
+        <img
+          src="https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=900&q=80&fit=crop"
+          alt="Trilha na natureza brasileira"
+          class="about-img-main"
+          loading="lazy"
+        />
+        <div class="about-img-badge">
+          <strong>15+</strong>
+          anos de<br/>experiencia
+        </div>
+      </div>
+      <div class="about-text reveal reveal-delay-2">
+        <p class="section-eyebrow">Quem somos</p>
+        <h2 class="section-title">Somos guias do <em>Brasil selvagem</em></h2>
+        <p class="body-text">A Agencia Eco Brasil nasceu da paixao pelo territorio nacional — das florestas tropicais aos campos rupestres, das dunas litoraneas as matas de araucaria. Conectamos viajantes a experiencias genuinas que transformam perspectivas.</p>
+        <p class="body-text">Reunimos especialistas em ecoturismo receptivo, cartografia digital e producao de conteudo tematico para oferecer um servico completo a quem acredita que viajar e muito mais que turismo.</p>
+        <div class="about-manifesto">
+          <p>"O Brasil e maior do que qualquer mapa consegue mostrar — nossa missao e aproximar as pessoas desse territorio incrivel, um destino de cada vez."</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services" id="servicos">
+    <div class="services-inner">
+      <div class="reveal">
+        <p class="section-eyebrow" style="color:var(--amber)">O que fazemos</p>
+        <h2 class="section-title" style="color:var(--white)">Quatro pilares,<br/><em>um ecossistema</em></h2>
+        <p class="body-text">Do roteiro personalizado ao mapa digital publicado — cada servico foi desenhado para ampliar sua relacao com a natureza brasileira.</p>
+      </div>
+      <div class="services-grid">
+
+        <div class="service-card reveal reveal-delay-1">
+          <span class="service-number">01</span>
+          <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+            <circle cx="12" cy="9" r="2.5"/>
+          </svg>
+          <h3 class="service-name">Ecoturismo Receptivo</h3>
+          <p class="service-desc">Roteiros sob medida em biomas brasileiros — trilhas, cachoeiras, fauna e flora com guias especializados e compromisso ambiental.</p>
+          <a href="#contato" class="service-link">
+            Conhecer roteiros
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+
+        <div class="service-card reveal reveal-delay-2">
+          <span class="service-number">02</span>
+          <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <path d="M3 9h18M9 21V9"/>
+            <circle cx="15" cy="15" r="2"/>
+            <path d="m18 12-2 2 2 2"/>
+          </svg>
+          <h3 class="service-name">Mapas Turisticos Digitais</h3>
+          <p class="service-desc">Cartografia interativa de destinos, parques e roteiros — mapas que contam historias e facilitam a navegacao em campo.</p>
+          <a href="#mapas" class="service-link">
+            Ver mapas
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+
+        <div class="service-card reveal reveal-delay-3">
+          <span class="service-number">03</span>
+          <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/>
+            <line x1="8" y1="2" x2="8" y2="6"/>
+            <line x1="3" y1="10" x2="21" y2="10"/>
+            <path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/>
+          </svg>
+          <h3 class="service-name">Organizacao de Eventos</h3>
+          <p class="service-desc">Festivais de ecoturismo, encontros de fotografia da natureza, seminarios de conservacao — eventos que movem comunidades.</p>
+          <a href="#eventos" class="service-link">
+            Ver eventos
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+
+        <div class="service-card reveal reveal-delay-4">
+          <span class="service-number">04</span>
+          <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 19.5A2.5 2.5 0 016.5 17H20"/>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/>
+            <line x1="10" y1="8" x2="16" y2="8"/>
+            <line x1="10" y1="12" x2="14" y2="12"/>
+          </svg>
+          <h3 class="service-name">Publicacoes Tematicas</h3>
+          <p class="service-desc">Guias impressos e digitais, revistas tematicas e colecoes editoriais sobre biodiversidade, cultura e turismo sustentavel.</p>
+          <a href="#publicacoes" class="service-link">
+            Ver publicacoes
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCES -->
+  <section class="experiences" id="experiencias">
+    <div class="experiences-inner">
+      <div class="experiences-header">
+        <div class="reveal">
+          <p class="section-eyebrow">Destinos em destaque</p>
+          <h2 class="section-title">Experiencias<br/><em>inesqueciveis</em></h2>
+        </div>
+        <a href="#contato" class="btn-primary reveal" style="flex-shrink:0">Ver todos</a>
+      </div>
+      <div class="bento-grid">
+        <div class="bento-item bento-item-large reveal">
+          <img src="https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=1200&q=80&fit=crop" alt="Cachoeira na Mata Atlantica" loading="lazy" />
+          <div class="bento-overlay"></div>
+          <div class="bento-label">
+            <p class="bento-tag">Mata Atlantica</p>
+            <h3 class="bento-name">Trilha das Cachoeiras</h3>
+            <p class="bento-detail">3 dias — nivel intermediario</p>
+          </div>
+        </div>
+
+        <div class="bento-item bento-item-tall reveal reveal-delay-1">
+          <img src="https://images.unsplash.com/photo-1448375240586-882707db888b?w=800&q=80&fit=crop" alt="Floresta tropical" loading="lazy" />
+          <div class="bento-overlay"></div>
+          <div class="bento-label">
+            <p class="bento-tag">Amazonia</p>
+            <h3 class="bento-name">Imersao na Floresta</h3>
+            <p class="bento-detail">5 a 10 dias</p>
+          </div>
+        </div>
+
+        <div class="bento-item reveal reveal-delay-2">
+          <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80&fit=crop" alt="Montanhas do Brasil" loading="lazy" />
+          <div class="bento-overlay"></div>
+          <div class="bento-label">
+            <p class="bento-tag">Serra Gaucha</p>
+            <h3 class="bento-name">Campos de Altitude</h3>
+            <p class="bento-detail">2 dias — todas as idades</p>
+          </div>
+        </div>
+
+        <div class="bento-item reveal reveal-delay-3">
+          <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&q=80&fit=crop" alt="Ecoturismo noturno" loading="lazy" />
+          <div class="bento-overlay"></div>
+          <div class="bento-label">
+            <p class="bento-tag">Cerrado</p>
+            <h3 class="bento-name">Safari Fotografico</h3>
+            <p class="bento-detail">1 a 3 dias</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAPS -->
+  <section class="maps" id="mapas">
+    <div class="maps-inner">
+      <div class="reveal">
+        <p class="section-eyebrow" style="color:var(--amber)">Cartografia digital</p>
+        <h2 class="section-title" style="color:var(--white)">Mapas que<br/><em>contam historias</em></h2>
+        <p class="body-text">Desenvolvemos mapas turisticos digitais para destinos, parques nacionais, municipios e iniciativas de turismo sustentavel — com informacoes precisas e design impecavel.</p>
+      </div>
+      <div class="maps-layout">
+        <div class="map-showcase reveal reveal-delay-1">
+          <img src="https://images.unsplash.com/photo-1473773508845-188df298d2d1?w=900&q=80&fit=crop&crop=center" alt="Mapa digital de destino" class="map-img" loading="lazy" />
+          <div class="map-overlay-bar">
+            <div>
+              <p class="map-tag">Em destaque</p>
+              <p class="map-name">Mapa do Pantanal</p>
+            </div>
+            <a href="#contato" class="map-btn" aria-label="Acessar mapa">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="maps-features">
+          <div class="map-feature reveal reveal-delay-1">
+            <h4 class="map-feature-title">Trilhas e acessos</h4>
+            <p class="map-feature-text">Pontos de entrada, trilhas categorizadas por dificuldade, acessibilidade e pontos de agua potavel.</p>
+          </div>
+          <div class="map-feature reveal reveal-delay-2">
+            <h4 class="map-feature-title">Fauna e flora</h4>
+            <p class="map-feature-text">Espotting points por especie, epocas de avistamento e areas de conservacao prioritaria.</p>
+          </div>
+          <div class="map-feature reveal reveal-delay-3">
+            <h4 class="map-feature-title">Uso offline</h4>
+            <p class="map-feature-text">Download completo para uso sem conexao — ideal para areas remotas de baixa cobertura de sinal.</p>
+          </div>
+          <div class="map-feature reveal reveal-delay-4">
+            <h4 class="map-feature-title">API e embeddings</h4>
+            <p class="map-feature-text">Integracao com sites e aplicativos de terceiros via API publica com documentacao completa.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EVENTS -->
+  <section class="events" id="eventos">
+    <div class="events-inner">
+      <div class="reveal">
+        <p class="section-eyebrow">Proximos eventos</p>
+        <h2 class="section-title">Encontros que<br/><em>unem pessoas</em></h2>
+      </div>
+      <div class="events-grid">
+
+        <div class="event-card reveal reveal-delay-1">
+          <img src="https://images.unsplash.com/photo-1542401886-65d6c61db217?w=700&q=80&fit=crop" alt="Festival de ecoturismo" class="event-img" loading="lazy" />
+          <div class="event-body">
+            <div class="event-meta">
+              <span class="event-date">Jun 2025</span>
+              <span class="event-type">Festival</span>
+            </div>
+            <h3 class="event-title">Festival Nacional de Ecoturismo</h3>
+            <p class="event-desc">Tres dias de palestras, exposicoes, workshops e roteiros guiados com os principais nomes do turismo sustentavel brasileiro.</p>
+          </div>
+          <div class="event-footer">
+            <span class="event-location">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Bonito, MS
+            </span>
+            <a href="#contato" class="event-cta">Inscrever-se</a>
+          </div>
+        </div>
+
+        <div class="event-card reveal reveal-delay-2">
+          <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=700&q=80&fit=crop" alt="Workshop fotografia" class="event-img" loading="lazy" />
+          <div class="event-body">
+            <div class="event-meta">
+              <span class="event-date">Ago 2025</span>
+              <span class="event-type">Workshop</span>
+            </div>
+            <h3 class="event-title">Fotografia de Natureza na Chapada</h3>
+            <p class="event-desc">Imersao intensiva de 5 dias com fotografos profissionais na Chapada dos Veadeiros — tecnica, olhar e poetica da natureza.</p>
+          </div>
+          <div class="event-footer">
+            <span class="event-location">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Alto Paraiso, GO
+            </span>
+            <a href="#contato" class="event-cta">Inscrever-se</a>
+          </div>
+        </div>
+
+        <div class="event-card reveal reveal-delay-3">
+          <img src="https://images.unsplash.com/photo-1462275646964-a0e3386b89fa?w=700&q=80&fit=crop" alt="Seminario conservacao" class="event-img" loading="lazy" />
+          <div class="event-body">
+            <div class="event-meta">
+              <span class="event-date">Out 2025</span>
+              <span class="event-type">Seminario</span>
+            </div>
+            <h3 class="event-title">Seminario de Conservacao e Turismo</h3>
+            <p class="event-desc">Debate sobre modelos de turismo de base comunitaria, gestao de unidades de conservacao e desenvolvimento sustentavel.</p>
+          </div>
+          <div class="event-footer">
+            <span class="event-location">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Manaus, AM
+            </span>
+            <a href="#contato" class="event-cta">Inscrever-se</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PUBLICATIONS -->
+  <section class="publications" id="publicacoes">
+    <div class="publications-inner">
+      <div class="reveal">
+        <p class="section-eyebrow" style="color:var(--amber)">Publicacoes tematicas</p>
+        <h2 class="section-title" style="color:var(--white)">Conhecimento que<br/><em>voce leva</em></h2>
+        <p class="body-text">Guias de campo, revistas e atlas digitais para quem quer aprofundar o olhar sobre a natureza brasileira.</p>
+      </div>
+      <div class="pub-grid" style="margin-top:48px">
+
+        <div class="pub-card reveal">
+          <img src="https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=200&h=200&q=80&fit=crop" alt="Guia Amazonia" class="pub-thumb" loading="lazy" />
+          <div class="pub-body">
+            <p class="pub-cat">Guia de campo</p>
+            <h4 class="pub-title">Amazonia — O Grande Manual do Explorador</h4>
+            <p class="pub-date">3a edicao — 2024</p>
+          </div>
+          <svg class="pub-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+
+        <div class="pub-card reveal reveal-delay-1">
+          <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200&h=200&q=80&fit=crop" alt="Atlas Cerrado" class="pub-thumb" loading="lazy" />
+          <div class="pub-body">
+            <p class="pub-cat">Atlas digital</p>
+            <h4 class="pub-title">Atlas do Cerrado Brasileiro</h4>
+            <p class="pub-date">Edicao especial — 2024</p>
+          </div>
+          <svg class="pub-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+
+        <div class="pub-card reveal reveal-delay-2">
+          <img src="https://images.unsplash.com/photo-1448375240586-882707db888b?w=200&h=200&q=80&fit=crop" alt="Revista Trilhas" class="pub-thumb" loading="lazy" />
+          <div class="pub-body">
+            <p class="pub-cat">Revista trimestral</p>
+            <h4 class="pub-title">Trilhas &amp; Biomas — Edicao Inverno</h4>
+            <p class="pub-date">Julho 2025</p>
+          </div>
+          <svg class="pub-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+
+        <div class="pub-card reveal reveal-delay-3">
+          <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=200&h=200&q=80&fit=crop" alt="Guia fauna noturna" class="pub-thumb" loading="lazy" />
+          <div class="pub-body">
+            <p class="pub-cat">Guia especializado</p>
+            <h4 class="pub-title">Fauna Noturna do Brasil Central</h4>
+            <p class="pub-date">1a edicao — 2025</p>
+          </div>
+          <svg class="pub-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery">
+    <div class="gallery-inner">
+      <div class="reveal">
+        <p class="section-eyebrow">Galeria</p>
+        <h2 class="section-title">O Brasil que<br/><em>existia antes</em></h2>
+      </div>
+      <div class="gallery-grid" style="margin-top:48px">
+        <div class="gallery-item reveal">
+          <img src="https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=1000&q=80&fit=crop" alt="Natureza brasileira" loading="lazy" />
+        </div>
+        <div class="gallery-item reveal reveal-delay-1">
+          <img src="https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=700&q=80&fit=crop" alt="Floresta" loading="lazy" />
+        </div>
+        <div class="gallery-item reveal reveal-delay-2">
+          <img src="https://images.unsplash.com/photo-1448375240586-882707db888b?w=700&q=80&fit=crop" alt="Natureza" loading="lazy" />
+        </div>
+        <div class="gallery-item reveal reveal-delay-1">
+          <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1000&q=80&fit=crop" alt="Ecoturismo" loading="lazy" />
+        </div>
+        <div class="gallery-item reveal reveal-delay-2">
+          <img src="https://images.unsplash.com/photo-1542401886-65d6c61db217?w=700&q=80&fit=crop" alt="Paisagem" loading="lazy" />
+        </div>
+        <div class="gallery-item reveal reveal-delay-3">
+          <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=700&q=80&fit=crop" alt="Natureza selvagem" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contato">
+    <div class="contact-inner">
+      <div>
+        <p class="section-eyebrow" style="color:var(--amber)">Fale conosco</p>
+        <h2 class="section-title" style="color:var(--white)">Vamos planejar<br/><em>sua proxima</em><br/>aventura</h2>
+        <p class="body-text" style="margin-top:16px">Entre em contato para roteiros personalizados, aquisicao de mapas, contratacao de eventos ou encomenda de publicacoes.</p>
+        <div class="contact-details reveal">
+          <div class="contact-item">
+            <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.07 1.18C.07.06 1 0 2.08 0h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.18 6.18l1.27-.41a2 2 0 012.11.45 13.07 13.07 0 002.81.7A2 2 0 0122 16.92z"/>
+            </svg>
+            <div>
+              <p class="contact-label">WhatsApp</p>
+              <p class="contact-value">+55 (00) 00000-0000</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+              <polyline points="22,6 12,13 2,6"/>
+            </svg>
+            <div>
+              <p class="contact-label">E-mail</p>
+              <p class="contact-value">contato@ecobrasil.tur.br</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <svg class="contact-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+            <div>
+              <p class="contact-label">Horario de atendimento</p>
+              <p class="contact-value">Seg-Sex — 9h as 18h</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-cta-block reveal reveal-delay-2">
+        <h3 class="contact-big-title">Seu proximo<br/><em>destino</em><br/>te espera.</h3>
+        <a href="https://wa.me/5500000000000" class="btn-whatsapp-large" target="_blank" rel="noopener">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163A11.867 11.867 0 010 12C0 5.373 5.373 0 12 0s12 5.373 12 12-5.373 12-12 12a11.867 11.867 0 01-5.837-1.529L.057 24zM5.841 20.329l.372.221A9.867 9.867 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12a9.867 9.867 0 001.63 5.42l.231.348-1.02 3.73 3-1.169z"/><path d="M8.593 7.234c-.152-.377-.31-.384-.456-.391-.118-.006-.253-.005-.388-.005a.744.744 0 00-.54.253c-.185.202-.71.693-.71 1.69s.726 1.96.828 2.096c.101.137 1.4 2.205 3.453 2.994.483.185.86.295 1.153.378.484.137.925.117 1.274.071.389-.052 1.197-.489 1.366-.962.168-.473.168-.878.117-.962-.05-.083-.185-.134-.388-.235z"/></svg>
+          Falar no WhatsApp
+        </a>
+        <p class="contact-disclaimer">Respondemos em ate 2 horas em dias uteis.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <a href="#" class="footer-logo">Eco <span>Brasil</span></a>
+      <ul class="footer-links">
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#servicos">Servicos</a></li>
+        <li><a href="#experiencias">Experiencias</a></li>
+        <li><a href="#eventos">Eventos</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+      <p class="footer-copy">&copy; 2025 Agencia Eco Brasil. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- WHATSAPP FLOAT -->
+  <a href="https://wa.me/5500000000000" class="wa-float" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M.057 24l1.687-6.163A11.867 11.867 0 010 12C0 5.373 5.373 0 12 0s12 5.373 12 12-5.373 12-12 12a11.867 11.867 0 01-5.837-1.529L.057 24zM5.841 20.329l.372.221A9.867 9.867 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12a9.867 9.867 0 001.63 5.42l.231.348-1.02 3.73 3-1.169z"/><path d="M8.593 7.234c-.152-.377-.31-.384-.456-.391-.118-.006-.253-.005-.388-.005a.744.744 0 00-.54.253c-.185.202-.71.693-.71 1.69s.726 1.96.828 2.096c.101.137 1.4 2.205 3.453 2.994.483.185.86.295 1.153.378.484.137.925.117 1.274.071.389-.052 1.197-.489 1.366-.962.168-.473.168-.878.117-.962-.05-.083-.185-.134-.388-.235z"/></svg>
+  </a>
+
+  <script>
+    // Nav scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    // Hamburger
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('open');
+      mobileMenu.classList.toggle('open');
+    });
+    document.querySelectorAll('.mobile-link').forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('open');
+        mobileMenu.classList.remove('open');
+      });
+    });
+
+    // Scroll reveal
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
