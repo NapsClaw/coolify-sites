@@ -1977,10 +1977,11 @@ function isAdminLoggedIn() {
 function adminLogin() {
   if (isAdminLoggedIn()) { showAdminBar(); return; }
   document.getElementById('admin-login-error').classList.remove('show');
+  document.getElementById('admin-username-input').value = '';
   document.getElementById('admin-password-input').value = '';
   document.getElementById('admin-login-overlay').classList.add('open');
   document.body.style.overflow = 'hidden';
-  setTimeout(() => document.getElementById('admin-password-input').focus(), 300);
+  setTimeout(() => document.getElementById('admin-username-input').focus(), 300);
 }
 
 function closeAdminLogin() {
@@ -1988,21 +1989,24 @@ function closeAdminLogin() {
   document.body.style.overflow = '';
 }
 
-async function submitAdminLogin() {
+function submitAdminLogin() {
+  const un = (document.getElementById('admin-username-input').value || '').trim();
   const pw = document.getElementById('admin-password-input').value;
-  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pw));
-  const hex = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
-  if (hex === ADMIN_HASH) {
+  const ok = VALID_CREDS.some(([u, p]) => u === un && p === pw);
+  if (ok) {
     sessionStorage.setItem(ADMIN_SESSION_KEY, '1');
     closeAdminLogin();
     showAdminBar();
   } else {
     document.getElementById('admin-login-error').classList.add('show');
     document.getElementById('admin-password-input').value = '';
-    document.getElementById('admin-password-input').focus();
+    document.getElementById('admin-username-input').focus();
   }
 }
 
+document.getElementById('admin-username-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') document.getElementById('admin-password-input').focus();
+});
 document.getElementById('admin-password-input').addEventListener('keydown', function(e) {
   if (e.key === 'Enter') submitAdminLogin();
 });
