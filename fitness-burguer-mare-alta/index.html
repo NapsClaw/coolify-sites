@@ -52,6 +52,7 @@
     @keyframes fadeIn    { from { opacity: 0; } to { opacity: 1; } }
     @keyframes waPulse   { 0%,100% { box-shadow: 0 4px 20px rgba(37,211,102,.45); } 50% { box-shadow: 0 4px 32px rgba(37,211,102,.7); } }
     @keyframes waRing    { 0% { opacity:.8; transform:scale(1); } 100% { opacity:0; transform:scale(1.65); } }
+    @keyframes modalIn   { from { opacity:0; transform:translateY(32px) scale(.97); } to { opacity:1; transform:translateY(0) scale(1); } }
 
     .reveal {
       opacity: 0;
@@ -254,7 +255,7 @@
     }
 
     /* ================================
-       CARDÁPIO — full expanded layout
+       CARDÁPIO
        ================================ */
     #menu {
       background: var(--bg);
@@ -287,10 +288,7 @@
     }
     .menu-wa-note:hover { background: rgba(37,211,102,.2); }
 
-    /* category block */
-    .menu-cat {
-      margin-bottom: 56px;
-    }
+    .menu-cat { margin-bottom: 56px; }
     .menu-cat:last-child { margin-bottom: 0; }
 
     .cat-header {
@@ -315,12 +313,7 @@
       padding: 0 28px;
       gap: 18px;
     }
-    .cat-emoji {
-      font-size: 40px;
-      line-height: 1;
-      flex-shrink: 0;
-    }
-    .cat-title-wrap {}
+    .cat-emoji { font-size: 40px; line-height: 1; flex-shrink: 0; }
     .cat-eyebrow {
       font-family: 'Barlow Condensed', sans-serif;
       font-weight: 700;
@@ -348,13 +341,13 @@
       flex-shrink: 0;
     }
 
-    /* item grid */
     .cat-items {
       display: grid;
       grid-template-columns: 1fr;
       gap: 10px;
     }
 
+    /* Menu item — now a button */
     .menu-item {
       display: flex;
       align-items: flex-start;
@@ -365,14 +358,21 @@
       border-radius: 8px;
       padding: 14px 18px;
       transition: border-left-color .22s, transform .22s, background .22s;
+      width: 100%;
+      text-align: left;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      position: relative;
     }
     .menu-item:hover {
       border-left-color: var(--primary);
       transform: translateX(4px);
       background: rgba(14,14,26,.9);
     }
+    .menu-item.gold-border { border-left-color: var(--gold); background: rgba(232,184,75,.05); }
+    .menu-item.gold-border:hover { border-left-color: var(--gold); }
 
-    /* photo slot — swap src for real product photo */
     .item-photo {
       width: 72px;
       height: 72px;
@@ -393,61 +393,24 @@
       display: block;
       border-radius: 8px;
     }
-    /* when no real photo, show emoji placeholder */
-    .item-photo .ph-emoji {
-      font-size: 30px;
-      line-height: 1;
-      opacity: .65;
-    }
+    .item-photo .ph-emoji { font-size: 30px; line-height: 1; opacity: .65; }
 
     .item-info { flex: 1; min-width: 0; }
-    .item-name {
-      font-weight: 600;
-      font-size: 15px;
-      line-height: 1.3;
-    }
-    .item-desc {
-      font-size: 13px;
-      color: var(--text-muted);
-      margin-top: 3px;
-      font-weight: 300;
-      line-height: 1.5;
-    }
-    .item-specs {
-      margin-top: 7px;
+    .item-name { font-weight: 600; font-size: 15px; line-height: 1.3; }
+    .item-desc { font-size: 13px; color: var(--text-muted); margin-top: 3px; font-weight: 300; line-height: 1.5; }
+    .item-specs { margin-top: 7px; display: flex; flex-direction: column; gap: 4px; }
+    .item-includes { font-size: 11.5px; font-weight: 400; color: rgba(100,200,120,.85); line-height: 1.55; }
+    .item-includes strong { font-weight: 700; font-size: 10px; letter-spacing: .5px; text-transform: uppercase; }
+    .item-excludes { font-size: 11.5px; font-weight: 400; color: rgba(240,236,232,.32); line-height: 1.55; }
+    .item-excludes strong { font-weight: 700; font-size: 10px; letter-spacing: .5px; text-transform: uppercase; }
+    .item-note { font-size: 11px; font-weight: 600; color: rgba(232,184,75,.7); margin-top: 4px; }
+
+    .item-right {
       display: flex;
       flex-direction: column;
-      gap: 4px;
-    }
-    .item-includes {
-      font-size: 11.5px;
-      font-weight: 400;
-      color: rgba(100,200,120,.85);
-      line-height: 1.55;
-    }
-    .item-includes strong {
-      font-weight: 700;
-      font-size: 10px;
-      letter-spacing: .5px;
-      text-transform: uppercase;
-    }
-    .item-excludes {
-      font-size: 11.5px;
-      font-weight: 400;
-      color: rgba(240,236,232,.32);
-      line-height: 1.55;
-    }
-    .item-excludes strong {
-      font-weight: 700;
-      font-size: 10px;
-      letter-spacing: .5px;
-      text-transform: uppercase;
-    }
-    .item-note {
-      font-size: 11px;
-      font-weight: 600;
-      color: rgba(232,184,75,.7);
-      margin-top: 4px;
+      align-items: flex-end;
+      gap: 10px;
+      flex-shrink: 0;
     }
     .item-price {
       font-family: 'Barlow Condensed', sans-serif;
@@ -455,9 +418,25 @@
       font-size: 26px;
       color: var(--gold);
       white-space: nowrap;
-      flex-shrink: 0;
       line-height: 1;
     }
+    .btn-pedir {
+      background: var(--primary);
+      color: #fff;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 7px 14px;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background .2s, transform .15s;
+      pointer-events: none; /* parent button handles click */
+    }
+    .menu-item:hover .btn-pedir { background: var(--accent); transform: scale(1.05); }
 
     .combo-note {
       background: rgba(232,184,75,.07);
@@ -506,11 +485,7 @@
       text-transform: uppercase;
       color: #fff;
     }
-    .menu-cta-band .delivery-note {
-      font-size: 14px;
-      font-weight: 300;
-      color: rgba(255,255,255,.7);
-    }
+    .menu-cta-band .delivery-note { font-size: 14px; font-weight: 300; color: rgba(255,255,255,.7); }
 
     /* SPECIAL */
     #special {
@@ -525,13 +500,7 @@
       inset: 0;
       background: linear-gradient(135deg, rgba(255,77,26,.4) 0%, transparent 60%);
     }
-    .special-inner {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
+    .special-inner { position: relative; z-index: 1; display: flex; flex-direction: column; gap: 20px; }
     .special-tag {
       display: inline-block;
       background: rgba(255,255,255,.2);
@@ -554,20 +523,8 @@
       letter-spacing: -1px;
       color: #fff;
     }
-    .special-desc {
-      font-size: 15px;
-      font-weight: 300;
-      color: rgba(255,255,255,.8);
-      max-width: 360px;
-      line-height: 1.7;
-    }
-    .special-price {
-      font-family: 'Barlow Condensed', sans-serif;
-      font-weight: 900;
-      font-size: 56px;
-      color: #fff;
-      line-height: 1;
-    }
+    .special-desc { font-size: 15px; font-weight: 300; color: rgba(255,255,255,.8); max-width: 360px; line-height: 1.7; }
+    .special-price { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 56px; color: #fff; line-height: 1; }
 
     /* ABOUT */
     #about { background: var(--bg2); position: relative; overflow: hidden; }
@@ -584,20 +541,9 @@
       white-space: nowrap;
       user-select: none;
     }
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 40px;
-      margin-top: 44px;
-      align-items: start;
-    }
+    .about-grid { display: grid; grid-template-columns: 1fr; gap: 40px; margin-top: 44px; align-items: start; }
     .about-img-wrap { position: relative; }
-    .about-img {
-      width: 100%; height: 280px;
-      object-fit: cover;
-      border-radius: 6px;
-      display: block;
-    }
+    .about-img { width: 100%; height: 280px; object-fit: cover; border-radius: 6px; display: block; }
     .about-img-badge {
       position: absolute;
       bottom: 16px; right: 16px;
@@ -611,19 +557,9 @@
       padding: 6px 14px;
       border-radius: 2px;
     }
-    .about-text {
-      font-size: 16px;
-      font-weight: 300;
-      color: rgba(240,236,232,.78);
-      line-height: 1.85;
-    }
+    .about-text { font-size: 16px; font-weight: 300; color: rgba(240,236,232,.78); line-height: 1.85; }
     .about-text + .about-text { margin-top: 14px; }
-    .highlights {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-top: 28px;
-    }
+    .highlights { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 28px; }
     .hl-card {
       background: rgba(200,39,62,.07);
       border: 1px solid rgba(200,39,62,.18);
@@ -637,13 +573,7 @@
 
     /* GALLERY */
     #gallery { background: var(--bg2); padding-bottom: 80px; }
-    .bento {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-auto-rows: 180px;
-      gap: 8px;
-      margin-top: 40px;
-    }
+    .bento { display: grid; grid-template-columns: 1fr 1fr; grid-auto-rows: 180px; gap: 8px; margin-top: 40px; }
     .bento-item { overflow: hidden; border-radius: 6px; position: relative; }
     .bento-item:nth-child(1) { grid-column: 1 / 3; grid-row: 1; }
     .bento-item:nth-child(2) { grid-column: 1; grid-row: 2; }
@@ -654,12 +584,7 @@
 
     /* CONTACT */
     #contact { background: var(--bg3); border-top: 1px solid rgba(200,39,62,.12); }
-    .contact-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 36px;
-      margin-top: 44px;
-    }
+    .contact-grid { display: grid; grid-template-columns: 1fr; gap: 36px; margin-top: 44px; }
     .c-block h3 {
       font-family: 'Barlow Condensed', sans-serif;
       font-weight: 700;
@@ -732,8 +657,244 @@
     #wa-float:hover { transform: scale(1.12); animation: none; box-shadow: 0 6px 28px rgba(37,211,102,.6); }
     #wa-float svg { width: 30px; height: 30px; fill: #fff; }
 
+    /* ================================
+       ORDER MODAL
+       ================================ */
+    #order-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(5,5,8,.82);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      z-index: 10000;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .28s ease;
+    }
+    #order-overlay.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+    #order-modal {
+      background: #13131F;
+      border: 1px solid rgba(255,255,255,.08);
+      border-bottom: none;
+      border-radius: 20px 20px 0 0;
+      width: 100%;
+      max-width: 520px;
+      max-height: 92svh;
+      overflow-y: auto;
+      padding: 0 0 env(safe-area-inset-bottom);
+      transform: translateY(40px);
+      transition: transform .32s cubic-bezier(.16,1,.3,1);
+    }
+    #order-overlay.open #order-modal {
+      transform: translateY(0);
+    }
+
+    .modal-handle {
+      width: 40px; height: 4px;
+      background: rgba(255,255,255,.15);
+      border-radius: 2px;
+      margin: 14px auto 0;
+    }
+    .modal-header {
+      padding: 20px 24px 16px;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .modal-item-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 800;
+      font-size: 22px;
+      text-transform: uppercase;
+      letter-spacing: -.5px;
+      flex: 1;
+      min-width: 0;
+    }
+    .modal-item-price {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 24px;
+      color: var(--gold);
+      white-space: nowrap;
+    }
+    .modal-close {
+      background: rgba(255,255,255,.08);
+      border: none;
+      color: var(--text);
+      font-size: 20px;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background .18s;
+    }
+    .modal-close:hover { background: rgba(255,255,255,.16); }
+
+    .modal-body { padding: 20px 24px 28px; }
+
+    .modal-step { margin-bottom: 22px; }
+    .modal-step-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 10px;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+    .modal-input {
+      width: 100%;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 8px;
+      padding: 13px 16px;
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      outline: none;
+      transition: border-color .18s;
+      -webkit-appearance: none;
+    }
+    .modal-input::placeholder { color: rgba(240,236,232,.28); }
+    .modal-input:focus { border-color: var(--primary); }
+
+    .modal-row {
+      display: grid;
+      grid-template-columns: 1fr 110px;
+      gap: 10px;
+    }
+
+    /* Payment choice */
+    .payment-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .pay-opt {
+      background: rgba(255,255,255,.05);
+      border: 2px solid rgba(255,255,255,.08);
+      border-radius: 10px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: border-color .18s, background .18s;
+      user-select: none;
+    }
+    .pay-opt:hover { border-color: rgba(200,39,62,.4); background: rgba(200,39,62,.06); }
+    .pay-opt.selected { border-color: var(--primary); background: rgba(200,39,62,.1); }
+    .pay-opt-icon { font-size: 26px; line-height: 1; }
+    .pay-opt-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      letter-spacing: .5px;
+      text-transform: uppercase;
+    }
+    .pay-opt-sub { font-size: 11px; color: var(--text-muted); }
+
+    /* Pix info box */
+    #pix-box {
+      background: rgba(21,128,61,.1);
+      border: 1px solid rgba(21,128,61,.3);
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin-top: 14px;
+      display: none;
+    }
+    #pix-box.show { display: block; }
+    .pix-label {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(74,222,128,.7);
+      margin-bottom: 8px;
+    }
+    .pix-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+    .pix-field {
+      font-size: 14px;
+      font-weight: 300;
+      color: rgba(240,236,232,.65);
+    }
+    .pix-val {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      color: var(--text);
+      letter-spacing: .5px;
+    }
+    .pix-copy {
+      background: rgba(74,222,128,.12);
+      border: 1px solid rgba(74,222,128,.25);
+      color: rgba(74,222,128,.9);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background .15s;
+      white-space: nowrap;
+    }
+    .pix-copy:hover { background: rgba(74,222,128,.22); }
+    .pix-copy.copied { color: #4ade80; }
+
+    /* Confirm button */
+    #btn-confirm {
+      width: 100%;
+      background: var(--green);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 18px;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 20px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 24px;
+      transition: transform .18s, box-shadow .18s, background .18s;
+    }
+    #btn-confirm:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(37,211,102,.38); }
+    #btn-confirm:disabled { background: rgba(255,255,255,.12); color: rgba(255,255,255,.3); cursor: not-allowed; transform: none; box-shadow: none; }
+
+    .modal-disclaimer {
+      text-align: center;
+      font-size: 11.5px;
+      color: var(--text-muted);
+      margin-top: 14px;
+      line-height: 1.6;
+    }
+
     /* RESPONSIVE */
-    /* Items stay single-column for readability of detailed specs */
     @media (min-width: 768px) {
       section { padding: 100px 48px; }
       #menu { padding: 80px 48px; }
@@ -751,6 +912,8 @@
       .contact-grid { grid-template-columns: 1fr 1fr 1fr; }
       .contact-big-btn { justify-content: flex-start; }
       .menu-cta-band { flex-direction: row; text-align: left; justify-content: space-between; }
+      #order-modal { border-radius: 20px; margin-bottom: 24px; border-bottom: 1px solid rgba(255,255,255,.08); }
+      #order-overlay { align-items: center; }
     }
     @media (min-width: 1024px) {
       section { padding: 120px 80px; }
@@ -763,6 +926,9 @@
 </head>
 <body>
 
+<!-- ============================================================
+     HERO
+     ============================================================ -->
 <section id="hero">
   <div class="hero-bg"></div>
   <div class="hero-overlay"></div>
@@ -781,11 +947,14 @@
     <div class="hero-bar"></div>
     <p class="hero-sub">Burgers artesanais, pastéis gigantes de 28cm e sabores que ficam na memória. Só delivery.</p>
     <div class="hero-actions">
-      <a href="https://wa.me/558893369082" class="btn-wa">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        Pedir Agora
+      <a href="#menu" class="btn-wa">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M11 9H13V7H11M12 20C7.59 20 4 16.41 4 12S7.59 4 12 4 20 7.59 20 12 16.41 20 12 20M12 2A10 10 0 0 0 2 12A10 10 0 0 0 12 22A10 10 0 0 0 22 12A10 10 0 0 0 12 2M11 17H13V11H11V17Z"/></svg>
+        Ver Cardápio
       </a>
-      <a href="#menu" class="btn-ghost">Ver Cardápio</a>
+      <a href="https://wa.me/558893369082" class="btn-ghost">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Falar no WhatsApp
+      </a>
     </div>
   </div>
 </section>
@@ -803,324 +972,21 @@
   <div class="inf">📍 Taxa R$5,00</div>
 </div>
 
-<!-- =====================================
-     CARDÁPIO COMPLETO
-     ===================================== -->
+<!-- ============================================================
+     CARDÁPIO — gerado por JavaScript a partir de MENU_DATA
+     ============================================================ -->
 <section id="menu">
-
   <div class="menu-header-row">
     <div>
       <div class="sec-label reveal">Cardápio Completo</div>
       <h2 class="sec-title reveal reveal-d1">Nosso<br>Cardápio</h2>
     </div>
-    <a href="https://wa.me/558893369082" class="menu-wa-note reveal reveal-d2">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-      Pedidos via WhatsApp
-    </a>
+    <span class="menu-wa-note reveal reveal-d2">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2A10 10 0 0 0 2 12A10 10 0 0 0 12 22A10 10 0 0 0 22 12A10 10 0 0 0 12 2M11 17H13V11H11M11 9H13V7H11V9Z"/></svg>
+      Toque num item para pedir
+    </span>
   </div>
-
-  <!-- CATEGORIA 1: SANDUÍCHES SIMPLES -->
-  <div class="menu-cat reveal">
-    <div class="cat-header">
-      <img class="cat-header-img" src="https://images.unsplash.com/photo-1596560548464-f010549b84d7?w=1200&q=80" alt="Sanduíches" loading="lazy">
-      <div class="cat-header-overlay">
-        <div class="cat-emoji">🥪</div>
-        <div class="cat-title-wrap">
-          <div class="cat-eyebrow">Categoria 01</div>
-          <div class="cat-title">Sanduíche Simples</div>
-        </div>
-        <div class="cat-count">9 itens</div>
-      </div>
-    </div>
-    <div class="cat-items">
-      <div class="menu-item">
-        <div class="item-photo"><span class="ph-emoji">🍔</span></div>
-        <div class="item-info">
-          <div class="item-name">Hambúrguer</div>
-          <div class="item-desc">Sanduíche básico da casa</div>
-          <div class="item-specs">
-            <div class="item-includes"><strong>✓ Inclui:</strong> Pão, hambúrguer bovino</div>
-            <div class="item-excludes"><strong>✗ Não inclui:</strong> Queijo, ovos, molhos extras, adicionais</div>
-          </div>
-        </div>
-        <div class="item-price">R$8</div>
-      </div>
-      <div class="menu-item">
-        <div class="item-photo"><span class="ph-emoji">🍔</span></div>
-        <div class="item-info">
-          <div class="item-name">X-Burguer</div>
-          <div class="item-desc">Clássico com queijo mussarela</div>
-          <div class="item-specs">
-            <div class="item-includes"><strong>✓ Inclui:</strong> Pão, hambúrguer bovino, queijo mussarela</div>
-            <div class="item-excludes"><strong>✗ Não inclui:</strong> Bacon, cheddar, cream cheese, catupiry, ovo</div>
-          </div>
-        </div>
-        <div class="item-price">R$10</div>
-      </div>
-      <div class="menu-item">
-        <div class="item-photo"><span class="ph-emoji">🥩</span></div>
-        <div class="item-info">
-          <div class="item-name">Bauru</div>
-          <div class="item-desc">Sanduíche clássico Bauru</div>
-          <div class="item-specs">
-            <div class="item-includes"><strong>✓ Inclui:</strong> Pão, presunto, queijo derretido, tomate</div>
-            <div class="item-excludes"><strong>✗ Não inclui:</strong> Hambúrguer bovino, bacon, cheddar, carne artesanal</div>
-          </div>
-        </div>
-        <div class="item-price">R$13</div>
-      </div>
-      <div class="menu-item">
-        <div class="item-photo"><span class="ph-emoji">🌭</span></div>
-        <div class="item-info">
-          <div class="item-name">Hot Dog / Cachorro Quente</div>
-          <div class="item-desc">Cachorro quente clássico</div>
-          <div class="item-specs">
-            <div class="item-includes"><strong>✓ Inclui:</strong> Pão, salsicha grelhada, ketchup, mostarda, maionese</div>
-            <div class="item-excludes"><strong>✗ Não inclui:</strong> Hambúrguer bovino, queijo, bacon</div>
-          </div>
-        </div>
-        <div class="item-price">R$10</div>
-      </div>
-      <div class="menu-item">
-        <div class="item-photo"><span class="ph-emoji">🫓</span></div>
-        <div class="item-info">
-          <div class="item-name">X-Frango no Pão Árabe</div>
-          <div class="item-desc">Frango grelhado em pão árabe</div>
-          <div class="item-specs">
-            <div class="item-includes"><strong>✓ Inclui:</strong> Pão árabe, frango filé grelhado, tomate, alface, molhos</div>
-            <div class="item-excludes"><strong>✗ Não inclui:</strong> Queijo coalho, bacon, cheddar, cream cheese, catupiry, ovo (adicionais dos artesanais)</div>
-          </div>
-        </div>
-        <div class="item-price">R$18</div>
-      </div>
-      <div class="menu-item">
-        <div class="item-photo"><span class="ph-emoji">🫓</span></div>
-        <div class="item-info">
-          <div class="item-name">X-Completo no Pão Árabe</div>
-          <div class="item-desc">Carne completa em pão árabe</div>
-          <div class="item-specs">
-            <div class="item-includes"><strong>✓ Inclui:</strong> Pão árabe, carne bovina, queijo mussarela, ovo, tomate, alface, cebola, molhos</div>
-            <div class="item-excludes"><strong>✗ Não inclui:</strong> Carne artesanal, queijo coalho, cheddar, cream cheese, catupiry</div>
-          </div>
-        </div>
-        <div class="item-price">R$25</div>
-      </div>
-      <div class="menu-item">
-        <div class="item-photo"><span class="ph-emoji">🍔</span></div>
-        <div class="item-info">
-          <div class="item-name">X-Fome Maré Alta</div>
-          <div class="item-desc">Sanduíche grande da casa</div>
-          <div class="item-specs">
-            <div class="item-includes"><strong>✓ Inclui:</strong> Pão, hambúrguer bovino, queijo mussarela, ovo, bacon, tomate, alface, cebola, ketchup, mostarda, maionese</div>
-            <div class="item-excludes"><strong>✗ Não inclui:</strong> Carne artesanal, queijo coalho, cheddar, cream cheese, catupiry, camarão</div>
-          </div>
-        </div>
-        <div class="item-price">R$25</div>
-      </div>
-      <div class="menu-item">
-        <div class="item-photo"><span class="ph-emoji">🍔</span></div>
-        <div class="item-info">
-          <div class="item-name">X-Fome Tudo em Dobro</div>
-          <div class="item-desc">X-Fome com tudo duplicado</div>
-          <div class="item-specs">
-            <div class="item-includes"><strong>✓ Inclui:</strong> Pão, hambúrguer bovino duplo, queijo mussarela, ovo, bacon, tomate, alface, cebola, ketchup, mostarda, maionese — todos em dobro</div>
-            <div class="item-excludes"><strong>✗ Não inclui:</strong> Carne artesanal, cheddar, cream cheese, catupiry, camarão</div>
-          </div>
-        </div>
-        <div class="item-price">R$30</div>
-      </div>
-      <div class="menu-item" style="border-left-color: var(--gold);">
-        <div class="item-photo"><span class="ph-emoji">🦐</span></div>
-        <div class="item-info">
-          <div class="item-name">X-Fome Camarão Titanic</div>
-          <div class="item-desc">O maior da linha simples — com camarão</div>
-          <div class="item-specs">
-            <div class="item-includes"><strong>✓ Inclui:</strong> Pão, hambúrguer bovino, camarão, queijo mussarela, ovo, bacon, tomate, alface, cebola, ketchup, mostarda, maionese</div>
-            <div class="item-excludes"><strong>✗ Não inclui:</strong> Carne artesanal, queijo coalho, cheddar, cream cheese, catupiry</div>
-          </div>
-        </div>
-        <div class="item-price">R$35</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- CATEGORIA 2: PASTÉIS 28CM -->
-  <div class="menu-cat reveal reveal-d1">
-    <div class="cat-header">
-      <img class="cat-header-img" src="https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?w=1200&q=80" alt="Pastéis" loading="lazy">
-      <div class="cat-header-overlay">
-        <div class="cat-emoji">🥟</div>
-        <div class="cat-title-wrap">
-          <div class="cat-eyebrow">Categoria 02</div>
-          <div class="cat-title">Pastéis 28cm</div>
-        </div>
-        <div class="cat-count">5 itens</div>
-      </div>
-    </div>
-    <div class="cat-items">
-      <div class="menu-item">
-        <div class="item-photo"><span class="ph-emoji">🧀</span></div>
-        <div class="item-info">
-          <div class="item-name">Queijo</div>
-          <div class="item-desc">Pastel gigante 28cm</div>
-          <div class="item-specs">
-            <div class="item-includes"><strong>✓ Inclui:</strong> Massa de pastel 28cm frita, recheio de queijo mussarela</div>
-            <div class="item-excludes"><strong>✗ Não inclui:</strong> Frango, catupiry, cheddar, camarão</div>
-          </div>
-        </div>
-        <div class="item-price">R$10</div>
-      </div>
-      <div class="menu-item">
-        <div class="item-photo"><span class="ph-emoji">🍗</span></div>
-        <div class="item-info">
-          <div class="item-name">Frango com Cheddar ou Catupiry</div>
-          <div class="item-desc">Pastel gigante 28cm — escolha o requeijão</div>
-          <div class="item-specs">
-            <div class="item-includes"><strong>✓ Inclui:</strong> Massa 28cm, frango desfiado + cheddar OU catupiry (informar no pedido)</div>
-            <div class="item-note">⚠ Escolher: cheddar ou catupiry — não vem os dois</div>
-            <div class="item-excludes"><strong>✗ Não inclui:</strong> Camarão, mussarela extra</div>
-          </div>
-        </div>
-        <div class="item-price">R$10</div>
-      </div>
-      <div class="menu-item">
-        <div class="item-photo"><span class="ph-emoji">🥟</span></div>
-        <div class="item-info">
-          <div class="item-name">Mistão</div>
-          <div class="item-desc">Pastel gigante 28cm — mistura da casa</div>
-          <div class="item-specs">
-            <div class="item-includes"><strong>✓ Inclui:</strong> Massa 28cm, frango desfiado + queijo mussarela (combinação da casa)</div>
-            <div class="item-excludes"><strong>✗ Não inclui:</strong> Camarão, cheddar, catupiry</div>
-          </div>
-        </div>
-        <div class="item-price">R$10</div>
-      </div>
-      <div class="menu-item">
-        <div class="item-photo"><span class="ph-emoji">🍕</span></div>
-        <div class="item-info">
-          <div class="item-name">Pizza</div>
-          <div class="item-desc">Pastel gigante 28cm — sabor pizza</div>
-          <div class="item-specs">
-            <div class="item-includes"><strong>✓ Inclui:</strong> Massa 28cm, molho de tomate, mussarela, presunto</div>
-            <div class="item-excludes"><strong>✗ Não inclui:</strong> Frango, camarão, cheddar, catupiry</div>
-          </div>
-        </div>
-        <div class="item-price">R$10</div>
-      </div>
-      <div class="menu-item" style="border-left-color: var(--gold);">
-        <div class="item-photo"><span class="ph-emoji">🦐</span></div>
-        <div class="item-info">
-          <div class="item-name">Camarão</div>
-          <div class="item-desc">Pastel gigante 28cm — sabor do mar</div>
-          <div class="item-specs">
-            <div class="item-includes"><strong>✓ Inclui:</strong> Massa 28cm, recheio de camarão</div>
-            <div class="item-excludes"><strong>✗ Não inclui:</strong> Frango, queijo mussarela extra</div>
-            <div class="item-note">⭐ Único pastel premium — R$5 acima dos demais</div>
-          </div>
-        </div>
-        <div class="item-price">R$15</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- CATEGORIA 3: CARNE ARTESANAL -->
-  <div class="menu-cat reveal reveal-d2">
-    <div class="cat-header">
-      <img class="cat-header-img" src="https://images.unsplash.com/photo-1550547660-d9450f859349?w=1200&q=80" alt="Sanduíche artesanal" loading="lazy">
-      <div class="cat-header-overlay">
-        <div class="cat-emoji">🥩</div>
-        <div class="cat-title-wrap">
-          <div class="cat-eyebrow">Categoria 03</div>
-          <div class="cat-title">Carne Artesanal</div>
-        </div>
-        <div class="cat-count">5 itens</div>
-      </div>
-    </div>
-    <div class="cat-items">
-      <div class="menu-item">
-        <div class="item-photo"><span class="ph-emoji">🥩</span></div>
-        <div class="item-info">
-          <div class="item-name">X-Filé Trinchado + Artesanal</div>
-          <div class="item-desc">Combinação filé + carne artesanal</div>
-          <div class="item-specs">
-            <div class="item-includes"><strong>✓ Carne:</strong> Filé trinchado + carne artesanal (2 tipos de carne)</div>
-            <div class="item-includes"><strong>✓ Acompanha:</strong> Pão, queijo coalho, mussarela, ovo, bacon, cheddar, cream cheese, catupiry, milho, ervilha, cebola, tomate, alface, molho da casa, maionese, ketchup, mostarda</div>
-          </div>
-        </div>
-        <div class="item-price">R$25</div>
-      </div>
-      <div class="menu-item">
-        <div class="item-photo"><span class="ph-emoji">🍗</span></div>
-        <div class="item-info">
-          <div class="item-name">X-Frango Filé + Artesanal</div>
-          <div class="item-desc">Frango filé + carne artesanal</div>
-          <div class="item-specs">
-            <div class="item-includes"><strong>✓ Carne:</strong> Frango filé grelhado + carne artesanal (2 tipos de carne)</div>
-            <div class="item-includes"><strong>✓ Acompanha:</strong> Pão, queijo coalho, mussarela, ovo, bacon, cheddar, cream cheese, catupiry, milho, ervilha, cebola, tomate, alface, molho da casa, maionese, ketchup, mostarda</div>
-            <div class="item-excludes"><strong>✗ Não inclui:</strong> Filé bovino trinchado, camarão</div>
-          </div>
-        </div>
-        <div class="item-price">R$20</div>
-      </div>
-      <div class="menu-item">
-        <div class="item-photo"><span class="ph-emoji">🌶️</span></div>
-        <div class="item-info">
-          <div class="item-name">X-Calabresa + Artesanal</div>
-          <div class="item-desc">Calabresa + carne artesanal</div>
-          <div class="item-specs">
-            <div class="item-includes"><strong>✓ Carne:</strong> Calabresa grelhada + carne artesanal (2 tipos de carne)</div>
-            <div class="item-includes"><strong>✓ Acompanha:</strong> Pão, queijo coalho, mussarela, ovo, bacon, cheddar, cream cheese, catupiry, milho, ervilha, cebola, tomate, alface, molho da casa, maionese, ketchup, mostarda</div>
-            <div class="item-excludes"><strong>✗ Não inclui:</strong> Frango, filé bovino trinchado, camarão</div>
-          </div>
-        </div>
-        <div class="item-price">R$20</div>
-      </div>
-      <div class="menu-item">
-        <div class="item-photo"><span class="ph-emoji">🦐</span></div>
-        <div class="item-info">
-          <div class="item-name">X-Camarão + Artesanal</div>
-          <div class="item-desc">Camarão + carne artesanal</div>
-          <div class="item-specs">
-            <div class="item-includes"><strong>✓ Carne:</strong> Camarão + carne artesanal (2 tipos de proteína)</div>
-            <div class="item-includes"><strong>✓ Acompanha:</strong> Pão, queijo coalho, mussarela, ovo, bacon, cheddar, cream cheese, catupiry, milho, ervilha, cebola, tomate, alface, molho da casa, maionese, ketchup, mostarda</div>
-            <div class="item-excludes"><strong>✗ Não inclui:</strong> Filé bovino trinchado, frango, calabresa</div>
-          </div>
-        </div>
-        <div class="item-price">R$30</div>
-      </div>
-      <div class="menu-item" style="border-left-color: var(--gold); background: rgba(232,184,75,.05);">
-        <div class="item-photo"><span class="ph-emoji">👑</span></div>
-        <div class="item-info">
-          <div class="item-name">X-Maré Alta — Três Filés + Artesanal</div>
-          <div class="item-desc" style="color:rgba(232,184,75,.7);">Três tipos de filé trinchado + carne artesanal</div>
-          <div class="item-specs">
-            <div class="item-includes"><strong>✓ Carne:</strong> 3 tipos de filé trinchado + carne artesanal (4 camadas de carne)</div>
-            <div class="item-includes"><strong>✓ Acompanha:</strong> Pão, queijo coalho, mussarela, ovo, bacon, cheddar, cream cheese, catupiry, milho, ervilha, cebola, tomate, alface, molho da casa, maionese, ketchup, mostarda</div>
-            <div class="item-excludes"><strong>✗ Não inclui:</strong> Camarão, frango, calabresa</div>
-            <div class="item-note">👑 O mais completo da linha — 4 tipos de carne no mesmo sanduíche</div>
-          </div>
-        </div>
-        <div class="item-price">R$35</div>
-      </div>
-    </div>
-    <div class="combo-note">
-      ✨ <strong>Base inclusa em TODOS os artesanais:</strong> Pão · Queijo coalho · Mussarela · Ovo · Bacon · Cheddar · Cream cheese · Catupiry · Milho · Ervilha · Cebola · Tomate · Alface · Molho da casa · Maionese · Ketchup · Mostarda — a diferença entre os itens é apenas o tipo de carne.
-    </div>
-  </div>
-
-  <!-- CTA dentro do cardápio -->
-  <div class="menu-cta-band reveal">
-    <div>
-      <p>Delivery — Dom a Sex</p>
-      <h3>Faça seu pedido<br>pelo WhatsApp</h3>
-      <p class="delivery-note" style="font-family:'DM Sans';font-weight:300;font-size:14px;color:rgba(255,255,255,.7);margin-top:6px;">Taxa de entrega R$5,00 · Abrimos 18h às 23h</p>
-    </div>
-    <a href="https://wa.me/558893369082" class="btn-wa" style="background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-      Pedir Agora
-    </a>
-  </div>
-
+  <div id="menu-render"></div>
 </section>
 
 <!-- CARRO-CHEFE -->
@@ -1136,10 +1002,10 @@
     <div>
       <div class="special-price">R$35</div>
       <div style="font-size:13px;color:rgba(255,255,255,.65);margin-top:4px;">+ entrega R$5</div>
-      <a href="https://wa.me/558893369082" class="btn-wa" style="margin-top:20px;display:inline-flex;">
+      <button onclick="openOrder('X-Fome Camarão Titanic', 35)" class="btn-wa" style="margin-top:20px;display:inline-flex;cursor:pointer;border:none;">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
         Pedir Agora
-      </a>
+      </button>
     </div>
   </div>
 </section>
@@ -1162,22 +1028,10 @@
         Do X-Burguer clássico ao lendário <strong>X-Maré Alta</strong> com três tipos de filé trinchado e carne artesanal — cada pedido chega quentinho na sua porta.
       </p>
       <div class="highlights">
-        <div class="hl-card reveal reveal-d2">
-          <div class="hl-num">18h</div>
-          <div class="hl-label">Abrimos às 18h toda noite</div>
-        </div>
-        <div class="hl-card reveal reveal-d3">
-          <div class="hl-num">R$5</div>
-          <div class="hl-label">Taxa de entrega fixa</div>
-        </div>
-        <div class="hl-card reveal reveal-d3">
-          <div class="hl-num">28cm</div>
-          <div class="hl-label">Pastéis gigantes</div>
-        </div>
-        <div class="hl-card reveal reveal-d4">
-          <div class="hl-num">6d</div>
-          <div class="hl-label">Domingo a sexta</div>
-        </div>
+        <div class="hl-card reveal reveal-d2"><div class="hl-num">18h</div><div class="hl-label">Abrimos às 18h toda noite</div></div>
+        <div class="hl-card reveal reveal-d3"><div class="hl-num">R$5</div><div class="hl-label">Taxa de entrega fixa</div></div>
+        <div class="hl-card reveal reveal-d3"><div class="hl-num">28cm</div><div class="hl-label">Pastéis gigantes</div></div>
+        <div class="hl-card reveal reveal-d4"><div class="hl-num">6d</div><div class="hl-label">Domingo a sexta</div></div>
       </div>
     </div>
   </div>
@@ -1188,18 +1042,10 @@
   <div class="sec-label reveal">Galeria</div>
   <h2 class="sec-title reveal reveal-d1">Veja os<br>sabores</h2>
   <div class="bento">
-    <div class="bento-item reveal reveal-d1">
-      <img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=900&q=80" alt="Burger artesanal" loading="lazy">
-    </div>
-    <div class="bento-item reveal reveal-d2">
-      <img src="https://images.unsplash.com/photo-1586816001966-79b736744398?w=700&q=80" alt="X-Burguer especial" loading="lazy">
-    </div>
-    <div class="bento-item reveal reveal-d3">
-      <img src="https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=700&q=80" alt="Lanche artesanal" loading="lazy">
-    </div>
-    <div class="bento-item reveal reveal-d4">
-      <img src="https://images.unsplash.com/photo-1606755962773-d324e0a13086?w=1400&q=80" alt="Pastéis e lanches" loading="lazy">
-    </div>
+    <div class="bento-item reveal reveal-d1"><img src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=900&q=80" alt="Burger artesanal" loading="lazy"></div>
+    <div class="bento-item reveal reveal-d2"><img src="https://images.unsplash.com/photo-1586816001966-79b736744398?w=700&q=80" alt="X-Burguer especial" loading="lazy"></div>
+    <div class="bento-item reveal reveal-d3"><img src="https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?w=700&q=80" alt="Lanche artesanal" loading="lazy"></div>
+    <div class="bento-item reveal reveal-d4"><img src="https://images.unsplash.com/photo-1606755962773-d324e0a13086?w=1400&q=80" alt="Pastéis e lanches" loading="lazy"></div>
   </div>
 </section>
 
@@ -1231,15 +1077,508 @@
   <div class="footer-bar">© 2025 Fitness Burguer Maré Alta · Camocim, Ceará · Todos os direitos reservados</div>
 </section>
 
+<!-- WA FLOAT -->
 <a id="wa-float" href="https://wa.me/558893369082" target="_blank" rel="noopener" aria-label="Fale pelo WhatsApp">
   <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
 
+<!-- ============================================================
+     ORDER MODAL
+     ============================================================ -->
+<div id="order-overlay" role="dialog" aria-modal="true" aria-label="Fazer pedido">
+  <div id="order-modal">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <div>
+        <div id="modal-item-name" class="modal-item-name"></div>
+        <div id="modal-item-price" class="modal-item-price" style="margin-top:2px;"></div>
+      </div>
+      <button class="modal-close" onclick="closeOrder()" aria-label="Fechar">✕</button>
+    </div>
+    <div class="modal-body">
+
+      <!-- Endereço + Número -->
+      <div class="modal-step">
+        <div class="modal-step-label">📍 Endereço de entrega</div>
+        <div class="modal-row">
+          <input id="inp-address" class="modal-input" type="text" placeholder="Rua / Bairro" autocomplete="street-address">
+          <input id="inp-number" class="modal-input" type="text" placeholder="Nº" autocomplete="address-line2" inputmode="numeric">
+        </div>
+      </div>
+
+      <!-- Ponto de referência -->
+      <div class="modal-step">
+        <div class="modal-step-label">🏠 Ponto de referência</div>
+        <input id="inp-ref" class="modal-input" type="text" placeholder="Ex: próximo ao mercado, casa amarela...">
+      </div>
+
+      <!-- Pagamento -->
+      <div class="modal-step">
+        <div class="modal-step-label">💳 Forma de pagamento</div>
+        <div class="payment-options">
+          <div class="pay-opt" id="opt-dinheiro" onclick="selectPay('dinheiro')">
+            <div class="pay-opt-icon">💵</div>
+            <div class="pay-opt-label">Dinheiro</div>
+            <div class="pay-opt-sub">Troco se precisar</div>
+          </div>
+          <div class="pay-opt" id="opt-pix" onclick="selectPay('pix')">
+            <div class="pay-opt-icon">📱</div>
+            <div class="pay-opt-label">Pix</div>
+            <div class="pay-opt-sub">Envie antes</div>
+          </div>
+        </div>
+
+        <!-- Caixa Pix — aparece ao selecionar Pix -->
+        <div id="pix-box">
+          <div class="pix-label">Dados para transferência</div>
+          <div class="pix-row">
+            <div>
+              <div class="pix-field">Chave Pix (telefone)</div>
+              <div class="pix-val">88981157584</div>
+            </div>
+            <button class="pix-copy" onclick="copyPix('88981157584', this)">Copiar</button>
+          </div>
+          <div class="pix-row" style="margin-bottom:0;">
+            <div>
+              <div class="pix-field">Favorecido</div>
+              <div class="pix-val" style="font-size:16px;">Antônia Erlane</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Troco (dinheiro) -->
+        <div id="troco-box" style="display:none;margin-top:12px;">
+          <div class="modal-step-label" style="margin-bottom:8px;">Troco para quanto? (opcional)</div>
+          <input id="inp-troco" class="modal-input" type="text" placeholder="Ex: R$50,00" inputmode="numeric">
+        </div>
+      </div>
+
+      <button id="btn-confirm" disabled onclick="confirmOrder()">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Enviar Pedido pelo WhatsApp
+      </button>
+      <p class="modal-disclaimer">Você será redirecionado ao WhatsApp com o pedido preenchido. Taxa de entrega: R$5,00.</p>
+    </div>
+  </div>
+</div>
+
 <script>
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.08 });
-  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+/* ================================================================
+   MENU DATA — EDITE AQUI para adicionar, remover ou alterar itens
+   ================================================================
+
+   Estrutura de cada item:
+     emoji    : ícone decorativo
+     name     : nome do item (aparece no cardápio e no pedido)
+     desc     : descrição curta
+     includes : o que vem incluso (string)
+     excludes : o que NÃO inclui (string, opcional)
+     note     : observação especial (string, opcional)
+     price    : preço em reais (número)
+     gold     : true = destaque dourado (opcional)
+
+   Estrutura de cada categoria:
+     label   : "Categoria 01"
+     name    : título da categoria
+     emoji   : ícone grande
+     img     : URL da imagem de capa
+     count   : texto ex "9 itens"
+     items   : array de itens acima
+================================================================ */
+const MENU_DATA = [
+  {
+    label: 'Categoria 01',
+    name: 'Sanduíche Simples',
+    emoji: '🥪',
+    img: 'https://images.unsplash.com/photo-1596560548464-f010549b84d7?w=1200&q=80',
+    count: '9 itens',
+    items: [
+      {
+        emoji: '🍔',
+        name: 'Hambúrguer',
+        desc: 'Sanduíche básico da casa',
+        includes: 'Pão, hambúrguer bovino',
+        excludes: 'Queijo, ovos, molhos extras, adicionais',
+        price: 8
+      },
+      {
+        emoji: '🍔',
+        name: 'X-Burguer',
+        desc: 'Clássico com queijo mussarela',
+        includes: 'Pão, hambúrguer bovino, queijo mussarela',
+        excludes: 'Bacon, cheddar, cream cheese, catupiry, ovo',
+        price: 10
+      },
+      {
+        emoji: '🥩',
+        name: 'Bauru',
+        desc: 'Sanduíche clássico Bauru',
+        includes: 'Pão, presunto, queijo derretido, tomate',
+        excludes: 'Hambúrguer bovino, bacon, cheddar, carne artesanal',
+        price: 13
+      },
+      {
+        emoji: '🌭',
+        name: 'Hot Dog / Cachorro Quente',
+        desc: 'Cachorro quente clássico',
+        includes: 'Pão, salsicha grelhada, ketchup, mostarda, maionese',
+        excludes: 'Hambúrguer bovino, queijo, bacon',
+        price: 10
+      },
+      {
+        emoji: '🫓',
+        name: 'X-Frango no Pão Árabe',
+        desc: 'Frango grelhado em pão árabe',
+        includes: 'Pão árabe, frango filé grelhado, tomate, alface, molhos',
+        excludes: 'Queijo coalho, bacon, cheddar, cream cheese, catupiry, ovo',
+        price: 18
+      },
+      {
+        emoji: '🫓',
+        name: 'X-Completo no Pão Árabe',
+        desc: 'Carne completa em pão árabe',
+        includes: 'Pão árabe, carne bovina, queijo mussarela, ovo, tomate, alface, cebola, molhos',
+        excludes: 'Carne artesanal, queijo coalho, cheddar, cream cheese, catupiry',
+        price: 25
+      },
+      {
+        emoji: '🍔',
+        name: 'X-Fome Maré Alta',
+        desc: 'Sanduíche grande da casa',
+        includes: 'Pão, hambúrguer bovino, queijo mussarela, ovo, bacon, tomate, alface, cebola, ketchup, mostarda, maionese',
+        excludes: 'Carne artesanal, queijo coalho, cheddar, cream cheese, catupiry, camarão',
+        price: 25
+      },
+      {
+        emoji: '🍔',
+        name: 'X-Fome Tudo em Dobro',
+        desc: 'X-Fome com tudo duplicado',
+        includes: 'Pão, hambúrguer bovino duplo, queijo mussarela, ovo, bacon, tomate, alface, cebola, ketchup, mostarda, maionese — todos em dobro',
+        excludes: 'Carne artesanal, cheddar, cream cheese, catupiry, camarão',
+        price: 30
+      },
+      {
+        emoji: '🦐',
+        name: 'X-Fome Camarão Titanic',
+        desc: 'O maior da linha simples — com camarão',
+        includes: 'Pão, hambúrguer bovino, camarão, queijo mussarela, ovo, bacon, tomate, alface, cebola, ketchup, mostarda, maionese',
+        excludes: 'Carne artesanal, queijo coalho, cheddar, cream cheese, catupiry',
+        price: 35,
+        gold: true
+      }
+    ]
+  },
+  {
+    label: 'Categoria 02',
+    name: 'Pastéis 28cm',
+    emoji: '🥟',
+    img: 'https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?w=1200&q=80',
+    count: '5 itens',
+    items: [
+      {
+        emoji: '🧀',
+        name: 'Pastel de Queijo',
+        desc: 'Pastel gigante 28cm',
+        includes: 'Massa de pastel 28cm frita, recheio de queijo mussarela',
+        excludes: 'Frango, catupiry, cheddar, camarão',
+        price: 10
+      },
+      {
+        emoji: '🍗',
+        name: 'Pastel Frango com Cheddar ou Catupiry',
+        desc: 'Pastel gigante 28cm — escolha o requeijão',
+        includes: 'Massa 28cm, frango desfiado + cheddar OU catupiry (informar no pedido)',
+        note: '⚠ Escolher ao pedir: cheddar ou catupiry',
+        price: 10
+      },
+      {
+        emoji: '🥟',
+        name: 'Pastel Mistão',
+        desc: 'Pastel gigante 28cm — mistura da casa',
+        includes: 'Massa 28cm, frango desfiado + queijo mussarela',
+        excludes: 'Camarão, cheddar, catupiry',
+        price: 10
+      },
+      {
+        emoji: '🍕',
+        name: 'Pastel Pizza',
+        desc: 'Pastel gigante 28cm — sabor pizza',
+        includes: 'Massa 28cm, molho de tomate, mussarela, presunto',
+        excludes: 'Frango, camarão, cheddar, catupiry',
+        price: 10
+      },
+      {
+        emoji: '🦐',
+        name: 'Pastel de Camarão',
+        desc: 'Pastel gigante 28cm — sabor do mar',
+        includes: 'Massa 28cm, recheio de camarão',
+        note: '⭐ Único pastel premium — R$5 acima dos demais',
+        price: 15,
+        gold: true
+      }
+    ]
+  },
+  {
+    label: 'Categoria 03',
+    name: 'Carne Artesanal',
+    emoji: '🥩',
+    img: 'https://images.unsplash.com/photo-1550547660-d9450f859349?w=1200&q=80',
+    count: '5 itens',
+    comboNote: '✨ <strong>Base inclusa em TODOS os artesanais:</strong> Pão · Queijo coalho · Mussarela · Ovo · Bacon · Cheddar · Cream cheese · Catupiry · Milho · Ervilha · Cebola · Tomate · Alface · Molho da casa · Maionese · Ketchup · Mostarda — a diferença entre os itens é apenas o tipo de carne.',
+    items: [
+      {
+        emoji: '🥩',
+        name: 'X-Filé Trinchado + Artesanal',
+        desc: 'Combinação filé + carne artesanal',
+        includes: 'Filé trinchado + carne artesanal (2 tipos de carne) · Pão, queijo coalho, mussarela, ovo, bacon, cheddar, cream cheese, catupiry, milho, ervilha, cebola, tomate, alface, molho da casa, maionese, ketchup, mostarda',
+        price: 25
+      },
+      {
+        emoji: '🍗',
+        name: 'X-Frango Filé + Artesanal',
+        desc: 'Frango filé + carne artesanal',
+        includes: 'Frango filé grelhado + carne artesanal (2 tipos de carne) · Pão, queijo coalho, mussarela, ovo, bacon, cheddar, cream cheese, catupiry, milho, ervilha, cebola, tomate, alface, molho da casa, maionese, ketchup, mostarda',
+        excludes: 'Filé bovino trinchado, camarão',
+        price: 20
+      },
+      {
+        emoji: '🌶️',
+        name: 'X-Calabresa + Artesanal',
+        desc: 'Calabresa + carne artesanal',
+        includes: 'Calabresa grelhada + carne artesanal (2 tipos de carne) · Pão, queijo coalho, mussarela, ovo, bacon, cheddar, cream cheese, catupiry, milho, ervilha, cebola, tomate, alface, molho da casa, maionese, ketchup, mostarda',
+        excludes: 'Frango, filé bovino trinchado, camarão',
+        price: 20
+      },
+      {
+        emoji: '🦐',
+        name: 'X-Camarão + Artesanal',
+        desc: 'Camarão + carne artesanal',
+        includes: 'Camarão + carne artesanal (2 tipos de proteína) · Pão, queijo coalho, mussarela, ovo, bacon, cheddar, cream cheese, catupiry, milho, ervilha, cebola, tomate, alface, molho da casa, maionese, ketchup, mostarda',
+        excludes: 'Filé bovino trinchado, frango, calabresa',
+        price: 30
+      },
+      {
+        emoji: '👑',
+        name: 'X-Maré Alta — Três Filés + Artesanal',
+        desc: 'Três tipos de filé trinchado + carne artesanal',
+        includes: '3 tipos de filé trinchado + carne artesanal (4 camadas de carne) · Pão, queijo coalho, mussarela, ovo, bacon, cheddar, cream cheese, catupiry, milho, ervilha, cebola, tomate, alface, molho da casa, maionese, ketchup, mostarda',
+        excludes: 'Camarão, frango, calabresa',
+        note: '👑 O mais completo da linha — 4 tipos de carne no mesmo sanduíche',
+        price: 35,
+        gold: true
+      }
+    ]
+  }
+];
+
+/* ================================================================
+   WA_NUMBER — número WhatsApp do estabelecimento
+================================================================ */
+const WA_NUMBER = '558893369082';
+
+/* ================================================================
+   PIX_KEY / PIX_NAME — dados Pix
+================================================================ */
+const PIX_KEY  = '88981157584';
+const PIX_NAME = 'Antônia Erlane';
+
+/* ================================================================
+   RENDER MENU
+================================================================ */
+function waIconSVG(size = 18) {
+  return `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>`;
+}
+
+function renderMenu() {
+  const container = document.getElementById('menu-render');
+  let html = '';
+
+  MENU_DATA.forEach((cat, ci) => {
+    const delay = ci === 0 ? '' : ` reveal-d${Math.min(ci, 5)}`;
+    html += `<div class="menu-cat reveal${delay}">
+      <div class="cat-header">
+        <img class="cat-header-img" src="${cat.img}" alt="${cat.name}" loading="lazy">
+        <div class="cat-header-overlay">
+          <div class="cat-emoji">${cat.emoji}</div>
+          <div class="cat-title-wrap">
+            <div class="cat-eyebrow">${cat.label}</div>
+            <div class="cat-title">${cat.name}</div>
+          </div>
+          <div class="cat-count">${cat.count || cat.items.length + ' itens'}</div>
+        </div>
+      </div>
+      <div class="cat-items">`;
+
+    cat.items.forEach(item => {
+      const goldClass = item.gold ? ' gold-border' : '';
+      const descColor = item.gold ? 'color:rgba(232,184,75,.7)' : '';
+      html += `<button class="menu-item${goldClass}" onclick="openOrder(${JSON.stringify(item.name)}, ${item.price})">
+        <div class="item-photo"><span class="ph-emoji">${item.emoji}</span></div>
+        <div class="item-info">
+          <div class="item-name">${item.name}</div>
+          <div class="item-desc" style="${descColor}">${item.desc}</div>
+          <div class="item-specs">
+            <div class="item-includes"><strong>✓ Inclui:</strong> ${item.includes}</div>
+            ${item.excludes ? `<div class="item-excludes"><strong>✗ Não inclui:</strong> ${item.excludes}</div>` : ''}
+            ${item.note ? `<div class="item-note">${item.note}</div>` : ''}
+          </div>
+        </div>
+        <div class="item-right">
+          <div class="item-price">R$${item.price}</div>
+          <span class="btn-pedir">${waIconSVG(13)} Pedir</span>
+        </div>
+      </button>`;
+    });
+
+    html += `</div>`;
+
+    if (cat.comboNote) {
+      html += `<div class="combo-note">${cat.comboNote}</div>`;
+    }
+
+    html += `</div>`;
+  });
+
+  // CTA band
+  html += `<div class="menu-cta-band reveal">
+    <div>
+      <p>Delivery — Dom a Sex</p>
+      <h3>Escolha um item<br>e peça direto</h3>
+      <p class="delivery-note" style="font-family:'DM Sans';font-weight:300;font-size:14px;color:rgba(255,255,255,.7);margin-top:6px;">Taxa de entrega R$5,00 · Abrimos 18h às 23h</p>
+    </div>
+    <a href="https://wa.me/${WA_NUMBER}" class="btn-wa" style="background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);">
+      ${waIconSVG(22)} Falar no WhatsApp
+    </a>
+  </div>`;
+
+  container.innerHTML = html;
+}
+
+renderMenu();
+
+/* ================================================================
+   SCROLL REVEAL
+================================================================ */
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* ================================================================
+   ORDER MODAL
+================================================================ */
+let currentItem = { name: '', price: 0 };
+let selectedPay = null;
+
+function openOrder(name, price) {
+  currentItem = { name, price };
+  selectedPay = null;
+
+  document.getElementById('modal-item-name').textContent = name;
+  document.getElementById('modal-item-price').textContent = 'R$' + price + ',00';
+
+  // Reset form
+  document.getElementById('inp-address').value = '';
+  document.getElementById('inp-number').value = '';
+  document.getElementById('inp-ref').value = '';
+  document.getElementById('inp-troco').value = '';
+  document.getElementById('opt-dinheiro').classList.remove('selected');
+  document.getElementById('opt-pix').classList.remove('selected');
+  document.getElementById('pix-box').classList.remove('show');
+  document.getElementById('troco-box').style.display = 'none';
+  document.getElementById('btn-confirm').disabled = true;
+
+  document.getElementById('order-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+
+  // Focus first field
+  setTimeout(() => document.getElementById('inp-address').focus(), 350);
+}
+
+function closeOrder() {
+  document.getElementById('order-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// Close on overlay click
+document.getElementById('order-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeOrder();
+});
+
+// Close on Escape
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeOrder();
+});
+
+function selectPay(method) {
+  selectedPay = method;
+  document.getElementById('opt-dinheiro').classList.toggle('selected', method === 'dinheiro');
+  document.getElementById('opt-pix').classList.toggle('selected', method === 'pix');
+  document.getElementById('pix-box').classList.toggle('show', method === 'pix');
+  document.getElementById('troco-box').style.display = method === 'dinheiro' ? 'block' : 'none';
+  validateForm();
+}
+
+function validateForm() {
+  const addr = document.getElementById('inp-address').value.trim();
+  const num  = document.getElementById('inp-number').value.trim();
+  const ref  = document.getElementById('inp-ref').value.trim();
+  const ok = addr.length > 0 && num.length > 0 && ref.length > 0 && selectedPay !== null;
+  document.getElementById('btn-confirm').disabled = !ok;
+}
+
+['inp-address', 'inp-number', 'inp-ref'].forEach(id => {
+  document.getElementById(id).addEventListener('input', validateForm);
+});
+
+function confirmOrder() {
+  const addr  = document.getElementById('inp-address').value.trim();
+  const num   = document.getElementById('inp-number').value.trim();
+  const ref   = document.getElementById('inp-ref').value.trim();
+  const troco = document.getElementById('inp-troco').value.trim();
+
+  const payLine = selectedPay === 'pix'
+    ? `💳 Pagamento: *Pix* (chave: ${PIX_KEY} · Favorecido: ${PIX_NAME})`
+    : `💳 Pagamento: *Dinheiro*${troco ? ` — troco para ${troco}` : ''}`;
+
+  const msg = [
+    `Olá! Quero fazer um pedido:`,
+    ``,
+    `🍔 *${currentItem.name}* — R$${currentItem.price},00`,
+    ``,
+    `📍 *Endereço:* ${addr}, nº ${num}`,
+    `🏠 *Referência:* ${ref}`,
+    ``,
+    payLine,
+    ``,
+    `(+ taxa de entrega R$5,00)`
+  ].join('\n');
+
+  const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
+  window.open(url, '_blank', 'noopener');
+  closeOrder();
+}
+
+function copyPix(key, btn) {
+  navigator.clipboard.writeText(key).then(() => {
+    const orig = btn.textContent;
+    btn.textContent = '✓ Copiado';
+    btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 2000);
+  }).catch(() => {
+    // fallback for older browsers
+    const ta = document.createElement('textarea');
+    ta.value = key;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    btn.textContent = '✓ Copiado';
+    setTimeout(() => { btn.textContent = 'Copiar'; }, 2000);
+  });
+}
 </script>
 
 </body>
