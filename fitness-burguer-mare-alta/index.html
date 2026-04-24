@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fitness Burguer Maré Alta — Camocim, Ceará</title>
+  <meta name="description" content="Hambúrgueres artesanais, pastéis gigantes e delivery em Camocim-CE. Pedidos via WhatsApp. Abrimos de domingo a sexta, 18h–23h." />
+  <meta property="og:title" content="Fitness Burguer Maré Alta" />
+  <meta property="og:description" content="Hambúrgueres artesanais + pastéis 28cm em Camocim, CE. Delivery das 18h às 23h." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍔</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,600;12..96,800;12..96,900&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --bg: #090C10;
+      --surface: #10161E;
+      --surface2: #161E28;
+      --border: rgba(255,255,255,0.07);
+      --primary: #F59E0B;
+      --primary-dark: #B45309;
+      --accent: #06B6D4;
+      --accent-glow: rgba(6,182,212,0.15);
+      --text: #EFF3F8;
+      --text-muted: #7A8EA8;
+      --wave: #0E1822;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, .display {
+      font-family: 'Bricolage Grotesque', sans-serif;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(32px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; } to { opacity: 1; }
+    }
+    @keyframes waveFloat {
+      0%, 100% { transform: translateY(0px); }
+      50%       { transform: translateY(-8px); }
+    }
+    @keyframes pulse-ring {
+      0%   { box-shadow: 0 0 0 0 rgba(37,211,102,0.4); }
+      70%  { box-shadow: 0 0 0 14px rgba(37,211,102,0); }
+      100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); }
+    }
+    @keyframes shimmer {
+      0%   { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+    @keyframes tagPop {
+      0%   { transform: scale(0.85); opacity: 0; }
+      60%  { transform: scale(1.05); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    @keyframes slideInLeft {
+      from { transform: translateX(-40px); opacity: 0; }
+      to   { transform: translateX(0); opacity: 1; }
+    }
+    @keyframes waveAnim {
+      0%   { d: path("M0,60 C150,120 350,0 500,60 C650,120 850,0 1000,60 L1000,200 L0,200 Z"); }
+      50%  { d: path("M0,80 C150,20 350,140 500,80 C650,20 850,140 1000,80 L1000,200 L0,200 Z"); }
+      100% { d: path("M0,60 C150,120 350,0 500,60 C650,120 850,0 1000,60 L1000,200 L0,200 Z"); }
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 100svh;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 80px 24px 120px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(6,182,212,0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 40% at 80% 80%, rgba(245,158,11,0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    /* Noise texture overlay */
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(6,182,212,0.1);
+      border: 1px solid rgba(6,182,212,0.3);
+      border-radius: 100px;
+      padding: 6px 16px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      animation: fadeUp 0.6s ease both;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+      display: inline-block;
+      animation: pulse-ring 2s infinite;
+    }
+
+    .hero-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: clamp(3rem, 12vw, 7rem);
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      margin-top: 20px;
+      position: relative;
+      z-index: 1;
+      animation: fadeUp 0.7s ease 0.15s both;
+    }
+    .hero-title .line1 { display: block; color: var(--text); }
+    .hero-title .line2 {
+      display: block;
+      background: linear-gradient(135deg, var(--primary) 0%, #FBBF24 40%, var(--accent) 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: fadeUp 0.7s ease 0.15s both, shimmer 4s linear infinite;
+    }
+    .hero-title .line3 {
+      display: block;
+      font-size: 0.45em;
+      font-weight: 300;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    .hero-cta-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 36px;
+      width: 100%;
+      max-width: 320px;
+      position: relative;
+      z-index: 1;
+      animation: fadeUp 0.7s ease 0.35s both;
+    }
+
+    .btn-primary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: #25D366;
+      color: #fff;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      padding: 16px 28px;
+      border-radius: 14px;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 0 24px rgba(37,211,102,0.3);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 0 36px rgba(37,211,102,0.45);
+    }
+
+    .btn-secondary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+      font-weight: 500;
+      padding: 12px 24px;
+      border-radius: 14px;
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-secondary:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    /* Info strip */
+    .info-strip {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .info-strip-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .info-item:last-child { border-bottom: none; }
+    .info-icon {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      background: var(--surface2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .info-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+    .info-value {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+    }
+    .info-value .highlight { color: var(--primary); }
+
+    /* Section */
+    .section { padding: 64px 24px; }
+    .section-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .section-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-weight: 900;
+      font-size: clamp(2rem, 7vw, 3.2rem);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+
+    /* Category tabs */
+    .cat-tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .cat-tabs::-webkit-scrollbar { display: none; }
+    .cat-tab {
+      flex-shrink: 0;
+      padding: 9px 18px;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-muted);
+      transition: all 0.2s;
+    }
+    .cat-tab.active, .cat-tab:hover {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #000;
+    }
+
+    /* Menu cards */
+    .menu-section {
+      display: none;
+    }
+    .menu-section.visible {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .menu-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+      cursor: default;
+    }
+    .menu-card:hover {
+      border-color: rgba(245,158,11,0.35);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    }
+
+    .card-emoji {
+      width: 52px; height: 52px;
+      border-radius: 12px;
+      background: var(--surface2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px;
+      flex-shrink: 0;
+      /* Photo-ready: add class .has-photo and set background-image */
+    }
+
+    .card-body { flex: 1; min-width: 0; }
+    .card-name {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      color: var(--text);
+      line-height: 1.3;
+    }
+    .card-desc {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 2px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card-price {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      font-size: 18px;
+      color: var(--primary);
+      flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    .card-order {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      background: rgba(37,211,102,0.1);
+      border: 1px solid rgba(37,211,102,0.2);
+      color: #25D366;
+      font-size: 18px;
+      flex-shrink: 0;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .card-order:hover {
+      background: rgba(37,211,102,0.2);
+    }
+
+    /* Artisanal highlight */
+    .artisanal-block {
+      background: linear-gradient(135deg, var(--surface) 0%, #0D1520 100%);
+      border: 1px solid rgba(245,158,11,0.15);
+      border-radius: 20px;
+      padding: 28px 24px;
+      margin-top: 16px;
+    }
+    .ingredient-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+    .ingredient-tag {
+      background: rgba(245,158,11,0.08);
+      border: 1px solid rgba(245,158,11,0.2);
+      border-radius: 100px;
+      padding: 4px 12px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--primary);
+      animation: tagPop 0.4s ease both;
+    }
+
+    /* Wave divider */
+    .wave-divider {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      line-height: 0;
+      margin-bottom: -2px;
+    }
+    .wave-divider svg { display: block; width: 100%; height: 60px; }
+
+    /* Footer CTA */
+    .footer-cta {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 56px 24px 40px;
+      text-align: center;
+    }
+    .footer-cta .cta-big {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: clamp(2rem, 8vw, 4rem);
+      line-height: 1;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+    .footer-cta .cta-sub {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-bottom: 28px;
+    }
+
+    .footer-btn-wpp {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: #25D366;
+      color: #fff;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 18px;
+      font-weight: 800;
+      padding: 18px 40px;
+      border-radius: 16px;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 0 32px rgba(37,211,102,0.35);
+      animation: pulse-ring 2.5s infinite;
+    }
+    .footer-btn-wpp:hover {
+      transform: scale(1.04);
+    }
+
+    .footer-info {
+      margin-top: 40px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      text-align: left;
+    }
+    .footer-info-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+    }
+    .footer-info-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+    .footer-info-value {
+      font-size: 14px;
+      color: var(--text);
+      font-weight: 500;
+      line-height: 1.5;
+    }
+
+    .footer-copy {
+      margin-top: 40px;
+      font-size: 12px;
+      color: var(--text-muted);
+      opacity: 0.5;
+    }
+
+    /* Floating WhatsApp */
+    .float-wpp {
+      position: fixed;
+      bottom: 24px;
+      right: 20px;
+      width: 60px; height: 60px;
+      border-radius: 50%;
+      background: #25D366;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 999;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.45);
+      animation: pulse-ring 2s infinite;
+      transition: transform 0.2s;
+      text-decoration: none;
+    }
+    .float-wpp:hover { transform: scale(1.12); }
+    .float-wpp svg { width: 30px; height: 30px; fill: #fff; }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    /* Desktop adjustments */
+    @media (min-width: 640px) {
+      .info-strip-inner {
+        flex-direction: row;
+        gap: 0;
+      }
+      .info-item {
+        flex: 1;
+        flex-direction: column;
+        text-align: center;
+        padding: 20px 16px;
+        border-bottom: none;
+        border-right: 1px solid var(--border);
+      }
+      .info-item:last-child { border-right: none; }
+      .menu-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .footer-info {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .section { padding: 88px 40px; }
+      .menu-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+      .hero-cta-group {
+        flex-direction: row;
+        max-width: none;
+        width: auto;
+      }
+      .btn-primary, .btn-secondary {
+        width: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── FLOATING WhatsApp ── -->
+<a href="https://wa.me/558893369082" target="_blank" class="float-wpp" aria-label="Pedir pelo WhatsApp">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <span class="hero-badge">🌊 Delivery Camocim, CE</span>
+  <h1 class="hero-title">
+    <span class="line1">FITNESS</span>
+    <span class="line2">BURGUER</span>
+    <span class="line3">Maré Alta — Sabor que não tem hora baixa</span>
+  </h1>
+  <div class="hero-cta-group">
+    <a href="https://wa.me/558893369082" target="_blank" class="btn-primary">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Fazer Pedido
+    </a>
+    <a href="#cardapio" class="btn-secondary">
+      Ver Cardápio ↓
+    </a>
+  </div>
+</section>
+
+<!-- ── INFO STRIP ── -->
+<div class="info-strip">
+  <div class="info-strip-inner">
+    <div class="info-item">
+      <div class="info-icon">🕕</div>
+      <div>
+        <div class="info-label">Horário</div>
+        <div class="info-value"><span class="highlight">18h – 23h</span> Dom a Sex</div>
+      </div>
+    </div>
+    <div class="info-item">
+      <div class="info-icon">🛵</div>
+      <div>
+        <div class="info-label">Entrega</div>
+        <div class="info-value">Somente Delivery · <span class="highlight">Taxa R$ 5,00</span></div>
+      </div>
+    </div>
+    <div class="info-item">
+      <div class="info-icon">📍</div>
+      <div>
+        <div class="info-label">Endereço</div>
+        <div class="info-value">Rua Humaitá, 313 · Camocim-CE</div>
+      </div>
+    </div>
+    <div class="info-item">
+      <div class="info-icon">📱</div>
+      <div>
+        <div class="info-label">WhatsApp</div>
+        <div class="info-value"><a href="https://wa.me/558893369082" style="color:var(--primary);text-decoration:none">(88) 9336-9082</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── CARDÁPIO ── -->
+<section id="cardapio" class="section" style="max-width:900px;margin:0 auto;">
+  <div class="section-header reveal">
+    <span class="section-tag">☰ Cardápio Completo</span>
+    <h2 class="section-title">O que tá<br/>na onda hoje?</h2>
+  </div>
+
+  <!-- Category tabs -->
+  <div class="cat-tabs reveal reveal-delay-1">
+    <button class="cat-tab active" onclick="showCat('sanduiches', this)">🍔 Sanduíches</button>
+    <button class="cat-tab" onclick="showCat('pasteis', this)">🥟 Pastéis</button>
+    <button class="cat-tab" onclick="showCat('artesanais', this)">⭐ Artesanais</button>
+  </div>
+
+  <!-- Sanduíches -->
+  <div id="cat-sanduiches" class="menu-section visible">
+    <div class="menu-grid">
+
+      <div class="menu-card reveal">
+        <div class="card-emoji">🍔</div>
+        <div class="card-body">
+          <div class="card-name">Hambúrguer</div>
+          <div class="card-desc">Clássico e sem erro</div>
+        </div>
+        <div class="card-price">R$ 8</div>
+        <a href="https://wa.me/558893369082?text=Quero%20pedir%20um%20Hamb%C3%BArguer%20-%20R%248%2C00" target="_blank" class="card-order" title="Pedir pelo WhatsApp">+</a>
+      </div>
+
+      <div class="menu-card reveal reveal-delay-1">
+        <div class="card-emoji">🧀</div>
+        <div class="card-body">
+          <div class="card-name">X-Burguer</div>
+          <div class="card-desc">Com queijo derretido</div>
+        </div>
+        <div class="card-price">R$ 10</div>
+        <a href="https://wa.me/558893369082?text=Quero%20pedir%20um%20X-Burguer%20-%20R%2410%2C00" target="_blank" class="card-order" title="Pedir">+</a>
+      </div>
+
+      <div class="menu-card reveal">
+        <div class="card-emoji">🥩</div>
+        <div class="card-body">
+          <div class="card-name">Bauru</div>
+          <div class="card-desc">O favorito de sempre</div>
+        </div>
+        <div class="card-price">R$ 13</div>
+        <a href="https://wa.me/558893369082?text=Quero%20pedir%20um%20Bauru%20-%20R%2413%2C00" target="_blank" class="card-order">+</a>
+      </div>
+
+      <div class="menu-card reveal reveal-delay-1">
+        <div class="card-emoji">🌭</div>
+        <div class="card-body">
+          <div class="card-name">Hot Dog</div>
+          <div class="card-desc">Cachorro quente caprichado</div>
+        </div>
+        <div class="card-price">R$ 10</div>
+        <a href="https://wa.me/558893369082?text=Quero%20pedir%20um%20Hot%20Dog%20-%20R%2410%2C00" target="_blank" class="card-order">+</a>
+      </div>
+
+      <div class="menu-card reveal">
+        <div class="card-emoji">🫓</div>
+        <div class="card-body">
+          <div class="card-name">X-Frango · Pão Árabe</div>
+          <div class="card-desc">Frango grelhado no pão árabe</div>
+        </div>
+        <div class="card-price">R$ 18</div>
+        <a href="https://wa.me/558893369082?text=Quero%20pedir%20um%20X-Frango%20no%20P%C3%A3o%20%C3%81rabe%20-%20R%2418%2C00" target="_blank" class="card-order">+</a>
+      </div>
+
+      <div class="menu-card reveal reveal-delay-1">
+        <div class="card-emoji">🫓</div>
+        <div class="card-body">
+          <div class="card-name">X-Completo · Pão Árabe</div>
+          <div class="card-desc">Completo no pão árabe</div>
+        </div>
+        <div class="card-price">R$ 25</div>
+        <a href="https://wa.me/558893369082?text=Quero%20pedir%20um%20X-Completo%20no%20P%C3%A3o%20%C3%81rabe%20-%20R%2425%2C00" target="_blank" class="card-order">+</a>
+      </div>
+
+      <div class="menu-card reveal" style="border-color:rgba(245,158,11,0.25)">
+        <div class="card-emoji">🌊</div>
+        <div class="card-body">
+          <div class="card-name">X-Fome Maré Alta</div>
+          <div class="card-desc">A assinatura da casa</div>
+        </div>
+        <div class="card-price" style="color:var(--primary)">R$ 25</div>
+        <a href="https://wa.me/558893369082?text=Quero%20pedir%20o%20X-Fome%20Mar%C3%A9%20Alta%20-%20R%2425%2C00" target="_blank" class="card-order">+</a>
+      </div>
+
+      <div class="menu-card reveal reveal-delay-1">
+        <div class="card-emoji">🔥</div>
+        <div class="card-body">
+          <div class="card-name">X-Fome Tudo em Dobro</div>
+          <div class="card-desc">Para quem tem fome de verdade</div>
+        </div>
+        <div class="card-price">R$ 30</div>
+        <a href="https://wa.me/558893369082?text=Quero%20pedir%20o%20X-Fome%20Tudo%20em%20Dobro%20-%20R%2430%2C00" target="_blank" class="card-order">+</a>
+      </div>
+
+      <div class="menu-card reveal" style="grid-column: 1 / -1; border-color:rgba(6,182,212,0.25)">
+        <div class="card-emoji">🦐</div>
+        <div class="card-body">
+          <div class="card-name">X-Fome Camarão Titanic</div>
+          <div class="card-desc">O maior e mais especial do cardápio</div>
+        </div>
+        <div class="card-price" style="color:var(--accent)">R$ 35</div>
+        <a href="https://wa.me/558893369082?text=Quero%20pedir%20o%20X-Fome%20Camar%C3%A3o%20Titanic%20-%20R%2435%2C00" target="_blank" class="card-order">+</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Pastéis -->
+  <div id="cat-pasteis" class="menu-section">
+    <div style="margin-top:16px; padding:12px 16px; background:rgba(6,182,212,0.05); border:1px solid rgba(6,182,212,0.2); border-radius:12px; font-size:13px; color:var(--accent); font-weight:600; text-align:center">
+      📏 Pastéis gigantes — 28 centímetros!
+    </div>
+    <div class="menu-grid">
+
+      <div class="menu-card reveal">
+        <div class="card-emoji">🧀</div>
+        <div class="card-body">
+          <div class="card-name">Pastel de Queijo</div>
+          <div class="card-desc">28 cm crocante</div>
+        </div>
+        <div class="card-price">R$ 10</div>
+        <a href="https://wa.me/558893369082?text=Quero%20pedir%20Pastel%20de%20Queijo%2028cm%20-%20R%2410%2C00" target="_blank" class="card-order">+</a>
+      </div>
+
+      <div class="menu-card reveal reveal-delay-1">
+        <div class="card-emoji">🍗</div>
+        <div class="card-body">
+          <div class="card-name">Frango c/ Cheddar</div>
+          <div class="card-desc">Ou catupiry — escolha!</div>
+        </div>
+        <div class="card-price">R$ 10</div>
+        <a href="https://wa.me/558893369082?text=Quero%20pedir%20Pastel%20de%20Frango%20-%20R%2410%2C00" target="_blank" class="card-order">+</a>
+      </div>
+
+      <div class="menu-card reveal">
+        <div class="card-emoji">🌀</div>
+        <div class="card-body">
+          <div class="card-name">Mistão</div>
+          <div class="card-desc">Mix de recheios</div>
+        </div>
+        <div class="card-price">R$ 10</div>
+        <a href="https://wa.me/558893369082?text=Quero%20pedir%20Pastel%20Mist%C3%A3o%20-%20R%2410%2C00" target="_blank" class="card-order">+</a>
+      </div>
+
+      <div class="menu-card reveal reveal-delay-1">
+        <div class="card-emoji">🍕</div>
+        <div class="card-body">
+          <div class="card-name">Pizza</div>
+          <div class="card-desc">Sabor pizza no pastel</div>
+        </div>
+        <div class="card-price">R$ 10</div>
+        <a href="https://wa.me/558893369082?text=Quero%20pedir%20Pastel%20Pizza%20-%20R%2410%2C00" target="_blank" class="card-order">+</a>
+      </div>
+
+      <div class="menu-card reveal" style="grid-column: 1 / -1; border-color:rgba(6,182,212,0.25)">
+        <div class="card-emoji">🦐</div>
+        <div class="card-body">
+          <div class="card-name">Pastel de Camarão</div>
+          <div class="card-desc">O especial — camarão generoso</div>
+        </div>
+        <div class="card-price" style="color:var(--accent)">R$ 15</div>
+        <a href="https://wa.me/558893369082?text=Quero%20pedir%20Pastel%20de%20Camar%C3%A3o%2028cm%20-%20R%2415%2C00" target="_blank" class="card-order">+</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Artesanais -->
+  <div id="cat-artesanais" class="menu-section">
+    <div class="artisanal-block reveal">
+      <div class="section-tag">✦ Tudo incluso</div>
+      <h3 style="font-family:'Bricolage Grotesque';font-weight:800;font-size:1.1rem;margin:6px 0 4px">Todos os artesanais acompanham:</h3>
+      <p style="font-size:13px;color:var(--text-muted);margin-bottom:12px">Pão, molho da casa, maionese, ketchup, mostarda e:</p>
+      <div class="ingredient-list">
+        <span class="ingredient-tag" style="animation-delay:0.05s">Queijo Coalho</span>
+        <span class="ingredient-tag" style="animation-delay:0.1s">Mussarela</span>
+        <span class="ingredient-tag" style="animation-delay:0.15s">Ovo</span>
+        <span class="ingredient-tag" style="animation-delay:0.2s">Bacon</span>
+        <span class="ingredient-tag" style="animation-delay:0.25s">Cheddar</span>
+        <span class="ingredient-tag" style="animation-delay:0.3s">Cream Cheese</span>
+        <span class="ingredient-tag" style="animation-delay:0.35s">Catupiry</span>
+        <span class="ingredient-tag" style="animation-delay:0.4s">Milho</span>
+        <span class="ingredient-tag" style="animation-delay:0.45s">Ervilha</span>
+        <span class="ingredient-tag" style="animation-delay:0.5s">Cebola</span>
+        <span class="ingredient-tag" style="animation-delay:0.55s">Tomate</span>
+        <span class="ingredient-tag" style="animation-delay:0.6s">Alface</span>
+      </div>
+    </div>
+
+    <div class="menu-grid" style="margin-top:16px">
+
+      <div class="menu-card reveal">
+        <div class="card-emoji">🥩</div>
+        <div class="card-body">
+          <div class="card-name">X-Filé + Carne Artesanal</div>
+          <div class="card-desc">Filé trinchado + artesanal</div>
+        </div>
+        <div class="card-price">R$ 25</div>
+        <a href="https://wa.me/558893369082?text=Quero%20pedir%20X-Fil%C3%A9%20%2B%20Artesanal%20-%20R%2425%2C00" target="_blank" class="card-order">+</a>
+      </div>
+
+      <div class="menu-card reveal reveal-delay-1">
+        <div class="card-emoji">🍗</div>
+        <div class="card-body">
+          <div class="card-name">X-Frango + Artesanal</div>
+          <div class="card-desc">Frango filé + carne artesanal</div>
+        </div>
+        <div class="card-price">R$ 20</div>
+        <a href="https://wa.me/558893369082?text=Quero%20pedir%20X-Frango%20%2B%20Artesanal%20-%20R%2420%2C00" target="_blank" class="card-order">+</a>
+      </div>
+
+      <div class="menu-card reveal">
+        <div class="card-emoji">🌶️</div>
+        <div class="card-body">
+          <div class="card-name">X-Calabresa + Artesanal</div>
+          <div class="card-desc">Calabresa + carne artesanal</div>
+        </div>
+        <div class="card-price">R$ 20</div>
+        <a href="https://wa.me/558893369082?text=Quero%20pedir%20X-Calabresa%20%2B%20Artesanal%20-%20R%2420%2C00" target="_blank" class="card-order">+</a>
+      </div>
+
+      <div class="menu-card reveal reveal-delay-1">
+        <div class="card-emoji">🦐</div>
+        <div class="card-body">
+          <div class="card-name">X-Camarão + Artesanal</div>
+          <div class="card-desc">Camarão + carne artesanal</div>
+        </div>
+        <div class="card-price">R$ 30</div>
+        <a href="https://wa.me/558893369082?text=Quero%20pedir%20X-Camar%C3%A3o%20%2B%20Artesanal%20-%20R%2430%2C00" target="_blank" class="card-order">+</a>
+      </div>
+
+      <div class="menu-card reveal" style="grid-column:1/-1; background:linear-gradient(135deg,rgba(245,158,11,0.08) 0%,rgba(6,182,212,0.05) 100%); border-color:rgba(245,158,11,0.35)">
+        <div class="card-emoji" style="font-size:28px">🌊</div>
+        <div class="card-body">
+          <div class="card-name" style="font-size:17px">X-Maré Alta Especial</div>
+          <div class="card-desc">3 tipos de filé trinchado + carne artesanal — o rei do cardápio</div>
+        </div>
+        <div class="card-price" style="font-size:22px;color:var(--primary)">R$ 35</div>
+        <a href="https://wa.me/558893369082?text=Quero%20pedir%20o%20X-Mar%C3%A9%20Alta%20Especial%20-%20R%2435%2C00" target="_blank" class="card-order">+</a>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+<!-- ── WAVE DIVIDER ── -->
+<div class="wave-divider" style="background:var(--bg)">
+  <svg viewBox="0 0 1200 60" preserveAspectRatio="none" style="fill:var(--surface)">
+    <path d="M0,30 C200,60 400,0 600,30 C800,60 1000,0 1200,30 L1200,60 L0,60 Z"/>
+  </svg>
+</div>
+
+<!-- ── FOOTER CTA ── -->
+<div class="footer-cta">
+  <div class="reveal">
+    <div class="cta-big">Bateu a fome?</div>
+    <p class="cta-sub">Chama no WhatsApp — resposta rápida, entrega garantida 🛵</p>
+    <a href="https://wa.me/558893369082" target="_blank" class="footer-btn-wpp">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Pedir Agora — (88) 9336-9082
+    </a>
+  </div>
+
+  <div class="footer-info reveal reveal-delay-1">
+    <div class="footer-info-card">
+      <div class="footer-info-label">Horário de Funcionamento</div>
+      <div class="footer-info-value">Domingo a Sexta<br/><strong style="color:var(--primary)">18h às 23h</strong></div>
+    </div>
+    <div class="footer-info-card">
+      <div class="footer-info-label">Taxa de Entrega</div>
+      <div class="footer-info-value">Confira o valor<br/>para seu bairro<br/><strong style="color:var(--primary)">a partir de R$ 5,00</strong></div>
+    </div>
+    <div class="footer-info-card">
+      <div class="footer-info-label">Endereço de Referência</div>
+      <div class="footer-info-value">Rua Humaitá, 313<br/>Camocim – CE<br/><span style="color:var(--text-muted);font-size:12px">Próximo à Bel Noivas</span></div>
+    </div>
+  </div>
+
+  <p class="footer-copy">© 2025 Fitness Burguer Maré Alta · Camocim, Ceará</p>
+</div>
+
+<script>
+  // Category tabs
+  function showCat(id, btn) {
+    document.querySelectorAll('.menu-section').forEach(el => el.classList.remove('visible'));
+    document.querySelectorAll('.cat-tab').forEach(el => el.classList.remove('active'));
+    document.getElementById('cat-' + id).classList.add('visible');
+    btn.classList.add('active');
+    // Re-trigger reveal animations
+    document.querySelectorAll('#cat-' + id + ' .reveal').forEach((el, i) => {
+      el.classList.remove('visible');
+      setTimeout(() => el.classList.add('visible'), i * 50);
+    });
+  }
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Pre-reveal visible section cards
+  document.querySelectorAll('#cat-sanduiches .reveal').forEach((el, i) => {
+    setTimeout(() => el.classList.add('visible'), 300 + i * 60);
+  });
+</script>
+
+</body>
+</html>
