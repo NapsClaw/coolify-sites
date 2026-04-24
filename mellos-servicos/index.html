@@ -551,38 +551,60 @@
       padding: 80px 24px;
     }
     #galeria .section-title { color: #fff; }
-    .gallery-bento {
+
+    /* Filter tabs */
+    .gallery-filters {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+    .filter-btn {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 9px 20px;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: transparent;
+      color: rgba(255,255,255,0.45);
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border-color 0.2s;
+    }
+    .filter-btn:hover {
+      border-color: rgba(255,255,255,0.4);
+      color: rgba(255,255,255,0.8);
+    }
+    .filter-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .gallery-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      grid-template-rows: auto;
       gap: 4px;
       max-width: 1400px;
       margin: 0 auto;
     }
-    @media (min-width: 768px) {
-      .gallery-bento {
-        grid-template-columns: repeat(12, 1fr);
-        grid-template-rows: 280px 280px 280px 360px;
-      }
-      .gb-1 { grid-column: 1 / 6; grid-row: 1; }
-      .gb-2 { grid-column: 6 / 9; grid-row: 1; }
-      .gb-3 { grid-column: 9 / 13; grid-row: 1; }
-      .gb-4 { grid-column: 1 / 5; grid-row: 2; }
-      .gb-5 { grid-column: 5 / 9; grid-row: 2; }
-      .gb-6 { grid-column: 9 / 13; grid-row: 2; }
-      .gb-7 { grid-column: 1 / 4; grid-row: 3; }
-      .gb-8 { grid-column: 4 / 8; grid-row: 3; }
-      .gb-9 { grid-column: 8 / 13; grid-row: 3; }
-      .gb-10 { grid-column: 1 / 13; grid-row: 4; }
+    @media (min-width: 640px) {
+      .gallery-grid { grid-template-columns: repeat(3, 1fr); }
     }
+    @media (min-width: 1024px) {
+      .gallery-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+
     .gallery-item {
       position: relative;
       overflow: hidden;
       aspect-ratio: 4/3;
       cursor: pointer;
+      transition: opacity 0.3s, transform 0.3s;
     }
-    @media (min-width: 768px) {
-      .gallery-item { aspect-ratio: unset; }
+    .gallery-item.hidden {
+      display: none;
     }
     .gallery-item img {
       width: 100%;
@@ -607,12 +629,12 @@
     }
     .gallery-item-label {
       position: absolute;
-      bottom: 16px;
-      left: 16px;
+      bottom: 12px;
+      left: 12px;
       font-family: 'Bricolage Grotesque', sans-serif;
       font-weight: 700;
-      font-size: 0.75rem;
-      letter-spacing: 0.12em;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       color: rgba(255,255,255,0.9);
       opacity: 0;
@@ -991,67 +1013,170 @@
   <!-- GALLERY -->
   <section id="galeria">
     <div style="max-width:1400px;margin:0 auto">
-      <div class="reveal" style="margin-bottom:48px">
+      <div class="reveal" style="margin-bottom:32px">
         <p class="section-label">Trabalhos realizados</p>
         <h2 class="section-title">Nosso<br/>portfólio</h2>
       </div>
-      <div class="gallery-bento">
-        <div class="gallery-item gb-1 reveal reveal-delay-1">
+
+      <!-- Filter tabs -->
+      <div class="gallery-filters reveal reveal-delay-1">
+        <button class="filter-btn active" data-filter="all">Todos (28)</button>
+        <button class="filter-btn" data-filter="coberturas">Coberturas</button>
+        <button class="filter-btn" data-filter="estruturas">Estruturas Metálicas</button>
+        <button class="filter-btn" data-filter="funilaria">Funilaria</button>
+        <button class="filter-btn" data-filter="toldos">Toldos & Fachadas</button>
+      </div>
+
+      <div class="gallery-grid">
+        <!-- Coberturas (telhado/rufos/calhas/garagem) — 01 a 09 -->
+        <div class="gallery-item reveal reveal-delay-1" data-cat="coberturas">
           <img src="trabalho-01.jpg" alt="Instalação de rufos e calhas em telhado metálico" loading="lazy" />
           <div class="gallery-item-overlay"></div>
           <div class="gallery-item-label">Cobertura metálica</div>
         </div>
-        <div class="gallery-item gb-2 reveal reveal-delay-2">
+        <div class="gallery-item reveal reveal-delay-2" data-cat="coberturas">
           <img src="trabalho-02.jpg" alt="Acabamento de rufo em cobertura" loading="lazy" />
           <div class="gallery-item-overlay"></div>
           <div class="gallery-item-label">Rufos e calhas</div>
         </div>
-        <div class="gallery-item gb-3 reveal reveal-delay-3">
+        <div class="gallery-item reveal reveal-delay-3" data-cat="coberturas">
           <img src="trabalho-03.jpg" alt="Estrutura de telhado com acabamento em metal" loading="lazy" />
           <div class="gallery-item-overlay"></div>
-          <div class="gallery-item-label">Estrutura metálica</div>
+          <div class="gallery-item-label">Telhado metálico</div>
         </div>
-        <div class="gallery-item gb-4 reveal reveal-delay-1">
+        <div class="gallery-item reveal reveal-delay-1" data-cat="coberturas">
           <img src="trabalho-04.jpg" alt="Detalhes da instalação em telhado" loading="lazy" />
           <div class="gallery-item-overlay"></div>
-          <div class="gallery-item-label">Serralheria</div>
+          <div class="gallery-item-label">Instalação em telhado</div>
         </div>
-        <div class="gallery-item gb-5 reveal reveal-delay-2">
+        <div class="gallery-item reveal reveal-delay-2" data-cat="coberturas">
           <img src="trabalho-05.jpg" alt="Acabamento em chapa metálica no telhado" loading="lazy" />
           <div class="gallery-item-overlay"></div>
-          <div class="gallery-item-label">Funilaria</div>
+          <div class="gallery-item-label">Chapa metálica</div>
         </div>
-        <div class="gallery-item gb-6 reveal reveal-delay-3">
+        <div class="gallery-item reveal reveal-delay-3" data-cat="coberturas">
           <img src="trabalho-06.jpg" alt="Cobertura curva em garagem com fechamento translúcido" loading="lazy" />
           <div class="gallery-item-overlay"></div>
           <div class="gallery-item-label">Cobertura em arco</div>
         </div>
-        <div class="gallery-item gb-7 reveal reveal-delay-1">
+        <div class="gallery-item reveal reveal-delay-1" data-cat="coberturas">
           <img src="trabalho-07.jpg" alt="Estrutura curva em metal com telha translúcida" loading="lazy" />
           <div class="gallery-item-overlay"></div>
           <div class="gallery-item-label">Estrutura curva</div>
         </div>
-        <div class="gallery-item gb-8 reveal reveal-delay-2">
+        <div class="gallery-item reveal reveal-delay-2" data-cat="coberturas">
           <img src="trabalho-08.jpg" alt="Garagem com cobertura metálica e fechamento lateral" loading="lazy" />
           <div class="gallery-item-overlay"></div>
           <div class="gallery-item-label">Garagem coberta</div>
         </div>
-        <div class="gallery-item gb-9 reveal reveal-delay-3">
+        <div class="gallery-item reveal reveal-delay-3" data-cat="coberturas">
           <img src="trabalho-09.jpg" alt="Vista completa de cobertura metálica instalada" loading="lazy" />
           <div class="gallery-item-overlay"></div>
-          <div class="gallery-item-label">Acabamento final</div>
+          <div class="gallery-item-label">Cobertura finalizada</div>
         </div>
-        <div class="gallery-item gb-10 reveal reveal-delay-1" style="position:relative">
-          <img src="trabalho-frame-01.jpg" alt="Execução de obra em cobertura metálica — equipe em campo" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:center" />
+
+        <!-- Estruturas Metálicas — 10 a 12 -->
+        <div class="gallery-item reveal reveal-delay-1" data-cat="estruturas">
+          <img src="trabalho-10.jpg" alt="Estrutura metálica grande em montagem — galpão" loading="lazy" />
           <div class="gallery-item-overlay"></div>
-          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:12px;pointer-events:none;z-index:3;opacity:0;transition:opacity 0.3s ease" class="play-badge">
-            <div style="width:72px;height:72px;background:rgba(255,255,255,0.15);backdrop-filter:blur(8px);border:2px solid rgba(255,255,255,0.6);border-radius:50%;display:flex;align-items:center;justify-content:center">
-              <svg width="28" height="28" fill="white" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            </div>
-          </div>
-          <div class="gallery-item-label" style="font-size:1rem;padding:10px 20px">Equipe em ação · obra ao vivo</div>
+          <div class="gallery-item-label">Estrutura de galpão</div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-2" data-cat="estruturas">
+          <img src="trabalho-11.jpg" alt="Montagem de estrutura metálica de grande porte" loading="lazy" />
+          <div class="gallery-item-overlay"></div>
+          <div class="gallery-item-label">Montagem estrutural</div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-3" data-cat="estruturas">
+          <img src="trabalho-12.jpg" alt="Cobertura de galpão em estrutura metálica" loading="lazy" />
+          <div class="gallery-item-overlay"></div>
+          <div class="gallery-item-label">Cobertura de galpão</div>
+        </div>
+
+        <!-- Funilaria — chapéu/exaustor metálico — 13 a 15 -->
+        <div class="gallery-item reveal reveal-delay-1" data-cat="funilaria">
+          <img src="trabalho-13.jpg" alt="Chapéu metálico instalado em telhado" loading="lazy" />
+          <div class="gallery-item-overlay"></div>
+          <div class="gallery-item-label">Chapéu metálico</div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-2" data-cat="funilaria">
+          <img src="trabalho-14.jpg" alt="Exaustor metálico instalado em telhado" loading="lazy" />
+          <div class="gallery-item-overlay"></div>
+          <div class="gallery-item-label">Exaustor metálico</div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-3" data-cat="funilaria">
+          <img src="trabalho-15.jpg" alt="Acabamento de chapéu em telhado residencial" loading="lazy" />
+          <div class="gallery-item-overlay"></div>
+          <div class="gallery-item-label">Funilaria de telhado</div>
+        </div>
+
+        <!-- Toldos & Fachadas Comerciais/Residenciais — 16 a 28 -->
+        <div class="gallery-item reveal reveal-delay-1" data-cat="toldos">
+          <img src="trabalho-16.jpg" alt="Cobertura verde em fabricação" loading="lazy" />
+          <div class="gallery-item-overlay"></div>
+          <div class="gallery-item-label">Fabricação de toldo</div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-2" data-cat="toldos">
+          <img src="trabalho-17.jpg" alt="Toldo verde sob medida em produção" loading="lazy" />
+          <div class="gallery-item-overlay"></div>
+          <div class="gallery-item-label">Toldo sob medida</div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-3" data-cat="toldos">
+          <img src="trabalho-18.jpg" alt="Cobertura frontal em fachada comercial — processo" loading="lazy" />
+          <div class="gallery-item-overlay"></div>
+          <div class="gallery-item-label">Fachada comercial</div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-1" data-cat="toldos">
+          <img src="trabalho-19.jpg" alt="Instalação de awning frontal em loja" loading="lazy" />
+          <div class="gallery-item-overlay"></div>
+          <div class="gallery-item-label">Instalação de toldo</div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-2" data-cat="toldos">
+          <img src="trabalho-20.jpg" alt="Awning retrátil em fachada — montagem" loading="lazy" />
+          <div class="gallery-item-overlay"></div>
+          <div class="gallery-item-label">Awning retrátil</div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-3" data-cat="toldos">
+          <img src="trabalho-21.jpg" alt="Cobertura de fachada com estrutura metálica" loading="lazy" />
+          <div class="gallery-item-overlay"></div>
+          <div class="gallery-item-label">Cobertura de fachada</div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-1" data-cat="toldos">
+          <img src="trabalho-22.jpg" alt="Resultado final de cobertura frontal comercial" loading="lazy" />
+          <div class="gallery-item-overlay"></div>
+          <div class="gallery-item-label">Resultado final</div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-2" data-cat="toldos">
+          <img src="trabalho-23.jpg" alt="Toldo comercial instalado com acabamento perfeito" loading="lazy" />
+          <div class="gallery-item-overlay"></div>
+          <div class="gallery-item-label">Toldo comercial</div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-3" data-cat="toldos">
+          <img src="trabalho-24.jpg" alt="Toldo verde em porta residencial" loading="lazy" />
+          <div class="gallery-item-overlay"></div>
+          <div class="gallery-item-label">Toldo de porta</div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-1" data-cat="toldos">
+          <img src="trabalho-25.jpg" alt="Cobertura verde instalada em janela" loading="lazy" />
+          <div class="gallery-item-overlay"></div>
+          <div class="gallery-item-label">Cobertura de janela</div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-2" data-cat="toldos">
+          <img src="trabalho-26.jpg" alt="Toldos verdes em portas e janelas — conjunto" loading="lazy" />
+          <div class="gallery-item-overlay"></div>
+          <div class="gallery-item-label">Conjunto de toldos</div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-3" data-cat="toldos">
+          <img src="trabalho-27.jpg" alt="Toldo residencial verde instalado" loading="lazy" />
+          <div class="gallery-item-overlay"></div>
+          <div class="gallery-item-label">Toldo residencial</div>
+        </div>
+        <div class="gallery-item reveal reveal-delay-1" data-cat="toldos">
+          <img src="trabalho-28.jpg" alt="Acabamento de toldo verde em fachada residencial" loading="lazy" />
+          <div class="gallery-item-overlay"></div>
+          <div class="gallery-item-label">Acabamento em toldo</div>
         </div>
       </div>
+
       <div class="reveal" style="text-align:center;margin-top:48px">
         <a href="https://wa.me/5551999480449" class="btn-primary" style="display:inline-flex">
           <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
@@ -1131,6 +1256,22 @@
       });
     }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
     revealEls.forEach(el => observer.observe(el));
+
+    // Gallery filter
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        document.querySelectorAll('.gallery-item').forEach(item => {
+          if (filter === 'all' || item.dataset.cat === filter) {
+            item.classList.remove('hidden');
+          } else {
+            item.classList.add('hidden');
+          }
+        });
+      });
+    });
   </script>
 </body>
 </html>
