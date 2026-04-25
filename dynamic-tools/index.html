@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dynamic Tools — Capas, Uniformes e Ferramentas para Estética Automotiva</title>
+  <meta name="description" content="Fabricamos capas de proteção para insulfilm, camisetas e moletons personalizados, e vendemos ferramentas para estética automotiva e insulfilm. Qualidade para profissionais." />
+  <meta property="og:title" content="Dynamic Tools — Estética Automotiva Profissional" />
+  <meta property="og:description" content="Capas personalizadas, uniformes e ferramentas para profissionais de insulfilm e estética automotiva." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet" />
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%230A0A0A'/><path d='M8 24 L16 8 L24 24' fill='none' stroke='%23FF6200' stroke-width='2.5' stroke-linejoin='round'/><line x1='10' y1='20' x2='22' y2='20' stroke='%23FF6200' stroke-width='2.5'/></svg>" />
+
+  <style>
+    :root {
+      --bg: #0A0A0A;
+      --bg2: #111111;
+      --bg3: #1A1A1A;
+      --primary: #FF6200;
+      --primary-dim: rgba(255,98,0,0.15);
+      --text: #F0EDE8;
+      --text-muted: #888880;
+      --silver: #C8C8C8;
+      --border: rgba(255,255,255,0.07);
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE TEXTURE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 256px;
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.35;
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 2px; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(to bottom, rgba(10,10,10,0.95), transparent);
+      backdrop-filter: blur(4px);
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 22px;
+      letter-spacing: 0.08em;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--primary); }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--primary);
+      color: #000;
+      font-family: var(--font-body);
+      font-weight: 700;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 10px 20px;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .nav-cta:hover { background: #FF8000; transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 100dvh;
+      display: flex;
+      align-items: flex-end;
+      padding: 120px 24px 64px;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 60% 40%, rgba(255,98,0,0.12) 0%, transparent 60%),
+        linear-gradient(160deg, #1A1A1A 0%, #0A0A0A 50%, #0D0D0D 100%);
+    }
+
+    /* Diagonal accent line */
+    .hero-bg::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 2px;
+      height: 100%;
+      background: linear-gradient(to bottom, transparent, var(--primary), transparent);
+      opacity: 0.4;
+    }
+
+    /* Grid pattern */
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 720px;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--primary);
+      border: 1px solid var(--primary);
+      padding: 5px 12px;
+      margin-bottom: 28px;
+      border-radius: 2px;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards;
+      animation-delay: 0.2s;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(64px, 14vw, 140px);
+      line-height: 0.92;
+      letter-spacing: 0.02em;
+      color: var(--text);
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards;
+      animation-delay: 0.4s;
+    }
+
+    .hero-title em {
+      font-style: normal;
+      color: var(--primary);
+      display: block;
+    }
+
+    .hero-desc {
+      margin-top: 28px;
+      font-size: 17px;
+      font-weight: 300;
+      color: var(--silver);
+      max-width: 480px;
+      line-height: 1.7;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards;
+      animation-delay: 0.6s;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 40px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards;
+      animation-delay: 0.8s;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--primary);
+      color: #000;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 16px 32px;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    }
+    .btn-primary:hover {
+      background: #FF8000;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(255,98,0,0.35);
+    }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text);
+      font-weight: 500;
+      font-size: 14px;
+      letter-spacing: 0.04em;
+      padding: 16px 24px;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-ghost:hover { border-color: var(--silver); color: var(--silver); }
+
+    .hero-stats {
+      position: absolute;
+      bottom: 40px;
+      right: 24px;
+      display: flex;
+      gap: 32px;
+      opacity: 0;
+      animation: fadeIn 1s ease forwards;
+      animation-delay: 1.2s;
+      z-index: 2;
+    }
+
+    .stat {
+      text-align: right;
+    }
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: 36px;
+      color: var(--primary);
+      letter-spacing: 0.03em;
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* ── SECTION COMMONS ── */
+    section { padding: 80px 24px; }
+
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 20px;
+    }
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: var(--primary);
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(42px, 8vw, 80px);
+      line-height: 0.95;
+      letter-spacing: 0.02em;
+      color: var(--text);
+      margin-bottom: 24px;
+    }
+
+    .section-title span { color: var(--primary); }
+
+    /* ── REVEAL ANIMATION ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ── PRODUCTS ── */
+    .products { background: var(--bg2); }
+
+    .products-intro {
+      margin-bottom: 56px;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+
+    .product-card {
+      position: relative;
+      background: var(--bg3);
+      padding: 40px 32px;
+      border-left: 2px solid transparent;
+      transition: border-color 0.3s, background 0.3s, transform 0.3s;
+      cursor: default;
+      overflow: hidden;
+    }
+
+    .product-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--primary-dim);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .product-card:hover {
+      border-left-color: var(--primary);
+      transform: translateX(4px);
+    }
+    .product-card:hover::before { opacity: 1; }
+
+    .product-num {
+      font-family: var(--font-display);
+      font-size: 72px;
+      color: rgba(255,255,255,0.04);
+      position: absolute;
+      top: 16px;
+      right: 24px;
+      line-height: 1;
+      user-select: none;
+    }
+
+    .product-icon {
+      width: 52px;
+      height: 52px;
+      background: var(--primary-dim);
+      border: 1px solid rgba(255,98,0,0.3);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .product-icon svg { width: 26px; height: 26px; color: var(--primary); }
+
+    .product-name {
+      font-family: var(--font-display);
+      font-size: 28px;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .product-desc {
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.7;
+      max-width: 480px;
+    }
+
+    .product-tag {
+      margin-top: 20px;
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--primary);
+      opacity: 0.7;
+    }
+
+    /* ── ABOUT / DIAGONAL BREAK ── */
+    .about {
+      background: var(--bg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about::before {
+      content: '';
+      position: absolute;
+      top: -80px;
+      left: 0;
+      right: 0;
+      height: 160px;
+      background: var(--bg2);
+      clip-path: polygon(0 0, 100% 0, 100% 40%, 0 100%);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 48px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .about-visual {
+      position: relative;
+    }
+
+    .about-box {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      padding: 40px 32px;
+      border-radius: 2px;
+    }
+
+    .about-box-big {
+      font-family: var(--font-display);
+      font-size: 80px;
+      color: var(--primary);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .about-box-label {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .about-tagline {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 7vw, 64px);
+      line-height: 0.95;
+      letter-spacing: 0.02em;
+      margin-bottom: 24px;
+    }
+
+    .about-text {
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--silver);
+      line-height: 1.75;
+      margin-bottom: 16px;
+    }
+
+    /* ── SPECIALTIES STRIP ── */
+    .strip {
+      background: var(--primary);
+      overflow: hidden;
+      padding: 20px 0;
+    }
+
+    .strip-inner {
+      display: flex;
+      gap: 0;
+      white-space: nowrap;
+      animation: marquee 20s linear infinite;
+    }
+
+    .strip-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 20px;
+      padding: 0 32px;
+      font-family: var(--font-display);
+      font-size: 18px;
+      letter-spacing: 0.1em;
+      color: #000;
+    }
+
+    .strip-dot {
+      width: 6px;
+      height: 6px;
+      background: rgba(0,0,0,0.35);
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ── CUSTOM / PERSONALIZATION ── */
+    .custom {
+      background: var(--bg2);
+    }
+
+    .custom-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      margin-top: 48px;
+    }
+
+    .custom-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 36px 28px;
+      transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+    }
+
+    .custom-card:hover {
+      border-color: rgba(255,98,0,0.4);
+      box-shadow: 0 0 32px rgba(255,98,0,0.08);
+      transform: translateY(-4px);
+    }
+
+    .custom-card-icon {
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--primary-dim);
+      border-radius: 4px;
+      margin-bottom: 20px;
+    }
+    .custom-card-icon svg { width: 22px; height: 22px; color: var(--primary); }
+
+    .custom-card-title {
+      font-family: var(--font-display);
+      font-size: 22px;
+      letter-spacing: 0.04em;
+      margin-bottom: 10px;
+    }
+
+    .custom-card-desc {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    /* ── CONTACT ── */
+    .contact {
+      background: var(--bg3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 50% at 50% 100%, rgba(255,98,0,0.1) 0%, transparent 65%);
+    }
+
+    .contact-inner {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+
+    .contact-title {
+      font-family: var(--font-display);
+      font-size: clamp(52px, 10vw, 100px);
+      line-height: 0.9;
+      letter-spacing: 0.02em;
+      margin-bottom: 20px;
+    }
+
+    .contact-sub {
+      font-size: 17px;
+      font-weight: 300;
+      color: var(--silver);
+      margin-bottom: 40px;
+      max-width: 420px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .contact-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      background: #25D366;
+      color: #fff;
+      font-weight: 700;
+      font-size: 15px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 20px 40px;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 24px rgba(37,211,102,0.2);
+    }
+    .contact-btn:hover {
+      background: #1DB954;
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(37,211,102,0.35);
+    }
+
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      margin-top: 48px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--text-muted);
+    }
+    .contact-item svg { width: 16px; height: 16px; color: var(--primary); flex-shrink: 0; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bg);
+      border-top: 1px solid var(--border);
+      padding: 32px 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-family: var(--font-display);
+      font-size: 24px;
+      letter-spacing: 0.1em;
+      color: var(--text);
+    }
+    .footer-logo span { color: var(--primary); }
+
+    .footer-copy {
+      font-size: 12px;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+    }
+
+    /* ── WHATSAPP FLOAT ── */
+    .wa-float {
+      position: fixed;
+      bottom: 28px;
+      right: 24px;
+      z-index: 500;
+      width: 60px;
+      height: 60px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      animation: pulse-wa 2.5s ease-in-out infinite;
+      transition: transform 0.2s;
+    }
+    .wa-float:hover {
+      transform: scale(1.12);
+      animation: none;
+    }
+    .wa-float svg { width: 30px; height: 30px; color: #fff; }
+
+    @keyframes pulse-wa {
+      0%, 100% { box-shadow: 0 4px 12px rgba(0,0,0,0.25), 0 0 0 0 rgba(37,211,102,0.4); }
+      50% { box-shadow: 0 4px 12px rgba(0,0,0,0.25), 0 0 0 14px rgba(37,211,102,0); }
+    }
+
+    /* ── KEYFRAMES ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    /* ── DESKTOP ── */
+    @media (min-width: 768px) {
+      section { padding: 100px 48px; }
+      nav { padding: 24px 48px; }
+
+      .hero { padding: 120px 48px 80px; }
+      .hero-stats { right: 48px; bottom: 60px; gap: 48px; }
+
+      .products-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 2px;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr 1.4fr;
+        align-items: start;
+      }
+
+      .about-visual {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .about-boxes {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+
+      .custom-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+
+      .contact-inner { padding: 0 48px; }
+    }
+
+    @media (min-width: 1100px) {
+      section { padding: 120px 80px; }
+      nav { padding: 28px 80px; }
+      .hero { padding: 120px 80px 100px; }
+
+      .products-grid {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">DYNAMIC<span>.</span>TOOLS</a>
+    <a href="https://wa.me/5511999999999" target="_blank" rel="noopener" class="nav-cta">
+      <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Falar Agora
+    </a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-tag">Estética Automotiva Profissional</div>
+      <h1 class="hero-title">
+        DYNAMIC<br>
+        <em>TOOLS</em>
+      </h1>
+      <p class="hero-desc">
+        Capas de proteção para insulfilm, uniformes personalizados e ferramentas profissionais — tudo que o especialista em estética automotiva precisa.
+      </p>
+      <div class="hero-actions">
+        <a href="https://wa.me/5511999999999" target="_blank" rel="noopener" class="btn-primary">
+          <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Pedir Orçamento
+        </a>
+        <a href="#produtos" class="btn-ghost">
+          Ver Produtos
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Personalizado</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">3+</div>
+        <div class="stat-label">Linhas de Produto</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STRIP -->
+  <div class="strip" aria-hidden="true">
+    <div class="strip-inner">
+      <span class="strip-item">Capas para Insulfilm <span class="strip-dot"></span></span>
+      <span class="strip-item">Uniformes Personalizados <span class="strip-dot"></span></span>
+      <span class="strip-item">Ferramentas Profissionais <span class="strip-dot"></span></span>
+      <span class="strip-item">Logo do Cliente <span class="strip-dot"></span></span>
+      <span class="strip-item">Estética Automotiva <span class="strip-dot"></span></span>
+      <span class="strip-item">Capas para Insulfilm <span class="strip-dot"></span></span>
+      <span class="strip-item">Uniformes Personalizados <span class="strip-dot"></span></span>
+      <span class="strip-item">Ferramentas Profissionais <span class="strip-dot"></span></span>
+      <span class="strip-item">Logo do Cliente <span class="strip-dot"></span></span>
+      <span class="strip-item">Estética Automotiva <span class="strip-dot"></span></span>
+    </div>
+  </div>
+
+  <!-- PRODUCTS -->
+  <section class="products" id="produtos">
+    <div class="products-intro reveal">
+      <div class="section-label">O Que Fazemos</div>
+      <h2 class="section-title">NOSSOS<br><span>PRODUTOS</span></h2>
+      <p style="font-size:16px;font-weight:300;color:var(--text-muted);max-width:520px;line-height:1.7;">
+        Fabricamos e fornecemos tudo que o profissional de estética automotiva precisa — da proteção ao uniforme, do detalhe à ferramenta certa.
+      </p>
+    </div>
+
+    <div class="products-grid">
+      <!-- Card 1 -->
+      <div class="product-card reveal reveal-delay-1">
+        <div class="product-num">01</div>
+        <div class="product-icon">
+          <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25z"/>
+          </svg>
+        </div>
+        <div class="product-name">CAPAS DE PROTEÇÃO</div>
+        <div class="product-desc">
+          Capas para aplicação de insulfilm em painel, portas e bancos. Fabricadas sob medida com o logo do seu cliente — proteção profissional que valoriza o serviço.
+        </div>
+        <div class="product-tag">Personalizado com Logo &rarr;</div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="product-card reveal reveal-delay-2">
+        <div class="product-num">02</div>
+        <div class="product-icon">
+          <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007z"/>
+          </svg>
+        </div>
+        <div class="product-name">CAMISETAS</div>
+        <div class="product-desc">
+          Uniformes e camisetas personalizadas com o logo do cliente. Identidade visual profissional que passa credibilidade e confiança para os seus clientes.
+        </div>
+        <div class="product-tag">Com Logo do Cliente &rarr;</div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="product-card reveal reveal-delay-3">
+        <div class="product-num">03</div>
+        <div class="product-icon">
+          <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 18v-5.25m0 0a6.01 6.01 0 001.5-.189m-1.5.189a6.01 6.01 0 01-1.5-.189m3.75 7.478a12.06 12.06 0 01-4.5 0m3.75 2.355a9 9 0 01-3 0M3 4.5h18m-18 0a2.25 2.25 0 002.25 2.25h13.5A2.25 2.25 0 0021 4.5m-18 0V3m18 1.5V3M3 6.75h18M6 12h.008v.008H6V12zm3.75 0h.008v.008H9.75V12zm3.75 0h.008v.008H13.5V12z"/>
+          </svg>
+        </div>
+        <div class="product-name">MOLETONS</div>
+        <div class="product-desc">
+          Moletons personalizados com logo do cliente — conforto e identidade para a equipe. Acabamento premium, perfeito para o dia a dia na oficina ou na rua.
+        </div>
+        <div class="product-tag">Com Logo do Cliente &rarr;</div>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="product-card reveal reveal-delay-4">
+        <div class="product-num">04</div>
+        <div class="product-icon">
+          <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z"/>
+          </svg>
+        </div>
+        <div class="product-name">FERRAMENTAS</div>
+        <div class="product-desc">
+          Ferramentas selecionadas para o segmento de estética automotiva e insulfilm — produtos que profissionais de verdade usam, com qualidade e durabilidade comprovadas.
+        </div>
+        <div class="product-tag">Para Profissionais &rarr;</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="sobre">
+    <div class="about-grid">
+      <div class="about-visual reveal">
+        <div class="about-boxes">
+          <div class="about-box">
+            <div class="about-box-big">B2B</div>
+            <div class="about-box-label">Focado em profissionais</div>
+          </div>
+          <div class="about-box" style="background:var(--primary);border-color:var(--primary);">
+            <div class="about-box-big" style="color:#000;">100%</div>
+            <div class="about-box-label" style="color:rgba(0,0,0,0.6);">Personalizado</div>
+          </div>
+        </div>
+        <div class="about-box" style="margin-top:16px;">
+          <div style="font-family:var(--font-display);font-size:18px;letter-spacing:.05em;margin-bottom:10px;color:var(--primary);">QUALIDADE GARANTIDA</div>
+          <div style="font-size:14px;font-weight:300;color:var(--text-muted);line-height:1.7;">
+            Cada peça fabricada com atenção ao acabamento, durabilidade e identidade visual do cliente.
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal reveal-delay-2">
+        <div class="section-label">Sobre Nós</div>
+        <h2 class="about-tagline">FEITO PARA<br><span style="color:var(--primary);">QUEM FAZ</span><br>A DIFERENÇA</h2>
+        <p class="about-text">
+          A Dynamic Tools nasceu da necessidade real do mercado de estética automotiva e insulfilm: materiais de qualidade, personalizados, com a identidade de quem trabalha.
+        </p>
+        <p class="about-text">
+          Fabricamos capas de proteção para aplicação de insulfilm em painel, portas e bancos — sempre com o logo do cliente. Desenvolvemos camisetas e moletons personalizados para equipes que querem passar profissionalismo. E oferecemos ferramentas selecionadas para quem não aceita menos que o melhor.
+        </p>
+        <a href="https://wa.me/5511999999999" target="_blank" rel="noopener" class="btn-primary" style="margin-top:32px;display:inline-flex;">
+          Falar pelo WhatsApp
+          <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CUSTOM SECTION -->
+  <section class="custom" id="personalizacao">
+    <div class="reveal">
+      <div class="section-label">Personalização</div>
+      <h2 class="section-title">SUA MARCA,<br><span>NOSSO TRABALHO</span></h2>
+      <p style="font-size:16px;font-weight:300;color:var(--text-muted);max-width:480px;line-height:1.7;">
+        Cada item que fabricamos pode levar o logo e as cores do seu negócio. Identidade visual coerente da capa ao uniforme.
+      </p>
+    </div>
+
+    <div class="custom-grid">
+      <div class="custom-card reveal reveal-delay-1">
+        <div class="custom-card-icon">
+          <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42"/>
+          </svg>
+        </div>
+        <div class="custom-card-title">BORDADO & SERIGRAFIA</div>
+        <div class="custom-card-desc">
+          Seu logo aplicado com precisão — bordado em moletons, serigrafia em camisetas. Acabamento profissional, longa durabilidade.
+        </div>
+      </div>
+
+      <div class="custom-card reveal reveal-delay-2">
+        <div class="custom-card-icon">
+          <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z"/>
+          </svg>
+        </div>
+        <div class="custom-card-title">SOB MEDIDA</div>
+        <div class="custom-card-desc">
+          Capas fabricadas nas dimensões exatas do veículo — painel, portas e bancos. Sem adaptações, sem sobras, sem falhas na proteção.
+        </div>
+      </div>
+
+      <div class="custom-card reveal reveal-delay-3">
+        <div class="custom-card-icon">
+          <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.59 14.37a6 6 0 01-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 006.16-12.12A14.98 14.98 0 009.631 8.41m5.96 5.96a14.926 14.926 0 01-5.841 2.58m-.119-8.54a6 6 0 00-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 00-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 01-2.448-2.448 14.9 14.9 0 01.06-.312m-2.24 2.39a4.493 4.493 0 00-1.757 4.306 4.493 4.493 0 004.306-1.758M16.5 9a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0z"/>
+          </svg>
+        </div>
+        <div class="custom-card-title">IDENTIDADE COMPLETA</div>
+        <div class="custom-card-desc">
+          Da capa ao uniforme, mantenha a identidade visual do seu negócio em todos os pontos de contato com o cliente.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contato">
+    <div class="contact-inner reveal">
+      <div class="section-label" style="justify-content:center;">Contato</div>
+      <h2 class="contact-title">FALE COM<br><span style="color:var(--primary);">A GENTE</span></h2>
+      <p class="contact-sub">
+        Tire suas dúvidas, faça seu pedido ou solicite um orçamento diretamente pelo WhatsApp.
+      </p>
+      <a href="https://wa.me/5511999999999" target="_blank" rel="noopener" class="contact-btn">
+        <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Chamar no WhatsApp
+      </a>
+
+      <div class="contact-info">
+        <div class="contact-item">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+          Atendimento rápido via WhatsApp
+        </div>
+        <div class="contact-item">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/>
+          </svg>
+          Personalizacao com logo do cliente
+        </div>
+        <div class="contact-item">
+          <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12"/>
+          </svg>
+          Especialistas em estetica automotiva
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">DYNAMIC<span>.</span>TOOLS</div>
+    <div class="footer-copy">&copy; 2025 Dynamic Tools &mdash; Todos os direitos reservados</div>
+  </footer>
+
+  <!-- WHATSAPP FLOAT -->
+  <a href="https://wa.me/5511999999999" target="_blank" rel="noopener" class="wa-float" aria-label="Falar pelo WhatsApp">
+    <svg fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+  <script>
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
