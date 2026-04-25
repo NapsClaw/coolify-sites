@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Óticas Vista Clara — Óculos de Grau, Exame de Vista e Lentes em BH e Santa Luzia</title>
+  <meta name="description" content="Óticas Vista Clara: óculos de grau, exame de vista, lentes de contato e óculos solar em Belo Horizonte e Santa Luzia. Atendimento especializado com qualidade e cuidado para a sua visão.">
+  <meta property="og:title" content="Óticas Vista Clara — Belo Horizonte e Santa Luzia">
+  <meta property="og:description" content="Óculos de grau, exame de vista, lentes de contato e solar. Cuidado com a sua visão em BH e Santa Luzia.">
+  <meta property="og:type" content="website">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Favicon SVG -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='35' cy='50' r='22' fill='none' stroke='%230E2A3B' stroke-width='8'/><circle cx='65' cy='50' r='22' fill='none' stroke='%230E2A3B' stroke-width='8'/><line x1='57' y1='50' x2='43' y2='50' stroke='%230E2A3B' stroke-width='8'/><line x1='13' y1='50' x2='5' y2='45' stroke='%230E2A3B' stroke-width='6'/><line x1='87' y1='50' x2='95' y2='45' stroke='%230E2A3B' stroke-width='6'/></svg>">
+
+  <style>
+    :root {
+      --primary: #0E2A3B;
+      --primary-light: #163d56;
+      --accent: #C49A5B;
+      --accent-light: #d4b07a;
+      --bg: #F5F3EE;
+      --surface: #EAE6DC;
+      --dark: #0A1C28;
+      --text: #1A1A1A;
+      --text-muted: #5A5A5A;
+      --white: #FAFAF8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Source Sans 3', sans-serif;
+      font-weight: 300;
+      background-color: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Playfair Display', serif;
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes revealLine {
+      from { width: 0; }
+      to   { width: 100%; }
+    }
+    @keyframes heroBgZoom {
+      from { transform: scale(1.08); }
+      to   { transform: scale(1); }
+    }
+    @keyframes pulseRing {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(196,154,91,0.5); }
+      50%       { box-shadow: 0 0 0 12px rgba(196,154,91,0); }
+    }
+    @keyframes lensRotate {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+    @keyframes slideInLeft {
+      from { opacity: 0; transform: translateX(-30px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    .hero-bg {
+      animation: heroBgZoom 1.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .anim-fade-up { opacity: 0; }
+    .anim-fade-up.visible {
+      animation: fadeUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    .anim-delay-1 { animation-delay: 0.1s !important; }
+    .anim-delay-2 { animation-delay: 0.2s !important; }
+    .anim-delay-3 { animation-delay: 0.3s !important; }
+    .anim-delay-4 { animation-delay: 0.4s !important; }
+    .anim-delay-5 { animation-delay: 0.5s !important; }
+
+    /* Hero specific - immediate */
+    .hero-title { animation: fadeUp 1s 0.3s cubic-bezier(0.22, 1, 0.36, 1) both; }
+    .hero-sub   { animation: fadeUp 1s 0.55s cubic-bezier(0.22, 1, 0.36, 1) both; }
+    .hero-cta   { animation: fadeUp 1s 0.8s cubic-bezier(0.22, 1, 0.36, 1) both; }
+    .hero-line  {
+      display: block;
+      height: 2px;
+      background: var(--accent);
+      width: 0;
+      animation: revealLine 0.9s 0.2s ease-out forwards;
+    }
+
+    /* ─── NAVBAR ─── */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 20px 40px;
+      transition: background 0.4s, padding 0.4s, box-shadow 0.4s;
+    }
+    #navbar.scrolled {
+      background: rgba(14, 42, 59, 0.97);
+      padding: 14px 40px;
+      box-shadow: 0 2px 32px rgba(0,0,0,0.18);
+      backdrop-filter: blur(8px);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--white);
+      letter-spacing: 0.03em;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .nav-logo svg { flex-shrink: 0; }
+
+    /* ─── HERO ─── */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+    .hero-image-wrap {
+      position: absolute; inset: 0;
+      overflow: hidden;
+    }
+    .hero-image-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        120deg,
+        rgba(10,28,40,0.88) 0%,
+        rgba(14,42,59,0.72) 55%,
+        rgba(14,42,59,0.35) 100%
+      );
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 700px;
+      padding: 0 24px;
+      padding-top: 100px;
+    }
+    .hero-eyebrow {
+      font-family: 'Source Sans 3', sans-serif;
+      font-weight: 600;
+      font-size: 0.8rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+      animation: slideInLeft 0.9s 0.1s both;
+    }
+    .hero-title {
+      font-size: clamp(2.6rem, 6vw, 4.8rem);
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.05;
+      margin-bottom: 8px;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--accent);
+    }
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: rgba(250,250,248,0.78);
+      font-weight: 300;
+      max-width: 480px;
+      line-height: 1.7;
+      margin-bottom: 40px;
+      margin-top: 18px;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--accent);
+      color: var(--dark);
+      font-family: 'Source Sans 3', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 17px 36px;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: background 0.25s, transform 0.2s, box-shadow 0.3s;
+      animation: pulseRing 3s 2s infinite;
+    }
+    .btn-primary:hover {
+      background: var(--accent-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(196,154,91,0.4);
+    }
+    .hero-stats {
+      position: absolute;
+      bottom: 40px;
+      left: 24px;
+      right: 24px;
+      z-index: 2;
+      display: flex;
+      gap: 40px;
+      animation: fadeUp 1s 1.1s both;
+    }
+    .hero-stat {
+      text-align: left;
+    }
+    .hero-stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent);
+      line-height: 1;
+    }
+    .hero-stat-label {
+      font-size: 0.75rem;
+      color: rgba(250,250,248,0.65);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    /* ─── SECTION BASE ─── */
+    section { position: relative; }
+    .section-label {
+      font-family: 'Source Sans 3', sans-serif;
+      font-weight: 600;
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+    .section-title {
+      font-size: clamp(1.9rem, 4vw, 3rem);
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1.15;
+    }
+    .section-title.light { color: var(--white); }
+
+    /* ─── SERVICES ─── */
+    #servicos {
+      background: var(--bg);
+      padding: 96px 24px;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      margin-top: 56px;
+    }
+    @media (min-width: 640px) {
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 1024px) {
+      .services-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+    .service-card {
+      background: var(--white);
+      border: 1px solid var(--surface);
+      padding: 36px 28px;
+      position: relative;
+      overflow: hidden;
+      cursor: default;
+      transition: transform 0.35s cubic-bezier(0.22,1,0.36,1), box-shadow 0.35s, border-color 0.35s;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 3px;
+      background: var(--accent);
+      transition: width 0.4s cubic-bezier(0.22,1,0.36,1);
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 52px rgba(14,42,59,0.12);
+      border-color: var(--accent);
+    }
+    .service-card:hover::before { width: 100%; }
+    .service-icon {
+      width: 56px; height: 56px;
+      background: var(--surface);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      transition: background 0.3s;
+    }
+    .service-card:hover .service-icon {
+      background: rgba(196,154,91,0.15);
+    }
+    .service-icon svg { width: 26px; height: 26px; }
+    .service-card h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 10px;
+      line-height: 1.2;
+    }
+    .service-card p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+    .service-num {
+      position: absolute;
+      top: 20px; right: 20px;
+      font-family: 'Playfair Display', serif;
+      font-size: 3.5rem;
+      font-weight: 900;
+      color: var(--surface);
+      line-height: 1;
+      transition: color 0.3s;
+    }
+    .service-card:hover .service-num {
+      color: rgba(196,154,91,0.12);
+    }
+
+    /* ─── TRUST/DARK SECTION ─── */
+    #confianca {
+      background: var(--primary);
+      padding: 96px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    #confianca::before {
+      content: '';
+      position: absolute;
+      top: -120px; right: -120px;
+      width: 500px; height: 500px;
+      border-radius: 50%;
+      border: 1px solid rgba(196,154,91,0.12);
+      pointer-events: none;
+    }
+    #confianca::after {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      border: 1px solid rgba(196,154,91,0.1);
+      pointer-events: none;
+    }
+    .trust-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 40px;
+      margin-top: 56px;
+    }
+    @media (min-width: 640px) {
+      .trust-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (min-width: 1024px) {
+      .trust-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    .trust-item {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+    .trust-icon {
+      flex-shrink: 0;
+      width: 48px; height: 48px;
+      border: 1px solid rgba(196,154,91,0.4);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .trust-icon svg { width: 22px; height: 22px; color: var(--accent); }
+    .trust-item h4 {
+      font-size: 1rem;
+      color: var(--white);
+      margin-bottom: 6px;
+    }
+    .trust-item p {
+      font-size: 0.84rem;
+      color: rgba(250,250,248,0.6);
+      line-height: 1.65;
+    }
+
+    /* ─── VISUAL BREAK ─── */
+    #visual-break {
+      height: 460px;
+      position: relative;
+      overflow: hidden;
+    }
+    #visual-break img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 40%;
+    }
+    #visual-break .vb-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(14,42,59,0.55) 0%, rgba(14,42,59,0.2) 100%);
+    }
+    #visual-break .vb-text {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 24px;
+    }
+    #visual-break blockquote {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: clamp(1.4rem, 3.5vw, 2.4rem);
+      color: var(--white);
+      max-width: 640px;
+      line-height: 1.5;
+      position: relative;
+    }
+    #visual-break blockquote::before,
+    #visual-break blockquote::after {
+      content: '"';
+      color: var(--accent);
+      font-size: 4rem;
+      line-height: 0;
+      vertical-align: -0.5em;
+    }
+
+    /* ─── UNIDADES ─── */
+    #unidades {
+      background: var(--surface);
+      padding: 96px 24px;
+    }
+    .unidades-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      margin-top: 56px;
+    }
+    @media (min-width: 768px) {
+      .unidades-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    .unidade-card {
+      background: var(--white);
+      overflow: hidden;
+      position: relative;
+    }
+    .unidade-img {
+      height: 220px;
+      overflow: hidden;
+    }
+    .unidade-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.22,1,0.36,1);
+    }
+    .unidade-card:hover .unidade-img img {
+      transform: scale(1.06);
+    }
+    .unidade-body {
+      padding: 32px;
+      border: 1px solid var(--surface);
+      border-top: none;
+    }
+    .unidade-city {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+    .unidade-body h3 {
+      font-size: 1.5rem;
+      color: var(--primary);
+      margin-bottom: 14px;
+    }
+    .unidade-info {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .unidade-info-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+    .unidade-info-row svg {
+      flex-shrink: 0;
+      width: 16px; height: 16px;
+      color: var(--accent);
+      margin-top: 2px;
+    }
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1.5px solid var(--primary);
+      color: var(--primary);
+      font-family: 'Source Sans 3', sans-serif;
+      font-weight: 600;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 13px 28px;
+      text-decoration: none;
+      transition: background 0.25s, color 0.25s, border-color 0.25s;
+      margin-top: 24px;
+    }
+    .btn-outline:hover {
+      background: var(--primary);
+      color: var(--white);
+    }
+
+    /* ─── CTA FINAL ─── */
+    #cta-final {
+      background: var(--dark);
+      padding: 96px 24px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    #cta-final::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url('https://images.unsplash.com/photo-1474960569572-194560a4820e?w=1400&q=60') center/cover no-repeat;
+      opacity: 0.06;
+    }
+    .cta-title {
+      font-size: clamp(2rem, 5vw, 3.6rem);
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 18px;
+      position: relative;
+    }
+    .cta-title em { color: var(--accent); font-style: italic; }
+    .cta-sub {
+      font-size: 1.05rem;
+      color: rgba(250,250,248,0.65);
+      max-width: 480px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+      position: relative;
+    }
+    .btn-whatsapp {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      background: #25D366;
+      color: #fff;
+      font-family: 'Source Sans 3', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      letter-spacing: 0.04em;
+      padding: 18px 42px;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: background 0.25s, transform 0.2s, box-shadow 0.3s;
+      position: relative;
+    }
+    .btn-whatsapp:hover {
+      background: #1dbb58;
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(37,211,102,0.35);
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--dark);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 40px 24px;
+    }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      align-items: center;
+      text-align: center;
+    }
+    @media (min-width: 768px) {
+      .footer-inner {
+        flex-direction: row;
+        justify-content: space-between;
+        text-align: left;
+      }
+    }
+    .footer-logo {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      color: var(--white);
+      font-size: 1.1rem;
+    }
+    .footer-copy {
+      font-size: 0.8rem;
+      color: rgba(250,250,248,0.4);
+    }
+
+    /* ─── WHATSAPP FAB ─── */
+    #wa-fab {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 999;
+      width: 60px;
+      height: 60px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+      text-decoration: none;
+      animation: pulseRing 3s 3s infinite;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    #wa-fab:hover {
+      transform: scale(1.1);
+      box-shadow: 0 8px 32px rgba(37,211,102,0.45);
+    }
+    #wa-fab svg { width: 30px; height: 30px; }
+
+    /* ─── RESPONSIVE ADJUSTMENTS ─── */
+    .container { max-width: 1100px; margin: 0 auto; }
+
+    @media (max-width: 768px) {
+      .hero-stats {
+        gap: 24px;
+        bottom: 28px;
+      }
+      .hero-stat-num { font-size: 1.5rem; }
+      #navbar { padding: 16px 20px; }
+      #navbar.scrolled { padding: 12px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ─── NAVBAR ─── -->
+  <nav id="navbar">
+    <div class="container" style="display:flex;align-items:center;justify-content:space-between;">
+      <a href="#" class="nav-logo">
+        <svg width="36" height="20" viewBox="0 0 72 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="22" cy="20" r="14" fill="none" stroke="#C49A5B" stroke-width="3.5"/>
+          <circle cx="50" cy="20" r="14" fill="none" stroke="#C49A5B" stroke-width="3.5"/>
+          <line x1="36" y1="20" x2="36" y2="20" stroke="#C49A5B" stroke-width="3.5" stroke-linecap="round"/>
+          <path d="M36 20 H36" stroke="#C49A5B" stroke-width="3.5"/>
+          <line x1="8" y1="20" x2="2" y2="15" stroke="#C49A5B" stroke-width="3" stroke-linecap="round"/>
+          <line x1="64" y1="20" x2="70" y2="15" stroke="#C49A5B" stroke-width="3" stroke-linecap="round"/>
+        </svg>
+        Vista Clara
+      </a>
+      <a href="https://wa.me/553175961552" target="_blank" rel="noopener" style="font-family:'Source Sans 3',sans-serif;font-size:0.8rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);text-decoration:none;display:flex;align-items:center;gap:8px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        WhatsApp
+      </a>
+    </div>
+  </nav>
+
+  <!-- ─── HERO ─── -->
+  <section id="hero">
+    <div class="hero-image-wrap">
+      <img class="hero-bg" src="https://images.unsplash.com/photo-1574258495973-f010dfbb5371?w=1920&q=80" alt="Ótica Vista Clara" loading="eager">
+    </div>
+    <div class="hero-overlay"></div>
+
+    <div class="container hero-content">
+      <p class="hero-eyebrow">Belo Horizonte &amp; Santa Luzia</p>
+      <h1 class="hero-title">
+        Sua visão<br>
+        merece o <em>melhor</em>
+      </h1>
+      <span class="hero-line"></span>
+      <p class="hero-sub">
+        Óculos de grau, exame de vista, lentes de contato e óculos solar com atendimento especializado e cuidado de verdade.
+      </p>
+      <div class="hero-cta" style="display:flex;gap:16px;flex-wrap:wrap;">
+        <a href="https://wa.me/553175961552" target="_blank" rel="noopener" class="btn-primary">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          Falar no WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-num">2</div>
+        <div class="hero-stat-label">Unidades</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">+4</div>
+        <div class="hero-stat-label">Especialidades</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">BH</div>
+        <div class="hero-stat-label">e Santa Luzia</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SERVIÇOS ─── -->
+  <section id="servicos">
+    <div class="container">
+      <p class="section-label anim-fade-up">O que oferecemos</p>
+      <h2 class="section-title anim-fade-up anim-delay-1">Cuidado completo<br>para a sua visão</h2>
+      <div class="services-grid">
+
+        <!-- Óculos de Grau -->
+        <div class="service-card anim-fade-up anim-delay-1">
+          <span class="service-num">01</span>
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#0E2A3B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="8.5" cy="12" r="4.5"/>
+              <circle cx="15.5" cy="12" r="4.5"/>
+              <path d="M4 12H2M22 12h-2M11 12h2"/>
+              <path d="M2 12 C2 9 4 8 4 8M22 12 C22 9 20 8 20 8"/>
+            </svg>
+          </div>
+          <h3>Óculos de Grau</h3>
+          <p>Armações para todos os estilos e necessidades, com lentes de alta qualidade adaptadas à sua prescrição.</p>
+        </div>
+
+        <!-- Exame de Vista -->
+        <div class="service-card anim-fade-up anim-delay-2">
+          <span class="service-num">02</span>
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#0E2A3B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+              <circle cx="12" cy="12" r="3"/>
+              <line x1="12" y1="1" x2="12" y2="3"/>
+              <line x1="12" y1="21" x2="12" y2="23"/>
+            </svg>
+          </div>
+          <h3>Exame de Vista</h3>
+          <p>Avaliação optométrica completa para identificar com precisão a sua necessidade visual.</p>
+        </div>
+
+        <!-- Lentes de Contato -->
+        <div class="service-card anim-fade-up anim-delay-3">
+          <span class="service-num">03</span>
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#0E2A3B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"/>
+              <circle cx="12" cy="12" r="4"/>
+              <line x1="3" y1="12" x2="8" y2="12"/>
+              <line x1="16" y1="12" x2="21" y2="12"/>
+            </svg>
+          </div>
+          <h3>Lentes de Contato</h3>
+          <p>Grande variedade de lentes de contato, incluindo descartáveis, coloridas e especiais para astigmatismo.</p>
+        </div>
+
+        <!-- Óculos Solar -->
+        <div class="service-card anim-fade-up anim-delay-4">
+          <span class="service-num">04</span>
+          <div class="service-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="#0E2A3B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="5"/>
+              <line x1="12" y1="1" x2="12" y2="3"/>
+              <line x1="12" y1="21" x2="12" y2="23"/>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+              <line x1="1" y1="12" x2="3" y2="12"/>
+              <line x1="21" y1="12" x2="23" y2="12"/>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            </svg>
+          </div>
+          <h3>Óculos Solar</h3>
+          <p>Proteção UV com estilo. Coleção com modelos para todos os gostos, com garantia de qualidade.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CONFIANÇA / DARK ─── -->
+  <section id="confianca">
+    <div class="container" style="position:relative;z-index:1;">
+      <p class="section-label anim-fade-up">Por que a Vista Clara</p>
+      <h2 class="section-title light anim-fade-up anim-delay-1">Seu bem-estar visual<br>é nossa prioridade</h2>
+      <div class="trust-grid">
+
+        <div class="trust-item anim-fade-up anim-delay-1">
+          <div class="trust-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+              <polyline points="22 4 12 14.01 9 11.01"/>
+            </svg>
+          </div>
+          <div>
+            <h4>Atendimento Especializado</h4>
+            <p>Equipe treinada para oferecer o melhor suporte na escolha de armações, lentes e cuidados visuais.</p>
+          </div>
+        </div>
+
+        <div class="trust-item anim-fade-up anim-delay-2">
+          <div class="trust-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <div>
+            <h4>Qualidade Garantida</h4>
+            <p>Produtos certificados com garantia. Lentes de marcas reconhecidas e armações com durabilidade.</p>
+          </div>
+        </div>
+
+        <div class="trust-item anim-fade-up anim-delay-3">
+          <div class="trust-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+              <circle cx="12" cy="10" r="3"/>
+            </svg>
+          </div>
+          <div>
+            <h4>Duas Localidades</h4>
+            <p>Presente em Belo Horizonte e Santa Luzia para sua comodidade. Escolha a unidade mais próxima.</p>
+          </div>
+        </div>
+
+        <div class="trust-item anim-fade-up anim-delay-4">
+          <div class="trust-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+              <line x1="1" y1="10" x2="23" y2="10"/>
+            </svg>
+          </div>
+          <div>
+            <h4>Condições de Pagamento</h4>
+            <p>Facilidades no pagamento para que a saúde visual caiba no seu orçamento.</p>
+          </div>
+        </div>
+
+        <div class="trust-item anim-fade-up anim-delay-5">
+          <div class="trust-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
+          <div>
+            <h4>Exame Incluso</h4>
+            <p>Consulta optométrica disponível nas lojas para verificar sua necessidade visual antes de comprar.</p>
+          </div>
+        </div>
+
+        <div class="trust-item anim-fade-up" style="animation-delay:0.55s;">
+          <div class="trust-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+              <polyline points="17 6 23 6 23 12"/>
+            </svg>
+          </div>
+          <div>
+            <h4>Variedade e Estilo</h4>
+            <p>Centenas de modelos de armações nacionais e importadas para todos os estilos e idades.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── VISUAL BREAK ─── -->
+  <div id="visual-break">
+    <img src="https://images.unsplash.com/photo-1508296695146-257a814070b4?w=1920&q=70" alt="Óculos" loading="lazy">
+    <div class="vb-overlay"></div>
+    <div class="vb-text">
+      <blockquote class="anim-fade-up">
+        Enxergar bem é viver melhor. Cuide da sua visão com quem entende.
+      </blockquote>
+    </div>
+  </div>
+
+  <!-- ─── UNIDADES ─── -->
+  <section id="unidades">
+    <div class="container">
+      <p class="section-label anim-fade-up">Nossas lojas</p>
+      <h2 class="section-title anim-fade-up anim-delay-1">Estamos perto de você</h2>
+      <div class="unidades-grid">
+
+        <!-- Belo Horizonte -->
+        <div class="unidade-card anim-fade-up anim-delay-1">
+          <div class="unidade-img">
+            <img src="https://images.unsplash.com/photo-1591076482161-42ce6da69f67?w=800&q=75" alt="Unidade Belo Horizonte" loading="lazy">
+          </div>
+          <div class="unidade-body">
+            <p class="unidade-city">Unidade</p>
+            <h3>Belo Horizonte</h3>
+            <div class="unidade-info">
+              <div class="unidade-info-row">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span>Belo Horizonte, MG</span>
+              </div>
+              <div class="unidade-info-row">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.07 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 2.92 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.5a16 16 0 0 0 8 8l.76-.76a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                <span>(31) 7596-1552</span>
+              </div>
+            </div>
+            <a href="https://wa.me/553175961552" target="_blank" rel="noopener" class="btn-outline">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+              Agendar Visita
+            </a>
+          </div>
+        </div>
+
+        <!-- Santa Luzia -->
+        <div class="unidade-card anim-fade-up anim-delay-2">
+          <div class="unidade-img">
+            <img src="https://images.unsplash.com/photo-1586105449897-20b5efeb3233?w=800&q=75" alt="Unidade Santa Luzia" loading="lazy">
+          </div>
+          <div class="unidade-body">
+            <p class="unidade-city">Unidade</p>
+            <h3>Santa Luzia</h3>
+            <div class="unidade-info">
+              <div class="unidade-info-row">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span>Santa Luzia, MG</span>
+              </div>
+              <div class="unidade-info-row">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.07 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 2.92 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.09 8.5a16 16 0 0 0 8 8l.76-.76a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                <span>(31) 7596-1552</span>
+              </div>
+            </div>
+            <a href="https://wa.me/553175961552" target="_blank" rel="noopener" class="btn-outline">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+              Agendar Visita
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CTA FINAL ─── -->
+  <section id="cta-final">
+    <div class="container" style="position:relative;z-index:1;">
+      <h2 class="cta-title anim-fade-up">
+        Pronto para ver o mundo<br>com <em>mais clareza?</em>
+      </h2>
+      <p class="cta-sub anim-fade-up anim-delay-1">
+        Agende seu exame de vista ou venha conhecer nossas coleções. Atendemos em Belo Horizonte e Santa Luzia.
+      </p>
+      <div class="anim-fade-up anim-delay-2">
+        <a href="https://wa.me/553175961552" target="_blank" rel="noopener" class="btn-whatsapp">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          Falar com a Ótica Vista Clara
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ─── -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">Óticas Vista Clara</div>
+      <div class="footer-copy">
+        Belo Horizonte &amp; Santa Luzia, MG &nbsp;·&nbsp; (31) 7596-1552
+      </div>
+      <div class="footer-copy">
+        &copy; 2025 Vista Clara. Todos os direitos reservados.
+      </div>
+    </div>
+  </footer>
+
+  <!-- ─── WHATSAPP FAB ─── -->
+  <a id="wa-fab" href="https://wa.me/553175961552" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+  </a>
+
+  <script>
+    // Navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    // Scroll reveal - IntersectionObserver
+    const revealEls = document.querySelectorAll('.anim-fade-up');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    revealEls.forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
