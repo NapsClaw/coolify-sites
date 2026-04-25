@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Edifica Imobiliária | Compra, Venda e Locação de Imóveis</title>
+  <meta name="description" content="Edifica Imobiliária — especialistas em compra, venda e locação de imóveis. Encontre o imóvel dos seus sonhos com quem edifica sonhos há anos." />
+  <meta property="og:title" content="Edifica Imobiliária" />
+  <meta property="og:description" content="Especialistas em compra, venda e locação de imóveis. Realize o sonho do seu imóvel." />
+  <meta property="og:type" content="website" />
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230D1117'/%3E%3Cpath d='M6 26V14l10-8 10 8v12H6z' fill='none' stroke='%23C9A96E' stroke-width='2'/%3E%3Crect x='13' y='18' width='6' height='8' fill='%23C9A96E'/%3E%3C/svg%3E" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --primary: #0D1117;
+      --primary-light: #161C27;
+      --accent: #C9A96E;
+      --accent-light: #D9BF8E;
+      --bg: #F7F4EF;
+      --bg-warm: #EDE9E2;
+      --text: #0D1117;
+      --text-muted: #6B6560;
+      --text-light: #F7F4EF;
+      --border: rgba(201,169,110,0.2);
+      --serif: 'Cormorant Garamond', Georgia, serif;
+      --sans: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    img { display: block; max-width: 100%; }
+
+    /* ─── NAV ─────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 20px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.4s, padding 0.4s;
+    }
+
+    nav.scrolled {
+      background: rgba(13,17,23,0.95);
+      backdrop-filter: blur(12px);
+      padding: 14px 32px;
+    }
+
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--text-light);
+      letter-spacing: 0.04em;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-logo-mark {
+      width: 32px;
+      height: 32px;
+      background: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(247,244,239,0.7);
+      text-decoration: none;
+      transition: color 0.25s;
+    }
+
+    .nav-links a:hover { color: var(--accent); }
+
+    .nav-cta {
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--primary);
+      background: var(--accent);
+      padding: 10px 22px;
+      text-decoration: none;
+      transition: background 0.25s, transform 0.2s;
+    }
+
+    .nav-cta:hover { background: var(--accent-light); transform: translateY(-1px); }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      nav { padding: 16px 24px; }
+      nav.scrolled { padding: 12px 24px; }
+    }
+
+    /* ─── HERO ────────────────────────────────────────────── */
+    #hero {
+      position: relative;
+      height: 100svh;
+      min-height: 640px;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1600&q=80');
+      background-size: cover;
+      background-position: center 30%;
+      transform: scale(1.05);
+      animation: heroZoom 12s ease-out forwards;
+    }
+
+    @keyframes heroZoom {
+      from { transform: scale(1.08); }
+      to   { transform: scale(1.00); }
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(13,17,23,0.95) 0%,
+        rgba(13,17,23,0.5) 40%,
+        rgba(13,17,23,0.15) 100%
+      );
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 32px 72px;
+      max-width: 900px;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.8s 0.3s ease forwards;
+    }
+
+    .hero-title {
+      font-family: var(--serif);
+      font-size: clamp(52px, 9vw, 110px);
+      font-weight: 300;
+      line-height: 0.92;
+      color: var(--text-light);
+      margin-bottom: 28px;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 0.9s 0.5s ease forwards;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      font-family: var(--sans);
+      font-size: 16px;
+      font-weight: 300;
+      color: rgba(247,244,239,0.65);
+      max-width: 480px;
+      line-height: 1.7;
+      margin-bottom: 40px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.8s 0.7s ease forwards;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.8s 0.9s ease forwards;
+    }
+
+    .btn-primary {
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--primary);
+      background: var(--accent);
+      padding: 16px 36px;
+      display: inline-block;
+      transition: background 0.25s, transform 0.2s;
+    }
+
+    .btn-primary:hover { background: var(--accent-light); transform: translateY(-2px); }
+
+    .btn-outline {
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--text-light);
+      border: 1px solid rgba(247,244,239,0.3);
+      padding: 16px 36px;
+      display: inline-block;
+      transition: border-color 0.25s, color 0.25s;
+    }
+
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 32px;
+      right: 40px;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      animation: fadeIn 1s 1.4s ease forwards;
+    }
+
+    .hero-scroll span {
+      font-family: var(--sans);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(247,244,239,0.4);
+      writing-mode: vertical-rl;
+    }
+
+    .hero-scroll-line {
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+      animation: scrollLine 2s 1.6s ease infinite;
+    }
+
+    @keyframes scrollLine {
+      0%   { transform: scaleY(0); transform-origin: top; opacity: 0; }
+      50%  { transform: scaleY(1); opacity: 1; }
+      100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
+    }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    @media (max-width: 768px) {
+      .hero-content { padding: 0 24px 80px; }
+      .hero-scroll { display: none; }
+    }
+
+    /* ─── NUMBERS STRIP ───────────────────────────────────── */
+    #numbers {
+      background: var(--primary);
+      padding: 40px 32px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background-color: rgba(201,169,110,0.15);
+    }
+
+    .number-item {
+      background: var(--primary);
+      padding: 32px 24px;
+      text-align: center;
+    }
+
+    .number-value {
+      font-family: var(--serif);
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: 300;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .number-label {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(247,244,239,0.45);
+    }
+
+    @media (max-width: 480px) {
+      #numbers { grid-template-columns: 1fr; gap: 1px; }
+    }
+
+    /* ─── SOBRE ───────────────────────────────────────────── */
+    #sobre {
+      padding: 120px 32px;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .sobre-image-wrap {
+      position: relative;
+    }
+
+    .sobre-image-wrap img {
+      width: 100%;
+      height: 520px;
+      object-fit: cover;
+    }
+
+    .sobre-badge {
+      position: absolute;
+      bottom: -24px;
+      right: -24px;
+      width: 140px;
+      height: 140px;
+      background: var(--accent);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .sobre-badge-num {
+      font-family: var(--serif);
+      font-size: 44px;
+      font-weight: 600;
+      color: var(--primary);
+      line-height: 1;
+    }
+
+    .sobre-badge-text {
+      font-family: var(--sans);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-top: 4px;
+    }
+
+    .sobre-eyebrow {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    .sobre-title {
+      font-family: var(--serif);
+      font-size: clamp(36px, 4vw, 54px);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 28px;
+    }
+
+    .sobre-title em { font-style: italic; color: var(--accent); }
+
+    .sobre-text {
+      font-family: var(--sans);
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+
+    .sobre-divider {
+      width: 48px;
+      height: 1px;
+      background: var(--accent);
+      margin: 32px 0;
+    }
+
+    .sobre-values {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .sobre-value {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .sobre-value-icon {
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--accent);
+    }
+
+    .sobre-value-text strong {
+      display: block;
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      color: var(--text);
+      margin-bottom: 3px;
+    }
+
+    .sobre-value-text span {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 300;
+    }
+
+    @media (max-width: 900px) {
+      #sobre {
+        grid-template-columns: 1fr;
+        gap: 48px;
+        padding: 80px 24px;
+      }
+      .sobre-badge { right: 0; }
+    }
+
+    /* ─── SERVIÇOS ────────────────────────────────────────── */
+    #servicos {
+      background: var(--primary);
+      padding: 120px 32px;
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto 72px;
+    }
+
+    .section-eyebrow {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(32px, 4vw, 50px);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--text-light);
+    }
+
+    .section-title em { font-style: italic; color: var(--accent); }
+
+    .section-title-dark {
+      color: var(--text);
+    }
+
+    .servicos-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      max-width: 1200px;
+      margin: 0 auto;
+      background: rgba(201,169,110,0.1);
+    }
+
+    .servico-card {
+      background: var(--primary-light);
+      padding: 48px 32px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s;
+      cursor: default;
+    }
+
+    .servico-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transition: transform 0.4s ease;
+    }
+
+    .servico-card:hover { background: #1A2233; }
+    .servico-card:hover::after { transform: scaleX(1); }
+
+    .servico-num {
+      font-family: var(--serif);
+      font-size: 64px;
+      font-weight: 300;
+      color: rgba(201,169,110,0.12);
+      line-height: 1;
+      margin-bottom: 24px;
+      transition: color 0.3s;
+    }
+
+    .servico-card:hover .servico-num { color: rgba(201,169,110,0.22); }
+
+    .servico-icon {
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    .servico-title {
+      font-family: var(--serif);
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--text-light);
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+
+    .servico-desc {
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 300;
+      color: rgba(247,244,239,0.5);
+      line-height: 1.7;
+    }
+
+    @media (max-width: 900px) {
+      .servicos-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 560px) {
+      .servicos-grid { grid-template-columns: 1fr; }
+      #servicos { padding: 80px 24px; }
+    }
+
+    /* ─── DESTAQUE ────────────────────────────────────────── */
+    #destaques {
+      padding: 120px 32px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .destaques-intro {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 56px;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .destaques-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      grid-template-rows: 280px 280px;
+      gap: 16px;
+    }
+
+    .imovel-card {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      background: var(--primary);
+    }
+
+    .imovel-card:first-child {
+      grid-row: 1 / 3;
+    }
+
+    .imovel-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .imovel-card:hover img { transform: scale(1.05); }
+
+    .imovel-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(13,17,23,0.88) 0%, transparent 55%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 28px;
+    }
+
+    .imovel-tag {
+      font-family: var(--sans);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(13,17,23,0.7);
+      padding: 5px 10px;
+      display: inline-block;
+      margin-bottom: 10px;
+      width: fit-content;
+    }
+
+    .imovel-name {
+      font-family: var(--serif);
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--text-light);
+      line-height: 1.2;
+      margin-bottom: 6px;
+    }
+
+    .imovel-card:first-child .imovel-name { font-size: 28px; }
+
+    .imovel-info {
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 400;
+      color: rgba(247,244,239,0.6);
+      letter-spacing: 0.05em;
+    }
+
+    .destaques-link {
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid var(--accent);
+      padding-bottom: 2px;
+      transition: gap 0.25s;
+    }
+
+    .destaques-link:hover { gap: 14px; }
+
+    @media (max-width: 900px) {
+      .destaques-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 220px 220px 220px;
+      }
+      .imovel-card:first-child { grid-row: auto; grid-column: 1 / 3; }
+    }
+
+    @media (max-width: 560px) {
+      .destaques-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+      }
+      .imovel-card { height: 240px; }
+      .imovel-card:first-child { grid-column: auto; }
+      #destaques { padding: 80px 24px; }
+    }
+
+    /* ─── DEPOIMENTOS ─────────────────────────────────────── */
+    #depoimentos {
+      background: var(--bg-warm);
+      padding: 120px 32px;
+      overflow: hidden;
+    }
+
+    .depoimentos-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      max-width: 1100px;
+      margin: 56px auto 0;
+    }
+
+    .depo-card {
+      background: var(--bg);
+      padding: 40px 32px;
+      position: relative;
+      border-top: 2px solid transparent;
+      transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+    }
+
+    .depo-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 16px 48px rgba(13,17,23,0.1);
+      transform: translateY(-4px);
+    }
+
+    .depo-quote {
+      font-family: var(--serif);
+      font-size: 72px;
+      font-weight: 300;
+      color: var(--accent);
+      line-height: 0.5;
+      margin-bottom: 20px;
+      opacity: 0.5;
+    }
+
+    .depo-text {
+      font-family: var(--serif);
+      font-size: 18px;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--text);
+      line-height: 1.65;
+      margin-bottom: 28px;
+    }
+
+    .depo-divider {
+      width: 32px;
+      height: 1px;
+      background: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    .depo-author strong {
+      display: block;
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+
+    .depo-author span {
+      font-family: var(--sans);
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 300;
+    }
+
+    @media (max-width: 900px) {
+      .depoimentos-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 560px) {
+      .depoimentos-grid { grid-template-columns: 1fr; }
+      #depoimentos { padding: 80px 24px; }
+    }
+
+    /* ─── CONTATO ─────────────────────────────────────────── */
+    #contato {
+      background: var(--primary);
+      padding: 120px 32px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #contato::before {
+      content: '';
+      position: absolute;
+      top: -60px;
+      right: -60px;
+      width: 400px;
+      height: 400px;
+      border: 1px solid rgba(201,169,110,0.08);
+      border-radius: 50%;
+    }
+
+    #contato::after {
+      content: '';
+      position: absolute;
+      top: 40px;
+      right: 40px;
+      width: 240px;
+      height: 240px;
+      border: 1px solid rgba(201,169,110,0.06);
+      border-radius: 50%;
+    }
+
+    .contato-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .contato-info .section-eyebrow { margin-bottom: 16px; }
+
+    .contato-title {
+      font-family: var(--serif);
+      font-size: clamp(36px, 4vw, 54px);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--text-light);
+      margin-bottom: 32px;
+    }
+
+    .contato-title em { font-style: italic; color: var(--accent); }
+
+    .contato-items {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .contato-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .contato-item-icon {
+      width: 44px;
+      height: 44px;
+      border: 1px solid rgba(201,169,110,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--accent);
+    }
+
+    .contato-item-text strong {
+      display: block;
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+
+    .contato-item-text span {
+      font-family: var(--sans);
+      font-size: 14px;
+      font-weight: 300;
+      color: rgba(247,244,239,0.65);
+    }
+
+    .contato-action {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 24px;
+    }
+
+    .contato-cta-box {
+      background: var(--primary-light);
+      border: 1px solid rgba(201,169,110,0.15);
+      padding: 48px 40px;
+      width: 100%;
+    }
+
+    .contato-cta-title {
+      font-family: var(--serif);
+      font-size: 26px;
+      font-weight: 400;
+      color: var(--text-light);
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+
+    .contato-cta-sub {
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 300;
+      color: rgba(247,244,239,0.5);
+      margin-bottom: 32px;
+      line-height: 1.7;
+    }
+
+    .btn-whatsapp {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: #25D366;
+      color: #fff;
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 18px 32px;
+      width: 100%;
+      justify-content: center;
+      transition: background 0.25s, transform 0.2s;
+    }
+
+    .btn-whatsapp:hover { background: #20BB5A; transform: translateY(-2px); }
+
+    @media (max-width: 900px) {
+      .contato-inner { grid-template-columns: 1fr; gap: 48px; }
+      #contato { padding: 80px 24px; }
+    }
+
+    /* ─── FOOTER ──────────────────────────────────────────── */
+    footer {
+      background: #080B10;
+      padding: 48px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-logo {
+      font-family: var(--serif);
+      font-size: 20px;
+      font-weight: 400;
+      color: rgba(247,244,239,0.35);
+      letter-spacing: 0.04em;
+    }
+
+    .footer-copy {
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 300;
+      color: rgba(247,244,239,0.2);
+      letter-spacing: 0.05em;
+    }
+
+    .footer-nav {
+      display: flex;
+      gap: 24px;
+      list-style: none;
+    }
+
+    .footer-nav a {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(247,244,239,0.3);
+      text-decoration: none;
+      transition: color 0.25s;
+    }
+
+    .footer-nav a:hover { color: var(--accent); }
+
+    @media (max-width: 768px) {
+      footer { flex-direction: column; text-align: center; padding: 40px 24px; }
+    }
+
+    /* ─── WHATSAPP FLOAT ──────────────────────────────────── */
+    .wa-float {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 999;
+      width: 60px;
+      height: 60px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(37,211,102,0.35), 0 2px 8px rgba(0,0,0,0.25);
+      text-decoration: none;
+      animation: waPulse 3s ease infinite;
+      transition: transform 0.25s, background 0.25s;
+    }
+
+    .wa-float:hover {
+      background: #20BB5A;
+      transform: scale(1.1);
+      animation: none;
+    }
+
+    @keyframes waPulse {
+      0%, 100% { box-shadow: 0 4px 16px rgba(37,211,102,0.35), 0 0 0 0 rgba(37,211,102,0.3); }
+      50% { box-shadow: 0 4px 16px rgba(37,211,102,0.35), 0 0 0 12px rgba(37,211,102,0); }
+    }
+
+    /* ─── REVEAL ANIMATION ────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="main-nav">
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-mark">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M2 14V8l6-6 6 6v6H2z" stroke="#0D1117" stroke-width="1.5" fill="none"/>
+          <rect x="6" y="9" width="4" height="5" fill="#0D1117"/>
+        </svg>
+      </div>
+      Edifica
+    </a>
+    <ul class="nav-links">
+      <li><a href="#sobre">Sobre</a></li>
+      <li><a href="#servicos">Serviços</a></li>
+      <li><a href="#destaques">Imóveis</a></li>
+      <li><a href="#contato">Contato</a></li>
+    </ul>
+    <a href="https://wa.me/5500000000000" class="nav-cta">Falar Agora</a>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Edifica Imobiliária — Realizando Sonhos</p>
+      <h1 class="hero-title">Seu imóvel<br><em>ideal</em> começa<br>aqui.</h1>
+      <p class="hero-sub">Compra, venda e locação com atendimento personalizado. Encontramos o lugar certo para cada momento da sua vida.</p>
+      <div class="hero-actions">
+        <a href="#destaques" class="btn-primary">Ver Imóveis</a>
+        <a href="#contato" class="btn-outline">Fale Conosco</a>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <div class="hero-scroll-line"></div>
+      <span>Explorar</span>
+    </div>
+  </section>
+
+  <!-- NUMBERS -->
+  <div id="numbers">
+    <div class="number-item reveal">
+      <div class="number-value">800+</div>
+      <div class="number-label">Imóveis Negociados</div>
+    </div>
+    <div class="number-item reveal reveal-delay-1">
+      <div class="number-value">15+</div>
+      <div class="number-label">Anos de Mercado</div>
+    </div>
+    <div class="number-item reveal reveal-delay-2">
+      <div class="number-value">98%</div>
+      <div class="number-label">Clientes Satisfeitos</div>
+    </div>
+  </div>
+
+  <!-- SOBRE -->
+  <section id="sobre">
+    <div class="sobre-image-wrap reveal">
+      <img
+        src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80"
+        alt="Equipe Edifica Imobiliária"
+        loading="lazy"
+        width="600"
+        height="520"
+      />
+      <div class="sobre-badge">
+        <span class="sobre-badge-num">15</span>
+        <span class="sobre-badge-text">anos de<br>experiência</span>
+      </div>
+    </div>
+    <div class="reveal reveal-delay-2">
+      <p class="sobre-eyebrow">Quem somos</p>
+      <h2 class="sobre-title">Edificamos mais<br>do que imóveis —<br><em>edificamos vidas.</em></h2>
+      <p class="sobre-text">A Edifica Imobiliária nasceu com um propósito claro: transformar a busca por um imóvel numa experiência simples, transparente e humana. Nosso time de especialistas está comprometido a encontrar a solução ideal para cada cliente.</p>
+      <p class="sobre-text">Atuamos em todo o mercado imobiliário — de apartamentos compactos a empreendimentos de alto padrão — com o mesmo cuidado e dedicação.</p>
+      <div class="sobre-divider"></div>
+      <div class="sobre-values">
+        <div class="sobre-value">
+          <div class="sobre-value-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <div class="sobre-value-text">
+            <strong>Transparência Total</strong>
+            <span>Documentação clara e processo sem surpresas em cada etapa.</span>
+          </div>
+        </div>
+        <div class="sobre-value">
+          <div class="sobre-value-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/>
+            </svg>
+          </div>
+          <div class="sobre-value-text">
+            <strong>Atendimento Personalizado</strong>
+            <span>Cada cliente tem um corretor dedicado do início ao fim.</span>
+          </div>
+        </div>
+        <div class="sobre-value">
+          <div class="sobre-value-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+            </svg>
+          </div>
+          <div class="sobre-value-text">
+            <strong>Melhor Negócio</strong>
+            <span>Expertise de mercado para garantir o melhor valor no seu investimento.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVIÇOS -->
+  <section id="servicos">
+    <div class="section-header reveal">
+      <p class="section-eyebrow">O que fazemos</p>
+      <h2 class="section-title">Soluções completas<br>para o seu <em>imóvel</em></h2>
+    </div>
+    <div class="servicos-grid">
+      <div class="servico-card reveal">
+        <div class="servico-num">01</div>
+        <div class="servico-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/>
+            <path d="M9 21V12h6v9"/>
+          </svg>
+        </div>
+        <h3 class="servico-title">Compra de Imóveis</h3>
+        <p class="servico-desc">Encontramos o imóvel perfeito para o seu perfil, necessidades e orçamento — com toda a segurança jurídica.</p>
+      </div>
+      <div class="servico-card reveal reveal-delay-1">
+        <div class="servico-num">02</div>
+        <div class="servico-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M12 6v6l4 2"/>
+          </svg>
+        </div>
+        <h3 class="servico-title">Venda de Imóveis</h3>
+        <p class="servico-desc">Avaliação precisa, divulgação estratégica e negociação experiente para vender mais rápido e pelo melhor preço.</p>
+      </div>
+      <div class="servico-card reveal reveal-delay-2">
+        <div class="servico-num">03</div>
+        <div class="servico-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="3" y="5" width="18" height="16" rx="1"/>
+            <path d="M3 10h18M8 3v4M16 3v4"/>
+          </svg>
+        </div>
+        <h3 class="servico-title">Locação</h3>
+        <p class="servico-desc">Administramos locações com eficiência — do contrato à entrega das chaves, sem burocracia para você.</p>
+      </div>
+      <div class="servico-card reveal reveal-delay-3">
+        <div class="servico-num">04</div>
+        <div class="servico-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M9 14l6-6M10 7H7a2 2 0 00-2 2v8a2 2 0 002 2h8a2 2 0 002-2v-3"/>
+            <path d="M14 3h7v7"/>
+          </svg>
+        </div>
+        <h3 class="servico-title">Avaliação</h3>
+        <p class="servico-desc">Laudos técnicos e avaliações de mercado para você tomar decisões com segurança e clareza.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DESTAQUES -->
+  <section id="destaques">
+    <div class="destaques-intro">
+      <div class="reveal">
+        <p class="section-eyebrow" style="color: var(--accent);">Portfólio</p>
+        <h2 class="section-title section-title-dark">Imóveis em <em>destaque</em></h2>
+      </div>
+      <a href="https://wa.me/5500000000000?text=Quero%20ver%20todos%20os%20im%C3%B3veis" class="destaques-link reveal">
+        Ver todos os imóveis
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+
+    <div class="destaques-grid">
+      <div class="imovel-card reveal">
+        <img
+          src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1000&q=80"
+          alt="Casa moderna com piscina"
+          loading="lazy"
+        />
+        <div class="imovel-overlay">
+          <span class="imovel-tag">Alto Padrão</span>
+          <h3 class="imovel-name">Residência Alto Padrão</h3>
+          <p class="imovel-info">4 suítes · 380 m² · Piscina · 4 vagas</p>
+        </div>
+      </div>
+      <div class="imovel-card reveal reveal-delay-1">
+        <img
+          src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=700&q=80"
+          alt="Apartamento moderno"
+          loading="lazy"
+        />
+        <div class="imovel-overlay">
+          <span class="imovel-tag">Apartamento</span>
+          <h3 class="imovel-name">Apto. Garden</h3>
+          <p class="imovel-info">3 quartos · 120 m²</p>
+        </div>
+      </div>
+      <div class="imovel-card reveal reveal-delay-2">
+        <img
+          src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=700&q=80"
+          alt="Edifício comercial"
+          loading="lazy"
+        />
+        <div class="imovel-overlay">
+          <span class="imovel-tag">Comercial</span>
+          <h3 class="imovel-name">Sala Comercial</h3>
+          <p class="imovel-info">48 m² · Centro</p>
+        </div>
+      </div>
+      <div class="imovel-card reveal reveal-delay-1">
+        <img
+          src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=700&q=80"
+          alt="Casa de condomínio"
+          loading="lazy"
+        />
+        <div class="imovel-overlay">
+          <span class="imovel-tag">Condomínio</span>
+          <h3 class="imovel-name">Casa em Condomínio</h3>
+          <p class="imovel-info">3 suítes · 200 m² · 2 vagas</p>
+        </div>
+      </div>
+      <div class="imovel-card reveal reveal-delay-2">
+        <img
+          src="https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=700&q=80"
+          alt="Apartamento studio"
+          loading="lazy"
+        />
+        <div class="imovel-overlay">
+          <span class="imovel-tag">Studio</span>
+          <h3 class="imovel-name">Studio Moderno</h3>
+          <p class="imovel-info">1 quarto · 38 m²</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEPOIMENTOS -->
+  <section id="depoimentos">
+    <div class="section-header reveal">
+      <p class="section-eyebrow">Depoimentos</p>
+      <h2 class="section-title section-title-dark">O que dizem<br>nossos <em>clientes</em></h2>
+    </div>
+    <div class="depoimentos-grid">
+      <div class="depo-card reveal">
+        <div class="depo-quote">"</div>
+        <p class="depo-text">A Edifica encontrou nossa casa em menos de um mês. Atendimento impecável do início ao fim, sem enrolação.</p>
+        <div class="depo-divider"></div>
+        <div class="depo-author">
+          <strong>Mariana Costa</strong>
+          <span>Compradora — São Paulo</span>
+        </div>
+      </div>
+      <div class="depo-card reveal reveal-delay-1">
+        <div class="depo-quote">"</div>
+        <p class="depo-text">Vendi meu apartamento pelo preço que queria e em tempo recorde. A equipe foi transparente em tudo.</p>
+        <div class="depo-divider"></div>
+        <div class="depo-author">
+          <strong>Ricardo Mendes</strong>
+          <span>Vendedor — Proprietário</span>
+        </div>
+      </div>
+      <div class="depo-card reveal reveal-delay-2">
+        <div class="depo-quote">"</div>
+        <p class="depo-text">Aluguei minha sala comercial sem complicações. A Edifica cuidou de tudo, eu só assinei o contrato.</p>
+        <div class="depo-divider"></div>
+        <div class="depo-author">
+          <strong>Fernanda Alves</strong>
+          <span>Locatária — Empreendedora</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTATO -->
+  <section id="contato">
+    <div class="contato-inner">
+      <div class="contato-info reveal">
+        <p class="section-eyebrow">Contato</p>
+        <h2 class="contato-title">Pronto para dar<br>o próximo <em>passo?</em></h2>
+        <div class="contato-items">
+          <div class="contato-item">
+            <div class="contato-item-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                <path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+              </svg>
+            </div>
+            <div class="contato-item-text">
+              <strong>Localização</strong>
+              <span>Atendemos toda a região<br>Entre em contato para mais detalhes</span>
+            </div>
+          </div>
+          <div class="contato-item">
+            <div class="contato-item-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="3" y="5" width="18" height="16" rx="1"/>
+                <path d="M3 10h18M8 3v4M16 3v4"/>
+              </svg>
+            </div>
+            <div class="contato-item-text">
+              <strong>Horário de Atendimento</strong>
+              <span>Segunda a Sexta: 8h às 18h<br>Sábado: 8h às 13h</span>
+            </div>
+          </div>
+          <div class="contato-item">
+            <div class="contato-item-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+              </svg>
+            </div>
+            <div class="contato-item-text">
+              <strong>WhatsApp</strong>
+              <span>Atendimento rápido pelo WhatsApp</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contato-action reveal reveal-delay-2">
+        <div class="contato-cta-box">
+          <h3 class="contato-cta-title">Fale com um<br>especialista agora</h3>
+          <p class="contato-cta-sub">Resposta em minutos. Sem compromisso. Nossos consultores estão prontos para ajudar você a encontrar o imóvel ideal.</p>
+          <a href="https://wa.me/5500000000000?text=Ol%C3%A1%21%20Tenho%20interesse%20em%20im%C3%B3veis%20da%20Edifica%20Imobili%C3%A1ria." class="btn-whatsapp">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+            </svg>
+            Iniciar Conversa no WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Edifica Imobiliária</div>
+    <ul class="footer-nav">
+      <li><a href="#sobre">Sobre</a></li>
+      <li><a href="#servicos">Serviços</a></li>
+      <li><a href="#destaques">Imóveis</a></li>
+      <li><a href="#contato">Contato</a></li>
+    </ul>
+    <p class="footer-copy">&copy; 2025 Edifica Imobiliária. Todos os direitos reservados.</p>
+  </footer>
+
+  <!-- WHATSAPP FLOAT -->
+  <a href="https://wa.me/5500000000000" class="wa-float" aria-label="Falar no WhatsApp" title="Falar no WhatsApp">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="#fff">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+
+  <script>
+    // Nav scroll
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    reveals.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
