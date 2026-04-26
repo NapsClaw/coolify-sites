@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pintura Auto Nível | Residencial, Industrial e Predial</title>
+  <meta name="description" content="Pintura Auto Nível — serviços profissionais de pintura residencial, industrial e predial. Acabamento impecável, equipe especializada, orçamento sem compromisso." />
+  <meta property="og:title" content="Pintura Auto Nível | Excelência em Pintura" />
+  <meta property="og:description" content="Pintura residencial, industrial e predial com acabamento de alto nível. Fale agora pelo WhatsApp." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='8' fill='%23F97316'/><rect x='20' y='70' width='60' height='10' rx='3' fill='white'/><rect x='44' y='20' width='12' height='55' rx='3' fill='white'/><rect x='25' y='30' width='50' height='8' rx='4' fill='white'/></svg>" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800;12..96,900&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;1,9..40,300&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Bricolage Grotesque', 'sans-serif'],
+            body: ['DM Sans', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --primary: #1A1A1A;
+      --accent: #F97316;
+      --accent-dark: #EA6A00;
+      --bg: #F5F0EA;
+      --bg-alt: #EDEBE5;
+      --dark: #0F0F0F;
+      --dark-2: #1C1C1C;
+      --text: #1A1A1A;
+      --text-muted: #6B6563;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes slideLeft {
+      from { opacity: 0; transform: translateX(-50px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes slideRight {
+      from { opacity: 0; transform: translateX(50px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+    @keyframes pulse-wa {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(37,211,102,0.5); }
+      50%       { box-shadow: 0 0 0 12px rgba(37,211,102,0); }
+    }
+    @keyframes barGrow {
+      from { transform: scaleX(0); }
+      to   { transform: scaleX(1); }
+    }
+
+    .animate-slide-up   { animation: slideUp 0.7s cubic-bezier(0.22,1,0.36,1) both; }
+    .animate-slide-left { animation: slideLeft 0.8s cubic-bezier(0.22,1,0.36,1) both; }
+    .animate-slide-right{ animation: slideRight 0.8s cubic-bezier(0.22,1,0.36,1) both; }
+    .animate-fade       { animation: fadeIn 0.9s ease both; }
+    .animate-scale      { animation: scaleIn 0.6s cubic-bezier(0.22,1,0.36,1) both; }
+
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.35s; }
+    .delay-4 { animation-delay: 0.5s; }
+    .delay-5 { animation-delay: 0.65s; }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-40px);
+      transition: opacity 0.8s cubic-bezier(0.22,1,0.36,1), transform 0.8s cubic-bezier(0.22,1,0.36,1);
+    }
+    .reveal-left.visible { opacity: 1; transform: translateX(0); }
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(40px);
+      transition: opacity 0.8s cubic-bezier(0.22,1,0.36,1), transform 0.8s cubic-bezier(0.22,1,0.36,1);
+    }
+    .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+    /* ── HEADER ── */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: transparent;
+      transition: background 0.4s, padding 0.4s;
+    }
+    header.scrolled {
+      background: rgba(15,15,15,0.97);
+      padding: 14px 24px;
+      backdrop-filter: blur(10px);
+    }
+    .logo {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: 20px;
+      color: #fff;
+      letter-spacing: -0.5px;
+      line-height: 1;
+    }
+    .logo span { color: var(--accent); }
+    nav a {
+      color: rgba(255,255,255,0.8);
+      font-size: 14px;
+      font-weight: 300;
+      letter-spacing: 0.5px;
+      text-decoration: none;
+      margin-left: 28px;
+      transition: color 0.2s;
+    }
+    nav a:hover { color: var(--accent); }
+    .nav-cta {
+      background: var(--accent);
+      color: #fff !important;
+      padding: 10px 20px;
+      border-radius: 3px;
+      font-weight: 700 !important;
+      letter-spacing: 0 !important;
+    }
+    .nav-cta:hover { background: var(--accent-dark); color: #fff !important; }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+    .hero-img {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=1400&q=80');
+      background-size: cover;
+      background-position: center;
+      transform: scale(1.05);
+      animation: scaleIn 1.2s cubic-bezier(0.22,1,0.36,1) both;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        170deg,
+        rgba(0,0,0,0.1) 0%,
+        rgba(0,0,0,0.3) 40%,
+        rgba(0,0,0,0.85) 100%
+      );
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 40px 24px 60px;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 2px;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: clamp(52px, 12vw, 110px);
+      line-height: 0.92;
+      color: #fff;
+      letter-spacing: -3px;
+      margin-bottom: 24px;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--accent);
+      display: block;
+    }
+    .hero-desc {
+      font-size: 16px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.75);
+      max-width: 480px;
+      line-height: 1.65;
+      margin-bottom: 36px;
+    }
+    .hero-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--accent);
+      color: #fff;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      font-size: 15px;
+      letter-spacing: -0.3px;
+      padding: 16px 28px;
+      border-radius: 3px;
+      text-decoration: none;
+      transition: background 0.25s, transform 0.2s;
+      width: 100%;
+      justify-content: center;
+    }
+    .btn-primary:hover { background: var(--accent-dark); transform: translateY(-2px); }
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: 1.5px solid rgba(255,255,255,0.4);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 300;
+      padding: 15px 28px;
+      border-radius: 3px;
+      text-decoration: none;
+      transition: border-color 0.25s, background 0.25s;
+      width: 100%;
+      justify-content: center;
+    }
+    .btn-outline:hover { border-color: #fff; background: rgba(255,255,255,0.08); }
+
+    /* Hero stats bar */
+    .hero-stats {
+      margin-top: 40px;
+      padding-top: 28px;
+      border-top: 1px solid rgba(255,255,255,0.15);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+    }
+    .stat-item {
+      text-align: center;
+    }
+    .stat-item + .stat-item {
+      border-left: 1px solid rgba(255,255,255,0.12);
+    }
+    .stat-num {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: 36px;
+      color: var(--accent);
+      line-height: 1;
+      letter-spacing: -1px;
+    }
+    .stat-label {
+      font-size: 11px;
+      color: rgba(255,255,255,0.5);
+      font-weight: 300;
+      letter-spacing: 0.5px;
+      margin-top: 4px;
+    }
+
+    /* ── MARQUEE ── */
+    .marquee-wrap {
+      background: var(--accent);
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 14px 0;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .marquee-track {
+      display: inline-block;
+      animation: marquee 22s linear infinite;
+    }
+    .marquee-item {
+      display: inline-block;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #fff;
+      margin: 0 28px;
+    }
+    .marquee-dot {
+      display: inline-block;
+      width: 5px; height: 5px;
+      background: rgba(255,255,255,0.5);
+      border-radius: 50%;
+      vertical-align: middle;
+      margin: 0 28px;
+    }
+
+    /* ── SOBRE ── */
+    .sobre {
+      background: var(--bg);
+      padding: 80px 24px;
+    }
+    .sobre-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-label::before {
+      content: '';
+      display: block;
+      width: 28px; height: 2px;
+      background: var(--accent);
+      border-radius: 1px;
+    }
+    .sobre h2 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: clamp(38px, 8vw, 64px);
+      line-height: 0.95;
+      letter-spacing: -2px;
+      color: var(--primary);
+      margin-bottom: 24px;
+    }
+    .sobre h2 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+    .sobre-text {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.75;
+      color: var(--text-muted);
+      max-width: 480px;
+      margin-bottom: 32px;
+    }
+    .sobre-img {
+      width: 100%;
+      height: 320px;
+      object-fit: cover;
+      border-radius: 4px;
+      position: relative;
+    }
+    .sobre-img-wrap {
+      position: relative;
+    }
+    .sobre-img-wrap::after {
+      content: '';
+      position: absolute;
+      bottom: -16px; right: -16px;
+      width: 60%; height: 60%;
+      border: 3px solid var(--accent);
+      border-radius: 4px;
+      z-index: -1;
+    }
+    .diferencial {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+    .dif-icon {
+      width: 40px; height: 40px;
+      background: var(--accent);
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .dif-icon svg { width: 20px; height: 20px; stroke: #fff; fill: none; }
+    .dif-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      font-size: 15px;
+      color: var(--primary);
+      margin-bottom: 2px;
+    }
+    .dif-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 300;
+      line-height: 1.5;
+    }
+
+    /* ── SERVICES ── */
+    .services {
+      background: var(--dark);
+      padding: 80px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .services::before {
+      content: 'SERVIÇOS';
+      position: absolute;
+      top: 20px; right: -20px;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: 120px;
+      color: rgba(255,255,255,0.03);
+      letter-spacing: -4px;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    .services-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .services .section-label { color: var(--accent); }
+    .services .section-label::before { background: var(--accent); }
+    .services h2 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: clamp(38px, 8vw, 64px);
+      line-height: 0.95;
+      letter-spacing: -2px;
+      color: #fff;
+      margin-bottom: 48px;
+    }
+    .services h2 em { font-style: normal; color: var(--accent); }
+
+    .service-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 4px;
+      padding: 32px 28px;
+      margin-bottom: 16px;
+      transition: background 0.3s, transform 0.3s, border-color 0.3s;
+      cursor: default;
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: var(--accent);
+      transform: scaleY(0);
+      transform-origin: bottom;
+      transition: transform 0.3s cubic-bezier(0.22,1,0.36,1);
+    }
+    .service-card:hover {
+      background: rgba(249,115,22,0.07);
+      border-color: rgba(249,115,22,0.2);
+      transform: translateX(6px);
+    }
+    .service-card:hover::before { transform: scaleY(1); }
+    .service-num {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: 48px;
+      color: rgba(255,255,255,0.06);
+      line-height: 1;
+      letter-spacing: -2px;
+      margin-bottom: 12px;
+    }
+    .service-name {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      font-size: 22px;
+      color: #fff;
+      margin-bottom: 10px;
+      letter-spacing: -0.5px;
+    }
+    .service-desc {
+      font-size: 14px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.65;
+      margin-bottom: 16px;
+    }
+    .service-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .service-tag {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(249,115,22,0.12);
+      padding: 4px 10px;
+      border-radius: 2px;
+    }
+
+    /* ── GALLERY ── */
+    .gallery {
+      background: var(--bg-alt);
+      padding: 80px 24px;
+    }
+    .gallery-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .gallery h2 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: clamp(38px, 8vw, 64px);
+      line-height: 0.95;
+      letter-spacing: -2px;
+      color: var(--primary);
+      margin-bottom: 40px;
+    }
+    .gallery h2 em { font-style: normal; color: var(--accent); }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 4px;
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s cubic-bezier(0.22,1,0.36,1);
+    }
+    .gallery-item:hover img { transform: scale(1.06); }
+    .gallery-item-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.7) 100%);
+      opacity: 0;
+      transition: opacity 0.3s;
+      display: flex;
+      align-items: flex-end;
+      padding: 20px;
+    }
+    .gallery-item:hover .gallery-item-overlay { opacity: 1; }
+    .gallery-caption {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      font-size: 14px;
+      color: #fff;
+      letter-spacing: -0.2px;
+    }
+
+    /* ── PROCESS ── */
+    .process {
+      background: var(--primary);
+      padding: 80px 24px;
+    }
+    .process-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .process .section-label { color: var(--accent); }
+    .process .section-label::before { background: var(--accent); }
+    .process h2 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: clamp(38px, 8vw, 64px);
+      line-height: 0.95;
+      letter-spacing: -2px;
+      color: #fff;
+      margin-bottom: 48px;
+    }
+    .process h2 em { font-style: normal; color: var(--accent); }
+    .step {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 40px;
+      align-items: flex-start;
+    }
+    .step-num {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: 52px;
+      color: var(--accent);
+      line-height: 1;
+      letter-spacing: -2px;
+      flex-shrink: 0;
+      width: 64px;
+    }
+    .step-content {}
+    .step-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      font-size: 20px;
+      color: #fff;
+      margin-bottom: 8px;
+      letter-spacing: -0.3px;
+    }
+    .step-desc {
+      font-size: 14px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.65;
+    }
+    .step-divider {
+      width: 1px;
+      height: 24px;
+      background: rgba(255,255,255,0.1);
+      margin-left: 32px;
+      margin-bottom: 8px;
+    }
+
+    /* ── CONTACT ── */
+    .contact {
+      background: var(--dark-2);
+      padding: 80px 24px;
+    }
+    .contact-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .contact .section-label { color: var(--accent); }
+    .contact .section-label::before { background: var(--accent); }
+    .contact h2 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: clamp(38px, 8vw, 64px);
+      line-height: 0.95;
+      letter-spacing: -2px;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+    .contact h2 em { font-style: normal; color: var(--accent); }
+    .contact-sub {
+      font-size: 15px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 40px;
+      line-height: 1.6;
+    }
+    .contact-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 4px;
+      padding: 28px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .contact-icon {
+      width: 48px; height: 48px;
+      background: rgba(249,115,22,0.12);
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .contact-icon svg { width: 22px; height: 22px; stroke: var(--accent); fill: none; }
+    .contact-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 4px;
+    }
+    .contact-value {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      color: #fff;
+      letter-spacing: -0.3px;
+    }
+    .contact-cta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #25D366;
+      color: #fff;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      font-size: 16px;
+      letter-spacing: -0.3px;
+      padding: 20px 28px;
+      border-radius: 4px;
+      text-decoration: none;
+      justify-content: center;
+      margin-top: 20px;
+      transition: background 0.25s, transform 0.2s;
+      width: 100%;
+    }
+    .contact-cta:hover { background: #20b85a; transform: translateY(-2px); }
+    .contact-cta svg { width: 24px; height: 24px; fill: #fff; flex-shrink: 0; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #080808;
+      padding: 32px 24px;
+      text-align: center;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    .footer-logo {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 900;
+      font-size: 22px;
+      color: #fff;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+    }
+    .footer-logo span { color: var(--accent); }
+    .footer-copy {
+      font-size: 12px;
+      color: rgba(255,255,255,0.25);
+      font-weight: 300;
+    }
+
+    /* ── WHATSAPP FLOAT ── */
+    .wa-float {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 999;
+      width: 60px; height: 60px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      animation: pulse-wa 2.5s ease-in-out infinite;
+      text-decoration: none;
+      transition: transform 0.2s;
+    }
+    .wa-float:hover {
+      transform: scale(1.12);
+      animation: none;
+    }
+    .wa-float svg { width: 30px; height: 30px; fill: #fff; }
+
+    /* ── DESKTOP ── */
+    @media (min-width: 768px) {
+      header { padding: 24px 48px; }
+      header.scrolled { padding: 16px 48px; }
+      .hero-content { padding: 60px 48px 80px; }
+      .hero h1 { letter-spacing: -5px; }
+      .hero-actions { flex-direction: row; }
+      .btn-primary, .btn-outline { width: auto; }
+      .hero-stats { max-width: 420px; }
+
+      .sobre { padding: 120px 48px; }
+      .sobre-inner {
+        grid-template-columns: 1fr 1fr;
+        gap: 80px;
+        align-items: center;
+      }
+      .sobre-img { height: 480px; }
+
+      .services { padding: 120px 48px; }
+      .services-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+      }
+      .service-card { margin-bottom: 0; }
+
+      .gallery { padding: 120px 48px; }
+      .gallery-grid {
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: auto auto;
+      }
+      .gallery-item:first-child {
+        grid-column: span 2;
+      }
+      .gallery-item img { height: 300px; }
+      .gallery-item:first-child img { height: 400px; }
+
+      .process { padding: 120px 48px; }
+      .steps-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0 60px;
+      }
+
+      .contact { padding: 120px 48px; }
+      .contact-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: start;
+      }
+      .contact-cta { width: auto; display: inline-flex; }
+
+      footer { padding: 40px 48px; }
+    }
+
+    @media (min-width: 1200px) {
+      .services-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header id="header">
+    <div class="logo">Auto<span>Nível</span></div>
+    <nav class="hidden md:flex">
+      <a href="#sobre">Empresa</a>
+      <a href="#servicos">Serviços</a>
+      <a href="#galeria">Portfólio</a>
+      <a href="#contato" class="nav-cta">Orçamento</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-img"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-tag animate-fade">
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="white"><circle cx="5" cy="5" r="5"/></svg>
+        Excelência em Pintura Profissional
+      </div>
+      <h1 class="animate-slide-left delay-1">
+        Pintura
+        <em>Auto Nível</em>
+      </h1>
+      <p class="hero-desc animate-slide-left delay-2">
+        Residencial, industrial e predial — acabamento impecável que transforma ambientes e valoriza seu patrimônio.
+      </p>
+      <div class="hero-actions animate-slide-up delay-3">
+        <a href="https://wa.me/5511999999999" class="btn-primary" target="_blank" rel="noopener">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          Solicitar Orçamento
+        </a>
+        <a href="#servicos" class="btn-outline">
+          Ver Serviços
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+      <div class="hero-stats animate-fade delay-5">
+        <div class="stat-item">
+          <div class="stat-num">10+</div>
+          <div class="stat-label">Anos no mercado</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">500+</div>
+          <div class="stat-label">Obras entregues</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">3</div>
+          <div class="stat-label">Segmentos</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span class="marquee-item">Pintura Residencial</span>
+      <span class="marquee-dot"></span>
+      <span class="marquee-item">Pintura Industrial</span>
+      <span class="marquee-dot"></span>
+      <span class="marquee-item">Pintura Predial</span>
+      <span class="marquee-dot"></span>
+      <span class="marquee-item">Acabamento Premium</span>
+      <span class="marquee-dot"></span>
+      <span class="marquee-item">Orçamento Grátis</span>
+      <span class="marquee-dot"></span>
+      <span class="marquee-item">Equipe Especializada</span>
+      <span class="marquee-dot"></span>
+      <span class="marquee-item">Pintura Residencial</span>
+      <span class="marquee-dot"></span>
+      <span class="marquee-item">Pintura Industrial</span>
+      <span class="marquee-dot"></span>
+      <span class="marquee-item">Pintura Predial</span>
+      <span class="marquee-dot"></span>
+      <span class="marquee-item">Acabamento Premium</span>
+      <span class="marquee-dot"></span>
+      <span class="marquee-item">Orçamento Grátis</span>
+      <span class="marquee-dot"></span>
+      <span class="marquee-item">Equipe Especializada</span>
+      <span class="marquee-dot"></span>
+    </div>
+  </div>
+
+  <!-- SOBRE -->
+  <section class="sobre" id="sobre">
+    <div class="sobre-inner">
+      <div class="reveal-left">
+        <div class="section-label">Nossa história</div>
+        <h2>
+          Mais de uma <em>década</em> transformando espaços
+        </h2>
+        <p class="sobre-text">
+          A Pintura Auto Nível nasceu da paixão por um acabamento impecável. Com mais de 10 anos no mercado, atuamos em projetos residenciais, industriais e prediais com rigor técnico, materiais de primeira linha e uma equipe treinada para entregar o melhor resultado.
+        </p>
+        <p class="sobre-text">
+          Do apartamento ao galpão industrial, cada obra recebe o mesmo cuidado: preparação criteriosa, produtos de alta performance e execução que supera expectativas.
+        </p>
+
+        <div class="diferencial reveal" style="transition-delay:0.1s">
+          <div class="dif-icon">
+            <svg viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <div>
+            <div class="dif-title">Garantia de serviço</div>
+            <div class="dif-desc">Cada projeto é entregue com garantia por escrito no acabamento e nos materiais aplicados.</div>
+          </div>
+        </div>
+        <div class="diferencial reveal" style="transition-delay:0.2s">
+          <div class="dif-icon">
+            <svg viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z"/></svg>
+          </div>
+          <div>
+            <div class="dif-title">Materiais de alto desempenho</div>
+            <div class="dif-desc">Trabalhamos com tintas e revestimentos das melhores marcas do mercado — Suvinil, Coral e Sherwin-Williams.</div>
+          </div>
+        </div>
+        <div class="diferencial reveal" style="transition-delay:0.3s">
+          <div class="dif-icon">
+            <svg viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          </div>
+          <div>
+            <div class="dif-title">Prazo respeitado</div>
+            <div class="dif-desc">Nos comprometemos com a data de entrega e avisamos com antecedência sobre qualquer intercorrência.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sobre-img-wrap reveal-right" style="padding-bottom: 32px; padding-right: 32px;">
+        <img
+          class="sobre-img"
+          src="https://images.unsplash.com/photo-1562259949-e8e7689d7828?w=800&q=80"
+          alt="Profissional de pintura em ação"
+          loading="lazy"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services" id="servicos">
+    <div class="services-inner">
+      <div class="section-label reveal">Especialidades</div>
+      <h2 class="reveal">
+        O que fazemos<br/><em>com excelência</em>
+      </h2>
+      <div class="services-grid">
+        <div class="service-card reveal" style="transition-delay:0.1s">
+          <div class="service-num">01</div>
+          <div class="service-name">Pintura Residencial</div>
+          <div class="service-desc">
+            Transformamos casas e apartamentos com acabamento fino, cores personalizadas e técnicas que preservam a estrutura e embelezam cada cômodo.
+          </div>
+          <div class="service-tags">
+            <span class="service-tag">Interiores</span>
+            <span class="service-tag">Exteriores</span>
+            <span class="service-tag">Textura</span>
+            <span class="service-tag">Grafiato</span>
+          </div>
+        </div>
+        <div class="service-card reveal" style="transition-delay:0.2s">
+          <div class="service-num">02</div>
+          <div class="service-name">Pintura Industrial</div>
+          <div class="service-desc">
+            Proteção e identidade visual para galpões, fábricas e estruturas metálicas — com tintas anticorrosivas e sistemas de alta durabilidade para ambientes exigentes.
+          </div>
+          <div class="service-tags">
+            <span class="service-tag">Galpões</span>
+            <span class="service-tag">Estruturas Metálicas</span>
+            <span class="service-tag">Anticorrosão</span>
+          </div>
+        </div>
+        <div class="service-card reveal" style="transition-delay:0.3s">
+          <div class="service-num">03</div>
+          <div class="service-name">Pintura Predial</div>
+          <div class="service-desc">
+            Revitalização completa de fachadas, corredores e áreas comuns de condomínios e edifícios comerciais, com impermeabilização e acabamentos duradouros.
+          </div>
+          <div class="service-tags">
+            <span class="service-tag">Fachadas</span>
+            <span class="service-tag">Condomínios</span>
+            <span class="service-tag">Impermeabilização</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery" id="galeria">
+    <div class="gallery-inner">
+      <div class="section-label reveal">Portfólio</div>
+      <h2 class="reveal">
+        Obras que <em>falam</em><br/>por si
+      </h2>
+      <div class="gallery-grid">
+        <div class="gallery-item reveal" style="transition-delay:0.05s">
+          <img
+            src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1000&q=80"
+            alt="Projeto residencial — acabamento fino"
+            loading="lazy"
+          />
+          <div class="gallery-item-overlay">
+            <span class="gallery-caption">Residencial · Interior</span>
+          </div>
+        </div>
+        <div class="gallery-item reveal" style="transition-delay:0.1s">
+          <img
+            src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=800&q=80"
+            alt="Obra predial — fachada"
+            loading="lazy"
+          />
+          <div class="gallery-item-overlay">
+            <span class="gallery-caption">Predial · Fachada</span>
+          </div>
+        </div>
+        <div class="gallery-item reveal" style="transition-delay:0.15s">
+          <img
+            src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80"
+            alt="Pintura industrial — galpão"
+            loading="lazy"
+          />
+          <div class="gallery-item-overlay">
+            <span class="gallery-caption">Industrial · Galpão</span>
+          </div>
+        </div>
+        <div class="gallery-item reveal" style="transition-delay:0.2s">
+          <img
+            src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80"
+            alt="Pintura interna residencial"
+            loading="lazy"
+          />
+          <div class="gallery-item-overlay">
+            <span class="gallery-caption">Residencial · Textura</span>
+          </div>
+        </div>
+        <div class="gallery-item reveal" style="transition-delay:0.25s">
+          <img
+            src="https://images.unsplash.com/photo-1572120360610-d971b9d7767c?w=800&q=80"
+            alt="Pintura externa — condomínio"
+            loading="lazy"
+          />
+          <div class="gallery-item-overlay">
+            <span class="gallery-caption">Predial · Condomínio</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="process">
+    <div class="process-inner">
+      <div class="section-label reveal">Como trabalhamos</div>
+      <h2 class="reveal">Do <em>orçamento</em><br/>à entrega</h2>
+      <div class="steps-grid">
+        <div>
+          <div class="step reveal" style="transition-delay:0.1s">
+            <div class="step-num">01</div>
+            <div class="step-content">
+              <div class="step-title">Contato e visita técnica</div>
+              <div class="step-desc">Você nos aciona pelo WhatsApp. Agendamos uma visita gratuita para avaliar a obra e entender o que você precisa.</div>
+            </div>
+          </div>
+          <div class="step-divider reveal"></div>
+          <div class="step reveal" style="transition-delay:0.2s">
+            <div class="step-num">02</div>
+            <div class="step-content">
+              <div class="step-title">Orçamento detalhado</div>
+              <div class="step-desc">Enviamos uma proposta clara com materiais, etapas, prazo e valor — sem letras miúdas ou surpresas.</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="step-divider reveal md:hidden"></div>
+          <div class="step reveal" style="transition-delay:0.3s">
+            <div class="step-num">03</div>
+            <div class="step-content">
+              <div class="step-title">Execução com qualidade</div>
+              <div class="step-desc">Nossa equipe trabalha com proteção dos móveis e arredores, preparação adequada das superfícies e aplicação em camadas corretas.</div>
+            </div>
+          </div>
+          <div class="step-divider reveal"></div>
+          <div class="step reveal" style="transition-delay:0.4s">
+            <div class="step-num">04</div>
+            <div class="step-content">
+              <div class="step-title">Entrega e garantia</div>
+              <div class="step-desc">Após vistoria final conjunta, você recebe o imóvel com garantia e suporte pós-obra para qualquer dúvida.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contato">
+    <div class="contact-inner">
+      <div class="contact-grid">
+        <div>
+          <div class="section-label reveal">Fale conosco</div>
+          <h2 class="reveal">Peça seu<br/><em>orçamento</em><br/>agora</h2>
+          <p class="contact-sub reveal">
+            Atendemos toda a região. Resposta rápida, visita gratuita e sem compromisso.
+          </p>
+          <a href="https://wa.me/5511999999999" class="contact-cta reveal" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+            Chamar no WhatsApp
+          </a>
+        </div>
+        <div>
+          <div class="contact-card reveal" style="transition-delay:0.1s">
+            <div class="contact-icon">
+              <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z"/><path d="M12 7v5l3 3"/></svg>
+            </div>
+            <div>
+              <div class="contact-label">Horário de atendimento</div>
+              <div class="contact-value">Seg–Sex 7h–18h · Sáb 7h–13h</div>
+            </div>
+          </div>
+          <div class="contact-card reveal" style="transition-delay:0.2s">
+            <div class="contact-icon">
+              <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12.1 19.79 19.79 0 0 1 1.61 3.5 2 2 0 0 1 3.6 1.32h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7a2 2 0 0 1 1.72 2.03z"/></svg>
+            </div>
+            <div>
+              <div class="contact-label">WhatsApp</div>
+              <div class="contact-value">(11) 9 9999-9999</div>
+            </div>
+          </div>
+          <div class="contact-card reveal" style="transition-delay:0.3s">
+            <div class="contact-icon">
+              <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+            </div>
+            <div>
+              <div class="contact-label">Atendimento</div>
+              <div class="contact-value">Residencial · Industrial · Predial</div>
+            </div>
+          </div>
+          <div class="contact-card reveal" style="transition-delay:0.4s">
+            <div class="contact-icon">
+              <svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </div>
+            <div>
+              <div class="contact-label">Orçamento</div>
+              <div class="contact-value">Gratuito e sem compromisso</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Auto<span>Nível</span></div>
+    <p class="footer-copy">© 2025 Pintura Auto Nível · Todos os direitos reservados</p>
+  </footer>
+
+  <!-- WHATSAPP FLOAT -->
+  <a href="https://wa.me/5511999999999" class="wa-float" target="_blank" rel="noopener" aria-label="Falar pelo WhatsApp">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+  </a>
+
+  <script>
+    // Header scroll effect
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    // Scroll reveal
+    const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    revealEls.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
