@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mcosta Móveis Planejados — Estilo e Bom Gosto</title>
+  <meta name="description" content="Mcosta Móveis Planejados: móveis sob medida com estilo e bom gosto. Cozinhas, dormitórios, closets, home office e muito mais. Orçamento gratuito.">
+  <meta property="og:title" content="Mcosta Móveis Planejados">
+  <meta property="og:description" content="Móveis planejados com estilo e bom gosto — criados para o seu espaço.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='55' x='0' y='22' rx='3' fill='%23C9A96E'/><rect width='82' height='9' x='9' y='16' rx='2' fill='%232C1810'/><rect width='12' height='22' x='14' y='74' rx='2' fill='%232C1810'/><rect width='12' height='22' x='74' y='74' rx='2' fill='%232C1810'/></svg>">
+
+  <style>
+    :root {
+      --bg: #FAF7F2;
+      --bg-dark: #1A0D06;
+      --bg-warm: #F2EBE0;
+      --primary: #2C1810;
+      --accent: #C9A96E;
+      --accent-light: #E8D5A8;
+      --text: #2C1810;
+      --text-muted: #8A7A6E;
+      --line: #E8DDD0;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      padding: 22px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.4s ease;
+    }
+    nav.scrolled {
+      background: var(--bg-dark);
+      padding: 14px 48px;
+      box-shadow: 0 2px 40px rgba(0,0,0,0.35);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 19px;
+      font-weight: 700;
+      color: #fff;
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-cta {
+      background: var(--accent);
+      color: var(--bg-dark);
+      text-decoration: none;
+      padding: 10px 26px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+    }
+    .nav-cta:hover { background: var(--accent-light); }
+
+    /* HERO */
+    .hero {
+      height: 100vh;
+      min-height: 640px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .hero-img {
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      animation: imgReveal 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    }
+    .hero-img::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(120deg, rgba(26,13,6,0.25) 0%, transparent 60%);
+    }
+    @keyframes imgReveal {
+      from { transform: scale(1.1); opacity: 0.7; }
+      to   { transform: scale(1);   opacity: 1; }
+    }
+    .hero-panel {
+      background: var(--bg-dark);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 100px 64px 64px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-panel::before {
+      content: '';
+      position: absolute;
+      top: -150px; right: -150px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(201,169,110,0.1) 0%, transparent 68%);
+      pointer-events: none;
+    }
+    .hero-panel::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 3px; height: 60%;
+      background: linear-gradient(to bottom, transparent, var(--accent), transparent);
+    }
+    .hero-eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease 0.4s forwards;
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(44px, 4.5vw, 68px);
+      font-weight: 900;
+      line-height: 1.06;
+      color: #fff;
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.6s forwards;
+    }
+    .hero-title em { font-style: italic; color: var(--accent); }
+    .hero-sub {
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.55);
+      max-width: 340px;
+      margin-bottom: 52px;
+      opacity: 0;
+      animation: fadeUp 0.9s ease 0.8s forwards;
+    }
+    .hero-cta {
+      opacity: 0;
+      animation: fadeUp 0.9s ease 1s forwards;
+      align-self: flex-start;
+    }
+    .btn-wa {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--accent);
+      color: var(--bg-dark);
+      text-decoration: none;
+      padding: 18px 36px;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: all 0.3s ease;
+    }
+    .btn-wa:hover {
+      background: var(--accent-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(201,169,110,0.35);
+    }
+    .btn-wa svg { width: 20px; height: 20px; flex-shrink: 0; }
+    .hero-scroll {
+      position: absolute;
+      bottom: 40px; left: 64px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+      opacity: 0;
+      animation: fadeIn 1s ease 1.6s forwards;
+    }
+    .hero-scroll::before {
+      content: '';
+      width: 36px; height: 1px;
+      background: rgba(255,255,255,0.25);
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    /* MARQUEE */
+    .marquee-bar {
+      background: var(--accent);
+      padding: 22px 0;
+      overflow: hidden;
+    }
+    .marquee-track {
+      display: flex;
+      gap: 64px;
+      white-space: nowrap;
+      animation: marquee 22s linear infinite;
+    }
+    .marquee-item {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      font-style: italic;
+      color: var(--bg-dark);
+      flex-shrink: 0;
+    }
+    .marquee-sep { color: var(--bg-dark); opacity: 0.4; flex-shrink: 0; }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* SOBRE */
+    .sobre {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .sobre-text {
+      padding: 100px 80px 100px 64px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .sec-label {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 28px;
+    }
+    .sec-label::before {
+      content: '';
+      width: 28px; height: 1px;
+      background: var(--accent);
+    }
+    .sobre-h {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(34px, 3.5vw, 50px);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 32px;
+    }
+    .sobre-h em { font-style: italic; color: var(--accent); }
+    .sobre-p {
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+    .sobre-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      margin-top: 48px;
+      padding-top: 48px;
+      border-top: 1px solid var(--line);
+    }
+    .stat-n {
+      font-family: 'Playfair Display', serif;
+      font-size: 52px;
+      font-weight: 900;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .stat-n span { color: var(--accent); }
+    .stat-l {
+      font-size: 13px;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+    }
+    .sobre-photo {
+      position: relative;
+      overflow: hidden;
+      min-height: 560px;
+    }
+    .sobre-photo img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s ease;
+    }
+    .sobre-photo:hover img { transform: scale(1.04); }
+    .sobre-accent {
+      position: absolute;
+      bottom: -16px; right: -16px;
+      width: 120px; height: 120px;
+      background: var(--accent);
+      z-index: -1;
+    }
+
+    /* SERVIÇOS */
+    .servicos {
+      background: var(--bg-warm);
+      padding: 110px 64px;
+    }
+    .servicos-hd {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 64px;
+      gap: 40px;
+    }
+    .servicos-h {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(34px, 3.5vw, 52px);
+      font-weight: 700;
+      line-height: 1.1;
+    }
+    .servicos-h em { font-style: italic; color: var(--accent); }
+    .servicos-intro {
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.75;
+      color: var(--text-muted);
+      max-width: 280px;
+    }
+    .servicos-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3px;
+    }
+    .s-card {
+      background: var(--bg);
+      padding: 48px 40px 44px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      cursor: default;
+    }
+    .s-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 3px;
+      background: var(--accent);
+      transition: width 0.5s ease;
+    }
+    .s-card:hover {
+      background: var(--bg-dark);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px rgba(26,13,6,0.2);
+    }
+    .s-card:hover::after { width: 100%; }
+    .s-card:hover .s-num,
+    .s-card:hover .s-name,
+    .s-card:hover .s-desc { color: #fff; }
+    .s-card:hover .s-desc { color: rgba(255,255,255,0.55); }
+    .s-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 60px;
+      font-weight: 900;
+      color: var(--line);
+      line-height: 1;
+      margin-bottom: 28px;
+      transition: color 0.4s ease;
+    }
+    .s-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 21px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      transition: color 0.4s ease;
+    }
+    .s-desc {
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.75;
+      color: var(--text-muted);
+      transition: color 0.4s ease;
+    }
+
+    /* GALERIA */
+    .galeria {
+      padding: 110px 64px;
+    }
+    .galeria-hd {
+      margin-bottom: 56px;
+    }
+    .galeria-h {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(34px, 3.5vw, 52px);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-top: 16px;
+    }
+    .galeria-h em { font-style: italic; color: var(--accent); }
+
+    .bento {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-auto-rows: 260px;
+      gap: 8px;
+    }
+    .b-item {
+      overflow: hidden;
+      position: relative;
+    }
+    .b-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.65s ease;
+    }
+    .b-item:hover img { transform: scale(1.08); }
+    .b-item::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(26,13,6,0.45), transparent 50%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    .b-item:hover::after { opacity: 1; }
+
+    .b1 { grid-column: 1/6;  grid-row: 1/3; }
+    .b2 { grid-column: 6/9;  grid-row: 1/2; }
+    .b3 { grid-column: 9/13; grid-row: 1/3; }
+    .b4 { grid-column: 6/9;  grid-row: 2/3; }
+    .b5 { grid-column: 1/5;  grid-row: 3/4; }
+    .b6 { grid-column: 5/9;  grid-row: 3/4; }
+    .b7 { grid-column: 9/13; grid-row: 3/4; }
+
+    /* CONTATO */
+    .contato {
+      background: var(--bg-dark);
+      padding: 130px 64px;
+      position: relative;
+      overflow: hidden;
+    }
+    .contato::before {
+      content: '';
+      position: absolute;
+      top: -180px; right: -180px;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(201,169,110,0.07) 0%, transparent 68%);
+      pointer-events: none;
+    }
+    .contato::after {
+      content: '';
+      position: absolute;
+      bottom: -100px; left: -100px;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(201,169,110,0.05) 0%, transparent 68%);
+      pointer-events: none;
+    }
+    .contato-inner {
+      max-width: 760px;
+      margin: 0 auto;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    .contato-label {
+      display: block;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 36px;
+    }
+    .contato-h {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(40px, 5vw, 72px);
+      font-weight: 900;
+      line-height: 1.08;
+      color: #fff;
+      margin-bottom: 28px;
+    }
+    .contato-h em { font-style: italic; color: var(--accent); }
+    .contato-sub {
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 56px;
+    }
+    .btn-wa-lg {
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      background: #25D366;
+      color: #fff;
+      text-decoration: none;
+      padding: 22px 52px;
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      transition: all 0.35s ease;
+    }
+    .btn-wa-lg:hover {
+      background: #1DBF5A;
+      transform: translateY(-3px);
+      box-shadow: 0 16px 50px rgba(37,211,102,0.35);
+    }
+    .btn-wa-lg svg { width: 22px; height: 22px; flex-shrink: 0; }
+    .divider {
+      width: 64px; height: 1px;
+      background: rgba(255,255,255,0.12);
+      margin: 60px auto;
+    }
+    .info-row {
+      display: flex;
+      justify-content: center;
+      gap: 64px;
+      flex-wrap: wrap;
+    }
+    .info-item { text-align: center; }
+    .info-l {
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+    .info-v {
+      font-size: 14px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.6);
+    }
+
+    /* FOOTER */
+    footer {
+      background: #0A0402;
+      padding: 36px 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid rgba(255,255,255,0.04);
+    }
+    .foot-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 17px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .foot-logo span { color: var(--accent); }
+    .foot-copy {
+      font-size: 12px;
+      color: rgba(255,255,255,0.2);
+    }
+
+    /* WHATSAPP FLOAT */
+    .wa-btn {
+      position: fixed;
+      bottom: 30px; right: 30px;
+      z-index: 999;
+      width: 60px; height: 60px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.45);
+      text-decoration: none;
+      animation: waPulse 2.8s ease-in-out infinite;
+      transition: transform 0.3s ease;
+    }
+    .wa-btn:hover {
+      transform: scale(1.14);
+      animation: none;
+      box-shadow: 0 8px 32px rgba(37,211,102,0.55);
+    }
+    .wa-btn svg { width: 30px; height: 30px; fill: #fff; }
+    @keyframes waPulse {
+      0%, 100% { box-shadow: 0 4px 20px rgba(37,211,102,0.45); }
+      50%       { box-shadow: 0 4px 40px rgba(37,211,102,0.7), 0 0 0 10px rgba(37,211,102,0.12); }
+    }
+
+    /* SCROLL REVEAL */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.85s ease, transform 0.85s ease;
+    }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+    .delay-1 { transition-delay: 0.1s; }
+    .delay-2 { transition-delay: 0.2s; }
+    .delay-3 { transition-delay: 0.3s; }
+    .delay-4 { transition-delay: 0.4s; }
+    .delay-5 { transition-delay: 0.5s; }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; height: auto; }
+      .hero-img { height: 52vh; min-height: 300px; }
+      .hero-panel { padding: 64px 32px 80px; }
+      .hero-scroll { display: none; }
+      nav { padding: 16px 24px; }
+      nav.scrolled { padding: 12px 24px; }
+
+      .sobre { grid-template-columns: 1fr; }
+      .sobre-text { padding: 64px 32px; order: 2; }
+      .sobre-photo { min-height: 300px; order: 1; }
+
+      .servicos { padding: 80px 24px; }
+      .servicos-hd { flex-direction: column; align-items: flex-start; }
+      .servicos-grid { grid-template-columns: 1fr; }
+
+      .galeria { padding: 80px 24px; }
+      .bento {
+        grid-template-columns: 1fr 1fr;
+        grid-auto-rows: 200px;
+      }
+      .b1,.b2,.b3,.b4,.b5,.b6,.b7 { grid-column: auto; grid-row: auto; }
+      .b1 { grid-column: 1/3; }
+
+      .contato { padding: 80px 32px; }
+      .info-row { gap: 36px; }
+      footer { flex-direction: column; gap: 12px; text-align: center; padding: 28px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <a href="#" class="nav-logo">MCosta <span>Móveis</span></a>
+    <a href="https://wa.me/5500000000000?text=Olá!%20Tenho%20interesse%20em%20móveis%20planejados." class="nav-cta" target="_blank" rel="noopener">Orçamento Grátis</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-img">
+      <img src="https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=1400&q=85" alt="Ambiente planejado Mcosta Móveis" loading="eager">
+    </div>
+    <div class="hero-panel">
+      <p class="hero-eyebrow">Móveis sob medida</p>
+      <h1 class="hero-title">
+        Estilo que<br>
+        transforma<br>
+        <em>ambientes</em>
+      </h1>
+      <p class="hero-sub">
+        Móveis planejados com estilo e bom gosto — criados para o seu espaço, do jeito que você sempre imaginou.
+      </p>
+      <div class="hero-cta">
+        <a href="https://wa.me/5500000000000?text=Olá!%20Tenho%20interesse%20em%20móveis%20planejados." class="btn-wa" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Falar no WhatsApp
+        </a>
+      </div>
+      <div class="hero-scroll">Role para ver mais</div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-bar" aria-hidden="true">
+    <div class="marquee-track">
+      <span class="marquee-item">Cozinhas Planejadas</span>
+      <span class="marquee-sep">·</span>
+      <span class="marquee-item">Dormitórios</span>
+      <span class="marquee-sep">·</span>
+      <span class="marquee-item">Closets</span>
+      <span class="marquee-sep">·</span>
+      <span class="marquee-item">Home Office</span>
+      <span class="marquee-sep">·</span>
+      <span class="marquee-item">Salas de Estar</span>
+      <span class="marquee-sep">·</span>
+      <span class="marquee-item">Áreas de Serviço</span>
+      <span class="marquee-sep">·</span>
+      <span class="marquee-item">Cozinhas Planejadas</span>
+      <span class="marquee-sep">·</span>
+      <span class="marquee-item">Dormitórios</span>
+      <span class="marquee-sep">·</span>
+      <span class="marquee-item">Closets</span>
+      <span class="marquee-sep">·</span>
+      <span class="marquee-item">Home Office</span>
+      <span class="marquee-sep">·</span>
+      <span class="marquee-item">Salas de Estar</span>
+      <span class="marquee-sep">·</span>
+      <span class="marquee-item">Áreas de Serviço</span>
+      <span class="marquee-sep">·</span>
+    </div>
+  </div>
+
+  <!-- SOBRE -->
+  <section class="sobre">
+    <div class="sobre-text reveal">
+      <div class="sec-label">Sobre nós</div>
+      <h2 class="sobre-h">Feito com<br>cuidado e<br><em>precisão</em></h2>
+      <p class="sobre-p">
+        A Mcosta Móveis Planejados nasce da paixão por transformar espaços em lares. Cada projeto é único — criado sob medida para refletir a personalidade de quem vive nele, com materiais de qualidade e acabamento impecável.
+      </p>
+      <p class="sobre-p">
+        Do planejamento à instalação, acompanhamos cada etapa para garantir que o resultado supere suas expectativas em qualidade e beleza.
+      </p>
+      <div class="sobre-stats">
+        <div class="reveal delay-1">
+          <div class="stat-n">500<span>+</span></div>
+          <div class="stat-l">Projetos realizados</div>
+        </div>
+        <div class="reveal delay-2">
+          <div class="stat-n">10<span>+</span></div>
+          <div class="stat-l">Anos de experiência</div>
+        </div>
+      </div>
+    </div>
+    <div class="sobre-photo">
+      <img src="https://images.unsplash.com/photo-1484154218962-a197022b5858?w=900&q=85" alt="Cozinha planejada de alto padrão" loading="lazy">
+      <div class="sobre-accent"></div>
+    </div>
+  </section>
+
+  <!-- SERVIÇOS -->
+  <section class="servicos" id="servicos">
+    <div class="servicos-hd reveal">
+      <div>
+        <div class="sec-label">O que fazemos</div>
+        <h2 class="servicos-h">Nossos<br><em>serviços</em></h2>
+      </div>
+      <p class="servicos-intro">Cada ambiente da sua casa pode ser planejado com funcionalidade e elegância.</p>
+    </div>
+    <div class="servicos-grid">
+      <div class="s-card reveal delay-1">
+        <div class="s-num">01</div>
+        <h3 class="s-name">Cozinha Planejada</h3>
+        <p class="s-desc">O coração do lar merece atenção especial. Projetos que unem beleza, praticidade e aproveitamento inteligente de cada centímetro.</p>
+      </div>
+      <div class="s-card reveal delay-2">
+        <div class="s-num">02</div>
+        <h3 class="s-name">Dormitório</h3>
+        <p class="s-desc">Guarda-roupas, cabeceiras e nichos planejados para criar o quarto dos seus sonhos — organizado e aconchegante.</p>
+      </div>
+      <div class="s-card reveal delay-3">
+        <div class="s-num">03</div>
+        <h3 class="s-name">Closet</h3>
+        <p class="s-desc">Organize seu guarda-roupa com sofisticação. Closets planejados que transformam a rotina e valorizam seu espaço.</p>
+      </div>
+      <div class="s-card reveal delay-1">
+        <div class="s-num">04</div>
+        <h3 class="s-name">Home Office</h3>
+        <p class="s-desc">Ambientes de trabalho planejados para produtividade e conforto, sem abrir mão do estilo no lar.</p>
+      </div>
+      <div class="s-card reveal delay-2">
+        <div class="s-num">05</div>
+        <h3 class="s-name">Sala de Estar</h3>
+        <p class="s-desc">Painéis, estantes e racks planejados que se tornam o ponto focal da sala, com design autoral e marcante.</p>
+      </div>
+      <div class="s-card reveal delay-3">
+        <div class="s-num">06</div>
+        <h3 class="s-name">Área de Serviço</h3>
+        <p class="s-desc">Praticidade e organização para a lavanderia e área de serviço, aproveitando cada centímetro com inteligência.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALERIA -->
+  <section class="galeria" id="galeria">
+    <div class="galeria-hd reveal">
+      <div class="sec-label">Portfólio</div>
+      <h2 class="galeria-h">Ambientes que<br><em>inspiram</em></h2>
+    </div>
+    <div class="bento">
+      <div class="b-item b1">
+        <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=900&q=85" alt="Cozinha planejada moderna" loading="lazy">
+      </div>
+      <div class="b-item b2">
+        <img src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=85" alt="Sala planejada sofá" loading="lazy">
+      </div>
+      <div class="b-item b3">
+        <img src="https://images.unsplash.com/photo-1616137466211-f939a420be84?w=900&q=85" alt="Dormitório planejado moderno" loading="lazy">
+      </div>
+      <div class="b-item b4">
+        <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600&q=85" alt="Living room furniture" loading="lazy">
+      </div>
+      <div class="b-item b5">
+        <img src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=700&q=85" alt="Sala de estar planejada" loading="lazy">
+      </div>
+      <div class="b-item b6">
+        <img src="https://images.unsplash.com/photo-1565183997392-2f6f122e5912?w=700&q=85" alt="Interior design moderno" loading="lazy">
+      </div>
+      <div class="b-item b7">
+        <img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=600&q=85" alt="Quarto planejado elegante" loading="lazy">
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTATO -->
+  <section class="contato" id="contato">
+    <div class="contato-inner">
+      <span class="contato-label reveal">Vamos conversar</span>
+      <h2 class="contato-h reveal">
+        Seu projeto<br>
+        começa com<br>
+        um <em>olá</em>
+      </h2>
+      <p class="contato-sub reveal">
+        Entre em contato agora e receba um orçamento personalizado e sem compromisso. Transformamos seu espaço com estilo e bom gosto.
+      </p>
+      <a href="https://wa.me/5500000000000?text=Olá!%20Tenho%20interesse%20em%20móveis%20planejados." class="btn-wa-lg reveal" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Falar no WhatsApp
+      </a>
+      <div class="divider"></div>
+      <div class="info-row">
+        <div class="info-item reveal delay-1">
+          <div class="info-l">Atendimento</div>
+          <div class="info-v">Seg a Sex, 8h às 18h</div>
+        </div>
+        <div class="info-item reveal delay-2">
+          <div class="info-l">Resposta</div>
+          <div class="info-v">Em até 2 horas</div>
+        </div>
+        <div class="info-item reveal delay-3">
+          <div class="info-l">Orçamento</div>
+          <div class="info-v">Gratuito e sem compromisso</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="foot-logo">MCosta <span>Móveis Planejados</span></div>
+    <div class="foot-copy">© 2025 Mcosta Móveis Planejados. Todos os direitos reservados.</div>
+  </footer>
+
+  <!-- FLOAT WA -->
+  <a href="https://wa.me/5500000000000?text=Olá!%20Tenho%20interesse%20em%20móveis%20planejados." class="wa-btn" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+  <script>
+    // Nav scroll
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 80);
+    }, { passive: true });
+
+    // Scroll reveal
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in');
+          revealObserver.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+  </script>
+</body>
+</html>
