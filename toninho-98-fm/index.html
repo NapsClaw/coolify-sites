@@ -126,6 +126,16 @@
     }
     .nav-links a:hover { color: var(--text); }
     .nav-links a:hover::after { width: 100%; }
+    .nav-listen-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--accent); color: white;
+      font-family: 'Unbounded', sans-serif;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 8px 18px; border-radius: 2px;
+      text-decoration: none; transition: all 0.3s ease;
+    }
+    .nav-listen-btn:hover { background: #FF1A24; transform: scale(1.04); }
     .on-air-badge {
       display: flex;
       align-items: center;
@@ -146,6 +156,35 @@
       border-radius: 50%;
       animation: blink 1.4s ease-in-out infinite;
     }
+
+    /* ===== STICKY LISTEN BAR ===== */
+    #sticky-listen {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      background: var(--accent);
+      padding: 0 24px;
+      height: 0; overflow: hidden;
+      transition: height 0.4s ease;
+      display: flex; align-items: center; justify-content: center;
+      gap: 16px;
+    }
+    #sticky-listen.visible { height: 48px; }
+    .sticky-listen-text {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.14em; color: white;
+      text-transform: uppercase;
+    }
+    .sticky-play-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.2); color: white;
+      border: 1px solid rgba(255,255,255,0.4);
+      font-family: 'Unbounded', sans-serif;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 6px 16px; border-radius: 2px;
+      cursor: pointer; transition: all 0.3s ease;
+    }
+    .sticky-play-btn:hover { background: rgba(255,255,255,0.35); }
 
     /* ===== HERO ===== */
     #hero {
@@ -233,19 +272,28 @@
       animation: fadeUp 0.9s ease 0.86s both;
     }
     .btn-primary {
-      display: inline-flex; align-items: center; gap: 10px;
+      display: inline-flex; align-items: center; gap: 12px;
       background: var(--accent); color: white;
       font-family: 'Unbounded', sans-serif;
-      font-size: 11px; font-weight: 700;
+      font-size: 13px; font-weight: 700;
       letter-spacing: 0.1em; text-transform: uppercase;
-      padding: 16px 32px; text-decoration: none;
-      border-radius: 2px; min-height: 48px;
+      padding: 20px 40px; text-decoration: none;
+      border-radius: 2px; min-height: 60px;
+      position: relative; overflow: visible;
+      box-shadow: 0 0 40px rgba(232,0,13,0.35);
       transition: all 0.3s ease;
+    }
+    .btn-primary::before {
+      content: '';
+      position: absolute; inset: -6px;
+      border-radius: 4px;
+      border: 1px solid rgba(232,0,13,0.4);
+      animation: pulseRing 2.4s ease-out infinite;
     }
     .btn-primary:hover {
       background: #FF1A24;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(232,0,13,0.4);
+      transform: translateY(-3px);
+      box-shadow: 0 12px 36px rgba(232,0,13,0.55);
     }
     .btn-secondary {
       display: inline-flex; align-items: center; gap: 10px;
@@ -355,6 +403,109 @@
       width: 80px; height: 80px;
       background: var(--accent); border-radius: 2px; z-index: -1;
     }
+
+    /* ===== LOCUTORES ===== */
+    #locutores { background: var(--surface); position: relative; overflow: hidden; }
+    #locutores::before {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(232,0,13,0.3), transparent);
+    }
+    .locutores-header { max-width: 1200px; margin: 0 auto 64px; }
+    .locutores-grid {
+      display: grid; grid-template-columns: 1fr; gap: 24px;
+      max-width: 1200px; margin: 0 auto;
+    }
+    @media (min-width: 640px)  { .locutores-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .locutores-grid { grid-template-columns: repeat(3, 1fr); } }
+    .locutor-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+      transition: all 0.4s ease;
+    }
+    .locutor-card:hover {
+      border-color: rgba(232,0,13,0.35);
+      transform: translateY(-6px);
+      box-shadow: 0 20px 48px rgba(0,0,0,0.5);
+    }
+    .locutor-avatar {
+      width: 100%; height: 220px;
+      position: relative; overflow: hidden;
+      background: var(--surface);
+    }
+    @media (min-width: 768px) { .locutor-avatar { height: 260px; } }
+    .locutor-avatar-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+    .locutor-card:hover .locutor-avatar-img { transform: scale(1.06); }
+    .locutor-avatar-initials {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Unbounded', sans-serif;
+      font-size: 52px; font-weight: 900;
+      color: rgba(240,237,232,0.15);
+      background: linear-gradient(135deg, var(--surface) 0%, #1e1e2a 100%);
+      letter-spacing: -0.04em;
+    }
+    .locutor-avatar-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(10,10,15,0.9) 0%, transparent 50%);
+    }
+    .locutor-program-badge {
+      position: absolute; top: 16px; left: 16px;
+      font-family: 'Unbounded', sans-serif;
+      font-size: 9px; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--accent);
+      background: rgba(10,10,15,0.85);
+      border: 1px solid rgba(232,0,13,0.25);
+      padding: 5px 12px; border-radius: 2px;
+    }
+    .locutor-body { padding: 24px; }
+    .locutor-name {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 17px; font-weight: 900;
+      letter-spacing: -0.01em; color: var(--text);
+      margin-bottom: 4px; line-height: 1.2;
+    }
+    .locutor-show {
+      font-size: 13px; font-weight: 400;
+      color: var(--accent); margin-bottom: 8px;
+    }
+    .locutor-schedule {
+      font-size: 12px; font-weight: 300;
+      color: var(--text-muted); letter-spacing: 0.04em;
+    }
+
+    /* ===== PROGRAMAÇÃO NOW-ON-AIR BANNER ===== */
+    .prog-now {
+      max-width: 1200px; margin: 0 auto 32px;
+      background: linear-gradient(135deg, rgba(232,0,13,0.12), rgba(255,184,0,0.05));
+      border: 1px solid rgba(232,0,13,0.3);
+      border-radius: 2px; padding: 20px 28px;
+      display: flex; align-items: center; gap: 20px;
+      flex-wrap: wrap;
+    }
+    .prog-now-badge {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: white; background: var(--accent);
+      padding: 5px 14px; border-radius: 2px;
+      display: flex; align-items: center; gap: 7px;
+      flex-shrink: 0;
+    }
+    .prog-now-name {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 15px; font-weight: 900;
+      color: var(--text); letter-spacing: -0.01em;
+    }
+    .prog-now-sub { font-size: 13px; color: var(--text-muted); font-weight: 300; }
 
     /* ===== PROGRAMAÇÃO ===== */
     #programacao { background: var(--bg); position: relative; }
@@ -661,16 +812,33 @@
 </head>
 <body>
 
+  <!-- STICKY LISTEN BAR -->
+  <div id="sticky-listen">
+    <span class="sticky-listen-text">
+      <span style="display:inline-flex;align-items:center;gap:7px;"><span style="width:7px;height:7px;background:white;border-radius:50%;animation:blink 1.2s ease-in-out infinite;display:inline-block;"></span>98 FM ao vivo</span>
+    </span>
+    <button class="sticky-play-btn" id="sticky-play-btn">
+      <svg id="sticky-icon-play" width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      <svg id="sticky-icon-pause" width="11" height="11" viewBox="0 0 24 24" fill="currentColor" style="display:none"><rect x="6" y="4" width="4" height="16"/><rect x="14" y="4" width="4" height="16"/></svg>
+      <span id="sticky-btn-label">Ouvir Agora</span>
+    </button>
+  </div>
+
   <!-- NAV -->
   <nav>
     <a href="#" class="nav-logo">TONINHO <span>98</span> FM</a>
     <ul class="nav-links">
       <li><a href="#ao-vivo">Ao Vivo</a></li>
       <li><a href="#sobre">Sobre</a></li>
+      <li><a href="#locutores">Locutores</a></li>
       <li><a href="#programacao">Programação</a></li>
       <li><a href="#contato">Contato</a></li>
     </ul>
-    <div class="on-air-badge">
+    <a href="#ao-vivo" class="nav-listen-btn" id="nav-listen-btn" style="display:none">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      Ouça
+    </a>
+    <div class="on-air-badge" id="on-air-badge">
       <div class="on-air-dot"></div>
       ON AIR
     </div>
@@ -701,11 +869,11 @@
 
       <div class="hero-cta-group">
         <a href="#ao-vivo" class="btn-primary" id="hero-listen-btn">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          Ouvir Ao Vivo
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Ouça Ao Vivo — 98 FM
         </a>
-        <a href="#programacao" class="btn-secondary">
-          Programação &rarr;
+        <a href="#locutores" class="btn-secondary">
+          Nossos Locutores &rarr;
         </a>
       </div>
     </div>
@@ -825,6 +993,102 @@
 
   <div class="section-divider"></div>
 
+  <!-- LOCUTORES -->
+  <section id="locutores">
+    <div class="locutores-header reveal">
+      <div class="section-label">
+        <div class="section-label-line"></div>
+        <span class="section-label-text">As vozes da rádio</span>
+      </div>
+      <h2 class="section-title">Nossos Locutores</h2>
+      <p style="font-size:16px; font-weight:300; color:var(--text-muted); max-width:500px; line-height:1.75;">
+        Conheça as vozes que animam o seu dia no 98.0 FM de Buritizeiro.
+      </p>
+    </div>
+
+    <div class="locutores-grid">
+      <div class="locutor-card reveal">
+        <div class="locutor-avatar">
+          <div class="locutor-avatar-initials">T</div>
+          <div class="locutor-avatar-overlay"></div>
+          <div class="locutor-program-badge">Manhã</div>
+        </div>
+        <div class="locutor-body">
+          <div class="locutor-name">Toninho</div>
+          <div class="locutor-show">Bom Dia Buritizeiro</div>
+          <div class="locutor-schedule">Seg &ndash; Sex &middot; 06:00 &ndash; 09:00</div>
+        </div>
+      </div>
+
+      <div class="locutor-card reveal">
+        <div class="locutor-avatar">
+          <div class="locutor-avatar-initials">PH</div>
+          <div class="locutor-avatar-overlay"></div>
+          <div class="locutor-program-badge">Sertanejo</div>
+        </div>
+        <div class="locutor-body">
+          <div class="locutor-name">Pedro Henrique</div>
+          <div class="locutor-show">Sertanejo das 9</div>
+          <div class="locutor-schedule">Seg &ndash; Sex &middot; 09:00 &ndash; 12:00</div>
+        </div>
+      </div>
+
+      <div class="locutor-card reveal">
+        <div class="locutor-avatar">
+          <div class="locutor-avatar-initials">MC</div>
+          <div class="locutor-avatar-overlay"></div>
+          <div class="locutor-program-badge">Almoço</div>
+        </div>
+        <div class="locutor-body">
+          <div class="locutor-name">Mariana Costa</div>
+          <div class="locutor-show">Hora do Almoço</div>
+          <div class="locutor-schedule">Seg &ndash; Sex &middot; 12:00 &ndash; 14:00</div>
+        </div>
+      </div>
+
+      <div class="locutor-card reveal">
+        <div class="locutor-avatar">
+          <div class="locutor-avatar-initials">JC</div>
+          <div class="locutor-avatar-overlay"></div>
+          <div class="locutor-program-badge">Tarde</div>
+        </div>
+        <div class="locutor-body">
+          <div class="locutor-name">João Carlos</div>
+          <div class="locutor-show">Tarde Sertaneja</div>
+          <div class="locutor-schedule">Seg &ndash; Sex &middot; 14:00 &ndash; 17:00</div>
+        </div>
+      </div>
+
+      <div class="locutor-card reveal">
+        <div class="locutor-avatar">
+          <div class="locutor-avatar-initials">AP</div>
+          <div class="locutor-avatar-overlay"></div>
+          <div class="locutor-program-badge">Noite</div>
+        </div>
+        <div class="locutor-body">
+          <div class="locutor-name">Ana Paula</div>
+          <div class="locutor-show">Vale a Pena Ouvir</div>
+          <div class="locutor-schedule">Seg &ndash; Sex &middot; 17:00 &ndash; 20:00</div>
+        </div>
+      </div>
+
+      <div class="locutor-card reveal">
+        <div class="locutor-avatar">
+          <div class="locutor-avatar-initials">PE</div>
+          <div class="locutor-avatar-overlay"></div>
+          <div class="locutor-program-badge">Gospel</div>
+        </div>
+        <div class="locutor-body">
+          <div class="locutor-name">Pastor Edilson</div>
+          <div class="locutor-show">Momento Gospel</div>
+          <div class="locutor-schedule">Domingo &middot; 06:00 &ndash; 08:00</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
   <!-- PROGRAMAÇÃO -->
   <section id="programacao">
     <div class="prog-header reveal">
@@ -836,6 +1100,17 @@
       <p style="font-size:16px; font-weight:300; color:var(--text-muted); max-width:460px; line-height:1.75;">
         De segunda a domingo, conteúdo de qualidade para todos os gostos.
       </p>
+    </div>
+
+    <div class="prog-now reveal" id="prog-now">
+      <div class="prog-now-badge">
+        <span style="width:7px;height:7px;background:white;border-radius:50%;animation:blink 1.2s ease-in-out infinite;display:inline-block;"></span>
+        Agora no ar
+      </div>
+      <div>
+        <div class="prog-now-name" id="prog-now-name">Bom Dia Buritizeiro</div>
+        <div class="prog-now-sub" id="prog-now-sub">com Toninho &middot; 06:00 &mdash; 09:00</div>
+      </div>
     </div>
 
     <div class="prog-grid">
@@ -981,6 +1256,66 @@
   </a>
 
   <script>
+    // Now on air dynamic
+    const schedule = [
+      { start: 0,  end: 360,  name: 'Madrugada Musical',  host: 'Programação automática',       time: '00:00 — 06:00' },
+      { start: 360, end: 540, name: 'Bom Dia Buritizeiro', host: 'com Toninho',                  time: '06:00 — 09:00' },
+      { start: 540, end: 720, name: 'Sertanejo das 9',     host: 'com Pedro Henrique',           time: '09:00 — 12:00' },
+      { start: 720, end: 840, name: 'Hora do Almoço',      host: 'com Mariana Costa',            time: '12:00 — 14:00' },
+      { start: 840, end: 1020,name: 'Tarde Sertaneja',     host: 'com João Carlos',              time: '14:00 — 17:00' },
+      { start: 1020,end: 1200,name: 'Vale a Pena Ouvir',   host: 'com Ana Paula',                time: '17:00 — 20:00' },
+      { start: 1200,end: 1440,name: 'Noite Musical',       host: 'Programação automática',       time: '20:00 — 00:00' },
+    ];
+    function updateNowOnAir() {
+      const now = new Date();
+      const mins = now.getHours() * 60 + now.getMinutes();
+      const current = schedule.find(s => mins >= s.start && mins < s.end) || schedule[0];
+      document.getElementById('prog-now-name').textContent = current.name;
+      document.getElementById('prog-now-sub').textContent = current.host + ' · ' + current.time;
+    }
+    updateNowOnAir();
+    setInterval(updateNowOnAir, 60000);
+
+    // Sticky listen bar
+    const stickyBar = document.getElementById('sticky-listen');
+    const heroSection = document.getElementById('hero');
+    const navOnAirBadge = document.getElementById('on-air-badge');
+    const navListenBtn = document.getElementById('nav-listen-btn');
+    const stickyPlayBtn = document.getElementById('sticky-play-btn');
+    const stickyIconPlay = document.getElementById('sticky-icon-play');
+    const stickyIconPause = document.getElementById('sticky-icon-pause');
+    const stickyBtnLabel = document.getElementById('sticky-btn-label');
+
+    window.addEventListener('scroll', () => {
+      const heroBottom = heroSection.getBoundingClientRect().bottom;
+      const show = heroBottom < 0;
+      stickyBar.classList.toggle('visible', show);
+      if (navOnAirBadge) navOnAirBadge.style.display = show ? 'none' : '';
+      if (navListenBtn) navListenBtn.style.display = show ? '' : 'none';
+    });
+
+    function updateStickyIcon(state) {
+      stickyIconPlay.style.display = state ? 'none' : '';
+      stickyIconPause.style.display = state ? '' : 'none';
+      stickyBtnLabel.textContent = state ? 'Pausar' : 'Ouvir Agora';
+    }
+
+    stickyPlayBtn.addEventListener('click', () => {
+      if (!isPlaying) {
+        stickyBtnLabel.textContent = 'Conectando…';
+        audio.load();
+        audio.play().then(() => setPlayingAll(true)).catch(() => { stickyBtnLabel.textContent = 'Erro. Tente de novo.'; });
+      } else {
+        audio.pause();
+        setPlayingAll(false);
+      }
+    });
+
+    function setPlayingAll(state) {
+      setPlaying(state);
+      updateStickyIcon(state);
+    }
+
     // Scroll reveal with stagger
     const reveals = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver((entries) => {
@@ -1023,18 +1358,19 @@
       if (isPlaying) {
         audio.pause();
         setPlaying(false);
+        updateStickyIcon(false);
       } else {
         playerStatus.textContent = 'Conectando…';
         audio.load();
-        audio.play().then(() => setPlaying(true)).catch(() => {
+        audio.play().then(() => { setPlaying(true); updateStickyIcon(true); }).catch(() => {
           playerStatus.textContent = 'Erro ao conectar. Tente novamente.';
         });
       }
     });
 
     audio.addEventListener('waiting', () => { if (isPlaying) playerStatus.textContent = 'Buffering…'; });
-    audio.addEventListener('playing', () => setPlaying(true));
-    audio.addEventListener('error', () => { setPlaying(false); playerStatus.textContent = 'Erro ao carregar stream.'; });
+    audio.addEventListener('playing', () => { setPlaying(true); updateStickyIcon(true); });
+    audio.addEventListener('error', () => { setPlaying(false); updateStickyIcon(false); playerStatus.textContent = 'Erro ao carregar stream.'; });
 
     volSlider.addEventListener('input', () => { audio.volume = parseFloat(volSlider.value); });
 
