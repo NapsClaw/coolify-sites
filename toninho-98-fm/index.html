@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Toninho 98 FM | Rádio Buritizeiro MG</title>
+  <meta name="description" content="Toninho 98 FM — A rádio de Buritizeiro, Minas Gerais. Sertanejo, notícias e entretenimento no seu dial 98.0 FM.">
+  <meta property="og:title" content="Toninho 98 FM | Rádio Buritizeiro MG">
+  <meta property="og:description" content="A voz de Buritizeiro. Sertanejo, notícias e a melhor música no 98.0 FM.">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='12' fill='%230A0A0F'/><text y='.9em' font-size='55' font-family='Arial Black' font-weight='900' fill='%23E8000D' x='10'>98</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --primary: #0A0A0F;
+      --accent: #E8000D;
+      --gold: #FFB800;
+      --bg: #0A0A0F;
+      --surface: #13131A;
+      --text: #F0EDE8;
+      --text-muted: #8A8A9A;
+      --border: rgba(240, 237, 232, 0.08);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'IBM Plex Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, .display { font-family: 'Unbounded', sans-serif; }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(32px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes slideInLeft {
+      from { opacity: 0; transform: translateX(-48px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.2; }
+    }
+    @keyframes pulseRing {
+      0%   { transform: scale(1); opacity: 0.7; }
+      100% { transform: scale(1.9); opacity: 0; }
+    }
+    @keyframes waveBar {
+      0%, 100% { transform: scaleY(0.15); }
+      50%       { transform: scaleY(1); }
+    }
+    @keyframes noise {
+      0%   { transform: translate(0,0); }
+      20%  { transform: translate(-2%,-2%); }
+      40%  { transform: translate(2%,1%); }
+      60%  { transform: translate(-1%,2%); }
+      80%  { transform: translate(1%,-1%); }
+      100% { transform: translate(0,0); }
+    }
+
+    /* ===== SCROLL REVEAL ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===== NAV ===== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(to bottom, rgba(10,10,15,0.96), transparent);
+      backdrop-filter: blur(12px);
+      animation: fadeIn 1s ease 0.2s both;
+    }
+    .nav-logo {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: none; gap: 32px; list-style: none; }
+    @media (min-width: 768px) { .nav-links { display: flex; } }
+    .nav-links a {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 0; height: 1px;
+      background: var(--accent);
+      transition: width 0.3s ease;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover::after { width: 100%; }
+    .on-air-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Unbounded', sans-serif;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      background: rgba(232,0,13,0.1);
+      border: 1px solid rgba(232,0,13,0.3);
+      padding: 6px 14px;
+      border-radius: 2px;
+    }
+    .on-air-dot {
+      width: 7px; height: 7px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: blink 1.4s ease-in-out infinite;
+    }
+
+    /* ===== HERO ===== */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 24px 64px;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse at 15% 55%, rgba(232,0,13,0.13) 0%, transparent 55%),
+        radial-gradient(ellipse at 85% 15%, rgba(255,184,0,0.07) 0%, transparent 50%),
+        var(--bg);
+    }
+    .hero-noise {
+      position: absolute;
+      inset: -50%; width: 200%; height: 200%;
+      opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      animation: noise 0.5s steps(1) infinite;
+    }
+    .hero-grid-lines {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(240,237,232,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(240,237,232,0.025) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .hero-bg-number {
+      position: absolute;
+      top: 50%; right: -4%;
+      transform: translateY(-50%);
+      font-family: 'Unbounded', sans-serif;
+      font-size: clamp(160px, 32vw, 380px);
+      font-weight: 900;
+      line-height: 1;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(240,237,232,0.04);
+      letter-spacing: -0.02em;
+      pointer-events: none;
+      user-select: none;
+      animation: fadeIn 2s ease 0.8s both;
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 900px; }
+    .hero-eyebrow {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 24px;
+      animation: slideInLeft 0.8s ease 0.3s both;
+    }
+    .hero-eyebrow-line { width: 40px; height: 1px; background: var(--accent); }
+    .hero-eyebrow-text {
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .hero-title {
+      font-size: clamp(48px, 11vw, 110px);
+      font-weight: 900; line-height: 0.95;
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+      animation: fadeUp 0.9s ease 0.5s both;
+    }
+    .hero-title-accent { color: var(--accent); display: block; }
+    .hero-frequency {
+      font-size: clamp(72px, 16vw, 160px);
+      font-weight: 900; line-height: 0.9;
+      letter-spacing: -0.04em;
+      color: var(--gold); display: block;
+      animation: fadeUp 0.9s ease 0.62s both;
+    }
+    .hero-tagline {
+      font-size: clamp(14px, 1.8vw, 16px);
+      font-weight: 300; line-height: 1.75;
+      color: var(--text-muted);
+      max-width: 400px;
+      margin: 24px 0 40px;
+      animation: fadeUp 0.9s ease 0.74s both;
+    }
+    .hero-cta-group {
+      display: flex; flex-wrap: wrap; gap: 16px; align-items: center;
+      animation: fadeUp 0.9s ease 0.86s both;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--accent); color: white;
+      font-family: 'Unbounded', sans-serif;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 16px 32px; text-decoration: none;
+      border-radius: 2px; min-height: 48px;
+      transition: all 0.3s ease;
+    }
+    .btn-primary:hover {
+      background: #FF1A24;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(232,0,13,0.4);
+    }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: transparent; color: var(--text);
+      font-family: 'Unbounded', sans-serif;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 16px 32px; text-decoration: none;
+      border: 1px solid var(--border); border-radius: 2px;
+      min-height: 48px; transition: all 0.3s ease;
+    }
+    .btn-secondary:hover {
+      border-color: rgba(240,237,232,0.3);
+      background: rgba(240,237,232,0.05);
+    }
+
+    /* Equalizer bars */
+    .equalizer {
+      position: absolute;
+      bottom: 64px; right: 24px;
+      display: flex; align-items: flex-end; gap: 4px;
+      height: 48px; opacity: 0.45;
+      animation: fadeIn 1s ease 1.6s both;
+    }
+    @media (min-width: 768px) {
+      .equalizer { right: 48px; height: 64px; }
+    }
+    .eq-bar {
+      width: 4px;
+      background: var(--accent);
+      border-radius: 2px;
+      transform-origin: bottom;
+      animation: waveBar var(--dur) ease-in-out var(--del) infinite;
+    }
+
+    /* ===== DIVIDER ===== */
+    .section-divider {
+      width: 100%; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(232,0,13,0.35), transparent);
+    }
+
+    /* ===== SECTIONS ===== */
+    section { padding: 80px 24px; }
+    @media (min-width: 768px) { section { padding: 120px 48px; } }
+
+    .section-label { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+    .section-label-line { width: 32px; height: 1px; background: var(--accent); }
+    .section-label-text {
+      font-size: 10px; font-weight: 500;
+      letter-spacing: 0.25em; text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .section-title {
+      font-size: clamp(30px, 5.5vw, 60px);
+      font-weight: 900; line-height: 1.05;
+      letter-spacing: -0.02em; margin-bottom: 24px;
+    }
+
+    /* ===== SOBRE ===== */
+    #sobre {
+      background: var(--surface);
+      position: relative; overflow: hidden;
+    }
+    #sobre::before {
+      content: '';
+      position: absolute; top: 0; right: 0;
+      width: 320px; height: 320px;
+      background: radial-gradient(circle, rgba(255,184,0,0.05) 0%, transparent 70%);
+    }
+    .sobre-grid {
+      display: grid; grid-template-columns: 1fr; gap: 48px;
+      max-width: 1200px; margin: 0 auto;
+    }
+    @media (min-width: 768px) {
+      .sobre-grid { grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    }
+    .sobre-text p {
+      font-size: 16px; font-weight: 300; line-height: 1.85;
+      color: var(--text-muted); margin-bottom: 16px;
+    }
+    .sobre-text p strong { color: var(--text); font-weight: 500; }
+    .sobre-stats {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 24px; margin-top: 40px;
+    }
+    .stat-item { border-top: 1px solid var(--border); padding-top: 16px; }
+    .stat-number {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 32px; font-weight: 900;
+      color: var(--gold); letter-spacing: -0.02em;
+      line-height: 1; margin-bottom: 4px;
+    }
+    .stat-label {
+      font-size: 11px; font-weight: 400;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .sobre-image-wrapper { position: relative; }
+    .sobre-image-wrapper img {
+      width: 100%; aspect-ratio: 4/3;
+      object-fit: cover; border-radius: 2px;
+      display: block;
+    }
+    .sobre-image-accent {
+      position: absolute;
+      bottom: -16px; right: -16px;
+      width: 80px; height: 80px;
+      background: var(--accent); border-radius: 2px; z-index: -1;
+    }
+
+    /* ===== PROGRAMAÇÃO ===== */
+    #programacao { background: var(--bg); position: relative; }
+    .prog-header { max-width: 1200px; margin: 0 auto 64px; }
+    .prog-grid {
+      display: grid; grid-template-columns: 1fr; gap: 2px;
+      max-width: 1200px; margin: 0 auto;
+    }
+    @media (min-width: 640px)  { .prog-grid { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 1024px) { .prog-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    .prog-card {
+      background: var(--surface);
+      padding: 32px; position: relative;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      cursor: default;
+    }
+    .prog-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0;
+      width: 3px; height: 0;
+      background: var(--accent);
+      transition: height 0.4s ease;
+    }
+    .prog-card:hover::before { height: 100%; }
+    .prog-card:hover {
+      background: #1A1A24;
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.45);
+    }
+    .prog-time {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.15em; color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .prog-name {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 18px; font-weight: 900;
+      letter-spacing: -0.01em; color: var(--text);
+      margin-bottom: 8px; line-height: 1.2;
+    }
+    .prog-host { font-size: 13px; font-weight: 400; color: var(--text-muted); margin-bottom: 16px; }
+    .prog-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+    .prog-tag {
+      font-size: 10px; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-muted);
+      background: rgba(240,237,232,0.05);
+      border: 1px solid var(--border);
+      padding: 4px 10px; border-radius: 2px;
+    }
+
+    /* ===== CONTATO ===== */
+    #contato { background: #080810; position: relative; overflow: hidden; }
+    #contato::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(232,0,13,0.5), transparent);
+    }
+    .contato-grid {
+      display: grid; grid-template-columns: 1fr; gap: 64px;
+      max-width: 1200px; margin: 0 auto;
+    }
+    @media (min-width: 768px) {
+      .contato-grid { grid-template-columns: 1fr 1fr; align-items: start; }
+    }
+    .contato-info-heading {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 13px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 24px;
+    }
+    .contato-item { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 24px; }
+    .contato-icon {
+      width: 40px; height: 40px; flex-shrink: 0;
+      background: rgba(232,0,13,0.1);
+      border: 1px solid rgba(232,0,13,0.2);
+      border-radius: 2px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--accent);
+    }
+    .contato-item-label {
+      font-size: 11px; font-weight: 500;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text); margin-bottom: 4px;
+    }
+    .contato-item-text { font-size: 14px; font-weight: 300; line-height: 1.65; color: var(--text-muted); }
+    .freq-display {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 2px; padding: 40px;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .freq-display::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at center, rgba(255,184,0,0.06) 0%, transparent 70%);
+    }
+    .freq-big {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 72px; font-weight: 900;
+      color: var(--gold); letter-spacing: -0.04em;
+      line-height: 1; display: block; position: relative;
+    }
+    .freq-label {
+      font-family: 'Unbounded', sans-serif;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.2em; color: var(--text-muted);
+      margin-top: 8px; position: relative;
+    }
+    .freq-eq {
+      display: flex; justify-content: center; align-items: flex-end;
+      gap: 3px; height: 32px; margin-top: 24px; position: relative;
+    }
+    .freq-eq .eq-bar { background: var(--gold); opacity: 0.7; }
+    .btn-cta-full {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      background: var(--accent); color: white;
+      font-family: 'Unbounded', sans-serif;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 18px 32px; text-decoration: none;
+      border-radius: 2px; min-height: 52px;
+      margin-top: 32px; position: relative;
+      transition: all 0.3s ease;
+    }
+    .btn-cta-full:hover {
+      background: #FF1A24;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(232,0,13,0.4);
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: #050508; padding: 32px 24px;
+      border-top: 1px solid var(--border);
+    }
+    .footer-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; flex-direction: column;
+      gap: 12px; align-items: center; text-align: center;
+    }
+    @media (min-width: 768px) {
+      .footer-inner { flex-direction: row; justify-content: space-between; text-align: left; }
+    }
+    .footer-logo { font-family: 'Unbounded', sans-serif; font-size: 16px; font-weight: 900; }
+    .footer-logo span { color: var(--accent); }
+    .footer-copy { font-size: 12px; color: var(--text-muted); font-weight: 300; }
+
+    /* ===== WHATSAPP ===== */
+    .whatsapp-btn {
+      position: fixed; bottom: 24px; right: 24px; z-index: 999;
+      width: 60px; height: 60px;
+      background: #25D366; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      text-decoration: none;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: fadeIn 1s ease 2s both;
+    }
+    .whatsapp-btn::before {
+      content: '';
+      position: absolute; width: 100%; height: 100%;
+      background: #25D366; border-radius: 50%;
+      animation: pulseRing 2.2s ease-out infinite;
+    }
+    .whatsapp-btn:hover {
+      transform: scale(1.12);
+      box-shadow: 0 8px 24px rgba(37,211,102,0.45);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">TONINHO <span>98</span> FM</a>
+    <ul class="nav-links">
+      <li><a href="#sobre">Sobre</a></li>
+      <li><a href="#programacao">Programação</a></li>
+      <li><a href="#contato">Contato</a></li>
+    </ul>
+    <div class="on-air-badge">
+      <div class="on-air-dot"></div>
+      ON AIR
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-noise"></div>
+    <div class="hero-grid-lines"></div>
+    <div class="hero-bg-number">98</div>
+
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <div class="hero-eyebrow-line"></div>
+        <span class="hero-eyebrow-text">Buritizeiro &middot; Minas Gerais</span>
+      </div>
+
+      <h1 class="hero-title">
+        <span>RÁDIO</span>
+        <span class="hero-title-accent">TONINHO</span>
+        <span class="hero-frequency">98 FM</span>
+      </h1>
+
+      <p class="hero-tagline">
+        A voz de Buritizeiro. Sertanejo, notícias e a melhor música do seu dial — no ar 24 horas por dia.
+      </p>
+
+      <div class="hero-cta-group">
+        <a href="#contato" class="btn-primary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+          Ouvir Agora
+        </a>
+        <a href="#programacao" class="btn-secondary">
+          Programação &rarr;
+        </a>
+      </div>
+    </div>
+
+    <!-- Equalizer -->
+    <div class="equalizer">
+      <div class="eq-bar" style="height:80%; --dur:0.8s; --del:0s;"></div>
+      <div class="eq-bar" style="height:55%; --dur:1.1s; --del:0.10s;"></div>
+      <div class="eq-bar" style="height:100%; --dur:0.9s; --del:0.20s;"></div>
+      <div class="eq-bar" style="height:40%; --dur:1.3s; --del:0.05s;"></div>
+      <div class="eq-bar" style="height:70%; --dur:0.75s; --del:0.15s;"></div>
+      <div class="eq-bar" style="height:90%; --dur:1.0s; --del:0.25s;"></div>
+      <div class="eq-bar" style="height:50%; --dur:1.2s; --del:0.30s;"></div>
+      <div class="eq-bar" style="height:85%; --dur:0.85s; --del:0.08s;"></div>
+      <div class="eq-bar" style="height:65%; --dur:1.15s; --del:0.18s;"></div>
+      <div class="eq-bar" style="height:45%; --dur:0.72s; --del:0.12s;"></div>
+      <div class="eq-bar" style="height:95%; --dur:1.05s; --del:0.22s;"></div>
+      <div class="eq-bar" style="height:60%; --dur:0.95s; --del:0.35s;"></div>
+    </div>
+  </section>
+
+  <!-- SOBRE -->
+  <section id="sobre">
+    <div class="sobre-grid">
+      <div class="sobre-text reveal">
+        <div class="section-label">
+          <div class="section-label-line"></div>
+          <span class="section-label-text">Nossa história</span>
+        </div>
+        <h2 class="section-title">A rádio que pulsa com Buritizeiro</h2>
+        <p>A <strong>Rádio Toninho 98 FM</strong> nasceu com um propósito: ser a voz autêntica de Buritizeiro e de toda a região do Alto São Francisco. Mais do que uma estação de rádio, somos parte da vida da cidade.</p>
+        <p>Com programação diversificada — do sertanejo raiz ao gospel, das notícias locais à música popular brasileira — estamos no ar todos os dias levando informação, entretenimento e alegria para a sua casa.</p>
+        <p>Sintonize no <strong>98.0 FM</strong> e faça parte dessa história.</p>
+
+        <div class="sobre-stats">
+          <div class="stat-item">
+            <div class="stat-number">98.0</div>
+            <div class="stat-label">Frequência FM</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">24h</div>
+            <div class="stat-label">No ar</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">MG</div>
+            <div class="stat-label">Buritizeiro</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-number">100%</div>
+            <div class="stat-label">Local</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sobre-image-wrapper reveal">
+        <img
+          src="https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?w=800&q=80"
+          alt="Estúdio da Rádio Toninho 98 FM"
+          loading="lazy"
+        >
+        <div class="sobre-image-accent"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- PROGRAMAÇÃO -->
+  <section id="programacao">
+    <div class="prog-header reveal">
+      <div class="section-label">
+        <div class="section-label-line"></div>
+        <span class="section-label-text">Grade semanal</span>
+      </div>
+      <h2 class="section-title">Programação</h2>
+      <p style="font-size:16px; font-weight:300; color:var(--text-muted); max-width:460px; line-height:1.75;">
+        De segunda a domingo, conteúdo de qualidade para todos os gostos.
+      </p>
+    </div>
+
+    <div class="prog-grid">
+      <div class="prog-card reveal">
+        <div class="prog-time">06:00 &mdash; 09:00</div>
+        <div class="prog-name">Bom Dia Buritizeiro</div>
+        <div class="prog-host">com Toninho</div>
+        <div class="prog-tags">
+          <span class="prog-tag">Notícias</span>
+          <span class="prog-tag">Manhã</span>
+          <span class="prog-tag">Ao vivo</span>
+        </div>
+      </div>
+
+      <div class="prog-card reveal">
+        <div class="prog-time">09:00 &mdash; 12:00</div>
+        <div class="prog-name">Sertanejo das 9</div>
+        <div class="prog-host">com Pedro Henrique</div>
+        <div class="prog-tags">
+          <span class="prog-tag">Sertanejo</span>
+          <span class="prog-tag">Pedidos</span>
+        </div>
+      </div>
+
+      <div class="prog-card reveal">
+        <div class="prog-time">12:00 &mdash; 14:00</div>
+        <div class="prog-name">Hora do Almoço</div>
+        <div class="prog-host">com Mariana Costa</div>
+        <div class="prog-tags">
+          <span class="prog-tag">Variedades</span>
+          <span class="prog-tag">Popular</span>
+        </div>
+      </div>
+
+      <div class="prog-card reveal">
+        <div class="prog-time">14:00 &mdash; 17:00</div>
+        <div class="prog-name">Tarde Sertaneja</div>
+        <div class="prog-host">com João Carlos</div>
+        <div class="prog-tags">
+          <span class="prog-tag">Sertanejo</span>
+          <span class="prog-tag">Universitário</span>
+        </div>
+      </div>
+
+      <div class="prog-card reveal">
+        <div class="prog-time">17:00 &mdash; 20:00</div>
+        <div class="prog-name">Vale a Pena Ouvir</div>
+        <div class="prog-host">com Ana Paula</div>
+        <div class="prog-tags">
+          <span class="prog-tag">Sucessos</span>
+          <span class="prog-tag">Anos 80/90</span>
+        </div>
+      </div>
+
+      <div class="prog-card reveal">
+        <div class="prog-time">Dom &middot; 06:00</div>
+        <div class="prog-name">Momento Gospel</div>
+        <div class="prog-host">com Pastor Edilson</div>
+        <div class="prog-tags">
+          <span class="prog-tag">Gospel</span>
+          <span class="prog-tag">Domingo</span>
+          <span class="prog-tag">Ao vivo</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTATO -->
+  <section id="contato">
+    <div class="contato-grid">
+      <div class="reveal">
+        <div class="section-label">
+          <div class="section-label-line"></div>
+          <span class="section-label-text">Fale conosco</span>
+        </div>
+        <h2 class="section-title">Contato</h2>
+
+        <div class="contato-item">
+          <div class="contato-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div>
+            <div class="contato-item-label">Localização</div>
+            <div class="contato-item-text">Buritizeiro, Minas Gerais<br>Alto São Francisco — MG</div>
+          </div>
+        </div>
+
+        <div class="contato-item">
+          <div class="contato-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          </div>
+          <div>
+            <div class="contato-item-label">Frequência</div>
+            <div class="contato-item-text">98.0 FM — Buritizeiro e região</div>
+          </div>
+        </div>
+
+        <div class="contato-item">
+          <div class="contato-icon">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div>
+            <div class="contato-item-label">Funcionamento</div>
+            <div class="contato-item-text">24 horas por dia<br>7 dias por semana</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <div class="freq-display">
+          <span class="freq-big">98.0</span>
+          <div class="freq-label">FM &middot; Buritizeiro MG</div>
+          <div class="freq-eq">
+            <div class="eq-bar" style="height:70%; --dur:0.9s; --del:0s;"></div>
+            <div class="eq-bar" style="height:50%; --dur:1.2s; --del:0.1s;"></div>
+            <div class="eq-bar" style="height:90%; --dur:0.8s; --del:0.2s;"></div>
+            <div class="eq-bar" style="height:40%; --dur:1.1s; --del:0.15s;"></div>
+            <div class="eq-bar" style="height:80%; --dur:1.0s; --del:0.05s;"></div>
+            <div class="eq-bar" style="height:60%; --dur:0.85s; --del:0.25s;"></div>
+            <div class="eq-bar" style="height:100%; --dur:1.3s; --del:0.30s;"></div>
+            <div class="eq-bar" style="height:45%; --dur:0.75s; --del:0.1s;"></div>
+          </div>
+          <a href="https://wa.me/5538" class="btn-cta-full">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Mandar Mensagem
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">TONINHO <span>98</span> FM</div>
+      <div class="footer-copy">&copy; 2025 Rádio Toninho 98 FM &middot; Buritizeiro, MG &middot; Todos os direitos reservados</div>
+    </div>
+  </footer>
+
+  <!-- WhatsApp -->
+  <a href="https://wa.me/5538" class="whatsapp-btn" aria-label="WhatsApp">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+  <script>
+    // Scroll reveal with stagger
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 90);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -32px 0px' });
+    reveals.forEach(el => observer.observe(el));
+
+    // Stagger prog cards
+    document.querySelectorAll('.prog-card.reveal').forEach((card, i) => {
+      card.style.transitionDelay = `${i * 0.07}s`;
+    });
+  </script>
+
+</body>
+</html>
