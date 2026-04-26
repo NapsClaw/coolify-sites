@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RSD Informática e Telecomunicações | TI, Telecom e Segurança</title>
+  <meta name="description" content="RSD Informática e Telecomunicações — soluções completas em tecnologia da informação, telecomunicações e segurança digital para empresas. Suporte técnico especializado.">
+  <meta property="og:title" content="RSD Informática e Telecomunicações">
+  <meta property="og:description" content="Soluções completas em TI, telecomunicações e segurança para empresas.">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='12' fill='%23080C16'/><text x='12' y='72' font-family='monospace' font-size='62' font-weight='900' fill='%2300E5D0'>R</text></svg>">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800;900&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    :root {
+      --bg:       #070B14;
+      --bg2:      #0C1220;
+      --bg3:      #111827;
+      --accent:   #00E5D0;
+      --accent2:  #00B4A0;
+      --aglow:    rgba(0,229,208,0.35);
+      --adim:     rgba(0,229,208,0.10);
+      --border:   rgba(0,229,208,0.18);
+      --text:     #E2E8F4;
+      --muted:    #64748B;
+      --light:    rgba(255,255,255,0.06);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'IBM Plex Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── TECH GRID ── */
+    .grid-bg {
+      position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(0,229,208,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,229,208,0.035) 1px, transparent 1px);
+      background-size: 56px 56px;
+      animation: gridBreath 10s ease-in-out infinite;
+    }
+    @keyframes gridBreath {
+      0%,100% { opacity:.6; }
+      50% { opacity:1; }
+    }
+
+    /* ── SCANLINE ── */
+    .scanline {
+      position: absolute; left: 0; right: 0; height: 2px; pointer-events: none;
+      background: linear-gradient(90deg, transparent 0%, var(--accent) 40%, var(--accent) 60%, transparent 100%);
+      animation: scanAnim 5s linear infinite;
+      z-index: 2;
+    }
+    @keyframes scanAnim {
+      0%   { top: -2px; opacity:0; }
+      3%   { opacity:.8; }
+      97%  { opacity:.8; }
+      100% { top: 100%; opacity:0; }
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 40px;
+      background: rgba(7,11,20,0.82);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      transition: background .3s;
+    }
+    .nav-logo {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900; font-size: 20px; letter-spacing: .06em;
+      color: var(--text); text-decoration: none;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      font-size: 12px; font-weight: 500; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--muted); text-decoration: none;
+      transition: color .2s; position: relative;
+    }
+    .nav-links a::after {
+      content:''; position:absolute; bottom:-4px; left:0;
+      width:0; height:1px; background:var(--accent); transition:width .3s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-links a:hover::after { width:100%; }
+    .nav-btn {
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 12px; font-weight: 700; letter-spacing: .12em;
+      text-transform: uppercase; text-decoration: none;
+      color: var(--bg); background: var(--accent);
+      padding: 10px 22px; transition: all .25s;
+    }
+    .nav-btn:hover {
+      background: #00fff0;
+      box-shadow: 0 0 28px var(--aglow);
+    }
+
+    /* ── HERO ── */
+    #hero {
+      position: relative; min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 120px 40px 80px; overflow: hidden;
+    }
+    .hero-content { position: relative; z-index: 3; max-width: 680px; }
+
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 11px; font-weight: 600; letter-spacing: .28em;
+      text-transform: uppercase; color: var(--accent);
+      margin-bottom: 28px;
+      opacity: 0; animation: riseIn .8s ease .1s forwards;
+    }
+    .hero-tag::before { content:''; width:32px; height:1px; background:var(--accent); }
+
+    .hero-h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900; text-transform: uppercase; line-height: .88;
+      font-size: clamp(76px, 13vw, 160px);
+      letter-spacing: -.01em;
+      opacity: 0; animation: riseIn .9s ease .3s forwards;
+    }
+    .hero-h1 em { font-style: normal; color: var(--accent); display: block; }
+
+    .hero-sub {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 300; font-size: clamp(22px, 3.5vw, 44px);
+      text-transform: uppercase; letter-spacing: .12em; color: var(--muted);
+      margin-top: 6px;
+      opacity: 0; animation: riseIn .9s ease .5s forwards;
+    }
+
+    .hero-desc {
+      font-size: 15px; line-height: 1.75; color: var(--muted);
+      max-width: 440px; margin-top: 28px;
+      opacity: 0; animation: riseIn .9s ease .7s forwards;
+    }
+
+    .hero-ctas {
+      display: flex; gap: 14px; flex-wrap: wrap; margin-top: 44px;
+      opacity: 0; animation: riseIn .9s ease .9s forwards;
+    }
+    .btn-solid {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 12px; font-weight: 700; letter-spacing: .12em;
+      text-transform: uppercase; text-decoration: none;
+      color: var(--bg); background: var(--accent);
+      padding: 16px 30px; transition: all .3s;
+    }
+    .btn-solid:hover {
+      background: #00fff0;
+      box-shadow: 0 0 48px var(--aglow);
+      transform: translateY(-2px);
+    }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 12px; font-weight: 700; letter-spacing: .12em;
+      text-transform: uppercase; text-decoration: none;
+      color: var(--text); border: 1px solid var(--border);
+      padding: 16px 30px; transition: all .3s;
+    }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+    .hero-metrics {
+      display: flex; gap: 48px; margin-top: 64px;
+      padding-top: 36px; border-top: 1px solid var(--border);
+      opacity: 0; animation: riseIn .9s ease 1.1s forwards;
+    }
+    .metric-val {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900; font-size: 44px; line-height: 1; color: var(--accent);
+    }
+    .metric-label { font-size: 11px; color: var(--muted); margin-top: 4px; letter-spacing: .04em; }
+
+    /* Hero right: radar/circuit SVG */
+    .hero-radar {
+      position: absolute; right: -60px; top: 50%;
+      transform: translateY(-50%);
+      width: 560px; height: 560px;
+      opacity: 0; animation: fadeIn 1.6s ease 1.2s forwards;
+    }
+    .radar-ring {
+      animation: radarSpin 20s linear infinite;
+      transform-origin: 280px 280px;
+    }
+    .radar-pulse {
+      animation: radarPulse 3s ease-in-out infinite;
+    }
+    @keyframes radarSpin { to { transform: rotate(360deg); } }
+    @keyframes radarPulse { 0%,100%{opacity:.3} 50%{opacity:.9} }
+
+    /* ── SECTION LABELS ── */
+    .sec-tag {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-size: 10px; font-weight: 700; letter-spacing: .3em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 14px;
+    }
+    .sec-tag::before { content:''; width:20px; height:1px; background:var(--accent); }
+    .sec-h2 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900; text-transform: uppercase;
+      font-size: clamp(52px, 7vw, 96px);
+      line-height: .92; letter-spacing: -.01em;
+    }
+
+    /* ── SERVICES ── */
+    #services {
+      background: var(--bg2);
+      padding: 120px 40px; position: relative;
+    }
+    #services::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:1px;
+      background: linear-gradient(90deg, transparent, var(--accent) 50%, transparent);
+    }
+    .srv-header {
+      max-width: 1200px; margin: 0 auto 72px;
+      display: flex; align-items: flex-end; justify-content: space-between; gap: 40px;
+    }
+    .srv-header-note {
+      max-width: 340px; font-size: 13px; color: var(--muted); line-height: 1.7;
+    }
+    .srv-grid {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 2px;
+    }
+    .srv-card {
+      background: var(--bg); padding: 48px 40px;
+      position: relative; overflow: hidden;
+      transition: transform .4s ease, box-shadow .4s ease;
+    }
+    .srv-card::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:2px;
+      background: var(--accent); transform: scaleX(0); transform-origin: left;
+      transition: transform .4s ease;
+    }
+    .srv-card::after {
+      content:''; position:absolute; inset:0;
+      background: var(--adim); opacity:0; transition:opacity .4s;
+    }
+    .srv-card:hover { transform: translateY(-6px); box-shadow: 0 32px 64px rgba(0,0,0,.5); }
+    .srv-card:hover::before { transform: scaleX(1); }
+    .srv-card:hover::after { opacity:1; }
+    .srv-card:hover .srv-ico { color: var(--accent); transform: scale(1.15) rotate(-5deg); }
+    .srv-num {
+      position:absolute; top:20px; right:28px;
+      font-family:'Barlow Condensed',sans-serif;
+      font-weight:900; font-size:80px; line-height:1;
+      color: rgba(0,229,208,.06);
+      transition: color .4s;
+    }
+    .srv-card:hover .srv-num { color: rgba(0,229,208,.12); }
+    .srv-ico { position:relative; z-index:1; color:var(--muted); margin-bottom:28px; transition: all .4s ease; }
+    .srv-title {
+      position:relative; z-index:1;
+      font-family:'Barlow Condensed',sans-serif;
+      font-weight:800; font-size:38px; text-transform:uppercase; margin-bottom:14px;
+    }
+    .srv-desc { position:relative; z-index:1; font-size:13px; color:var(--muted); line-height:1.75; margin-bottom:28px; }
+    .srv-list { position:relative; z-index:1; list-style:none; display:flex; flex-direction:column; gap:9px; }
+    .srv-list li { font-size:13px; color:var(--muted); display:flex; align-items:center; gap:10px; }
+    .srv-list li::before { content:''; width:14px; height:1px; background:var(--accent); flex-shrink:0; }
+
+    /* ── ABOUT ── */
+    #about { padding: 120px 40px; position:relative; }
+    .about-wrap {
+      max-width: 1200px; margin:0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    }
+    .about-txt p { font-size:14px; color:var(--muted); line-height:1.8; margin-top:20px; }
+    .about-panel {
+      background: var(--bg2); border:1px solid var(--border);
+      padding: 52px; position:relative;
+    }
+    .about-panel::before {
+      content:''; position:absolute; top:-1px; left:0;
+      width:55%; height:2px; background:var(--accent);
+    }
+    .panel-tag {
+      font-size:10px; font-weight:700; letter-spacing:.25em;
+      text-transform:uppercase; color:var(--accent); margin-bottom:36px;
+    }
+    .stats-g { display:grid; grid-template-columns:1fr 1fr; gap:36px; }
+    .stat-val {
+      font-family:'Barlow Condensed',sans-serif;
+      font-weight:900; font-size:60px; line-height:1; color:var(--accent);
+    }
+    .stat-lbl { font-size:12px; color:var(--muted); margin-top:4px; }
+
+    /* ── DIFFERENTIALS ── */
+    #diff { background: var(--bg2); padding: 120px 40px; position:relative; }
+    #diff::before {
+      content:''; position:absolute; top:0; left:0; right:0; height:1px;
+      background: linear-gradient(90deg, transparent, var(--accent) 50%, transparent);
+    }
+    .diff-wrap { max-width:1200px; margin:0 auto; }
+    .diff-hdr { margin-bottom:72px; }
+    .diff-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:2px; }
+    .diff-item {
+      background: var(--bg); padding:40px 32px;
+      border-top:2px solid transparent; transition: border-color .3s, background .3s;
+    }
+    .diff-item:hover { border-top-color:var(--accent); }
+    .diff-ico { color:var(--accent); margin-bottom:18px; }
+    .diff-title {
+      font-family:'Barlow Condensed',sans-serif;
+      font-weight:700; font-size:22px; text-transform:uppercase;
+      margin-bottom:10px; letter-spacing:.02em;
+    }
+    .diff-desc { font-size:13px; color:var(--muted); line-height:1.7; }
+
+    /* ── CONTACT ── */
+    #contact { padding:120px 40px; position:relative; overflow:hidden; }
+    .contact-wrap {
+      max-width:1200px; margin:0 auto;
+      display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:start;
+      position:relative; z-index:2;
+    }
+    .contact-h2 {
+      font-family:'Barlow Condensed',sans-serif;
+      font-weight:900; font-size:clamp(60px,8vw,108px);
+      text-transform:uppercase; line-height:.88; margin-bottom:28px;
+    }
+    .contact-h2 span { color:var(--accent); display:block; }
+    .contact-intro { font-size:14px; color:var(--muted); line-height:1.75; margin-bottom:44px; }
+    .cinfo { display:flex; flex-direction:column; gap:16px; }
+    .cinfo-item {
+      display:flex; align-items:flex-start; gap:16px;
+      padding:20px 24px; background:var(--bg2);
+      border:1px solid var(--border); transition:border-color .3s;
+    }
+    .cinfo-item:hover { border-color:var(--accent); }
+    .cinfo-ico { color:var(--accent); flex-shrink:0; margin-top:2px; }
+    .cinfo-lbl { font-size:10px; font-weight:700; letter-spacing:.15em; text-transform:uppercase; color:var(--muted); margin-bottom:3px; }
+    .cinfo-val { font-size:14px; color:var(--text); }
+
+    /* form */
+    .cform {
+      background:var(--bg2); border:1px solid var(--border);
+      padding:48px; position:relative;
+    }
+    .cform::before {
+      content:''; position:absolute; top:-1px; left:0;
+      width:45%; height:2px; background:var(--accent);
+    }
+    .fg { margin-bottom:20px; }
+    .flabel { display:block; font-size:10px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--muted); margin-bottom:8px; }
+    .finput {
+      width:100%; background:var(--bg); border:1px solid var(--border);
+      color:var(--text); padding:13px 16px;
+      font-family:'IBM Plex Sans',sans-serif; font-size:14px;
+      outline:none; transition:border-color .2s;
+    }
+    .finput:focus { border-color:var(--accent); }
+    .finput::placeholder { color:var(--muted); opacity:.5; }
+    textarea.finput { min-height:110px; resize:vertical; }
+    .fsubmit {
+      width:100%; background:var(--accent); color:var(--bg);
+      border:none; padding:17px;
+      font-family:'IBM Plex Sans',sans-serif; font-size:12px;
+      font-weight:700; letter-spacing:.18em; text-transform:uppercase;
+      cursor:pointer; transition:all .3s;
+    }
+    .fsubmit:hover { background:#00fff0; box-shadow:0 0 48px var(--aglow); }
+
+    /* ── FOOTER ── */
+    footer {
+      padding:36px 40px; border-top:1px solid var(--border);
+      display:flex; align-items:center; justify-content:space-between;
+    }
+    .f-logo {
+      font-family:'Barlow Condensed',sans-serif;
+      font-weight:900; font-size:18px; letter-spacing:.06em;
+    }
+    .f-logo span { color:var(--accent); }
+    .f-copy { font-size:12px; color:var(--muted); }
+
+    /* ── WA BUTTON ── */
+    .wa-btn {
+      position:fixed; bottom:28px; right:28px; z-index:999;
+      width:60px; height:60px; background:#25D366; border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      box-shadow:0 4px 20px rgba(37,211,102,.45);
+      text-decoration:none;
+      animation:waPulse 2.5s ease-in-out infinite;
+      transition:transform .2s, box-shadow .2s;
+    }
+    .wa-btn:hover { transform:scale(1.12); animation:none; box-shadow:0 6px 36px rgba(37,211,102,.65); }
+    @keyframes waPulse {
+      0%,100%{ box-shadow:0 4px 20px rgba(37,211,102,.45); }
+      50%{ box-shadow:0 4px 40px rgba(37,211,102,.7), 0 0 0 10px rgba(37,211,102,.08); }
+    }
+
+    /* ── REVEAL ── */
+    .reveal { opacity:0; transform:translateY(28px); transition:opacity .85s ease, transform .85s ease; }
+    .reveal.vis { opacity:1; transform:translateY(0); }
+
+    /* ── KEYFRAMES ── */
+    @keyframes riseIn { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+    /* ── MOBILE ── */
+    @media(max-width:900px){
+      nav { padding:16px 20px; }
+      .nav-links { display:none; }
+      #hero { padding:100px 24px 64px; }
+      .hero-radar { display:none; }
+      .hero-metrics { gap:28px; }
+      .metric-val { font-size:36px; }
+      #services { padding:80px 24px; }
+      .srv-header { flex-direction:column; align-items:flex-start; }
+      .srv-grid { grid-template-columns:1fr; }
+      #about { padding:80px 24px; }
+      .about-wrap { grid-template-columns:1fr; gap:48px; }
+      #diff { padding:80px 24px; }
+      .diff-grid { grid-template-columns:1fr 1fr; }
+      #contact { padding:80px 24px; }
+      .contact-wrap { grid-template-columns:1fr; gap:48px; }
+      .cform { padding:28px 24px; }
+      footer { flex-direction:column; gap:14px; text-align:center; }
+    }
+    @media(max-width:480px){
+      .hero-ctas { flex-direction:column; }
+      .hero-ctas a { width:100%; text-align:center; justify-content:center; }
+      .diff-grid { grid-template-columns:1fr; }
+      .stats-g { grid-template-columns:1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<nav id="nav">
+  <a href="#hero" class="nav-logo"><span>RSD</span> INFORMÁTICA</a>
+  <ul class="nav-links">
+    <li><a href="#services">Serviços</a></li>
+    <li><a href="#about">Sobre</a></li>
+    <li><a href="#diff">Diferenciais</a></li>
+    <li><a href="#contact">Contato</a></li>
+  </ul>
+  <a href="#contact" class="nav-btn">Orçamento</a>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section id="hero">
+  <div class="grid-bg"></div>
+  <div class="scanline"></div>
+
+  <!-- Radar SVG -->
+  <svg class="hero-radar" viewBox="0 0 560 560" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <!-- outer rings -->
+    <circle cx="280" cy="280" r="240" stroke="rgba(0,229,208,.06)" stroke-width="1"/>
+    <circle cx="280" cy="280" r="180" stroke="rgba(0,229,208,.08)" stroke-width="1"/>
+    <circle cx="280" cy="280" r="120" stroke="rgba(0,229,208,.12)" stroke-width="1"/>
+    <circle cx="280" cy="280" r="60"  stroke="rgba(0,229,208,.2)"  stroke-width="1"/>
+    <!-- cross -->
+    <line x1="280" y1="40"  x2="280" y2="520" stroke="rgba(0,229,208,.08)" stroke-width="1"/>
+    <line x1="40"  y1="280" x2="520" y2="280" stroke="rgba(0,229,208,.08)" stroke-width="1"/>
+    <line x1="110" y1="110" x2="450" y2="450" stroke="rgba(0,229,208,.05)" stroke-width="1"/>
+    <line x1="450" y1="110" x2="110" y2="450" stroke="rgba(0,229,208,.05)" stroke-width="1"/>
+    <!-- spinning sweep -->
+    <g class="radar-ring">
+      <path d="M280 280 L280 40 A240 240 0 0 1 506 396 Z" fill="url(#sweep)" opacity=".15"/>
+    </g>
+    <defs>
+      <radialGradient id="sweep" cx="0%" cy="0%">
+        <stop offset="0%" stop-color="#00E5D0" stop-opacity="0"/>
+        <stop offset="100%" stop-color="#00E5D0" stop-opacity="1"/>
+      </radialGradient>
+    </defs>
+    <!-- dots -->
+    <circle class="radar-pulse" cx="280" cy="280" r="6" fill="#00E5D0"/>
+    <circle cx="280" cy="40"  r="3" fill="#00E5D0" opacity=".6"/>
+    <circle cx="280" cy="520" r="3" fill="#00E5D0" opacity=".6"/>
+    <circle cx="40"  cy="280" r="3" fill="#00E5D0" opacity=".6"/>
+    <circle cx="520" cy="280" r="3" fill="#00E5D0" opacity=".6"/>
+    <!-- blips -->
+    <circle cx="350" cy="160" r="4" fill="#00E5D0" opacity=".8"/>
+    <circle cx="420" cy="310" r="3" fill="#00E5D0" opacity=".5"/>
+    <circle cx="180" cy="380" r="3" fill="#00E5D0" opacity=".4"/>
+  </svg>
+
+  <div class="hero-content">
+    <div class="hero-tag">Informática &middot; Telecomunicações &middot; Segurança</div>
+
+    <h1 class="hero-h1">
+      RSD
+      <em>Informática</em>
+    </h1>
+    <p class="hero-sub">e Telecomunicações</p>
+
+    <p class="hero-desc">
+      Soluções técnicas completas para empresas que dependem de tecnologia. Suporte especializado em TI, infraestrutura de telecomunicações e sistemas de segurança — tudo sob um único fornecedor confiável.
+    </p>
+
+    <div class="hero-ctas">
+      <a href="#contact" class="btn-solid">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.18 2 2 2 0 012 .18h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.09-1.09a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg>
+        Solicitar Orçamento
+      </a>
+      <a href="#services" class="btn-ghost">
+        Ver Serviços
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+      </a>
+    </div>
+
+    <div class="hero-metrics">
+      <div>
+        <div class="metric-val">3</div>
+        <div class="metric-label">Áreas de especialização</div>
+      </div>
+      <div>
+        <div class="metric-val">24h</div>
+        <div class="metric-label">Suporte disponível</div>
+      </div>
+      <div>
+        <div class="metric-val">100%</div>
+        <div class="metric-label">Foco no cliente</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SERVICES ══ -->
+<section id="services">
+  <div class="srv-header reveal">
+    <div>
+      <div class="sec-tag">O que fazemos</div>
+      <h2 class="sec-h2">Nossas<br>Especialidades</h2>
+    </div>
+    <p class="srv-header-note">
+      Cobertura técnica completa nas três frentes essenciais de qualquer operação moderna — integradas, ágeis e sob medida para o seu negócio.
+    </p>
+  </div>
+
+  <div class="srv-grid">
+
+    <!-- Informática -->
+    <div class="srv-card reveal">
+      <span class="srv-num">01</span>
+      <div class="srv-ico">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+        </svg>
+      </div>
+      <h3 class="srv-title">Informática</h3>
+      <p class="srv-desc">Suporte técnico especializado em hardware e software para manter sua operação sem interrupções.</p>
+      <ul class="srv-list">
+        <li>Manutenção de computadores e notebooks</li>
+        <li>Instalação e configuração de sistemas</li>
+        <li>Redes corporativas e Wi-Fi</li>
+        <li>Gerenciamento de servidores</li>
+        <li>Suporte remoto e presencial</li>
+      </ul>
+    </div>
+
+    <!-- Telecomunicações -->
+    <div class="srv-card reveal" style="transition-delay:.15s">
+      <span class="srv-num">02</span>
+      <div class="srv-ico">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M1.5 8.5C5.5 4.5 10.5 2.5 12 2.5s6.5 2 10.5 6"/><path d="M5 12c1.9-2 4.7-3.5 7-3.5s5.1 1.5 7 3.5"/><path d="M8.5 15.5c1-1 2.2-1.5 3.5-1.5s2.5.5 3.5 1.5"/><circle cx="12" cy="19" r="1" fill="currentColor"/>
+        </svg>
+      </div>
+      <h3 class="srv-title">Telecomunicações</h3>
+      <p class="srv-desc">Infraestrutura de comunicação corporativa de alta performance, conectividade robusta e integrada.</p>
+      <ul class="srv-list">
+        <li>PABX e telefonia IP (VoIP)</li>
+        <li>Cabeamento estruturado Cat5e/Cat6</li>
+        <li>Link dedicado e internet empresarial</li>
+        <li>Instalação de antenas e roteadores</li>
+        <li>Integração de sistemas de comunicação</li>
+      </ul>
+    </div>
+
+    <!-- Segurança -->
+    <div class="srv-card reveal" style="transition-delay:.3s">
+      <span class="srv-num">03</span>
+      <div class="srv-ico">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+        </svg>
+      </div>
+      <h3 class="srv-title">Segurança</h3>
+      <p class="srv-desc">Proteção completa para sua empresa: vigilância eletrônica, controle de acesso e segurança digital.</p>
+      <ul class="srv-list">
+        <li>Câmeras de segurança e CFTV</li>
+        <li>Controle de acesso biométrico</li>
+        <li>Firewall e segurança de rede</li>
+        <li>Backup e recuperação de dados</li>
+        <li>Monitoramento e alarmes</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══ ABOUT ══ -->
+<section id="about">
+  <div class="about-wrap">
+    <div class="about-txt reveal">
+      <div class="sec-tag">Quem somos</div>
+      <h2 class="sec-h2">Expertise<br>Técnica<br><span style="color:var(--accent)">Real</span></h2>
+      <p>A RSD Informática e Telecomunicações é especializada em soluções tecnológicas completas para empresas que precisam de infraestrutura confiável e suporte de qualidade.</p>
+      <p>Atuamos de forma integrada nas três frentes que sustentam qualquer negócio moderno: informática, telecomunicações e segurança — entregando projetos personalizados com execução precisa.</p>
+      <p>Nossa abordagem combina conhecimento técnico aprofundado com atendimento ágil, garantindo continuidade operacional e tranquilidade para o seu negócio.</p>
+    </div>
+
+    <div class="about-panel reveal" style="transition-delay:.2s">
+      <div class="panel-tag">Pilares da RSD</div>
+      <div class="stats-g">
+        <div>
+          <div class="stat-val">TI</div>
+          <div class="stat-lbl">Suporte em informática</div>
+        </div>
+        <div>
+          <div class="stat-val">Tel.</div>
+          <div class="stat-lbl">Telecomunicações</div>
+        </div>
+        <div>
+          <div class="stat-val">Seg.</div>
+          <div class="stat-lbl">Sistemas de segurança</div>
+        </div>
+        <div>
+          <div class="stat-val">24h</div>
+          <div class="stat-lbl">Disponibilidade</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ DIFFERENTIALS ══ -->
+<section id="diff">
+  <div class="diff-wrap">
+    <div class="diff-hdr reveal">
+      <div class="sec-tag">Por que a RSD</div>
+      <h2 class="sec-h2">Nossos<br>Diferenciais</h2>
+    </div>
+
+    <div class="diff-grid">
+      <div class="diff-item reveal">
+        <div class="diff-ico">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div class="diff-title">Resposta Ágil</div>
+        <p class="diff-desc">Tempo de atendimento rápido para minimizar impacto de falhas técnicas na sua operação.</p>
+      </div>
+
+      <div class="diff-item reveal" style="transition-delay:.1s">
+        <div class="diff-ico">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+        </div>
+        <div class="diff-title">Soluções Integradas</div>
+        <p class="diff-desc">TI, telecomunicações e segurança num único fornecedor — menos burocracia, mais eficiência.</p>
+      </div>
+
+      <div class="diff-item reveal" style="transition-delay:.2s">
+        <div class="diff-ico">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+        </div>
+        <div class="diff-title">Equipe Técnica</div>
+        <p class="diff-desc">Profissionais qualificados e atualizados com as tecnologias mais recentes do mercado.</p>
+      </div>
+
+      <div class="diff-item reveal" style="transition-delay:.3s">
+        <div class="diff-ico">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        </div>
+        <div class="diff-title">Diagnóstico Preciso</div>
+        <p class="diff-desc">Identificamos a causa raiz dos problemas e entregamos soluções duradouras, não paliativas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CONTACT ══ -->
+<section id="contact">
+  <div class="grid-bg" style="opacity:.25; position:absolute; inset:0; pointer-events:none;"></div>
+
+  <div class="contact-wrap">
+    <div class="reveal">
+      <h2 class="contact-h2">Fale<br><span>Conosco</span></h2>
+      <p class="contact-intro">
+        Precisa de suporte técnico, quer um orçamento ou tem dúvidas sobre nossas soluções? Nossa equipe está pronta para ajudar.
+      </p>
+
+      <div class="cinfo">
+        <div class="cinfo-item">
+          <div class="cinfo-ico">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.18 2 2 2 0 012 .18h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.09-1.09a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z"/></svg>
+          </div>
+          <div>
+            <div class="cinfo-lbl">WhatsApp / Telefone</div>
+            <div class="cinfo-val">Entre em contato para obter nosso número</div>
+          </div>
+        </div>
+
+        <div class="cinfo-item">
+          <div class="cinfo-ico">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div>
+            <div class="cinfo-lbl">E-mail</div>
+            <div class="cinfo-val">contato@rsdinformatica.com.br</div>
+          </div>
+        </div>
+
+        <div class="cinfo-item">
+          <div class="cinfo-ico">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div>
+            <div class="cinfo-lbl">Horário de Atendimento</div>
+            <div class="cinfo-val">Seg–Sex: 8h às 18h &middot; Sáb: 8h às 13h</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cform reveal" style="transition-delay:.2s">
+      <form onsubmit="handleForm(event)">
+        <div class="fg">
+          <label class="flabel">Nome</label>
+          <input type="text" class="finput" placeholder="Seu nome completo" required>
+        </div>
+        <div class="fg">
+          <label class="flabel">Telefone / WhatsApp</label>
+          <input type="tel" class="finput" placeholder="(00) 00000-0000" required>
+        </div>
+        <div class="fg">
+          <label class="flabel">Serviço de Interesse</label>
+          <input type="text" class="finput" placeholder="Informática, Telecom ou Segurança" required>
+        </div>
+        <div class="fg">
+          <label class="flabel">Mensagem</label>
+          <textarea class="finput" placeholder="Descreva sua necessidade..."></textarea>
+        </div>
+        <button type="submit" class="fsubmit">Enviar Mensagem</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="f-logo"><span>RSD</span> INFORMÁTICA E TELECOMUNICAÇÕES</div>
+  <div class="f-copy">&copy; 2025 RSD Informática. Todos os direitos reservados.</div>
+</footer>
+
+<!-- ══ WHATSAPP ══ -->
+<a href="#contact" class="wa-btn" aria-label="Contato via WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white" aria-hidden="true">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+
+<script>
+  // ── SCROLL REVEAL ──
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('vis'); observer.unobserve(e.target); } });
+  }, { threshold:.08, rootMargin:'0px 0px -50px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // ── NAV BG ──
+  window.addEventListener('scroll', () => {
+    document.getElementById('nav').style.background =
+      window.scrollY > 60 ? 'rgba(7,11,20,.97)' : 'rgba(7,11,20,.82)';
+  });
+
+  // ── FORM ──
+  function handleForm(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.fsubmit');
+    btn.textContent = 'Mensagem Enviada!';
+    btn.style.background = '#00E5D0';
+    setTimeout(() => { btn.textContent = 'Enviar Mensagem'; btn.style.background = ''; e.target.reset(); }, 3000);
+  }
+</script>
+</body>
+</html>
