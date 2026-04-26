@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transvino Mudanças e Transportes | Mudanças Residenciais e Comerciais</title>
+  <meta name="description" content="Transvino Mudanças e Transportes — serviços completos de mudança residencial e comercial, transporte de cargas e guarda-móveis. Atendimento profissional, seguro e pontual.">
+  <meta property="og:title" content="Transvino Mudanças e Transportes">
+  <meta property="og:description" content="Mudamos o que mais importa pra você. Serviços completos de mudança residencial, comercial e transporte de cargas.">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='12' fill='%231B2B4D'/><path d='M15 62h70M15 62l8-18h36l10 10h16v8' stroke='%23E8720C' stroke-width='4' fill='none' stroke-linecap='round'/><circle cx='30' cy='66' r='6' fill='%23E8720C'/><circle cx='70' cy='66' r='6' fill='%23E8720C'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --primary: #1B2B4D;
+      --accent: #E8720C;
+      --accent-light: #F5A623;
+      --bg: #F7F6F2;
+      --dark: #0D1926;
+      --text: #1A202C;
+      --muted: #6B7280;
+      --card-bg: #FFFFFF;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeLeft {
+      from { opacity: 0; transform: translateX(-60px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes fadeRight {
+      from { opacity: 0; transform: translateX(60px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.88); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes pulse-ring {
+      0%   { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.5); }
+      70%  { box-shadow: 0 0 0 14px rgba(37, 211, 102, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+    }
+
+    @keyframes truckSlide {
+      0%   { transform: translateX(-100%) scaleX(1); opacity: 0; }
+      30%  { opacity: 1; }
+      100% { transform: translateX(0) scaleX(1); opacity: 1; }
+    }
+
+    @keyframes lineGrow {
+      from { width: 0; }
+      to   { width: 60px; }
+    }
+
+    @keyframes numberCount {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Reveal on scroll */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-50px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(50px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal-right.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* ─── NAVBAR ─── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.3s, padding 0.3s, box-shadow 0.3s;
+    }
+    nav.scrolled {
+      background: var(--primary);
+      padding: 14px 24px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    .nav-logo {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      font-size: 1.25rem;
+      color: #fff;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+    .nav-logo span { color: var(--accent-light); }
+    .nav-cta {
+      background: var(--accent);
+      color: #fff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.85rem;
+      padding: 10px 22px;
+      border-radius: 50px;
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .nav-cta:hover {
+      background: var(--accent-light);
+      transform: scale(1.04);
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+      background: var(--dark);
+    }
+
+    .hero-img {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1400&q=80');
+      background-size: cover;
+      background-position: center;
+      animation: scaleIn 1.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(13, 25, 38, 0.97) 0%,
+        rgba(13, 25, 38, 0.75) 40%,
+        rgba(13, 25, 38, 0.25) 100%
+      );
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 24px 64px;
+      max-width: 900px;
+    }
+
+    .hero-label {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      margin-bottom: 20px;
+      animation: fadeUp 0.7s ease 0.3s both;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.8rem, 9vw, 6rem);
+      font-weight: 800;
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+      color: #fff;
+      margin-bottom: 24px;
+      animation: fadeLeft 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--accent-light);
+    }
+
+    .hero-desc {
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.75);
+      max-width: 520px;
+      line-height: 1.7;
+      margin-bottom: 40px;
+      animation: fadeUp 0.8s ease 0.8s both;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      animation: fadeUp 0.8s ease 1s both;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 18px 36px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      width: 100%;
+      letter-spacing: 0.01em;
+    }
+    .btn-primary:hover {
+      background: var(--accent-light);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(232, 114, 12, 0.35);
+    }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border: 1.5px solid rgba(255,255,255,0.3);
+      color: #fff;
+      font-weight: 500;
+      font-size: 0.95rem;
+      padding: 16px 36px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      width: 100%;
+    }
+    .btn-outline:hover {
+      border-color: #fff;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .hero-stats {
+      position: absolute;
+      bottom: 64px;
+      right: 24px;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      animation: fadeRight 0.9s ease 1.2s both;
+    }
+
+    .stat {
+      text-align: right;
+    }
+    .stat-number {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1;
+    }
+    .stat-number span { color: var(--accent-light); }
+    .stat-label {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.55);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    /* scroll indicator */
+    .scroll-hint {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      opacity: 0.5;
+      animation: fadeUp 1s ease 1.5s both;
+    }
+    .scroll-hint span {
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #fff;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 32px;
+      background: linear-gradient(to bottom, #fff, transparent);
+      animation: fadeUp 1s ease infinite alternate;
+    }
+
+    /* ─── MARQUEE STRIP ─── */
+    .marquee-section {
+      background: var(--accent);
+      overflow: hidden;
+      padding: 14px 0;
+    }
+    .marquee-track {
+      display: flex;
+      white-space: nowrap;
+      animation: marquee 20s linear infinite;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .marquee-item {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #fff;
+      padding: 0 32px;
+      display: inline-flex;
+      align-items: center;
+      gap: 32px;
+    }
+    .marquee-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.5);
+      display: inline-block;
+    }
+
+    /* ─── SERVICES ─── */
+    .section {
+      padding: 88px 24px;
+    }
+
+    .section-tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      color: var(--primary);
+      margin-bottom: 48px;
+    }
+
+    .section-title em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .service-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      padding: 32px 28px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(27, 43, 77, 0.07);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.35s ease;
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 24px 48px rgba(27, 43, 77, 0.12);
+      border-color: rgba(232, 114, 12, 0.15);
+    }
+    .service-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .service-icon {
+      width: 52px;
+      height: 52px;
+      background: rgba(232, 114, 12, 0.1);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      transition: background 0.3s;
+    }
+    .service-card:hover .service-icon {
+      background: rgba(232, 114, 12, 0.2);
+    }
+    .service-icon svg {
+      width: 26px;
+      height: 26px;
+      color: var(--accent);
+    }
+
+    .service-card h3 {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 10px;
+      letter-spacing: -0.015em;
+    }
+
+    .service-card p {
+      font-size: 0.9rem;
+      line-height: 1.65;
+      color: var(--muted);
+    }
+
+    /* ─── ABOUT ─── */
+    .about-section {
+      background: var(--primary);
+      padding: 88px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .about-section::before {
+      content: '';
+      position: absolute;
+      top: -80px;
+      right: -80px;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      border: 60px solid rgba(232, 114, 12, 0.08);
+    }
+    .about-section::after {
+      content: '';
+      position: absolute;
+      bottom: -60px;
+      left: -60px;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      border: 40px solid rgba(255,255,255,0.04);
+    }
+
+    .about-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      display: block;
+      margin-bottom: 14px;
+    }
+
+    .about-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(1.8rem, 5vw, 2.8rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      color: #fff;
+      margin-bottom: 24px;
+    }
+
+    .about-text {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 32px;
+    }
+
+    .about-img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 36px;
+    }
+
+    .about-features {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .about-feature {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+    .feature-check {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .feature-check svg {
+      width: 12px;
+      height: 12px;
+      color: #fff;
+    }
+    .feature-text {
+      font-size: 0.92rem;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.5;
+    }
+
+    /* ─── HOW IT WORKS ─── */
+    .steps-section {
+      padding: 88px 24px;
+      background: var(--bg);
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+      position: relative;
+    }
+
+    .step {
+      display: flex;
+      gap: 20px;
+      padding: 28px 0;
+      border-bottom: 1px solid rgba(27, 43, 77, 0.1);
+      position: relative;
+    }
+    .step:last-child { border-bottom: none; }
+
+    .step-number {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 3.5rem;
+      font-weight: 800;
+      line-height: 1;
+      color: rgba(27, 43, 77, 0.1);
+      flex-shrink: 0;
+      width: 60px;
+    }
+
+    .step-content h3 {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
+    }
+    .step-content p {
+      font-size: 0.9rem;
+      line-height: 1.65;
+      color: var(--muted);
+    }
+
+    .step-accent {
+      position: absolute;
+      top: 28px;
+      right: 0;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .step-accent svg {
+      width: 16px;
+      height: 16px;
+      color: #fff;
+    }
+
+    /* ─── GALLERY ─── */
+    .gallery-section {
+      padding: 88px 0 0;
+      overflow: hidden;
+    }
+    .gallery-header {
+      padding: 0 24px 48px;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 4px;
+    }
+
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 1;
+    }
+    .gallery-item.wide {
+      grid-column: span 2;
+      aspect-ratio: 16/9;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .gallery-item:hover img {
+      transform: scale(1.06);
+    }
+    .gallery-item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(13,25,38,0.4), transparent 50%);
+      pointer-events: none;
+    }
+
+    /* ─── CTA SECTION ─── */
+    .cta-section {
+      background: var(--dark);
+      padding: 88px 24px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(232,114,12,0.12) 0%, transparent 70%);
+    }
+
+    .cta-section h2 {
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.025em;
+      color: #fff;
+      margin-bottom: 20px;
+      position: relative;
+    }
+    .cta-section h2 em {
+      font-style: normal;
+      color: var(--accent-light);
+    }
+
+    .cta-section p {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.7;
+      max-width: 440px;
+      margin: 0 auto 40px;
+      position: relative;
+    }
+
+    .btn-whatsapp-large {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: #25D366;
+      color: #fff;
+      font-weight: 700;
+      font-size: 1.05rem;
+      padding: 20px 40px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.25s ease;
+      width: 100%;
+      max-width: 380px;
+      letter-spacing: 0.01em;
+      position: relative;
+    }
+    .btn-whatsapp-large:hover {
+      background: #1ebe5c;
+      transform: translateY(-3px);
+      box-shadow: 0 16px 36px rgba(37, 211, 102, 0.3);
+    }
+
+    .cta-info {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 48px;
+      padding-top: 48px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .cta-info-item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: rgba(255,255,255,0.55);
+      font-size: 0.88rem;
+    }
+    .cta-info-item svg {
+      width: 18px;
+      height: 18px;
+      color: var(--accent-light);
+      flex-shrink: 0;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: #070D14;
+      padding: 40px 24px 32px;
+      text-align: center;
+    }
+    .footer-logo {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+    .footer-logo span { color: var(--accent-light); }
+    .footer-tagline {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 28px;
+    }
+    .footer-divider {
+      width: 40px;
+      height: 2px;
+      background: var(--accent);
+      margin: 0 auto 24px;
+    }
+    .footer-copy {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.25);
+    }
+
+    /* ─── WHATSAPP FLOAT ─── */
+    .wa-float {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 999;
+      width: 60px;
+      height: 60px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.28);
+      animation: pulse-ring 2.5s ease-out infinite;
+      transition: transform 0.2s ease;
+      text-decoration: none;
+    }
+    .wa-float:hover {
+      transform: scale(1.12);
+      animation: none;
+      box-shadow: 0 8px 24px rgba(37,211,102,0.4);
+    }
+    .wa-float svg {
+      width: 30px;
+      height: 30px;
+      color: #fff;
+    }
+
+    /* ─── DESKTOP RESPONSIVE ─── */
+    @media (min-width: 768px) {
+      .hero-content {
+        padding: 0 60px 80px;
+        max-width: 800px;
+      }
+      .hero-actions {
+        flex-direction: row;
+        align-items: center;
+      }
+      .btn-primary, .btn-outline {
+        width: auto;
+      }
+      .hero-stats {
+        right: 60px;
+        bottom: 80px;
+      }
+      .section { padding: 112px 60px; }
+      .about-section { padding: 112px 60px; }
+      .steps-section { padding: 112px 60px; }
+      .gallery-section { padding: 112px 0 0; }
+      .gallery-header { padding: 0 60px 60px; }
+      .cta-section { padding: 112px 60px; }
+      footer { padding: 56px 60px 40px; }
+      .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+      }
+      .about-inner {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: center;
+      }
+      .about-img {
+        height: 420px;
+        margin-bottom: 0;
+      }
+      .steps-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 32px;
+      }
+      .step {
+        flex-direction: column;
+        border-bottom: none;
+        padding: 0;
+        border-right: 1px solid rgba(27, 43, 77, 0.1);
+        padding-right: 32px;
+      }
+      .step:last-child { border-right: none; padding-right: 0; }
+      .step-number { font-size: 4rem; width: auto; }
+      .step-accent { top: 0; }
+      .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+      .gallery-item.wide { grid-column: span 2; }
+      .cta-info { flex-direction: row; justify-content: center; gap: 48px; }
+      nav { padding: 24px 60px; }
+      nav.scrolled { padding: 16px 60px; }
+    }
+
+    @media (min-width: 1024px) {
+      .services-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav id="navbar">
+    <div class="nav-logo">TRANS<span>VINO</span></div>
+    <a href="https://wa.me/55" class="nav-cta">Solicitar Orçamento</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-img"></div>
+    <div class="hero-overlay"></div>
+
+    <div class="hero-content">
+      <span class="hero-label">Mudanças &amp; Transportes Profissionais</span>
+      <h1>Mudamos o que<br>mais <em>importa</em><br>pra você.</h1>
+      <p class="hero-desc">Da embalagem ao destino final — a Transvino cuida de cada detalhe da sua mudança com segurança, pontualidade e zelo.</p>
+      <div class="hero-actions">
+        <a href="https://wa.me/55" class="btn-primary">
+          <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.528 5.845L0 24l6.335-1.652A11.954 11.954 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.007-1.37l-.36-.214-3.76.984.999-3.671-.235-.376A9.818 9.818 0 012.182 12C2.182 6.573 6.573 2.182 12 2.182S21.818 6.573 21.818 12 17.427 21.818 12 21.818z"/></svg>
+          Falar no WhatsApp
+        </a>
+        <a href="#servicos" class="btn-outline">
+          Nossos Serviços
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M7 17l10-10M7 7h10v10"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-number">+<span>500</span></div>
+        <div class="stat-label">Mudanças realizadas</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number"><span>100</span>%</div>
+        <div class="stat-label">Satisfação garantida</div>
+      </div>
+    </div>
+
+    <div class="scroll-hint">
+      <div class="scroll-line"></div>
+      <span>Role</span>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-section">
+    <div class="marquee-track">
+      <span class="marquee-item">Mudança Residencial <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Mudança Comercial <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Transporte de Cargas <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Guarda-Móveis <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Desmontagem e Montagem <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Embalagem Especializada <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Mudança Residencial <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Mudança Comercial <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Transporte de Cargas <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Guarda-Móveis <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Desmontagem e Montagem <span class="marquee-dot"></span></span>
+      <span class="marquee-item">Embalagem Especializada <span class="marquee-dot"></span></span>
+    </div>
+  </div>
+
+  <!-- SERVICES -->
+  <section class="section" id="servicos">
+    <div class="reveal">
+      <span class="section-tag">O que fazemos</span>
+      <h2 class="section-title">Soluções completas<br>de <em>mudança</em></h2>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal" style="transition-delay:0.1s">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <h3>Mudança Residencial</h3>
+        <p>Transporte seguro de móveis, eletrodomésticos e pertences pessoais. Embalamos, transportamos e remontamos no novo lar.</p>
+      </div>
+      <div class="service-card reveal" style="transition-delay:0.15s">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>
+        </div>
+        <h3>Mudança Comercial</h3>
+        <p>Relocação de escritórios, lojas e empresas com mínimo impacto operacional. Planejamos cada etapa para agilizar sua mudança.</p>
+      </div>
+      <div class="service-card reveal" style="transition-delay:0.2s">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        </div>
+        <h3>Transporte de Cargas</h3>
+        <p>Entrega de mercadorias, equipamentos e cargas especiais com frotas adequadas para cada tipo de carga e distância.</p>
+      </div>
+      <div class="service-card reveal" style="transition-delay:0.25s">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        </div>
+        <h3>Guarda-Móveis</h3>
+        <p>Armazenamento temporário de móveis e objetos em ambiente seguro, limpo e monitorado. Ideal para transições e reformas.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about-section">
+    <div class="about-inner">
+      <div class="reveal-right">
+        <img
+          src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80"
+          alt="Equipe Transvino Mudanças"
+          class="about-img"
+          loading="lazy"
+        />
+      </div>
+      <div class="reveal-left">
+        <span class="about-label">Sobre a Transvino</span>
+        <h2 class="about-title">Tradição e cuidado em cada mudança</h2>
+        <p class="about-text">
+          A Transvino Mudanças e Transportes nasceu da missão de tornar cada mudança uma experiência tranquila. Sabemos que seus pertences carregam história — por isso tratamos cada item com respeito e dedicação.
+        </p>
+        <p class="about-text" style="margin-bottom:32px;">
+          Nossa equipe treinada, frota própria e processos cuidadosos garantem que sua mudança chegue no destino com segurança e no prazo combinado.
+        </p>
+        <div class="about-features">
+          <div class="about-feature">
+            <div class="feature-check">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <span class="feature-text">Equipe treinada e uniformizada para atendimento profissional</span>
+          </div>
+          <div class="about-feature">
+            <div class="feature-check">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <span class="feature-text">Materiais de embalagem de qualidade inclusos no serviço</span>
+          </div>
+          <div class="about-feature">
+            <div class="feature-check">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <span class="feature-text">Pontualidade garantida — respeitamos seu tempo</span>
+          </div>
+          <div class="about-feature">
+            <div class="feature-check">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
+            <span class="feature-text">Orçamento transparente, sem surpresas</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="steps-section">
+    <div class="reveal">
+      <span class="section-tag">Como funciona</span>
+      <h2 class="section-title">Simples, rápido<br>e <em>sem stress</em></h2>
+    </div>
+    <div class="steps-grid">
+      <div class="step reveal" style="transition-delay:0.1s">
+        <div class="step-number">01</div>
+        <div class="step-content">
+          <h3>Solicite o orçamento</h3>
+          <p>Entre em contato pelo WhatsApp. Informe a origem, destino e o que precisa ser transportado. Respondemos rapidinho.</p>
+        </div>
+        <div class="step-accent">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+        </div>
+      </div>
+      <div class="step reveal" style="transition-delay:0.2s">
+        <div class="step-number">02</div>
+        <div class="step-content">
+          <h3>Planejamos juntos</h3>
+          <p>Agendamos a visita ou avaliamos remotamente. Definimos data, equipe e logística para que tudo saia perfeito.</p>
+        </div>
+        <div class="step-accent">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+      </div>
+      <div class="step reveal" style="transition-delay:0.3s">
+        <div class="step-number">03</div>
+        <div class="step-content">
+          <h3>Entregamos e montamos</h3>
+          <p>Nossa equipe executa tudo com cuidado. Embalagem, transporte, desembalo e remontagem dos móveis no novo espaço.</p>
+        </div>
+        <div class="step-accent">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section class="gallery-section">
+    <div class="gallery-header reveal">
+      <span class="section-tag">Nosso trabalho</span>
+      <h2 class="section-title">Cada mudança,<br>uma <em>nova história</em></h2>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item wide">
+        <img src="https://images.unsplash.com/photo-1600132806370-bf17e65e942f?w=1200&q=80" alt="Mudança residencial" loading="lazy" />
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1549989476-69a92fa57c36?w=600&q=80" alt="Embalagem de móveis" loading="lazy" />
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1616401784845-180882ba9ba8?w=600&q=80" alt="Transporte de carga" loading="lazy" />
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1615486511484-92e172cc4fe0?w=600&q=80" alt="Logística e transporte" loading="lazy" />
+      </div>
+      <div class="gallery-item">
+        <img src="https://images.unsplash.com/photo-1519974719765-e6559eac2575?w=600&q=80" alt="Organização e entrega" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section">
+    <h2 class="reveal">Pronto para sua<br><em>próxima mudança?</em></h2>
+    <p class="reveal">Fale com a Transvino agora mesmo e receba um orçamento personalizado. É rápido, sem compromisso e sem custo.</p>
+    <a href="https://wa.me/55" class="btn-whatsapp-large reveal">
+      <svg viewBox="0 0 24 24" fill="currentColor" width="24" height="24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.528 5.845L0 24l6.335-1.652A11.954 11.954 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.007-1.37l-.36-.214-3.76.984.999-3.671-.235-.376A9.818 9.818 0 012.182 12C2.182 6.573 6.573 2.182 12 2.182S21.818 6.573 21.818 12 17.427 21.818 12 21.818z"/></svg>
+      Solicitar Orçamento Grátis
+    </a>
+    <div class="cta-info reveal">
+      <div class="cta-info-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Resposta em menos de 1 hora
+      </div>
+      <div class="cta-info-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Serviço segurado e garantido
+      </div>
+      <div class="cta-info-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="20 6 9 17 4 12"/></svg>
+        Orçamento sem compromisso
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">TRANS<span>VINO</span></div>
+    <p class="footer-tagline">Mudanças e Transportes</p>
+    <div class="footer-divider"></div>
+    <p class="footer-copy">&copy; 2025 Transvino Mudanças e Transportes. Todos os direitos reservados.</p>
+  </footer>
+
+  <!-- WHATSAPP FLOAT -->
+  <a href="https://wa.me/55" class="wa-float" aria-label="Falar no WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.528 5.845L0 24l6.335-1.652A11.954 11.954 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.007-1.37l-.36-.214-3.76.984.999-3.671-.235-.376A9.818 9.818 0 012.182 12C2.182 6.573 6.573 2.182 12 2.182S21.818 6.573 21.818 12 17.427 21.818 12 21.818z"/></svg>
+  </a>
+
+  <script>
+    // Navbar scroll behavior
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12 });
+
+    reveals.forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
