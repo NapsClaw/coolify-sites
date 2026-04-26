@@ -1,0 +1,1389 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal Carira News — Notícias de Carira, Sergipe</title>
+  <meta name="description" content="Portal Carira News — As principais notícias de Carira e região. Política, saúde, esportes, economia e cultura do sertão sergipano.">
+  <meta property="og:title" content="Portal Carira News">
+  <meta property="og:description" content="As principais notícias de Carira e região, Sergipe.">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,700&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --navy: #0D1B2A;
+      --navy-mid: #1A2D42;
+      --red: #C62828;
+      --red-light: #E53935;
+      --bg: #F8F7F2;
+      --bg-warm: #F0EDE6;
+      --text: #1A1A18;
+      --text-muted: #5A5A54;
+      --text-light: #8A8A82;
+      --border: #D8D5CE;
+      --white: #FFFFFF;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Source Sans 3', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes slideRight {
+      from { transform: translateX(-100%); }
+      to { transform: translateX(0); }
+    }
+    @keyframes ticker {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+    @keyframes revealLine {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+    @keyframes scaleIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── TOP BAR ─── */
+    .topbar {
+      background: var(--navy);
+      color: rgba(255,255,255,0.7);
+      font-size: 12px;
+      padding: 7px 0;
+      animation: fadeIn 0.5s ease both;
+    }
+    .topbar-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    .topbar-date { font-weight: 300; letter-spacing: 0.04em; }
+    .topbar-meta {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+    .topbar-meta a {
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .topbar-meta a:hover { color: var(--white); }
+
+    /* ─── HEADER ─── */
+    header {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 20px rgba(13,27,42,0.08);
+    }
+    .header-main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 70px;
+    }
+    .logo {
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      line-height: 1;
+    }
+    .logo-wordmark {
+      font-family: 'Fraunces', serif;
+      font-weight: 900;
+      font-size: 26px;
+      color: var(--navy);
+      letter-spacing: -0.03em;
+    }
+    .logo-wordmark span {
+      color: var(--red);
+    }
+    .logo-sub {
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    nav {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+    }
+    nav a {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text);
+      text-decoration: none;
+      padding: 6px 10px;
+      border-radius: 3px;
+      transition: color 0.2s, background 0.2s;
+      white-space: nowrap;
+    }
+    nav a:hover {
+      color: var(--red);
+      background: rgba(198,40,40,0.06);
+    }
+
+    .btn-search {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--navy);
+      color: var(--white);
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      letter-spacing: 0.04em;
+      transition: background 0.2s;
+      margin-left: 8px;
+    }
+    .btn-search:hover { background: var(--red); }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--navy);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+
+    /* ─── BREAKING NEWS TICKER ─── */
+    .ticker-wrap {
+      background: var(--red);
+      overflow: hidden;
+      animation: fadeIn 0.6s 0.3s ease both;
+    }
+    .ticker-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      align-items: stretch;
+    }
+    .ticker-label {
+      background: #8B1A1A;
+      color: var(--white);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 8px 16px;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .ticker-label::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      background: #FF5252;
+      border-radius: 50%;
+      animation: pulse 1.2s infinite;
+    }
+    .ticker-track {
+      flex: 1;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+    }
+    .ticker-content {
+      display: flex;
+      gap: 60px;
+      white-space: nowrap;
+      animation: ticker 32s linear infinite;
+      color: var(--white);
+      font-size: 13px;
+      font-weight: 400;
+      padding: 8px 0;
+    }
+    .ticker-content span::before {
+      content: '◆';
+      margin-right: 12px;
+      font-size: 8px;
+      opacity: 0.7;
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px 20px 0;
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      grid-template-rows: auto auto;
+      gap: 24px;
+    }
+    .hero-feature {
+      position: relative;
+      overflow: hidden;
+      border-radius: 6px;
+      cursor: pointer;
+      animation: scaleIn 0.8s 0.2s ease both;
+    }
+    .hero-feature:hover .hero-img { transform: scale(1.04); }
+    .hero-img {
+      width: 100%;
+      height: 420px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(13,27,42,0.92) 0%, rgba(13,27,42,0.4) 50%, transparent 100%);
+    }
+    .hero-content {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 28px;
+    }
+    .hero-tag {
+      display: inline-block;
+      background: var(--red);
+      color: var(--white);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 2px;
+      margin-bottom: 12px;
+      animation: fadeUp 0.8s 0.5s ease both;
+    }
+    .hero-title {
+      font-family: 'Fraunces', serif;
+      font-weight: 900;
+      font-size: clamp(26px, 3vw, 38px);
+      color: var(--white);
+      line-height: 1.15;
+      margin-bottom: 12px;
+      animation: fadeUp 0.8s 0.65s ease both;
+    }
+    .hero-meta {
+      font-size: 13px;
+      color: rgba(255,255,255,0.65);
+      animation: fadeUp 0.8s 0.8s ease both;
+    }
+
+    /* Sidebar stories */
+    .hero-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      animation: fadeUp 0.8s 0.4s ease both;
+    }
+    .sidebar-story {
+      display: flex;
+      gap: 12px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .sidebar-story:last-child { border-bottom: none; padding-bottom: 0; }
+    .sidebar-story:hover { opacity: 0.7; }
+    .sidebar-story-img {
+      width: 90px;
+      height: 70px;
+      object-fit: cover;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+    .sidebar-story-text { flex: 1; }
+    .sidebar-tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 5px;
+    }
+    .sidebar-title {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-size: 15px;
+      line-height: 1.3;
+      color: var(--text);
+    }
+    .sidebar-time {
+      font-size: 12px;
+      color: var(--text-light);
+      margin-top: 5px;
+    }
+
+    /* ─── SECTION HEADER ─── */
+    .section-hd {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .section-hd-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+    .section-hd-title {
+      font-family: 'Fraunces', serif;
+      font-weight: 900;
+      font-size: 18px;
+      letter-spacing: -0.02em;
+      color: var(--navy);
+      position: relative;
+    }
+    .section-hd-title::before {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--red);
+    }
+
+    /* ─── NEWS GRID ─── */
+    .main-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 40px;
+      align-items: start;
+    }
+
+    .news-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+    .news-card {
+      cursor: pointer;
+    }
+    .news-card:hover .news-card-img { transform: scale(1.04); }
+    .news-card:hover .news-card-title { color: var(--red); }
+    .news-card-img-wrap {
+      overflow: hidden;
+      border-radius: 5px;
+      margin-bottom: 12px;
+    }
+    .news-card-img {
+      width: 100%;
+      height: 190px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+    .news-card-tag {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 7px;
+    }
+    .news-card-title {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-size: 17px;
+      line-height: 1.35;
+      color: var(--text);
+      margin-bottom: 8px;
+      transition: color 0.2s;
+    }
+    .news-card-excerpt {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.55;
+      margin-bottom: 8px;
+    }
+    .news-card-meta {
+      font-size: 12px;
+      color: var(--text-light);
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .news-card-meta-dot {
+      width: 3px;
+      height: 3px;
+      background: var(--text-light);
+      border-radius: 50%;
+    }
+
+    /* Sidebar widgets */
+    .sidebar-widget {
+      margin-bottom: 36px;
+    }
+
+    /* Most Read */
+    .most-read-list {
+      list-style: none;
+    }
+    .most-read-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .most-read-item:last-child { border-bottom: none; }
+    .most-read-item:hover { opacity: 0.7; }
+    .most-read-num {
+      font-family: 'Fraunces', serif;
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--border);
+      line-height: 1;
+      flex-shrink: 0;
+      width: 30px;
+    }
+    .most-read-title {
+      font-family: 'Fraunces', serif;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.4;
+      color: var(--text);
+    }
+    .most-read-tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* Newsletter box */
+    .newsletter-box {
+      background: var(--navy);
+      border-radius: 8px;
+      padding: 28px 24px;
+      color: var(--white);
+    }
+    .newsletter-box h3 {
+      font-family: 'Fraunces', serif;
+      font-weight: 900;
+      font-size: 22px;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+    .newsletter-box p {
+      font-size: 14px;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 18px;
+      line-height: 1.55;
+    }
+    .newsletter-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .newsletter-input {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 4px;
+      padding: 10px 14px;
+      color: var(--white);
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .newsletter-input::placeholder { color: rgba(255,255,255,0.4); }
+    .newsletter-input:focus { border-color: rgba(255,255,255,0.5); }
+    .newsletter-btn {
+      background: var(--red);
+      color: var(--white);
+      border: none;
+      border-radius: 4px;
+      padding: 11px;
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .newsletter-btn:hover { background: var(--red-light); }
+
+    /* ─── CATEGORY SECTIONS ─── */
+    .categories-section {
+      background: var(--bg-warm);
+      border-top: 3px solid var(--navy);
+      padding: 48px 0;
+    }
+    .categories-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    .cat-tabs {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+    .cat-tab {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 7px 16px;
+      border-radius: 3px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.2s;
+      background: transparent;
+      color: var(--text-muted);
+      font-family: 'Source Sans 3', sans-serif;
+    }
+    .cat-tab.active, .cat-tab:hover {
+      background: var(--navy);
+      color: var(--white);
+    }
+    .cat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .cat-card {
+      background: var(--white);
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(13,27,42,0.06);
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .cat-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(13,27,42,0.12);
+    }
+    .cat-card-img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      display: block;
+    }
+    .cat-card-body {
+      padding: 16px;
+    }
+    .cat-card-tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 6px;
+    }
+    .cat-card-title {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-size: 15px;
+      line-height: 1.4;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .cat-card-meta {
+      font-size: 12px;
+      color: var(--text-light);
+    }
+
+    /* ─── OPINION / COLUMNISTS ─── */
+    .opinion-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 48px 20px;
+    }
+    .opinion-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+    .opinion-card {
+      background: var(--white);
+      border-radius: 6px;
+      padding: 24px;
+      border: 1px solid var(--border);
+      cursor: pointer;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .opinion-card:hover {
+      border-color: var(--navy);
+      box-shadow: 0 8px 24px rgba(13,27,42,0.08);
+    }
+    .opinion-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 12px;
+    }
+    .opinion-author {
+      font-weight: 700;
+      font-size: 14px;
+      color: var(--text);
+      margin-bottom: 3px;
+    }
+    .opinion-role {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+    .opinion-quote {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--text);
+      border-left: 3px solid var(--red);
+      padding-left: 12px;
+    }
+
+    /* ─── FULL-WIDTH BANNER ─── */
+    .banner-section {
+      background: var(--navy);
+      padding: 56px 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .banner-section::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(198,40,40,0.2) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .banner-section::after {
+      content: '';
+      position: absolute;
+      bottom: -80px; left: -40px;
+      width: 250px; height: 250px;
+      background: radial-gradient(circle, rgba(198,40,40,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .banner-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--red-light);
+      margin-bottom: 12px;
+    }
+    .banner-title {
+      font-family: 'Fraunces', serif;
+      font-weight: 900;
+      font-size: clamp(32px, 5vw, 60px);
+      color: var(--white);
+      line-height: 1.1;
+      margin-bottom: 16px;
+      letter-spacing: -0.03em;
+    }
+    .banner-subtitle {
+      font-size: 16px;
+      color: rgba(255,255,255,0.6);
+      max-width: 500px;
+      margin: 0 auto 28px;
+      line-height: 1.6;
+    }
+    .banner-btn {
+      display: inline-block;
+      background: var(--red);
+      color: var(--white);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 14px 32px;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .banner-btn:hover { background: var(--red-light); transform: translateY(-2px); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: #080E16;
+      color: rgba(255,255,255,0.65);
+      padding: 56px 20px 32px;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      margin-bottom: 28px;
+    }
+    .footer-brand {}
+    .footer-logo-text {
+      font-family: 'Fraunces', serif;
+      font-weight: 900;
+      font-size: 24px;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+    .footer-logo-text span { color: var(--red); }
+    .footer-tagline {
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 16px;
+    }
+    .footer-desc {
+      font-size: 14px;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.5);
+    }
+    .footer-col h4 {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .footer-links a {
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--white); }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: rgba(255,255,255,0.3);
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    /* ─── MOBILE NAV ─── */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: var(--navy);
+      z-index: 200;
+      padding: 80px 24px 40px;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: none;
+      border: none;
+      color: var(--white);
+      font-size: 28px;
+      cursor: pointer;
+      line-height: 1;
+    }
+    .mobile-menu a {
+      font-family: 'Fraunces', serif;
+      font-weight: 700;
+      font-size: 28px;
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      transition: color 0.2s;
+    }
+    .mobile-menu a:hover { color: var(--white); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 1024px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-sidebar { flex-direction: row; overflow-x: auto; }
+      .sidebar-story { min-width: 220px; }
+      .main-content { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      nav, .btn-search { display: none; }
+      .hamburger { display: flex; }
+      .hero-img { height: 280px; }
+      .hero-title { font-size: 22px; }
+      .news-grid { grid-template-columns: 1fr; }
+      .cat-grid { grid-template-columns: 1fr; }
+      .opinion-grid { grid-template-columns: 1fr 1fr; }
+      .topbar-meta { display: none; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .banner-title { font-size: 32px; }
+    }
+
+    @media (max-width: 480px) {
+      .opinion-grid { grid-template-columns: 1fr; }
+      .hero-sidebar { flex-direction: column; }
+      .sidebar-story { min-width: unset; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <span class="topbar-date">Domingo, 26 de Abril de 2026 &mdash; Carira, Sergipe</span>
+      <div class="topbar-meta">
+        <a href="#">Contato</a>
+        <a href="#">Anuncie</a>
+        <a href="#">Newsletter</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-main">
+      <a href="#" class="logo">
+        <span class="logo-wordmark">Portal Carira<span>News</span></span>
+        <span class="logo-sub">Carira · Sergipe · Brasil</span>
+      </a>
+      <nav>
+        <a href="#">Início</a>
+        <a href="#">Política</a>
+        <a href="#">Saúde</a>
+        <a href="#">Esportes</a>
+        <a href="#">Economia</a>
+        <a href="#">Cultura</a>
+        <a href="#">Polícia</a>
+      </nav>
+      <button class="btn-search">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        Buscar
+      </button>
+      <div class="hamburger" id="menuBtn" onclick="openMenu()">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-menu-close" onclick="closeMenu()">&#215;</button>
+    <a href="#" onclick="closeMenu()">Início</a>
+    <a href="#" onclick="closeMenu()">Política</a>
+    <a href="#" onclick="closeMenu()">Saúde</a>
+    <a href="#" onclick="closeMenu()">Esportes</a>
+    <a href="#" onclick="closeMenu()">Economia</a>
+    <a href="#" onclick="closeMenu()">Cultura</a>
+    <a href="#" onclick="closeMenu()">Polícia</a>
+  </div>
+
+  <!-- BREAKING NEWS TICKER -->
+  <div class="ticker-wrap">
+    <div class="ticker-inner">
+      <div class="ticker-label">Urgente</div>
+      <div class="ticker-track">
+        <div class="ticker-content">
+          <span>Prefeitura de Carira anuncia novos investimentos em infraestrutura urbana para 2026</span>
+          <span>Campeonato municipal de futebol tem início neste final de semana com 18 equipes</span>
+          <span>Unidade de Saúde passa por reforma e ampliação com recursos estaduais</span>
+          <span>Feira do Agricultor registra recorde de público neste mês com 3 mil visitantes</span>
+          <span>Novo concurso público para Câmara Municipal é anunciado para o segundo semestre</span>
+          <span>Chuvas acima da média beneficiam produção agrícola na região sertaneja</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section style="background: var(--bg);">
+    <div class="hero">
+      <!-- Feature Story -->
+      <div class="hero-feature">
+        <img
+          class="hero-img"
+          src="https://images.unsplash.com/photo-1588421357574-87938a86fa28?w=900&q=80&auto=format&fit=crop"
+          alt="Câmara Municipal de Carira"
+          loading="lazy"
+        >
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+          <span class="hero-tag">Política</span>
+          <h1 class="hero-title">Câmara aprova orçamento de R$ 12 milhões para obras de saneamento e pavimentação</h1>
+          <div class="hero-meta">Por Redação PCN &nbsp;&middot;&nbsp; Hoje, 18h30 &nbsp;&middot;&nbsp; 4 min de leitura</div>
+        </div>
+      </div>
+
+      <!-- Sidebar Stories -->
+      <div class="hero-sidebar">
+        <div class="sidebar-story">
+          <img class="sidebar-story-img" src="https://images.unsplash.com/photo-1584982751601-97dcc096659c?w=200&q=80&auto=format&fit=crop" alt="Saúde" loading="lazy">
+          <div class="sidebar-story-text">
+            <div class="sidebar-tag">Saúde</div>
+            <div class="sidebar-title">Vacinas contra dengue chegam ao posto de saúde central nesta semana</div>
+            <div class="sidebar-time">Hoje &middot; 14h45</div>
+          </div>
+        </div>
+        <div class="sidebar-story">
+          <img class="sidebar-story-img" src="https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=200&q=80&auto=format&fit=crop" alt="Esportes" loading="lazy">
+          <div class="sidebar-story-text">
+            <div class="sidebar-tag">Esportes</div>
+            <div class="sidebar-title">Time carirense se classifica para semifinal do Campeonato Regional</div>
+            <div class="sidebar-time">Hoje &middot; 12h10</div>
+          </div>
+        </div>
+        <div class="sidebar-story">
+          <img class="sidebar-story-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=200&q=80&auto=format&fit=crop" alt="Economia" loading="lazy">
+          <div class="sidebar-story-text">
+            <div class="sidebar-tag">Economia</div>
+            <div class="sidebar-title">Cooperativa agrícola do município exporta produtos para mercados do Nordeste</div>
+            <div class="sidebar-time">Ontem &middot; 16h20</div>
+          </div>
+        </div>
+        <div class="sidebar-story">
+          <img class="sidebar-story-img" src="https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?w=200&q=80&auto=format&fit=crop" alt="Cultura" loading="lazy">
+          <div class="sidebar-story-text">
+            <div class="sidebar-tag">Cultura</div>
+            <div class="sidebar-title">Festival Cultural de Carira confirma atrações regionais para o mês de junho</div>
+            <div class="sidebar-time">Ontem &middot; 10h00</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN CONTENT + SIDEBAR -->
+  <div class="main-content">
+    <div>
+      <div class="section-hd reveal">
+        <div class="section-hd-line"></div>
+        <h2 class="section-hd-title">Últimas Notícias</h2>
+        <div class="section-hd-line"></div>
+      </div>
+
+      <div class="news-grid">
+        <!-- Card 1 -->
+        <div class="news-card reveal">
+          <div class="news-card-img-wrap">
+            <img class="news-card-img" src="https://images.unsplash.com/photo-1590247813693-5541d1c609fd?w=600&q=80&auto=format&fit=crop" alt="Educação" loading="lazy">
+          </div>
+          <div class="news-card-tag">Educação</div>
+          <div class="news-card-title">Escola Municipal recebe laboratório de informática com 30 computadores novos</div>
+          <div class="news-card-excerpt">Investimento de R$ 180 mil beneficia mais de 600 alunos da rede pública municipal de Carira.</div>
+          <div class="news-card-meta">
+            <span>Hoje</span>
+            <span class="news-card-meta-dot"></span>
+            <span>3 min</span>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="news-card reveal">
+          <div class="news-card-img-wrap">
+            <img class="news-card-img" src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=600&q=80&auto=format&fit=crop" alt="Meio Ambiente" loading="lazy">
+          </div>
+          <div class="news-card-tag">Meio Ambiente</div>
+          <div class="news-card-title">Projeto de reflorestamento planta 5 mil mudas nas margens do Rio Jacaré Pepeira</div>
+          <div class="news-card-excerpt">Iniciativa conjunta da prefeitura com produtores rurais visa recuperar mata ciliar da região.</div>
+          <div class="news-card-meta">
+            <span>Hoje</span>
+            <span class="news-card-meta-dot"></span>
+            <span>4 min</span>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="news-card reveal">
+          <div class="news-card-img-wrap">
+            <img class="news-card-img" src="https://images.unsplash.com/photo-1573497620053-ea5300f94f21?w=600&q=80&auto=format&fit=crop" alt="Polícia" loading="lazy">
+          </div>
+          <div class="news-card-tag">Segurança</div>
+          <div class="news-card-title">Polícia Civil desativa ponto de venda de drogas no bairro Nova Esperança</div>
+          <div class="news-card-excerpt">Operação resultou na apreensão de entorpecentes e prisão de dois suspeitos na madrugada de sábado.</div>
+          <div class="news-card-meta">
+            <span>Ontem</span>
+            <span class="news-card-meta-dot"></span>
+            <span>2 min</span>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="news-card reveal">
+          <div class="news-card-img-wrap">
+            <img class="news-card-img" src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=600&q=80&auto=format&fit=crop" alt="Social" loading="lazy">
+          </div>
+          <div class="news-card-tag">Social</div>
+          <div class="news-card-title">CRAS realiza ação comunitária com distribuição de cestas básicas para 400 famílias</div>
+          <div class="news-card-excerpt">Assistência Social atende famílias em situação de vulnerabilidade com apoio de parceiros.</div>
+          <div class="news-card-meta">
+            <span>Ontem</span>
+            <span class="news-card-meta-dot"></span>
+            <span>3 min</span>
+          </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="news-card reveal">
+          <div class="news-card-img-wrap">
+            <img class="news-card-img" src="https://images.unsplash.com/photo-1519419691348-3b3433c4c20e?w=600&q=80&auto=format&fit=crop" alt="Economia" loading="lazy">
+          </div>
+          <div class="news-card-tag">Economia</div>
+          <div class="news-card-title">Empreendedores locais recebem capacitação pelo Sebrae para ampliar negócios</div>
+          <div class="news-card-excerpt">Curso gratuito de gestão financeira e marketing digital atendeu 80 comerciantes do município.</div>
+          <div class="news-card-meta">
+            <span>2 dias atrás</span>
+            <span class="news-card-meta-dot"></span>
+            <span>3 min</span>
+          </div>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="news-card reveal">
+          <div class="news-card-img-wrap">
+            <img class="news-card-img" src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&q=80&auto=format&fit=crop" alt="Agropecuária" loading="lazy">
+          </div>
+          <div class="news-card-tag">Agropecuária</div>
+          <div class="news-card-title">Produtores de leite da região registram aumento de 20% na produção após período de chuvas</div>
+          <div class="news-card-excerpt">Pastagens recuperadas e reservatórios cheios impulsionam o setor pecuário no sertão sergipano.</div>
+          <div class="news-card-meta">
+            <span>2 dias atrás</span>
+            <span class="news-card-meta-dot"></span>
+            <span>4 min</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <aside>
+      <div class="sidebar-widget reveal">
+        <div class="section-hd" style="margin-bottom: 16px;">
+          <h3 class="section-hd-title">Mais Lidas</h3>
+          <div class="section-hd-line"></div>
+        </div>
+        <ul class="most-read-list">
+          <li class="most-read-item">
+            <span class="most-read-num">01</span>
+            <div>
+              <div class="most-read-title">Prefeitura lança edital para licitação de nova praça central com investimento de R$ 400 mil</div>
+              <div class="most-read-tag">Política</div>
+            </div>
+          </li>
+          <li class="most-read-item">
+            <span class="most-read-num">02</span>
+            <div>
+              <div class="most-read-title">Dengue: secretaria de saúde convoca mutirão de limpeza nos bairros afetados</div>
+              <div class="most-read-tag">Saúde</div>
+            </div>
+          </li>
+          <li class="most-read-item">
+            <span class="most-read-num">03</span>
+            <div>
+              <div class="most-read-title">Concurso Estadual seleciona 42 vagas para profissionais da educação em Carira</div>
+              <div class="most-read-tag">Educação</div>
+            </div>
+          </li>
+          <li class="most-read-item">
+            <span class="most-read-num">04</span>
+            <div>
+              <div class="most-read-title">Atleta carirense representará Sergipe nos Jogos do Interior do Nordeste em atletismo</div>
+              <div class="most-read-tag">Esportes</div>
+            </div>
+          </li>
+          <li class="most-read-item">
+            <span class="most-read-num">05</span>
+            <div>
+              <div class="most-read-title">Tribunal de Justiça realiza audiências de custódia em regime itinerante no município</div>
+              <div class="most-read-tag">Judiciário</div>
+            </div>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sidebar-widget reveal">
+        <div class="newsletter-box">
+          <h3>Receba as notícias no seu e-mail</h3>
+          <p>Fique por dentro de tudo que acontece em Carira e na região.</p>
+          <form class="newsletter-form" onsubmit="return false;">
+            <input class="newsletter-input" type="email" placeholder="Seu melhor e-mail">
+            <button class="newsletter-btn">Assinar Newsletter</button>
+          </form>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <!-- CATEGORIES SECTION -->
+  <div class="categories-section">
+    <div class="categories-inner">
+      <div class="section-hd reveal" style="justify-content: flex-start; gap: 16px;">
+        <h2 class="section-hd-title">Por Categoria</h2>
+        <div class="section-hd-line"></div>
+      </div>
+      <div class="cat-tabs reveal">
+        <button class="cat-tab active" onclick="setTab(this, 'politica')">Política</button>
+        <button class="cat-tab" onclick="setTab(this, 'saude')">Saúde</button>
+        <button class="cat-tab" onclick="setTab(this, 'esportes')">Esportes</button>
+        <button class="cat-tab" onclick="setTab(this, 'cultura')">Cultura</button>
+        <button class="cat-tab" onclick="setTab(this, 'economia')">Economia</button>
+      </div>
+      <div class="cat-grid" id="catGrid">
+        <!-- Filled by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- OPINION SECTION -->
+  <div class="opinion-section">
+    <div class="section-hd reveal">
+      <div class="section-hd-line"></div>
+      <h2 class="section-hd-title">Opinião & Análise</h2>
+      <div class="section-hd-line"></div>
+    </div>
+    <div class="opinion-grid">
+      <div class="opinion-card reveal">
+        <img class="opinion-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80&auto=format&fit=crop&faces=1" alt="Colunista" loading="lazy">
+        <div class="opinion-author">Carlos Mendonça</div>
+        <div class="opinion-role">Jornalista e Analista Político</div>
+        <div class="opinion-quote">"O orçamento aprovado pela Câmara sinaliza um compromisso real com o desenvolvimento urbano que Carira tanto necessita."</div>
+      </div>
+      <div class="opinion-card reveal">
+        <img class="opinion-avatar" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80&auto=format&fit=crop&faces=1" alt="Colunista" loading="lazy">
+        <div class="opinion-author">Dra. Maria Santos</div>
+        <div class="opinion-role">Médica e Ativista de Saúde Pública</div>
+        <div class="opinion-quote">"A chegada das vacinas é fundamental, mas a prevenção exige ação coletiva permanente em toda a comunidade."</div>
+      </div>
+      <div class="opinion-card reveal">
+        <img class="opinion-avatar" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&q=80&auto=format&fit=crop&faces=1" alt="Colunista" loading="lazy">
+        <div class="opinion-author">João Brito</div>
+        <div class="opinion-role">Economista e Consultor Rural</div>
+        <div class="opinion-quote">"O aumento na produção leiteira demonstra a resiliência do agronegócio familiar do sertão sergipano diante dos desafios climáticos."</div>
+      </div>
+      <div class="opinion-card reveal">
+        <img class="opinion-avatar" src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&q=80&auto=format&fit=crop&faces=1" alt="Colunista" loading="lazy">
+        <div class="opinion-author">Ana Lima</div>
+        <div class="opinion-role">Professora e Ativista Cultural</div>
+        <div class="opinion-quote">"Preservar as tradições culturais de Carira é preservar a identidade de um povo que tem muito a contar ao Brasil."</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BANNER -->
+  <div class="banner-section">
+    <div class="reveal">
+      <div class="banner-label">Portal Carira News</div>
+      <h2 class="banner-title">A voz de Carira<br>para o mundo</h2>
+      <p class="banner-subtitle">Informação local com qualidade, responsabilidade e compromisso com a comunidade carirense.</p>
+      <a href="#" class="banner-btn">Receber Newsletter</a>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="footer-logo-text">Portal Carira<span>News</span></div>
+          <div class="footer-tagline">Carira &middot; Sergipe &middot; Brasil</div>
+          <p class="footer-desc">O Portal Carira News é o principal veículo de comunicação digital do município de Carira, Sergipe. Comprometido com o jornalismo local de qualidade, transparência e prestação de serviço à comunidade.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Editorias</h4>
+          <ul class="footer-links">
+            <li><a href="#">Política</a></li>
+            <li><a href="#">Saúde</a></li>
+            <li><a href="#">Esportes</a></li>
+            <li><a href="#">Economia</a></li>
+            <li><a href="#">Cultura</a></li>
+            <li><a href="#">Segurança</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Portal</h4>
+          <ul class="footer-links">
+            <li><a href="#">Sobre Nós</a></li>
+            <li><a href="#">Equipe</a></li>
+            <li><a href="#">Anuncie</a></li>
+            <li><a href="#">Contato</a></li>
+            <li><a href="#">Política de Privacidade</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Contato</h4>
+          <ul class="footer-links">
+            <li><a href="#">Carira, Sergipe</a></li>
+            <li><a href="#">redacao@cariranews.com.br</a></li>
+            <li><a href="#">WhatsApp</a></li>
+            <li><a href="#">Instagram</a></li>
+            <li><a href="#">Facebook</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 Portal Carira News — Todos os direitos reservados</span>
+        <span>Carira, Sergipe, Brasil &middot; CNPJ: 00.000.000/0001-00</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- FAVICON -->
+  <script>
+    // Inline favicon
+    const faviconSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="4" fill="#0D1B2A"/><text x="4" y="24" font-size="22" font-family="serif" font-weight="900" fill="#C62828">N</text></svg>`;
+    const faviconBlob = new Blob([faviconSVG], {type: 'image/svg+xml'});
+    const faviconUrl = URL.createObjectURL(faviconBlob);
+    document.querySelector('link[rel="icon"]')?.setAttribute('href', faviconUrl);
+  </script>
+
+  <script>
+    // Category data
+    const catData = {
+      politica: [
+        { tag: 'Política', title: 'Prefeito assina convênio com governo estadual para ampliação da rede de esgotamento sanitário', time: 'Hoje', img: 'https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=400&q=80&auto=format&fit=crop' },
+        { tag: 'Política', title: 'Câmara realiza audiência pública sobre revisão do Plano Diretor Municipal de Carira', time: 'Ontem', img: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=400&q=80&auto=format&fit=crop' },
+        { tag: 'Política', title: 'Secretaria Municipal lança chamada pública para projetos culturais com R$ 60 mil em prêmios', time: '2 dias atrás', img: 'https://images.unsplash.com/photo-1577495508048-b635879837f1?w=400&q=80&auto=format&fit=crop' },
+      ],
+      saude: [
+        { tag: 'Saúde', title: 'Mutirão de exames preventivos atende mais de 500 mulheres no mês de março', time: 'Hoje', img: 'https://images.unsplash.com/photo-1584982751601-97dcc096659c?w=400&q=80&auto=format&fit=crop' },
+        { tag: 'Saúde', title: 'Novo programa de saúde mental oferece acompanhamento psicológico gratuito no CRAS', time: 'Ontem', img: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=400&q=80&auto=format&fit=crop' },
+        { tag: 'Saúde', title: 'Campanha de vacinação alcança 94% da meta para crianças menores de 5 anos no município', time: '3 dias atrás', img: 'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=400&q=80&auto=format&fit=crop' },
+      ],
+      esportes: [
+        { tag: 'Esportes', title: 'Seleção municipal de futsal conquista bicampeonato nos Jogos dos Municípios Sergipanos', time: 'Hoje', img: 'https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=400&q=80&auto=format&fit=crop' },
+        { tag: 'Esportes', title: 'Arena esportiva recebe cobertura e reforma no vestiário com recursos do governo federal', time: 'Ontem', img: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400&q=80&auto=format&fit=crop' },
+        { tag: 'Esportes', title: 'Projeto social Bola no Pé beneficia 200 crianças e adolescentes com escolinha de futebol', time: '2 dias atrás', img: 'https://images.unsplash.com/photo-1543326727-cf6c39e8f84c?w=400&q=80&auto=format&fit=crop' },
+      ],
+      cultura: [
+        { tag: 'Cultura', title: 'Forró pé-de-serra anima a Praça Central com shows gratuitos todos os sábados de junho', time: 'Hoje', img: 'https://images.unsplash.com/photo-1498243691581-b145c3f54a5a?w=400&q=80&auto=format&fit=crop' },
+        { tag: 'Cultura', title: 'Biblioteca Municipal recebe doação de 800 livros e amplia acervo infantojuvenil', time: 'Ontem', img: 'https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=400&q=80&auto=format&fit=crop' },
+        { tag: 'Cultura', title: 'Artesãos de Carira exibem trabalhos em feira regional em Aracaju e atraem turistas', time: '3 dias atrás', img: 'https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=400&q=80&auto=format&fit=crop' },
+      ],
+      economia: [
+        { tag: 'Economia', title: 'Supermercado inaugura nova filial gerando 80 empregos diretos no município', time: 'Hoje', img: 'https://images.unsplash.com/photo-1519419691348-3b3433c4c20e?w=400&q=80&auto=format&fit=crop' },
+        { tag: 'Economia', title: 'Programa Microcrédito Nordeste beneficia 160 empreendedores de Carira com financiamento', time: 'Ontem', img: 'https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=400&q=80&auto=format&fit=crop' },
+        { tag: 'Economia', title: 'Feira do Agricultor registra crescimento de 30% nas vendas no primeiro trimestre de 2026', time: '2 dias atrás', img: 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=400&q=80&auto=format&fit=crop' },
+      ],
+    };
+
+    function renderCat(key) {
+      const grid = document.getElementById('catGrid');
+      grid.innerHTML = catData[key].map(item => `
+        <div class="cat-card">
+          <img class="cat-card-img" src="${item.img}" alt="${item.tag}" loading="lazy">
+          <div class="cat-card-body">
+            <div class="cat-card-tag">${item.tag}</div>
+            <div class="cat-card-title">${item.title}</div>
+            <div class="cat-card-meta">${item.time}</div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function setTab(btn, key) {
+      document.querySelectorAll('.cat-tab').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderCat(key);
+    }
+
+    renderCat('politica');
+
+    // Mobile menu
+    function openMenu() { document.getElementById('mobileMenu').classList.add('open'); document.body.style.overflow = 'hidden'; }
+    function closeMenu() { document.getElementById('mobileMenu').classList.remove('open'); document.body.style.overflow = ''; }
+
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          entry.target.style.transitionDelay = `${i * 0.07}s`;
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
