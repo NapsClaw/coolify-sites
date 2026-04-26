@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rogerio Silva — Montador de Móveis Profissional | São Paulo</title>
+  <meta name="description" content="Montagem profissional de móveis em São Paulo. IKEA, Tok&Stok, Madeira Madeira, armários, camas, prateleiras e mais. Rápido, cuidadoso e garantido. Rogerio Silva." />
+  <meta property="og:title" content="Rogerio Silva — Montador de Móveis Profissional" />
+  <meta property="og:description" content="Montagem profissional de móveis em São Paulo. IKEA, Tok&Stok, Madeira Madeira e muito mais." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect x='10' y='40' width='80' height='8' rx='2' fill='%23E8A020'/><rect x='20' y='20' width='8' height='60' rx='2' fill='%231A1A2E'/><rect x='72' y='20' width='8' height='60' rx='2' fill='%231A1A2E'/></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── CSS Variables ─────────────────────────────────────── */
+    :root {
+      --primary: #12121E;
+      --primary-2: #1E1E30;
+      --accent: #E8A020;
+      --accent-light: #F5BC55;
+      --bg: #F3EFE6;
+      --bg-2: #EAE4D8;
+      --text: #12121E;
+      --text-muted: #5A5870;
+      --white: #FDFCF8;
+      --font-display: 'Bricolage Grotesque', sans-serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    /* ─── Reset ─────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ─── Noise Overlay ─────────────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.5;
+    }
+
+    /* ─── Animations ─────────────────────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(32px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    @keyframes slideLeft {
+      from { opacity: 0; transform: translateX(-48px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes zoomIn {
+      from { transform: scale(1.08); }
+      to   { transform: scale(1); }
+    }
+    @keyframes pulse-ring {
+      0%   { box-shadow: 0 0 0 0 rgba(37,211,102,0.5); }
+      70%  { box-shadow: 0 0 0 14px rgba(37,211,102,0); }
+      100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); }
+    }
+    @keyframes draw {
+      from { stroke-dashoffset: 400; }
+      to   { stroke-dashoffset: 0; }
+    }
+    @keyframes accentSlide {
+      from { width: 0; }
+      to   { width: 64px; }
+    }
+    @keyframes counterUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-40px);
+      transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal-left.visible { opacity: 1; transform: translateX(0); }
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(40px);
+      transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+    /* ─── Nav ────────────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 24px;
+      background: rgba(18,18,30,0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(232,160,32,0.15);
+      animation: fadeIn 0.6s ease both;
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+    .nav-logo span { color: var(--accent); display: block; font-size: 0.65rem; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; }
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: var(--primary);
+      font-family: var(--font-body);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 10px 18px;
+      border-radius: 2px;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .nav-cta:hover { background: var(--accent-light); transform: translateY(-1px); }
+
+    /* ─── Hero ───────────────────────────────────────────────── */
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      overflow: hidden;
+      padding: 100px 24px 56px;
+    }
+    .hero-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+      animation: zoomIn 1.4s cubic-bezier(0.16,1,0.3,1) both;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        170deg,
+        rgba(18,18,30,0.3) 0%,
+        rgba(18,18,30,0.5) 40%,
+        rgba(18,18,30,0.92) 100%
+      );
+    }
+    .hero-badge {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(232,160,32,0.15);
+      border: 1px solid rgba(232,160,32,0.4);
+      color: var(--accent);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 24px;
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+    .hero-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+    .hero-title {
+      position: relative;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(2.8rem, 10vw, 6rem);
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      color: var(--white);
+      margin-bottom: 20px;
+      animation: slideLeft 0.8s 0.2s cubic-bezier(0.16,1,0.3,1) both;
+    }
+    .hero-title em {
+      font-style: normal;
+      color: var(--accent);
+    }
+    .hero-sub {
+      position: relative;
+      font-family: var(--font-body);
+      font-size: clamp(1rem, 3vw, 1.2rem);
+      font-weight: 300;
+      color: rgba(253,252,248,0.75);
+      max-width: 480px;
+      line-height: 1.6;
+      margin-bottom: 36px;
+      animation: fadeUp 0.7s 0.5s ease both;
+    }
+    .hero-actions {
+      position: relative;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      animation: fadeUp 0.7s 0.65s ease both;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--accent);
+      color: var(--primary);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 700;
+      padding: 16px 28px;
+      border-radius: 2px;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-primary:hover {
+      background: var(--accent-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(232,160,32,0.35);
+    }
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: transparent;
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 0.95rem;
+      font-weight: 500;
+      padding: 16px 28px;
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 2px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .btn-secondary:hover {
+      border-color: var(--accent);
+      background: rgba(232,160,32,0.08);
+    }
+
+    /* Stats bar */
+    .hero-stats {
+      position: relative;
+      display: flex;
+      gap: 0;
+      margin-top: 48px;
+      border-top: 1px solid rgba(255,255,255,0.12);
+      padding-top: 24px;
+      animation: fadeUp 0.7s 0.8s ease both;
+    }
+    .stat-item {
+      flex: 1;
+      padding-right: 20px;
+      border-right: 1px solid rgba(255,255,255,0.12);
+    }
+    .stat-item:last-child { border-right: none; padding-right: 0; padding-left: 20px; }
+    .stat-item:not(:first-child) { padding-left: 20px; }
+    .stat-num {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 2rem;
+      color: var(--accent);
+      line-height: 1;
+      letter-spacing: -0.03em;
+    }
+    .stat-label {
+      font-size: 0.72rem;
+      font-weight: 400;
+      color: rgba(253,252,248,0.5);
+      margin-top: 4px;
+      line-height: 1.3;
+    }
+
+    /* ─── Section base ───────────────────────────────────────── */
+    section { padding: 80px 24px; }
+    .section-tag {
+      display: inline-block;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .section-tag::before {
+      content: '— ';
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(2rem, 7vw, 3.5rem);
+      line-height: 0.98;
+      letter-spacing: -0.03em;
+      color: var(--text);
+    }
+    .section-title.light { color: var(--white); }
+    .accent-line {
+      width: 0;
+      height: 3px;
+      background: var(--accent);
+      margin: 16px 0 24px;
+      border-radius: 2px;
+    }
+    .accent-line.visible { animation: accentSlide 0.5s 0.3s ease both; width: 64px; }
+
+    /* ─── About ──────────────────────────────────────────────── */
+    .about {
+      background: var(--primary);
+      color: var(--white);
+      position: relative;
+      overflow: hidden;
+    }
+    .about::before {
+      content: 'RS';
+      position: absolute;
+      top: -20px; right: -10px;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 18rem;
+      color: rgba(255,255,255,0.025);
+      pointer-events: none;
+      line-height: 1;
+    }
+    .about-inner {
+      position: relative;
+      display: grid;
+      gap: 48px;
+    }
+    .about-img-wrap {
+      position: relative;
+      border-radius: 2px;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+    }
+    .about-img-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+    .about-img-wrap:hover img { transform: scale(1.04); }
+    .about-img-badge {
+      position: absolute;
+      bottom: 20px; left: 20px;
+      background: var(--accent);
+      color: var(--primary);
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 0.8rem;
+      padding: 10px 16px;
+      border-radius: 2px;
+    }
+    .about-text p {
+      font-size: 1.05rem;
+      font-weight: 300;
+      line-height: 1.75;
+      color: rgba(253,252,248,0.75);
+      margin-bottom: 20px;
+    }
+    .about-text p strong { color: var(--accent); font-weight: 600; }
+    .about-features {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 8px;
+    }
+    .feature-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.9rem;
+      color: rgba(253,252,248,0.75);
+    }
+    .feature-row svg { flex-shrink: 0; }
+
+    /* ─── Services ───────────────────────────────────────────── */
+    .services { background: var(--bg); }
+    .services-header {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-bottom: 48px;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+    .service-card {
+      background: var(--bg-2);
+      border: 1px solid rgba(18,18,30,0.08);
+      padding: 28px 24px;
+      transition: background 0.3s, transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+      cursor: default;
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 2px;
+      background: var(--accent);
+      transition: width 0.4s cubic-bezier(0.16,1,0.3,1);
+    }
+    .service-card:hover {
+      background: var(--primary);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 48px rgba(18,18,30,0.2);
+      border-color: transparent;
+    }
+    .service-card:hover::after { width: 100%; }
+    .service-icon {
+      width: 48px; height: 48px;
+      background: rgba(232,160,32,0.12);
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      transition: background 0.3s;
+    }
+    .service-card:hover .service-icon { background: rgba(232,160,32,0.2); }
+    .service-name {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      color: var(--text);
+      transition: color 0.3s;
+    }
+    .service-card:hover .service-name { color: var(--white); }
+    .service-desc {
+      font-size: 0.88rem;
+      font-weight: 400;
+      line-height: 1.6;
+      color: var(--text-muted);
+      transition: color 0.3s;
+    }
+    .service-card:hover .service-desc { color: rgba(253,252,248,0.6); }
+
+    /* ─── Process ────────────────────────────────────────────── */
+    .process {
+      background: var(--primary);
+      position: relative;
+      overflow: hidden;
+    }
+    .process::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: -100px;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(232,160,32,0.08) 0%, transparent 70%);
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+    .process-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-top: 48px;
+      position: relative;
+    }
+    .process-steps::before {
+      content: '';
+      position: absolute;
+      left: 20px; top: 0; bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, rgba(232,160,32,0.3) 20%, rgba(232,160,32,0.3) 80%, transparent);
+    }
+    .step {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 20px;
+      padding: 28px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      position: relative;
+    }
+    .step:last-child { border-bottom: none; }
+    .step-num {
+      width: 40px; height: 40px;
+      background: var(--accent);
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 0.85rem;
+      color: var(--primary);
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+    .step-content h3 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+    .step-content p {
+      font-size: 0.88rem;
+      font-weight: 300;
+      line-height: 1.65;
+      color: rgba(253,252,248,0.55);
+    }
+
+    /* ─── Gallery ────────────────────────────────────────────── */
+    .gallery { background: var(--bg); padding-bottom: 0; }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 3px;
+      margin-top: 40px;
+    }
+    .gallery-item {
+      overflow: hidden;
+      position: relative;
+    }
+    .gallery-item img {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.16,1,0.3,1);
+      display: block;
+    }
+    .gallery-item:hover img { transform: scale(1.05); }
+    .gallery-item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(18,18,30,0.5) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .gallery-item:hover::after { opacity: 1; }
+
+    /* ─── Testimonial ────────────────────────────────────────── */
+    .testimonial {
+      background: var(--bg-2);
+      border-top: 3px solid var(--accent);
+      padding: 80px 24px;
+    }
+    .testimonial-quote {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: clamp(1.5rem, 5vw, 2.4rem);
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 28px;
+      position: relative;
+    }
+    .testimonial-quote::before {
+      content: '\201C';
+      font-size: 5rem;
+      line-height: 0;
+      vertical-align: -0.6em;
+      color: var(--accent);
+      font-weight: 800;
+      margin-right: 4px;
+    }
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .author-avatar {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--accent);
+    }
+    .author-name {
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .author-loc {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+    .stars {
+      display: flex;
+      gap: 3px;
+      margin-bottom: 20px;
+    }
+    .stars svg { fill: var(--accent); }
+
+    /* ─── Contact/CTA ────────────────────────────────────────── */
+    .contact {
+      background: var(--primary);
+      padding: 80px 24px;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+    .contact::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23E8A020' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+    .contact-inner { position: relative; max-width: 480px; margin: 0 auto; }
+    .contact-title {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(2rem, 8vw, 3.5rem);
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      color: var(--white);
+      margin-bottom: 16px;
+    }
+    .contact-title span { color: var(--accent); }
+    .contact-sub {
+      font-size: 1rem;
+      font-weight: 300;
+      color: rgba(253,252,248,0.6);
+      line-height: 1.65;
+      margin-bottom: 36px;
+    }
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 36px;
+    }
+    .contact-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      font-size: 0.9rem;
+      color: rgba(253,252,248,0.65);
+    }
+    .contact-row strong { color: var(--white); font-weight: 600; }
+    .btn-wa {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: #25D366;
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 18px 36px;
+      border-radius: 2px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      width: 100%;
+      justify-content: center;
+    }
+    .btn-wa:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 32px rgba(37,211,102,0.35);
+    }
+
+    /* ─── Footer ─────────────────────────────────────────────── */
+    footer {
+      background: #0C0C16;
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: center;
+      text-align: center;
+    }
+    .footer-logo {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1rem;
+      color: var(--white);
+      letter-spacing: -0.02em;
+    }
+    .footer-logo span { color: var(--accent); }
+    .footer-copy {
+      font-size: 0.72rem;
+      color: rgba(253,252,248,0.3);
+    }
+
+    /* ─── WhatsApp Float ─────────────────────────────────────── */
+    .wa-float {
+      position: fixed;
+      bottom: 24px; right: 24px;
+      z-index: 999;
+      width: 60px; height: 60px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      animation: pulse-ring 2.5s ease infinite;
+      transition: transform 0.2s;
+    }
+    .wa-float:hover { transform: scale(1.1); }
+
+    /* ─── Desktop ────────────────────────────────────────────── */
+    @media (min-width: 768px) {
+      nav { padding: 20px 48px; }
+      section { padding: 120px 48px; }
+      .hero { padding: 120px 48px 72px; }
+      .about-inner { grid-template-columns: 1fr 1fr; align-items: center; }
+      .services-grid { grid-template-columns: 1fr 1fr; }
+      .process-steps::before { left: 24px; }
+      .gallery-grid {
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: auto auto;
+      }
+      .gallery-item:first-child {
+        grid-column: span 2;
+        grid-row: span 1;
+      }
+      .gallery-item img { height: 320px; }
+      .gallery-item:first-child img { height: 420px; }
+      .hero-stats { max-width: 480px; }
+      .testimonial { padding: 100px 48px; }
+      .contact { padding: 120px 48px; }
+      footer { flex-direction: row; justify-content: space-between; text-align: left; padding: 28px 48px; }
+    }
+
+    @media (min-width: 1024px) {
+      nav { padding: 20px 80px; }
+      section { padding: 140px 80px; }
+      .hero { padding: 140px 80px 96px; }
+      .services-grid { grid-template-columns: repeat(3, 1fr); }
+      .gallery-grid { grid-template-columns: repeat(4, 1fr); }
+      .gallery-item:first-child { grid-column: span 2; }
+      .testimonial { padding: 120px 80px; }
+      .contact { padding: 140px 80px; }
+      footer { padding: 32px 80px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav>
+    <div class="nav-logo">
+      Rogerio Silva
+      <span>Montador de Móveis</span>
+    </div>
+    <a href="https://wa.me/5511999999999?text=Olá%20Rogerio,%20gostaria%20de%20solicitar%20um%20orçamento" class="nav-cta">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24"><path fill="#12121E" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path fill="#12121E" d="M12 0C5.373 0 0 5.373 0 12c0 2.126.555 4.12 1.524 5.853L.064 23.512a.5.5 0 0 0 .607.607l5.659-1.46A11.95 11.95 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.956 9.956 0 0 1-5.175-1.445l-.37-.22-3.358.868.888-3.268-.241-.383A9.96 9.96 0 0 1 2 12C2 6.478 6.478 2 12 2s10 4.478 10 10-4.478 10-10 10z"/></svg>
+      Solicitar Orçamento
+    </a>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <img
+      class="hero-img"
+      src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1920&q=85"
+      alt="Sala com móveis bem montados"
+      loading="eager"
+    />
+    <div class="hero-overlay"></div>
+    <div class="hero-badge">Profissional Certificado</div>
+    <h1 class="hero-title">
+      Móveis montados<br />
+      com <em>precisão.</em>
+    </h1>
+    <p class="hero-sub">
+      Rogerio Silva — montagem profissional de qualquer móvel, com cuidado, agilidade e garantia de serviço.
+    </p>
+    <div class="hero-actions">
+      <a href="https://wa.me/5511999999999?text=Olá%20Rogerio,%20gostaria%20de%20solicitar%20um%20orçamento" class="btn-primary">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path fill="#12121E" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path fill="#12121E" d="M12 0C5.373 0 0 5.373 0 12c0 2.126.555 4.12 1.524 5.853L.064 23.512a.5.5 0 0 0 .607.607l5.659-1.46A11.95 11.95 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.956 9.956 0 0 1-5.175-1.445l-.37-.22-3.358.868.888-3.268-.241-.383A9.96 9.96 0 0 1 2 12C2 6.478 6.478 2 12 2s10 4.478 10 10-4.478 10-10 10z"/></svg>
+        Pedir Orçamento
+      </a>
+      <a href="#servicos" class="btn-secondary">
+        Ver Serviços
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">500+</div>
+        <div class="stat-label">Móveis montados</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">5★</div>
+        <div class="stat-label">Avaliação média</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">24h</div>
+        <div class="stat-label">Agendamento rápido</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="about">
+    <div class="about-inner">
+      <div class="about-img-wrap reveal-left">
+        <img
+          src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80"
+          alt="Ferramentas de montagem profissional"
+          loading="lazy"
+        />
+        <div class="about-img-badge">+8 anos de experiência</div>
+      </div>
+      <div class="about-text reveal-right">
+        <span class="section-tag" style="color:var(--accent)">Sobre Rogerio</span>
+        <h2 class="section-title light">Profissional que faz a diferença</h2>
+        <div class="accent-line"></div>
+        <p>
+          Sou <strong>Rogerio Silva</strong>, montador de móveis profissional com mais de 8 anos de experiência. Trabalho com marcas como IKEA, Tok&Stok, Etna, Madeira Madeira e qualquer outro fornecedor — com o mesmo cuidado e dedicação.
+        </p>
+        <p>
+          Cada peça é montada com <strong>atenção ao detalhe</strong>, seguindo rigorosamente o manual do fabricante. Nada de parafuso folgado ou encaixe torto.
+        </p>
+        <div class="about-features">
+          <div class="feature-row">
+            <svg width="18" height="18" fill="none" stroke="#E8A020" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+            Pontualidade garantida
+          </div>
+          <div class="feature-row">
+            <svg width="18" height="18" fill="none" stroke="#E8A020" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+            Ferramentas próprias e profissionais
+          </div>
+          <div class="feature-row">
+            <svg width="18" height="18" fill="none" stroke="#E8A020" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+            Limpeza do local após o serviço
+          </div>
+          <div class="feature-row">
+            <svg width="18" height="18" fill="none" stroke="#E8A020" stroke-width="2" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>
+            Garantia de 30 dias no serviço
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section class="services" id="servicos">
+    <div class="services-header">
+      <span class="section-tag reveal">Especialidades</span>
+      <h2 class="section-title reveal">O que eu monto</h2>
+      <div class="accent-line reveal"></div>
+    </div>
+    <div class="services-grid">
+
+      <div class="service-card reveal">
+        <div class="service-icon">
+          <svg width="24" height="24" fill="none" stroke="#E8A020" stroke-width="1.5" viewBox="0 0 24 24"><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>
+        </div>
+        <div class="service-name">Móveis IKEA</div>
+        <div class="service-desc">Toda a linha IKEA montada com precisão: PAX, KALLAX, MALM, BILLY, HEMNES e muito mais.</div>
+      </div>
+
+      <div class="service-card reveal" style="transition-delay:.08s">
+        <div class="service-icon">
+          <svg width="24" height="24" fill="none" stroke="#E8A020" stroke-width="1.5" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="1"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/><path d="M12 12v3M9 12h6"/></svg>
+        </div>
+        <div class="service-name">Guarda-roupas</div>
+        <div class="service-desc">Montagem de armários e guarda-roupas de todos os tamanhos, com espelho ou sem.</div>
+      </div>
+
+      <div class="service-card reveal" style="transition-delay:.16s">
+        <div class="service-icon">
+          <svg width="24" height="24" fill="none" stroke="#E8A020" stroke-width="1.5" viewBox="0 0 24 24"><path d="M2 20h20M4 20V10a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10M4 14h16"/></svg>
+        </div>
+        <div class="service-name">Camas e beliches</div>
+        <div class="service-desc">Box, camas box, beliches e camas com estrutura articulada. Segurança total na montagem.</div>
+      </div>
+
+      <div class="service-card reveal" style="transition-delay:.24s">
+        <div class="service-icon">
+          <svg width="24" height="24" fill="none" stroke="#E8A020" stroke-width="1.5" viewBox="0 0 24 24"><path d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+        </div>
+        <div class="service-name">Estantes e prateleiras</div>
+        <div class="service-desc">Fixação e montagem de prateleiras, estantes e nichos, com nível e chumbadores adequados.</div>
+      </div>
+
+      <div class="service-card reveal" style="transition-delay:.32s">
+        <div class="service-icon">
+          <svg width="24" height="24" fill="none" stroke="#E8A020" stroke-width="1.5" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        </div>
+        <div class="service-name">Escritório e home office</div>
+        <div class="service-desc">Mesas, cadeiras, racks, gavetas e todo o mobiliário do seu escritório ou home office.</div>
+      </div>
+
+      <div class="service-card reveal" style="transition-delay:.4s">
+        <div class="service-icon">
+          <svg width="24" height="24" fill="none" stroke="#E8A020" stroke-width="1.5" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+        </div>
+        <div class="service-name">Qualquer marca</div>
+        <div class="service-desc">Tok&Stok, Etna, Madeira Madeira, MDF Online, Lojas Americanas — qualquer fabricante.</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section class="process">
+    <span class="section-tag" style="color:var(--accent)" class="reveal">Como funciona</span>
+    <h2 class="section-title light reveal">Simples assim</h2>
+    <div class="process-steps">
+      <div class="step reveal">
+        <div class="step-num">01</div>
+        <div class="step-content">
+          <h3>Entre em contato pelo WhatsApp</h3>
+          <p>Mande uma mensagem com os móveis que precisam ser montados e o endereço. Respondo rápido.</p>
+        </div>
+      </div>
+      <div class="step reveal" style="transition-delay:.1s">
+        <div class="step-num">02</div>
+        <div class="step-content">
+          <h3>Receba o orçamento na hora</h3>
+          <p>Passo o valor e agendamos o melhor horário pra você. Sem surpresas, sem cobranças extras.</p>
+        </div>
+      </div>
+      <div class="step reveal" style="transition-delay:.2s">
+        <div class="step-num">03</div>
+        <div class="step-content">
+          <h3>Móveis prontos e ambiente limpo</h3>
+          <p>Chego no horário combinado, monto tudo com cuidado e deixo o local limpo antes de ir embora.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery -->
+  <section class="gallery">
+    <span class="section-tag reveal">Portfólio</span>
+    <h2 class="section-title reveal">Trabalhos realizados</h2>
+    <div class="gallery-grid">
+      <div class="gallery-item reveal">
+        <img src="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=1200&q=80" alt="Sala de estar montada" loading="lazy" />
+      </div>
+      <div class="gallery-item reveal" style="transition-delay:.08s">
+        <img src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?w=800&q=80" alt="Quarto com mobiliário organizado" loading="lazy" />
+      </div>
+      <div class="gallery-item reveal" style="transition-delay:.16s">
+        <img src="https://images.unsplash.com/photo-1484154218962-a197022b5858?w=800&q=80" alt="Cozinha equipada" loading="lazy" />
+      </div>
+      <div class="gallery-item reveal" style="transition-delay:.24s">
+        <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=80" alt="Living room com estante" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonial -->
+  <section class="testimonial">
+    <div class="stars reveal">
+      <svg width="18" height="18" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09L5.25 12.5.5 8.09l5.62-.817L10 2l3.88 5.273 5.62.817-4.75 4.41 1.128 5.59z"/></svg>
+      <svg width="18" height="18" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09L5.25 12.5.5 8.09l5.62-.817L10 2l3.88 5.273 5.62.817-4.75 4.41 1.128 5.59z"/></svg>
+      <svg width="18" height="18" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09L5.25 12.5.5 8.09l5.62-.817L10 2l3.88 5.273 5.62.817-4.75 4.41 1.128 5.59z"/></svg>
+      <svg width="18" height="18" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09L5.25 12.5.5 8.09l5.62-.817L10 2l3.88 5.273 5.62.817-4.75 4.41 1.128 5.59z"/></svg>
+      <svg width="18" height="18" viewBox="0 0 20 20"><path d="M10 15l-5.878 3.09L5.25 12.5.5 8.09l5.62-.817L10 2l3.88 5.273 5.62.817-4.75 4.41 1.128 5.59z"/></svg>
+    </div>
+    <blockquote class="testimonial-quote reveal">
+      Chegou no horário, montou meu guarda-roupa PAX do IKEA em menos de 2 horas. Ficou perfeito. Super recomendo o Rogerio!
+    </blockquote>
+    <div class="testimonial-author reveal">
+      <img
+        class="author-avatar"
+        src="https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=100&q=80"
+        alt="Cliente satisfeita"
+        loading="lazy"
+      />
+      <div>
+        <div class="author-name">Camila M.</div>
+        <div class="author-loc">Vila Madalena, São Paulo</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="contact" id="contato">
+    <div class="contact-inner">
+      <h2 class="contact-title reveal">
+        Pronto para<br /><span>montar?</span>
+      </h2>
+      <p class="contact-sub reveal">
+        Entre em contato agora pelo WhatsApp. Orçamento rápido, sem compromisso.
+      </p>
+      <div class="contact-info reveal">
+        <div class="contact-row">
+          <svg width="16" height="16" fill="none" stroke="rgba(253,252,248,0.5)" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          <span>Atende São Paulo e região</span>
+        </div>
+        <div class="contact-row">
+          <svg width="16" height="16" fill="none" stroke="rgba(253,252,248,0.5)" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          <span>Seg–Sáb, das 8h às 19h</span>
+        </div>
+      </div>
+      <a
+        href="https://wa.me/5511999999999?text=Olá%20Rogerio,%20gostaria%20de%20solicitar%20um%20orçamento%20para%20montagem%20de%20móveis"
+        class="btn-wa reveal"
+        target="_blank"
+        rel="noopener"
+      >
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path fill="#fff" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path fill="#fff" d="M12 0C5.373 0 0 5.373 0 12c0 2.126.555 4.12 1.524 5.853L.064 23.512a.5.5 0 0 0 .607.607l5.659-1.46A11.95 11.95 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.956 9.956 0 0 1-5.175-1.445l-.37-.22-3.358.868.888-3.268-.241-.383A9.96 9.96 0 0 1 2 12C2 6.478 6.478 2 12 2s10 4.478 10 10-4.478 10-10 10z"/></svg>
+        Chamar no WhatsApp
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-logo">Rogerio <span>Silva</span></div>
+    <div class="footer-copy">&copy; 2025 Rogerio Silva — Montador de Móveis. São Paulo, SP.</div>
+  </footer>
+
+  <!-- WhatsApp Float -->
+  <a
+    href="https://wa.me/5511999999999?text=Olá%20Rogerio,%20gostaria%20de%20solicitar%20um%20orçamento"
+    class="wa-float"
+    target="_blank"
+    rel="noopener"
+    aria-label="Chamar no WhatsApp"
+  >
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path fill="#fff" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path fill="#fff" d="M12 0C5.373 0 0 5.373 0 12c0 2.126.555 4.12 1.524 5.853L.064 23.512a.5.5 0 0 0 .607.607l5.659-1.46A11.95 11.95 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.956 9.956 0 0 1-5.175-1.445l-.37-.22-3.358.868.888-3.268-.241-.383A9.96 9.96 0 0 1 2 12C2 6.478 6.478 2 12 2s10 4.478 10 10-4.478 10-10 10z"/></svg>
+  </a>
+
+  <script>
+    // Scroll Reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          // accent lines
+          const line = e.target.querySelector('.accent-line');
+          if (line) line.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => observer.observe(el));
+
+    // Also observe sections for accent lines
+    document.querySelectorAll('.accent-line').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
