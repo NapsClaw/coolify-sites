@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Unidade Integrada Manoel Eloi de Sousa — Da Creche ao Magistério</title>
+  <meta name="description" content="Escola Unidade Integrada Manoel Eloi de Sousa — Educação completa da Creche ao Magistério. Formando cidadãos com excelência e valores." />
+  <meta property="og:title" content="Unidade Integrada Manoel Eloi de Sousa" />
+  <meta property="og:description" content="Da Creche ao Magistério — Uma jornada completa de formação humana e acadêmica." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏫</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;0,700;0,800;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --primary: #1A3D20;
+      --primary-light: #2A5C30;
+      --accent: #C8862A;
+      --accent-light: #E0A045;
+      --bg: #F4EFE6;
+      --bg-alt: #EDE7D9;
+      --bg-dark: #0D1F10;
+      --text: #1C1C1A;
+      --text-muted: #5A5648;
+      --text-light: #F4EFE6;
+      --border: rgba(26,61,32,0.12);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE TEXTURE ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.025;
+      pointer-events: none;
+      z-index: 9998;
+    }
+
+    /* ── TYPOGRAPHY ── */
+    .font-display { font-family: 'Crimson Pro', serif; }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s cubic-bezier(.16,1,.3,1), transform 0.8s cubic-bezier(.16,1,.3,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-50px);
+      transition: opacity 0.9s cubic-bezier(.16,1,.3,1), transform 0.9s cubic-bezier(.16,1,.3,1);
+    }
+    .reveal-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(50px);
+      transition: opacity 0.9s cubic-bezier(.16,1,.3,1), transform 0.9s cubic-bezier(.16,1,.3,1);
+    }
+    .reveal-right.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* ── NAVBAR ── */
+    #navbar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.4s, padding 0.4s, box-shadow 0.4s;
+    }
+    #navbar.scrolled {
+      background: rgba(13, 31, 16, 0.97);
+      padding: 14px 24px;
+      box-shadow: 0 2px 24px rgba(0,0,0,0.25);
+      backdrop-filter: blur(12px);
+    }
+    .nav-logo {
+      font-family: 'Crimson Pro', serif;
+      font-weight: 700;
+      font-size: 1rem;
+      color: #fff;
+      letter-spacing: 0.02em;
+      line-height: 1.2;
+      max-width: 220px;
+    }
+    .nav-logo span {
+      display: block;
+      font-weight: 300;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      margin-top: 2px;
+    }
+    .nav-links {
+      display: none;
+      gap: 32px;
+    }
+    @media (min-width: 768px) {
+      .nav-links { display: flex; }
+    }
+    .nav-links a {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent-light); }
+
+    /* ── HERO ── */
+    #hero {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1600&q=85');
+      background-size: cover;
+      background-position: center top;
+      transform: scale(1.08);
+      animation: heroZoom 12s ease-out forwards;
+    }
+    @keyframes heroZoom {
+      from { transform: scale(1.08); }
+      to   { transform: scale(1.0); }
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(13, 31, 16, 0.97) 0%,
+        rgba(13, 31, 16, 0.75) 45%,
+        rgba(13, 31, 16, 0.30) 100%
+      );
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      padding: 0 24px 64px;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    @media (min-width: 768px) {
+      .hero-content { padding: 0 48px 96px; }
+    }
+
+    .hero-tag {
+      display: inline-block;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      border: 1px solid var(--accent);
+      padding: 6px 14px;
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.3s cubic-bezier(.16,1,.3,1) forwards;
+    }
+    .hero-title {
+      font-family: 'Crimson Pro', serif;
+      font-size: clamp(2.8rem, 8vw, 6.5rem);
+      font-weight: 800;
+      color: #fff;
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+    }
+    .hero-title .line {
+      display: block;
+      overflow: hidden;
+    }
+    .hero-title .line span {
+      display: block;
+      opacity: 0;
+      transform: translateY(100%);
+    }
+    .hero-title .line:nth-child(1) span { animation: lineReveal 0.8s 0.5s cubic-bezier(.16,1,.3,1) forwards; }
+    .hero-title .line:nth-child(2) span { animation: lineReveal 0.8s 0.7s cubic-bezier(.16,1,.3,1) forwards; }
+    .hero-title .line:nth-child(3) span { animation: lineReveal 0.8s 0.9s cubic-bezier(.16,1,.3,1) forwards; }
+    @keyframes lineReveal {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+      from { opacity: 0; transform: translateY(20px); }
+    }
+
+    .hero-sub {
+      font-size: clamp(0.85rem, 2vw, 1rem);
+      color: rgba(255,255,255,0.6);
+      letter-spacing: 0.05em;
+      max-width: 460px;
+      line-height: 1.7;
+      opacity: 0;
+      animation: fadeUp 0.8s 1.1s cubic-bezier(.16,1,.3,1) forwards;
+    }
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 36px;
+      padding: 14px 28px;
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+      opacity: 0;
+      animation: fadeUp 0.8s 1.3s cubic-bezier(.16,1,.3,1) forwards;
+    }
+    .hero-cta:hover {
+      background: var(--accent-light);
+      transform: translateY(-2px);
+    }
+    .hero-scroll {
+      position: absolute;
+      bottom: 36px;
+      right: 36px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      animation: fadeUp 1s 1.8s ease forwards;
+    }
+    .hero-scroll span {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+    }
+    .scroll-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, transparent, rgba(200,134,42,0.6));
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.1); }
+    }
+
+    /* ── ABOUT ── */
+    #sobre {
+      background: var(--bg);
+      padding: 80px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    @media (min-width: 768px) { #sobre { padding: 120px 48px; } }
+
+    #sobre::before {
+      content: 'UIMES';
+      position: absolute;
+      top: -20px;
+      right: -20px;
+      font-family: 'Crimson Pro', serif;
+      font-size: clamp(6rem, 18vw, 16rem);
+      font-weight: 800;
+      color: rgba(26, 61, 32, 0.04);
+      line-height: 1;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .sobre-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+    @media (min-width: 900px) {
+      .sobre-inner { grid-template-columns: 1fr 1fr; align-items: center; gap: 80px; }
+    }
+
+    .sobre-img-wrap {
+      position: relative;
+    }
+    .sobre-img-wrap img {
+      width: 100%;
+      height: 420px;
+      object-fit: cover;
+      display: block;
+    }
+    .sobre-img-wrap::after {
+      content: '';
+      position: absolute;
+      bottom: -16px;
+      right: -16px;
+      width: 60%;
+      height: 60%;
+      border: 2px solid var(--accent);
+      z-index: -1;
+    }
+    .sobre-badge {
+      position: absolute;
+      top: 24px;
+      left: -16px;
+      background: var(--primary);
+      color: #fff;
+      padding: 12px 20px;
+      font-family: 'Crimson Pro', serif;
+      font-size: 0.85rem;
+      font-style: italic;
+    }
+
+    .sobre-text .section-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sobre-text .section-label::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--accent);
+    }
+    .sobre-text h2 {
+      font-family: 'Crimson Pro', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--primary);
+      margin-bottom: 24px;
+    }
+    .sobre-text p {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+    .sobre-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-top: 36px;
+      padding-top: 36px;
+      border-top: 1px solid var(--border);
+    }
+    .stat-item {
+      text-align: center;
+    }
+    .stat-num {
+      font-family: 'Crimson Pro', serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1;
+    }
+    .stat-num span { color: var(--accent); }
+    .stat-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* ── NÍVEIS ── */
+    #niveis {
+      background: var(--primary);
+      padding: 80px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    @media (min-width: 768px) { #niveis { padding: 120px 48px; } }
+
+    #niveis::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(to right, transparent, var(--accent), transparent);
+    }
+
+    .niveis-header {
+      max-width: 1200px;
+      margin: 0 auto 60px;
+    }
+    .niveis-header .section-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .niveis-header .section-label::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--accent);
+    }
+    .niveis-header h2 {
+      font-family: 'Crimson Pro', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.1;
+    }
+
+    .niveis-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2px;
+    }
+    @media (min-width: 640px) { .niveis-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .niveis-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    .nivel-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.07);
+      padding: 36px 32px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s, border-color 0.3s, transform 0.3s;
+      cursor: default;
+    }
+    .nivel-card::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width 0.4s cubic-bezier(.16,1,.3,1);
+    }
+    .nivel-card:hover::before { width: 100%; }
+    .nivel-card:hover {
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(200,134,42,0.3);
+      transform: translateY(-4px);
+    }
+
+    .nivel-num {
+      font-family: 'Crimson Pro', serif;
+      font-size: 3.5rem;
+      font-weight: 800;
+      color: rgba(200,134,42,0.18);
+      line-height: 1;
+      margin-bottom: 16px;
+      transition: color 0.3s;
+    }
+    .nivel-card:hover .nivel-num { color: rgba(200,134,42,0.4); }
+
+    .nivel-icon {
+      width: 40px;
+      height: 40px;
+      margin-bottom: 20px;
+      color: var(--accent);
+    }
+    .nivel-title {
+      font-family: 'Crimson Pro', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+    .nivel-age {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      margin-bottom: 12px;
+    }
+    .nivel-desc {
+      font-size: 0.82rem;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.5);
+    }
+
+    /* ── GALERIA ── */
+    #galeria {
+      background: var(--bg-alt);
+      padding: 80px 24px;
+    }
+    @media (min-width: 768px) { #galeria { padding: 120px 48px; } }
+
+    .galeria-header {
+      max-width: 1200px;
+      margin: 0 auto 48px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .galeria-header h2 {
+      font-family: 'Crimson Pro', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1.1;
+    }
+    .galeria-header p {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      max-width: 240px;
+      text-align: right;
+      line-height: 1.6;
+    }
+
+    .galeria-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto;
+      gap: 8px;
+    }
+    @media (min-width: 768px) {
+      .galeria-grid {
+        grid-template-columns: 2fr 1fr 1fr;
+        grid-template-rows: 320px 240px;
+      }
+    }
+
+    .galeria-item {
+      overflow: hidden;
+      position: relative;
+    }
+    .galeria-item.large {
+      grid-row: 1 / 3;
+    }
+    .galeria-item img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s cubic-bezier(.16,1,.3,1);
+      filter: saturate(0.85);
+    }
+    @media (min-width: 768px) {
+      .galeria-item img { height: 100%; }
+    }
+    .galeria-item:hover img {
+      transform: scale(1.06);
+      filter: saturate(1);
+    }
+    .galeria-item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(26, 61, 32, 0);
+      transition: background 0.3s;
+    }
+    .galeria-item:hover::after {
+      background: rgba(26, 61, 32, 0.12);
+    }
+
+    /* ── CONTATO ── */
+    #contato {
+      background: var(--bg-dark);
+      padding: 80px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    @media (min-width: 768px) { #contato { padding: 120px 48px; } }
+
+    #contato::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1509062522246-3755977927d7?w=1400&q=60');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.08;
+    }
+
+    .contato-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 60px;
+    }
+    @media (min-width: 768px) {
+      .contato-inner { grid-template-columns: 1fr 1fr; align-items: start; gap: 80px; }
+    }
+
+    #contato .section-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    #contato .section-label::before {
+      content: '';
+      display: block;
+      width: 24px;
+      height: 1px;
+      background: var(--accent);
+    }
+    #contato h2 {
+      font-family: 'Crimson Pro', serif;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.1;
+      margin-bottom: 28px;
+    }
+    #contato p {
+      font-size: 0.9rem;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.55);
+    }
+
+    .contato-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+    .contato-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .contato-icon {
+      width: 40px;
+      height: 40px;
+      border: 1px solid rgba(200,134,42,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--accent-light);
+    }
+    .contato-icon svg { width: 18px; height: 18px; }
+    .contato-info strong {
+      display: block;
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent-light);
+      margin-bottom: 4px;
+    }
+    .contato-info span {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.6;
+    }
+
+    .contato-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 40px;
+      padding: 16px 32px;
+      background: #25D366;
+      color: #fff;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+    .contato-cta:hover {
+      background: #1db954;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(37, 211, 102, 0.3);
+    }
+    .contato-cta svg { width: 20px; height: 20px; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bg-dark);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 28px 24px;
+      text-align: center;
+    }
+    footer p {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.25);
+      letter-spacing: 0.08em;
+    }
+    footer strong { color: rgba(255,255,255,0.45); }
+
+    /* ── WHATSAPP FLOAT ── */
+    .wa-float {
+      position: fixed;
+      bottom: 28px;
+      right: 24px;
+      width: 60px;
+      height: 60px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 999;
+      text-decoration: none;
+      box-shadow: 0 4px 16px rgba(37,211,102,0.4);
+      animation: waPulse 3s ease-in-out infinite;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .wa-float:hover {
+      transform: scale(1.12);
+      box-shadow: 0 8px 28px rgba(37,211,102,0.55);
+      animation: none;
+    }
+    .wa-float svg { width: 28px; height: 28px; color: #fff; }
+    @keyframes waPulse {
+      0%, 100% { box-shadow: 0 4px 16px rgba(37,211,102,0.4); }
+      50% { box-shadow: 0 4px 28px rgba(37,211,102,0.65), 0 0 0 8px rgba(37,211,102,0.1); }
+    }
+
+    /* ── DIVIDER ── */
+    .section-divider {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--border), transparent);
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav id="navbar">
+    <div class="nav-logo">
+      Manoel Eloi de Sousa
+      <span>Unidade Integrada</span>
+    </div>
+    <div class="nav-links">
+      <a href="#sobre">Sobre</a>
+      <a href="#niveis">Ensino</a>
+      <a href="#galeria">Galeria</a>
+      <a href="#contato">Contato</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-tag">Educação Pública de Excelência</div>
+      <h1 class="hero-title font-display">
+        <span class="line"><span>Da Creche</span></span>
+        <span class="line"><span>ao</span></span>
+        <span class="line"><span style="color: var(--accent-light);">Magistério.</span></span>
+      </h1>
+      <p class="hero-sub">
+        Formando cidadãos, professores e líderes há décadas. Uma escola completa que acompanha cada fase da sua jornada educacional.
+      </p>
+      <a href="#niveis" class="hero-cta">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+        Conheça os Níveis
+      </a>
+    </div>
+    <div class="hero-scroll">
+      <span>Role</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- SOBRE -->
+  <section id="sobre">
+    <div class="sobre-inner">
+      <div class="reveal-left">
+        <div class="sobre-img-wrap">
+          <img
+            src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=85"
+            alt="Professores e alunos em sala de aula"
+            loading="lazy"
+          />
+          <div class="sobre-badge">"Educação que transforma"</div>
+        </div>
+      </div>
+      <div class="sobre-text reveal-right">
+        <div class="section-label">Nossa Escola</div>
+        <h2>Uma jornada completa de aprendizado e formação</h2>
+        <p>
+          A Unidade Integrada Manoel Eloi de Sousa é uma escola comprometida com a educação integral de seus alunos, desde os primeiros anos na Creche até a formação no Magistério.
+        </p>
+        <p>
+          Acreditamos que a educação é o caminho mais transformador para o desenvolvimento humano e social. Nossa proposta pedagógica une rigor acadêmico, afeto e valorização da cultura local.
+        </p>
+        <div class="sobre-stats">
+          <div class="stat-item reveal" style="transition-delay: 0.1s;">
+            <div class="stat-num">6<span>+</span></div>
+            <div class="stat-label">Níveis de Ensino</div>
+          </div>
+          <div class="stat-item reveal" style="transition-delay: 0.2s;">
+            <div class="stat-num">∞</div>
+            <div class="stat-label">Possibilidades</div>
+          </div>
+          <div class="stat-item reveal" style="transition-delay: 0.3s;">
+            <div class="stat-num">1<span>°</span></div>
+            <div class="stat-label">Passo ao Futuro</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NÍVEIS DE ENSINO -->
+  <section id="niveis">
+    <div class="niveis-header reveal">
+      <div class="section-label">Formação Completa</div>
+      <h2>Níveis de Ensino</h2>
+    </div>
+    <div class="niveis-grid">
+
+      <div class="nivel-card reveal" style="transition-delay: 0.05s;">
+        <div class="nivel-num">01</div>
+        <svg class="nivel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+          <path d="M8.5 11.5c.83 1.17 2.17 2 3.5 2s2.67-.83 3.5-2"/>
+          <circle cx="9" cy="9.5" r="1.2" fill="currentColor" stroke="none"/>
+          <circle cx="15" cy="9.5" r="1.2" fill="currentColor" stroke="none"/>
+        </svg>
+        <div class="nivel-title">Creche</div>
+        <div class="nivel-age">0 a 3 anos</div>
+        <p class="nivel-desc">Cuidado e estimulação nos primeiros anos de vida, com ambiente acolhedor e equipe especializada em desenvolvimento infantil.</p>
+      </div>
+
+      <div class="nivel-card reveal" style="transition-delay: 0.1s;">
+        <div class="nivel-num">02</div>
+        <svg class="nivel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M12 3L1 9l11 6 11-6-11-6z"/>
+          <path d="M5 12v5c3.67 1.83 10.33 1.83 14 0v-5"/>
+        </svg>
+        <div class="nivel-title">Educação Infantil</div>
+        <div class="nivel-age">4 a 5 anos</div>
+        <p class="nivel-desc">Desenvolvimento socioemocional, coordenação motora e estímulo à criatividade com atividades lúdicas e pedagógicas.</p>
+      </div>
+
+      <div class="nivel-card reveal" style="transition-delay: 0.15s;">
+        <div class="nivel-num">03</div>
+        <svg class="nivel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="3" y="3" width="18" height="18" rx="2"/>
+          <path d="M3 9h18M9 21V9"/>
+        </svg>
+        <div class="nivel-title">Fundamental I</div>
+        <div class="nivel-age">6 a 10 anos</div>
+        <p class="nivel-desc">Alfabetização e base sólida em Português, Matemática, Ciências e Arte, com metodologias ativas e projetos interdisciplinares.</p>
+      </div>
+
+      <div class="nivel-card reveal" style="transition-delay: 0.2s;">
+        <div class="nivel-num">04</div>
+        <svg class="nivel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+          <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+        </svg>
+        <div class="nivel-title">Fundamental II</div>
+        <div class="nivel-age">11 a 14 anos</div>
+        <p class="nivel-desc">Aprofundamento nas disciplinas, raciocínio crítico e preparação para os desafios do Ensino Médio com foco em protagonismo.</p>
+      </div>
+
+      <div class="nivel-card reveal" style="transition-delay: 0.25s;">
+        <div class="nivel-num">05</div>
+        <svg class="nivel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="12" cy="8" r="6"/>
+          <path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/>
+        </svg>
+        <div class="nivel-title">Ensino Médio</div>
+        <div class="nivel-age">15 a 17 anos</div>
+        <p class="nivel-desc">Formação para o ENEM e vestibulares, com educação ampla que prepara o jovem para a cidadania e o mundo do trabalho.</p>
+      </div>
+
+      <div class="nivel-card reveal" style="transition-delay: 0.3s;">
+        <div class="nivel-num">06</div>
+        <svg class="nivel-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+          <path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
+        </svg>
+        <div class="nivel-title">Magistério</div>
+        <div class="nivel-age">Formação Docente</div>
+        <p class="nivel-desc">Curso de formação de professores que habilita para atuar na Educação Infantil e nos anos iniciais do Ensino Fundamental.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- GALERIA -->
+  <section id="galeria">
+    <div class="galeria-header reveal">
+      <h2>Nossa Escola<br/>em Imagens</h2>
+      <p>Um espaço de aprendizado, convívio e transformação.</p>
+    </div>
+    <div class="galeria-grid reveal">
+      <div class="galeria-item large">
+        <img
+          src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&q=85"
+          alt="Crianças em atividade escolar"
+          loading="lazy"
+        />
+      </div>
+      <div class="galeria-item">
+        <img
+          src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=600&q=85"
+          alt="Livros e material didático"
+          loading="lazy"
+        />
+      </div>
+      <div class="galeria-item">
+        <img
+          src="https://images.unsplash.com/photo-1588072432836-e10032774350?w=600&q=85"
+          alt="Alunos estudando"
+          loading="lazy"
+        />
+      </div>
+      <div class="galeria-item">
+        <img
+          src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=600&q=85"
+          alt="Professora em sala de aula"
+          loading="lazy"
+        />
+      </div>
+      <div class="galeria-item">
+        <img
+          src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=600&q=85"
+          alt="Escola — estrutura educacional"
+          loading="lazy"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTATO -->
+  <section id="contato">
+    <div class="contato-inner">
+      <div class="reveal">
+        <div class="section-label">Entre em Contato</div>
+        <h2>Venha fazer parte da nossa comunidade escolar</h2>
+        <p>Conheça nossa estrutura, metodologia e como matricular seu filho. Estamos aqui para acompanhá-lo em cada etapa do crescimento.</p>
+        <a href="https://wa.me/55" class="contato-cta" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+          Falar pelo WhatsApp
+        </a>
+      </div>
+      <div class="reveal" style="transition-delay: 0.2s;">
+        <ul class="contato-list">
+          <li>
+            <div class="contato-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+                <polyline points="9,22 9,12 15,12 15,22"/>
+              </svg>
+            </div>
+            <div class="contato-info">
+              <strong>Instituição</strong>
+              <span>Unidade Integrada<br/>Manoel Eloi de Sousa</span>
+            </div>
+          </li>
+          <li>
+            <div class="contato-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12,6 12,12 16,14"/>
+              </svg>
+            </div>
+            <div class="contato-info">
+              <strong>Horário de Funcionamento</strong>
+              <span>Segunda a Sexta<br/>7h às 17h</span>
+            </div>
+          </li>
+          <li>
+            <div class="contato-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.64A2 2 0 012 .97h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.91a16 16 0 006.18 6.18l1.3-1.29a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/>
+              </svg>
+            </div>
+            <div class="contato-info">
+              <strong>Secretaria</strong>
+              <span>Ligue ou envie uma mensagem<br/>para mais informações</span>
+            </div>
+          </li>
+          <li>
+            <div class="contato-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 2a14.5 14.5 0 000 20 14.5 14.5 0 000-20"/>
+                <path d="M2 12h20"/>
+              </svg>
+            </div>
+            <div class="contato-info">
+              <strong>Matrículas</strong>
+              <span>Vagas abertas para todos<br/>os níveis de ensino</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p><strong>Unidade Integrada Manoel Eloi de Sousa</strong> &mdash; Da Creche ao Magistério · Todos os direitos reservados</p>
+  </footer>
+
+  <!-- WHATSAPP FLOAT -->
+  <a href="https://wa.me/55" class="wa-float" target="_blank" rel="noopener" aria-label="Contato pelo WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+  </a>
+
+  <script>
+    // ── NAVBAR SCROLL ──
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    // ── SCROLL REVEAL ──
+    const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -48px 0px' });
+
+    revealEls.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
