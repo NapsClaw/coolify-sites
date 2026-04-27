@@ -769,6 +769,125 @@
       50% { box-shadow: 0 4px 30px rgba(37,211,102,0.6), 0 0 0 8px rgba(37,211,102,0.1); }
     }
 
+    /* ─── HERO PHOTO CARD ─── */
+    .hero-photo-card {
+      position: relative; border-radius: 3px;
+      overflow: hidden;
+      box-shadow: 0 12px 64px rgba(42,82,64,0.16), 0 4px 16px rgba(42,82,64,0.08);
+    }
+    .hero-photo-img {
+      width: 100%; height: 460px;
+      object-fit: cover; display: block;
+      transition: transform 0.7s cubic-bezier(0.22,1,0.36,1);
+    }
+    .hero-photo-card:hover .hero-photo-img { transform: scale(1.04); }
+    .hero-photo-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(26,46,38,0.78) 0%, rgba(26,46,38,0.08) 55%, transparent 100%);
+    }
+    .hero-photo-tags {
+      position: absolute; top: 18px; left: 18px;
+      display: flex; flex-wrap: wrap; gap: 6px;
+    }
+    .hero-photo-tag {
+      font-size: 9px; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: #fff;
+      padding: 4px 10px;
+      background: rgba(201,168,76,0.88);
+      border-radius: 1px;
+    }
+    .hero-photo-badge {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      padding: 24px 28px;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .hero-photo-badge img {
+      height: 44px; width: auto;
+      filter: brightness(0) invert(1); opacity: 0.92;
+    }
+    .hero-photo-caption {
+      font-size: 10px; font-weight: 500; letter-spacing: 0.18em;
+      text-transform: uppercase; color: rgba(255,255,255,0.65);
+      line-height: 1.4; border-left: 1px solid rgba(255,255,255,0.2); padding-left: 14px;
+    }
+
+    /* ─── SOBRE CONSTRUCTION ─── */
+    .sobre-construction-frame { position: relative; padding-bottom: 28px; padding-right: 20px; }
+    .sobre-construction-photo {
+      width: 100%; height: 420px;
+      object-fit: cover; border-radius: 2px; display: block;
+      box-shadow: 0 12px 48px rgba(42,82,64,0.14);
+    }
+    .sobre-logo-badge {
+      position: absolute; bottom: 0; right: 0;
+      background: #fff; border: 1px solid var(--border);
+      border-radius: 2px; padding: 18px 22px;
+      box-shadow: 0 4px 24px rgba(42,82,64,0.12);
+      border-bottom: 3px solid var(--gold); z-index: 2;
+    }
+    .sobre-logo-badge img { height: 48px; width: auto; display: block; }
+
+    /* ─── OBRAS SECTION ─── */
+    #obras {
+      background: var(--bg-alt);
+      padding: 120px 48px;
+    }
+    .obras-header {
+      max-width: 1200px; margin: 0 auto 64px;
+      display: flex; align-items: flex-end; justify-content: space-between; gap: 24px;
+    }
+    .obras-sub {
+      font-size: 14px; font-weight: 300; color: var(--muted);
+      max-width: 340px; text-align: right; line-height: 1.75;
+    }
+    .obras-grid {
+      max-width: 1200px; margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      grid-auto-rows: 280px;
+      gap: 10px;
+    }
+    .obra-item { position: relative; overflow: hidden; border-radius: 2px; }
+    .obra-item:nth-child(1) { grid-column: span 5; }
+    .obra-item:nth-child(2) { grid-column: span 7; }
+    .obra-item:nth-child(3) { grid-column: span 4; }
+    .obra-item:nth-child(4) { grid-column: span 4; }
+    .obra-item:nth-child(5) { grid-column: span 4; }
+    .obra-photo { width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform 0.6s cubic-bezier(0.22,1,0.36,1); }
+    .obra-item:hover .obra-photo { transform: scale(1.06); }
+    .obra-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(26,46,38,0.82) 0%, rgba(26,46,38,0.08) 55%, transparent 100%);
+    }
+    .obra-caption { position: absolute; bottom: 0; left: 0; right: 0; padding: 20px 22px; }
+    .obra-tag {
+      display: inline-block;
+      font-size: 9px; font-weight: 600; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--gold);
+      padding: 3px 8px; border: 1px solid rgba(201,168,76,0.5);
+      border-radius: 1px; margin-bottom: 6px;
+    }
+    .obra-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600; font-size: 17px; color: #fff;
+      line-height: 1.2; letter-spacing: -0.01em;
+    }
+    @media (max-width: 900px) {
+      #obras { padding: 80px 24px; }
+      .obras-header { flex-direction: column; align-items: flex-start; }
+      .obras-sub { text-align: left; }
+      .obras-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-auto-rows: 220px;
+      }
+      .obra-item:nth-child(1) { grid-column: span 2; }
+      .obra-item:nth-child(2),
+      .obra-item:nth-child(3),
+      .obra-item:nth-child(4),
+      .obra-item:nth-child(5) { grid-column: span 1; }
+    }
+
     /* Scroll reveal */
     .reveal {
       opacity: 0; transform: translateY(28px);
@@ -792,6 +911,7 @@
     <ul class="nav-links">
       <li><a href="#sobre">Empresa</a></li>
       <li><a href="#servicos">Serviços</a></li>
+      <li><a href="#obras">Obras</a></li>
       <li><a href="#atuacao">Atuação</a></li>
       <li><a href="#contato">Contato</a></li>
     </ul>
@@ -823,15 +943,17 @@
         </div>
       </div>
       <div class="hero-right">
-        <div class="hero-logo-card">
-          <img src="logo-1.jpg" alt="NRAJEBRENI — Jebreni Engenharia Civil" class="hero-logo-img">
-          <p class="hero-logo-sub">Engenharia Civil · Gerenciamento de Obras</p>
-          <div class="hero-tags">
-            <span class="hero-tag">Estruturas</span>
-            <span class="hero-tag">Fundação</span>
-            <span class="hero-tag">Reformas</span>
-            <span class="hero-tag">Licitações</span>
-            <span class="hero-tag">São Paulo · SP</span>
+        <div class="hero-photo-card">
+          <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1400&q=80" alt="Obra de engenharia civil — NRAJEBRENI" class="hero-photo-img" loading="eager">
+          <div class="hero-photo-overlay"></div>
+          <div class="hero-photo-tags">
+            <span class="hero-photo-tag">Estruturas</span>
+            <span class="hero-photo-tag">Fundação</span>
+            <span class="hero-photo-tag">Licitações</span>
+          </div>
+          <div class="hero-photo-badge">
+            <img src="logo-1.jpg" alt="NRAJEBRENI">
+            <span class="hero-photo-caption">Gestão em<br>Engenharia Civil</span>
           </div>
         </div>
       </div>
@@ -874,12 +996,11 @@
         </div>
       </div>
       <div class="sobre-visual reveal reveal-delay-2">
-        <div class="sobre-img-frame">
-          <span class="sobre-corner-text">Identidade de Marca</span>
-          <div class="sobre-logo-display">
-            <img src="logo-2.jpg" alt="NRAJEBRENI — Cartão de Visita">
+        <div class="sobre-construction-frame">
+          <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1200&q=80" alt="Equipe NRAJEBRENI em obra" class="sobre-construction-photo" loading="lazy">
+          <div class="sobre-logo-badge">
+            <img src="logo-2.jpg" alt="NRAJEBRENI">
           </div>
-          <div class="sobre-accent-bar"></div>
         </div>
       </div>
     </div>
@@ -1005,6 +1126,67 @@
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </span>
       </div>
+    </div>
+  </section>
+
+  <!-- OBRAS & PROJETOS -->
+  <section id="obras">
+    <div class="obras-header">
+      <div>
+        <p class="section-eyebrow reveal">Portfólio</p>
+        <h2 class="section-heading reveal reveal-delay-1">Obras &amp;<br>Projetos</h2>
+      </div>
+      <p class="obras-sub reveal reveal-delay-2">
+        Da fundação à entrega — projetos estruturais, reformas e gerenciamento de obras para clientes em todo o Brasil.
+      </p>
+    </div>
+    <div class="obras-grid">
+
+      <div class="obra-item reveal">
+        <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1000&q=80" alt="Construção de edifício — estruturas" class="obra-photo" loading="lazy">
+        <div class="obra-overlay"></div>
+        <div class="obra-caption">
+          <span class="obra-tag">Estruturas</span>
+          <p class="obra-name">Projeto Estrutural<br>Residencial</p>
+        </div>
+      </div>
+
+      <div class="obra-item reveal reveal-delay-1">
+        <img src="https://images.unsplash.com/photo-1590650213165-c1fef80648c4?w=1200&q=80" alt="Obra de construção civil — concreto e aço" class="obra-photo" loading="lazy">
+        <div class="obra-overlay"></div>
+        <div class="obra-caption">
+          <span class="obra-tag">Estruturas &amp; Fundação</span>
+          <p class="obra-name">Edificação Comercial<br>Grande Porte</p>
+        </div>
+      </div>
+
+      <div class="obra-item reveal reveal-delay-1">
+        <img src="https://images.unsplash.com/photo-1587293852726-70cdb56c2866?w=900&q=80" alt="Fundação — concretagem" class="obra-photo" loading="lazy">
+        <div class="obra-overlay"></div>
+        <div class="obra-caption">
+          <span class="obra-tag">Fundação</span>
+          <p class="obra-name">Concretagem<br>de Fundação</p>
+        </div>
+      </div>
+
+      <div class="obra-item reveal reveal-delay-2">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=80" alt="Projeto de engenharia — plantas e licitação" class="obra-photo" loading="lazy">
+        <div class="obra-overlay"></div>
+        <div class="obra-caption">
+          <span class="obra-tag">Licitações</span>
+          <p class="obra-name">Documentação<br>para Processo Licitatório</p>
+        </div>
+      </div>
+
+      <div class="obra-item reveal reveal-delay-3">
+        <img src="https://images.unsplash.com/photo-1565008447742-97f6f38c985c?w=900&q=80" alt="Reforma e requalificação — engenharia" class="obra-photo" loading="lazy">
+        <div class="obra-overlay"></div>
+        <div class="obra-caption">
+          <span class="obra-tag">Reformas</span>
+          <p class="obra-name">Requalificação<br>de Edificação</p>
+        </div>
+      </div>
+
     </div>
   </section>
 
