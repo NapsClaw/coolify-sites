@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Arnaldo de Carvalho | Corretor de Imóveis — Vale do Paraíba & Serra da Mantiqueira</title>
+  <meta name="description" content="Arnaldo de Carvalho, corretor de imóveis CRECI/SP 312314-F, especialista em imóveis no Vale do Paraíba, Serra da Mantiqueira e Santo Antônio do Pinhal. Atendimento premium e personalizado." />
+  <meta property="og:title" content="Arnaldo de Carvalho | Corretor de Imóveis" />
+  <meta property="og:description" content="Especialista em imóveis no Vale do Paraíba e Serra da Mantiqueira. CRECI/SP 312314-F." />
+  <meta property="og:image" content="logo.jpg" />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23080706'/><path d='M16 4L28 12V28H4V12L16 4Z' fill='none' stroke='%23C9A84C' stroke-width='1.5'/><path d='M12 28V20H20V28' fill='none' stroke='%23C9A84C' stroke-width='1.5'/></svg>" />
+  <style>
+    /* ─── CSS Variables ─── */
+    :root {
+      --bg: #080706;
+      --bg-surface: #0F0E0C;
+      --bg-card: #141210;
+      --primary: #C9A84C;
+      --primary-light: #E2C46A;
+      --primary-dim: rgba(201, 168, 76, 0.15);
+      --primary-border: rgba(201, 168, 76, 0.25);
+      --text: #F2EDE4;
+      --text-muted: #8A8078;
+      --text-subtle: #5A554F;
+      --border: rgba(255,255,255,0.06);
+    }
+
+    /* ─── Reset ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      font-size: 16px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ─── Grain Overlay ─── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.35;
+    }
+
+    /* ─── Typography ─── */
+    h1, h2, h3, .display {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+    }
+    .label {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--primary);
+    }
+
+    /* ─── Gold rule ─── */
+    .gold-rule {
+      display: inline-block;
+      width: 40px;
+      height: 1px;
+      background: var(--primary);
+      vertical-align: middle;
+      margin-right: 12px;
+    }
+
+    /* ─── Navigation ─── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: linear-gradient(180deg, rgba(8,7,6,0.9) 0%, transparent 100%);
+      backdrop-filter: blur(0px);
+      transition: backdrop-filter 0.3s, background 0.3s;
+    }
+    nav.scrolled {
+      background: rgba(8,7,6,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      height: 48px;
+      width: auto;
+      object-fit: contain;
+      filter: brightness(1.05);
+    }
+    .nav-cta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border: 1px solid var(--primary-border);
+      color: var(--primary);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.3s, color 0.3s;
+    }
+    .nav-cta:hover {
+      background: var(--primary);
+      color: #080706;
+    }
+    .nav-cta svg { flex-shrink: 0; }
+
+    /* ─── Hero ─── */
+    #hero {
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 24px 64px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 60% 30%, rgba(201,168,76,0.05) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 80% at 20% 80%, rgba(201,168,76,0.03) 0%, transparent 50%),
+        linear-gradient(160deg, #0D0C0A 0%, #080706 50%, #060504 100%);
+    }
+    .hero-lines {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+    .hero-lines::before {
+      content: '';
+      position: absolute;
+      top: 15%;
+      right: -10%;
+      width: 55%;
+      height: 70%;
+      border: 1px solid rgba(201,168,76,0.08);
+      transform: rotate(8deg);
+    }
+    .hero-lines::after {
+      content: '';
+      position: absolute;
+      top: 20%;
+      right: -5%;
+      width: 45%;
+      height: 60%;
+      border: 1px solid rgba(201,168,76,0.05);
+      transform: rotate(8deg);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 680px;
+    }
+    .hero-label {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.8s ease forwards 0.2s;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+    .hero-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: clamp(52px, 12vw, 96px);
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      opacity: 0;
+      clip-path: inset(0 100% 0 0);
+      animation: revealText 1s cubic-bezier(0.77,0,0.175,1) forwards 0.5s;
+      margin-bottom: 8px;
+    }
+    .hero-name span {
+      display: block;
+      color: var(--primary);
+      font-style: italic;
+      font-weight: 300;
+    }
+    .hero-tagline {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      font-size: 16px;
+      color: var(--text-muted);
+      letter-spacing: 0.02em;
+      line-height: 1.6;
+      max-width: 380px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.8s ease forwards 1s;
+      margin-top: 24px;
+      margin-bottom: 40px;
+    }
+    .hero-cta-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.8s ease forwards 1.2s;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 18px 36px;
+      background: var(--primary);
+      color: #080706;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s;
+      width: 100%;
+      max-width: 320px;
+    }
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+    .btn-primary:hover::before { left: 100%; }
+    .btn-primary:hover { transform: translateY(-2px); }
+    .creci-badge {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--text-subtle);
+      letter-spacing: 0.1em;
+    }
+    .hero-scroll {
+      position: absolute;
+      bottom: 32px;
+      right: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 1.6s;
+    }
+    .hero-scroll span {
+      writing-mode: vertical-rl;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-subtle);
+    }
+    .scroll-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(180deg, var(--primary) 0%, transparent 100%);
+      animation: scrollPulse 2s ease-in-out infinite 2s;
+    }
+
+    /* ─── Sections ─── */
+    section {
+      padding: 80px 24px;
+    }
+    .section-inner {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .section-header {
+      margin-bottom: 48px;
+    }
+    .section-header .label { display: block; margin-bottom: 16px; }
+    .section-header h2 {
+      font-size: clamp(36px, 8vw, 64px);
+      color: var(--text);
+      line-height: 1.05;
+    }
+
+    /* ─── Credibility ─── */
+    #credibilidade {
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .cred-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-top: 40px;
+    }
+    .cred-item {
+      background: var(--bg-card);
+      padding: 32px 24px;
+      position: relative;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .cred-item.visible { opacity: 1; transform: translateY(0); }
+    .cred-item::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--primary);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.4s ease;
+    }
+    .cred-item:hover::before { transform: scaleX(1); }
+    .cred-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--primary);
+      line-height: 1;
+      margin-bottom: 8px;
+      letter-spacing: -0.03em;
+    }
+    .cred-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .cred-full {
+      grid-column: 1 / -1;
+    }
+    .creci-full {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .creci-icon {
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--primary-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .creci-text strong {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--primary);
+      letter-spacing: 0.05em;
+    }
+    .creci-text span {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* ─── Região ─── */
+    #regiao { background: var(--bg); }
+    .region-intro {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(20px, 5vw, 32px);
+      font-weight: 400;
+      font-style: italic;
+      color: var(--text-muted);
+      line-height: 1.4;
+      border-left: 2px solid var(--primary);
+      padding-left: 24px;
+      margin-bottom: 48px;
+      opacity: 0;
+      transform: translateX(-20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .region-intro.visible { opacity: 1; transform: translateX(0); }
+    .region-cards {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    .region-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 28px 24px;
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      transition: border-color 0.3s, background 0.3s;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease, border-color 0.3s, background 0.3s;
+    }
+    .region-card.visible { opacity: 1; transform: translateY(0); }
+    .region-card:hover {
+      border-color: var(--primary-border);
+      background: var(--bg-surface);
+    }
+    .region-icon {
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--primary-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--primary);
+    }
+    .region-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 6px;
+      letter-spacing: -0.01em;
+    }
+    .region-card p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ─── Diferenciais ─── */
+    #diferenciais {
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border);
+    }
+    .diff-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+      border: 1px solid var(--border);
+      margin-top: 40px;
+    }
+    .diff-item {
+      border-bottom: 1px solid var(--border);
+      padding: 28px 24px;
+      display: grid;
+      grid-template-columns: 32px 1fr;
+      gap: 20px;
+      align-items: start;
+      background: var(--bg-card);
+      transition: background 0.3s;
+      opacity: 0;
+      transform: translateX(-16px);
+      transition: opacity 0.5s ease, transform 0.5s ease, background 0.3s;
+    }
+    .diff-item:last-child { border-bottom: none; }
+    .diff-item.visible { opacity: 1; transform: translateX(0); }
+    .diff-item:hover { background: var(--bg-surface); }
+    .diff-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--primary);
+      padding-top: 4px;
+    }
+    .diff-content h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 6px;
+      letter-spacing: -0.01em;
+    }
+    .diff-content p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* ─── CTA Final ─── */
+    #contato {
+      background: linear-gradient(135deg, #0C0B09 0%, #100F0C 50%, #0A0907 100%);
+      border-top: 1px solid var(--primary-border);
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+    #contato::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .contato-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+    .contato-inner .logo-contato {
+      height: 80px;
+      width: auto;
+      object-fit: contain;
+      margin: 0 auto 32px;
+      display: block;
+      filter: brightness(1.1);
+    }
+    .contato-inner h2 {
+      font-size: clamp(36px, 8vw, 60px);
+      margin-bottom: 16px;
+    }
+    .contato-inner p {
+      font-size: 15px;
+      color: var(--text-muted);
+      margin-bottom: 40px;
+      line-height: 1.7;
+    }
+    .btn-wpp-large {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 20px 40px;
+      background: #1E6B3C;
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      width: 100%;
+      max-width: 340px;
+      transition: background 0.3s, transform 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-wpp-large::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+      transition: left 0.5s;
+    }
+    .btn-wpp-large:hover::before { left: 100%; }
+    .btn-wpp-large:hover { background: #228B4A; transform: translateY(-2px); }
+    .contact-divider {
+      margin: 32px auto;
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(180deg, transparent, var(--primary-border), transparent);
+    }
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: center;
+    }
+    .contact-info a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.3s;
+    }
+    .contact-info a:hover { color: var(--primary); }
+
+    /* ─── Footer ─── */
+    footer {
+      background: #050403;
+      border-top: 1px solid var(--border);
+      padding: 32px 24px;
+      text-align: center;
+    }
+    footer p {
+      font-size: 12px;
+      color: var(--text-subtle);
+      letter-spacing: 0.05em;
+      line-height: 1.8;
+    }
+    footer .creci-footer {
+      color: var(--primary);
+      font-weight: 500;
+    }
+
+    /* ─── WhatsApp Float ─── */
+    .wpp-float {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 999;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: #25D366;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.35);
+      transition: transform 0.3s, box-shadow 0.3s;
+      animation: wppPulse 3s ease-in-out infinite 2s;
+      text-decoration: none;
+    }
+    .wpp-float:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 28px rgba(37,211,102,0.5);
+      animation: none;
+    }
+
+    /* ─── Animations ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes revealText {
+      from { opacity: 0; clip-path: inset(0 100% 0 0); }
+      to { opacity: 1; clip-path: inset(0 0% 0 0); }
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.3); }
+    }
+    @keyframes wppPulse {
+      0%, 100% { box-shadow: 0 4px 20px rgba(37,211,102,0.35); }
+      50% { box-shadow: 0 4px 32px rgba(37,211,102,0.6); }
+    }
+
+    /* ─── Desktop ─── */
+    @media (min-width: 768px) {
+      nav { padding: 24px 48px; }
+      section { padding: 100px 48px; }
+      #hero { padding: 0 48px 80px; }
+
+      .hero-cta-group { flex-direction: row; align-items: center; }
+      .btn-primary { width: auto; }
+
+      .cred-grid { grid-template-columns: 1fr 1fr; }
+
+      .region-cards { grid-template-columns: 1fr 1fr; gap: 20px; }
+
+      .diff-list { }
+
+      .hero-scroll { right: 48px; }
+    }
+
+    @media (min-width: 1024px) {
+      nav { padding: 28px 64px; }
+      section { padding: 120px 64px; }
+      #hero { padding: 0 64px 96px; }
+      .section-inner { max-width: 840px; }
+      .contato-inner { max-width: 640px; }
+
+      .region-cards { grid-template-columns: 1fr 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav id="navbar">
+    <img src="logo.jpg" alt="Arnaldo de Carvalho" class="nav-logo" />
+    <a href="https://wa.me/5512996086412?text=Ol%C3%A1%2C+Arnaldo%21+Gostaria+de+saber+mais+sobre+im%C3%B3veis+na+regi%C3%A3o." class="nav-cta" target="_blank" rel="noopener">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.138.562 4.144 1.545 5.877L0 24l6.335-1.51A11.935 11.935 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.793 9.793 0 01-5.001-1.373l-.36-.214-3.724.888.936-3.618-.235-.372A9.785 9.785 0 012.182 12C2.182 6.575 6.575 2.182 12 2.182S21.818 6.575 21.818 12 17.425 21.818 12 21.818z"/></svg>
+      Falar com Arnaldo
+    </a>
+  </nav>
+
+  <!-- Hero -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-lines"></div>
+    <div class="hero-content">
+      <div class="hero-label">
+        <span class="gold-rule"></span>
+        <span class="label">Corretor de Imóveis · CRECI/SP 312314-F</span>
+      </div>
+      <h1 class="hero-name">
+        Arnaldo<br>
+        <span>de Carvalho</span>
+      </h1>
+      <p class="hero-tagline">
+        Especialista em imóveis no Vale do Paraíba e Serra da Mantiqueira.<br>
+        Atendimento exclusivo na região de Santo Antônio do Pinhal.
+      </p>
+      <div class="hero-cta-group">
+        <a href="https://wa.me/5512996086412?text=Ol%C3%A1%2C+Arnaldo%21+Gostaria+de+conversar+sobre+im%C3%B3veis+na+regi%C3%A3o." class="btn-primary" target="_blank" rel="noopener">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.138.562 4.144 1.545 5.877L0 24l6.335-1.51A11.935 11.935 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.793 9.793 0 01-5.001-1.373l-.36-.214-3.724.888.936-3.618-.235-.372A9.785 9.785 0 012.182 12C2.182 6.575 6.575 2.182 12 2.182S21.818 6.575 21.818 12 17.425 21.818 12 21.818z"/></svg>
+          Consultar Agora
+        </a>
+        <span class="creci-badge">CRECI/SP 312314-F</span>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <span>Rolar</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- Credibilidade -->
+  <section id="credibilidade">
+    <div class="section-inner">
+      <div class="section-header">
+        <span class="label"><span class="gold-rule"></span>Credenciais</span>
+        <h2>Autoridade e<br><em>Confiança</em></h2>
+      </div>
+      <div class="cred-grid">
+        <div class="cred-item">
+          <div class="cred-number">CRECI</div>
+          <div class="cred-desc">Registro profissional ativo no Conselho Regional de Corretores de Imóveis de São Paulo</div>
+        </div>
+        <div class="cred-item">
+          <div class="cred-number">SP</div>
+          <div class="cred-desc">Atuação no estado de São Paulo, com foco exclusivo na região serrana e vale</div>
+        </div>
+        <div class="cred-item cred-full">
+          <div class="creci-full">
+            <div class="creci-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="1.5"><path d="M9 12l2 2 4-4M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <div class="creci-text">
+              <strong>CRECI/SP 312314-F</strong>
+              <span>Registro Ativo — Corretor de Imóveis Profissional</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Região -->
+  <section id="regiao">
+    <div class="section-inner">
+      <div class="section-header">
+        <span class="label"><span class="gold-rule"></span>Região de Atuação</span>
+        <h2>Especialista<br><em>no Território</em></h2>
+      </div>
+      <p class="region-intro">
+        "Conhecer a região é fundamental para encontrar o imóvel certo — cada localidade tem seu caráter, seu potencial e suas oportunidades únicas."
+      </p>
+      <div class="region-cards">
+        <div class="region-card">
+          <div class="region-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><circle cx="12" cy="11" r="3"/></svg>
+          </div>
+          <div>
+            <h3>Santo Antônio do Pinhal</h3>
+            <p>Foco principal de atuação. Cidade serrana com alto potencial turístico e qualidade de vida excepcional.</p>
+          </div>
+        </div>
+        <div class="region-card">
+          <div class="region-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 21h18M3 7v1a3 3 0 006 0V7m0 1a3 3 0 006 0V7m0 1a3 3 0 006 0V7M3 7l2.545-6h12.91L21 7M12 12v9"/></svg>
+          </div>
+          <div>
+            <h3>Vale do Paraíba</h3>
+            <p>Região estratégica entre São Paulo e Rio de Janeiro, com forte crescimento imobiliário e infraestrutura consolidada.</p>
+          </div>
+        </div>
+        <div class="region-card">
+          <div class="region-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 3l14 9-14 9V3z"/></svg>
+          </div>
+          <div>
+            <h3>Serra da Mantiqueira</h3>
+            <p>Natureza exuberante, clima ameno e imóveis de alto padrão. Destino de referência para segunda residência.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Diferenciais -->
+  <section id="diferenciais">
+    <div class="section-inner">
+      <div class="section-header">
+        <span class="label"><span class="gold-rule"></span>Diferenciais</span>
+        <h2>Por que escolher<br><em>Arnaldo?</em></h2>
+      </div>
+      <div class="diff-list">
+        <div class="diff-item">
+          <div class="diff-num">01</div>
+          <div class="diff-content">
+            <h3>Conhecimento Local Profundo</h3>
+            <p>Décadas de vivência e atuação na região garantem orientação precisa sobre cada bairro, micro-clima e potencial de valorização de cada imóvel.</p>
+          </div>
+        </div>
+        <div class="diff-item">
+          <div class="diff-num">02</div>
+          <div class="diff-content">
+            <h3>Atendimento Personalizado</h3>
+            <p>Cada cliente recebe atenção exclusiva. Do primeiro contato à assinatura do contrato, Arnaldo acompanha pessoalmente cada etapa da negociação.</p>
+          </div>
+        </div>
+        <div class="diff-item">
+          <div class="diff-num">03</div>
+          <div class="diff-content">
+            <h3>Registro CRECI Ativo</h3>
+            <p>Atuação 100% legal e regularizada. Segurança jurídica total para comprador e vendedor em todas as transações imobiliárias.</p>
+          </div>
+        </div>
+        <div class="diff-item">
+          <div class="diff-num">04</div>
+          <div class="diff-content">
+            <h3>Foco em Alto Padrão</h3>
+            <p>Especialização em imóveis residenciais e de campo premium, com portfólio selecionado nas melhores localizações da Serra da Mantiqueira.</p>
+          </div>
+        </div>
+        <div class="diff-item">
+          <div class="diff-num">05</div>
+          <div class="diff-content">
+            <h3>Transparência Total</h3>
+            <p>Negociações claras, documentação em ordem e comunicação direta. Sem surpresas no processo — só o melhor resultado para você.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Final -->
+  <section id="contato">
+    <div class="contato-inner">
+      <img src="logo.jpg" alt="Arnaldo de Carvalho" class="logo-contato" />
+      <span class="label" style="display:block;margin-bottom:20px;"><span class="gold-rule"></span>Vamos conversar</span>
+      <h2>Encontre seu<br><em>imóvel ideal</em></h2>
+      <p>Entre em contato agora e descubra as melhores oportunidades no Vale do Paraíba e Serra da Mantiqueira.</p>
+      <a href="https://wa.me/5512996086412?text=Ol%C3%A1%2C+Arnaldo%21+Quero+conhecer+as+op%C3%A7%C3%B5es+de+im%C3%B3veis+na+regi%C3%A3o." class="btn-wpp-large" target="_blank" rel="noopener">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.138.562 4.144 1.545 5.877L0 24l6.335-1.51A11.935 11.935 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.793 9.793 0 01-5.001-1.373l-.36-.214-3.724.888.936-3.618-.235-.372A9.785 9.785 0 012.182 12C2.182 6.575 6.575 2.182 12 2.182S21.818 6.575 21.818 12 17.425 21.818 12 21.818z"/></svg>
+        Falar pelo WhatsApp
+      </a>
+      <div class="contact-divider"></div>
+      <div class="contact-info">
+        <a href="https://wa.me/5512996086412" target="_blank" rel="noopener">+55 (12) 99608-6412</a>
+        <span style="font-size:12px;color:var(--text-subtle);">Santo Antônio do Pinhal — SP</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>
+      <span class="creci-footer">CRECI/SP 312314-F</span><br>
+      Arnaldo de Carvalho · Corretor de Imóveis<br>
+      Vale do Paraíba · Serra da Mantiqueira · Santo Antônio do Pinhal — SP
+    </p>
+  </footer>
+
+  <!-- WhatsApp Float -->
+  <a href="https://wa.me/5512996086412?text=Ol%C3%A1%2C+Arnaldo%21+Gostaria+de+informações+sobre+imóveis." class="wpp-float" target="_blank" rel="noopener" aria-label="WhatsApp">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.138.562 4.144 1.545 5.877L0 24l6.335-1.51A11.935 11.935 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.793 9.793 0 01-5.001-1.373l-.36-.214-3.724.888.936-3.618-.235-.372A9.785 9.785 0 012.182 12C2.182 6.575 6.575 2.182 12 2.182S21.818 6.575 21.818 12 17.425 21.818 12 21.818z"/></svg>
+  </a>
+
+  <script>
+    // Nav scroll
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    }, { passive: true });
+
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          const delay = entry.target.dataset.delay || 0;
+          setTimeout(() => entry.target.classList.add('visible'), delay);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.cred-item, .region-card, .diff-item, .region-intro').forEach((el, i) => {
+      el.dataset.delay = (i % 4) * 100;
+      observer.observe(el);
+    });
+  </script>
+</body>
+</html>
