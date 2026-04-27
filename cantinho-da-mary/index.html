@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cantinho da Mary — Salgados &amp; Comida de Buteco</title>
+<meta name="description" content="Cantinho da Mary: salgados artesanais e comida de buteco feita com amor. Sabor caseiro, atendimento com carinho.">
+<meta property="og:title" content="Cantinho da Mary — Salgados &amp; Comida de Buteco">
+<meta property="og:description" content="Salgados artesanais e comida de buteco. Feito com carinho, com sabor de casa.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%238B2500'/%3E%3Ctext x='50' y='70' text-anchor='middle' font-family='Georgia%2Cserif' font-size='58' font-style='italic' fill='%23FAF3E8'%3EM%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,400;1,9..144,700;1,9..144,900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAF3E8;
+    --bg2: #F0E6D0;
+    --primary: #8B2500;
+    --accent: #E8910A;
+    --dark: #1A0800;
+    --dark2: #2C1000;
+    --text: #2A1200;
+    --muted: #9A7A60;
+    --cream: #FAF3E8;
+    --card: #EDE0CC;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  img { display: block; max-width: 100%; }
+  a { text-decoration: none; color: inherit; }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes heroTitleIn {
+    from { opacity: 0; transform: translateY(60px) skewY(-2deg); }
+    to   { opacity: 1; transform: translateY(0) skewY(0); }
+  }
+  @keyframes heroSubIn {
+    from { opacity: 0; transform: translateX(-40px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  @keyframes imgReveal {
+    from { opacity: 0; transform: scale(1.06); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  @keyframes waPulse {
+    0%, 100% { box-shadow: 0 6px 24px rgba(37,211,102,0.45); }
+    50%       { box-shadow: 0 6px 32px rgba(37,211,102,0.75), 0 0 0 10px rgba(37,211,102,0.1); }
+  }
+  @keyframes decorLine {
+    from { width: 0; }
+    to   { width: 80px; }
+  }
+  @keyframes grainShift {
+    0%   { transform: translate(0,0); }
+    20%  { transform: translate(-2px, 2px); }
+    40%  { transform: translate(2px,-1px); }
+    60%  { transform: translate(-1px, 3px); }
+    80%  { transform: translate(3px,-2px); }
+    100% { transform: translate(0,0); }
+  }
+
+  /* scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.75s cubic-bezier(0.22,1,0.36,1), transform 0.75s cubic-bezier(0.22,1,0.36,1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+  .reveal-delay-5 { transition-delay: 0.5s; }
+
+  /* ─── NOISE OVERLAY ─── */
+  .noise::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.035;
+    animation: grainShift 0.4s steps(1) infinite;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+    background-size: 200px;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(to bottom, rgba(26,8,0,0.9) 0%, rgba(26,8,0,0) 100%);
+  }
+  .nav-logo {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--cream);
+    letter-spacing: 0.01em;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-cta {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1.5px solid var(--accent);
+    padding: 0.5rem 1rem;
+    transition: background 0.25s, color 0.25s;
+  }
+  .nav-cta:hover { background: var(--accent); color: var(--dark); }
+
+  /* ─── HERO ─── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    background: var(--dark);
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    padding: 6rem 1.5rem 3.5rem;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    object-fit: cover;
+    width: 100%; height: 100%;
+    opacity: 0.22;
+    animation: imgReveal 1.4s cubic-bezier(0.22,1,0.36,1) both;
+    animation-delay: 0.2s;
+  }
+  /* Gradient overlay */
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      160deg,
+      rgba(26,8,0,0.92) 0%,
+      rgba(26,8,0,0.7) 50%,
+      rgba(139,37,0,0.35) 100%
+    );
+    z-index: 1;
+  }
+  /* Decorative diagonal */
+  .hero-diagonal {
+    position: absolute;
+    bottom: 0; right: 0;
+    width: 55%; height: 40%;
+    background: linear-gradient(135deg, transparent 50%, rgba(232,145,10,0.08) 50%);
+    z-index: 2;
+    pointer-events: none;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .hero-tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.6s ease both;
+    animation-delay: 0.5s;
+  }
+  .hero-title {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 900;
+    font-size: clamp(3.8rem, 16vw, 10rem);
+    line-height: 0.88;
+    color: var(--cream);
+    animation: heroTitleIn 0.9s cubic-bezier(0.22,1,0.36,1) both;
+    animation-delay: 0.6s;
+    display: block;
+  }
+  .hero-title .line2 {
+    display: block;
+    color: var(--accent);
+    font-style: italic;
+    font-weight: 700;
+    font-size: clamp(2.2rem, 8vw, 5.5rem);
+    margin-top: 0.15em;
+  }
+  .hero-divider {
+    width: 0;
+    height: 2px;
+    background: var(--accent);
+    margin: 1.75rem 0;
+    animation: decorLine 0.8s ease both;
+    animation-delay: 1.2s;
+  }
+  .hero-sub {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(1.1rem, 4vw, 2rem);
+    color: rgba(250,243,232,0.55);
+    animation: heroSubIn 0.8s ease both;
+    animation-delay: 1s;
+    max-width: 480px;
+    line-height: 1.4;
+  }
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    animation: fadeUp 0.7s ease both;
+    animation-delay: 1.3s;
+  }
+  .btn-accent {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    background: var(--accent);
+    color: var(--dark);
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 1rem 1.75rem;
+    min-height: 52px;
+    border: 2px solid var(--accent);
+    transition: all 0.3s ease;
+  }
+  .btn-accent:hover {
+    background: transparent;
+    color: var(--accent);
+  }
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: rgba(250,243,232,0.65);
+    font-size: 0.85rem;
+    font-weight: 500;
+    padding: 1rem 0.25rem;
+    min-height: 52px;
+    border-bottom: 1px solid rgba(250,243,232,0.25);
+    transition: color 0.25s, border-color 0.25s;
+  }
+  .btn-ghost:hover { color: var(--cream); border-color: var(--cream); }
+  .hero-scroll {
+    position: absolute;
+    bottom: 2rem; right: 1.5rem;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    animation: fadeIn 1s ease both;
+    animation-delay: 1.6s;
+  }
+  .scroll-line {
+    width: 1px; height: 60px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+    animation: fadeIn 1s ease infinite alternate;
+  }
+  .scroll-label {
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    writing-mode: vertical-rl;
+  }
+
+  /* ─── ABOUT ─── */
+  .about {
+    background: var(--bg);
+    padding: 6rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .about::before {
+    content: '';
+    position: absolute;
+    top: -2px; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--accent), var(--primary));
+  }
+  .about-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3.5rem;
+  }
+  .about-text-block {}
+  .section-eyebrow {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--primary);
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .section-eyebrow::before {
+    content: '';
+    display: block;
+    width: 24px; height: 1.5px;
+    background: var(--primary);
+    flex-shrink: 0;
+  }
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 900;
+    font-size: clamp(2.2rem, 8vw, 4.5rem);
+    line-height: 1;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+  }
+  .section-title em {
+    color: var(--primary);
+    font-style: italic;
+  }
+  .about-body {
+    font-size: 1.05rem;
+    font-weight: 300;
+    line-height: 1.8;
+    color: var(--muted);
+    max-width: 520px;
+  }
+  .about-body strong { color: var(--text); font-weight: 600; }
+  .about-stats {
+    display: flex;
+    gap: 2.5rem;
+    margin-top: 2.5rem;
+    flex-wrap: wrap;
+  }
+  .stat-item {}
+  .stat-number {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 900;
+    font-size: 2.8rem;
+    color: var(--primary);
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--muted);
+    margin-top: 0.25rem;
+    letter-spacing: 0.05em;
+  }
+  .about-image-wrap {
+    position: relative;
+  }
+  .about-img {
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+    display: block;
+  }
+  .about-img-badge {
+    position: absolute;
+    bottom: -1.5rem; left: -1rem;
+    background: var(--primary);
+    color: var(--cream);
+    padding: 1rem 1.25rem;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 0.9rem;
+    font-weight: 700;
+    line-height: 1.3;
+    max-width: 180px;
+  }
+  .about-img-badge span {
+    display: block;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-style: normal;
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.25rem;
+  }
+
+  /* ─── CARDÁPIO ─── */
+  .cardapio {
+    background: var(--dark2);
+    padding: 6rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .cardapio::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at 80% 20%, rgba(139,37,0,0.2) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .cardapio-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  .cardapio-header {
+    margin-bottom: 3.5rem;
+  }
+  .cardapio .section-eyebrow { color: var(--accent); }
+  .cardapio .section-eyebrow::before { background: var(--accent); }
+  .cardapio .section-title { color: var(--cream); }
+  .cardapio-categories {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+  }
+  .cat-btn {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.5rem 1.25rem;
+    border: 1px solid rgba(250,243,232,0.2);
+    color: rgba(250,243,232,0.5);
+    background: transparent;
+    cursor: default;
+    transition: all 0.25s;
+  }
+  .cat-btn.active {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(232,145,10,0.08);
+  }
+  .menu-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  .menu-card {
+    background: rgba(250,243,232,0.04);
+    border: 1px solid rgba(250,243,232,0.08);
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+    cursor: default;
+  }
+  .menu-card:hover {
+    background: rgba(232,145,10,0.07);
+    border-color: rgba(232,145,10,0.25);
+    transform: translateX(6px);
+  }
+  .menu-card-info {}
+  .menu-card-name {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--cream);
+    margin-bottom: 0.4rem;
+    line-height: 1.2;
+  }
+  .menu-card-desc {
+    font-size: 0.82rem;
+    font-weight: 300;
+    color: rgba(250,243,232,0.45);
+    line-height: 1.5;
+    max-width: 400px;
+  }
+  .menu-card-dot {
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 0.55rem;
+  }
+  .menu-section-label {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 2.5rem 0 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .menu-section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(232,145,10,0.2);
+  }
+
+  /* ─── GALLERY ─── */
+  .gallery {
+    background: var(--bg2);
+    padding: 6rem 1.5rem;
+    position: relative;
+  }
+  .gallery-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .gallery-header {
+    margin-bottom: 3rem;
+  }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.875rem;
+  }
+  .gallery-item {
+    overflow: hidden;
+    position: relative;
+  }
+  .gallery-item img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.22,1,0.36,1);
+    display: block;
+  }
+  .gallery-item:hover img { transform: scale(1.06); }
+  .gallery-item.tall { grid-row: span 2; }
+  .gallery-item.wide { grid-column: span 2; }
+  .g1 { height: 220px; }
+  .g2 { height: 220px; }
+  .g3 { height: 200px; }
+  .g4 { height: 200px; }
+  .g5 { height: 180px; grid-column: span 2; }
+
+  /* ─── CONTACT ─── */
+  .contact {
+    background: var(--dark);
+    padding: 6rem 1.5rem 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .contact::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--accent), var(--primary));
+  }
+  .contact-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  .contact .section-eyebrow { justify-content: center; color: var(--accent); }
+  .contact .section-eyebrow::before { background: var(--accent); }
+  .contact .section-title { color: var(--cream); margin-bottom: 1rem; }
+  .contact-sub {
+    font-size: 1rem;
+    font-weight: 300;
+    color: rgba(250,243,232,0.5);
+    max-width: 480px;
+    margin: 0 auto 3rem;
+    line-height: 1.7;
+  }
+  .contact-wa-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    background: #25D366;
+    color: #fff;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.05em;
+    padding: 1.25rem 2.5rem;
+    min-height: 60px;
+    border-radius: 0;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 24px rgba(37,211,102,0.3);
+    width: 100%;
+    max-width: 380px;
+  }
+  .contact-wa-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 36px rgba(37,211,102,0.45);
+  }
+  .wa-icon {
+    width: 26px; height: 26px;
+    flex-shrink: 0;
+  }
+  .contact-info {
+    margin-top: 3.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    align-items: center;
+  }
+  .info-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: rgba(250,243,232,0.45);
+    font-size: 0.875rem;
+    font-weight: 300;
+  }
+  .info-row svg {
+    flex-shrink: 0;
+    stroke: var(--accent);
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--dark);
+    border-top: 1px solid rgba(250,243,232,0.06);
+    padding: 1.75rem 1.5rem;
+    text-align: center;
+  }
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .footer-logo {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: rgba(250,243,232,0.4);
+  }
+  .footer-logo span { color: var(--accent); opacity: 0.7; }
+  .footer-copy {
+    font-size: 0.72rem;
+    color: rgba(250,243,232,0.2);
+    font-weight: 300;
+    letter-spacing: 0.05em;
+  }
+
+  /* ─── WHATSAPP FLOAT ─── */
+  .wa-float {
+    position: fixed;
+    bottom: 1.75rem; right: 1.25rem;
+    z-index: 999;
+    width: 60px; height: 60px;
+    background: #25D366;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+    animation: waPulse 2.5s ease-in-out infinite;
+    transition: transform 0.3s ease;
+  }
+  .wa-float:hover {
+    transform: scale(1.1);
+    animation-play-state: paused;
+  }
+  .wa-float svg {
+    width: 30px; height: 30px;
+  }
+
+  /* ─── DESKTOP BREAKPOINTS ─── */
+  @media (min-width: 768px) {
+    .hero { padding: 7rem 3rem 4rem; }
+    .about { padding: 8rem 3rem; }
+    .about-inner {
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .about-img { height: 450px; }
+    .cardapio { padding: 8rem 3rem; }
+    .menu-grid { grid-template-columns: 1fr 1fr; }
+    .gallery { padding: 8rem 3rem; }
+    .gallery-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    .g1 { height: 280px; }
+    .g2 { height: 280px; }
+    .g3 { height: 260px; grid-column: span 1; }
+    .g4 { height: 260px; grid-column: span 1; }
+    .g5 { height: 240px; grid-column: span 1; }
+    .contact { padding: 9rem 3rem 6rem; }
+    footer { padding: 2rem 3rem; }
+    .footer-inner { flex-direction: row; justify-content: space-between; }
+    nav { padding: 1.5rem 3rem; }
+  }
+
+  @media (min-width: 1024px) {
+    .gallery-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .gallery-grid .g1 { height: 300px; }
+    .gallery-grid .g2 { height: 300px; grid-column: span 2; }
+    .gallery-grid .g3 { height: 280px; }
+    .gallery-grid .g4 { height: 280px; }
+    .gallery-grid .g5 { height: 280px; }
+    .menu-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Cantinho<span> da Mary</span></div>
+  <a href="https://wa.me/55" class="nav-cta">Fazer Pedido</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero noise">
+  <img
+    class="hero-bg"
+    src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1400&q=80&auto=format&fit=crop"
+    alt="Mesa com comida variada"
+    loading="eager"
+  >
+  <div class="hero-diagonal"></div>
+  <div class="hero-content">
+    <span class="hero-tag">Salgados &amp; Comida de Buteco</span>
+    <h1 class="hero-title">
+      Cantinho
+      <span class="line2">da Mary</span>
+    </h1>
+    <div class="hero-divider"></div>
+    <p class="hero-sub">Feito com carinho, sabor que fica na memória.</p>
+    <div class="hero-actions">
+      <a href="https://wa.me/55" class="btn-accent">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        Peça pelo WhatsApp
+      </a>
+      <a href="#cardapio" class="btn-ghost">
+        Ver Cardápio
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M7 17L17 7M17 7H7M17 7V17"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span class="scroll-label">scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about">
+  <div class="about-inner">
+    <div class="about-text-block reveal">
+      <p class="section-eyebrow">Sobre Nós</p>
+      <h2 class="section-title">Sabor que<br><em>aquece a alma</em></h2>
+      <p class="about-body">
+        O Cantinho da Mary nasceu de uma paixão pela comida simples e honesta. <strong>Cada salgado sai do forno com o mesmo carinho</strong> de sempre — crocante por fora, recheado de sabor por dentro.<br><br>
+        Da coxinha ao bolinho, da porção ao petisco, aqui você encontra o verdadeiro sabor de buteco, feito artesanalmente todos os dias.
+      </p>
+      <div class="about-stats">
+        <div class="stat-item">
+          <div class="stat-number">100%</div>
+          <div class="stat-label">Artesanal</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">+20</div>
+          <div class="stat-label">Sabores</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">Diário</div>
+          <div class="stat-label">Fresquinho</div>
+        </div>
+      </div>
+    </div>
+    <div class="about-image-wrap reveal reveal-delay-2">
+      <img
+        class="about-img"
+        src="https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=900&q=80&auto=format&fit=crop"
+        alt="Salgados artesanais"
+        loading="lazy"
+      >
+      <div class="about-img-badge">
+        <span>Feito com</span>
+        muito amor
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CARDÁPIO -->
+<section class="cardapio" id="cardapio">
+  <div class="cardapio-inner">
+    <div class="cardapio-header reveal">
+      <p class="section-eyebrow">O que tem hoje</p>
+      <h2 class="section-title">Nosso<br><em style="color:var(--accent)">Cardápio</em></h2>
+    </div>
+
+    <div class="menu-section-label reveal">Salgados</div>
+    <div class="menu-grid">
+      <div class="menu-card reveal reveal-delay-1">
+        <div class="menu-card-info">
+          <div class="menu-card-name">Coxinha de Frango</div>
+          <div class="menu-card-desc">Recheio cremoso de frango desfiado, massa crocante dourada no ponto certo</div>
+        </div>
+        <div class="menu-card-dot"></div>
+      </div>
+      <div class="menu-card reveal reveal-delay-2">
+        <div class="menu-card-info">
+          <div class="menu-card-name">Empada de Frango</div>
+          <div class="menu-card-desc">Massa amanteigada com recheio generoso de frango ao molho</div>
+        </div>
+        <div class="menu-card-dot"></div>
+      </div>
+      <div class="menu-card reveal reveal-delay-1">
+        <div class="menu-card-info">
+          <div class="menu-card-name">Kibbeh</div>
+          <div class="menu-card-desc">Carne moída temperada com especiarias, frito na hora</div>
+        </div>
+        <div class="menu-card-dot"></div>
+      </div>
+      <div class="menu-card reveal reveal-delay-2">
+        <div class="menu-card-info">
+          <div class="menu-card-name">Pastel de Queijo</div>
+          <div class="menu-card-desc">Massa fina e crocante, recheio de queijo derretendo</div>
+        </div>
+        <div class="menu-card-dot"></div>
+      </div>
+      <div class="menu-card reveal reveal-delay-1">
+        <div class="menu-card-info">
+          <div class="menu-card-name">Bolinho de Bacalhau</div>
+          <div class="menu-card-desc">Tradicional, com bacalhau desfiado e temperos da casa</div>
+        </div>
+        <div class="menu-card-dot"></div>
+      </div>
+      <div class="menu-card reveal reveal-delay-2">
+        <div class="menu-card-info">
+          <div class="menu-card-name">Pão de Queijo</div>
+          <div class="menu-card-desc">Fresquinho, macio por dentro, quentinho na saída do forno</div>
+        </div>
+        <div class="menu-card-dot"></div>
+      </div>
+    </div>
+
+    <div class="menu-section-label reveal">Comida de Buteco</div>
+    <div class="menu-grid">
+      <div class="menu-card reveal reveal-delay-1">
+        <div class="menu-card-info">
+          <div class="menu-card-name">Petisco da Casa</div>
+          <div class="menu-card-desc">Seleção do dia com o melhor que tem no Cantinho da Mary</div>
+        </div>
+        <div class="menu-card-dot"></div>
+      </div>
+      <div class="menu-card reveal reveal-delay-2">
+        <div class="menu-card-info">
+          <div class="menu-card-name">Bolinho de Mandioca</div>
+          <div class="menu-card-desc">Recheado com carne seca desfiada, frito na hora</div>
+        </div>
+        <div class="menu-card-dot"></div>
+      </div>
+      <div class="menu-card reveal reveal-delay-1">
+        <div class="menu-card-info">
+          <div class="menu-card-name">Frango Assado</div>
+          <div class="menu-card-desc">Temperado na hora, assado lentamente com ervas</div>
+        </div>
+        <div class="menu-card-dot"></div>
+      </div>
+      <div class="menu-card reveal reveal-delay-2">
+        <div class="menu-card-info">
+          <div class="menu-card-name">Porção de Batata</div>
+          <div class="menu-card-desc">Batata frita crocante, temperada com alho e ervas finas</div>
+        </div>
+        <div class="menu-card-dot"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery">
+  <div class="gallery-inner">
+    <div class="gallery-header reveal">
+      <p class="section-eyebrow">Galeria</p>
+      <h2 class="section-title">Sabor que<br><em>se vê</em></h2>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item g1 reveal reveal-delay-1">
+        <img src="https://images.unsplash.com/photo-1621236378699-8597faf6a11e?w=600&q=80&auto=format&fit=crop" alt="Salgados variados" loading="lazy">
+      </div>
+      <div class="gallery-item g2 reveal reveal-delay-2">
+        <img src="https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=600&q=80&auto=format&fit=crop" alt="Pizza e comida" loading="lazy">
+      </div>
+      <div class="gallery-item g3 reveal reveal-delay-3">
+        <img src="https://images.unsplash.com/photo-1551782450-a2132b4ba21d?w=600&q=80&auto=format&fit=crop" alt="Prato de comida" loading="lazy">
+      </div>
+      <div class="gallery-item g4 reveal reveal-delay-4">
+        <img src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af?w=600&q=80&auto=format&fit=crop" alt="Comida artesanal" loading="lazy">
+      </div>
+      <div class="gallery-item g5 reveal reveal-delay-1">
+        <img src="https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=900&q=80&auto=format&fit=crop" alt="Refeição completa" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact">
+  <div class="contact-inner">
+    <p class="section-eyebrow reveal">Fale com a Mary</p>
+    <h2 class="section-title reveal reveal-delay-1">Peça o seu<br><em>agora</em></h2>
+    <p class="contact-sub reveal reveal-delay-2">Faça seu pedido pelo WhatsApp e receba tudo fresquinho, feito com carinho na hora.</p>
+    <div class="reveal reveal-delay-3">
+      <a href="https://wa.me/55" class="contact-wa-btn">
+        <svg class="wa-icon" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+        Chamar no WhatsApp
+      </a>
+    </div>
+    <div class="contact-info reveal reveal-delay-4">
+      <div class="info-row">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="12 6 12 12 16 14"/>
+        </svg>
+        Segunda a Sábado — 9h às 20h
+      </div>
+      <div class="info-row">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
+          <circle cx="12" cy="10" r="3"/>
+        </svg>
+        Atendimento e Delivery
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">Cantinho<span> da Mary</span></div>
+    <div class="footer-copy">Salgados &amp; Comida de Buteco &mdash; Feito com amor</div>
+  </div>
+</footer>
+
+<!-- FLOATING WHATSAPP -->
+<a href="https://wa.me/55" class="wa-float" aria-label="WhatsApp">
+  <svg viewBox="0 0 24 24" fill="#fff">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(el => observer.observe(el));
+
+  // Nav opacity on scroll
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 60) {
+      nav.style.background = 'rgba(26,8,0,0.96)';
+      nav.style.backdropFilter = 'blur(12px)';
+    } else {
+      nav.style.background = 'linear-gradient(to bottom, rgba(26,8,0,0.9) 0%, rgba(26,8,0,0) 100%)';
+      nav.style.backdropFilter = '';
+    }
+  }, { passive: true });
+</script>
+</body>
+</html>
