@@ -114,7 +114,7 @@
     }
     .hero-bg {
       position: absolute; inset: 0;
-      background: url('https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=1800&q=88&fit=crop') center 38% / cover no-repeat;
+      background: url('promo-vehicle.jpg') center 40% / cover no-repeat;
       animation: bgZoom 1.8s cubic-bezier(.22,1,.36,1) forwards;
     }
     .hero-overlay {
@@ -683,12 +683,11 @@
 
     /* ── CATALOG DATA ── */
     const DEFAULT_VEHICLES = [
-      { id:1, name:'Honda Civic',        version:'EXL 2.0 CVT',         year:'2022', km:'38.000', fuel:'Flex',   price:'129.900', badge:'Destaque',   img:'https://images.unsplash.com/photo-1590362891991-f776e747a588?w=640&q=80&fit=crop' },
-      { id:2, name:'Toyota Corolla',     version:'XEI 2.0 Flex CVT',    year:'2021', km:'52.000', fuel:'Flex',   price:'118.500', badge:'Financiado', img:'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=640&q=80&fit=crop' },
-      { id:3, name:'Jeep Compass',       version:'Limited 2.0 TD 4x4',  year:'2022', km:'44.000', fuel:'Diesel', price:'168.000', badge:'SUV',        img:'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=640&q=80&fit=crop' },
-      { id:4, name:'VW T-Cross',         version:'Highline 1.4 TSI',    year:'2023', km:'18.000', fuel:'Flex',   price:'142.000', badge:'Novo',       img:'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=640&q=80&fit=crop' },
-      { id:5, name:'Hyundai Creta',      version:'Platinum 1.0 Turbo',  year:'2023', km:'22.000', fuel:'Flex',   price:'138.900', badge:'Novo',       img:'https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=640&q=80&fit=crop' },
-      { id:6, name:'Chevrolet Tracker',  version:'Premier 1.2 Turbo',   year:'2022', km:'35.000', fuel:'Flex',   price:'119.900', badge:'',           img:'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=640&q=80&fit=crop' }
+      { id:1, name:'GM Spin Premier',    version:'1.8 Automático 7 Lugares', year:'2024', km:'Consulte', fuel:'Flex',   price:'Consulte', badge:'Destaque',   img:'spin-premier-promo.jpg' },
+      { id:2, name:'Chevrolet Spin',     version:'Premier 1.8 Flex AT',     year:'2024', km:'Baixa KM',   fuel:'Flex',   price:'Consulte', badge:'Novo',       img:'spin-lot.jpg' },
+      { id:3, name:'Chevrolet S10',      version:'LT 2.8 Diesel CD 4x4',    year:'2022', km:'Consulte',   fuel:'Diesel', price:'Consulte', badge:'Oportunidade', img:'s10-lot.jpg' },
+      { id:4, name:'Veículo Premium',    version:'Interior Couro — Sob Consulta', year:'2023', km:'Consulte', fuel:'Flex', price:'Consulte', badge:'',         img:'interior-couro.jpg' },
+      { id:5, name:'Honda Civic',        version:'EXL 2.0 CVT',             year:'2022', km:'38.000',     fuel:'Flex',   price:'129.900', badge:'',            img:'promo-vehicle.jpg' }
     ];
 
     function getVehicles() {
@@ -718,7 +717,7 @@
             <div class="vcard-specs">
               <span class="spec-tag">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-                ${v.km} km
+              ${['Consulte','Baixa KM'].includes(v.km) ? v.km : v.km+' km'}
               </span>
               <span class="spec-tag">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10h18M7 10V6a2 2 0 012-2h6a2 2 0 012 2v4M5 20h14a2 2 0 002-2v-8H3v8a2 2 0 002 2z"/></svg>
@@ -726,7 +725,7 @@
               </span>
             </div>
             <div class="vcard-foot">
-              <span class="vcard-price"><span class="cur">R$</span>${v.price}</span>
+              <span class="vcard-price">${v.price === 'Consulte' ? '<span style="font-size:18px;letter-spacing:.04em">Consulte</span>' : '<span class="cur">R$</span>'+v.price}</span>
               <a href="https://wa.me/5521984277950?text=Olá!%20Tenho%20interesse%20no%20${encodeURIComponent(v.year+' '+v.name+' '+v.version)}" target="_blank" rel="noopener" class="btn-int">Tenho interesse</a>
             </div>
           </div>
