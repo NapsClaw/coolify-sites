@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RAVCAR — Painel Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800;900&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='6' fill='%23E8302A'/><text x='50%25' y='72%25' text-anchor='middle' font-size='72' font-family='Georgia,serif' font-weight='900' fill='white'>R</text></svg>">
+  <style>
+    :root {
+      --bg: #080808;
+      --surface: #111111;
+      --surface-2: #181818;
+      --primary: #E8302A;
+      --primary-dark: #C02020;
+      --text: #F0EDE8;
+      --text-muted: #747474;
+      --border: #222222;
+      --green: #22C55E;
+      --red: #EF4444;
+      --font-d: 'Barlow Condensed', sans-serif;
+      --font-b: 'IBM Plex Sans', sans-serif;
+    }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html, body { height: 100%; }
+    body { background: var(--bg); color: var(--text); font-family: var(--font-b); font-weight: 300; }
+
+    /* ─── LOGIN ─── */
+    #login-screen {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      padding: 24px;
+    }
+    .login-box {
+      background: var(--surface); border: 1px solid var(--border);
+      padding: 48px 40px; width: 100%; max-width: 400px;
+    }
+    .login-logo {
+      font-family: var(--font-d); font-weight: 900; font-size: 28px;
+      letter-spacing: .06em; margin-bottom: 8px;
+    }
+    .login-logo em { color: var(--primary); font-style: normal; }
+    .login-sub { font-size: 13px; color: var(--text-muted); margin-bottom: 36px; }
+    .field label {
+      display: block; font-size: 11px; font-weight: 500; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px;
+    }
+    .field input {
+      width: 100%; background: var(--surface-2); border: 1px solid var(--border);
+      color: var(--text); font-family: var(--font-b); font-weight: 300; font-size: 15px;
+      padding: 12px 16px; outline: none; transition: border-color .2s;
+      min-height: 48px;
+    }
+    .field input:focus { border-color: var(--primary); }
+    .field { margin-bottom: 20px; }
+    .login-err {
+      font-size: 13px; color: var(--red); margin-bottom: 16px;
+      display: none;
+    }
+    .btn-login {
+      width: 100%; background: var(--primary); color: #fff;
+      font-family: var(--font-d); font-weight: 700; font-size: 17px;
+      letter-spacing: .1em; text-transform: uppercase;
+      padding: 14px; border: none; cursor: pointer;
+      transition: background .2s; min-height: 52px;
+    }
+    .btn-login:hover { background: var(--primary-dark); }
+
+    /* ─── ADMIN SHELL ─── */
+    #admin-shell { display: none; min-height: 100vh; }
+
+    /* Topbar */
+    .topbar {
+      background: var(--surface); border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 32px; position: sticky; top: 0; z-index: 10;
+    }
+    .topbar-logo {
+      font-family: var(--font-d); font-weight: 900; font-size: 22px; letter-spacing: .06em;
+    }
+    .topbar-logo em { color: var(--primary); font-style: normal; }
+    .topbar-right { display: flex; align-items: center; gap: 16px; }
+    .site-link {
+      color: var(--text-muted); font-size: 13px; text-decoration: none;
+      display: flex; align-items: center; gap: 6px; transition: color .2s;
+    }
+    .site-link:hover { color: var(--text); }
+    .btn-logout {
+      background: transparent; border: 1px solid var(--border);
+      color: var(--text-muted); font-family: var(--font-b); font-size: 13px;
+      padding: 8px 16px; cursor: pointer; transition: border-color .2s, color .2s;
+    }
+    .btn-logout:hover { border-color: var(--text-muted); color: var(--text); }
+
+    /* Content */
+    .admin-content { padding: 40px 32px; max-width: 1200px; margin: 0 auto; }
+
+    /* Section header */
+    .adm-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 28px; flex-wrap: wrap; gap: 16px;
+    }
+    .adm-title {
+      font-family: var(--font-d); font-weight: 900; font-size: 40px;
+      letter-spacing: -.01em;
+    }
+    .btn-add {
+      background: var(--primary); color: #fff;
+      font-family: var(--font-d); font-weight: 700; font-size: 16px;
+      letter-spacing: .08em; text-transform: uppercase;
+      padding: 12px 28px; border: none; cursor: pointer;
+      display: flex; align-items: center; gap: 8px;
+      transition: background .2s; min-height: 48px;
+    }
+    .btn-add:hover { background: var(--primary-dark); }
+
+    /* Vehicle list */
+    .vlist { display: flex; flex-direction: column; gap: 2px; }
+    .vrow {
+      background: var(--surface); border: 1px solid var(--border);
+      display: grid; grid-template-columns: 80px 1fr auto;
+      gap: 20px; align-items: center; padding: 16px 20px;
+      transition: border-color .2s;
+    }
+    .vrow:hover { border-color: #333; }
+    .vrow-thumb {
+      width: 80px; height: 54px; object-fit: cover; flex-shrink: 0;
+      background: var(--surface-2);
+    }
+    .vrow-info {}
+    .vrow-name {
+      font-family: var(--font-d); font-weight: 800; font-size: 20px;
+      letter-spacing: -.01em; margin-bottom: 3px;
+    }
+    .vrow-meta { font-size: 12.5px; color: var(--text-muted); }
+    .vrow-price {
+      font-family: var(--font-d); font-weight: 800; font-size: 18px;
+      color: var(--primary); white-space: nowrap;
+    }
+    .vrow-actions { display: flex; gap: 8px; }
+    .btn-edit, .btn-del {
+      background: transparent; border: 1px solid var(--border);
+      color: var(--text-muted); font-family: var(--font-b); font-size: 12px;
+      padding: 6px 14px; cursor: pointer; transition: all .2s;
+      min-height: 34px;
+    }
+    .btn-edit:hover { border-color: var(--primary); color: var(--primary); }
+    .btn-del:hover  { border-color: var(--red); color: var(--red); }
+
+    .empty-list {
+      text-align: center; padding: 64px 24px;
+      color: var(--text-muted); font-size: 15px; line-height: 1.8;
+      border: 1px dashed var(--border);
+    }
+
+    /* ─── MODAL ─── */
+    .overlay {
+      position: fixed; inset: 0; z-index: 200;
+      background: rgba(0,0,0,.82); backdrop-filter: blur(4px);
+      display: flex; align-items: center; justify-content: center; padding: 24px;
+      opacity: 0; pointer-events: none; transition: opacity .25s;
+    }
+    .overlay.open { opacity: 1; pointer-events: all; }
+    .modal {
+      background: var(--surface); border: 1px solid var(--border);
+      width: 100%; max-width: 560px; max-height: 90vh; overflow-y: auto;
+      transform: translateY(20px); transition: transform .25s;
+    }
+    .overlay.open .modal { transform: translateY(0); }
+    .modal-head {
+      padding: 24px 28px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .modal-title { font-family: var(--font-d); font-weight: 800; font-size: 26px; }
+    .btn-close {
+      background: none; border: none; color: var(--text-muted);
+      font-size: 22px; cursor: pointer; line-height: 1; padding: 4px;
+      transition: color .2s;
+    }
+    .btn-close:hover { color: var(--text); }
+    .modal-body { padding: 24px 28px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { margin-bottom: 18px; }
+    .form-group label {
+      display: block; font-size: 11px; font-weight: 500; letter-spacing: .14em;
+      text-transform: uppercase; color: var(--text-muted); margin-bottom: 7px;
+    }
+    .form-group input, .form-group select {
+      width: 100%; background: var(--surface-2); border: 1px solid var(--border);
+      color: var(--text); font-family: var(--font-b); font-weight: 300; font-size: 15px;
+      padding: 11px 14px; outline: none; transition: border-color .2s;
+      min-height: 46px; -webkit-appearance: none;
+    }
+    .form-group input:focus, .form-group select:focus { border-color: var(--primary); }
+    .form-group select option { background: var(--surface-2); }
+    .img-preview {
+      margin-top: 10px; width: 100%; height: 160px; object-fit: cover;
+      background: var(--surface-2); display: none;
+    }
+    .img-preview.show { display: block; }
+    .modal-foot {
+      padding: 0 28px 24px;
+      display: flex; gap: 12px; flex-wrap: wrap;
+    }
+    .btn-save {
+      flex: 1; background: var(--primary); color: #fff;
+      font-family: var(--font-d); font-weight: 700; font-size: 17px;
+      letter-spacing: .08em; text-transform: uppercase;
+      padding: 14px; border: none; cursor: pointer;
+      transition: background .2s; min-height: 52px;
+    }
+    .btn-save:hover { background: var(--primary-dark); }
+    .btn-cancel {
+      flex: 1; background: transparent; border: 1px solid var(--border);
+      color: var(--text-muted); font-family: var(--font-d); font-weight: 600;
+      font-size: 17px; letter-spacing: .06em; text-transform: uppercase;
+      padding: 14px; cursor: pointer; transition: all .2s; min-height: 52px;
+    }
+    .btn-cancel:hover { border-color: var(--text-muted); color: var(--text); }
+
+    /* Toast */
+    .toast {
+      position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%) translateY(20px);
+      background: var(--green); color: #fff;
+      font-family: var(--font-d); font-weight: 700; font-size: 16px;
+      letter-spacing: .06em; padding: 14px 28px;
+      opacity: 0; transition: opacity .3s, transform .3s;
+      pointer-events: none; z-index: 300; white-space: nowrap;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    .toast.error { background: var(--red); }
+
+    @media (max-width: 640px) {
+      .topbar { padding: 14px 18px; }
+      .admin-content { padding: 28px 18px; }
+      .vrow { grid-template-columns: 60px 1fr; gap: 12px; }
+      .vrow-actions { grid-column: 1/-1; justify-content: flex-end; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LOGIN -->
+  <div id="login-screen">
+    <div class="login-box">
+      <div class="login-logo">RAV<em>CAR</em></div>
+      <p class="login-sub">Painel de administração</p>
+      <p class="login-err" id="login-err">Senha incorreta. Tente novamente.</p>
+      <div class="field">
+        <label>Senha</label>
+        <input type="password" id="login-pass" placeholder="••••••••" autocomplete="current-password">
+      </div>
+      <button class="btn-login" onclick="doLogin()">Entrar</button>
+    </div>
+  </div>
+
+  <!-- ADMIN SHELL -->
+  <div id="admin-shell">
+    <div class="topbar">
+      <span class="topbar-logo">RAV<em>CAR</em> <span style="font-size:15px;font-weight:600;opacity:.5;margin-left:8px;">Admin</span></span>
+      <div class="topbar-right">
+        <a href="index.html" target="_blank" class="site-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+          Ver Site
+        </a>
+        <button class="btn-logout" onclick="doLogout()">Sair</button>
+      </div>
+    </div>
+
+    <div class="admin-content">
+      <div class="adm-header">
+        <h1 class="adm-title">Veículos</h1>
+        <button class="btn-add" onclick="openModal()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+          Adicionar Veículo
+        </button>
+      </div>
+      <div class="vlist" id="vlist"></div>
+    </div>
+  </div>
+
+  <!-- MODAL -->
+  <div class="overlay" id="modal-overlay" onclick="maybeCloseModal(event)">
+    <div class="modal" id="modal">
+      <div class="modal-head">
+        <span class="modal-title" id="modal-title">Novo Veículo</span>
+        <button class="btn-close" onclick="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="f-id">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Marca / Modelo *</label>
+            <input type="text" id="f-name" placeholder="Ex: Honda Civic">
+          </div>
+          <div class="form-group">
+            <label>Versão *</label>
+            <input type="text" id="f-version" placeholder="Ex: EXL 2.0 CVT">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Ano *</label>
+            <input type="text" id="f-year" placeholder="Ex: 2023" maxlength="4">
+          </div>
+          <div class="form-group">
+            <label>Quilometragem *</label>
+            <input type="text" id="f-km" placeholder="Ex: 35.000">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Combustível</label>
+            <select id="f-fuel">
+              <option value="Flex">Flex</option>
+              <option value="Gasolina">Gasolina</option>
+              <option value="Diesel">Diesel</option>
+              <option value="Elétrico">Elétrico</option>
+              <option value="Híbrido">Híbrido</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Preço (R$) *</label>
+            <input type="text" id="f-price" placeholder="Ex: 129.900">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Badge (opcional)</label>
+          <input type="text" id="f-badge" placeholder="Ex: Destaque, Novo, Financiado">
+        </div>
+        <div class="form-group">
+          <label>URL da Foto *</label>
+          <input type="url" id="f-img" placeholder="https://..." oninput="previewImg(this.value)">
+          <img class="img-preview" id="img-preview" alt="">
+        </div>
+      </div>
+      <div class="modal-foot">
+        <button class="btn-save" onclick="saveVehicle()">Salvar</button>
+        <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+    const PASS = 'ravcar2025';
+    const STORE_KEY = 'ravcar_vehicles';
+    const DEFAULT = [
+      { id:1, name:'Honda Civic',       version:'EXL 2.0 CVT',         year:'2022', km:'38.000', fuel:'Flex',   price:'129.900', badge:'Destaque',   img:'https://images.unsplash.com/photo-1590362891991-f776e747a588?w=640&q=80&fit=crop' },
+      { id:2, name:'Toyota Corolla',    version:'XEI 2.0 Flex CVT',    year:'2021', km:'52.000', fuel:'Flex',   price:'118.500', badge:'Financiado', img:'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=640&q=80&fit=crop' },
+      { id:3, name:'Jeep Compass',      version:'Limited 2.0 TD 4x4',  year:'2022', km:'44.000', fuel:'Diesel', price:'168.000', badge:'SUV',        img:'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=640&q=80&fit=crop' },
+      { id:4, name:'VW T-Cross',        version:'Highline 1.4 TSI',    year:'2023', km:'18.000', fuel:'Flex',   price:'142.000', badge:'Novo',       img:'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=640&q=80&fit=crop' },
+      { id:5, name:'Hyundai Creta',     version:'Platinum 1.0 Turbo',  year:'2023', km:'22.000', fuel:'Flex',   price:'138.900', badge:'Novo',       img:'https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=640&q=80&fit=crop' },
+      { id:6, name:'Chevrolet Tracker', version:'Premier 1.2 Turbo',   year:'2022', km:'35.000', fuel:'Flex',   price:'119.900', badge:'',           img:'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=640&q=80&fit=crop' }
+    ];
+
+    /* ── AUTH ── */
+    function doLogin() {
+      const val = document.getElementById('login-pass').value;
+      if (val === PASS) {
+        sessionStorage.setItem('ravcar_auth', '1');
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('admin-shell').style.display = 'block';
+        renderList();
+      } else {
+        document.getElementById('login-err').style.display = 'block';
+      }
+    }
+    document.getElementById('login-pass').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+    function doLogout() {
+      sessionStorage.removeItem('ravcar_auth');
+      location.reload();
+    }
+    if (sessionStorage.getItem('ravcar_auth') === '1') {
+      document.getElementById('login-screen').style.display = 'none';
+      document.getElementById('admin-shell').style.display = 'block';
+    }
+
+    /* ── DATA ── */
+    function load() {
+      try { const s = localStorage.getItem(STORE_KEY); return s ? JSON.parse(s) : [...DEFAULT]; }
+      catch { return [...DEFAULT]; }
+    }
+    function save(arr) { localStorage.setItem(STORE_KEY, JSON.stringify(arr)); }
+    function nextId(arr) { return arr.length ? Math.max(...arr.map(v => v.id)) + 1 : 1; }
+
+    /* ── LIST ── */
+    function renderList() {
+      const arr = load();
+      const el = document.getElementById('vlist');
+      if (!arr.length) {
+        el.innerHTML = '<div class="empty-list"><p>Nenhum veículo cadastrado.</p><p style="margin-top:8px">Clique em "Adicionar Veículo" para começar.</p></div>';
+        return;
+      }
+      el.innerHTML = arr.map(v => `
+        <div class="vrow">
+          <img class="vrow-thumb" src="${v.img}" alt="${v.name}" loading="lazy" onerror="this.style.opacity=.2">
+          <div class="vrow-info">
+            <div class="vrow-name">${v.year} ${v.name}</div>
+            <div class="vrow-meta">${v.version} &nbsp;·&nbsp; ${v.km} km &nbsp;·&nbsp; ${v.fuel}${v.badge ? ' &nbsp;·&nbsp; <strong style="color:var(--primary)">' + v.badge + '</strong>' : ''}</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:flex-end;gap:10px;">
+            <div class="vrow-price">R$ ${v.price}</div>
+            <div class="vrow-actions">
+              <button class="btn-edit" onclick="openModal(${v.id})">Editar</button>
+              <button class="btn-del"  onclick="deleteVehicle(${v.id})">Remover</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    /* ── MODAL ── */
+    let editingId = null;
+    function openModal(id) {
+      editingId = id || null;
+      const overlay = document.getElementById('modal-overlay');
+      document.getElementById('modal-title').textContent = id ? 'Editar Veículo' : 'Novo Veículo';
+      if (id) {
+        const v = load().find(x => x.id === id);
+        if (v) {
+          document.getElementById('f-id').value      = v.id;
+          document.getElementById('f-name').value    = v.name;
+          document.getElementById('f-version').value = v.version;
+          document.getElementById('f-year').value    = v.year;
+          document.getElementById('f-km').value      = v.km;
+          document.getElementById('f-fuel').value    = v.fuel;
+          document.getElementById('f-price').value   = v.price;
+          document.getElementById('f-badge').value   = v.badge || '';
+          document.getElementById('f-img').value     = v.img;
+          previewImg(v.img);
+        }
+      } else {
+        ['f-name','f-version','f-year','f-km','f-price','f-badge','f-img'].forEach(k => document.getElementById(k).value = '');
+        document.getElementById('f-fuel').value = 'Flex';
+        document.getElementById('img-preview').className = 'img-preview';
+      }
+      overlay.classList.add('open');
+    }
+    function closeModal() { document.getElementById('modal-overlay').classList.remove('open'); }
+    function maybeCloseModal(e) { if (e.target === document.getElementById('modal-overlay')) closeModal(); }
+
+    function previewImg(url) {
+      const p = document.getElementById('img-preview');
+      if (url && url.startsWith('http')) {
+        p.src = url; p.className = 'img-preview show';
+      } else {
+        p.className = 'img-preview';
+      }
+    }
+
+    function saveVehicle() {
+      const name    = document.getElementById('f-name').value.trim();
+      const version = document.getElementById('f-version').value.trim();
+      const year    = document.getElementById('f-year').value.trim();
+      const km      = document.getElementById('f-km').value.trim();
+      const fuel    = document.getElementById('f-fuel').value;
+      const price   = document.getElementById('f-price').value.trim();
+      const badge   = document.getElementById('f-badge').value.trim();
+      const img     = document.getElementById('f-img').value.trim();
+
+      if (!name || !version || !year || !km || !price || !img) {
+        toast('Preencha todos os campos obrigatórios.', true); return;
+      }
+
+      const arr = load();
+      if (editingId) {
+        const i = arr.findIndex(v => v.id === editingId);
+        if (i > -1) arr[i] = { ...arr[i], name, version, year, km, fuel, price, badge, img };
+      } else {
+        arr.push({ id: nextId(arr), name, version, year, km, fuel, price, badge, img });
+      }
+      save(arr);
+      closeModal();
+      renderList();
+      toast(editingId ? 'Veículo atualizado!' : 'Veículo adicionado!');
+    }
+
+    function deleteVehicle(id) {
+      if (!confirm('Remover este veículo do catálogo?')) return;
+      const arr = load().filter(v => v.id !== id);
+      save(arr);
+      renderList();
+      toast('Veículo removido.');
+    }
+
+    /* ── TOAST ── */
+    let toastTimer;
+    function toast(msg, isError) {
+      const el = document.getElementById('toast');
+      el.textContent = msg;
+      el.className = 'toast show' + (isError ? ' error' : '');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => { el.className = 'toast'; }, 3000);
+    }
+
+    /* ── INIT ── */
+    if (sessionStorage.getItem('ravcar_auth') === '1') renderList();
+  </script>
+</body>
+</html>

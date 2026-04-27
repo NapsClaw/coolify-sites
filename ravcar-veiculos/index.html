@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RAVCAR VEÍCULOS — Compra, Venda, Troca e Consigna | Rio de Janeiro</title>
+  <meta name="description" content="RAVCAR VEÍCULOS — Especialistas em compra, venda, troca e consigna de automóveis no Rio de Janeiro. Atendimento rápido via WhatsApp.">
+  <meta property="og:title" content="RAVCAR VEÍCULOS — Compra, Venda, Troca e Consigna">
+  <meta property="og:description" content="Especialistas em compra, venda, troca e consigna de automóveis. Atendimento rápido via WhatsApp.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='6' fill='%23E8302A'/><text x='50%25' y='72%25' text-anchor='middle' font-size='72' font-family='Georgia,serif' font-weight='900' fill='white'>R</text></svg>">
+
+  <style>
+    :root {
+      --bg: #080808;
+      --surface: #111111;
+      --surface-2: #191919;
+      --primary: #E8302A;
+      --primary-dark: #C02020;
+      --text: #F0EDE8;
+      --text-muted: #747474;
+      --border: #222222;
+      --font-display: 'Barlow Condensed', sans-serif;
+      --font-body: 'IBM Plex Sans', sans-serif;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ─── ANIMATIONS ─────────────────────────── */
+    @keyframes heroReveal {
+      from { opacity: 0; transform: translateY(32px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes bgZoom {
+      from { transform: scale(1.08); }
+      to   { transform: scale(1); }
+    }
+    @keyframes pulse-wa {
+      0%   { box-shadow: 0 0 0 0 rgba(37,211,102,0.45); }
+      70%  { box-shadow: 0 0 0 14px rgba(37,211,102,0); }
+      100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); }
+    }
+    @keyframes scrollDash {
+      0%   { transform: scaleY(0); transform-origin: top; opacity: 1; }
+      50%  { transform: scaleY(1); transform-origin: top; opacity: 1; }
+      51%  { transform: scaleY(1); transform-origin: bottom; opacity: 1; }
+      100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
+    }
+    @keyframes lineExpand {
+      from { width: 0; }
+      to   { width: 56px; }
+    }
+
+    .anim-hero { animation: heroReveal 0.9s cubic-bezier(.22,1,.36,1) forwards; opacity: 0; }
+    .d1 { animation-delay: 0.2s; }
+    .d2 { animation-delay: 0.38s; }
+    .d3 { animation-delay: 0.54s; }
+    .d4 { animation-delay: 0.70s; }
+
+    /* scroll reveal */
+    .sr { opacity: 0; transform: translateY(44px); transition: opacity 0.75s ease, transform 0.75s ease; }
+    .sr-l { opacity: 0; transform: translateX(-44px); transition: opacity 0.75s ease, transform 0.75s ease; }
+    .sr-r { opacity: 0; transform: translateX(44px); transition: opacity 0.75s ease, transform 0.75s ease; }
+    .sr.in, .sr-l.in, .sr-r.in { opacity: 1; transform: none; }
+
+    /* ─── NAVBAR ─────────────────────────────── */
+    #nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 22px 36px;
+      transition: background .3s, backdrop-filter .3s, border-color .3s;
+      border-bottom: 1px solid transparent;
+    }
+    #nav.scrolled {
+      background: rgba(8,8,8,.94);
+      backdrop-filter: blur(14px);
+      border-color: var(--border);
+    }
+    .nav-logo {
+      font-family: var(--font-display); font-weight: 900; font-size: 26px;
+      letter-spacing: .06em; color: var(--text); text-decoration: none;
+    }
+    .nav-logo em { color: var(--primary); font-style: normal; }
+    .nav-wa {
+      background: var(--primary); color: #fff;
+      font-family: var(--font-display); font-weight: 700; font-size: 15px;
+      letter-spacing: .1em; text-transform: uppercase;
+      padding: 10px 26px; text-decoration: none;
+      transition: background .2s, transform .2s;
+      display: none;
+    }
+    .nav-wa:hover { background: var(--primary-dark); transform: translateY(-1px); }
+    @media (min-width: 640px) { .nav-wa { display: block; } }
+
+    /* ─── HERO ───────────────────────────────── */
+    #hero {
+      position: relative; height: 100svh; min-height: 680px;
+      display: flex; align-items: flex-end; overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: url('https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=1800&q=88&fit=crop') center 38% / cover no-repeat;
+      animation: bgZoom 1.8s cubic-bezier(.22,1,.36,1) forwards;
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(8,8,8,.98) 0%,
+        rgba(8,8,8,.68) 38%,
+        rgba(8,8,8,.22) 68%,
+        rgba(8,8,8,.08) 100%
+      );
+    }
+    /* diagonal red tint */
+    .hero-tint {
+      position: absolute; inset: 0; pointer-events: none;
+      background: linear-gradient(
+        125deg,
+        transparent 55%,
+        rgba(232,48,42,.07) 55%
+      );
+    }
+    /* vertical red bar far right */
+    .hero-bar {
+      position: absolute; top: 0; right: 72px; bottom: 0;
+      width: 3px; background: var(--primary); opacity: .5;
+      display: none;
+    }
+    @media (min-width: 1024px) { .hero-bar { display: block; } }
+
+    .hero-inner {
+      position: relative; z-index: 2; width: 100%; max-width: 1280px;
+      margin: 0 auto; padding: 0 36px 72px;
+    }
+    .hero-eyebrow {
+      display: flex; align-items: center; gap: 14px;
+      font-family: var(--font-display); font-weight: 600; font-size: 13px;
+      letter-spacing: .28em; text-transform: uppercase; color: var(--primary);
+      margin-bottom: 18px;
+    }
+    .hero-eyebrow::before {
+      content: ''; display: block; width: 0; height: 2px; background: var(--primary);
+      animation: lineExpand .6s .8s ease forwards;
+    }
+    h1 {
+      font-family: var(--font-display); font-weight: 900;
+      font-size: clamp(68px, 12.5vw, 152px);
+      line-height: .88; letter-spacing: -.02em;
+      margin-bottom: 28px;
+    }
+    h1 .l1 { display: block; color: var(--text); }
+    h1 .l2 {
+      display: block; color: transparent;
+      -webkit-text-stroke: 2px var(--primary);
+      text-stroke: 2px var(--primary);
+    }
+    .hero-sub {
+      font-size: 15px; font-weight: 300; color: var(--text-muted);
+      max-width: 440px; line-height: 1.8; margin-bottom: 40px;
+    }
+    .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+
+    .btn-solid {
+      background: var(--primary); color: #fff;
+      font-family: var(--font-display); font-weight: 700; font-size: 17px;
+      letter-spacing: .08em; text-transform: uppercase;
+      padding: 16px 38px; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 10px;
+      transition: background .2s, transform .2s;
+      min-height: 54px;
+    }
+    .btn-solid:hover { background: var(--primary-dark); transform: translateY(-2px); }
+
+    .btn-ghost {
+      background: transparent; color: var(--text);
+      border: 1px solid rgba(240,237,232,.18);
+      font-family: var(--font-display); font-weight: 600; font-size: 17px;
+      letter-spacing: .08em; text-transform: uppercase;
+      padding: 16px 38px; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 10px;
+      transition: border-color .2s, background .2s, transform .2s;
+      min-height: 54px;
+    }
+    .btn-ghost:hover {
+      border-color: var(--text);
+      background: rgba(240,237,232,.04);
+      transform: translateY(-2px);
+    }
+
+    /* scroll hint */
+    .scroll-hint {
+      position: absolute; right: 40px; bottom: 44px; z-index: 2;
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      opacity: .35;
+    }
+    .scroll-hint span {
+      font-family: var(--font-display); font-size: 10px; letter-spacing: .22em;
+      text-transform: uppercase; writing-mode: vertical-rl;
+    }
+    .scroll-hint i {
+      width: 1px; height: 64px; background: var(--text);
+      animation: scrollDash 2s ease infinite;
+    }
+    @media (max-width: 767px) { .scroll-hint { display: none; } }
+
+    /* ─── SECTION COMMON ─────────────────────── */
+    .sec { padding: 96px 36px; }
+    @media (max-width: 767px) { .sec { padding: 72px 22px; } }
+    .sec-inner { max-width: 1280px; margin: 0 auto; }
+    .sec-label {
+      font-family: var(--font-display); font-weight: 600; font-size: 12px;
+      letter-spacing: .28em; text-transform: uppercase; color: var(--primary);
+      margin-bottom: 12px; display: flex; align-items: center; gap: 10px;
+    }
+    .sec-label::before { content: ''; display: block; width: 28px; height: 2px; background: var(--primary); }
+    .sec-title {
+      font-family: var(--font-display); font-weight: 900;
+      font-size: clamp(44px, 6.5vw, 76px);
+      line-height: .9; letter-spacing: -.015em;
+    }
+
+    /* ─── SERVICES ───────────────────────────── */
+    #services { background: var(--surface); }
+    .svc-head {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      gap: 24px; margin-bottom: 56px; flex-wrap: wrap;
+    }
+    .svc-grid {
+      display: grid; gap: 2px;
+      grid-template-columns: 1fr;
+    }
+    @media (min-width: 640px)  { .svc-grid { grid-template-columns: repeat(2,1fr); } }
+    @media (min-width: 1024px) { .svc-grid { grid-template-columns: repeat(4,1fr); } }
+
+    .svc-card {
+      background: var(--surface-2); padding: 40px 32px;
+      position: relative; overflow: hidden;
+      transition: background .3s;
+    }
+    .svc-card::after {
+      content: ''; position: absolute; bottom: 0; left: 0;
+      height: 3px; width: 100%; background: var(--primary);
+      transform: scaleX(0); transform-origin: left; transition: transform .4s ease;
+    }
+    .svc-card:hover::after { transform: scaleX(1); }
+    .svc-card:hover { background: #1e1e1e; }
+
+    .svc-num {
+      font-family: var(--font-display); font-size: 11px; font-weight: 600;
+      letter-spacing: .22em; color: var(--primary); margin-bottom: 28px;
+    }
+    .svc-ico { color: var(--primary); margin-bottom: 20px; }
+    .svc-name {
+      font-family: var(--font-display); font-weight: 800; font-size: 38px;
+      letter-spacing: -.01em; line-height: 1; margin-bottom: 12px;
+    }
+    .svc-desc {
+      font-size: 13.5px; font-weight: 300; color: var(--text-muted);
+      line-height: 1.75;
+    }
+
+    /* ─── CATALOG ────────────────────────────── */
+    #catalog { background: var(--bg); }
+    .cat-head { margin-bottom: 48px; }
+    .cat-grid {
+      display: grid; gap: 24px; grid-template-columns: 1fr;
+    }
+    @media (min-width: 600px)  { .cat-grid { grid-template-columns: repeat(2,1fr); } }
+    @media (min-width: 1024px) { .cat-grid { grid-template-columns: repeat(3,1fr); } }
+
+    .vcard {
+      background: var(--surface); border: 1px solid var(--border);
+      overflow: hidden; transition: transform .3s, border-color .3s, box-shadow .3s;
+    }
+    .vcard:hover {
+      transform: translateY(-5px);
+      border-color: var(--primary);
+      box-shadow: 0 12px 40px rgba(232,48,42,.12);
+    }
+    .vcard-thumb {
+      position: relative; height: 200px; overflow: hidden;
+    }
+    .vcard-thumb img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform .55s ease;
+    }
+    .vcard:hover .vcard-thumb img { transform: scale(1.07); }
+    .vcard-badge {
+      position: absolute; top: 14px; left: 14px;
+      background: var(--primary); color: #fff;
+      font-family: var(--font-display); font-weight: 700; font-size: 11px;
+      letter-spacing: .16em; text-transform: uppercase; padding: 4px 12px;
+    }
+    .vcard-body { padding: 22px; }
+    .vcard-year {
+      font-family: var(--font-display); font-size: 11px; font-weight: 600;
+      letter-spacing: .22em; color: var(--primary); margin-bottom: 6px;
+    }
+    .vcard-name {
+      font-family: var(--font-display); font-weight: 800; font-size: 25px;
+      letter-spacing: -.01em; margin-bottom: 3px;
+    }
+    .vcard-ver {
+      font-size: 13px; font-weight: 300; color: var(--text-muted); margin-bottom: 16px;
+    }
+    .vcard-specs {
+      display: flex; gap: 16px; margin-bottom: 18px; flex-wrap: wrap;
+    }
+    .spec-tag {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 12px; color: var(--text-muted); font-weight: 300;
+    }
+    .spec-tag svg { color: var(--primary); flex-shrink: 0; }
+    .vcard-foot {
+      display: flex; align-items: center; justify-content: space-between;
+      border-top: 1px solid var(--border); padding-top: 16px;
+    }
+    .vcard-price {
+      font-family: var(--font-display); font-weight: 800; font-size: 26px;
+      letter-spacing: -.02em;
+    }
+    .vcard-price .cur { font-size: 14px; font-weight: 300; color: var(--text-muted); margin-right: 3px; }
+    .btn-int {
+      background: transparent; color: var(--primary); border: 1px solid var(--primary);
+      font-family: var(--font-display); font-weight: 700; font-size: 13px;
+      letter-spacing: .1em; text-transform: uppercase;
+      padding: 8px 18px; text-decoration: none;
+      transition: background .2s, color .2s; cursor: pointer;
+      display: inline-block; min-height: 38px; line-height: 22px;
+    }
+    .btn-int:hover { background: var(--primary); color: #fff; }
+
+    /* ─── BAND ───────────────────────────────── */
+    #band {
+      background: var(--primary); padding: 84px 36px;
+      text-align: center; position: relative; overflow: hidden;
+    }
+    #band::before {
+      content: 'RAVCAR';
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      font-family: var(--font-display); font-weight: 900;
+      font-size: clamp(88px, 22vw, 240px);
+      color: rgba(255,255,255,.055); white-space: nowrap; pointer-events: none;
+      letter-spacing: .04em;
+    }
+    #band .band-inner { position: relative; z-index: 1; }
+    #band .band-tagline {
+      display: flex; align-items: center; justify-content: center; gap: 16px;
+      font-family: var(--font-display); font-size: 12px; font-weight: 600;
+      letter-spacing: .28em; text-transform: uppercase;
+      color: rgba(255,255,255,.65); margin-bottom: 22px;
+    }
+    #band .band-tagline span { display: block; width: 40px; height: 1px; background: rgba(255,255,255,.4); }
+    #band h2 {
+      font-family: var(--font-display); font-weight: 900;
+      font-size: clamp(44px, 7vw, 84px);
+      line-height: .94; color: #fff; margin-bottom: 36px;
+      letter-spacing: -.02em;
+    }
+    .btn-band {
+      display: inline-flex; align-items: center; gap: 12px;
+      background: #fff; color: var(--primary);
+      font-family: var(--font-display); font-weight: 800; font-size: 18px;
+      letter-spacing: .08em; text-transform: uppercase;
+      padding: 18px 48px; text-decoration: none;
+      transition: transform .2s, box-shadow .2s;
+      min-height: 58px;
+    }
+    .btn-band:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.18); }
+
+    /* ─── TRUST ──────────────────────────────── */
+    #trust { background: var(--surface); }
+    .trust-grid {
+      display: grid; gap: 2px; grid-template-columns: 1fr;
+    }
+    @media (min-width: 768px) { .trust-grid { grid-template-columns: repeat(3,1fr); } }
+    .trust-item {
+      padding: 44px 32px; border: 1px solid var(--border);
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .trust-item::before {
+      content: ''; position: absolute; top: 0; left: 0;
+      width: 100%; height: 3px; background: var(--primary);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform .5s ease;
+    }
+    .trust-item.in::before { transform: scaleX(1); }
+    .trust-big {
+      font-family: var(--font-display); font-weight: 900; font-size: 80px;
+      color: var(--primary); line-height: 1; margin-bottom: 10px;
+    }
+    .trust-lbl { font-size: 13.5px; font-weight: 300; color: var(--text-muted); line-height: 1.7; }
+
+    /* ─── CONTACT ────────────────────────────── */
+    #contact { background: #040404; border-top: 1px solid var(--border); }
+    .contact-grid {
+      display: grid; gap: 72px; grid-template-columns: 1fr;
+    }
+    @media (min-width: 768px) { .contact-grid { grid-template-columns: 1fr 1fr; align-items: center; } }
+    .ct-label { margin-bottom: 12px; }
+    .ct-title { margin-bottom: 36px; }
+    .ct-rule { width: 48px; height: 2px; background: var(--primary); margin-bottom: 28px; }
+    .ct-info p {
+      font-size: 14.5px; font-weight: 300; color: var(--text-muted);
+      line-height: 1.85; margin-bottom: 14px;
+    }
+    .ct-info p:last-child { margin-bottom: 0; }
+    .ct-info strong { color: var(--text); font-weight: 400; }
+
+    /* ─── FOOTER ─────────────────────────────── */
+    footer {
+      background: var(--bg); border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 16px; padding: 28px 36px;
+    }
+    .footer-logo {
+      font-family: var(--font-display); font-weight: 900; font-size: 20px;
+      letter-spacing: .06em;
+    }
+    .footer-logo em { color: var(--primary); font-style: normal; }
+    .footer-copy { font-size: 12.5px; font-weight: 300; color: var(--text-muted); }
+    .footer-admin {
+      font-size: 12px; color: var(--text-muted); text-decoration: none; opacity: .3;
+      transition: opacity .2s;
+    }
+    .footer-admin:hover { opacity: .7; }
+
+    /* ─── WHATSAPP FLOAT ─────────────────────── */
+    .wa-float {
+      position: fixed; bottom: 26px; right: 26px; z-index: 999;
+      width: 60px; height: 60px; border-radius: 50%; background: #25D366;
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(37,211,102,.3);
+      animation: pulse-wa 2.8s ease infinite;
+      transition: transform .2s, animation .2s;
+    }
+    .wa-float:hover { transform: scale(1.12); animation: none; box-shadow: 0 6px 28px rgba(37,211,102,.45); }
+
+    /* ─── MOBILE ─────────────────────────────── */
+    @media (max-width: 767px) {
+      #nav { padding: 16px 22px; }
+      .hero-inner { padding: 0 22px 60px; }
+      footer { padding: 22px; flex-direction: column; align-items: flex-start; gap: 12px; }
+      .wa-float { bottom: 20px; right: 20px; }
+    }
+
+    /* ─── EMPTY CATALOG ──────────────────────── */
+    .empty-cat {
+      grid-column: 1 / -1; text-align: center; padding: 80px 20px;
+      color: var(--text-muted); font-size: 15px; line-height: 1.8;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ─── NAV ─── -->
+  <nav id="nav">
+    <a href="#" class="nav-logo">RAV<em>CAR</em></a>
+    <a href="https://wa.me/5521984277950" target="_blank" rel="noopener" class="nav-wa">Falar no WhatsApp</a>
+  </nav>
+
+  <!-- ─── HERO ─── -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-tint"></div>
+    <div class="hero-bar"></div>
+    <div class="scroll-hint">
+      <span>Rolar</span>
+      <i></i>
+    </div>
+    <div class="hero-inner">
+      <p class="hero-eyebrow anim-hero d1">Compra &nbsp;&middot;&nbsp; Venda &nbsp;&middot;&nbsp; Troca &nbsp;&middot;&nbsp; Consigna</p>
+      <h1 class="anim-hero d2">
+        <span class="l1">SEU PRÓXIMO</span>
+        <span class="l2">VEÍCULO</span>
+      </h1>
+      <p class="hero-sub anim-hero d3">
+        Especialistas em compra, venda, troca e consigna de automóveis. Atendimento personalizado e transparente do início ao fim.
+      </p>
+      <div class="hero-btns anim-hero d4">
+        <a href="https://wa.me/5521984277950" target="_blank" rel="noopener" class="btn-solid">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M5.273 19.727A9.906 9.906 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12a9.906 9.906 0 0 0 1.492 5.224L2 22l4.727-1.273zM12 4a8 8 0 1 1 0 16 8 8 0 0 1 0-16z"/></svg>
+          Falar com Consultor
+        </a>
+        <a href="#catalog" class="btn-ghost">
+          Ver Catálogo
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SERVICES ─── -->
+  <section id="services" class="sec">
+    <div class="sec-inner">
+      <div class="svc-head sr">
+        <div>
+          <p class="sec-label">O que fazemos</p>
+          <h2 class="sec-title">Nossos<br>Serviços</h2>
+        </div>
+      </div>
+      <div class="svc-grid">
+
+        <div class="svc-card sr">
+          <p class="svc-num">01</p>
+          <div class="svc-ico">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+            </svg>
+          </div>
+          <p class="svc-name">Compra</p>
+          <p class="svc-desc">Adquirimos o seu veículo com avaliação justa, transparência total e pagamento rápido. Sem burocracia.</p>
+        </div>
+
+        <div class="svc-card sr" style="transition-delay:.1s">
+          <p class="svc-num">02</p>
+          <div class="svc-ico">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M20 12V22H4V12"/><path d="M22 7H2v5h20V7z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 010-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 000-5C13 2 12 7 12 7z"/>
+            </svg>
+          </div>
+          <p class="svc-name">Venda</p>
+          <p class="svc-desc">Catálogo de veículos selecionados com garantia de procedência e suporte completo na compra.</p>
+        </div>
+
+        <div class="svc-card sr" style="transition-delay:.2s">
+          <p class="svc-num">03</p>
+          <div class="svc-ico">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M8 7h12m0 0l-4-4m4 4l-4 4M4 17h12m0 0l-4-4m4 4l-4 4"/>
+            </svg>
+          </div>
+          <p class="svc-name">Troca</p>
+          <p class="svc-desc">Troque seu veículo pelo modelo desejado com as melhores condições de avaliação do mercado.</p>
+        </div>
+
+        <div class="svc-card sr" style="transition-delay:.3s">
+          <p class="svc-num">04</p>
+          <div class="svc-ico">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>
+            </svg>
+          </div>
+          <p class="svc-name">Consigna</p>
+          <p class="svc-desc">Consigne seu veículo conosco e receba a melhor negociação, com divulgação ativa e sem custo antecipado.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CATALOG ─── -->
+  <section id="catalog" class="sec">
+    <div class="sec-inner">
+      <div class="cat-head sr">
+        <p class="sec-label">Disponíveis agora</p>
+        <h2 class="sec-title">Catálogo<br>de Veículos</h2>
+      </div>
+      <div class="cat-grid" id="catalogGrid">
+        <!-- rendered by JS -->
+      </div>
+      <div style="text-align:center;margin-top:48px;" class="sr">
+        <a href="https://wa.me/5521984277950" target="_blank" rel="noopener" class="btn-solid" style="display:inline-flex;">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M5.273 19.727A9.906 9.906 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12a9.906 9.906 0 0 0 1.492 5.224L2 22l4.727-1.273zM12 4a8 8 0 1 1 0 16 8 8 0 0 1 0-16z"/></svg>
+          Consultar Disponibilidade
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── BAND ─── -->
+  <section id="band">
+    <div class="band-inner sr">
+      <p class="band-tagline">
+        <span></span>Negócio transparente. Atendimento humano.<span></span>
+      </p>
+      <h2>O carro certo<br>para você</h2>
+      <a href="https://wa.me/5521984277950" target="_blank" rel="noopener" class="btn-band">
+        Falar no WhatsApp
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M5.273 19.727A9.906 9.906 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12a9.906 9.906 0 0 0 1.492 5.224L2 22l4.727-1.273zM12 4a8 8 0 1 1 0 16 8 8 0 0 1 0-16z"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- ─── TRUST ─── -->
+  <section id="trust" class="sec">
+    <div class="sec-inner">
+      <div class="trust-grid">
+        <div class="trust-item sr">
+          <div class="trust-big">500+</div>
+          <div class="trust-lbl">Veículos<br>Negociados</div>
+        </div>
+        <div class="trust-item sr" style="transition-delay:.15s">
+          <div class="trust-big">98%</div>
+          <div class="trust-lbl">Clientes<br>Satisfeitos</div>
+        </div>
+        <div class="trust-item sr" style="transition-delay:.3s">
+          <div class="trust-big">24h</div>
+          <div class="trust-lbl">Prazo médio de<br>negociação</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CONTACT ─── -->
+  <section id="contact" class="sec">
+    <div class="sec-inner">
+      <div class="contact-grid">
+        <div class="sr-l">
+          <p class="sec-label ct-label">Fale conosco</p>
+          <h2 class="sec-title ct-title">Pronto para<br>negociar?</h2>
+          <div class="ct-rule"></div>
+          <div class="ct-info">
+            <p><strong>Atendimento</strong><br>Segunda a sábado, das 9h às 18h</p>
+            <p><strong>WhatsApp</strong><br>+55 (21) 98427-7950</p>
+            <p><strong>RAVCAR VEÍCULOS</strong><br>Rio de Janeiro — RJ</p>
+          </div>
+        </div>
+        <div class="sr-r" style="text-align:center;">
+          <a href="https://wa.me/5521984277950" target="_blank" rel="noopener" class="btn-solid" style="display:inline-flex;font-size:19px;padding:20px 48px;margin-bottom:14px;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M5.273 19.727A9.906 9.906 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12a9.906 9.906 0 0 0 1.492 5.224L2 22l4.727-1.273zM12 4a8 8 0 1 1 0 16 8 8 0 0 1 0-16z"/></svg>
+            Iniciar Conversa
+          </a>
+          <p style="font-size:13px;color:var(--text-muted);">Resposta em até 15 minutos</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ─── -->
+  <footer>
+    <div class="footer-logo">RAV<em>CAR</em> VEÍCULOS</div>
+    <p class="footer-copy">© 2025 RAVCAR VEÍCULOS — Todos os direitos reservados</p>
+    <a href="admin.html" class="footer-admin">Admin</a>
+  </footer>
+
+  <!-- ─── WA FLOAT ─── -->
+  <a href="https://wa.me/5521984277950" target="_blank" rel="noopener" class="wa-float" title="Falar no WhatsApp">
+    <svg width="30" height="30" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M5.273 19.727A9.906 9.906 0 0 0 12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12a9.906 9.906 0 0 0 1.492 5.224L2 22l4.727-1.273zM12 4a8 8 0 1 1 0 16 8 8 0 0 1 0-16z"/></svg>
+  </a>
+
+  <script>
+    /* ── NAVBAR SCROLL ── */
+    const nav = document.getElementById('nav');
+    addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 50), { passive: true });
+
+    /* ── SCROLL REVEAL ── */
+    const revealEls = document.querySelectorAll('.sr, .sr-l, .sr-r, .trust-item');
+    const ro = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('in'); ro.unobserve(e.target); }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -32px 0px' });
+    revealEls.forEach(el => ro.observe(el));
+
+    /* ── CATALOG DATA ── */
+    const DEFAULT_VEHICLES = [
+      { id:1, name:'Honda Civic',        version:'EXL 2.0 CVT',         year:'2022', km:'38.000', fuel:'Flex',   price:'129.900', badge:'Destaque',   img:'https://images.unsplash.com/photo-1590362891991-f776e747a588?w=640&q=80&fit=crop' },
+      { id:2, name:'Toyota Corolla',     version:'XEI 2.0 Flex CVT',    year:'2021', km:'52.000', fuel:'Flex',   price:'118.500', badge:'Financiado', img:'https://images.unsplash.com/photo-1621007947382-bb3c3994e3fb?w=640&q=80&fit=crop' },
+      { id:3, name:'Jeep Compass',       version:'Limited 2.0 TD 4x4',  year:'2022', km:'44.000', fuel:'Diesel', price:'168.000', badge:'SUV',        img:'https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=640&q=80&fit=crop' },
+      { id:4, name:'VW T-Cross',         version:'Highline 1.4 TSI',    year:'2023', km:'18.000', fuel:'Flex',   price:'142.000', badge:'Novo',       img:'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=640&q=80&fit=crop' },
+      { id:5, name:'Hyundai Creta',      version:'Platinum 1.0 Turbo',  year:'2023', km:'22.000', fuel:'Flex',   price:'138.900', badge:'Novo',       img:'https://images.unsplash.com/photo-1549317661-bd32c8ce0db2?w=640&q=80&fit=crop' },
+      { id:6, name:'Chevrolet Tracker',  version:'Premier 1.2 Turbo',   year:'2022', km:'35.000', fuel:'Flex',   price:'119.900', badge:'',           img:'https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=640&q=80&fit=crop' }
+    ];
+
+    function getVehicles() {
+      try {
+        const s = localStorage.getItem('ravcar_vehicles');
+        return s ? JSON.parse(s) : DEFAULT_VEHICLES;
+      } catch { return DEFAULT_VEHICLES; }
+    }
+
+    function renderCatalog() {
+      const vehicles = getVehicles();
+      const grid = document.getElementById('catalogGrid');
+      if (!vehicles.length) {
+        grid.innerHTML = '<div class="empty-cat"><p>Em breve novos veículos disponíveis.</p><p style="margin-top:8px">Entre em contato para consultar disponibilidade.</p></div>';
+        return;
+      }
+      grid.innerHTML = vehicles.map((v, i) => `
+        <div class="vcard sr" style="transition-delay:${(i%3)*0.11}s">
+          <div class="vcard-thumb">
+            <img src="${v.img}" alt="${v.name} ${v.year}" loading="lazy">
+            ${v.badge ? `<span class="vcard-badge">${v.badge}</span>` : ''}
+          </div>
+          <div class="vcard-body">
+            <p class="vcard-year">${v.year}</p>
+            <p class="vcard-name">${v.name}</p>
+            <p class="vcard-ver">${v.version}</p>
+            <div class="vcard-specs">
+              <span class="spec-tag">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                ${v.km} km
+              </span>
+              <span class="spec-tag">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10h18M7 10V6a2 2 0 012-2h6a2 2 0 012 2v4M5 20h14a2 2 0 002-2v-8H3v8a2 2 0 002 2z"/></svg>
+                ${v.fuel}
+              </span>
+            </div>
+            <div class="vcard-foot">
+              <span class="vcard-price"><span class="cur">R$</span>${v.price}</span>
+              <a href="https://wa.me/5521984277950?text=Olá!%20Tenho%20interesse%20no%20${encodeURIComponent(v.year+' '+v.name+' '+v.version)}" target="_blank" rel="noopener" class="btn-int">Tenho interesse</a>
+            </div>
+          </div>
+        </div>
+      `).join('');
+      document.querySelectorAll('.vcard.sr').forEach(el => ro.observe(el));
+    }
+
+    renderCatalog();
+  </script>
+</body>
+</html>
