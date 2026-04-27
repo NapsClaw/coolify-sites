@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Igreja do Evangelho Quadrangular — Culto, Comunhão e Missão</title>
+  <meta name="description" content="Igreja do Evangelho Quadrangular — Uma comunidade de fé, esperança e amor. Venha fazer parte de nossa família. Cultos todas as semanas.">
+  <meta property="og:title" content="Igreja do Evangelho Quadrangular">
+  <meta property="og:description" content="Uma comunidade de fé, esperança e amor. Cultos todas as semanas.">
+  <meta property="og:type" content="website">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect x='44' y='10' width='12' height='80' fill='%23D4A853'/><rect x='20' y='28' width='60' height='12' fill='%23D4A853'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --primary: #0D1B3E;
+      --primary-mid: #142348;
+      --primary-light: #1E3060;
+      --accent: #D4A853;
+      --accent-light: #E8C87A;
+      --accent-glow: rgba(212,168,83,0.15);
+      --cream: #F5ECD7;
+      --cream-muted: #D9CCBA;
+      --text: #F0E8D8;
+      --text-muted: #9E8F7B;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--primary);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ===== TYPOGRAPHY ===== */
+    .font-display { font-family: 'Cormorant Garamond', serif; }
+
+    /* ===== NAVBAR ===== */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.4s ease, padding 0.4s ease;
+    }
+    nav.scrolled {
+      background: rgba(13, 27, 62, 0.95);
+      backdrop-filter: blur(12px);
+      padding: 14px 24px;
+      border-bottom: 1px solid rgba(212,168,83,0.15);
+    }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+      line-height: 1.2;
+    }
+    .nav-logo span { display: block; font-size: 11px; font-weight: 300; color: var(--cream-muted); letter-spacing: 0.15em; text-transform: uppercase; font-family: 'DM Sans', sans-serif; }
+    .nav-links { display: none; }
+    @media (min-width: 768px) {
+      .nav-links { display: flex; gap: 32px; }
+      .nav-links a { font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cream-muted); text-decoration: none; transition: color 0.3s; }
+      .nav-links a:hover { color: var(--accent); }
+    }
+
+    /* ===== HERO ===== */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(212,168,83,0.12) 0%, transparent 65%),
+                  radial-gradient(ellipse 40% 40% at 50% 0%, rgba(212,168,83,0.06) 0%, transparent 60%),
+                  linear-gradient(180deg, #060D1F 0%, #0D1B3E 40%, #0A1530 100%);
+    }
+
+    /* Light rays */
+    .ray {
+      position: absolute;
+      top: -10%;
+      left: 50%;
+      width: 2px;
+      height: 110vh;
+      transform-origin: top center;
+      background: linear-gradient(to bottom, rgba(212,168,83,0.4), transparent);
+      opacity: 0;
+      animation: rayReveal 2s ease forwards;
+    }
+    .ray:nth-child(1)  { transform: translateX(-50%) rotate(-25deg); animation-delay: 0.3s; }
+    .ray:nth-child(2)  { transform: translateX(-50%) rotate(-15deg); animation-delay: 0.5s; width: 3px; }
+    .ray:nth-child(3)  { transform: translateX(-50%) rotate(-6deg);  animation-delay: 0.4s; }
+    .ray:nth-child(4)  { transform: translateX(-50%) rotate(0deg);   animation-delay: 0.2s; width: 4px; background: linear-gradient(to bottom, rgba(212,168,83,0.6), transparent); }
+    .ray:nth-child(5)  { transform: translateX(-50%) rotate(6deg);   animation-delay: 0.4s; }
+    .ray:nth-child(6)  { transform: translateX(-50%) rotate(15deg);  animation-delay: 0.5s; width: 3px; }
+    .ray:nth-child(7)  { transform: translateX(-50%) rotate(25deg);  animation-delay: 0.3s; }
+    @keyframes rayReveal { to { opacity: 1; } }
+
+    /* Cross */
+    .hero-cross {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -70%);
+      opacity: 0;
+      animation: crossReveal 1.2s ease 0.6s forwards;
+    }
+    @keyframes crossReveal { to { opacity: 0.06; } }
+    .hero-cross svg { width: 220px; height: 220px; }
+    @media (min-width: 768px) { .hero-cross svg { width: 340px; height: 340px; } }
+
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 0 24px;
+      max-width: 700px;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+      opacity: 0;
+      transform: translateY(12px);
+      animation: slideUp 0.8s ease 0.8s forwards;
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(42px, 10vw, 84px);
+      font-weight: 700;
+      line-height: 1.0;
+      color: var(--cream);
+      margin-bottom: 8px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: slideUp 1s ease 0.95s forwards;
+    }
+    .hero-title .accent { color: var(--accent); }
+
+    .hero-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(18px, 4vw, 28px);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--accent-light);
+      margin-bottom: 32px;
+      opacity: 0;
+      transform: translateY(12px);
+      animation: slideUp 0.8s ease 1.15s forwards;
+    }
+
+    .hero-tagline {
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--cream-muted);
+      line-height: 1.7;
+      margin-bottom: 44px;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: slideUp 0.8s ease 1.3s forwards;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--accent);
+      color: var(--primary);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 16px 36px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      opacity: 0;
+      transform: translateY(10px);
+      animation: slideUp 0.8s ease 1.5s forwards;
+    }
+    .hero-cta:hover { background: var(--accent-light); transform: translateY(-2px); box-shadow: 0 12px 32px rgba(212,168,83,0.3); }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      animation: fadeIn 1s ease 2s forwards;
+    }
+    .hero-scroll span { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); }
+    .scroll-line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--accent), transparent); animation: scrollPulse 1.5s ease infinite; }
+    @keyframes scrollPulse { 0%,100% { opacity: 0.4; } 50% { opacity: 1; } }
+
+    @keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { to { opacity: 1; } }
+
+    /* ===== DIVIDER ===== */
+    .divider {
+      width: 60px;
+      height: 2px;
+      background: linear-gradient(to right, transparent, var(--accent), transparent);
+      margin: 0 auto 24px;
+    }
+
+    /* ===== SECTION SHARED ===== */
+    section { padding: 80px 24px; }
+    @media (min-width: 768px) { section { padding: 120px 48px; } }
+    @media (min-width: 1024px) { section { padding: 140px 80px; } }
+
+    .section-label {
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(34px, 6vw, 64px);
+      font-weight: 700;
+      line-height: 1.05;
+      color: var(--cream);
+      margin-bottom: 20px;
+    }
+    .section-body {
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--cream-muted);
+      max-width: 560px;
+    }
+
+    /* ===== SOBRE ===== */
+    #sobre {
+      background: var(--primary-mid);
+      position: relative;
+      overflow: hidden;
+    }
+    #sobre::before {
+      content: '';
+      position: absolute;
+      top: -100px;
+      right: -100px;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(212,168,83,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .sobre-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    @media (min-width: 768px) { .sobre-grid { grid-template-columns: 1fr 1fr; gap: 80px; } }
+
+    .sobre-visual {
+      position: relative;
+    }
+    .sobre-cross-large {
+      width: 100%;
+      max-width: 280px;
+      margin: 0 auto;
+      display: block;
+    }
+    .sobre-verse {
+      margin-top: 32px;
+      padding: 24px;
+      border-left: 2px solid var(--accent);
+      background: rgba(212,168,83,0.05);
+    }
+    .sobre-verse p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-style: italic;
+      color: var(--accent-light);
+      line-height: 1.5;
+      margin-bottom: 8px;
+    }
+    .sobre-verse cite { font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); }
+
+    .pilares {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 40px;
+    }
+    .pilar {
+      padding: 20px;
+      border: 1px solid rgba(212,168,83,0.15);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .pilar::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(212,168,83,0.05), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .pilar:hover { border-color: rgba(212,168,83,0.4); transform: translateY(-2px); }
+    .pilar:hover::before { opacity: 1; }
+    .pilar-icon { margin-bottom: 10px; }
+    .pilar h4 { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: var(--accent); margin-bottom: 4px; }
+    .pilar p { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+
+    /* ===== PROGRAMAÇÃO ===== */
+    #programacao {
+      background: var(--primary);
+      position: relative;
+    }
+    #programacao::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(212,168,83,0.3), transparent);
+    }
+
+    .prog-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    .prog-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    @media (min-width: 640px) { .prog-grid { grid-template-columns: 1fr 1fr; } }
+    @media (min-width: 1024px) { .prog-grid { grid-template-columns: repeat(3, 1fr); } }
+
+    .prog-card {
+      position: relative;
+      padding: 28px 24px;
+      border: 1px solid rgba(212,168,83,0.12);
+      background: rgba(255,255,255,0.02);
+      transition: all 0.35s ease;
+      cursor: default;
+      overflow: hidden;
+    }
+    .prog-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transition: transform 0.35s ease;
+    }
+    .prog-card:hover {
+      background: rgba(212,168,83,0.05);
+      border-color: rgba(212,168,83,0.3);
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+    .prog-card:hover::after { transform: scaleX(1); }
+
+    .prog-card.destaque {
+      background: rgba(212,168,83,0.08);
+      border-color: rgba(212,168,83,0.3);
+    }
+
+    .prog-dia {
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+    .prog-nome {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      font-weight: 600;
+      color: var(--cream);
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+    .prog-hora {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .prog-hora-dot {
+      width: 5px;
+      height: 5px;
+      background: var(--accent);
+      border-radius: 50%;
+    }
+    .prog-tag {
+      display: inline-block;
+      margin-top: 14px;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border: 1px solid rgba(212,168,83,0.3);
+      color: var(--accent);
+    }
+
+    /* ===== MINISTERIOS ===== */
+    #ministerios {
+      background: linear-gradient(180deg, var(--primary-mid) 0%, #0A1325 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    #ministerios::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(212,168,83,0.04) 0%, transparent 70%);
+    }
+
+    .min-content {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .min-top {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 48px;
+      margin-bottom: 64px;
+    }
+    @media (min-width: 768px) { .min-top { grid-template-columns: 1fr 1fr; align-items: end; } }
+
+    .min-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-top: 32px;
+    }
+    .min-item {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      padding: 20px;
+      border-left: 1px solid rgba(212,168,83,0.15);
+      transition: all 0.3s ease;
+    }
+    .min-item:hover { border-left-color: var(--accent); background: rgba(212,168,83,0.03); }
+    .min-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 42px;
+      font-weight: 700;
+      color: rgba(212,168,83,0.2);
+      line-height: 1;
+      min-width: 48px;
+      transition: color 0.3s;
+    }
+    .min-item:hover .min-num { color: rgba(212,168,83,0.5); }
+    .min-info h4 { font-family: 'Cormorant Garamond', serif; font-size: 22px; font-weight: 600; color: var(--cream); margin-bottom: 4px; }
+    .min-info p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+
+    /* ===== VERSÍCULO FULL ===== */
+    #versiculo {
+      background: #060D1F;
+      text-align: center;
+      padding: 80px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    #versiculo::before {
+      content: '"';
+      position: absolute;
+      top: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 240px;
+      color: rgba(212,168,83,0.04);
+      line-height: 1;
+      pointer-events: none;
+    }
+    .verso-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(24px, 4.5vw, 42px);
+      font-style: italic;
+      font-weight: 300;
+      color: var(--cream);
+      line-height: 1.5;
+      max-width: 800px;
+      margin: 0 auto 20px;
+      position: relative;
+    }
+    .verso-ref {
+      font-size: 13px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    /* ===== CONTATO ===== */
+    #contato {
+      background: #08112A;
+      position: relative;
+      overflow: hidden;
+    }
+    #contato::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(212,168,83,0.4), transparent);
+    }
+
+    .contato-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 60px;
+    }
+    @media (min-width: 768px) { .contato-grid { grid-template-columns: 1fr 1fr; align-items: start; gap: 80px; } }
+
+    .horarios-list {
+      margin-top: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .horario-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+      border-bottom: 1px solid rgba(212,168,83,0.08);
+    }
+    .horario-row:last-child { border-bottom: none; }
+    .horario-dia { font-size: 13px; color: var(--cream-muted); }
+    .horario-hora { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: var(--accent); }
+
+    .contato-card {
+      padding: 40px;
+      border: 1px solid rgba(212,168,83,0.15);
+      background: rgba(212,168,83,0.03);
+    }
+    .contato-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px;
+      font-weight: 600;
+      color: var(--cream);
+      margin-bottom: 8px;
+    }
+    .contato-card p { font-size: 15px; color: var(--text-muted); line-height: 1.7; margin-bottom: 32px; }
+    .btn-visitar {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 14px 28px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    .btn-visitar:hover { background: var(--accent); color: var(--primary); }
+
+    .social-links {
+      display: flex;
+      gap: 16px;
+      margin-top: 32px;
+    }
+    .social-link {
+      width: 44px;
+      height: 44px;
+      border: 1px solid rgba(212,168,83,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      transition: all 0.3s;
+      text-decoration: none;
+    }
+    .social-link:hover { background: var(--accent); color: var(--primary); border-color: var(--accent); }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: #040B1A;
+      padding: 32px 24px;
+      text-align: center;
+      border-top: 1px solid rgba(212,168,83,0.08);
+    }
+    footer p { font-size: 12px; color: var(--text-muted); letter-spacing: 0.05em; }
+    footer .cross-sep { color: var(--accent); margin: 0 8px; }
+
+    /* ===== WHATSAPP FLOAT ===== */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 28px;
+      right: 24px;
+      z-index: 999;
+      width: 60px;
+      height: 60px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+      animation: waPulse 2.5s ease infinite;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .whatsapp-float:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 28px rgba(37,211,102,0.5);
+      animation: none;
+    }
+    @keyframes waPulse {
+      0%,100% { box-shadow: 0 4px 20px rgba(37,211,102,0.4); }
+      50% { box-shadow: 0 4px 28px rgba(37,211,102,0.6), 0 0 0 8px rgba(37,211,102,0.08); }
+    }
+
+    /* ===== SCROLL REVEAL ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ===== NOISE OVERLAY ===== */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-size: 256px 256px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav id="navbar">
+    <div class="nav-logo">
+      Igreja do Evangelho
+      <span>Quadrangular</span>
+    </div>
+    <div class="nav-links">
+      <a href="#sobre">Sobre</a>
+      <a href="#programacao">Programação</a>
+      <a href="#ministerios">Ministérios</a>
+      <a href="#contato">Contato</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg">
+      <div class="ray"></div>
+      <div class="ray"></div>
+      <div class="ray"></div>
+      <div class="ray"></div>
+      <div class="ray"></div>
+      <div class="ray"></div>
+      <div class="ray"></div>
+    </div>
+    <div class="hero-cross">
+      <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="88" y="20" width="24" height="160" fill="white"/>
+        <rect x="30" y="60" width="140" height="24" fill="white"/>
+      </svg>
+    </div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Bem-vindo à</p>
+      <h1 class="hero-title">Igreja do<br><span class="accent">Evangelho</span></h1>
+      <p class="hero-subtitle">Quadrangular</p>
+      <p class="hero-tagline">Uma comunidade de fé, esperança e amor.<br>Onde vidas são transformadas pela graça de Deus.</p>
+      <a href="#programacao" class="hero-cta">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Ver Programação
+      </a>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- SOBRE -->
+  <section id="sobre">
+    <div class="sobre-grid">
+      <div class="sobre-visual reveal">
+        <svg class="sobre-cross-large" viewBox="0 0 280 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="glow" cx="50%" cy="35%" r="50%">
+              <stop offset="0%" stop-color="#D4A853" stop-opacity="0.3"/>
+              <stop offset="100%" stop-color="#D4A853" stop-opacity="0"/>
+            </radialGradient>
+          </defs>
+          <ellipse cx="140" cy="100" rx="120" ry="100" fill="url(#glow)"/>
+          <rect x="124" y="40" width="32" height="240" rx="2" fill="#D4A853" opacity="0.15"/>
+          <rect x="60" y="100" width="160" height="32" rx="2" fill="#D4A853" opacity="0.15"/>
+          <rect x="130" y="46" width="20" height="228" rx="1" fill="#D4A853" opacity="0.5"/>
+          <rect x="66" y="106" width="148" height="20" rx="1" fill="#D4A853" opacity="0.5"/>
+          <rect x="136" y="52" width="8" height="216" rx="1" fill="#D4A853"/>
+          <rect x="72" y="112" width="136" height="8" rx="1" fill="#D4A853"/>
+        </svg>
+        <div class="sobre-verse">
+          <p>"Porque Deus amou o mundo de tal maneira que deu o seu Filho Unigênito."</p>
+          <cite>João 3:16</cite>
+        </div>
+      </div>
+      <div>
+        <p class="section-label reveal">Nossa história</p>
+        <h2 class="section-title reveal reveal-delay-1">Uma Igreja<br>Viva e Ativa</h2>
+        <p class="section-body reveal reveal-delay-2">A Igreja do Evangelho Quadrangular é uma comunidade de fé comprometida com o ensino da Palavra, a adoração genuína, e o cuidado com cada pessoa. Nossa missão é alcançar vidas com o amor de Cristo e edificar discípulos que transformem sua comunidade.</p>
+        <div class="pilares reveal reveal-delay-3">
+          <div class="pilar">
+            <div class="pilar-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D4A853" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <h4>Fé</h4>
+            <p>Fundamentados na Palavra de Deus</p>
+          </div>
+          <div class="pilar">
+            <div class="pilar-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D4A853" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            </div>
+            <h4>Amor</h4>
+            <p>Servindo com o coração de Cristo</p>
+          </div>
+          <div class="pilar">
+            <div class="pilar-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D4A853" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            </div>
+            <h4>Missão</h4>
+            <p>Alcançando o mundo para Deus</p>
+          </div>
+          <div class="pilar">
+            <div class="pilar-icon">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D4A853" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <h4>Comunidade</h4>
+            <p>Unidos em família e propósito</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGRAMAÇÃO -->
+  <section id="programacao">
+    <div class="prog-header">
+      <p class="section-label reveal">Semanalmente</p>
+      <h2 class="section-title reveal reveal-delay-1" style="text-align:center;">Nossa Programação</h2>
+      <div class="divider reveal reveal-delay-2"></div>
+      <p class="section-body reveal reveal-delay-3" style="margin:0 auto;text-align:center;">Venha participar dos nossos cultos e encontros semanais.<br>Todos são bem-vindos à casa do Senhor.</p>
+    </div>
+    <div class="prog-grid">
+
+      <div class="prog-card reveal reveal-delay-1">
+        <p class="prog-dia">Segunda-feira</p>
+        <h3 class="prog-nome">Culto no Lar</h3>
+        <div class="prog-hora">
+          <span class="prog-hora-dot"></span>
+          <span>19h30</span>
+        </div>
+        <span class="prog-tag">Comunidade</span>
+      </div>
+
+      <div class="prog-card reveal reveal-delay-2">
+        <p class="prog-dia">Terça-feira</p>
+        <h3 class="prog-nome">Escola Bíblica<br><span style="font-size:20px;color:var(--text-muted)">Cola Bíblica</span></h3>
+        <div class="prog-hora">
+          <span class="prog-hora-dot"></span>
+          <span>19h30</span>
+        </div>
+        <span class="prog-tag">Ensino</span>
+      </div>
+
+      <div class="prog-card reveal reveal-delay-3">
+        <p class="prog-dia">Quarta-feira</p>
+        <h3 class="prog-nome">Culto do<br>Coração</h3>
+        <div class="prog-hora">
+          <span class="prog-hora-dot"></span>
+          <span>19h30</span>
+        </div>
+        <span class="prog-tag">Adoração</span>
+      </div>
+
+      <div class="prog-card reveal reveal-delay-1">
+        <p class="prog-dia">Quinta-feira</p>
+        <h3 class="prog-nome">Grupos<br>Missionários</h3>
+        <div class="prog-hora">
+          <span class="prog-hora-dot"></span>
+          <span>19h30</span>
+        </div>
+        <span class="prog-tag">Missão</span>
+      </div>
+
+      <div class="prog-card destaque reveal reveal-delay-2">
+        <p class="prog-dia">Sexta-feira</p>
+        <h3 class="prog-nome">Culto de<br>Libertação</h3>
+        <div class="prog-hora">
+          <span class="prog-hora-dot"></span>
+          <span>19h30</span>
+        </div>
+        <span class="prog-tag">Libertação</span>
+      </div>
+
+      <div class="prog-card reveal reveal-delay-3">
+        <p class="prog-dia">1º Domingo</p>
+        <h3 class="prog-nome">Culto da<br>Família</h3>
+        <div class="prog-hora">
+          <span class="prog-hora-dot"></span>
+          <span>19h00</span>
+        </div>
+        <span class="prog-tag">Família</span>
+      </div>
+
+      <div class="prog-card reveal reveal-delay-1">
+        <p class="prog-dia">2º Domingo</p>
+        <h3 class="prog-nome">Santa Ceia</h3>
+        <div class="prog-hora">
+          <span class="prog-hora-dot"></span>
+          <span>19h00</span>
+        </div>
+        <span class="prog-tag">Comunhão</span>
+      </div>
+
+      <div class="prog-card reveal reveal-delay-2">
+        <p class="prog-dia">3º Domingo</p>
+        <h3 class="prog-nome">Culto de<br>Missão</h3>
+        <div class="prog-hora">
+          <span class="prog-hora-dot"></span>
+          <span>19h00</span>
+        </div>
+        <span class="prog-tag">Missão</span>
+      </div>
+
+      <div class="prog-card reveal reveal-delay-3">
+        <p class="prog-dia">4º Domingo</p>
+        <h3 class="prog-nome">Culto<br>Geral</h3>
+        <div class="prog-hora">
+          <span class="prog-hora-dot"></span>
+          <span>19h00</span>
+        </div>
+        <span class="prog-tag">Comunidade</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- VERSÍCULO DESTAQUE -->
+  <section id="versiculo">
+    <div class="divider reveal" style="margin-bottom:40px;"></div>
+    <p class="verso-text reveal reveal-delay-1">
+      "O Espírito do Senhor está sobre mim, porque ele me ungiu para anunciar boas novas aos pobres."
+    </p>
+    <p class="verso-ref reveal reveal-delay-2">Lucas 4:18</p>
+  </section>
+
+  <!-- MINISTÉRIOS -->
+  <section id="ministerios">
+    <div class="min-content">
+      <div class="min-top">
+        <div>
+          <p class="section-label reveal">Áreas de atuação</p>
+          <h2 class="section-title reveal reveal-delay-1">Nossos<br>Ministérios</h2>
+        </div>
+        <p class="section-body reveal reveal-delay-2" style="align-self:end;">Cada ministério é um chamado — um espaço onde talentos e vocações se encontram para servir ao Senhor e edificar o povo de Deus.</p>
+      </div>
+      <div class="min-list">
+        <div class="min-item reveal reveal-delay-1">
+          <span class="min-num">01</span>
+          <div class="min-info">
+            <h4>Escola Bíblica</h4>
+            <p>Ensino sólido da Palavra de Deus para crescimento e discipulado. Encontros às terças-feiras.</p>
+          </div>
+        </div>
+        <div class="min-item reveal reveal-delay-2">
+          <span class="min-num">02</span>
+          <div class="min-info">
+            <h4>Ministério Missionário</h4>
+            <p>Grupos dedicados ao chamado missionário, planejamento e execução de ações evangelísticas. Reúne-se às quintas.</p>
+          </div>
+        </div>
+        <div class="min-item reveal reveal-delay-3">
+          <span class="min-num">03</span>
+          <div class="min-info">
+            <h4>Culto no Lar</h4>
+            <p>Células de comunhão e oração que acontecem nas casas dos membros, fortalecendo laços e fé. Às segundas-feiras.</p>
+          </div>
+        </div>
+        <div class="min-item reveal reveal-delay-1">
+          <span class="min-num">04</span>
+          <div class="min-info">
+            <h4>Ministério de Libertação</h4>
+            <p>Encontros de oração e cura espiritual onde vidas são restauradas pelo poder do Espírito Santo. Às sextas-feiras.</p>
+          </div>
+        </div>
+        <div class="min-item reveal reveal-delay-2">
+          <span class="min-num">05</span>
+          <div class="min-info">
+            <h4>Culto da Família</h4>
+            <p>Momento especial dedicado às famílias — celebração, ensinamento e fortalecer os laços familiares. Primeiro domingo do mês.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTATO -->
+  <section id="contato">
+    <div class="contato-grid">
+      <div>
+        <p class="section-label reveal">Venha nos visitar</p>
+        <h2 class="section-title reveal reveal-delay-1">Faça Parte<br>da Família</h2>
+        <p class="section-body reveal reveal-delay-2">Independente de onde você está na vida, há um lugar para você aqui. Nossas portas estão abertas e nosso coração também.</p>
+        <div class="horarios-list reveal reveal-delay-3">
+          <div class="horario-row">
+            <span class="horario-dia">Segunda — Culto no Lar</span>
+            <span class="horario-hora">19h30</span>
+          </div>
+          <div class="horario-row">
+            <span class="horario-dia">Terça — Escola Bíblica</span>
+            <span class="horario-hora">19h30</span>
+          </div>
+          <div class="horario-row">
+            <span class="horario-dia">Quarta — Culto do Coração</span>
+            <span class="horario-hora">19h30</span>
+          </div>
+          <div class="horario-row">
+            <span class="horario-dia">Quinta — Grupos Missionários</span>
+            <span class="horario-hora">19h30</span>
+          </div>
+          <div class="horario-row">
+            <span class="horario-dia">Sexta — Culto de Libertação</span>
+            <span class="horario-hora">19h30</span>
+          </div>
+          <div class="horario-row">
+            <span class="horario-dia">Domingo — Culto</span>
+            <span class="horario-hora">19h00</span>
+          </div>
+        </div>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <div class="contato-card">
+          <h3>Entre em Contato</h3>
+          <p>Quer saber mais sobre nossa igreja, ou tirar uma dúvida? Fale com a gente — será um prazer!</p>
+          <a href="https://wa.me" class="btn-visitar" target="_blank">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            Falar no WhatsApp
+          </a>
+          <div style="margin-top:32px;padding-top:32px;border-top:1px solid rgba(212,168,83,0.1)">
+            <p style="font-size:12px;letter-spacing:0.15em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;">Horários de Culto</p>
+            <p style="font-size:14px;color:var(--text-muted);line-height:1.8;">
+              Dias de semana: 19h30<br>
+              Domingos: 19h00
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>
+      <svg width="12" height="14" viewBox="0 0 100 120" fill="none" style="display:inline;vertical-align:middle;margin-right:8px"><rect x="44" y="10" width="12" height="100" fill="#D4A853"/><rect x="20" y="35" width="60" height="12" fill="#D4A853"/></svg>
+      Igreja do Evangelho Quadrangular
+      <span class="cross-sep">·</span>
+      Todos os direitos reservados
+    </p>
+  </footer>
+
+  <!-- WHATSAPP FLOAT -->
+  <a href="https://wa.me" class="whatsapp-float" target="_blank" rel="noopener" aria-label="Fale conosco no WhatsApp">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+  <script>
+    // Navbar scroll
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
