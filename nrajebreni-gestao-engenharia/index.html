@@ -9,30 +9,33 @@
   <meta property="og:description" content="Desenvolvemos projetos de estruturas, fundação, reformas e licitações para licitantes em todo o Brasil.">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="pt_BR">
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='8' fill='%230E2240'/><rect x='20' y='45' width='60' height='8' rx='2' fill='%23C9A84C'/><rect x='20' y='30' width='40' height='8' rx='2' fill='%23C9A84C'/><rect x='20' y='60' width='50' height='8' rx='2' fill='%23C9A84C'/></svg>">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='8' fill='%23F8FCFA'/><rect x='10' y='78' width='80' height='8' rx='1' fill='%23C9A84C'/><text x='50' y='68' text-anchor='middle' font-family='serif' font-size='48' font-weight='700' fill='%232A5240'>N</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,600;12..96,800;12..96,900&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&display=swap" rel="stylesheet">
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --dark:    #0C1520;
-      --navy:    #0E2240;
-      --navy-md: #132D54;
-      --accent:  #C9A84C;
-      --accent2: #E8C46A;
-      --bg:      #EFECE5;
-      --bg-warm: #F7F5F0;
-      --text:    #111418;
-      --muted:   #6B7280;
-      --border:  rgba(201,168,76,0.25);
+      --green:      #2A5240;
+      --green-mid:  #3D6B55;
+      --green-light:#5A8A70;
+      --gold:       #C9A84C;
+      --gold-light: #D9BB6B;
+      --gold-pale:  #EDD98A;
+      --bg:         #F8FCFA;
+      --bg-alt:     #F0F7F3;
+      --bg-mint:    #E8F5EE;
+      --text:       #1A2E26;
+      --muted:      #6B8C7A;
+      --border:     rgba(42,82,64,0.12);
+      --border-gold:rgba(201,168,76,0.3);
     }
 
     html { scroll-behavior: smooth; }
     body {
-      font-family: 'IBM Plex Sans', sans-serif;
+      font-family: 'DM Sans', sans-serif;
       background: var(--bg);
       color: var(--text);
       overflow-x: hidden;
@@ -40,364 +43,409 @@
       line-height: 1.6;
     }
 
+    /* ─── WATERCOLOR BG TEXTURE ─── */
+    .watercolor-bg {
+      position: relative;
+    }
+    .watercolor-bg::after {
+      content: '';
+      position: absolute; inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 70% 50% at 80% 20%, rgba(168,210,190,0.18) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 60% at 20% 70%, rgba(168,210,190,0.12) 0%, transparent 55%),
+        radial-gradient(ellipse 40% 30% at 60% 80%, rgba(201,168,76,0.06) 0%, transparent 50%);
+      z-index: 0;
+    }
+
     /* ─── NAV ─── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 20px 40px;
-      background: transparent;
-      transition: background 0.4s ease, backdrop-filter 0.4s ease;
+      padding: 20px 48px;
+      background: rgba(248,252,250,0.9);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s, box-shadow 0.3s;
     }
     nav.scrolled {
-      background: rgba(12,21,32,0.94);
-      backdrop-filter: blur(16px);
+      border-color: var(--border);
+      box-shadow: 0 2px 24px rgba(42,82,64,0.06);
     }
     .nav-logo {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-weight: 800;
-      font-size: 14px;
-      letter-spacing: 0.18em;
-      color: #fff;
-      text-transform: uppercase;
+      display: flex; align-items: center; gap: 12px;
       text-decoration: none;
     }
-    .nav-logo span { color: var(--accent); }
+    .nav-logo-mark {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700; font-size: 22px;
+      color: var(--green);
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+    .nav-logo-mark span { color: var(--gold); }
+    .nav-logo-text {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 9px; font-weight: 500;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--muted);
+      border-left: 1px solid var(--border);
+      padding-left: 12px;
+      line-height: 1.3;
+    }
     .nav-links {
-      display: flex; gap: 36px; list-style: none;
+      display: flex; gap: 40px; list-style: none;
     }
     .nav-links a {
-      font-size: 12px; font-weight: 500;
-      letter-spacing: 0.12em; text-transform: uppercase;
-      color: rgba(255,255,255,0.7);
+      font-size: 12px; font-weight: 400;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--muted);
       text-decoration: none;
       transition: color 0.2s;
     }
-    .nav-links a:hover { color: var(--accent); }
+    .nav-links a:hover { color: var(--green); }
     .nav-cta {
-      font-size: 11px; font-weight: 600; letter-spacing: 0.14em;
+      font-size: 11px; font-weight: 500; letter-spacing: 0.12em;
       text-transform: uppercase; text-decoration: none;
-      color: var(--dark); background: var(--accent);
-      padding: 10px 22px; border-radius: 2px;
+      color: #fff; background: var(--green);
+      padding: 11px 24px; border-radius: 2px;
       transition: background 0.2s, transform 0.15s;
     }
-    .nav-cta:hover { background: var(--accent2); transform: translateY(-1px); }
+    .nav-cta:hover { background: var(--green-mid); transform: translateY(-1px); }
 
     @media (max-width: 768px) {
       nav { padding: 16px 24px; }
       .nav-links, .nav-cta { display: none; }
+      .nav-logo-text { display: none; }
     }
 
     /* ─── HERO ─── */
     #hero {
       min-height: 100vh;
-      background: var(--dark);
+      background: var(--bg);
       position: relative;
-      display: flex; flex-direction: column; justify-content: flex-end;
-      padding: 0 40px 80px;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 120px 48px 80px;
       overflow: hidden;
     }
-
-    /* Blueprint grid */
+    /* Watercolor wash */
     #hero::before {
       content: '';
       position: absolute; inset: 0;
-      background-image:
-        linear-gradient(rgba(201,168,76,0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(201,168,76,0.05) 1px, transparent 1px);
-      background-size: 60px 60px;
-      z-index: 1;
+      background:
+        radial-gradient(ellipse 80% 70% at 75% 30%, rgba(168,215,190,0.22) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 15% 75%, rgba(168,215,190,0.14) 0%, transparent 55%),
+        radial-gradient(ellipse 45% 35% at 55% 85%, rgba(201,168,76,0.07) 0%, transparent 50%),
+        radial-gradient(ellipse 30% 40% at 85% 65%, rgba(168,215,190,0.10) 0%, transparent 45%);
+      z-index: 0;
     }
-    /* Diagonal gold stripe */
+    /* Gold horizontal line at bottom */
     #hero::after {
       content: '';
-      position: absolute;
-      top: -20%; right: -5%;
-      width: 45vw; height: 140%;
-      background: linear-gradient(135deg, rgba(14,34,64,0.6) 0%, rgba(201,168,76,0.08) 100%);
-      clip-path: polygon(15% 0%, 100% 0%, 85% 100%, 0% 100%);
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
       z-index: 1;
     }
 
-    .hero-eyebrow {
+    .hero-inner {
       position: relative; z-index: 2;
-      font-size: 11px; font-weight: 500; letter-spacing: 0.22em;
-      text-transform: uppercase; color: var(--accent);
+      max-width: 1200px; margin: 0 auto; width: 100%;
+      display: grid; grid-template-columns: 1fr 420px; gap: 80px; align-items: center;
+    }
+
+    .hero-eyebrow {
+      font-size: 11px; font-weight: 500; letter-spacing: 0.24em;
+      text-transform: uppercase; color: var(--gold);
       margin-bottom: 28px;
-      opacity: 0; transform: translateY(20px);
+      opacity: 0; transform: translateY(16px);
       animation: fadeUp 0.7s ease 0.2s forwards;
       display: flex; align-items: center; gap: 14px;
     }
     .hero-eyebrow::before {
       content: '';
-      display: inline-block; width: 40px; height: 1px;
-      background: var(--accent);
+      display: inline-block; width: 36px; height: 1px;
+      background: var(--gold);
     }
 
     .hero-title {
-      position: relative; z-index: 2;
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-weight: 900;
-      line-height: 0.88;
-      letter-spacing: -0.03em;
-      color: #fff;
-      margin-bottom: 36px;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      line-height: 1.0;
+      letter-spacing: -0.01em;
+      color: var(--green);
+      margin-bottom: 32px;
     }
     .hero-title .line1 {
       display: block;
-      font-size: clamp(52px, 9vw, 130px);
-      opacity: 0; transform: translateY(40px);
-      animation: fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) 0.35s forwards;
+      font-size: clamp(48px, 7vw, 104px);
+      font-weight: 700;
+      opacity: 0; transform: translateY(32px);
+      animation: fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 0.3s forwards;
+      letter-spacing: -0.02em;
     }
     .hero-title .line2 {
       display: block;
-      font-size: clamp(28px, 4.5vw, 68px);
-      color: var(--accent);
-      font-weight: 300;
-      letter-spacing: 0.06em;
-      margin-top: 12px;
-      opacity: 0; transform: translateY(40px);
-      animation: fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) 0.5s forwards;
+      font-size: clamp(22px, 3vw, 42px);
+      font-weight: 400;
+      color: var(--green-light);
+      font-style: italic;
+      letter-spacing: 0.01em;
+      margin-top: 8px;
+      opacity: 0; transform: translateY(32px);
+      animation: fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 0.45s forwards;
     }
     .hero-title .line3 {
       display: block;
-      font-size: clamp(40px, 6.5vw, 96px);
-      opacity: 0; transform: translateY(40px);
-      animation: fadeUp 0.8s cubic-bezier(0.22,1,0.36,1) 0.65s forwards;
+      font-size: clamp(32px, 4.5vw, 68px);
+      font-weight: 700;
+      color: var(--text);
+      margin-top: 4px;
+      opacity: 0; transform: translateY(32px);
+      animation: fadeUp 0.9s cubic-bezier(0.22,1,0.36,1) 0.58s forwards;
     }
 
-    .hero-bottom {
-      position: relative; z-index: 2;
-      display: flex; align-items: flex-end; justify-content: space-between;
-      gap: 32px;
-      opacity: 0; transform: translateY(20px);
-      animation: fadeUp 0.7s ease 0.9s forwards;
-    }
     .hero-tagline {
-      font-size: clamp(15px, 1.8vw, 18px);
-      color: rgba(255,255,255,0.65);
+      font-size: clamp(15px, 1.6vw, 17px);
+      color: var(--muted);
       font-weight: 300;
-      max-width: 420px;
-      line-height: 1.65;
-      font-style: italic;
+      max-width: 480px;
+      line-height: 1.75;
+      margin-bottom: 40px;
+      opacity: 0; transform: translateY(16px);
+      animation: fadeUp 0.7s ease 0.8s forwards;
     }
-    .hero-services {
-      display: flex; flex-direction: column; gap: 6px;
-      text-align: right;
+
+    .hero-cta-group {
+      display: flex; gap: 16px; align-items: center;
+      opacity: 0; transform: translateY(16px);
+      animation: fadeUp 0.7s ease 0.95s forwards;
     }
-    .hero-service-tag {
-      font-size: 10px; font-weight: 600; letter-spacing: 0.18em;
-      text-transform: uppercase; color: rgba(255,255,255,0.45);
-      padding: 4px 10px;
-      border: 1px solid rgba(201,168,76,0.2);
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 15px 32px;
+      background: var(--green); color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px; font-weight: 500; letter-spacing: 0.14em;
+      text-transform: uppercase; text-decoration: none;
+      border-radius: 2px;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: var(--green-mid); transform: translateY(-1px); }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 12px; font-weight: 400; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--green);
+      text-decoration: none;
+      padding-bottom: 2px;
+      border-bottom: 1px solid var(--gold);
+      transition: color 0.2s;
+    }
+    .btn-secondary:hover { color: var(--gold); }
+
+    .hero-right {
+      opacity: 0; transform: translateX(24px);
+      animation: fadeRight 0.9s cubic-bezier(0.22,1,0.36,1) 0.7s forwards;
+    }
+    .hero-logo-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 48px 40px;
+      text-align: center;
+      box-shadow: 0 8px 48px rgba(42,82,64,0.08), 0 2px 8px rgba(42,82,64,0.04);
+      position: relative; overflow: hidden;
+    }
+    .hero-logo-card::before {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 5px;
+      background: linear-gradient(to right, var(--gold), var(--gold-pale), var(--gold));
+    }
+    .hero-logo-img {
+      width: 100%; max-width: 280px;
+      height: auto; display: block; margin: 0 auto 24px;
+    }
+    .hero-logo-sub {
+      font-size: 10px; font-weight: 500; letter-spacing: 0.22em;
+      text-transform: uppercase; color: var(--muted);
+    }
+    .hero-tags {
+      display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px;
+      justify-content: center;
+    }
+    .hero-tag {
+      font-size: 9px; font-weight: 500; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--green);
+      padding: 5px 12px;
+      border: 1px solid var(--border);
       border-radius: 1px;
-      transition: color 0.2s, border-color 0.2s;
-    }
-    .hero-service-tag:hover { color: var(--accent); border-color: var(--accent); }
-
-    .scroll-indicator {
-      position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
-      z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 8px;
-      opacity: 0; animation: fadeUp 0.6s ease 1.3s forwards;
-    }
-    .scroll-indicator span {
-      font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
-      color: rgba(255,255,255,0.35);
-    }
-    .scroll-line {
-      width: 1px; height: 48px;
-      background: linear-gradient(to bottom, var(--accent), transparent);
-      animation: scrollPulse 2s ease-in-out infinite;
+      background: var(--bg-mint);
     }
 
-    @media (max-width: 768px) {
-      #hero { padding: 0 24px 60px; }
-      .hero-bottom { flex-direction: column; align-items: flex-start; }
-      .hero-services { text-align: left; flex-direction: row; flex-wrap: wrap; }
-      .hero-tagline { max-width: 100%; }
+    @media (max-width: 1024px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 48px; }
+      .hero-right { display: none; }
+      #hero { padding: 100px 24px 64px; }
     }
 
     /* ─── SOBRE ─── */
     #sobre {
-      background: var(--bg-warm);
-      padding: 120px 40px;
+      background: var(--bg-alt);
+      padding: 120px 48px;
       position: relative; overflow: hidden;
     }
     .sobre-inner {
       max-width: 1200px; margin: 0 auto;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 96px; align-items: center;
     }
-    .sobre-label {
-      font-size: 10px; font-weight: 600; letter-spacing: 0.22em;
-      text-transform: uppercase; color: var(--accent);
+    .section-eyebrow {
+      font-size: 10px; font-weight: 500; letter-spacing: 0.24em;
+      text-transform: uppercase; color: var(--gold);
       margin-bottom: 20px;
       display: flex; align-items: center; gap: 12px;
     }
-    .sobre-label::after {
-      content: ''; display: inline-block; width: 32px; height: 1px; background: var(--accent);
+    .section-eyebrow::before { content: ''; display: inline-block; width: 28px; height: 1px; background: var(--gold); }
+    .section-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600; font-size: clamp(36px, 4vw, 58px);
+      line-height: 1.05; letter-spacing: -0.01em;
+      color: var(--green);
+      margin-bottom: 28px;
     }
-    .sobre-heading {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-weight: 800; font-size: clamp(36px, 4vw, 60px);
-      line-height: 1.0; letter-spacing: -0.02em;
-      color: var(--dark);
-      margin-bottom: 32px;
+    .section-heading em { font-style: italic; color: var(--green-light); }
+    .body-text {
+      font-size: 16px; font-weight: 300; line-height: 1.85;
+      color: #4A6558; margin-bottom: 20px;
     }
-    .sobre-heading em { font-style: normal; color: var(--navy); }
-    .sobre-body {
-      font-size: 16px; font-weight: 300; line-height: 1.8;
-      color: #444; margin-bottom: 20px;
-    }
+
     .sobre-stat-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
-      margin-top: 48px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+      margin-top: 40px;
     }
     .sobre-stat {
-      padding: 24px; border-left: 2px solid var(--accent);
+      padding: 20px 20px 20px 24px;
+      border-left: 2px solid var(--gold);
       background: #fff;
+      box-shadow: 0 2px 12px rgba(42,82,64,0.04);
     }
     .sobre-stat .num {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-weight: 900; font-size: 42px; color: var(--navy);
-      letter-spacing: -0.03em; line-height: 1;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700; font-size: 36px; color: var(--green);
+      letter-spacing: -0.02em; line-height: 1;
     }
-    .sobre-stat .label { font-size: 12px; font-weight: 500; color: var(--muted); margin-top: 6px; letter-spacing: 0.08em; }
+    .sobre-stat .lbl { font-size: 11px; font-weight: 400; color: var(--muted); margin-top: 4px; letter-spacing: 0.06em; }
 
     .sobre-visual {
       position: relative;
     }
-    .sobre-block-main {
-      width: 100%; aspect-ratio: 4/5;
-      background: var(--navy);
-      position: relative; overflow: hidden;
+    .sobre-img-frame {
+      position: relative;
+      border-radius: 2px; overflow: hidden;
+    }
+    .sobre-logo-display {
+      width: 100%;
+      aspect-ratio: 4/3;
+      background: var(--bg);
+      display: flex; align-items: center; justify-content: center;
+      border: 1px solid var(--border);
       border-radius: 2px;
-    }
-    .sobre-block-main::before {
-      content: '';
-      position: absolute; inset: 0;
-      background-image:
-        linear-gradient(rgba(201,168,76,0.08) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(201,168,76,0.08) 1px, transparent 1px);
-      background-size: 32px 32px;
-    }
-    .sobre-block-main::after {
-      content: '';
-      position: absolute; bottom: 0; left: 0; right: 0;
-      height: 60%;
-      background: linear-gradient(to top, rgba(201,168,76,0.15) 0%, transparent 100%);
-    }
-    .sobre-block-text {
-      position: absolute; inset: 0; z-index: 2;
-      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      position: relative; overflow: hidden;
       padding: 40px;
     }
-    .sobre-block-icon {
-      width: 64px; height: 64px; margin-bottom: 24px;
+    .sobre-logo-display::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 70% at 70% 40%, rgba(168,215,190,0.25) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 50% at 20% 70%, rgba(168,215,190,0.15) 0%, transparent 50%);
     }
-    .sobre-pullquote {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-weight: 800; font-size: clamp(24px, 3vw, 38px);
-      color: #fff; text-align: center; line-height: 1.15;
-      letter-spacing: -0.01em;
+    .sobre-logo-display img {
+      width: 100%; max-width: 320px;
+      height: auto; position: relative; z-index: 1;
     }
-    .sobre-pullquote span { color: var(--accent); }
-    .sobre-accent-block {
-      position: absolute; bottom: -24px; right: -24px;
-      width: 110px; height: 110px;
-      background: var(--accent);
-      border-radius: 2px;
+    .sobre-accent-bar {
+      position: absolute; bottom: -12px; right: 24px;
+      width: 80px; height: 4px;
+      background: var(--gold);
+    }
+    .sobre-corner-text {
+      position: absolute; top: -12px; left: 24px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13px; font-style: italic; color: var(--muted);
+      background: var(--bg-alt);
+      padding: 0 8px;
     }
 
     @media (max-width: 900px) {
       .sobre-inner { grid-template-columns: 1fr; gap: 48px; }
       #sobre { padding: 80px 24px; }
-      .sobre-visual { max-width: 380px; }
     }
 
     /* ─── SERVIÇOS ─── */
     #servicos {
-      background: var(--dark);
-      padding: 120px 40px;
+      background: #fff;
+      padding: 120px 48px;
       position: relative;
     }
-    #servicos::before {
-      content: '';
-      position: absolute; inset: 0;
-      background-image:
-        linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
-      background-size: 60px 60px;
-    }
-    .section-header {
+    .servicos-header {
       max-width: 1200px; margin: 0 auto 72px;
       display: flex; align-items: flex-end; justify-content: space-between; gap: 24px;
-      position: relative; z-index: 1;
     }
-    .section-label {
-      font-size: 10px; font-weight: 600; letter-spacing: 0.22em;
-      text-transform: uppercase; color: var(--accent); margin-bottom: 16px;
-      display: flex; align-items: center; gap: 12px;
+    .servicos-sub {
+      font-size: 14px; font-weight: 300; color: var(--muted);
+      max-width: 320px; text-align: right; line-height: 1.75;
     }
-    .section-label::before { content: ''; display: inline-block; width: 32px; height: 1px; background: var(--accent); }
-    .section-heading {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-weight: 900; font-size: clamp(36px, 4.5vw, 64px);
-      line-height: 0.95; letter-spacing: -0.02em;
-      color: #fff;
-    }
-    .section-heading.dark { color: var(--dark); }
-    .section-sub {
-      font-size: 14px; font-weight: 300; color: rgba(255,255,255,0.5);
-      max-width: 300px; text-align: right; line-height: 1.7;
-    }
-
     .services-grid {
       max-width: 1200px; margin: 0 auto;
       display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px;
-      position: relative; z-index: 1;
     }
     .service-card {
-      background: rgba(14,34,64,0.7);
-      border: 1px solid rgba(201,168,76,0.1);
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
       padding: 52px 44px;
       position: relative; overflow: hidden;
       cursor: default;
-      transition: background 0.35s ease;
+      transition: background 0.35s ease, border-color 0.35s;
     }
     .service-card::before {
       content: '';
       position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
-      background: var(--accent);
+      background: var(--gold);
       transform: scaleY(0); transform-origin: bottom;
-      transition: transform 0.35s cubic-bezier(0.22,1,0.36,1);
+      transition: transform 0.4s cubic-bezier(0.22,1,0.36,1);
     }
-    .service-card:hover { background: rgba(14,34,64,0.95); }
+    .service-card:hover {
+      background: #fff;
+      border-color: rgba(201,168,76,0.2);
+    }
     .service-card:hover::before { transform: scaleY(1); }
 
     .service-num {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-weight: 900; font-size: 72px;
-      color: rgba(201,168,76,0.1);
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700; font-size: 64px;
+      color: rgba(42,82,64,0.07);
       line-height: 1; letter-spacing: -0.04em;
       position: absolute; top: 20px; right: 24px;
       transition: color 0.35s;
     }
-    .service-card:hover .service-num { color: rgba(201,168,76,0.2); }
+    .service-card:hover .service-num { color: rgba(201,168,76,0.18); }
 
     .service-icon { margin-bottom: 24px; width: 40px; height: 40px; }
     .service-name {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-weight: 800; font-size: 28px;
-      color: #fff; line-height: 1.1; letter-spacing: -0.01em;
-      margin-bottom: 16px;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600; font-size: 28px;
+      color: var(--green); line-height: 1.1; letter-spacing: -0.01em;
+      margin-bottom: 14px;
     }
     .service-desc {
-      font-size: 14px; font-weight: 300; color: rgba(255,255,255,0.55);
-      line-height: 1.75;
+      font-size: 14px; font-weight: 300; color: #5A7A6C;
+      line-height: 1.8;
     }
     .service-arrow {
-      margin-top: 32px; display: inline-flex; align-items: center; gap: 10px;
-      font-size: 11px; font-weight: 600; letter-spacing: 0.14em;
-      text-transform: uppercase; color: var(--accent);
+      margin-top: 28px; display: inline-flex; align-items: center; gap: 10px;
+      font-size: 11px; font-weight: 500; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--gold);
       opacity: 0; transform: translateX(-8px);
       transition: opacity 0.3s, transform 0.3s;
     }
@@ -406,147 +454,168 @@
     @media (max-width: 768px) {
       #servicos { padding: 80px 24px; }
       .services-grid { grid-template-columns: 1fr; }
-      .section-header { flex-direction: column; align-items: flex-start; }
-      .section-sub { text-align: left; }
+      .servicos-header { flex-direction: column; align-items: flex-start; }
+      .servicos-sub { text-align: left; }
       .service-card { padding: 36px 28px; }
     }
 
     /* ─── ATUAÇÃO NACIONAL ─── */
     #atuacao {
-      background: var(--navy);
-      padding: 120px 40px;
+      background: var(--green);
+      padding: 120px 48px;
       position: relative; overflow: hidden;
+    }
+    #atuacao::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 80% at 80% 50%, rgba(93,140,113,0.3) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 50% at 10% 20%, rgba(93,140,113,0.2) 0%, transparent 50%);
     }
     .atuacao-inner {
       max-width: 1200px; margin: 0 auto;
       display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+      position: relative; z-index: 1;
     }
-    .atuacao-left {}
+    .atuacao-eyebrow {
+      font-size: 10px; font-weight: 500; letter-spacing: 0.24em;
+      text-transform: uppercase; color: var(--gold);
+      margin-bottom: 20px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .atuacao-eyebrow::before { content: ''; display: inline-block; width: 28px; height: 1px; background: var(--gold); }
     .atuacao-big {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-weight: 900; font-size: clamp(54px, 8vw, 120px);
-      line-height: 0.9; letter-spacing: -0.03em;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700; font-size: clamp(52px, 7vw, 100px);
+      line-height: 0.92; letter-spacing: -0.02em;
       color: #fff;
-      margin-top: 24px;
+      margin-bottom: 32px;
     }
-    .atuacao-big span { color: var(--accent); display: block; }
+    .atuacao-big span { color: var(--gold); display: block; }
     .atuacao-body {
-      font-size: 16px; font-weight: 300; color: rgba(255,255,255,0.6);
-      line-height: 1.8; margin-top: 32px; max-width: 460px;
+      font-size: 16px; font-weight: 300; color: rgba(255,255,255,0.7);
+      line-height: 1.85; margin-bottom: 40px; max-width: 460px;
     }
-    .atuacao-visual {
-      position: relative; display: flex; justify-content: center; align-items: center;
-    }
-    /* Brazil SVG placeholder — abstract representation */
-    .brazil-outline {
-      width: 100%; max-width: 340px; aspect-ratio: 0.85;
-      background: rgba(201,168,76,0.06);
-      border: 1px solid rgba(201,168,76,0.15);
+    .btn-gold {
+      display: inline-flex; align-items: center; gap: 12px;
+      padding: 15px 32px;
+      background: var(--gold); color: var(--green);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; text-decoration: none;
       border-radius: 2px;
-      position: relative; overflow: hidden;
-      display: flex; justify-content: center; align-items: center;
+      transition: background 0.2s, transform 0.15s;
     }
-    .brazil-outline::before {
-      content: '';
-      position: absolute; inset: 0;
-      background-image:
-        linear-gradient(rgba(201,168,76,0.07) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(201,168,76,0.07) 1px, transparent 1px);
-      background-size: 24px 24px;
+    .btn-gold:hover { background: var(--gold-light); transform: translateY(-1px); }
+    .atuacao-visual {
+      display: flex; flex-direction: column; gap: 20px;
+      align-items: flex-end;
     }
-    .brazil-pin {
-      position: relative; z-index: 2;
-      text-align: center;
+    .coverage-box {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 2px;
+      padding: 32px 36px;
+      width: 100%;
     }
-    .brazil-pin .pin-city {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-weight: 800; font-size: 13px; letter-spacing: 0.2em;
-      text-transform: uppercase; color: var(--accent);
+    .coverage-label {
+      font-size: 10px; font-weight: 500; letter-spacing: 0.2em;
+      text-transform: uppercase; color: rgba(255,255,255,0.4);
+      margin-bottom: 16px;
     }
-    .brazil-pin .pin-label {
-      font-size: 11px; font-weight: 300; color: rgba(255,255,255,0.4);
-      margin-top: 6px; letter-spacing: 0.12em;
+    .coverage-regions {
+      display: flex; flex-wrap: wrap; gap: 8px;
     }
-    .coverage-badges {
-      position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%);
-      display: flex; gap: 8px;
-      white-space: nowrap;
+    .region-tag {
+      font-size: 11px; font-weight: 400; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--gold);
+      padding: 6px 14px;
+      border: 1px solid rgba(201,168,76,0.35);
+      border-radius: 1px;
     }
-    .badge {
-      font-size: 9px; font-weight: 600; letter-spacing: 0.14em;
-      text-transform: uppercase; padding: 6px 12px;
-      border: 1px solid rgba(201,168,76,0.3);
-      color: var(--accent); border-radius: 1px;
-      background: rgba(12,21,32,0.5);
+    .coverage-stat {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+      width: 100%;
     }
+    .cov-stat-item {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      padding: 24px 20px;
+      border-radius: 2px;
+    }
+    .cov-stat-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700; font-size: 40px; color: #fff;
+      line-height: 1; letter-spacing: -0.02em;
+    }
+    .cov-stat-num span { color: var(--gold); font-size: 24px; }
+    .cov-stat-lbl { font-size: 11px; font-weight: 300; color: rgba(255,255,255,0.5); margin-top: 4px; }
 
     @media (max-width: 900px) {
       .atuacao-inner { grid-template-columns: 1fr; gap: 48px; }
       #atuacao { padding: 80px 24px; }
-      .atuacao-visual { display: none; }
+      .atuacao-visual { align-items: stretch; }
     }
 
     /* ─── DIFERENCIAIS ─── */
     #diferenciais {
       background: var(--bg);
-      padding: 120px 40px;
+      padding: 120px 48px;
     }
-    .diferenciais-inner {
-      max-width: 1200px; margin: 0 auto;
-    }
+    .diferenciais-inner { max-width: 1200px; margin: 0 auto; }
     .diferenciais-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
       margin-top: 64px;
     }
     .diferencial-item {
-      background: var(--bg-warm);
-      padding: 52px 40px;
-      border-top: 2px solid transparent;
-      transition: border-color 0.3s, background 0.3s;
-      position: relative; overflow: hidden;
+      background: #fff;
+      border: 1px solid var(--border);
+      padding: 44px 36px;
+      border-radius: 2px;
+      border-top: 3px solid transparent;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      position: relative;
     }
     .diferencial-item:hover {
-      border-color: var(--accent);
-      background: #fff;
+      border-top-color: var(--gold);
+      box-shadow: 0 8px 32px rgba(42,82,64,0.08);
     }
     .dif-num {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-weight: 900; font-size: 80px;
-      color: rgba(14,34,64,0.08); line-height: 1;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700; font-size: 72px;
+      color: rgba(42,82,64,0.05); line-height: 1;
       letter-spacing: -0.04em;
-      position: absolute; top: 16px; right: 24px;
+      position: absolute; top: 16px; right: 20px;
     }
-    .dif-icon { width: 48px; height: 48px; margin-bottom: 24px; }
+    .dif-icon { width: 44px; height: 44px; margin-bottom: 20px; }
     .dif-title {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-weight: 800; font-size: 26px;
-      color: var(--dark); line-height: 1.1; letter-spacing: -0.01em;
-      margin-bottom: 16px;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600; font-size: 24px;
+      color: var(--green); line-height: 1.15;
+      margin-bottom: 14px;
     }
     .dif-desc {
-      font-size: 14px; font-weight: 300; color: #666;
-      line-height: 1.75;
+      font-size: 14px; font-weight: 300; color: #5A7A6C;
+      line-height: 1.8;
     }
 
     @media (max-width: 900px) {
       .diferenciais-grid { grid-template-columns: 1fr; }
       #diferenciais { padding: 80px 24px; }
-      .diferencial-item { padding: 36px 28px; }
+      .diferencial-item { padding: 32px 28px; }
     }
 
     /* ─── CONTATO ─── */
     #contato {
-      background: var(--dark);
-      padding: 120px 40px;
+      background: var(--bg-alt);
+      padding: 120px 48px;
       position: relative; overflow: hidden;
     }
     #contato::before {
       content: '';
-      position: absolute; inset: 0;
-      background-image:
-        linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
-      background-size: 60px 60px;
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 5px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
     }
     .contato-inner {
       max-width: 1200px; margin: 0 auto;
@@ -554,74 +623,87 @@
       position: relative; z-index: 1;
     }
     .contato-heading {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-weight: 900; font-size: clamp(40px, 5vw, 72px);
-      line-height: 0.95; letter-spacing: -0.02em;
-      color: #fff; margin-top: 24px; margin-bottom: 32px;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600; font-size: clamp(36px, 4.5vw, 62px);
+      line-height: 1.0; letter-spacing: -0.01em;
+      color: var(--green); margin-top: 20px; margin-bottom: 32px;
     }
-    .contato-heading span { color: var(--accent); }
-    .contato-info { display: flex; flex-direction: column; gap: 20px; }
+    .contato-heading em { font-style: italic; color: var(--gold); }
+    .contato-info { display: flex; flex-direction: column; gap: 0; }
     .contato-row {
       display: flex; align-items: flex-start; gap: 16px;
-      padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.07);
+      padding: 20px 0; border-bottom: 1px solid var(--border);
     }
     .contato-row:last-child { border-bottom: none; }
-    .contato-icon { width: 20px; height: 20px; flex-shrink: 0; margin-top: 2px; }
+    .contato-icon { width: 20px; height: 20px; flex-shrink: 0; margin-top: 3px; }
     .contato-row-label {
-      font-size: 10px; font-weight: 600; letter-spacing: 0.18em;
-      text-transform: uppercase; color: var(--accent); margin-bottom: 4px;
+      font-size: 10px; font-weight: 500; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--gold); margin-bottom: 3px;
     }
     .contato-row-value {
-      font-size: 15px; font-weight: 300; color: rgba(255,255,255,0.75);
+      font-size: 15px; font-weight: 300; color: var(--text); line-height: 1.6;
     }
+    .contato-row-value a {
+      color: var(--green); text-decoration: none;
+    }
+    .contato-row-value a:hover { text-decoration: underline; }
 
     .contato-form {
-      background: rgba(14,34,64,0.5);
-      border: 1px solid rgba(201,168,76,0.15);
+      background: #fff;
+      border: 1px solid var(--border);
       padding: 48px 40px;
       border-radius: 2px;
+      box-shadow: 0 4px 24px rgba(42,82,64,0.06);
+      position: relative; overflow: hidden;
+    }
+    .contato-form::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(to right, var(--gold), var(--gold-light), var(--gold));
     }
     .contato-form h3 {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-weight: 800; font-size: 22px; color: #fff;
-      margin-bottom: 8px;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600; font-size: 26px; color: var(--green);
+      margin-bottom: 6px;
     }
     .contato-form p {
-      font-size: 13px; font-weight: 300; color: rgba(255,255,255,0.45);
+      font-size: 13px; font-weight: 300; color: var(--muted);
       margin-bottom: 32px; line-height: 1.6;
     }
     .form-group { margin-bottom: 20px; }
     .form-group label {
-      display: block; font-size: 10px; font-weight: 600;
-      letter-spacing: 0.18em; text-transform: uppercase;
-      color: rgba(255,255,255,0.5); margin-bottom: 8px;
+      display: block; font-size: 10px; font-weight: 500;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 8px;
     }
     .form-group input, .form-group select, .form-group textarea {
-      width: 100%; background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(201,168,76,0.2);
-      padding: 14px 16px; font-size: 14px;
-      color: #fff; font-family: 'IBM Plex Sans', sans-serif;
+      width: 100%; background: var(--bg);
+      border: 1px solid var(--border);
+      padding: 13px 16px; font-size: 14px;
+      color: var(--text); font-family: 'DM Sans', sans-serif;
       border-radius: 2px; outline: none;
       transition: border-color 0.2s;
     }
     .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-      border-color: var(--accent);
+      border-color: var(--gold);
     }
     .form-group input::placeholder, .form-group textarea::placeholder {
-      color: rgba(255,255,255,0.25);
+      color: var(--muted);
     }
-    .form-group select option { background: var(--dark); color: #fff; }
+    .form-group select { appearance: none; cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B8C7A' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 36px; }
+    .form-group select option { background: #fff; color: var(--text); }
     .form-group textarea { resize: vertical; min-height: 100px; }
     .btn-submit {
-      width: 100%; padding: 16px;
-      background: var(--accent); color: var(--dark);
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-weight: 800; font-size: 14px; letter-spacing: 0.12em;
+      width: 100%; padding: 15px;
+      background: var(--green); color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 500; font-size: 13px; letter-spacing: 0.14em;
       text-transform: uppercase; border: none; cursor: pointer;
       border-radius: 2px;
       transition: background 0.2s, transform 0.15s;
     }
-    .btn-submit:hover { background: var(--accent2); transform: translateY(-1px); }
+    .btn-submit:hover { background: var(--green-mid); transform: translateY(-1px); }
 
     @media (max-width: 900px) {
       .contato-inner { grid-template-columns: 1fr; gap: 48px; }
@@ -631,20 +713,27 @@
 
     /* ─── FOOTER ─── */
     footer {
-      background: #080e18;
-      padding: 40px;
+      background: var(--green);
+      padding: 40px 48px;
       display: flex; align-items: center; justify-content: space-between;
       gap: 24px; flex-wrap: wrap;
+      border-top: 4px solid var(--gold);
     }
     .footer-brand {
-      font-family: 'Bricolage Grotesque', sans-serif;
-      font-weight: 800; font-size: 13px;
-      letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.4);
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600; font-size: 18px;
+      color: rgba(255,255,255,0.9);
+      letter-spacing: 0.02em;
     }
-    .footer-brand span { color: var(--accent); }
+    .footer-brand span { color: var(--gold); }
+    .footer-sub {
+      font-size: 10px; font-weight: 300; letter-spacing: 0.14em;
+      text-transform: uppercase; color: rgba(255,255,255,0.4);
+      margin-top: 4px;
+    }
     .footer-copy {
-      font-size: 11px; color: rgba(255,255,255,0.2);
-      font-weight: 300; text-align: right;
+      font-size: 11px; color: rgba(255,255,255,0.35);
+      font-weight: 300; text-align: right; line-height: 1.6;
     }
     @media (max-width: 768px) {
       footer { padding: 32px 24px; }
@@ -672,9 +761,8 @@
     @keyframes fadeUp {
       to { opacity: 1; transform: translateY(0); }
     }
-    @keyframes scrollPulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.3; }
+    @keyframes fadeRight {
+      to { opacity: 1; transform: translateX(0); }
     }
     @keyframes waPulse {
       0%, 100% { box-shadow: 0 4px 20px rgba(37,211,102,0.35); }
@@ -683,21 +771,24 @@
 
     /* Scroll reveal */
     .reveal {
-      opacity: 0; transform: translateY(32px);
-      transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22,1,0.36,1);
+      opacity: 0; transform: translateY(28px);
+      transition: opacity 0.75s ease, transform 0.75s cubic-bezier(0.22,1,0.36,1);
     }
     .reveal.revealed { opacity: 1; transform: none; }
     .reveal-delay-1 { transition-delay: 0.1s; }
     .reveal-delay-2 { transition-delay: 0.2s; }
-    .reveal-delay-3 { transition-delay: 0.3s; }
-    .reveal-delay-4 { transition-delay: 0.4s; }
+    .reveal-delay-3 { transition-delay: 0.32s; }
+    .reveal-delay-4 { transition-delay: 0.44s; }
   </style>
 </head>
 <body>
 
   <!-- NAV -->
   <nav id="navbar">
-    <a href="#hero" class="nav-logo">NRAJE<span>BRENI</span></a>
+    <a href="#hero" class="nav-logo">
+      <span class="nav-logo-mark">NRAJE<span>BRENI</span></span>
+      <span class="nav-logo-text">Gestão em<br>Engenharia</span>
+    </a>
     <ul class="nav-links">
       <li><a href="#sobre">Empresa</a></li>
       <li><a href="#servicos">Serviços</a></li>
@@ -709,26 +800,41 @@
 
   <!-- HERO -->
   <section id="hero">
-    <p class="hero-eyebrow">Engenharia Civil &amp; Plataformas Financeiras</p>
-    <h1 class="hero-title">
-      <span class="line1">NRAJEBRENI</span>
-      <span class="line2">Gestão em Engenharia</span>
-      <span class="line3">e Plataformas Financeiras</span>
-    </h1>
-    <div class="hero-bottom">
-      <p class="hero-tagline">
-        Desenvolvemos projetos de estruturas, fundação, reformas e licitações para todo o Brasil — com a solidez técnica que seu negócio exige.
-      </p>
-      <div class="hero-services">
-        <span class="hero-service-tag">Estruturas</span>
-        <span class="hero-service-tag">Fundação</span>
-        <span class="hero-service-tag">Reformas</span>
-        <span class="hero-service-tag">Licitações</span>
+    <div class="hero-inner">
+      <div class="hero-left">
+        <p class="hero-eyebrow">Engenharia Civil &amp; Plataformas Financeiras</p>
+        <h1 class="hero-title">
+          <span class="line1">NRAJEBRENI</span>
+          <span class="line2">Gestão em Engenharia</span>
+          <span class="line3">e Plataformas Financeiras</span>
+        </h1>
+        <p class="hero-tagline">
+          Desenvolvemos projetos de estruturas, fundação, reformas e licitações para todo o Brasil — com solidez técnica e compromisso com a excelência.
+        </p>
+        <div class="hero-cta-group">
+          <a href="#contato" class="btn-primary">
+            Solicitar Proposta
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <a href="#servicos" class="btn-secondary">
+            Ver Serviços
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
       </div>
-    </div>
-    <div class="scroll-indicator">
-      <span>Scroll</span>
-      <div class="scroll-line"></div>
+      <div class="hero-right">
+        <div class="hero-logo-card">
+          <img src="logo-1.jpg" alt="NRAJEBRENI — Jebreni Engenharia Civil" class="hero-logo-img">
+          <p class="hero-logo-sub">Engenharia Civil · Gerenciamento de Obras</p>
+          <div class="hero-tags">
+            <span class="hero-tag">Estruturas</span>
+            <span class="hero-tag">Fundação</span>
+            <span class="hero-tag">Reformas</span>
+            <span class="hero-tag">Licitações</span>
+            <span class="hero-tag">São Paulo · SP</span>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -736,66 +842,57 @@
   <section id="sobre">
     <div class="sobre-inner">
       <div class="sobre-content">
-        <p class="sobre-label reveal">Quem Somos</p>
-        <h2 class="sobre-heading reveal reveal-delay-1">
+        <p class="section-eyebrow reveal">Quem Somos</p>
+        <h2 class="section-heading reveal reveal-delay-1">
           Solidez técnica.<br>
           <em>Resultados</em><br>
           concretos.
         </h2>
-        <p class="sobre-body reveal reveal-delay-2">
+        <p class="body-text reveal reveal-delay-2">
           A NRAJEBRENI Gestão em Engenharia e Plataformas Financeiras é uma empresa dedicada ao desenvolvimento de projetos técnicos de alto padrão para o setor da construção civil e processos licitatórios em todo o Brasil.
         </p>
-        <p class="sobre-body reveal reveal-delay-2">
-          Sediados em São Paulo-SP, atendemos licitantes e construtoras que precisam de parceiros técnicos com rigor, credibilidade e profundo conhecimento em engenharia estrutural e plataformas de gestão financeira.
+        <p class="body-text reveal reveal-delay-2">
+          Sediados em São Paulo-SP, atendemos licitantes e construtoras que precisam de parceiros técnicos com rigor, credibilidade e profundo conhecimento em engenharia estrutural e gestão financeira de projetos.
         </p>
         <div class="sobre-stat-grid reveal reveal-delay-3">
           <div class="sobre-stat">
             <div class="num">SP</div>
-            <div class="label">Sede São Paulo</div>
+            <div class="lbl">Sede São Paulo</div>
           </div>
           <div class="sobre-stat">
             <div class="num">BR</div>
-            <div class="label">Atuação Nacional</div>
+            <div class="lbl">Atuação Nacional</div>
           </div>
           <div class="sobre-stat">
-            <div class="num">4+</div>
-            <div class="label">Áreas de Atuação</div>
+            <div class="num">5+</div>
+            <div class="lbl">Áreas de Atuação</div>
           </div>
           <div class="sobre-stat">
             <div class="num">B2B</div>
-            <div class="label">Foco Corporativo</div>
+            <div class="lbl">Foco Corporativo</div>
           </div>
         </div>
       </div>
       <div class="sobre-visual reveal reveal-delay-2">
-        <div class="sobre-block-main">
-          <div class="sobre-block-text">
-            <!-- Engineering icon -->
-            <svg class="sobre-block-icon" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="8" y="48" width="48" height="4" rx="1" fill="#C9A84C" opacity="0.8"/>
-              <rect x="14" y="28" width="8" height="20" rx="1" fill="rgba(255,255,255,0.3)"/>
-              <rect x="28" y="18" width="8" height="30" rx="1" fill="rgba(255,255,255,0.5)"/>
-              <rect x="42" y="36" width="8" height="12" rx="1" fill="rgba(255,255,255,0.3)"/>
-              <line x1="8" y1="28" x2="56" y2="28" stroke="#C9A84C" stroke-width="1" stroke-dasharray="4 4" opacity="0.4"/>
-            </svg>
-            <p class="sobre-pullquote">
-              Projetos que<br><span>sustentam</span><br>o Brasil.
-            </p>
+        <div class="sobre-img-frame">
+          <span class="sobre-corner-text">Identidade de Marca</span>
+          <div class="sobre-logo-display">
+            <img src="logo-2.jpg" alt="NRAJEBRENI — Cartão de Visita">
           </div>
+          <div class="sobre-accent-bar"></div>
         </div>
-        <div class="sobre-accent-block"></div>
       </div>
     </div>
   </section>
 
   <!-- SERVIÇOS -->
   <section id="servicos">
-    <div class="section-header">
+    <div class="servicos-header">
       <div>
-        <p class="section-label reveal">O que fazemos</p>
+        <p class="section-eyebrow reveal">O que fazemos</p>
         <h2 class="section-heading reveal reveal-delay-1">Nossos<br>Serviços</h2>
       </div>
-      <p class="section-sub reveal reveal-delay-2">
+      <p class="servicos-sub reveal reveal-delay-2">
         Soluções técnicas completas para a construção civil e processos licitatórios em todo o território nacional.
       </p>
     </div>
@@ -805,10 +902,10 @@
         <span class="service-num">01</span>
         <svg class="service-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect x="4" y="32" width="32" height="3" rx="1" fill="#C9A84C" opacity="0.7"/>
-          <rect x="8" y="16" width="6" height="16" rx="1" fill="rgba(255,255,255,0.4)"/>
-          <rect x="17" y="10" width="6" height="22" rx="1" fill="rgba(255,255,255,0.6)"/>
-          <rect x="26" y="22" width="6" height="10" rx="1" fill="rgba(255,255,255,0.4)"/>
-          <line x1="4" y1="16" x2="36" y2="16" stroke="#C9A84C" stroke-width="1" stroke-dasharray="3 3" opacity="0.5"/>
+          <rect x="8" y="16" width="6" height="16" rx="1" fill="#2A5240" opacity="0.35"/>
+          <rect x="17" y="10" width="6" height="22" rx="1" fill="#2A5240" opacity="0.55"/>
+          <rect x="26" y="22" width="6" height="10" rx="1" fill="#2A5240" opacity="0.35"/>
+          <line x1="4" y1="16" x2="36" y2="16" stroke="#C9A84C" stroke-width="1" stroke-dasharray="3 3" opacity="0.6"/>
         </svg>
         <h3 class="service-name">Projetos de Estruturas</h3>
         <p class="service-desc">Desenvolvimento de projetos estruturais completos, com cálculo e dimensionamento para edificações residenciais, comerciais e industriais. Rigor técnico e segurança em cada etapa.</p>
@@ -823,10 +920,10 @@
         <span class="service-num">02</span>
         <svg class="service-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect x="4" y="8" width="32" height="3" rx="1" fill="#C9A84C" opacity="0.7"/>
-          <rect x="10" y="11" width="4" height="22" rx="1" fill="rgba(255,255,255,0.5)"/>
-          <rect x="18" y="11" width="4" height="22" rx="1" fill="rgba(255,255,255,0.5)"/>
-          <rect x="26" y="11" width="4" height="22" rx="1" fill="rgba(255,255,255,0.5)"/>
-          <path d="M4 33 Q20 38 36 33" stroke="#C9A84C" stroke-width="1.5" fill="none" opacity="0.5"/>
+          <rect x="10" y="11" width="4" height="22" rx="1" fill="#2A5240" opacity="0.4"/>
+          <rect x="18" y="11" width="4" height="22" rx="1" fill="#2A5240" opacity="0.4"/>
+          <rect x="26" y="11" width="4" height="22" rx="1" fill="#2A5240" opacity="0.4"/>
+          <path d="M4 33 Q20 38 36 33" stroke="#C9A84C" stroke-width="1.5" fill="none" opacity="0.6"/>
         </svg>
         <h3 class="service-name">Fundação</h3>
         <p class="service-desc">Estudos e projetos de fundações superficiais e profundas, com análise geotécnica, sondagem e dimensionamento adequado às condições do solo e das cargas estruturais.</p>
@@ -840,12 +937,12 @@
       <div class="service-card reveal reveal-delay-1">
         <span class="service-num">03</span>
         <svg class="service-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="6" y="6" width="28" height="22" rx="2" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" fill="none"/>
-          <rect x="10" y="10" width="8" height="6" rx="1" fill="rgba(201,168,76,0.5)"/>
-          <rect x="22" y="10" width="8" height="6" rx="1" fill="rgba(201,168,76,0.5)"/>
-          <rect x="10" y="20" width="20" height="4" rx="1" fill="rgba(255,255,255,0.2)"/>
-          <path d="M18 28 L18 34 M22 28 L22 34" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-linecap="round"/>
-          <line x1="12" y1="34" x2="28" y2="34" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-linecap="round"/>
+          <rect x="6" y="6" width="28" height="22" rx="2" stroke="#2A5240" stroke-width="1.5" fill="none" opacity="0.45"/>
+          <rect x="10" y="10" width="8" height="6" rx="1" fill="#C9A84C" opacity="0.55"/>
+          <rect x="22" y="10" width="8" height="6" rx="1" fill="#C9A84C" opacity="0.55"/>
+          <rect x="10" y="20" width="20" height="4" rx="1" fill="#2A5240" opacity="0.2"/>
+          <path d="M18 28 L18 34 M22 28 L22 34" stroke="#2A5240" stroke-width="1.5" stroke-linecap="round" opacity="0.35"/>
+          <line x1="12" y1="34" x2="28" y2="34" stroke="#2A5240" stroke-width="1.5" stroke-linecap="round" opacity="0.35"/>
         </svg>
         <h3 class="service-name">Reformas</h3>
         <p class="service-desc">Gestão completa de projetos de reforma e requalificação de edificações. Planejamento técnico, fiscalização e execução com foco em eficiência, prazo e conformidade normativa.</p>
@@ -859,15 +956,50 @@
       <div class="service-card reveal reveal-delay-2">
         <span class="service-num">04</span>
         <svg class="service-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="6" y="4" width="24" height="32" rx="2" stroke="rgba(255,255,255,0.4)" stroke-width="1.5" fill="none"/>
-          <line x1="11" y1="12" x2="25" y2="12" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
-          <line x1="11" y1="18" x2="25" y2="18" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-linecap="round"/>
-          <line x1="11" y1="24" x2="20" y2="24" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" stroke-linecap="round"/>
-          <circle cx="32" cy="32" r="7" fill="rgba(201,168,76,0.2)" stroke="#C9A84C" stroke-width="1.5"/>
+          <rect x="6" y="4" width="24" height="32" rx="2" stroke="#2A5240" stroke-width="1.5" fill="none" opacity="0.4"/>
+          <line x1="11" y1="12" x2="25" y2="12" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" opacity="0.8"/>
+          <line x1="11" y1="18" x2="25" y2="18" stroke="#2A5240" stroke-width="1.5" stroke-linecap="round" opacity="0.3"/>
+          <line x1="11" y1="24" x2="20" y2="24" stroke="#2A5240" stroke-width="1.5" stroke-linecap="round" opacity="0.3"/>
+          <circle cx="32" cy="32" r="7" fill="rgba(201,168,76,0.15)" stroke="#C9A84C" stroke-width="1.5"/>
           <path d="M29 32 L31 34 L35 30" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         <h3 class="service-name">Licitações</h3>
         <p class="service-desc">Suporte técnico completo para licitantes em todo o Brasil. Elaboração de propostas, documentação técnica, projetos para processos licitatórios públicos e privados em conformidade com a legislação vigente.</p>
+        <span class="service-arrow">
+          Saiba mais
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </div>
+
+      <!-- Projetos Sustentáveis -->
+      <div class="service-card reveal">
+        <span class="service-num">05</span>
+        <svg class="service-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="20" cy="20" r="14" stroke="#2A5240" stroke-width="1.5" fill="none" opacity="0.25"/>
+          <path d="M20 6 C12 10 8 18 12 26 C16 30 24 30 28 26 C32 18 28 10 20 6Z" fill="#2A5240" opacity="0.2"/>
+          <path d="M20 14 C20 14 14 18 14 24 C14 26 16 28 20 28 C24 28 26 26 26 24 C26 18 20 14 20 14Z" fill="#2A5240" opacity="0.35"/>
+          <line x1="20" y1="14" x2="20" y2="28" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+        </svg>
+        <h3 class="service-name">Projetos Sustentáveis</h3>
+        <p class="service-desc">Desenvolvimento de projetos com foco em sustentabilidade ambiental, eficiência energética e uso racional de recursos, alinhados às demandas contemporâneas do setor da construção civil.</p>
+        <span class="service-arrow">
+          Saiba mais
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+      </div>
+
+      <!-- Gestão de Contratos -->
+      <div class="service-card reveal reveal-delay-1">
+        <span class="service-num">06</span>
+        <svg class="service-icon" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="8" y="6" width="24" height="30" rx="2" stroke="#2A5240" stroke-width="1.5" fill="none" opacity="0.35"/>
+          <line x1="13" y1="13" x2="27" y2="13" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+          <line x1="13" y1="19" x2="27" y2="19" stroke="#2A5240" stroke-width="1" stroke-linecap="round" opacity="0.3"/>
+          <line x1="13" y1="25" x2="22" y2="25" stroke="#2A5240" stroke-width="1" stroke-linecap="round" opacity="0.3"/>
+          <path d="M22 28 L25 31 L31 25" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <h3 class="service-name">Gestão de Contratos</h3>
+        <p class="service-desc">Gerenciamento estratégico de contratos de obras e serviços de engenharia, com controle de escopo, prazos, custos e conformidade contratual para máxima eficiência operacional.</p>
         <span class="service-arrow">
           Saiba mais
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -880,10 +1012,7 @@
   <section id="atuacao">
     <div class="atuacao-inner">
       <div class="atuacao-left">
-        <p class="section-label reveal" style="color:rgba(201,168,76,1);">
-          <span style="width:32px;height:1px;background:var(--accent);display:inline-block;margin-right:12px;vertical-align:middle;"></span>
-          Cobertura
-        </p>
+        <p class="atuacao-eyebrow reveal">Cobertura Nacional</p>
         <div class="atuacao-big reveal reveal-delay-1">
           TODO<br>
           <span>O BRASIL</span>
@@ -891,30 +1020,41 @@
         <p class="atuacao-body reveal reveal-delay-2">
           Nossa estrutura operacional nos permite atender licitantes e contratantes em qualquer estado do país. Da elaboração técnica à entrega final, a NRAJEBRENI está presente onde seu projeto precisa estar.
         </p>
-        <div style="margin-top:40px;" class="reveal reveal-delay-3">
-          <a href="#contato" style="display:inline-flex;align-items:center;gap:12px;padding:16px 32px;background:var(--accent);color:var(--dark);font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;text-decoration:none;border-radius:2px;transition:background 0.2s,transform 0.15s;" onmouseover="this.style.background='#E8C46A';this.style.transform='translateY(-1px)'" onmouseout="this.style.background='var(--accent)';this.style.transform='none'">
+        <div class="reveal reveal-delay-3">
+          <a href="#contato" class="btn-gold">
             Solicitar Proposta
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3.5 9h11M10 4.5l4.5 4.5-4.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
         </div>
       </div>
       <div class="atuacao-visual reveal reveal-delay-2">
-        <div class="brazil-outline">
-          <div class="brazil-pin">
-            <svg width="32" height="40" viewBox="0 0 32 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-bottom:12px;">
-              <path d="M16 0C7.163 0 0 7.163 0 16c0 12 16 24 16 24S32 28 32 16C32 7.163 24.837 0 16 0z" fill="#C9A84C" opacity="0.8"/>
-              <circle cx="16" cy="16" r="6" fill="#0E2240"/>
-            </svg>
-            <p class="pin-city">São Paulo — SP</p>
-            <p class="pin-label">Sede Operacional</p>
+        <div class="coverage-box">
+          <p class="coverage-label">Regiões atendidas</p>
+          <div class="coverage-regions">
+            <span class="region-tag">Norte</span>
+            <span class="region-tag">Nordeste</span>
+            <span class="region-tag">Centro-Oeste</span>
+            <span class="region-tag">Sudeste</span>
+            <span class="region-tag">Sul</span>
           </div>
         </div>
-        <div class="coverage-badges">
-          <span class="badge">Norte</span>
-          <span class="badge">Nordeste</span>
-          <span class="badge">Centro-Oeste</span>
-          <span class="badge">Sudeste</span>
-          <span class="badge">Sul</span>
+        <div class="coverage-stat">
+          <div class="cov-stat-item">
+            <div class="cov-stat-num">27<span>+</span></div>
+            <div class="cov-stat-lbl">Estados atendidos</div>
+          </div>
+          <div class="cov-stat-item">
+            <div class="cov-stat-num">SP</div>
+            <div class="cov-stat-lbl">Sede operacional</div>
+          </div>
+          <div class="cov-stat-item">
+            <div class="cov-stat-num">100<span>%</span></div>
+            <div class="cov-stat-lbl">Online &amp; presencial</div>
+          </div>
+          <div class="cov-stat-item">
+            <div class="cov-stat-num">B2B</div>
+            <div class="cov-stat-lbl">Foco corporativo</div>
+          </div>
         </div>
       </div>
     </div>
@@ -923,49 +1063,43 @@
   <!-- DIFERENCIAIS -->
   <section id="diferenciais">
     <div class="diferenciais-inner">
-      <div class="section-header" style="margin-bottom:0;">
-        <div>
-          <p class="section-label reveal" style="color:var(--accent);">
-            <span style="width:32px;height:1px;background:var(--accent);display:inline-block;margin-right:12px;vertical-align:middle;"></span>
-            Por que a NRAJEBRENI
-          </p>
-          <h2 class="section-heading dark reveal reveal-delay-1">Nossos<br>Diferenciais</h2>
-        </div>
+      <div style="max-width:600px;">
+        <p class="section-eyebrow reveal">Por que a NRAJEBRENI</p>
+        <h2 class="section-heading reveal reveal-delay-1">Nossos<br>Diferenciais</h2>
       </div>
       <div class="diferenciais-grid">
         <div class="diferencial-item reveal">
           <span class="dif-num">01</span>
-          <svg class="dif-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="24" cy="24" r="20" stroke="#0E2240" stroke-width="2" fill="none" opacity="0.15"/>
-            <path d="M14 24L21 31L34 18" stroke="#C9A84C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <circle cx="24" cy="24" r="10" stroke="#0E2240" stroke-width="1.5" fill="none" opacity="0.2"/>
+          <svg class="dif-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="22" cy="22" r="18" stroke="#2A5240" stroke-width="1.5" fill="none" opacity="0.15"/>
+            <path d="M13 22L20 29L33 17" stroke="#C9A84C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
           <h3 class="dif-title">Credibilidade Técnica</h3>
-          <p class="dif-desc">Projetos elaborados com rigor normativo e respaldo técnico, garantindo conformidade com as exigências da ABNT e dos órgãos fiscalizadores. Cada entrega é um documento de confiança.</p>
+          <p class="dif-desc">Projetos elaborados com rigor normativo, garantindo conformidade com as exigências da ABNT e dos órgãos fiscalizadores.</p>
         </div>
         <div class="diferencial-item reveal reveal-delay-1">
           <span class="dif-num">02</span>
-          <svg class="dif-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="8" y="38" width="32" height="4" rx="1" fill="#C9A84C" opacity="0.6"/>
-            <rect x="10" y="24" width="8" height="14" rx="1" fill="#0E2240" opacity="0.3"/>
-            <rect x="20" y="16" width="8" height="22" rx="1" fill="#0E2240" opacity="0.5"/>
-            <rect x="30" y="30" width="8" height="8" rx="1" fill="#0E2240" opacity="0.3"/>
-            <path d="M8 24 L16 18 L24 12 L36 20" stroke="#C9A84C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity="0.7"/>
+          <svg class="dif-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="8" y="36" width="28" height="3" rx="1" fill="#C9A84C" opacity="0.6"/>
+            <rect x="10" y="22" width="6" height="14" rx="1" fill="#2A5240" opacity="0.3"/>
+            <rect x="19" y="14" width="6" height="22" rx="1" fill="#2A5240" opacity="0.5"/>
+            <rect x="28" y="28" width="6" height="8" rx="1" fill="#2A5240" opacity="0.3"/>
+            <path d="M8 22 L14 16 L22 10 L34 18" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
           </svg>
           <h3 class="dif-title">Solidez Estrutural</h3>
-          <p class="dif-desc">Décadas de know-how em engenharia estrutural aplicadas a projetos que precisam suportar o peso real das operações. Nenhum detalhe técnico é negligenciado na nossa metodologia.</p>
+          <p class="dif-desc">Know-how em engenharia estrutural aplicado a projetos que precisam suportar o peso real das operações, sem negligenciar nenhum detalhe.</p>
         </div>
         <div class="diferencial-item reveal reveal-delay-2">
           <span class="dif-num">03</span>
-          <svg class="dif-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="8" y="8" width="32" height="32" rx="3" stroke="#0E2240" stroke-width="2" fill="none" opacity="0.2"/>
-            <rect x="14" y="14" width="8" height="8" rx="1" fill="#C9A84C" opacity="0.6"/>
-            <rect x="26" y="14" width="8" height="8" rx="1" fill="#0E2240" opacity="0.25"/>
-            <rect x="14" y="26" width="8" height="8" rx="1" fill="#0E2240" opacity="0.25"/>
-            <rect x="26" y="26" width="8" height="8" rx="1" fill="#C9A84C" opacity="0.6"/>
+          <svg class="dif-icon" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="8" y="8" width="28" height="28" rx="3" stroke="#2A5240" stroke-width="1.5" fill="none" opacity="0.2"/>
+            <rect x="13" y="13" width="8" height="8" rx="1" fill="#C9A84C" opacity="0.55"/>
+            <rect x="23" y="13" width="8" height="8" rx="1" fill="#2A5240" opacity="0.2"/>
+            <rect x="13" y="23" width="8" height="8" rx="1" fill="#2A5240" opacity="0.2"/>
+            <rect x="23" y="23" width="8" height="8" rx="1" fill="#C9A84C" opacity="0.55"/>
           </svg>
           <h3 class="dif-title">Profissionalismo Total</h3>
-          <p class="dif-desc">Atendimento consultivo, prazos cumpridos e documentação completa em cada processo. Trabalhamos como parceiros estratégicos, não apenas como fornecedores de projetos.</p>
+          <p class="dif-desc">Atendimento consultivo, prazos cumpridos e documentação completa. Somos parceiros estratégicos, não apenas fornecedores de projetos.</p>
         </div>
       </div>
     </div>
@@ -975,12 +1109,9 @@
   <section id="contato">
     <div class="contato-inner">
       <div class="contato-left">
-        <p class="section-label reveal" style="color:var(--accent);">
-          <span style="width:32px;height:1px;background:var(--accent);display:inline-block;margin-right:12px;vertical-align:middle;"></span>
-          Fale Conosco
-        </p>
+        <p class="section-eyebrow reveal">Fale Conosco</p>
         <h2 class="contato-heading reveal reveal-delay-1">
-          Inicie seu<br><span>projeto</span><br>conosco.
+          Inicie seu<br><em>projeto</em><br>conosco.
         </h2>
         <div class="contato-info reveal reveal-delay-2">
           <div class="contato-row">
@@ -995,18 +1126,43 @@
           </div>
           <div class="contato-row">
             <svg class="contato-icon" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 5a2 2 0 012-2h10a2 2 0 012 2v.5L10 11 3 5.5V5z" stroke="#C9A84C" stroke-width="1.5" fill="none"/>
+              <path d="M3 7.5l7 5 7-5V15a2 2 0 01-2 2H5a2 2 0 01-2-2V7.5z" stroke="#C9A84C" stroke-width="1.5" fill="none"/>
+            </svg>
+            <div>
+              <p class="contato-row-label">E-mail</p>
+              <p class="contato-row-value">
+                <a href="mailto:nrajebreni@jebreni.com.br">nrajebreni@jebreni.com.br</a><br>
+                <a href="mailto:projetojebreni@gmail.com">projetojebreni@gmail.com</a>
+              </p>
+            </div>
+          </div>
+          <div class="contato-row">
+            <svg class="contato-icon" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2 3a1 1 0 011-1h3l1.5 4L6 7.5a11 11 0 005.5 5.5l1.5-1.5 4 1.5v3a1 1 0 01-1 1C7 18 2 13 2 3z" stroke="#C9A84C" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            <div>
+              <p class="contato-row-label">Telefone / WhatsApp</p>
+              <p class="contato-row-value">
+                <a href="https://wa.me/5511949664472">(11) 94966-4472</a><br>
+                <a href="https://wa.me/5511945920648">(11) 94592-0648</a>
+              </p>
+            </div>
+          </div>
+          <div class="contato-row">
+            <svg class="contato-icon" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
               <circle cx="10" cy="10" r="8" stroke="#C9A84C" stroke-width="1.5" fill="none"/>
               <path d="M10 2v8l4 2" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
             </svg>
             <div>
-              <p class="contato-row-label">Horário</p>
+              <p class="contato-row-label">Horário de Atendimento</p>
               <p class="contato-row-value">Segunda a Sexta, 08h — 18h</p>
             </div>
           </div>
           <div class="contato-row">
             <svg class="contato-icon" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M2 4h16v12a1 1 0 01-1 1H3a1 1 0 01-1-1V4z" stroke="#C9A84C" stroke-width="1.5" fill="none"/>
-              <path d="M2 4l8 7 8-7" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+              <rect x="2" y="4" width="16" height="14" rx="1.5" stroke="#C9A84C" stroke-width="1.5" fill="none"/>
+              <path d="M6 2v4M14 2v4M2 9h16" stroke="#C9A84C" stroke-width="1.5" stroke-linecap="round" fill="none"/>
             </svg>
             <div>
               <p class="contato-row-label">Atuação</p>
@@ -1035,6 +1191,8 @@
               <option>Fundação</option>
               <option>Reformas</option>
               <option>Licitações</option>
+              <option>Projetos Sustentáveis</option>
+              <option>Gestão de Contratos</option>
             </select>
           </div>
           <div class="form-group">
@@ -1049,15 +1207,18 @@
 
   <!-- FOOTER -->
   <footer>
-    <p class="footer-brand">NRAJE<span>BRENI</span> &mdash; Gestão em Engenharia</p>
+    <div>
+      <p class="footer-brand">NRAJE<span>BRENI</span></p>
+      <p class="footer-sub">Gestão em Engenharia e Plataformas Financeiras</p>
+    </div>
     <p class="footer-copy">
-      &copy; 2025 NRAJEBRENI Gestão em Engenharia e Plataformas Financeiras<br>
+      &copy; 2025 NRAJEBRENI Gestão em Engenharia<br>
       São Paulo, SP &mdash; Brasil
     </p>
   </footer>
 
   <!-- WHATSAPP FLOAT -->
-  <a href="#contato" class="whatsapp-float" aria-label="Fale conosco">
+  <a href="https://wa.me/5511949664472" class="whatsapp-float" aria-label="Fale conosco pelo WhatsApp" target="_blank" rel="noopener">
     <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M14 2C7.373 2 2 7.373 2 14c0 2.12.553 4.108 1.52 5.832L2 26l6.37-1.506A11.94 11.94 0 0014 26c6.627 0 12-5.373 12-12S20.627 2 14 2z" fill="white"/>
       <path d="M19.5 17.5c-.3.8-1.5 1.5-2.1 1.6-.6.1-1.3.1-2-.2-.7-.3-1.5-.7-2.7-1.9-1.2-1.2-2-2.4-2.2-2.8-.2-.4-.1-1 .2-1.4l.6-.6c.2-.2.4-.2.6-.1l1.5.7c.2.1.3.3.2.5l-.4 1c.8 1.1 1.7 2 2.8 2.7l1-.4c.2-.1.4 0 .5.2l.7 1.5c.1.2 0 .4-.2.5l-.5.2z" fill="#25D366"/>
@@ -1080,7 +1241,7 @@
           observer.unobserve(e.target);
         }
       });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
     reveals.forEach(el => observer.observe(el));
 
     // Form
@@ -1089,11 +1250,9 @@
       const btn = e.target.querySelector('.btn-submit');
       btn.textContent = 'Solicitação enviada!';
       btn.style.background = '#1a6b3c';
-      btn.style.color = '#fff';
       setTimeout(() => {
-        btn.textContent = 'Enviar Solicitação →';
+        btn.textContent = 'Enviar Solicitação \u2192';
         btn.style.background = '';
-        btn.style.color = '';
         e.target.reset();
       }, 3000);
     }
