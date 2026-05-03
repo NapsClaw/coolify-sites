@@ -112,6 +112,39 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Plus Jakarta Sans'
 .ti{font-size:12px;font-weight:600;color:rgba(255,255,255,.88);display:inline-flex;align-items:center;gap:8px}
 .tdot{color:var(--g)}
 @keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.tv-panel{position:fixed;top:0;right:0;width:min(420px,92vw);height:100vh;background:rgba(10,10,14,.98);border-left:1px solid rgba(255,255,255,.08);box-shadow:-18px 0 40px rgba(0,0,0,.38);z-index:120;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .28s ease}
+.tv-panel.open{transform:translateX(0)}
+.tv-panel-hd{padding:18px 18px 14px;border-bottom:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.tv-panel-hd h3{font-size:15px;font-weight:900;color:#fff}
+.tv-panel-hd p{font-size:11px;color:rgba(255,255,255,.55);margin-top:4px}
+.tv-panel-close{width:36px;height:36px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:#fff;font-size:18px;cursor:pointer}
+.tv-panel-body{padding:16px 18px 20px;overflow:auto;display:flex;flex-direction:column;gap:14px}
+.tv-card{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:14px}
+.tv-card h4{font-size:11px;font-weight:800;color:#FFD700;text-transform:uppercase;letter-spacing:.12em;margin-bottom:10px}
+.tv-grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tv-field label{display:block;font-size:10px;font-weight:800;color:rgba(255,255,255,.45);letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px}
+.tv-field input,.tv-field select{width:100%;background:#15151c;border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:10px 12px;color:#fff;font:600 13px 'Plus Jakarta Sans',sans-serif;outline:none}
+.tv-field input:focus,.tv-field select:focus{border-color:rgba(204,0,0,.75)}
+.tv-actions{display:flex;gap:10px;flex-wrap:wrap}
+.tv-btn{border:none;border-radius:10px;padding:10px 14px;font:800 12px 'Plus Jakarta Sans',sans-serif;letter-spacing:.04em;cursor:pointer}
+.tv-btn.pri{background:var(--v);color:#fff}
+.tv-btn.sec{background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.1)}
+.tv-btn.warn{background:rgba(255,68,68,.18);color:#fff;border:1px solid rgba(255,68,68,.3)}
+.tv-list{display:flex;flex-direction:column;gap:8px;max-height:42vh;overflow:auto}
+.tv-item{display:flex;gap:10px;align-items:flex-start;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-left:3px solid rgba(255,255,255,.14);border-radius:12px;padding:10px 12px}
+.tv-item.called{opacity:.62;border-left-color:#4CAF50}
+.tv-item.pending{border-left-color:var(--v)}
+.tv-item-main{flex:1;min-width:0}
+.tv-item-main strong{display:block;font-size:14px;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tv-item-main span{display:block;font-size:11px;color:rgba(255,255,255,.56);margin-top:3px}
+.tv-item-badge{font-size:10px;font-weight:800;border-radius:999px;padding:4px 8px;background:rgba(255,255,255,.08);color:#fff;white-space:nowrap}
+.tv-item-btns{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.tv-mini{border:none;border-radius:8px;padding:7px 10px;font:800 11px 'Plus Jakarta Sans',sans-serif;cursor:pointer}
+.tv-mini.call{background:var(--v);color:#fff}
+.tv-mini.del{background:rgba(255,255,255,.08);color:#fff}
+.tv-empty{font-size:12px;color:rgba(255,255,255,.4);text-align:center;padding:12px 4px}
+.tv-overlay{position:fixed;inset:0;background:rgba(0,0,0,.36);z-index:110;opacity:0;pointer-events:none;transition:opacity .25s ease}
+.tv-overlay.open{opacity:1;pointer-events:auto}
 /* media query removida - TV sempre em tela cheia */
 </style>
 </head>
@@ -124,7 +157,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Plus Jakarta Sans'
 </div>
 <div class="hr">
 <div class="sbadge">Atendendo</div>
-<a href="chamada.html" target="_blank" style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);color:#fff;font-size:11px;font-weight:800;padding:5px 14px;border-radius:50px;text-decoration:none;letter-spacing:.05em;">📋 GERENCIAR</a>
+<button type="button" onclick="toggleTvPanel()" style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);color:#fff;font-size:11px;font-weight:800;padding:5px 14px;border-radius:50px;letter-spacing:.05em;cursor:pointer;">📋 PAINEL TV</button>
 <div><div class="ctm" id="ck">--:--</div><div class="cdt" id="cd">carregando...</div></div>
 </div>
 </header>
@@ -752,27 +785,32 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Plus Jakarta Sans'
   <script>
   (function(){
     function loadTvAgenda(){
+      var el = document.getElementById('tv-agenda-items');
+      if(!el) return;
       try {
-        var data = JSON.parse(localStorage.getItem('fisiot_patients')||'[]');
-        var el = document.getElementById('tv-agenda-items');
-        if(!el) return;
+        var data = (window.getTvPatients ? window.getTvPatients() : []).slice(0,8);
         if(!data.length){
           el.innerHTML = '<div style="text-align:center;color:rgba(255,255,255,0.3);font-size:13px;padding:30px;">Nenhum paciente cadastrado ainda</div>';
           return;
         }
-        el.innerHTML = data.slice(0,8).map(function(p){
-          var bg = p.status==='called' ? '#1a5c1a' : 'rgba(204,0,0,0.5)';
-          var label = p.status==='called' ? 'CHAMADO' : 'AGUARDANDO';
-          return '<div style="display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.05);border-radius:8px;padding:9px 14px;">'
-            + '<span style="font-size:clamp(12px,1.5vw,16px);color:#fff;font-weight:600;">' + (p.time||'') + ' &mdash; ' + (p.name||'') + '</span>'
-            + '<span style="font-size:10px;background:' + bg + ';color:#fff;padding:3px 10px;border-radius:20px;font-weight:700;">' + label + '</span>'
+        el.innerHTML = data.map(function(p){
+          var called = p.status==='called';
+          var bg = called ? '#1a5c1a' : 'rgba(204,0,0,0.5)';
+          var label = called ? 'CHAMADO' : 'PRONTO P/ CHAMAR';
+          var sub = [p.ginasio, p.profissional].filter(Boolean).join(' • ');
+          return '<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;background:rgba(255,255,255,0.05);border-radius:8px;padding:9px 14px;">'
+            + '<div style="min-width:0">'
+            + '<span style="display:block;font-size:clamp(12px,1.5vw,16px);color:#fff;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + (p.time||'') + ' &mdash; ' + (p.name||'Paciente') + '</span>'
+            + '<span style="display:block;font-size:10px;color:rgba(255,255,255,.55);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + sub + '</span>'
+            + '</div>'
+            + '<span style="font-size:10px;background:' + bg + ';color:#fff;padding:3px 10px;border-radius:20px;font-weight:700;white-space:nowrap;">' + label + '</span>'
             + '</div>';
         }).join('');
       } catch(e) {
-        var el2 = document.getElementById('tv-agenda-items');
-        if(el2) el2.innerHTML = '<div style="text-align:center;color:rgba(255,255,255,0.3);font-size:13px;padding:30px;">Agenda dispon&iacute;vel na recep&ccedil;&atilde;o</div>';
+        el.innerHTML = '<div style="text-align:center;color:rgba(255,255,255,0.3);font-size:13px;padding:30px;">Agenda indispon&iacute;vel no momento</div>';
       }
     }
+    window.loadTvAgenda = loadTvAgenda;
     loadTvAgenda();
     setInterval(loadTvAgenda, 10000);
   })();
@@ -948,6 +986,143 @@ var el=document.getElementById("ct");
 el.style.opacity="0";
 setTimeout(function(){el.innerHTML=chs[ci];el.style.opacity="1"},400);
 },12000);
+
+function normalizeTvPatient(p){
+  return {
+    id:p.id||('p-'+Date.now()+'-'+Math.random().toString(16).slice(2)),
+    name:p.name||p.nome||'Paciente',
+    time:p.time||p.horario||'',
+    ginasio:p.ginasio||p.room||'Ginásio 1',
+    profissional:p.profissional||p.doctor||'',
+    status:p.status==='called'?'called':'waiting',
+    createdAt:p.createdAt||Date.now()
+  };
+}
+window.getTvPatients=function(){
+  try{
+    var data=JSON.parse(localStorage.getItem('fisiot_patients')||'[]');
+    if(!Array.isArray(data)) return [];
+    return data.map(normalizeTvPatient).sort(function(a,b){
+      return (a.time||'').localeCompare(b.time||'') || a.name.localeCompare(b.name);
+    });
+  }catch(e){return []}
+};
+function saveTvPatients(list){
+  localStorage.setItem('fisiot_patients',JSON.stringify(list.map(normalizeTvPatient)));
+  if(window.loadTvAgenda) window.loadTvAgenda();
+  renderTvPanel();
+}
+function speakTvCall(data){
+  if('speechSynthesis' in window){
+    var msg='Paciente '+data.name+', dirija-se ao '+data.ginasio+(data.profissional?' com '+data.profissional:'')+(data.time?' às '+data.time:'')+'.';
+    window.speechSynthesis.cancel();
+    var utt=new SpeechSynthesisUtterance(msg);
+    utt.lang='pt-BR';utt.rate=0.85;utt.pitch=1;utt.volume=1;
+    var voices=window.speechSynthesis.getVoices();
+    var voz=voices.find(function(v){return v.lang==='pt-BR';})||voices.find(function(v){return v.lang&&v.lang.startsWith('pt');});
+    if(voz) utt.voice=voz;
+    window.speechSynthesis.speak(utt);
+  }
+}
+function updateTvCallBanner(data){
+  lastChamada=data.timestamp;
+  var el=document.getElementById('ct');
+  if(!el) return;
+  el.style.opacity='0';
+  setTimeout(function(){
+    el.innerHTML='<strong style="color:#FFD700">📢 CHAMADA:</strong> Paciente <span class="d">'+data.name+'</span> &mdash; '+data.ginasio+(data.profissional?' &mdash; <span class="d">'+data.profissional+'</span>':'')+(data.time?' &mdash; '+data.time:'');
+    el.style.opacity='1';
+  },220);
+}
+function callTvPatient(id){
+  var list=window.getTvPatients();
+  var idx=list.findIndex(function(p){return p.id===id;});
+  if(idx===-1) return;
+  list[idx].status='called';
+  var payload={name:list[idx].name,ginasio:list[idx].ginasio,profissional:list[idx].profissional,time:list[idx].time,timestamp:Date.now()};
+  localStorage.setItem('fisiot_chamada',JSON.stringify({nome:payload.name,ginasio:payload.ginasio,profissional:payload.profissional,horario:payload.time,timestamp:payload.timestamp}));
+  saveTvPatients(list);
+  updateTvCallBanner(payload);
+  speakTvCall(payload);
+}
+function removeTvPatient(id){
+  saveTvPatients(window.getTvPatients().filter(function(p){return p.id!==id;}));
+}
+function addTvPatient(){
+  var name=(document.getElementById('tvp-name').value||'').trim();
+  var time=document.getElementById('tvp-time').value||'';
+  var ginasio=document.getElementById('tvp-ginasio').value||'Ginásio 1';
+  var profissional=(document.getElementById('tvp-profissional').value||'').trim();
+  if(!name||!time){return;}
+  var list=window.getTvPatients();
+  list.push({id:'p-'+Date.now(),name:name,time:time,ginasio:ginasio,profissional:profissional,status:'waiting',createdAt:Date.now()});
+  saveTvPatients(list);
+  document.getElementById('tvp-name').value='';
+  document.getElementById('tvp-time').value='';
+  document.getElementById('tvp-profissional').value='';
+}
+function callNextTvPatient(){
+  var next=window.getTvPatients().find(function(p){return p.status!=='called';});
+  if(next) callTvPatient(next.id);
+}
+function clearCalledTvPatients(){
+  saveTvPatients(window.getTvPatients().filter(function(p){return p.status!=='called';}));
+}
+function resetTvAgenda(){
+  localStorage.removeItem('fisiot_patients');
+  if(window.loadTvAgenda) window.loadTvAgenda();
+  renderTvPanel();
+}
+function renderTvPanel(){
+  var list=window.getTvPatients();
+  var host=document.getElementById('tv-panel-list');
+  if(!host) return;
+  if(!list.length){
+    host.innerHTML='<div class="tv-empty">Nenhum paciente cadastrado na TV ainda.</div>';
+    return;
+  }
+  host.innerHTML=list.map(function(p){
+    var called=p.status==='called';
+    return '<div class="tv-item '+(called?'called':'pending')+'">'
+      + '<div class="tv-item-main">'
+      + '<strong>'+p.time+' — '+p.name+'</strong>'
+      + '<span>'+[p.ginasio,p.profissional].filter(Boolean).join(' • ')+'</span>'
+      + '<div class="tv-item-btns">'
+      + (called ? '<button class="tv-mini del" onclick="restoreTvPatient(\''+p.id+'\')">↺ Reabrir</button>' : '<button class="tv-mini call" onclick="callTvPatient(\''+p.id+'\')">📢 Chamar</button>')
+      + '<button class="tv-mini del" onclick="removeTvPatient(\''+p.id+'\')">🗑 Remover</button>'
+      + '</div>'
+      + '</div>'
+      + '<div class="tv-item-badge">'+(called?'CHAMADO':'AGUARDANDO')+'</div>'
+      + '</div>';
+  }).join('');
+}
+function restoreTvPatient(id){
+  var list=window.getTvPatients();
+  var idx=list.findIndex(function(p){return p.id===id;});
+  if(idx===-1) return;
+  list[idx].status='waiting';
+  saveTvPatients(list);
+}
+function toggleTvPanel(force){
+  var panel=document.getElementById('tv-panel');
+  var overlay=document.getElementById('tv-overlay');
+  if(!panel||!overlay) return;
+  var open=typeof force==='boolean'?force:!panel.classList.contains('open');
+  panel.classList.toggle('open',open);
+  overlay.classList.toggle('open',open);
+  if(open) renderTvPanel();
+}
+window.addTvPatient=addTvPatient;
+window.callTvPatient=callTvPatient;
+window.callNextTvPatient=callNextTvPatient;
+window.clearCalledTvPatients=clearCalledTvPatients;
+window.resetTvAgenda=resetTvAgenda;
+window.toggleTvPanel=toggleTvPanel;
+window.restoreTvPatient=restoreTvPatient;
+window.removeTvPatient=removeTvPatient;
+window.renderTvPanel=renderTvPanel;
+if(window.loadTvAgenda) window.loadTvAgenda();
+renderTvPanel();
 </script>
 <script>
 (function(){
@@ -981,6 +1156,56 @@ setTimeout(function(){el.innerHTML=chs[ci];el.style.opacity="1"},400);
   setInterval(nextProd,4000);
 })();
 </script>
+
+<div class="tv-overlay" id="tv-overlay" onclick="toggleTvPanel(false)"></div>
+<aside class="tv-panel" id="tv-panel">
+  <div class="tv-panel-hd">
+    <div>
+      <h3>Painel da TV principal</h3>
+      <p>Cadastre e chame pacientes sem depender de outro aparelho.</p>
+    </div>
+    <button class="tv-panel-close" type="button" onclick="toggleTvPanel(false)">×</button>
+  </div>
+  <div class="tv-panel-body">
+    <section class="tv-card">
+      <h4>Adicionar paciente</h4>
+      <div class="tv-grid2">
+        <div class="tv-field" style="grid-column:1 / -1">
+          <label>Nome do paciente</label>
+          <input id="tvp-name" type="text" placeholder="Ex.: Maria Silva"/>
+        </div>
+        <div class="tv-field">
+          <label>Horário</label>
+          <input id="tvp-time" type="time"/>
+        </div>
+        <div class="tv-field">
+          <label>Ginásio</label>
+          <select id="tvp-ginasio">
+            <option>Ginásio 1</option>
+            <option>Ginásio 2</option>
+            <option>Ginásio 3</option>
+          </select>
+        </div>
+        <div class="tv-field" style="grid-column:1 / -1">
+          <label>Profissional</label>
+          <input id="tvp-profissional" type="text" placeholder="Ex.: Dra. Lívia"/>
+        </div>
+      </div>
+      <div class="tv-actions" style="margin-top:12px">
+        <button class="tv-btn pri" type="button" onclick="addTvPatient()">+ Adicionar na agenda</button>
+        <button class="tv-btn sec" type="button" onclick="callNextTvPatient()">📢 Chamar próximo</button>
+      </div>
+    </section>
+    <section class="tv-card">
+      <h4>Agenda da TV</h4>
+      <div id="tv-panel-list" class="tv-list"></div>
+      <div class="tv-actions" style="margin-top:12px">
+        <button class="tv-btn sec" type="button" onclick="clearCalledTvPatients()">Limpar chamados</button>
+        <button class="tv-btn warn" type="button" onclick="resetTvAgenda()">Zerar agenda</button>
+      </div>
+    </section>
+  </div>
+</aside>
 
 </body>
 </html>
