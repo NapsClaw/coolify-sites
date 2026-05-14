@@ -2,125 +2,158 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title>Painel de Chamada — Fisiot</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
     *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:'Plus Jakarta Sans',sans-serif;background:#0d0d1a;color:#fff;min-height:100vh;padding:16px}
-    .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px}
-    .logo{display:flex;align-items:center;gap:10px}
-    .logo-icon{width:36px;height:36px;background:#CC0000;border-radius:7px;display:grid;grid-template-columns:1fr 1fr 1fr;grid-template-rows:1fr 1fr 1fr;gap:2px;padding:4px}
-    .logo-icon span{background:#fff;border-radius:1px}
-    .logo-icon span:nth-child(2),.logo-icon span:nth-child(4),.logo-icon span:nth-child(6),.logo-icon span:nth-child(8){background:#CC0000}
-    .logo h1{font-size:1.1rem;font-weight:800}
-    .logo h1 small{display:block;font-size:.65rem;color:rgba(255,255,255,.5);font-weight:500}
-    .relogio{font-size:1.4rem;font-weight:800;color:#FFD700;background:#1a1a2e;padding:7px 16px;border-radius:9px;border:1px solid rgba(204,0,0,.3)}
-    .periodo-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:50px;font-size:.8rem;font-weight:700}
+    body{font-family:'Plus Jakarta Sans',sans-serif;background:#0d0d1a;color:#fff;min-height:100vh;padding:18px;font-size:16px}
+
+    /* TOPO */
+    .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:12px}
+    .logo{display:flex;align-items:center;gap:12px}
+    .logo-icon{width:44px;height:44px;background:#CC0000;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:24px;color:#fff;font-weight:900;flex-shrink:0}
+    .logo h1{font-size:1.3rem;font-weight:800}
+    .logo h1 small{display:block;font-size:.72rem;color:rgba(255,255,255,.5);font-weight:500}
+    .relogio{font-size:1.7rem;font-weight:800;color:#FFD700;background:#1a1a2e;padding:9px 20px;border-radius:10px;border:1px solid rgba(204,0,0,.3);letter-spacing:2px}
+    .periodo-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:50px;font-size:.9rem;font-weight:700}
     .periodo-badge.manha{background:rgba(255,215,0,.15);border:1px solid rgba(255,215,0,.4);color:#FFD700}
     .periodo-badge.tarde{background:rgba(255,140,0,.15);border:1px solid rgba(255,140,0,.4);color:#FF8C00}
-    .tab-bar{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
-    .tab{padding:7px 16px;border-radius:8px;font-size:.82rem;font-weight:700;cursor:pointer;border:none;font-family:inherit;transition:all .2s}
-    .tab.on{background:#CC0000;color:#fff}
+
+    /* ABAS */
+    .tab-bar{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap}
+    .tab{padding:10px 20px;border-radius:10px;font-size:.9rem;font-weight:800;cursor:pointer;border:none;font-family:inherit;transition:all .2s;letter-spacing:.02em}
+    .tab.on{background:#CC0000;color:#fff;box-shadow:0 4px 14px rgba(204,0,0,.4)}
     .tab.off{background:rgba(255,255,255,.07);color:rgba(255,255,255,.5)}
-    /* Grid ginásios */
-    .gin-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
-    .gin-card{background:#1a1a2e;border:1px solid rgba(204,0,0,.25);border-radius:14px;overflow:hidden}
-    .gin-head{background:rgba(204,0,0,.15);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(204,0,0,.2)}
-    .gin-head h2{font-size:1.1rem;font-weight:800;color:#CC0000;text-transform:uppercase;letter-spacing:.5px}
-    .gin-prof{font-size:.75rem;color:rgba(255,255,255,.5);margin-top:2px}
-    .gin-body{padding:12px}
-    /* Grupo de horário */
-    .grupo{background:#0d0d1a;border-radius:10px;margin-bottom:10px;overflow:hidden;border:1px solid rgba(255,255,255,.06)}
-    .grupo-head{padding:9px 12px;display:flex;align-items:center;justify-content:space-between;background:#13132a;cursor:pointer}
-    .grupo-hora{font-size:1.18rem;font-weight:800;color:#FFD700}
-    .grupo-info{font-size:.72rem;color:rgba(255,255,255,.4)}
-    .grupo-actions{display:flex;gap:6px;align-items:center}
-    .btn-chamar-grupo{background:#CC0000;color:#fff;border:none;border-radius:6px;padding:6px 14px;font-size:.82rem;font-weight:800;cursor:pointer;font-family:inherit;transition:all .2s;letter-spacing:.03em}
-    .btn-chamar-grupo:hover{background:#a80000}
-    .btn-small{background:rgba(255,255,255,.07);color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.1);border-radius:5px;padding:3px 8px;font-size:.68rem;cursor:pointer;font-family:inherit}
-    .grupo-lista{padding:8px 12px}
-    /* Item paciente */
-    .pac-item{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;margin-bottom:6px;background:#1a1a2e;border-left:3px solid #333;transition:all .4s;cursor:pointer}
-    .pac-item.atual{border-left-color:#FFD700;background:#1a1800;box-shadow:0 0 10px rgba(255,215,0,.1)}
+    .tab.off:hover{background:rgba(255,255,255,.12)}
+
+    /* ATIVAR BANNER */
+    #ativar-banner{background:#1a1800;border:2px solid #FFD700;border-radius:14px;padding:16px 22px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+    #ativar-banner .titulo{font-size:.9rem;color:#FFD700;font-weight:800;text-transform:uppercase;letter-spacing:1px}
+    #ativar-banner .sub{font-size:.85rem;color:rgba(255,255,255,.6);margin-top:4px}
+    #btn-ativar{background:#FFD700;color:#000;border:none;border-radius:10px;padding:12px 24px;font-size:1rem;font-weight:800;cursor:pointer;font-family:inherit;letter-spacing:.03em}
+    #btn-ativar:hover{background:#e6c200}
+
+    /* GRID GINÁSIOS */
+    .gin-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+
+    /* CARD GINÁSIO */
+    .gin-card{background:#1a1a2e;border:1px solid rgba(204,0,0,.25);border-radius:16px;overflow:hidden}
+    .gin-head{background:rgba(204,0,0,.18);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(204,0,0,.25)}
+    .gin-head h2{font-size:1.25rem;font-weight:800;color:#CC0000;text-transform:uppercase;letter-spacing:.5px}
+    .gin-prof{font-size:.85rem;color:rgba(255,255,255,.6);margin-top:3px}
+    .gin-body{padding:14px}
+
+    /* GRUPO DE HORÁRIO */
+    .grupo{background:#0d0d1a;border-radius:12px;margin-bottom:12px;overflow:hidden;border:1px solid rgba(255,255,255,.07)}
+    .grupo-head{padding:12px 16px;display:flex;align-items:center;justify-content:space-between;background:#13132a;flex-wrap:wrap;gap:8px}
+    .grupo-hora{font-size:1.7rem;font-weight:900;color:#FFD700;letter-spacing:.5px}
+    .grupo-info{font-size:.8rem;color:rgba(255,255,255,.4);margin-top:2px}
+    .grupo-actions{display:flex;gap:8px;align-items:center}
+
+    /* BOTÃO CHAMAR — principal */
+    .btn-chamar{
+      background:linear-gradient(135deg,#CC0000,#990000);
+      color:#fff;border:none;border-radius:10px;
+      padding:10px 20px;font-size:1rem;font-weight:800;
+      cursor:pointer;font-family:inherit;
+      transition:all .2s;letter-spacing:.03em;
+      box-shadow:0 4px 12px rgba(204,0,0,.4);
+      white-space:nowrap;
+    }
+    .btn-chamar:hover{background:linear-gradient(135deg,#e60000,#b30000);box-shadow:0 6px 18px rgba(204,0,0,.6)}
+    .btn-chamar:disabled{opacity:.35;cursor:not-allowed;box-shadow:none}
+    .btn-limpar{background:rgba(255,255,255,.07);color:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:8px 12px;font-size:.8rem;cursor:pointer;font-family:inherit;transition:all .2s}
+    .btn-limpar:hover{background:rgba(255,0,0,.15);color:#ff7777}
+
+    /* ITEM PACIENTE */
+    .pac-lista{padding:10px 14px}
+    .pac-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;margin-bottom:8px;background:#1a1a2e;border-left:3px solid #333;transition:all .35s;cursor:pointer}
     .pac-item.chamado{border-left-color:#4CAF50;background:#0a1a0a;opacity:.55}
+    .pac-item.atual{border-left-color:#FFD700;background:#1a1800}
     .pac-item.pendente{border-left-color:rgba(204,0,0,.4)}
-    .pac-num{font-size:.7rem;font-weight:800;color:rgba(255,255,255,.3);min-width:16px;text-align:center}
-    .pac-nome{flex:1;font-size:.88rem;font-weight:700;color:rgba(255,255,255,.55)}
-    .pac-status{font-size:.65rem;padding:2px 7px;border-radius:12px;font-weight:700;white-space:nowrap}
+    .pac-num{font-size:.8rem;font-weight:800;color:rgba(255,255,255,.3);min-width:20px;text-align:center}
+    .pac-nome{flex:1;font-size:1rem;font-weight:700;color:rgba(255,255,255,.6)}
+    .pac-status{font-size:.75rem;padding:3px 9px;border-radius:12px;font-weight:700;white-space:nowrap}
     .pac-status.ok{background:rgba(76,175,80,.2);color:#4CAF50}
     .pac-status.atual{background:rgba(255,215,0,.2);color:#FFD700}
-    .pac-status.esp{background:rgba(255,255,255,.07);color:rgba(255,255,255,.35)}
-    .pac-btn{background:rgba(204,0,0,.15);color:#ff7777;border:1px solid rgba(204,0,0,.25);border-radius:5px;padding:3px 8px;font-size:.65rem;cursor:pointer;font-family:inherit;transition:all .2s}
-    .pac-btn:hover{background:#CC0000;color:#fff}
-    .pac-del{background:rgba(255,255,255,.05);color:rgba(255,255,255,.3);border:1px solid rgba(255,255,255,.08);border-radius:5px;padding:3px 6px;font-size:.65rem;cursor:pointer;font-family:inherit}
-    /* Adicionar inline */
-    .add-inline{padding:8px 12px;border-top:1px solid rgba(255,255,255,.05)}
-    .add-inline-row{display:flex;gap:6px}
-    .add-inline button{background:#CC0000;color:#fff;border:none;border-radius:7px;padding:7px 16px;font-size:.82rem;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;width:100%}
-    .add-inline button:hover{background:#a80000}
-    /* Banner chamada */
-    .chamada-banner{display:none;position:fixed;top:16px;right:16px;background:#0a2010;border:2px solid #4CAF50;border-radius:12px;padding:14px 18px;max-width:300px;z-index:999;animation:slidein .3s ease}
-    .chamada-banner.show{display:block}
-    @keyframes slidein{from{opacity:0;transform:translateY(-15px)}to{opacity:1;transform:translateY(0)}}
-    .chamada-banner h3{font-size:.7rem;color:#4CAF50;text-transform:uppercase;letter-spacing:1px;margin-bottom:5px}
-    .chamada-banner p{font-size:.9rem;font-weight:700;color:#fff}
-    .chamada-banner span{color:#FFD700}
-    /* Form chamar agora */
-    .form-card{background:#1a1a2e;border:1px solid rgba(204,0,0,.25);border-radius:14px;padding:20px;max-width:460px;margin:0 auto}
-    .form-card h2{font-size:.95rem;font-weight:700;color:#CC0000;margin-bottom:16px;text-transform:uppercase;letter-spacing:.5px}
-    .field{margin-bottom:12px}
-    label{display:block;font-size:.7rem;font-weight:700;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px}
-    input,select{width:100%;background:#0d0d1a;border:1px solid rgba(255,255,255,.1);border-radius:7px;padding:9px 12px;font-size:.9rem;color:#fff;font-family:inherit;outline:none;transition:border .2s}
+    .pac-status.esp{background:rgba(255,255,255,.07);color:rgba(255,255,255,.3)}
+    .pac-btn-ch{background:rgba(204,0,0,.18);color:#ff8888;border:1px solid rgba(204,0,0,.3);border-radius:6px;padding:4px 10px;font-size:.8rem;cursor:pointer;font-family:inherit;transition:all .2s}
+    .pac-btn-ch:hover{background:#CC0000;color:#fff}
+    .pac-del{background:rgba(255,255,255,.05);color:rgba(255,255,255,.25);border:1px solid rgba(255,255,255,.08);border-radius:6px;padding:4px 8px;font-size:.75rem;cursor:pointer;font-family:inherit}
+    .pac-del:hover{color:#ff5555}
+
+    /* ADICIONAR PACIENTE */
+    .add-area{padding:10px 14px;border-top:1px solid rgba(255,255,255,.06)}
+    .add-area button{width:100%;background:rgba(204,0,0,.15);color:#ff8888;border:1px solid rgba(204,0,0,.25);border-radius:9px;padding:10px;font-size:.9rem;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s}
+    .add-area button:hover{background:#CC0000;color:#fff}
+
+    /* AVISO CHAMADA (top-right) */
+    .ch-banner{display:none;position:fixed;top:18px;right:18px;background:#0a2010;border:2px solid #4CAF50;border-radius:14px;padding:16px 22px;max-width:380px;z-index:999;animation:slideIn .3s ease}
+    .ch-banner.show{display:block}
+    @keyframes slideIn{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:translateY(0)}}
+    .ch-banner-tit{font-size:.75rem;color:#4CAF50;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+    .dot-green{width:8px;height:8px;background:#4CAF50;border-radius:50%;animation:blink 1.5s infinite;display:inline-block}
+    @keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+    .ch-banner-txt{font-size:1rem;font-weight:700;color:#fff;line-height:1.4}
+
+    /* ABA CHAMAR AGORA */
+    .form-card{background:#1a1a2e;border:1px solid rgba(204,0,0,.25);border-radius:16px;padding:24px;max-width:480px;margin:0 auto}
+    .form-card h2{font-size:1.1rem;font-weight:800;color:#CC0000;margin-bottom:20px;text-transform:uppercase;letter-spacing:.5px}
+    .field{margin-bottom:14px}
+    label{display:block;font-size:.75rem;font-weight:700;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.8px;margin-bottom:5px}
+    input,select{width:100%;background:#0d0d1a;border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:11px 14px;font-size:1rem;color:#fff;font-family:inherit;outline:none;transition:border .2s}
     input:focus,select:focus{border-color:#CC0000}
     select option{background:#0d0d1a}
-    .btn{width:100%;background:#CC0000;color:#fff;border:none;border-radius:9px;padding:12px;font-size:.85rem;font-weight:800;cursor:pointer;margin-top:4px;transition:all .2s;text-transform:uppercase;letter-spacing:.8px;font-family:inherit}
-    .btn:hover{background:#a80000}
-    .ok-msg{display:none;margin-top:10px;background:#0d1a0d;border:1px solid #4CAF50;border-radius:7px;padding:10px;text-align:center;color:#4CAF50;font-weight:700;font-size:.85rem}
-    .empty{color:rgba(255,255,255,.25);font-size:.8rem;text-align:center;padding:14px}
-    .dot{width:7px;height:7px;background:#4CAF50;border-radius:50%;animation:blink 1.5s infinite;display:inline-block;margin-right:5px}
-    @keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+    .btn-enviar{width:100%;background:linear-gradient(135deg,#CC0000,#990000);color:#fff;border:none;border-radius:10px;padding:14px;font-size:1rem;font-weight:800;cursor:pointer;margin-top:6px;transition:all .2s;text-transform:uppercase;letter-spacing:.8px;font-family:inherit;box-shadow:0 4px 14px rgba(204,0,0,.35)}
+    .btn-enviar:hover{background:linear-gradient(135deg,#e60000,#b30000)}
+    .ok-msg{display:none;margin-top:12px;background:#0d1a0d;border:1px solid #4CAF50;border-radius:8px;padding:12px;text-align:center;color:#4CAF50;font-weight:700;font-size:.95rem}
+
+    .empty-msg{color:rgba(255,255,255,.25);font-size:.85rem;text-align:center;padding:16px}
   </style>
 </head>
 <body>
 
-<div class="chamada-banner" id="chamada-banner">
-  <h3><span class="dot"></span>Chamada realizada</h3>
-  <p id="chamada-banner-txt"></p>
+<!-- BANNER CHAMADA -->
+<div class="ch-banner" id="ch-banner">
+  <div class="ch-banner-tit"><span class="dot-green"></span>Chamada enviada para a TV</div>
+  <div class="ch-banner-txt" id="ch-banner-txt"></div>
 </div>
 
+<!-- TOPO -->
 <div class="top">
   <div class="logo">
-    <div class="logo-icon"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
-    <h1>TV Fisiot <small>Painel de Chamada</small></h1>
+    <div class="logo-icon">+</div>
+    <h1>TV Fisiot <small>Painel de Chamada de Pacientes</small></h1>
   </div>
-  <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+  <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
     <div id="periodo-badge" class="periodo-badge manha">☀️ Manhã</div>
     <div class="relogio" id="relogio">--:--</div>
   </div>
 </div>
 
+<!-- ABAS -->
 <div class="tab-bar">
   <button class="tab on" id="tab1" onclick="trocarAba(1)">📋 Agenda do Dia</button>
   <button class="tab off" id="tab2" onclick="trocarAba(2)">📢 Chamar Agora</button>
 </div>
 
-<!-- ABA 1: Agenda -->
+<!-- ABA 1: AGENDA -->
 <div id="aba1">
-  <div id="ativar-banner" style="background:#1a1800;border:2px solid #FFD700;border-radius:12px;padding:14px 18px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
+  <div id="ativar-banner">
     <div>
-      <div style="font-size:.8rem;color:#FFD700;font-weight:700;text-transform:uppercase;letter-spacing:1px">🔔 Chamada Automática</div>
-      <div id="ativar-status" style="font-size:.85rem;color:rgba(255,255,255,.6);margin-top:3px">Clique para ativar — necessário uma vez por dia</div>
+      <div class="titulo">🔔 Chamada Automática</div>
+      <div id="ativar-status" class="sub">Clique para ativar — necessário uma vez ao abrir o painel</div>
     </div>
-    <button id="btn-ativar" onclick="ativarAudio()" style="background:#FFD700;color:#000;border:none;border-radius:9px;padding:10px 20px;font-size:.9rem;font-weight:800;cursor:pointer;font-family:inherit">▶ ATIVAR AGORA</button>
+    <button id="btn-ativar" onclick="ativarAudio()">▶ ATIVAR AGORA</button>
   </div>
   <div id="gin-grid" class="gin-grid"></div>
 </div>
 
-<!-- ABA 2: Chamar agora -->
+<!-- ABA 2: CHAMAR AGORA -->
 <div id="aba2" style="display:none">
   <div class="form-card">
-    <h2>📢 Chamar Agora</h2>
+    <h2>📢 Chamar Pacientes Agora</h2>
     <div class="field">
       <label>Ginásio</label>
       <select id="now-gin" onchange="atualizarProfNow()">
@@ -130,454 +163,414 @@
       </select>
     </div>
     <div class="field">
-      <label>Profissional</label>
-      <div id="now-prof-display" style="background:#0d0d1a;border:1px solid rgba(255,255,255,.1);border-radius:7px;padding:9px 12px;font-size:.88rem;color:rgba(255,255,255,.6)">—</div>
+      <label>Profissional responsável</label>
+      <div id="now-prof" style="background:#0d0d1a;border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:11px 14px;font-size:1rem;color:rgba(255,255,255,.65)">—</div>
     </div>
-    <button class="btn" onclick="chamarAgora()">📢 CHAMAR AGORA</button>
+    <div class="field">
+      <label>Horário (opcional)</label>
+      <input type="text" id="now-hora" placeholder="ex: 14:20" maxlength="5">
+    </div>
+    <button class="btn-enviar" onclick="chamarAgora()">📢 CHAMAR NA TV AGORA</button>
     <div class="ok-msg" id="now-ok">✅ Chamada enviada para a TV!</div>
   </div>
 </div>
 
 <script>
 // ============================================================
-// CONFIGURAÇÃO DOS GINÁSIOS
+// CONFIG GINÁSIOS (grade correta conforme briefing)
 // ============================================================
 const CFG = {
-  G1: {
-    nome: 'Ginásio 1',
-    prof: {
-      manha: { todos: 'Dra. Bárbara' },
-      tarde:  { '135': 'Dra. Natália', '24': 'Dra. Kênia' }
+  G1:{
+    nome:'Ginásio 1',
+    prof:{
+      manha:{ todos:'Dra. Bárbara' },
+      tarde:{ '135':'Dra. Nathalia', '24':'Dra. Bárbara' }
     },
-    grupos: {
-      manha: ['07:00','07:40','08:20','09:00','09:40','10:20'],
-      tarde:  ['13:00','13:40','14:20','15:00','15:40','16:20','17:00']
+    grupos:{
+      manha:['07:00','07:40','08:20','09:00','09:40','10:20'],
+      tarde:{
+        '135':['13:00','13:40','14:20','15:00','15:40','16:20','17:00'],
+        '24': ['15:00','15:40','16:20','17:00']
+      }
     },
-    maxPorGrupo: 6
+    max:6
   },
-  G2: {
-    nome: 'Ginásio 2',
-    prof: {
-      manha: { todos: 'Dra. Lívia' },
-      tarde:  { todos: 'Dra. Miriam' }
+  G2:{
+    nome:'Ginásio 2',
+    prof:{
+      manha:{ todos:'Dra. Lívia' },
+      tarde:{ todos:'Dra. Mirian' }
     },
-    grupos: {
-      manha: ['07:20','08:00','08:40','09:20','10:00','10:40'],
-      tarde:  ['13:00','13:40','14:20','15:00','15:40','16:20']
+    grupos:{
+      manha:['07:20','08:00','08:40','09:20','10:00','10:40'],
+      tarde:['13:00','13:40','14:20','15:00','15:40','16:20']
     },
-    maxPorGrupo: 6
+    max:6
   },
-  G3: {
-    nome: 'Ginásio 3',
-    prof: {
-      manha: { '135': 'Dra. Priscila', '24': 'Dra. Daniela (Neuro)' },
-      tarde:  null
+  G3:{
+    nome:'Ginásio 3',
+    prof:{
+      manha:{ '135':'Dra. Priscila', '24':'Dra. Daniela (Neuro)' },
+      tarde:null
     },
-    grupos: {
-      manha: { '135': ['07:00','07:20','08:00'], '24': ['07:40','08:20','09:00','09:40','10:20','11:00'] },
-      tarde:  []
+    grupos:{
+      manha:{
+        '135':['07:00','07:20','08:00'],
+        '24': ['07:40','08:20','09:00','09:40','10:20','11:00']
+      },
+      tarde:[]
     },
-    maxPorGrupo: 6
+    max:6
   }
 };
 
-// Dia: Seg/Qua/Sex = '135', Ter/Qui = '24'
-function getDiaTipo() {
-  const d = new Date().getDay();
-  return [1,3,5].includes(d) ? '135' : '24';
+// ============================================================
+// HELPERS
+// ============================================================
+function getDiaTipo(){ const d=new Date().getDay(); return [1,3,5].includes(d)?'135':'24'; }
+function getPeriodo(h){ return parseInt(h.split(':')[0])<13?'manha':'tarde'; }
+function getHora(){ const n=new Date(); return (n.getHours()<10?'0':'')+n.getHours()+':'+(n.getMinutes()<10?'0':'')+n.getMinutes(); }
+
+function getProfissional(ginId,periodo){
+  const p=CFG[ginId].prof[periodo];
+  if(!p) return null;
+  if(p.todos) return p.todos;
+  return p[getDiaTipo()]||null;
 }
 
-function getPeriodo(h) {
-  return parseInt(h.split(':')[0]) < 13 ? 'manha' : 'tarde';
-}
-
-function getHoraAtual() {
-  const n = new Date();
-  return n.getHours().toString().padStart(2,'0') + ':' + n.getMinutes().toString().padStart(2,'0');
-}
-
-function getProfissional(ginId, periodo) {
-  const p = CFG[ginId].prof[periodo];
-  if (!p) return null;
-  if (p.todos) return p.todos;
-  return p[getDiaTipo()] || null;
-}
-
-function getGrupos(ginId, periodo) {
-  const g = CFG[ginId].grupos[periodo];
-  if (!g) return [];
-  if (Array.isArray(g)) return g;
-  return g[getDiaTipo()] || [];
+function getGrupos(ginId,periodo){
+  const g=CFG[ginId].grupos[periodo];
+  if(!g||!g.length) return [];
+  if(Array.isArray(g)) return g;
+  return g[getDiaTipo()]||[];
 }
 
 // ============================================================
 // RELÓGIO
 // ============================================================
-function tick() {
-  const h = getHoraAtual();
-  document.getElementById('relogio').textContent = h;
-  const p = getPeriodo(h);
-  const b = document.getElementById('periodo-badge');
-  b.className = 'periodo-badge ' + p;
-  b.innerHTML = p === 'manha' ? '☀️ Manhã' : '🌤️ Tarde';
+function tick(){
+  const h=getHora();
+  document.getElementById('relogio').textContent=h;
+  const p=getPeriodo(h);
+  const b=document.getElementById('periodo-badge');
+  b.className='periodo-badge '+p;
+  b.innerHTML=p==='manha'?'☀️ Manhã':'🌤️ Tarde';
 }
-tick(); setInterval(tick, 1000);
+tick(); setInterval(tick,1000);
 
 // ============================================================
 // ABAS
 // ============================================================
-function trocarAba(n) {
-  [1,2].forEach(i => {
-    document.getElementById('aba'+i).style.display = i===n?'block':'none';
-    document.getElementById('tab'+i).className = 'tab '+(i===n?'on':'off');
+function trocarAba(n){
+  [1,2].forEach(i=>{
+    document.getElementById('aba'+i).style.display=i===n?'block':'none';
+    document.getElementById('tab'+i).className='tab '+(i===n?'on':'off');
   });
-  if (n===2) atualizarProfNow();
+  if(n===2) atualizarProfNow();
 }
 
 // ============================================================
-// STORAGE — estrutura: { G1: { '07:00': ['Nome1','Nome2',...], chamados: {'07:00_0': true} } }
+// STORAGE (chave v4)
 // ============================================================
-function getAgenda() { return JSON.parse(localStorage.getItem('fisiot_v3')||'{}'); }
-function saveAgenda(a) { localStorage.setItem('fisiot_v3', JSON.stringify(a)); }
+function getAgenda(){ return JSON.parse(localStorage.getItem('fisiot_v4')||'{}'); }
+function saveAgenda(a){ localStorage.setItem('fisiot_v4',JSON.stringify(a)); }
 
-function getPacientes(ginId, hora) {
-  const a = getAgenda();
-  return (a[ginId] && a[ginId][hora]) ? a[ginId][hora] : [];
-}
+function getPacientes(ginId,hora){ const a=getAgenda(); return (a[ginId]&&a[ginId][hora])?a[ginId][hora]:[]; }
+function getChamados(ginId){ const a=getAgenda(); return (a[ginId]&&a[ginId]._ch)?a[ginId]._ch:{}; }
 
-function getChamados(ginId) {
-  const a = getAgenda();
-  return (a[ginId] && a[ginId]._chamados) ? a[ginId]._chamados : {};
-}
-
-function setChamado(ginId, hora, idx) {
-  const a = getAgenda();
-  if (!a[ginId]) a[ginId] = {};
-  if (!a[ginId]._chamados) a[ginId]._chamados = {};
-  a[ginId]._chamados[hora+'_'+idx] = true;
+function setChamado(ginId,hora,idx){
+  const a=getAgenda();
+  if(!a[ginId]) a[ginId]={};
+  if(!a[ginId]._ch) a[ginId]._ch={};
+  a[ginId]._ch[hora+'_'+idx]=true;
   saveAgenda(a);
 }
 
-function addPaciente(ginId, hora) {
-  const a = getAgenda();
-  if (!a[ginId]) a[ginId] = {};
-  if (!a[ginId][hora]) a[ginId][hora] = [];
-  if (a[ginId][hora].length >= CFG[ginId].maxPorGrupo) return false;
-  a[ginId][hora].push(a[ginId][hora].length + 1); // store slot number
-  saveAgenda(a);
-  return true;
+function addPaciente(ginId,hora){
+  const a=getAgenda();
+  if(!a[ginId]) a[ginId]={};
+  if(!a[ginId][hora]) a[ginId][hora]=[];
+  if(a[ginId][hora].length>=CFG[ginId].max) return false;
+  a[ginId][hora].push(a[ginId][hora].length+1);
+  saveAgenda(a); return true;
 }
 
-function removePaciente(ginId, hora, idx) {
-  const a = getAgenda();
-  if (!a[ginId] || !a[ginId][hora]) return;
-  a[ginId][hora].splice(idx, 1);
-  // Reindexar chamados
-  const ch = a[ginId]._chamados || {};
-  const novo = {};
-  Object.keys(ch).forEach(k => {
-    const [h, i] = k.split('_');
-    const ni = parseInt(i);
-    if (h !== hora) { novo[k] = true; return; }
-    if (ni < idx) novo[k] = true;
-    else if (ni > idx) novo[h+'_'+(ni-1)] = true;
+function removePaciente(ginId,hora,idx){
+  const a=getAgenda();
+  if(!a[ginId]||!a[ginId][hora]) return;
+  a[ginId][hora].splice(idx,1);
+  const ch=a[ginId]._ch||{};
+  const novo={};
+  Object.keys(ch).forEach(k=>{
+    const [h,i]=k.split('_'); const ni=parseInt(i);
+    if(h!==hora){novo[k]=true;return;}
+    if(ni<idx) novo[k]=true;
+    else if(ni>idx) novo[h+'_'+(ni-1)]=true;
   });
-  a[ginId]._chamados = novo;
-  saveAgenda(a);
+  a[ginId]._ch=novo; saveAgenda(a);
 }
 
-function limparGrupo(ginId, hora) {
-  if (!confirm('Limpar grupo das '+hora+' do '+CFG[ginId].nome+'?')) return;
-  const a = getAgenda();
-  if (a[ginId]) {
-    a[ginId][hora] = [];
-    const ch = a[ginId]._chamados || {};
-    Object.keys(ch).forEach(k => { if (k.startsWith(hora+'_')) delete ch[k]; });
+function limparGrupo(ginId,hora){
+  if(!confirm('Limpar todos os pacientes das '+hora+' do '+CFG[ginId].nome+'?')) return;
+  const a=getAgenda();
+  if(a[ginId]){
+    a[ginId][hora]=[];
+    const ch=a[ginId]._ch||{};
+    Object.keys(ch).forEach(k=>{ if(k.startsWith(hora+'_')) delete ch[k]; });
   }
-  saveAgenda(a);
-  renderAgenda();
+  saveAgenda(a); renderAgenda();
 }
 
 // ============================================================
-// RENDER
+// RENDER AGENDA
 // ============================================================
-function renderAgenda() {
-  const h = getHoraAtual();
-  const periodo = getPeriodo(h);
-  const grid = document.getElementById('gin-grid');
-  grid.innerHTML = '';
+function renderAgenda(){
+  const h=getHora();
+  const periodo=getPeriodo(h);
+  const grid=document.getElementById('gin-grid');
+  grid.innerHTML='';
 
-  ['G1','G2','G3'].forEach(ginId => {
-    const prof = getProfissional(ginId, periodo);
-    if (!prof) return;
-    const grupos = getGrupos(ginId, periodo);
-    if (!grupos.length) return;
+  ['G1','G2','G3'].forEach(ginId=>{
+    const prof=getProfissional(ginId,periodo);
+    if(!prof) return;
+    const grupos=getGrupos(ginId,periodo);
+    if(!grupos.length) return;
 
-    const card = document.createElement('div');
-    card.className = 'gin-card';
+    const card=document.createElement('div');
+    card.className='gin-card';
 
-    const gruposHTML = grupos.map(hora => {
-      const pacs = getPacientes(ginId, hora);
-      const chamados = getChamados(ginId);
-      const count = pacs.length;
-      const max = CFG[ginId].maxPorGrupo;
-      const isAtual = hora === h;
+    const gruposHTML=grupos.map(hora=>{
+      const pacs=getPacientes(ginId,hora);
+      const chamados=getChamados(ginId);
+      const count=pacs.length;
+      const max=CFG[ginId].max;
+      const isAtual=(hora===h);
 
-      const pacHTML = pacs.length ? pacs.map((_, i) => {
-        const key = hora+'_'+i;
-        const chamado = chamados[key];
-        let cls = chamado ? 'chamado' : (isAtual && !chamado ? 'atual' : 'pendente');
-        let scls = chamado ? 'ok' : (isAtual ? 'atual' : 'esp');
-        let stxt = chamado ? '✅' : (isAtual ? '🔔' : '⏳');
-        return `<div class="pac-item ${cls}">
-          <div class="pac-num">${i+1}</div>
-          <div class="pac-nome">Paciente ${i+1}</div>
-          <span class="pac-status ${scls}">${stxt}</span>
-          ${!chamado ? `<button class="pac-btn" onclick="chamarPac('${ginId}','${hora}',${i})">📢</button>` : ''}
-          <button class="pac-del" onclick="removerErender('${ginId}','${hora}',${i})">✕</button>
-        </div>`;
-      }).join('') : `<div class="empty">Sem pacientes · <em>Adicione abaixo</em></div>`;
+      const pacHTML=pacs.length
+        ? pacs.map((_,i)=>{
+            const key=hora+'_'+i;
+            const ch=chamados[key];
+            const cls=ch?'chamado':(isAtual?'atual':'pendente');
+            const scls=ch?'ok':(isAtual?'atual':'esp');
+            const stxt=ch?'✅ Chamado':(isAtual?'🔔 Vez atual':'⏳ Aguardando');
+            return `<div class="pac-item ${cls}">
+              <div class="pac-num">${i+1}</div>
+              <div class="pac-nome">Paciente ${i+1}</div>
+              <span class="pac-status ${scls}">${stxt}</span>
+              ${!ch?`<button class="pac-btn-ch" onclick="chamarPac('${ginId}','${hora}',${i})">📢</button>`:''}
+              <button class="pac-del" onclick="removerRender('${ginId}','${hora}',${i})">✕</button>
+            </div>`;
+          }).join('')
+        : `<div class="empty-msg">Sem pacientes registrados · clique em Adicionar abaixo</div>`;
 
-      const podeAdicionar = count < max;
-      const addHTML = podeAdicionar ? `
-        <div class="add-inline">
-          <div class="add-inline-row">
-            <button onclick="addPacBtn('${ginId}','${hora}')">＋ Adicionar paciente</button>
-          </div>
-        </div>` : '';
+      const addHTML=count<max
+        ? `<div class="add-area"><button onclick="addBtn('${ginId}','${hora}')">＋ Adicionar paciente</button></div>`
+        : '';
 
-      const headStyle = isAtual ? 'background:rgba(255,215,0,.12)' : '';
+      const headStyle=isAtual?'background:rgba(255,215,0,.1)':'';
       return `<div class="grupo">
         <div class="grupo-head" style="${headStyle}">
           <div>
-            <div class="grupo-hora">${hora} ${isAtual ? '🔔' : ''}</div>
+            <div class="grupo-hora">${hora}${isAtual?' 🔔':''}</div>
             <div class="grupo-info">${count}/${max} pacientes</div>
           </div>
           <div class="grupo-actions">
-            ${count > 0 ? `<button class="btn-chamar-grupo" style="font-size:.85rem;padding:6px 14px" onclick="chamarTodosSequencia('${ginId}','${hora}')">▶ CHAMAR TODOS AGORA</button>` : '<button class="btn-chamar-grupo" style="opacity:.4" disabled>▶ CHAMAR TODOS</button>'}
-            ${count > 0 ? `<button class="btn-small" onclick="limparGrupo('${ginId}','${hora}')">🗑</button>` : ''}
+            ${count>0
+              ? `<button class="btn-chamar" onclick="chamarTodos('${ginId}','${hora}')">▶ CHAMAR TODOS</button>
+                 <button class="btn-limpar" onclick="limparGrupo('${ginId}','${hora}')">🗑</button>`
+              : `<button class="btn-chamar" disabled>▶ CHAMAR TODOS</button>`}
           </div>
         </div>
-        <div class="grupo-lista">${pacHTML}</div>
+        <div class="pac-lista">${pacHTML}</div>
         ${addHTML}
       </div>`;
     }).join('');
 
-    card.innerHTML = `
+    card.innerHTML=`
       <div class="gin-head">
         <div>
           <h2>${CFG[ginId].nome}</h2>
           <div class="gin-prof">${prof}</div>
         </div>
       </div>
-      <div class="gin-body">${gruposHTML || '<div class="empty">Sem horários neste período</div>'}</div>
-    `;
+      <div class="gin-body">${gruposHTML||'<div class="empty-msg">Sem horários neste período</div>'}</div>`;
     grid.appendChild(card);
   });
 }
 
-function removerErender(ginId, hora, idx) {
-  removePaciente(ginId, hora, idx);
-  renderAgenda();
-}
-
-function addPacBtn(ginId, hora) {
-  if (!addPaciente(ginId, hora)) {
-    alert('Máximo de 6 pacientes por grupo!');
-    return;
-  }
-  renderAgenda();
-}
+function removerRender(g,h,i){ removePaciente(g,h,i); renderAgenda(); }
+function addBtn(g,h){ if(!addPaciente(g,h)){ alert('Máximo de 6 pacientes por grupo!'); return; } renderAgenda(); }
 
 // ============================================================
-// CHAMADA
+// CHAMADA — funções de fala e localStorage
 // ============================================================
-function falar(msg, reps) {
-  if (!('speechSynthesis' in window)) return;
-  reps = (reps !== undefined) ? reps : 5;
+function falar(msg,reps=5){
+  if(!('speechSynthesis' in window)) return;
   window.speechSynthesis.cancel();
-  const vs = window.speechSynthesis.getVoices();
-  const v = vs.find(x => x.lang==='pt-BR') || vs.find(x => x.lang.startsWith('pt'));
-  let count = 0;
-  function falaUma() {
-    if (count >= reps) return;
-    count++;
-    const utt = new SpeechSynthesisUtterance(msg);
-    utt.lang = 'pt-BR'; utt.rate = 0.9; utt.pitch = 1.02; utt.volume = 1;
-    if (v) utt.voice = v;
-    utt.onend = () => setTimeout(falaUma, 700);
-    utt.onerror = () => setTimeout(falaUma, 900);
-    window.speechSynthesis.speak(utt);
+  const vs=window.speechSynthesis.getVoices();
+  const v=vs.find(x=>x.lang==='pt-BR')||vs.find(x=>x.lang.startsWith('pt'));
+  let n=0;
+  function falaUma(){
+    if(n>=reps) return; n++;
+    const u=new SpeechSynthesisUtterance(msg);
+    u.lang='pt-BR'; u.rate=0.88; u.pitch=1.05; u.volume=1;
+    if(v) u.voice=v;
+    u.onend=()=>setTimeout(falaUma,800);
+    u.onerror=()=>setTimeout(falaUma,1000);
+    window.speechSynthesis.speak(u);
   }
-  setTimeout(falaUma, 80);
+  setTimeout(falaUma,80);
 }
 
-function mostrarBanner(txt) {
-  const b = document.getElementById('chamada-banner');
-  document.getElementById('chamada-banner-txt').innerHTML = txt;
+function enviarParaTV(texto,ginasio,profissional,horario){
+  localStorage.setItem('fisiot_chamada', JSON.stringify({
+    texto, ginasio, profissional, horario,
+    timestamp: Date.now()
+  }));
+}
+
+function mostrarBanner(txt){
+  const b=document.getElementById('ch-banner');
+  document.getElementById('ch-banner-txt').textContent=txt;
   b.classList.add('show');
   clearTimeout(b._t);
-  b._t = setTimeout(() => b.classList.remove('show'), 7000);
+  b._t=setTimeout(()=>b.classList.remove('show'),8000);
 }
 
-function chamarPac(ginId, hora, idx) {
-  const pacs = getPacientes(ginId, hora);
-  if (idx >= pacs.length) return;
-  const periodo = getPeriodo(hora);
-  const prof = getProfissional(ginId, periodo);
-  const gin = CFG[ginId].nome;
-  const num = idx + 1;
-  const msg = `Atenção! Pacientes da ${prof}, comparecer ao ${gin}. ${prof}, ${gin}.`;
-  falar(msg, 5);
-  mostrarBanner(`📢 ${hora} · ${gin} · ${prof}`);
-  localStorage.setItem('fisiot_chamada', JSON.stringify({texto:`Pacientes das ${hora} — ${prof} → ${gin}`,ginasio:gin,profissional:prof,horario:hora,timestamp:Date.now()}));
-  setChamado(ginId, hora, idx);
+// Chamar paciente individual
+function chamarPac(ginId,hora,idx){
+  const periodo=getPeriodo(hora);
+  const prof=getProfissional(ginId,periodo);
+  const gin=CFG[ginId].nome;
+  const msg=`Atenção! Pacientes das ${hora} da ${prof}, comparecer ao ${gin}.`;
+  falar(msg,5);
+  mostrarBanner(msg);
+  enviarParaTV(msg,gin,prof,hora);
+  setChamado(ginId,hora,idx);
   renderAgenda();
 }
 
-function chamarProximo(ginId, hora) {
-  const pacs = getPacientes(ginId, hora);
-  const chamados = getChamados(ginId);
-  const idx = pacs.findIndex((_, i) => !chamados[hora+'_'+i]);
-  if (idx === -1) { alert('Todos os pacientes deste grupo já foram chamados!'); return; }
-  chamarPac(ginId, hora, idx);
-}
+// Chamar todos do grupo
+function chamarTodos(ginId,hora){
+  const pacs=getPacientes(ginId,hora);
+  const chamados=getChamados(ginId);
+  const pendentes=pacs.map((_,i)=>i).filter(i=>!chamados[hora+'_'+i]);
+  if(!pendentes.length){ alert('Todos os pacientes deste horário já foram chamados!'); return; }
 
-function chamarTodosSequencia(ginId, hora) {
-  const pacs = getPacientes(ginId, hora);
-  const chamados = getChamados(ginId);
-  const pendentes = pacs.map((_, i) => i).filter(i => !chamados[hora+'_'+i]);
-  if (!pendentes.length) { alert('Todos os pacientes deste grupo já foram chamados!'); return; }
+  const periodo=getPeriodo(hora);
+  const prof=getProfissional(ginId,periodo);
+  const gin=CFG[ginId].nome;
+  const msg=`Atenção! Pacientes das ${hora} da ${prof}, comparecer ao ${gin}.`;
 
-  const periodo = getPeriodo(hora);
-  const prof = getProfissional(ginId, periodo);
-  const gin = CFG[ginId].nome;
-
-  // Marcar todos como chamados imediatamente
-  pendentes.forEach(idx => setChamado(ginId, hora, idx));
+  pendentes.forEach(idx=>setChamado(ginId,hora,idx));
   renderAgenda();
-
-  // Anúncio de grupo — repetir 5 vezes conforme briefing
-  const msg = `Atenção! Pacientes das ${hora} da ${prof}, comparecer ao ${gin}.`;
-  mostrarBanner(`📢 ${hora} · ${gin} · ${prof} · ${pendentes.length} pac.`);
-  localStorage.setItem('fisiot_chamada', JSON.stringify({
-    texto: `Pacientes das ${hora} — ${prof} → ${gin}`,
-    ginasio: gin,
-    profissional: prof,
-    horario: hora,
-    timestamp: Date.now()
-  }));
-  falar(msg, 5);
-}
-
-function chamarAgora() {
-  const ginId = document.getElementById('now-gin').value;
-  const h = getHoraAtual();
-  const periodo = getPeriodo(h);
-  const prof = getProfissional(ginId, periodo);
-  const gin = CFG[ginId].nome;
-  const msg = `Atenção! Próximo paciente, comparecer ao ${gin}${prof ? ' com ' + prof : ''}.`;
-  falar(msg, 5);
-  mostrarBanner(`📢 ${gin}${prof ? ' · ' + prof : ''}`);
-  localStorage.setItem('fisiot_chamada', JSON.stringify({
-    texto: `Próximo paciente → ${gin}${prof ? ' · ' + prof : ''}`,
-    ginasio: gin,
-    profissional: prof,
-    horario: h,
-    timestamp: Date.now()
-  }));
-  document.getElementById('now-ok').style.display = 'block';
-  setTimeout(()=>document.getElementById('now-ok').style.display='none', 3000);
-}
-
-function atualizarProfNow() {
-  const ginId = document.getElementById('now-gin').value;
-  const h = getHoraAtual();
-  const periodo = getPeriodo(h);
-  const prof = getProfissional(ginId, periodo);
-  document.getElementById('now-prof-display').textContent = prof || 'Sem atendimento neste período';
+  falar(msg,5);
+  mostrarBanner(msg);
+  enviarParaTV(msg,gin,prof,hora);
 }
 
 // ============================================================
-// AUTO-CHAMADA nos horários exatos — chama TODOS em sequência
+// ABA 2 — CHAMAR AGORA
 // ============================================================
-var autoKeys = new Set();
-var autoChamandoAgora = false; // impede chamadas sobrepostas
+function atualizarProfNow(){
+  const ginId=document.getElementById('now-gin').value;
+  const h=getHora();
+  const periodo=getPeriodo(h);
+  const prof=getProfissional(ginId,periodo);
+  document.getElementById('now-prof').textContent=prof||'Sem atendimento neste período';
+}
 
-function verificarAuto() {
-  if (!audioAtivado) return; // só roda após ativar
-  if (autoChamandoAgora) return; // já tem chamada em andamento
+function chamarAgora(){
+  const ginId=document.getElementById('now-gin').value;
+  const horaInput=document.getElementById('now-hora').value.trim();
+  const h=horaInput||getHora();
+  const periodo=getPeriodo(h);
+  const prof=getProfissional(ginId,periodo);
+  const gin=CFG[ginId].nome;
+  let msg;
+  if(horaInput && prof){
+    msg=`Atenção! Pacientes das ${h} da ${prof}, comparecer ao ${gin}.`;
+  } else if(prof){
+    msg=`Atenção! Pacientes da ${prof}, comparecer ao ${gin}.`;
+  } else {
+    msg=`Atenção! Próximos pacientes, comparecer ao ${gin}.`;
+  }
+  falar(msg,5);
+  mostrarBanner(msg);
+  enviarParaTV(msg,gin,prof||'',h);
+  const ok=document.getElementById('now-ok');
+  ok.style.display='block';
+  setTimeout(()=>ok.style.display='none',4000);
+}
 
-  const h = getHoraAtual();
-  const periodo = getPeriodo(h);
+// ============================================================
+// AUTO-CHAMADA NOS HORÁRIOS
+// ============================================================
+const autoKeys=new Set();
+let autoBloqueado=false;
 
-  // Coletar todos os grupos pendentes em ordem (G1 antes G2 antes G3, e por horário)
-  const pendentes = [];
-  ['G1','G2','G3'].forEach(ginId => {
-    const prof = getProfissional(ginId, periodo);
-    if (!prof) return;
-    const grupos = getGrupos(ginId, periodo);
-    grupos.forEach(hora => {
-      if (hora > h) return; // ainda não chegou
-      const pacs = getPacientes(ginId, hora);
-      if (!pacs.length) return;
-      const chamados = getChamados(ginId);
-      const temPendente = pacs.some((_, i) => !chamados[hora+'_'+i]);
-      if (!temPendente) return;
-      const key = ginId+'_'+hora+'_auto';
-      if (autoKeys.has(key)) return;
-      pendentes.push({ginId, hora, key});
+function verificarAuto(){
+  if(!audioAtivado||autoBloqueado) return;
+  const h=getHora();
+  const periodo=getPeriodo(h);
+  const pendentes=[];
+  ['G1','G2','G3'].forEach(ginId=>{
+    const prof=getProfissional(ginId,periodo);
+    if(!prof) return;
+    getGrupos(ginId,periodo).forEach(hora=>{
+      if(hora>h) return;
+      const pacs=getPacientes(ginId,hora);
+      if(!pacs.length) return;
+      const chs=getChamados(ginId);
+      if(!pacs.some((_,i)=>!chs[hora+'_'+i])) return;
+      const key=ginId+'_'+hora+'_auto';
+      if(autoKeys.has(key)) return;
+      pendentes.push({ginId,hora,key});
     });
   });
-
-  if (!pendentes.length) return;
-
-  // Chamar o primeiro da fila
-  const {ginId, hora, key} = pendentes[0];
+  if(!pendentes.length) return;
+  const {ginId,hora,key}=pendentes[0];
   autoKeys.add(key);
-  autoChamandoAgora = true;
-
-  // Chama e libera após 5 repetições (cada ~5s + pausa = ~40s total)
-  chamarTodosSequencia(ginId, hora);
-  setTimeout(() => { autoChamandoAgora = false; }, 40000);
+  autoBloqueado=true;
+  chamarTodos(ginId,hora);
+  setTimeout(()=>{ autoBloqueado=false; },42000);
 }
 
-setInterval(verificarAuto, 15000);
-setInterval(renderAgenda, 60000);
+setInterval(verificarAuto,15000);
+setInterval(renderAgenda,60000);
 
 // ============================================================
-// ATIVAR ÁUDIO (obrigatório pelo navegador)
+// ATIVAR ÁUDIO
 // ============================================================
-var audioAtivado = false;
-function ativarAudio() {
-  if (!('speechSynthesis' in window)) {
-    audioAtivado = true;
-    document.getElementById('ativar-status').textContent = '✅ Chamada automática ativa!';
-    document.getElementById('btn-ativar').textContent = '✅ ATIVADO';
-    document.getElementById('btn-ativar').style.background = '#4CAF50';
-    document.getElementById('btn-ativar').disabled = true;
+let audioAtivado=false;
+function ativarAudio(){
+  if(!('speechSynthesis' in window)){
+    audioAtivado=true;
+    document.getElementById('ativar-status').textContent='✅ Chamada automática ativa!';
+    document.getElementById('btn-ativar').textContent='✅ ATIVADO';
+    document.getElementById('btn-ativar').style.background='#4CAF50';
+    document.getElementById('btn-ativar').disabled=true;
     return;
   }
-  // Faz uma fala silenciosa para desbloquear o audio context
-  const utt = new SpeechSynthesisUtterance(' ');
-  utt.volume = 0;
-  utt.onend = () => {
-    audioAtivado = true;
-    document.getElementById('ativar-status').textContent = '✅ Chamada automática ativa! Os pacientes serão chamados automaticamente nos horários.';
-    document.getElementById('btn-ativar').textContent = '✅ ATIVADO';
-    document.getElementById('btn-ativar').style.background = '#4CAF50';
-    document.getElementById('btn-ativar').style.color = '#fff';
-    document.getElementById('btn-ativar').disabled = true;
-    document.getElementById('ativar-banner').style.borderColor = '#4CAF50';
-    document.getElementById('ativar-banner').style.background = '#0a2010';
+  const u=new SpeechSynthesisUtterance(' ');
+  u.volume=0;
+  u.onend=()=>{
+    audioAtivado=true;
+    document.getElementById('ativar-status').textContent='✅ Chamada automática ativa! Pacientes serão chamados automaticamente nos horários.';
+    document.getElementById('btn-ativar').textContent='✅ ATIVADO';
+    document.getElementById('btn-ativar').style.background='#4CAF50';
+    document.getElementById('btn-ativar').style.color='#fff';
+    document.getElementById('btn-ativar').disabled=true;
+    document.getElementById('ativar-banner').style.borderColor='#4CAF50';
+    document.getElementById('ativar-banner').style.background='#0a2010';
   };
-  window.speechSynthesis.speak(utt);
+  window.speechSynthesis.speak(u);
 }
 
-// Init
-if ('speechSynthesis' in window) {
+// INIT
+if('speechSynthesis' in window){
   window.speechSynthesis.getVoices();
-  window.speechSynthesis.onvoiceschanged = ()=>window.speechSynthesis.getVoices();
+  window.speechSynthesis.onvoiceschanged=()=>window.speechSynthesis.getVoices();
 }
 atualizarProfNow();
 renderAgenda();

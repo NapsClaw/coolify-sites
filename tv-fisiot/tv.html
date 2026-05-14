@@ -3,98 +3,370 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>TV Fisiot</title>
+<title>TV Fisiot — Clínica Fisiot &amp; Vc</title>
 <style>
-body{margin:0;padding:0;background:#111;color:#fff;font-family:Arial,sans-serif;overflow:hidden;width:100vw;height:100vh}
-#header{background:#CC0000;padding:12px 24px;display:table;width:100%;box-sizing:border-box}
-#header-left{display:table-cell;vertical-align:middle}
-#header-right{display:table-cell;vertical-align:middle;text-align:right}
-#logo-text{font-size:24px;font-weight:bold;color:#fff}
-#logo-sub{font-size:11px;color:rgba(255,255,255,0.8);text-transform:uppercase;letter-spacing:2px}
-#clock{font-size:42px;font-weight:bold;color:#fff}
-#date{font-size:11px;color:rgba(255,255,255,0.8)}
-#main{display:table;width:100%;height:calc(100vh - 80px)}
-#slide-area{display:table-cell;vertical-align:middle;text-align:center;padding:30px}
-#sidebar{display:table-cell;vertical-align:top;width:240px;background:#1a1a1a;border-left:1px solid #333;padding:16px}
-#slide-title{font-size:36px;font-weight:bold;color:#fff;margin-bottom:16px;line-height:1.2}
-#slide-title .hl{color:#FF4444}
-#slide-sub{font-size:18px;color:rgba(255,255,255,0.75);margin-bottom:20px;line-height:1.5}
-#slide-badge{display:inline-block;background:#CC0000;color:#fff;font-size:12px;font-weight:bold;padding:6px 18px;border-radius:20px;letter-spacing:1px;text-transform:uppercase}
-.sidebar-title{font-size:10px;font-weight:bold;color:#FFD700;text-transform:uppercase;letter-spacing:2px;margin-bottom:12px}
-.dot-wrap{display:table;width:100%}
-.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#444;margin:3px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  background:#0a0a0a;color:#fff;
+  font-family:'Arial',sans-serif;
+  overflow:hidden;width:100vw;height:100vh;
+  display:flex;flex-direction:column;
+}
+
+/* ── HEADER ─────────────────────────────── */
+#header{
+  background:linear-gradient(135deg,#CC0000 0%,#990000 100%);
+  padding:0 32px;
+  height:72px;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-shrink:0;
+  box-shadow:0 3px 20px rgba(0,0,0,0.6);
+  z-index:10;
+}
+.logo-area{display:flex;align-items:center;gap:16px}
+.logo-emblem{
+  width:50px;height:50px;
+  background:#fff;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:30px;color:#CC0000;font-weight:900;line-height:1;
+  flex-shrink:0;
+}
+.logo-name{font-size:24px;font-weight:900;letter-spacing:.5px}
+.logo-tag{font-size:11px;color:rgba(255,255,255,.75);text-transform:uppercase;letter-spacing:2px;margin-top:2px}
+.clock-area{text-align:right}
+#clock{font-size:52px;font-weight:900;line-height:1;letter-spacing:2px;font-variant-numeric:tabular-nums}
+#date{font-size:12px;color:rgba(255,255,255,.8);margin-top:3px}
+
+/* ── MAIN ─────────────────────────────── */
+#main{flex:1;display:flex;overflow:hidden;position:relative}
+
+/* ── SLIDE AREA ─────────────────────────────── */
+#slide-area{
+  flex:1;position:relative;overflow:hidden;
+  background:#0d0505;
+}
+
+/* Imagem de fundo */
+#slide-bg{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  object-fit:cover;
+  object-position:center 20%;
+  transition:opacity .7s ease;
+  display:block;
+}
+
+/* Gradiente sobre a imagem — suave no topo, denso na base */
+#slide-gradient{
+  position:absolute;inset:0;
+  background:linear-gradient(
+    to top,
+    rgba(0,0,0,.90) 0%,
+    rgba(0,0,0,.50) 35%,
+    rgba(0,0,0,.15) 60%,
+    rgba(0,0,0,.05) 100%
+  );
+  pointer-events:none;
+}
+
+/* Conteúdo do slide */
+#slide-content{
+  position:absolute;bottom:0;left:0;right:0;
+  padding:28px 36px 36px;
+  z-index:4;
+}
+#slide-badge{
+  display:inline-block;
+  background:#CC0000;color:#fff;
+  font-size:13px;font-weight:800;
+  padding:6px 18px;border-radius:20px;
+  letter-spacing:1.5px;text-transform:uppercase;
+  margin-bottom:12px;
+}
+#slide-title{
+  font-size:48px;font-weight:900;
+  line-height:1.1;
+  text-shadow:2px 2px 12px rgba(0,0,0,0.9);
+  margin-bottom:10px;
+}
+#slide-title .hl{color:#FF5555}
+#slide-sub{
+  font-size:22px;
+  color:rgba(255,255,255,.92);
+  line-height:1.5;
+  text-shadow:1px 1px 6px rgba(0,0,0,0.95);
+  max-width:760px;
+}
+
+/* Dots — topo direito */
+#dots-area{
+  position:absolute;top:16px;right:18px;
+  display:flex;gap:6px;flex-wrap:wrap;
+  max-width:180px;justify-content:flex-end;
+  z-index:5;
+}
+.dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.25)}
 .dot.on{background:#CC0000}
-#progress{position:absolute;bottom:0;left:0;height:3px;background:#CC0000;transition:width 0.1s linear}
-.slide-img{max-width:100%;max-height:300px;border-radius:12px;margin-bottom:16px;display:block;margin-left:auto;margin-right:auto}
-#chamada-bar{background:#1a1a1a;border-top:1px solid #333;padding:8px 24px;font-size:14px;color:rgba(255,255,255,0.6);position:fixed;bottom:0;left:0;right:0}
-#chamada-bar span{color:#FFD700;font-weight:bold}
+
+/* Barra de progresso */
+#progress{
+  position:absolute;bottom:0;left:0;
+  height:4px;background:#CC0000;
+  transition:width .1s linear;
+  z-index:5;
+}
+
+/* ── CHAMADA OVERLAY ─────────────────────────────── */
+#chamada-overlay{
+  position:absolute;inset:0;
+  z-index:100;
+  display:none;
+  align-items:center;justify-content:center;
+  background:rgba(0,0,0,.88);
+}
+#chamada-overlay.show{display:flex;animation:fadeInOv .4s ease}
+@keyframes fadeInOv{from{opacity:0}to{opacity:1}}
+
+.chamada-box{
+  background:linear-gradient(135deg,#CC0000 0%,#880000 100%);
+  border-radius:24px;padding:44px 56px;
+  text-align:center;max-width:82%;
+  animation:pulseBox 1.4s ease infinite alternate;
+}
+@keyframes pulseBox{
+  from{box-shadow:0 0 40px rgba(204,0,0,.55),0 0 80px rgba(204,0,0,.2)}
+  to{box-shadow:0 0 90px rgba(204,0,0,.9),0 0 180px rgba(204,0,0,.4)}
+}
+.ch-icone{font-size:56px;margin-bottom:14px}
+.ch-atencao{
+  font-size:16px;font-weight:800;
+  color:rgba(255,255,255,.75);
+  text-transform:uppercase;letter-spacing:4px;
+  margin-bottom:18px;
+}
+#chamada-texto{
+  font-size:54px;font-weight:900;
+  color:#fff;line-height:1.2;
+  text-shadow:2px 2px 10px rgba(0,0,0,.5);
+}
+#chamada-rep{
+  font-size:16px;color:rgba(255,255,255,.6);
+  margin-top:16px;letter-spacing:1px;
+}
+
+/* ── SIDEBAR ─────────────────────────────── */
+#sidebar{
+  width:300px;
+  background:#0f0f0f;
+  border-left:2px solid #1e1e1e;
+  overflow-y:auto;overflow-x:hidden;
+  flex-shrink:0;
+  padding:18px 14px;
+  scrollbar-width:thin;scrollbar-color:#333 #0f0f0f;
+}
+.sb-title{
+  font-size:10px;font-weight:800;color:#FFD700;
+  text-transform:uppercase;letter-spacing:2.5px;
+  margin-bottom:12px;padding-bottom:6px;
+  border-bottom:1px solid rgba(255,215,0,.2);
+}
+.gin-block{
+  background:#1a1a1a;border-radius:10px;
+  margin-bottom:10px;overflow:hidden;
+  border:1px solid rgba(204,0,0,.2);
+}
+.gin-hdr{
+  background:rgba(204,0,0,.14);
+  padding:9px 12px;
+  border-bottom:1px solid rgba(204,0,0,.2);
+}
+.gin-nm{font-size:13px;font-weight:800;color:#CC0000;text-transform:uppercase;letter-spacing:.5px}
+.gin-pr{font-size:11px;color:rgba(255,255,255,.5);margin-top:2px}
+.gin-slots{padding:8px 10px;display:flex;flex-wrap:wrap;gap:5px}
+.slot{
+  font-size:13px;font-weight:700;
+  padding:4px 9px;border-radius:6px;
+  background:rgba(255,255,255,.07);color:rgba(255,255,255,.45);
+}
+.slot.prox{background:rgba(255,215,0,.13);color:#FFD700;border:1px solid rgba(255,215,0,.3)}
+.slot.atual{background:rgba(204,0,0,.2);color:#ff7777;border:1px solid rgba(204,0,0,.4)}
+.slot.passado{opacity:.3}
+
+.sb-contato{margin-top:14px}
+.sb-c-item{font-size:12px;color:rgba(255,255,255,.55);line-height:2}
+.sb-c-item .hi{color:#FFD700}
+
+/* ── CHAMADA BAR (rodapé) ─────────────────────────────── */
+#chamada-bar{
+  background:#0a0a0a;border-top:2px solid #1e1e1e;
+  padding:0 28px;
+  display:flex;align-items:center;gap:14px;
+  flex-shrink:0;height:52px;
+  z-index:10;
+}
+.cb-lbl{
+  font-size:10px;font-weight:800;color:rgba(255,255,255,.4);
+  text-transform:uppercase;letter-spacing:1.5px;white-space:nowrap;flex-shrink:0;
+}
+#chamada-txt{
+  font-size:21px;font-weight:700;color:rgba(255,255,255,.5);
+  flex:1;transition:all .3s;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+#chamada-txt.ativo{color:#FFD700;font-size:24px}
 </style>
 </head>
 <body>
 
+<!-- HEADER -->
 <div id="header">
-  <div id="header-left">
-    <div id="logo-text">&#9829; Fisiot &amp; Vc</div>
-    <div id="logo-sub">Cl&iacute;nica Fisiot &bull; 30 Anos</div>
+  <div class="logo-area">
+    <div class="logo-emblem">+</div>
+    <div>
+      <div class="logo-name">&#9829; Fisiot &amp; Vc</div>
+      <div class="logo-tag">Clínica Fisiot &bull; 30 Anos &bull; Lagoa Santa MG</div>
+    </div>
   </div>
-  <div id="header-right">
-    <div id="clock">00:00</div>
+  <div class="clock-area">
+    <div id="clock">00:00:00</div>
     <div id="date">Carregando...</div>
   </div>
 </div>
 
+<!-- MAIN -->
 <div id="main">
+
+  <!-- SLIDE -->
   <div id="slide-area">
-    <div id="slide-title">Carregando...</div>
-    <div id="slide-sub"></div>
-    <div id="slide-badge" style="display:none"></div>
+    <img id="slide-bg" src="fisioterapia-hero.jpg" alt=""/>
+    <div id="slide-gradient"></div>
+
+    <div id="dots-area"></div>
+
+    <!-- CHAMADA OVERLAY -->
+    <div id="chamada-overlay">
+      <div class="chamada-box">
+        <div class="ch-icone">📢</div>
+        <div class="ch-atencao">Atenção — Chamada de Pacientes</div>
+        <div id="chamada-texto">Aguardando...</div>
+        <div id="chamada-rep"></div>
+      </div>
+    </div>
+
+    <!-- Conteúdo -->
+    <div id="slide-content">
+      <div id="slide-badge"></div>
+      <div id="slide-title"></div>
+      <div id="slide-sub"></div>
+    </div>
+
     <div id="progress"></div>
   </div>
+
+  <!-- SIDEBAR -->
   <div id="sidebar">
-    <div class="sidebar-title">Slides</div>
-    <div id="dots" class="dot-wrap"></div>
-    <br/>
-    <div class="sidebar-title">Contato</div>
-    <div style="font-size:12px;color:rgba(255,255,255,0.7);line-height:1.8">
-      (31) 98337-7662<br/>
-      (31) 98756-9375<br/>
-      <span style="color:#FFD700">@fisiotfisioterapia</span><br/>
-      Lagoa Santa MG
-    </div>
-    <br/>
-    <div class="sidebar-title">Hor&aacute;rio</div>
-    <div style="font-size:12px;color:rgba(255,255,255,0.7);line-height:1.8">
-      Seg&ndash;Sex<br/>
-      Manh&atilde;: 7h &ndash; 12h<br/>
-      Tarde: 13h &ndash; 18h
+    <div class="sb-title">📅 Agenda Hoje</div>
+    <div id="gin-blocks"></div>
+
+    <div class="sb-contato">
+      <div class="sb-title" style="margin-top:16px">📞 Contato</div>
+      <div class="sb-c-item">(31) 98337-7662</div>
+      <div class="sb-c-item">(31) 98756-9375</div>
+      <div class="sb-c-item"><span class="hi">@fisiotfisioterapia</span></div>
+      <div class="sb-c-item" style="margin-top:4px;font-size:11px;line-height:1.6">
+        Rua Dr. Benjamin Vieira, 27<br>
+        Joana D'Arc — Lagoa Santa MG
+      </div>
+      <div style="margin-top:8px;font-size:10px;color:rgba(255,255,255,.3);line-height:1.7">
+        Seg–Sex: Manhã 7h–12h<br>Tarde 13h–18h
+      </div>
     </div>
   </div>
+
 </div>
 
-<div id="chamada-bar">Chamada: <span id="chamada-txt">Aguardando...</span></div>
+<!-- CHAMADA BAR -->
+<div id="chamada-bar">
+  <span class="cb-lbl">📢 Última chamada:</span>
+  <span id="chamada-txt">Aguardando chamada de pacientes...</span>
+</div>
 
 <script>
+// ============================================================
+// SLIDES COM IMAGENS
+// ============================================================
 var slides = [
-  {t:"Fisiot <span class='hl'>30 Anos</span>", s:"Cl&iacute;nica de Fisioterapia e Pilates em Lagoa Santa MG", b:"Desde 1994"},
-  {t:"Programa <span class='hl'>Idoso Presente</span>", s:"Cuidado especializado para melhor idade. Fisioterapia, Pilates e muito mais!", b:"Idoso Presente"},
-  {t:"Dra. <span class='hl'>Keila Marques</span>", s:"Fisioterapeuta especialista. Atendimento humanizado e personalizado.", b:"Diretora Cl&iacute;nica"},
-  {t:"<span class='hl'>Loja Fisiot</span>", s:"Produtos ortop&eacute;dicos e de bem-estar. Consulte nosso cat&aacute;logo!", b:"Produtos"},
-  {t:"Nossos <span class='hl'>Atendimentos</span>", s:"Ventosaterapia &bull; Pilates &bull; Neuro &bull; Ortopedia &bull; Geriatria", b:"Especilidades"},
-  {t:"<span class='hl'>Leva &amp; Traz</span> Fisiot", s:"N&atilde;o deixe de se cuidar por dificuldade de vir at&eacute; a Fisiot. Transporte especializado!", b:"(31) 99259-4953"},
-  {t:"Ana Clara <span class='hl'>Esportes</span>", s:"Fisioterapia esportiva de alto rendimento. Campeonato Nacional!", b:"Esportiva"},
-  {t:"<span class='hl'>Pilates</span> Cl&iacute;nico", s:"Fortalecimento, postura e qualidade de vida. Turmas dispon&iacute;veis!", b:"Pilates"},
-  {t:"<span class='hl'>Neuro</span>fisioterapia", s:"Reabilita&ccedil;&atilde;o neurol&oacute;gica especializada. Cuidado completo para voc&ecirc;.", b:"Neuro"},
-  {t:"Melhor <span class='hl'>Idade</span>", s:"Programa exclusivo para terceira idade. Mais sa&uacute;de e independ&ecirc;ncia!", b:"Geriatria"},
-  {t:"<span class='hl'>Ventosaterapia</span>", s:"T&eacute;cnica milenar para al&iacute;vio de dores e bem-estar. Experimente!", b:"Tratamento"},
-  {t:"Fisiot &amp; <span class='hl'>Pilates</span>", s:"Aulas em grupo e individuais. Todos os n&iacute;veis. Agende sua aula!", b:"Pilates"},
-  {t:"<span class='hl'>Reabilita&ccedil;&atilde;o</span> Completa", s:"Da avalia&ccedil;&atilde;o ao tratamento. Equipe multidisciplinar dedicada a voc&ecirc;.", b:"Reabilita&ccedil;&atilde;o"},
-  {t:"<span class='hl'>Agende</span> sua Consulta", s:"WhatsApp: (31) 98337-7662 ou (31) 98756-9375. Venha nos conhecer!", b:"Agende J&aacute;"},
-  {t:"<span class='hl'>30 Anos</span> de Cuidado", s:"Tr&ecirc;s d&eacute;cadas cuidando da sa&uacute;de dos moradores de Lagoa Santa e regi&atilde;o.", b:"Desde 1994"},
-  {t:"Fisiot <span class='hl'>Online</span>", s:"Acompanhe nossas novidades! @fisiotfisioterapia nas redes sociais.", b:"Redes Sociais"},
-  {t:"Nossa <span class='hl'>Equipe</span>", s:"Dras. B&aacute;rbara, L&iacute;via, Priscila, Daniela, Nathalia, K&ecirc;nia, Mirian e mais!", b:"Profissionais"},
-  {t:"<span class='hl'>Agenda</span> Manh&atilde;", s:"G1: Dra. B&aacute;rbara &bull; G2: Dra. L&iacute;via &bull; G3: Dra. Priscila (Seg/Qua/Sex)", b:"Manh&atilde;"},
-  {t:"<span class='hl'>Agenda</span> Tarde", s:"G1: Dra. Nathalia (Seg/Qua/Sex) &bull; G1: Dra. K&ecirc;nia (Ter/Qui) &bull; G2: Dra. Mirian", b:"Tarde"},
-  {t:"<span class='hl'>Fisiot</span> &mdash; Sempre com Voc&ecirc;", s:"Rua Dr. Benjamin Vieira, 27 &mdash; Joana D'Arc, Lagoa Santa MG &bull; CEP 33239-238", b:"Venha nos visitar"}
+  {t:"Fisiot <span class='hl'>30 Anos</span>",
+   s:"Clínica de Fisioterapia e Pilates em Lagoa Santa MG — Desde 1994",
+   b:"30 Anos de Cuidado",img:"equipe-30anos.jpg",pos:"center 20%"},
+
+  {t:"Programa <span class='hl'>Idoso Presente</span>",
+   s:"Cuidado especializado para a melhor idade. Fisioterapia, Pilates e muito mais!",
+   b:"Idoso Presente",img:"idoso-exercicio.jpg",pos:"center 30%"},
+
+  {t:"<span class='hl'>Leva &amp; Traz</span> Fisiot",
+   s:"Não deixe de se cuidar por dificuldade de locomoção. Transporte especializado até a Fisiot!",
+   b:"📞 (31) 99259-4953",img:"saude-exercicio.jpg",pos:"center 20%"},
+
+  {t:"<span class='hl'>Ventosaterapia</span>",
+   s:"Técnica milenar para alívio de dores musculares e bem-estar. Agende agora!",
+   b:"Tratamento",img:"ventosa-fisiot.jpg",pos:"center 20%"},
+
+  {t:"Dra. <span class='hl'>Keila Marques</span>",
+   s:"Fisioterapeuta especialista. Diretora Clínica. Atendimento humanizado e personalizado.",
+   b:"Diretora Clínica",img:"dra-keila.jpg",pos:"center 15%"},
+
+  {t:"<span class='hl'>Loja Fisiot</span>",
+   s:"Produtos ortopédicos e de bem-estar. Rolos, faixas, pesos, TENS e muito mais!",
+   b:"Loja",img:"loja-produto.jpg",pos:"center 30%"},
+
+  {t:"<span class='hl'>Pilates</span> Clínico",
+   s:"Fortalecimento, postura e qualidade de vida. Turmas disponíveis para todos os níveis!",
+   b:"Pilates",img:"sala-pilates.jpg",pos:"center 25%"},
+
+  {t:"Nossos <span class='hl'>Tratamentos</span>",
+   s:"Ventosaterapia · Pilates · Neuro · Ortopedia · Geriatria · Drenagem · Acupuntura",
+   b:"Especialidades",img:"tratamentos-collage.jpg",pos:"center 20%"},
+
+  {t:"Ana Clara <span class='hl'>Esportes</span>",
+   s:"Fisioterapia esportiva de alto rendimento. Equipe de competição!",
+   b:"Esportiva",img:"ana-clara.jpg",pos:"center 18%"},
+
+  {t:"Melhor <span class='hl'>Idade</span>",
+   s:"Programa exclusivo para a terceira idade. Mais saúde, independência e qualidade de vida!",
+   b:"Geriatria",img:"melhor-idade.jpg",pos:"center 25%"},
+
+  {t:"<span class='hl'>Produtos</span> Fisiot",
+   s:"Rolos, discos, pesos, sapatilha, gel, creme de ervas — tudo para seu tratamento!",
+   b:"Loja",img:"prod-rolo.jpg",pos:"center 40%"},
+
+  {t:"<span class='hl'>Reabilitação</span> Completa",
+   s:"Da avaliação ao tratamento. Equipe multidisciplinar dedicada a você.",
+   b:"Reabilitação",img:"tratamentos-collage2.jpg",pos:"center 20%"},
+
+  {t:"<span class='hl'>Pilates</span> 55+",
+   s:"Programa especial para a terceira idade. Movimento, equilíbrio e bem-estar!",
+   b:"Pilates Sênior",img:"pilates-55.jpg",pos:"center 20%"},
+
+  {t:"Nossa <span class='hl'>Equipe</span>",
+   s:"Dras. Bárbara, Lívia, Priscila, Daniela, Nathalia, Mirian, Kênia e mais!",
+   b:"Profissionais",img:"equipe-30anos.jpg",pos:"center 30%"},
+
+  {t:"<span class='hl'>Agende</span> sua Consulta",
+   s:"WhatsApp: (31) 98337-7662 ou (31) 98756-9375 — Venha nos conhecer!",
+   b:"Agende Já",img:"recepcao-fisiot.jpg",pos:"center 20%"},
+
+  {t:"<span class='hl'>Leva &amp; Traz</span> — Transporte Fisiot",
+   s:"Serviço exclusivo de transporte para pacientes. Marque a sua carona!",
+   b:"📞 (31) 99259-4953",img:"fisioterapia-hero.jpg",pos:"center 30%"},
+
+  {t:"Fisiot <span class='hl'>Pilates</span> Studio",
+   s:"Aulas em grupo e individuais. Todos os níveis. Venha fazer sua avaliação gratuita!",
+   b:"Pilates",img:"cartaz-pilates.jpg",pos:"center 20%"},
+
+  {t:"<span class='hl'>Fisiot</span> — Sempre com Você",
+   s:"Rua Dr. Benjamin Vieira, 27 · Joana D'Arc · Lagoa Santa MG",
+   b:"Venha nos Visitar",img:"fisioterapia-hero.jpg",pos:"center 35%"}
 ];
 
 var N = slides.length;
@@ -102,51 +374,66 @@ var cur = 0;
 var DURATION = 8000;
 var startTime;
 var timer;
+var overlayAtivo = false;
+var overlayTimer = null;
+var chamadaRepCount = 0;
+var repTimer = null;
+var lastChamadaTS = 0;
 
-// Criar dots
-var dotsEl = document.getElementById('dots');
+// Dots
+var dotsEl = document.getElementById('dots-area');
 for(var i=0;i<N;i++){
   var d = document.createElement('span');
-  d.className = 'dot';
-  d.id = 'dot'+i;
+  d.className='dot'; d.id='dot'+i;
   dotsEl.appendChild(d);
 }
 
 function showSlide(n){
   cur = n;
   var s = slides[n];
+  var bg = document.getElementById('slide-bg');
+
+  // Fade out → trocar imagem → fade in
+  bg.style.opacity = '0';
+  setTimeout(function(){
+    bg.src = s.img;
+    bg.style.objectPosition = s.pos || 'center 20%';
+    bg.onerror = function(){
+      bg.src = 'fisioterapia-hero.jpg';
+      bg.style.objectPosition = 'center 30%';
+    };
+    bg.style.opacity = '1';
+  }, 300);
+
   document.getElementById('slide-title').innerHTML = s.t;
-  document.getElementById('slide-sub').innerHTML = s.s;
+  document.getElementById('slide-sub').innerHTML   = s.s;
   var badge = document.getElementById('slide-badge');
-  if(s.b){
-    badge.innerHTML = s.b;
-    badge.style.display = 'inline-block';
-  } else {
-    badge.style.display = 'none';
-  }
-  // dots
+  if(s.b){ badge.textContent = s.b; badge.style.display='inline-block'; }
+  else { badge.style.display='none'; }
+
+  // Dots
   for(var i=0;i<N;i++){
-    var d = document.getElementById('dot'+i);
-    if(d) d.className = i===n ? 'dot on' : 'dot';
+    var dot=document.getElementById('dot'+i);
+    if(dot) dot.className = (i===n)?'dot on':'dot';
   }
-  // progress bar
-  startTime = Date.now();
-  updateProgress();
+
+  if(!overlayAtivo){
+    startTime = Date.now();
+    updateProgress();
+  }
 }
 
 function updateProgress(){
+  if(overlayAtivo) return;
   var el = document.getElementById('progress');
   var elapsed = Date.now() - startTime;
-  var pct = Math.min(100, (elapsed / DURATION) * 100);
-  el.style.width = pct + '%';
-  if(pct < 100){
-    setTimeout(updateProgress, 100);
-  }
+  var pct = Math.min(100,(elapsed/DURATION)*100);
+  el.style.width = pct+'%';
+  if(pct < 100) setTimeout(updateProgress,100);
 }
 
 function nextSlide(){
-  var next = (cur + 1) % N;
-  showSlide(next);
+  if(!overlayAtivo) showSlide((cur+1)%N);
 }
 
 function startTimer(){
@@ -154,42 +441,218 @@ function startTimer(){
   timer = setInterval(nextSlide, DURATION);
 }
 
-// Clock
+// ============================================================
+// RELÓGIO
+// ============================================================
 function updateClock(){
   var now = new Date();
-  var h = now.getHours();
-  var m = now.getMinutes();
-  var s = now.getSeconds();
+  var h=now.getHours(),m=now.getMinutes(),s=now.getSeconds();
   document.getElementById('clock').innerHTML =
     (h<10?'0':'')+h+':'+(m<10?'0':'')+m+':'+(s<10?'0':'')+s;
-  var days = ['Domingo','Segunda','Ter&ccedil;a','Quarta','Quinta','Sexta','S&aacute;bado'];
+  var days   = ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];
   var months = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
   document.getElementById('date').innerHTML =
-    days[now.getDay()]+', '+now.getDate()+' '+months[now.getMonth()]+' '+now.getFullYear();
+    days[now.getDay()]+', '+now.getDate()+' de '+months[now.getMonth()]+' de '+now.getFullYear();
 }
 
-// Chamada paciente
-function updateChamada(){
-  try {
-    var c = localStorage.getItem('fisiot_chamada');
-    if(c){
-      var data = JSON.parse(c);
-      if(data && data.timestamp && (Date.now() - data.timestamp) < 30000){
-        var txt = (data.ginasio||'Ginásio');
-        if(data.profissional) txt += ' &mdash; ' + data.profissional;
-        if(data.horario) txt += ' &mdash; ' + data.horario;
-        document.getElementById('chamada-txt').innerHTML = txt;
-      }
+// ============================================================
+// SIDEBAR — AGENDA
+// ============================================================
+var CFG = {
+  G1:{
+    nome:'Ginásio 1',
+    prof:{
+      manha:{ todos:'Dra. Bárbara' },
+      tarde:{ '135':'Dra. Nathalia','24':'Dra. Bárbara' }
+    },
+    grupos:{
+      manha:['07:00','07:40','08:20','09:00','09:40','10:20'],
+      tarde:{ '135':['13:00','13:40','14:20','15:00','15:40','16:20','17:00'],
+              '24':['15:00','15:40','16:20','17:00'] }
     }
-  } catch(e){}
+  },
+  G2:{
+    nome:'Ginásio 2',
+    prof:{
+      manha:{ todos:'Dra. Lívia' },
+      tarde:{ todos:'Dra. Mirian' }
+    },
+    grupos:{
+      manha:['07:20','08:00','08:40','09:20','10:00','10:40'],
+      tarde:['13:00','13:40','14:20','15:00','15:40','16:20']
+    }
+  },
+  G3:{
+    nome:'Ginásio 3',
+    prof:{
+      manha:{ '135':'Dra. Priscila','24':'Dra. Daniela' },
+      tarde:null
+    },
+    grupos:{
+      manha:{ '135':['07:00','07:20','08:00'],
+               '24':['07:40','08:20','09:00','09:40','10:20','11:00'] },
+      tarde:[]
+    }
+  }
+};
+
+function getDiaTipo(){
+  var d=new Date().getDay();
+  return [1,3,5].includes(d)?'135':'24';
+}
+function getHoraAtual(){
+  var n=new Date();
+  return (n.getHours()<10?'0':'')+n.getHours()+':'+(n.getMinutes()<10?'0':'')+n.getMinutes();
+}
+function getPeriodo(h){ return parseInt(h.split(':')[0])<13?'manha':'tarde'; }
+
+function getProfissional(ginId,periodo){
+  var p=CFG[ginId].prof[periodo];
+  if(!p) return null;
+  if(p.todos) return p.todos;
+  return p[getDiaTipo()]||null;
 }
 
-// Init
+function getSlots(ginId,periodo){
+  var g=CFG[ginId].grupos[periodo];
+  if(!g||!g.length) return [];
+  if(Array.isArray(g)) return g;
+  return g[getDiaTipo()]||[];
+}
+
+function renderSidebar(){
+  var h=getHoraAtual();
+  var periodo=getPeriodo(h);
+  var container=document.getElementById('gin-blocks');
+  container.innerHTML='';
+
+  var gins=['G1','G2','G3'];
+  gins.forEach(function(ginId){
+    var prof=getProfissional(ginId,periodo);
+    if(!prof) return;
+    var slots=getSlots(ginId,periodo);
+    if(!slots.length) return;
+
+    var slotsHTML=slots.map(function(s){
+      var hora=s.replace(':','');
+      var hn=parseInt(h.replace(':',''));
+      var sn=parseInt(hora);
+      var cls='slot';
+      if(sn===hn) cls='slot atual';
+      else if(sn<hn) cls='slot passado';
+      else if(sn<=hn+40) cls='slot prox';
+      return '<span class="'+cls+'">'+s+'</span>';
+    }).join('');
+
+    container.innerHTML+=
+      '<div class="gin-block">'+
+        '<div class="gin-hdr">'+
+          '<div class="gin-nm">'+ginId+' · '+CFG[ginId].nome+'</div>'+
+          '<div class="gin-pr">'+prof+'</div>'+
+        '</div>'+
+        '<div class="gin-slots">'+slotsHTML+'</div>'+
+      '</div>';
+  });
+
+  // Se não houver nada (fora de horário), mostra próximo turno
+  if(!container.innerHTML){
+    var prox = periodo==='manha'?'tarde':'manha';
+    container.innerHTML='<div style="font-size:12px;color:rgba(255,255,255,.35);text-align:center;padding:16px">'+
+      'Fora do horário de atendimento<br><small>Próximo turno: '+(prox==='tarde'?'Tarde 13h':'Manhã 7h')+'</small></div>';
+  }
+}
+
+// ============================================================
+// CHAMADA OVERLAY
+// ============================================================
+function mostrarChamadaOverlay(data){
+  // Montar texto no novo formato
+  var texto;
+  if(data.profissional && data.horario && data.ginasio){
+    texto = 'Pacientes das '+data.horario+' da '+data.profissional+
+            ', comparecer ao '+data.ginasio+'.';
+  } else if(data.profissional && data.ginasio){
+    texto = 'Pacientes da '+data.profissional+
+            ', comparecer ao '+data.ginasio+'.';
+  } else if(data.texto){
+    texto = data.texto;
+  } else {
+    texto = 'Pacientes, comparecer à recepção.';
+  }
+
+  document.getElementById('chamada-texto').textContent = texto;
+
+  // Contador de repetições
+  chamadaRepCount = 0;
+  clearInterval(repTimer);
+  var repEl = document.getElementById('chamada-rep');
+  function atualizarRep(){
+    chamadaRepCount++;
+    if(chamadaRepCount<=5){
+      repEl.textContent = 'Repetição '+chamadaRepCount+' de 5';
+      if(chamadaRepCount<5) repTimer = setTimeout(atualizarRep, 4500);
+      else repEl.textContent = 'Chamada concluída';
+    }
+  }
+  atualizarRep();
+
+  // Mostrar overlay e pausar carrossel
+  overlayAtivo = true;
+  document.getElementById('chamada-overlay').classList.add('show');
+
+  clearTimeout(overlayTimer);
+  overlayTimer = setTimeout(function(){
+    document.getElementById('chamada-overlay').classList.remove('show');
+    overlayAtivo = false;
+    startTime = Date.now();
+    updateProgress();
+  }, 24000);
+}
+
+function updateChamada(){
+  try{
+    var c = localStorage.getItem('fisiot_chamada');
+    if(!c) return;
+    var data = JSON.parse(c);
+    if(!data || !data.timestamp) return;
+
+    // Mostrar na bottom bar se recente (< 3 min)
+    var age = Date.now() - data.timestamp;
+    if(age < 180000){
+      var txt;
+      if(data.profissional && data.horario && data.ginasio){
+        txt = 'Atenção! Pacientes das '+data.horario+' da '+
+              data.profissional+', comparecer ao '+data.ginasio+'.';
+      } else if(data.texto){
+        txt = data.texto;
+      }
+      if(txt){
+        document.getElementById('chamada-txt').textContent = txt;
+        document.getElementById('chamada-txt').className = age<30000?'ativo':'';
+      }
+    } else {
+      document.getElementById('chamada-txt').textContent = 'Aguardando chamada de pacientes...';
+      document.getElementById('chamada-txt').className = '';
+    }
+
+    // Mostrar overlay apenas se chamada nova (< 30s e não vimos ainda)
+    if(age < 30000 && data.timestamp > lastChamadaTS){
+      lastChamadaTS = data.timestamp;
+      mostrarChamadaOverlay(data);
+    }
+  }catch(e){}
+}
+
+// ============================================================
+// INIT
+// ============================================================
 showSlide(0);
 startTimer();
 setInterval(updateClock, 1000);
 setInterval(updateChamada, 2000);
+setInterval(renderSidebar, 30000);
 updateClock();
+renderSidebar();
 </script>
 </body>
 </html>
