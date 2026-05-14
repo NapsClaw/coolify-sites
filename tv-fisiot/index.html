@@ -146,6 +146,19 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Plus Jakarta Sans'
 .tv-overlay{position:fixed;inset:0;background:rgba(0,0,0,.36);z-index:110;opacity:0;pointer-events:none;transition:opacity .25s ease}
 .tv-overlay.open{opacity:1;pointer-events:auto}
 /* media query removida - TV sempre em tela cheia */
+
+/* ══ OVERLAY DE CHAMADA NA TV ══ */
+#cov{position:absolute;inset:0;z-index:95;background:rgba(6,0,0,.97);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px;opacity:0;pointer-events:none;transition:opacity .5s ease;cursor:pointer;}
+#cov.show{opacity:1;pointer-events:auto;}
+#cov-card{width:100%;max-width:720px;border:3px solid #CC0000;border-radius:24px;padding:36px 48px;background:rgba(204,0,0,.1);}
+@keyframes covPulse{0%,100%{border-color:#CC0000;box-shadow:0 0 0 rgba(204,0,0,0)}50%{border-color:#FF4444;box-shadow:0 0 60px rgba(204,0,0,.5)}}
+#cov.show #cov-card{animation:covPulse 1.8s ease-in-out infinite;}
+#cov-icon{font-size:52px;margin-bottom:12px;animation:float 1s ease-in-out infinite;}
+@keyframes covFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+#cov.show #cov-icon{animation:covFloat 1s ease-in-out infinite;}
+/* Flash na barra de chamada */
+.cham{transition:background .4s,border-color .4s;}
+.cham.chamando{background:rgba(180,0,0,.38)!important;border-bottom:2px solid #FFD700!important;}
 </style>
 </head>
 <body>
@@ -168,7 +181,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Plus Jakarta Sans'
 </div>
 <div class="cnt">
 <div class="sa">
-<div class="sl sl-bv on" id="s0" style="background-image:url(recepcao-fisiot.jpg?v=2);background-size:cover;background-position:center;padding:0;justify-content:flex-start;align-items:flex-start;">
+<div class="sl sl-bv on" id="s0" style="background-image:url(recepcao-fisiot.jpg?v=3);background-size:cover;background-position:center 30%;padding:0;justify-content:flex-start;align-items:flex-start;">
   <div style="width:100%;height:100%;background:linear-gradient(to right,rgba(0,0,0,0.78) 0%,rgba(0,0,0,0.2) 55%,transparent 100%);display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:32px 40px;">
     <div style="font-size:13px;font-weight:700;color:#CC0000;text-transform:uppercase;letter-spacing:2px;margin-bottom:12px;">Clínica Fisiot • Lagoa Santa MG</div>
     <h2 style="font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,52px);color:#fff;line-height:1.1;margin-bottom:14px;">Bem-vindo(a) à<br/><em>Clínica Fisiot!</em></h2>
@@ -275,8 +288,38 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Plus Jakarta Sans'
     </div>
   </div>
 </div>
-<div class="sl" id="s6" style="background:linear-gradient(135deg,#1a0000 0%,#3d0000 50%,#1a0000 100%);">
-<div class="lc"><div class="li">&#x1F697;</div><h2>Servico Leva &amp; Traz</h2><p>Facilitamos seu acesso! Transporte exclusivo que busca voce em casa e traz de volta com seguranca. Ideal para idosos e pacientes em reabilitacao.</p><div class="lct">(31) 99259-4953</div></div>
+<div class="sl" id="s6" style="background:linear-gradient(135deg,#0a0500 0%,#1a0800 40%,#300000 100%);padding:0;overflow:hidden;">
+  <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:28px 44px;">
+    <div style="position:absolute;right:-30px;bottom:-70px;font-size:380px;opacity:0.04;pointer-events:none;transform:rotate(-12deg);line-height:1;">🚗</div>
+    <div style="max-width:720px;width:100%;text-align:center;position:relative;z-index:1;">
+      <div style="display:inline-block;background:#CC0000;color:#fff;font-size:11px;font-weight:800;padding:6px 22px;border-radius:50px;letter-spacing:3px;text-transform:uppercase;margin-bottom:18px;">🚗 SERVIÇO EXCLUSIVO FISIOT</div>
+      <h2 style="font-family:'Playfair Display',serif;font-size:clamp(52px,8.5vw,108px);color:#fff;line-height:.95;margin-bottom:10px;letter-spacing:-1px;">Leva <em style="color:#FFD700;font-style:normal;">&amp;</em> Traz</h2>
+      <p style="font-size:clamp(15px,2.2vw,24px);color:rgba(255,255,255,.88);line-height:1.6;margin-bottom:26px;max-width:580px;margin-left:auto;margin-right:auto;">Não deixe a falta de transporte impedir seus cuidados de saúde.<br/><strong style="color:#fff;">Buscamos você em casa</strong> e trazemos de volta com segurança.</p>
+      <div style="display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-bottom:28px;">
+        <div style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:14px;padding:14px 20px;text-align:center;min-width:110px;">
+          <div style="font-size:28px;margin-bottom:5px;">👴</div>
+          <div style="font-size:10px;color:#FFD700;font-weight:800;text-transform:uppercase;letter-spacing:1px;">Ideal para</div>
+          <div style="font-size:13px;color:#fff;font-weight:700;">Idosos</div>
+        </div>
+        <div style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:14px;padding:14px 20px;text-align:center;min-width:110px;">
+          <div style="font-size:28px;margin-bottom:5px;">🏥</div>
+          <div style="font-size:10px;color:#FFD700;font-weight:800;text-transform:uppercase;letter-spacing:1px;">Pacientes em</div>
+          <div style="font-size:13px;color:#fff;font-weight:700;">Reabilitação</div>
+        </div>
+        <div style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:14px;padding:14px 20px;text-align:center;min-width:110px;">
+          <div style="font-size:28px;margin-bottom:5px;">🛡️</div>
+          <div style="font-size:10px;color:#FFD700;font-weight:800;text-transform:uppercase;letter-spacing:1px;">Transporte</div>
+          <div style="font-size:13px;color:#fff;font-weight:700;">Seguro</div>
+        </div>
+        <div style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:14px;padding:14px 20px;text-align:center;min-width:110px;">
+          <div style="font-size:28px;margin-bottom:5px;">🧭</div>
+          <div style="font-size:10px;color:#FFD700;font-weight:800;text-transform:uppercase;letter-spacing:1px;">Pontualidade</div>
+          <div style="font-size:13px;color:#fff;font-weight:700;">Garantida</div>
+        </div>
+      </div>
+      <div style="background:linear-gradient(135deg,#CC0000,#a80000);color:#fff;font-size:clamp(20px,3.2vw,40px);font-weight:900;padding:16px 48px;border-radius:60px;display:inline-block;letter-spacing:1px;box-shadow:0 10px 50px rgba(204,0,0,.55);">📞 (31) 99259-4953</div>
+    </div>
+  </div>
 </div>
 <div class="sl" id="s7" style="background:#0a0005;background-size:cover;background-position:center;padding:0;justify-content:center;align-items:center;">
   <div style="width:100%;height:100%;background:rgba(0,0,0,0.65);display:flex;align-items:center;justify-content:center;">
@@ -816,6 +859,16 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Plus Jakarta Sans'
   })();
   </script>
 </div>
+<div id="cov" onclick="this.classList.remove('show')">
+  <div id="cov-card">
+    <div id="cov-icon">📢</div>
+    <div style="font-size:13px;font-weight:800;color:#FFD700;text-transform:uppercase;letter-spacing:4px;margin-bottom:18px;display:flex;align-items:center;justify-content:center;gap:10px;"><span style="display:inline-block;width:10px;height:10px;background:#CC0000;border-radius:50%;animation:blink 1s infinite;"></span>ATENÇÃO — CHAMADA</div>
+    <div id="cov-texto" style="font-family:'Playfair Display',serif;font-size:clamp(26px,4.5vw,58px);color:#fff;line-height:1.1;margin-bottom:14px;font-weight:700;"></div>
+    <div id="cov-gin" style="font-size:clamp(20px,3.2vw,42px);color:#FF4444;font-weight:900;margin-bottom:10px;"></div>
+    <div id="cov-prof" style="font-size:clamp(15px,2.2vw,28px);color:rgba(255,255,255,.75);font-weight:600;"></div>
+  </div>
+  <div style="margin-top:18px;font-size:12px;color:rgba(255,255,255,.28);letter-spacing:1px;">Toque na tela para fechar</div>
+</div>
 <div class="dots">
 <div class="dot on" id="d0" onclick="go(0)"></div>
 <div class="dot" id="d1" onclick="go(1)"></div>
@@ -879,8 +932,16 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:'Plus Jakarta Sans'
 <div class="sib"><div class="sib-ic">&#x1F9F5;</div><div class="sib-t"><strong>Acupuntura</strong><span>Tratamento integrativo</span></div></div>
 <div class="sib"><div class="sib-ic">&#x1F4AA;</div><div class="sib-t"><strong>Suplementos</strong><span>Para uma vida saudavel</span></div></div>
 </div>
+<div class="ss"><div class="st">🚗 Leva &amp; Traz</div>
+<div style="background:linear-gradient(135deg,#3d0000,#1a0000);border-radius:10px;padding:12px;text-align:center;margin-bottom:6px;border:1px solid rgba(204,0,0,.3);">
+  <div style="font-size:26px;margin-bottom:4px;">🚗</div>
+  <div style="font-size:12px;font-weight:900;color:#fff;margin-bottom:3px;">Serviço Leva &amp; Traz</div>
+  <div style="font-size:10px;color:rgba(255,255,255,.7);margin-bottom:8px;line-height:1.4;">Buscamos você em casa!<br/>Idosos e reabilitação.</div>
+  <div style="background:#CC0000;border-radius:7px;padding:7px;color:#fff;font-size:13px;font-weight:900;">(31) 99259-4953</div>
+</div>
+</div>
 <div class="ss"><div class="st">Contato</div>
-<div class="cb"><div class="num">(31) 99259-4953</div><div class="lab">WhatsApp &bull; Lagoa Santa MG</div></div>
+<div class="cb"><div class="num">(31) 98337-7662</div><div class="lab">WhatsApp &bull; Lagoa Santa MG</div></div>
 </div>
 <div class="ss"><div class="st">&#127925; Radio Fisiot ao vivo</div>
 <div style="display:flex;align-items:center;gap:10px;margin-top:6px;">
@@ -949,32 +1010,61 @@ b.style.transition="width "+dur+"ms linear";b.style.width="100%";
 })});
 }
 sp();tmr=setTimeout(function(){go(1)},dur);
-var chs=["Bem-vindo(a) à <span class=\"d\">Clínica Fisiot</span> &mdash; Em breve chamaremos você!","Aguarde &mdash; em instantes você será chamado(a) pelo seu <span class=\"d\">nome</span>","Serviço <span class=\"d\">Leva e Traz</span> &mdash; (31) 99259-4953","Programa <span class=\"d\">Idoso Presente</span> &mdash; Inscrições abertas!"],ci=0;
+var chs=["Bem-vindo(a) à <span class=\"d\">Clínica Fisiot</span> &mdash; Aguarde, em breve você será chamado(a)!","🚗 Serviço <span class=\"d\">Leva &amp; Traz</span> &mdash; Buscamos você em casa! Ligue <span class=\"d\">(31) 99259-4953</span>","Programa <span class=\"d\">Idoso Presente</span> &mdash; Cuidado especializado para a melhor idade &mdash; (31) 99259-4953","🚗 <span class=\"d\">Leva &amp; Traz Fisiot</span> &mdash; Não fique sem tratamento por falta de transporte. <span class=\"d\">(31) 99259-4953</span>"],ci=0;
 var lastChamada=null;
+
+function mostrarOverlayChamada(d) {
+  var cov=document.getElementById('cov');
+  var covTxt=document.getElementById('cov-texto');
+  var covGin=document.getElementById('cov-gin');
+  var covProf=document.getElementById('cov-prof');
+  if(!cov) return;
+  // Monta texto principal
+  if(d.texto){
+    if(covTxt) covTxt.innerHTML=d.texto.replace(/→/,'<span style="color:#FFD700"> → </span>');
+  } else if(d.nome){
+    if(covTxt) covTxt.innerHTML='Paciente <em style="color:#FFD700">'+d.nome+'</em>';
+  } else {
+    if(covTxt) covTxt.innerHTML='Próximo Paciente';
+  }
+  if(covGin) covGin.innerHTML=d.ginasio||'';
+  if(covProf) covProf.innerHTML=d.profissional||'';
+  cov.classList.add('show');
+  clearTimeout(cov._covT);
+  cov._covT=setTimeout(function(){cov.classList.remove('show');},22000);
+  // Flash na barra de chamada
+  var chamBar=document.querySelector('.cham');
+  if(chamBar){
+    chamBar.classList.add('chamando');
+    clearTimeout(chamBar._cT);
+    chamBar._cT=setTimeout(function(){chamBar.classList.remove('chamando');},22000);
+  }
+}
+
 function checkChamada(){
   try{
     var c=localStorage.getItem('fisiot_chamada');
     if(c){
       var d=JSON.parse(c);
-      if(d.timestamp!==lastChamada){
+      if(d && d.timestamp && d.timestamp!==lastChamada){
         lastChamada=d.timestamp;
+        // Monta texto da barra
+        var displayTxt='';
+        if(d.texto){
+          displayTxt='<strong style="color:#FFD700">📢</strong> <span class="d">'+d.texto+'</span>';
+        } else if(d.nome){
+          displayTxt='<strong style="color:#FFD700">📢 CHAMADA:</strong> Paciente <span class="d">'+d.nome+'</span>'+(d.ginasio?' &mdash; '+d.ginasio:'')+(d.profissional?' &mdash; <span class="d">'+d.profissional+'</span>':'')+(d.horario?' &mdash; '+d.horario:'');
+        } else {
+          displayTxt='<strong style="color:#FFD700">📢 CHAMADA:</strong> '+(d.ginasio||'')+(d.profissional?' &mdash; <span class="d">'+d.profissional+'</span>':'')+(d.horario?' &mdash; '+d.horario:'');
+        }
         var el=document.getElementById("ct");
         el.style.opacity="0";
         setTimeout(function(){
-          el.innerHTML='<strong style="color:#FFD700">📢 CHAMADA:</strong> Paciente <span class="d">'+d.nome+'</span> &mdash; '+d.ginasio+' &mdash; <span class="d">'+d.profissional+'</span> &mdash; '+d.horario;
+          el.innerHTML=displayTxt;
           el.style.opacity="1";
         },300);
-        // Voz na TV também
-        if('speechSynthesis' in window){
-          var msg='Paciente '+d.nome+', dirija-se ao '+d.ginasio+' com '+d.profissional+' às '+d.horario+'.';
-          window.speechSynthesis.cancel();
-          var utt=new SpeechSynthesisUtterance(msg);
-          utt.lang='pt-BR'; utt.rate=0.85; utt.pitch=1; utt.volume=1;
-          var voices=window.speechSynthesis.getVoices();
-          var voz=voices.find(function(v){return v.lang==='pt-BR';})||voices.find(function(v){return v.lang.startsWith('pt');});
-          if(voz) utt.voice=voz;
-          window.speechSynthesis.speak(utt);
-        }
+        // Mostrar overlay grande na tela
+        mostrarOverlayChamada(d);
       }
     }
   }catch(e){}
@@ -1033,6 +1123,8 @@ function updateTvCallBanner(data){
     el.innerHTML='<strong style="color:#FFD700">📢 CHAMADA:</strong> Paciente <span class="d">'+data.name+'</span> &mdash; '+data.ginasio+(data.profissional?' &mdash; <span class="d">'+data.profissional+'</span>':'')+(data.time?' &mdash; '+data.time:'');
     el.style.opacity='1';
   },220);
+  // Mostrar overlay na tela
+  mostrarOverlayChamada({nome:data.name,ginasio:data.ginasio,profissional:data.profissional,horario:data.time,timestamp:data.timestamp});
 }
 function callTvPatient(id){
   var list=window.getTvPatients();

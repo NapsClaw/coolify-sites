@@ -27,16 +27,16 @@
     .gin-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
     .gin-card{background:#1a1a2e;border:1px solid rgba(204,0,0,.25);border-radius:14px;overflow:hidden}
     .gin-head{background:rgba(204,0,0,.15);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(204,0,0,.2)}
-    .gin-head h2{font-size:.95rem;font-weight:800;color:#CC0000;text-transform:uppercase;letter-spacing:.5px}
+    .gin-head h2{font-size:1.1rem;font-weight:800;color:#CC0000;text-transform:uppercase;letter-spacing:.5px}
     .gin-prof{font-size:.75rem;color:rgba(255,255,255,.5);margin-top:2px}
     .gin-body{padding:12px}
     /* Grupo de horário */
     .grupo{background:#0d0d1a;border-radius:10px;margin-bottom:10px;overflow:hidden;border:1px solid rgba(255,255,255,.06)}
     .grupo-head{padding:9px 12px;display:flex;align-items:center;justify-content:space-between;background:#13132a;cursor:pointer}
-    .grupo-hora{font-size:1rem;font-weight:800;color:#FFD700}
+    .grupo-hora{font-size:1.18rem;font-weight:800;color:#FFD700}
     .grupo-info{font-size:.72rem;color:rgba(255,255,255,.4)}
     .grupo-actions{display:flex;gap:6px;align-items:center}
-    .btn-chamar-grupo{background:#CC0000;color:#fff;border:none;border-radius:6px;padding:4px 10px;font-size:.72rem;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s}
+    .btn-chamar-grupo{background:#CC0000;color:#fff;border:none;border-radius:6px;padding:6px 14px;font-size:.82rem;font-weight:800;cursor:pointer;font-family:inherit;transition:all .2s;letter-spacing:.03em}
     .btn-chamar-grupo:hover{background:#a80000}
     .btn-small{background:rgba(255,255,255,.07);color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.1);border-radius:5px;padding:3px 8px;font-size:.68rem;cursor:pointer;font-family:inherit}
     .grupo-lista{padding:8px 12px}
@@ -392,17 +392,24 @@ function addPacBtn(ginId, hora) {
 // ============================================================
 // CHAMADA
 // ============================================================
-function falar(msg) {
+function falar(msg, reps) {
   if (!('speechSynthesis' in window)) return;
+  reps = (reps !== undefined) ? reps : 5;
   window.speechSynthesis.cancel();
-  setTimeout(() => {
+  const vs = window.speechSynthesis.getVoices();
+  const v = vs.find(x => x.lang==='pt-BR') || vs.find(x => x.lang.startsWith('pt'));
+  let count = 0;
+  function falaUma() {
+    if (count >= reps) return;
+    count++;
     const utt = new SpeechSynthesisUtterance(msg);
-    utt.lang = 'pt-BR'; utt.rate = 0.88; utt.pitch = 1; utt.volume = 1;
-    const vs = window.speechSynthesis.getVoices();
-    const v = vs.find(x => x.lang==='pt-BR') || vs.find(x => x.lang.startsWith('pt'));
+    utt.lang = 'pt-BR'; utt.rate = 0.9; utt.pitch = 1.02; utt.volume = 1;
     if (v) utt.voice = v;
+    utt.onend = () => setTimeout(falaUma, 700);
+    utt.onerror = () => setTimeout(falaUma, 900);
     window.speechSynthesis.speak(utt);
-  }, 80);
+  }
+  setTimeout(falaUma, 80);
 }
 
 function mostrarBanner(txt) {
@@ -420,10 +427,10 @@ function chamarPac(ginId, hora, idx) {
   const prof = getProfissional(ginId, periodo);
   const gin = CFG[ginId].nome;
   const num = idx + 1;
-  const msg = `Atenção! Próximo paciente, por favor dirija-se ao ${gin}.`;
-  falar(msg);
-  mostrarBanner(`Paciente ${num} → ${gin} · ${prof}`);
-  localStorage.setItem('fisiot_chamada', JSON.stringify({ginasio:gin,profissional:prof,horario:hora,num,msg,timestamp:Date.now()}));
+  const msg = `Atenção! Pacientes da ${prof}, comparecer ao ${gin}. ${prof}, ${gin}.`;
+  falar(msg, 5);
+  mostrarBanner(`📢 ${hora} · ${gin} · ${prof}`);
+  localStorage.setItem('fisiot_chamada', JSON.stringify({texto:`Pacientes das ${hora} — ${prof} → ${gin}`,ginasio:gin,profissional:prof,horario:hora,timestamp:Date.now()}));
   setChamado(ginId, hora, idx);
   renderAgenda();
 }
@@ -446,34 +453,21 @@ function chamarTodosSequencia(ginId, hora) {
   const prof = getProfissional(ginId, periodo);
   const gin = CFG[ginId].nome;
 
-  // Marcar todos como chamados
+  // Marcar todos como chamados imediatamente
   pendentes.forEach(idx => setChamado(ginId, hora, idx));
   renderAgenda();
 
-  // Chamar cada paciente individualmente em sequência
-  let i = 0;
-  function falarProximo() {
-    if (i >= pendentes.length) return;
-    const idx = pendentes[i];
-    const num = idx + 1;
-    const msg = `Próximo paciente. ${gin}. ${prof}.`;
-    mostrarBanner(`Paciente ${num} → ${gin} · ${prof}`);
-    localStorage.setItem('fisiot_chamada', JSON.stringify({ginasio:gin,profissional:prof,horario:hora,num,msg,timestamp:Date.now()}));
-
-    if (!('speechSynthesis' in window)) { i++; setTimeout(falarProximo, 1500); return; }
-    window.speechSynthesis.cancel();
-    setTimeout(() => {
-      const utt = new SpeechSynthesisUtterance(msg);
-      utt.lang = 'pt-BR'; utt.rate = 0.85; utt.pitch = 1; utt.volume = 1;
-      const vs = window.speechSynthesis.getVoices();
-      const v = vs.find(x => x.lang==='pt-BR') || vs.find(x => x.lang.startsWith('pt'));
-      if (v) utt.voice = v;
-      utt.onend = () => { i++; setTimeout(falarProximo, 800); };
-      utt.onerror = () => { i++; setTimeout(falarProximo, 800); };
-      window.speechSynthesis.speak(utt);
-    }, 300);
-  }
-  falarProximo();
+  // Anúncio de grupo — repetir 5 vezes conforme briefing
+  const msg = `Atenção! Pacientes das ${hora} da ${prof}, comparecer ao ${gin}.`;
+  mostrarBanner(`📢 ${hora} · ${gin} · ${prof} · ${pendentes.length} pac.`);
+  localStorage.setItem('fisiot_chamada', JSON.stringify({
+    texto: `Pacientes das ${hora} — ${prof} → ${gin}`,
+    ginasio: gin,
+    profissional: prof,
+    horario: hora,
+    timestamp: Date.now()
+  }));
+  falar(msg, 5);
 }
 
 function chamarAgora() {
@@ -482,10 +476,16 @@ function chamarAgora() {
   const periodo = getPeriodo(h);
   const prof = getProfissional(ginId, periodo);
   const gin = CFG[ginId].nome;
-  const msg = `Atenção! Próximo paciente, por favor dirija-se ao ${gin}.`;
-  falar(msg);
-  mostrarBanner(`Próximo paciente → ${gin} · ${prof||''}`);
-  localStorage.setItem('fisiot_chamada', JSON.stringify({ginasio:gin,profissional:prof,horario:h,msg,timestamp:Date.now()}));
+  const msg = `Atenção! Próximo paciente, comparecer ao ${gin}${prof ? ' com ' + prof : ''}.`;
+  falar(msg, 5);
+  mostrarBanner(`📢 ${gin}${prof ? ' · ' + prof : ''}`);
+  localStorage.setItem('fisiot_chamada', JSON.stringify({
+    texto: `Próximo paciente → ${gin}${prof ? ' · ' + prof : ''}`,
+    ginasio: gin,
+    profissional: prof,
+    horario: h,
+    timestamp: Date.now()
+  }));
   document.getElementById('now-ok').style.display = 'block';
   setTimeout(()=>document.getElementById('now-ok').style.display='none', 3000);
 }
@@ -537,11 +537,9 @@ function verificarAuto() {
   autoKeys.add(key);
   autoChamandoAgora = true;
 
-  // Após a fala terminar, libera para próxima verificação
-  const orig = window.speechSynthesis.onend;
+  // Chama e libera após 5 repetições (cada ~5s + pausa = ~40s total)
   chamarTodosSequencia(ginId, hora);
-  // Aguarda 6s após o início para liberar (tempo suficiente para o anúncio terminar)
-  setTimeout(() => { autoChamandoAgora = false; }, 6000);
+  setTimeout(() => { autoChamandoAgora = false; }, 40000);
 }
 
 setInterval(verificarAuto, 15000);
