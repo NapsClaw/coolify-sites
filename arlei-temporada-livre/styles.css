@@ -183,20 +183,21 @@ img { max-width: 100%; display: block; }
   pointer-events: none;
 }
 
-/* Hero grid wrapper — evita sobreposição texto/mockup */
+/* Hero grid wrapper — 2 colunas sem overlap */
 .hero-inner {
   position: relative;
   z-index: 2;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr minmax(0, 460px);
   align-items: center;
-  gap: 48px;
+  gap: 72px;
   width: 100%;
 }
 
 .hero-content {
   color: #fff;
-  min-width: 0; /* evita overflow em grid */
+  min-width: 0;
+  max-width: 560px;
 }
 
 .hero-badge {
@@ -255,12 +256,14 @@ img { max-width: 100%; display: block; }
 .stat span { font-size: 12px; color: #64748B; }
 .stat-divider { width: 1px; height: 36px; background: rgba(255,255,255,0.12); }
 
-/* Hero mockup — agora em fluxo normal dentro do grid */
+/* Hero mockup — tamanho contido, alinhado à direita no grid */
 .hero-mockup {
   position: relative;
   z-index: 2;
   width: 100%;
   min-width: 0;
+  max-width: 460px;
+  justify-self: end;
 }
 
 .mockup-browser {
@@ -641,9 +644,16 @@ img { max-width: 100%; display: block; }
 .footer-note { font-style: italic; color: #334155 !important; }
 
 /* ===== RESPONSIVE ===== */
-@media (max-width: 1024px) {
-  .hero-inner { grid-template-columns: 1fr; }
-  .hero-mockup { display: none; }
+@media (max-width: 1100px) {
+  .hero-inner {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+  .hero-mockup {
+    max-width: 600px;
+    justify-self: center;
+    width: 100%;
+  }
   .hero { min-height: auto; padding: 120px 0 80px; }
   .benefits-grid { grid-template-columns: repeat(2,1fr); }
   .plans-grid { grid-template-columns: 1fr; max-width: 440px; margin: 0 auto; }
@@ -661,6 +671,7 @@ img { max-width: 100%; display: block; }
   .footer-links { grid-template-columns: repeat(2,1fr); }
   .footer-bottom .container { flex-direction: column; text-align: center; }
   .trust-logos { gap: 20px; }
+  .hero-mockup { display: none; }
 }
 
 @media (max-width: 640px) {
