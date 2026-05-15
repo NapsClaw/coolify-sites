@@ -183,11 +183,20 @@ img { max-width: 100%; display: block; }
   pointer-events: none;
 }
 
-.hero-content {
+/* Hero grid wrapper — evita sobreposição texto/mockup */
+.hero-inner {
   position: relative;
   z-index: 2;
-  max-width: 580px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 48px;
+  width: 100%;
+}
+
+.hero-content {
   color: #fff;
+  min-width: 0; /* evita overflow em grid */
 }
 
 .hero-badge {
@@ -246,16 +255,12 @@ img { max-width: 100%; display: block; }
 .stat span { font-size: 12px; color: #64748B; }
 .stat-divider { width: 1px; height: 36px; background: rgba(255,255,255,0.12); }
 
-/* Hero mockup */
+/* Hero mockup — agora em fluxo normal dentro do grid */
 .hero-mockup {
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 48%;
-  max-width: 620px;
-  padding: 60px 40px 60px 0;
+  position: relative;
   z-index: 2;
+  width: 100%;
+  min-width: 0;
 }
 
 .mockup-browser {
@@ -637,8 +642,8 @@ img { max-width: 100%; display: block; }
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 1024px) {
+  .hero-inner { grid-template-columns: 1fr; }
   .hero-mockup { display: none; }
-  .hero-content { max-width: 100%; }
   .hero { min-height: auto; padding: 120px 0 80px; }
   .benefits-grid { grid-template-columns: repeat(2,1fr); }
   .plans-grid { grid-template-columns: 1fr; max-width: 440px; margin: 0 auto; }
