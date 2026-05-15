@@ -177,27 +177,36 @@ img { max-width: 100%; display: block; }
 .hero-bg {
   position: absolute;
   inset: 0;
+  z-index: 0;
   background:
     radial-gradient(ellipse at 20% 50%, rgba(14,165,233,0.25) 0%, transparent 60%),
     radial-gradient(ellipse at 80% 20%, rgba(16,185,129,0.15) 0%, transparent 50%);
   pointer-events: none;
 }
 
-/* Hero grid wrapper — 2 colunas sem overlap */
+/*
+ * hero-inner: grid de 2 colunas explícito (texto | mockup).
+ * Nenhum filho usa position:absolute, então ZERO sobreposição.
+ * v=hero-fix-1
+ */
 .hero-inner {
   position: relative;
   z-index: 2;
+  isolation: isolate;           /* stacking context próprio */
   display: grid;
-  grid-template-columns: 1fr minmax(0, 460px);
+  grid-template-columns: 1fr 420px;
   align-items: center;
-  gap: 72px;
+  gap: 64px;
   width: 100%;
 }
 
+/* Coluna 1: texto — nunca sobreposta pelo mockup */
 .hero-content {
+  position: relative;           /* garante stacking local */
+  z-index: 2;
   color: #fff;
-  min-width: 0;
-  max-width: 560px;
+  min-width: 0;                 /* permite encolher corretamente */
+  max-width: 580px;
 }
 
 .hero-badge {
@@ -256,14 +265,15 @@ img { max-width: 100%; display: block; }
 .stat span { font-size: 12px; color: #64748B; }
 .stat-divider { width: 1px; height: 36px; background: rgba(255,255,255,0.12); }
 
-/* Hero mockup — tamanho contido, alinhado à direita no grid */
+/* Coluna 2: mockup — ocupa somente sua célula de grid, sem overflow */
 .hero-mockup {
-  position: relative;
-  z-index: 2;
+  position: relative;           /* NÃO é absolute → nunca flutua sobre o texto */
+  z-index: 1;
   width: 100%;
   min-width: 0;
-  max-width: 460px;
+  max-width: 420px;
   justify-self: end;
+  align-self: center;
 }
 
 .mockup-browser {
@@ -645,12 +655,19 @@ img { max-width: 100%; display: block; }
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 1100px) {
+  /* Empilha texto acima do mockup — sem overlap */
   .hero-inner {
     grid-template-columns: 1fr;
     gap: 48px;
   }
+  .hero-content {
+    max-width: 100%;
+    text-align: center;
+  }
+  .hero-actions { justify-content: center; }
+  .hero-stats { justify-content: center; }
   .hero-mockup {
-    max-width: 600px;
+    max-width: 540px;
     justify-self: center;
     width: 100%;
   }
