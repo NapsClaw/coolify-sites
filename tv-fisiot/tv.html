@@ -23,16 +23,68 @@ body{
   box-shadow:0 3px 20px rgba(0,0,0,0.6);
   z-index:10;
 }
-.logo-area{display:flex;align-items:center;gap:16px}
-.logo-emblem{
-  width:50px;height:50px;
-  background:#fff;border-radius:12px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:30px;color:#CC0000;font-weight:900;line-height:1;
+.logo-area{display:flex;align-items:center;gap:14px}
+.logo-img{
+  height:56px;width:auto;
+  border-radius:10px;
+  object-fit:contain;
+  background:#fff;
+  padding:4px 8px;
   flex-shrink:0;
+  display:block;
 }
 .logo-name{font-size:24px;font-weight:900;letter-spacing:.5px}
 .logo-tag{font-size:11px;color:rgba(255,255,255,.75);text-transform:uppercase;letter-spacing:2px;margin-top:2px}
+
+/* ── VITRINE PRODUTOS ─────────────────────── */
+#product-grid{
+  position:absolute;inset:0;
+  z-index:3;
+  background:linear-gradient(160deg,#0d0505 0%,#1c0a0a 100%);
+  padding:16px 20px 14px;
+  display:none;
+}
+.pg-header{
+  font-size:13px;font-weight:800;color:#FFD700;
+  text-transform:uppercase;letter-spacing:3px;
+  margin-bottom:12px;
+  display:flex;align-items:center;gap:12px;
+}
+.pg-header::after{content:'';flex:1;height:1px;background:rgba(255,215,0,.25)}
+.pg-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  grid-template-rows:repeat(3,1fr);
+  gap:11px;
+  height:calc(100% - 44px);
+}
+.pg-card{
+  border-radius:11px;
+  overflow:hidden;
+  border:1px solid rgba(204,0,0,.3);
+  background:#181818;
+  display:flex;flex-direction:column;
+  position:relative;
+  transition:border-color .3s;
+}
+.pg-card img{
+  flex:1;
+  width:100%;
+  object-fit:cover;
+  object-position:center;
+  min-height:0;
+  display:block;
+}
+.pg-label{
+  background:rgba(0,0,0,.85);
+  color:#fff;
+  font-size:12.5px;font-weight:700;
+  text-align:center;
+  padding:6px 4px;
+  letter-spacing:.4px;
+  flex-shrink:0;
+  border-top:1px solid rgba(204,0,0,.2);
+}
 .clock-area{text-align:right}
 #clock{font-size:52px;font-weight:900;line-height:1;letter-spacing:2px;font-variant-numeric:tabular-nums}
 #date{font-size:12px;color:rgba(255,255,255,.8);margin-top:3px}
@@ -221,9 +273,10 @@ body{
 <!-- HEADER -->
 <div id="header">
   <div class="logo-area">
-    <div class="logo-emblem">+</div>
+    <img src="logo-fisiot.jpg" alt="Fisiot" class="logo-img"
+         onerror="this.style.display='none'"/>
     <div>
-      <div class="logo-name">&#9829; Fisiot &amp; Vc</div>
+      <div class="logo-name">Fisiot &amp; Vc</div>
       <div class="logo-tag">Clínica Fisiot &bull; 30 Anos &bull; Lagoa Santa MG</div>
     </div>
   </div>
@@ -240,6 +293,22 @@ body{
   <div id="slide-area">
     <img id="slide-bg" src="fisioterapia-hero.jpg" alt=""/>
     <div id="slide-gradient"></div>
+
+    <!-- VITRINE DE PRODUTOS -->
+    <div id="product-grid">
+      <div class="pg-header">🛍️ Loja Fisiot — Produtos para seu Tratamento</div>
+      <div class="pg-grid">
+        <div class="pg-card"><img src="prod-rolo.jpg" alt="Rolo Miofascial"/><div class="pg-label">Rolo Miofascial</div></div>
+        <div class="pg-card"><img src="prod-faixa.jpg" alt="Faixa Elástica"/><div class="pg-label">Faixa Elástica</div></div>
+        <div class="pg-card"><img src="prod-bola.jpg" alt="Bola Pilates"/><div class="pg-label">Bola Pilates</div></div>
+        <div class="pg-card"><img src="prod-pesos.jpg" alt="Pesos de Tornozelo"/><div class="pg-label">Pesos Tornozelo</div></div>
+        <div class="pg-card"><img src="prod-sapatilha.jpg" alt="Sapatilha Pilates"/><div class="pg-label">Sapatilha Pilates</div></div>
+        <div class="pg-card"><img src="prod-tens.jpg" alt="TENS / FES"/><div class="pg-label">TENS / FES</div></div>
+        <div class="pg-card"><img src="prod-bolsa-gel.jpg" alt="Bolsa de Gel"/><div class="pg-label">Bolsa de Gel</div></div>
+        <div class="pg-card"><img src="prod-creme-ervas.jpg" alt="Creme de Ervas"/><div class="pg-label">Creme de Ervas</div></div>
+        <div class="pg-card"><img src="prod-disco-flex.jpg" alt="Disco Flexível"/><div class="pg-label">Disco Flexível</div></div>
+      </div>
+    </div>
 
     <div id="dots-area"></div>
 
@@ -336,9 +405,9 @@ var slides = [
    s:"Programa exclusivo para a terceira idade. Mais saúde, independência e qualidade de vida!",
    b:"Geriatria",img:"melhor-idade.jpg",pos:"center 25%"},
 
-  {t:"<span class='hl'>Produtos</span> Fisiot",
-   s:"Rolos, discos, pesos, sapatilha, gel, creme de ervas — tudo para seu tratamento!",
-   b:"Loja",img:"prod-rolo.jpg",pos:"center 40%"},
+  {t:"<span class='hl'>Vitrine</span> Fisiot",
+   s:"Rolos, faixas, pesos, sapatilha, gel, TENS, bola, creme — tudo para seu tratamento!",
+   b:"Loja",type:"vitrine",img:"loja-produto.jpg",pos:"center 30%"},
 
   {t:"<span class='hl'>Reabilitação</span> Completa",
    s:"Da avaliação ao tratamento. Equipe multidisciplinar dedicada a você.",
@@ -392,6 +461,16 @@ function showSlide(n){
   cur = n;
   var s = slides[n];
   var bg = document.getElementById('slide-bg');
+  var grid = document.getElementById('product-grid');
+  var content = document.getElementById('slide-content');
+  var gradient = document.getElementById('slide-gradient');
+
+  var isVitrine = (s.type === 'vitrine');
+
+  // Mostra/oculta vitrine vs slide normal
+  grid.style.display = isVitrine ? 'block' : 'none';
+  content.style.display = isVitrine ? 'none' : 'block';
+  gradient.style.display = isVitrine ? 'none' : 'block';
 
   // Fade out → trocar imagem → fade in
   bg.style.opacity = '0';
@@ -404,14 +483,17 @@ function showSlide(n){
       bg.style.objectPosition = 'center 30%';
       bg.style.objectFit = 'cover';
     };
-    bg.style.opacity = '1';
+    // Na vitrine não mostra o bg por cima
+    bg.style.opacity = isVitrine ? '0' : '1';
   }, 300);
 
-  document.getElementById('slide-title').innerHTML = s.t;
-  document.getElementById('slide-sub').innerHTML   = s.s;
-  var badge = document.getElementById('slide-badge');
-  if(s.b){ badge.textContent = s.b; badge.style.display='inline-block'; }
-  else { badge.style.display='none'; }
+  if(!isVitrine){
+    document.getElementById('slide-title').innerHTML = s.t;
+    document.getElementById('slide-sub').innerHTML   = s.s;
+    var badge = document.getElementById('slide-badge');
+    if(s.b){ badge.textContent = s.b; badge.style.display='inline-block'; }
+    else { badge.style.display='none'; }
+  }
 
   // Dots
   for(var i=0;i<N;i++){
