@@ -144,6 +144,10 @@
     <div>
       <div class="titulo">🔔 Chamada Automática</div>
       <div id="ativar-status" class="sub">Clique para ativar — necessário uma vez ao abrir o painel</div>
+      <div class="sub" style="margin-top:6px;font-size:.78rem;color:rgba(255,255,255,.4)">
+        ⚠️ <b>Painel e TV no mesmo aparelho/navegador?</b> A chamada sincroniza automaticamente.<br>
+        Se a TV estiver em outro aparelho: o som toca aqui no painel; a TV usa localStorage (atualiza em até 2s) — certifique-se que a TV também abriu o <i>tv.html</i> e clicou em <b>ATIVAR SOM</b>.
+      </div>
     </div>
     <button id="btn-ativar" onclick="ativarAudio()">▶ ATIVAR AGORA</button>
   </div>
@@ -423,10 +427,17 @@ function falar(msg,reps=5){
 }
 
 function enviarParaTV(texto,ginasio,profissional,horario){
-  localStorage.setItem('fisiot_chamada', JSON.stringify({
-    texto, ginasio, profissional, horario,
-    timestamp: Date.now()
-  }));
+  const data = { texto, ginasio, profissional, horario, timestamp: Date.now() };
+  localStorage.setItem('fisiot_chamada', JSON.stringify(data));
+  // BroadcastChannel: sincronização em tempo real (mesmo browser, abas diferentes)
+  try{
+    const bc = new BroadcastChannel('fisiot_tv_chamada');
+    bc.postMessage(data);
+    bc.close();
+    console.log('[Painel] Chamada enviada via BroadcastChannel');
+  }catch(e){
+    console.log('[Painel] BroadcastChannel não suportado, usando apenas localStorage');
+  }
 }
 
 function mostrarBanner(txt){
