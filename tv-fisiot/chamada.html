@@ -145,8 +145,11 @@
       <div class="titulo">🔔 Chamada Automática</div>
       <div id="ativar-status" class="sub">Clique para ativar — necessário uma vez ao abrir o painel</div>
       <div class="sub" style="margin-top:6px;font-size:.78rem;color:rgba(255,255,255,.4)">
-        ⚠️ <b>Painel e TV no mesmo aparelho/navegador?</b> A chamada sincroniza automaticamente.<br>
-        Se a TV estiver em outro aparelho: o som toca aqui no painel; a TV usa localStorage (atualiza em até 2s) — certifique-se que a TV também abriu o <i>tv.html</i> e clicou em <b>ATIVAR SOM</b>.
+        📡 <b>TV em outro aparelho?</b> A chamada é enviada ao servidor e a TV recebe em até 3 s.<br>
+        Na TV: o <i>tv.html</i> deve estar aberto e ter clicado em <b>🔊 ATIVAR SOM DA TV</b> (obrigatório uma vez).
+      </div>
+      <div id="api-status" style="margin-top:8px;font-size:.75rem;color:rgba(255,255,255,.3)">
+        🔄 Verificando sync cross-device...
       </div>
     </div>
     <button id="btn-ativar" onclick="ativarAudio()">▶ ATIVAR AGORA</button>
@@ -428,15 +431,36 @@ function falar(msg,reps=5){
 
 function enviarParaTV(texto,ginasio,profissional,horario){
   const data = { texto, ginasio, profissional, horario, timestamp: Date.now() };
-  localStorage.setItem('fisiot_chamada', JSON.stringify(data));
-  // BroadcastChannel: sincronização em tempo real (mesmo browser, abas diferentes)
+
+  // ── 1. API PHP — cross-device (TV em outro aparelho) ──────
+  fetch('chamada-api.php', {
+    method: 'POST',
+    headers: {'Content-Type':'application/json'},
+    body: JSON.stringify(data)
+  })
+  .then(r => r.json())
+  .then(d => {
+    console.log('[Painel] ✅ Chamada enviada via API cross-device:', d);
+    document.getElementById('api-status').textContent = '✅ Sync cross-device ativo — TV recebe em até 3 s';
+    document.getElementById('api-status').style.color = '#4CAF50';
+  })
+  .catch(e => {
+    console.warn('[Painel] ⚠️ API não disponível (funcionando apenas no mesmo dispositivo):', e.message);
+    document.getElementById('api-status').textContent = '⚠️ Sync apenas mesmo dispositivo (chamada-api.php indisponível)';
+    document.getElementById('api-status').style.color = '#ff9900';
+  });
+
+  // ── 2. localStorage — mesmo browser/dispositivo ───────────
+  try { localStorage.setItem('fisiot_chamada', JSON.stringify(data)); } catch(x){}
+
+  // ── 3. BroadcastChannel — mesma origin, abas diferentes ───
   try{
     const bc = new BroadcastChannel('fisiot_tv_chamada');
     bc.postMessage(data);
     bc.close();
-    console.log('[Painel] Chamada enviada via BroadcastChannel');
+    console.log('[Painel] BroadcastChannel enviado (mesmo browser)');
   }catch(e){
-    console.log('[Painel] BroadcastChannel não suportado, usando apenas localStorage');
+    console.log('[Painel] BroadcastChannel não suportado');
   }
 }
 
@@ -578,6 +602,26 @@ function ativarAudio(){
   window.speechSynthesis.speak(u);
 }
 
+// ============================================================
+// VERIFICAR API CROSS-DEVICE
+// ============================================================
+function verificarAPI(){
+  fetch('chamada-api.php?check='+Date.now())
+    .then(r=>{ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+    .then(d=>{
+      document.getElementById('api-status').textContent =
+        '✅ Sync cross-device ativo — chamadas chegam na TV em até 3 s';
+      document.getElementById('api-status').style.color = '#4CAF50';
+      console.log('[Painel] API cross-device disponível');
+    })
+    .catch(e=>{
+      document.getElementById('api-status').textContent =
+        '⚠️ Sync cross-device indisponível — chamadas chegam APENAS no mesmo aparelho';
+      document.getElementById('api-status').style.color = '#ff9900';
+      console.warn('[Painel] chamada-api.php não acessível:', e.message);
+    });
+}
+
 // INIT
 if('speechSynthesis' in window){
   window.speechSynthesis.getVoices();
@@ -585,6 +629,7 @@ if('speechSynthesis' in window){
 }
 atualizarProfNow();
 renderAgenda();
+verificarAPI();
 </script>
 </body>
 </html>

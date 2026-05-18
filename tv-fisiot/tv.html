@@ -517,6 +517,74 @@ try {
 }
 
 // ============================================================
+// API POLLING — sincronização cross-device via chamada-api.php
+// Funciona quando painel e TV estão em aparelhos diferentes.
+// Intervalo: 3 segundos. Fallback: localStorage (mesmo device).
+// ============================================================
+var apiDisponivel = false;
+var API_URL = 'chamada-api.php';
+
+function initAPIPolling(){
+  fetch(API_URL + '?check=' + Date.now())
+    .then(function(r){
+      if(!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    })
+    .then(function(d){
+      apiDisponivel = true;
+      console.log('[TV] ✅ API cross-device ativa (chamada-api.php) — polling a cada 3s');
+      pollAPI(); // primeiro poll imediato
+      setInterval(pollAPI, 3000);
+    })
+    .catch(function(e){
+      apiDisponivel = false;
+      console.warn('[TV] ⚠️ chamada-api.php não disponível — usando localStorage/BroadcastChannel (mesmo dispositivo apenas). Erro:', e.message);
+    });
+}
+
+function pollAPI(){
+  fetch(API_URL + '?t=' + Date.now())
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      if(!data || !data.timestamp) return;
+      var age = Date.now() - data.timestamp;
+
+      // Atualiza barra inferior se chamada recente (< 3 min)
+      if(age < 180000 && data.timestamp > 0){
+        var txt;
+        if(data.profissional && data.horario && data.ginasio){
+          txt = 'Atenção! Pacientes das '+data.horario+' da '+
+                data.profissional+', comparecer ao '+data.ginasio+'.';
+        } else if(data.texto){
+          txt = data.texto;
+        }
+        if(txt){
+          document.getElementById('chamada-txt').textContent = txt;
+          document.getElementById('chamada-txt').className = age < 30000 ? 'ativo' : '';
+        }
+      } else if(age >= 180000){
+        var el = document.getElementById('chamada-txt');
+        if(el.className === 'ativo'){
+          el.textContent = 'Aguardando chamada de pacientes...';
+          el.className = '';
+        }
+      }
+
+      // Dispara overlay + voz apenas se chamada nova (< 30s) e não vista ainda
+      if(age < 30000 && data.timestamp > lastChamadaTS){
+        lastChamadaTS = data.timestamp;
+        // Salva em localStorage para manter barra inferior consistente
+        try{ localStorage.setItem('fisiot_chamada', JSON.stringify(data)); }catch(x){}
+        console.log('[TV] API: nova chamada recebida', data);
+        mostrarChamadaOverlay(data);
+      }
+    })
+    .catch(function(e){
+      // Silencia erros de rede no console (poluem demais)
+    });
+}
+
+// ============================================================
 // SLIDES COM IMAGENS
 // ============================================================
 var slides = [
@@ -891,10 +959,11 @@ function updateChamada(){
 showSlide(0);
 startTimer();
 setInterval(updateClock, 1000);
-setInterval(updateChamada, 2000);
+setInterval(updateChamada, 2000); // fallback localStorage (mesmo dispositivo)
 setInterval(renderSidebar, 30000);
 updateClock();
 renderSidebar();
+initAPIPolling(); // cross-device sync via chamada-api.php
 </script>
 </body>
 </html>
