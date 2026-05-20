@@ -2,6 +2,33 @@
    DOUGLAS DESENVOLVEDOR — script.js
    =================================================== */
 
+/* ---- Hero video: graceful fallback + pause when off-screen ---- */
+(function () {
+  const vid = document.getElementById('heroBg');
+  if (!vid) return;
+
+  // Remove element entirely if video can't be loaded (canvas is the real fallback)
+  vid.addEventListener('error', () => vid.remove(), true);
+
+  // Fade in once enough data is buffered
+  vid.style.opacity = '0';
+  vid.style.transition = 'opacity 1.2s ease';
+  vid.addEventListener('canplaythrough', () => {
+    vid.style.opacity = '.12';
+  }, { once: true });
+
+  // Pause/resume based on visibility → saves CPU/battery when hero not visible
+  if (window.IntersectionObserver) {
+    const vio = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { vid.play().catch(() => {}); }
+        else { vid.pause(); }
+      });
+    }, { threshold: 0.05 });
+    vio.observe(vid);
+  }
+})();
+
 /* ---- NAV scroll state ---- */
 const nav = document.getElementById('nav');
 window.addEventListener('scroll', () => {

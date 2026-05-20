@@ -219,12 +219,30 @@ body::before {
   overflow: hidden;
   padding: 120px 24px 80px;
 }
+
+/* ---------- Video background ---------- */
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;          /* behind canvas (same z-index; video is earlier in DOM) */
+  opacity: .12;
+  filter: grayscale(60%) brightness(.55) hue-rotate(165deg);
+  pointer-events: none;
+}
+/* Respect reduced-motion / low-power preferences */
+@media (prefers-reduced-motion: reduce) {
+  .hero-video { display: none; }
+}
+
 #bgCanvas {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  z-index: 0;
+  z-index: 0;   /* same z-index but after video in DOM → on top; transparent bg reveals video */
 }
 .hero-overlay {
   position: absolute;
@@ -791,11 +809,17 @@ body::before {
     display: flex;
     position: fixed;
     top: 68px; left: 0; right: 0;
+    z-index: 99;                          /* above hero video & canvas */
     background: rgba(8,12,20,.97);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     padding: 16px 24px 24px;
     border-bottom: 1px solid var(--border2);
+    animation: mobileNavIn .22s ease forwards;
+  }
+  @keyframes mobileNavIn {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
   .nav-links.open li { width: 100%; }
   .nav-links.open .nav-link { display: block; width: 100%; padding: 12px 16px; }
@@ -827,5 +851,11 @@ body::before {
 
 @media (max-width: 480px) {
   .hero-actions { flex-direction: column; align-items: center; }
+  .hero-actions .btn { width: 100%; max-width: 320px; justify-content: center; }
   .sobre-stats  { grid-template-columns: 1fr; }
+  /* proj/srv cards: ensure they don't overflow on very narrow phones */
+  .proj-card, .srv-card { padding: 22px 18px; }
+  .contact-box  { padding: 32px 18px; }
+  /* iOS safe-area support */
+  .footer { padding-bottom: max(32px, env(safe-area-inset-bottom)); }
 }
