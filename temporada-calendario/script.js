@@ -58,10 +58,21 @@ let activeMonth = 0;
 let editingId = null;
 const today = new Date();
 
+/* ── Season date range ── */
+const SEASON_BEGIN = new Date(2026, 5, 1);   // Jun 1, 2026
+const SEASON_CLOSE = new Date(2026, 7, 31, 23, 59, 59); // Aug 31, 2026
+
 /* ══════════════════════════════
    INIT
 ══════════════════════════════ */
 document.addEventListener('DOMContentLoaded', () => {
+  // ① Reset filter controls BEFORE first render
+  //    (prevents browser form-restoration from causing an initial empty grid)
+  const _fSearch = document.getElementById('filterSearch');
+  const _fCap    = document.getElementById('filterCap');
+  if (_fSearch) _fSearch.value = '';
+  if (_fCap)    _fCap.selectedIndex = 0;
+
   loadSitios();
   renderPublicGrid();
   renderCalendar(0);
@@ -80,12 +91,21 @@ document.addEventListener('DOMContentLoaded', () => {
    STORAGE
 ══════════════════════════════ */
 function loadSitios() {
-  const raw = localStorage.getItem(LS_KEY);
-  if (raw) {
-    sitios = JSON.parse(raw);
-  } else {
+  try {
+    const raw = localStorage.getItem(LS_KEY);
+    if (raw !== null) {
+      // Key exists – use stored data (even if empty array, user may have deleted all)
+      const parsed = JSON.parse(raw);
+      sitios = Array.isArray(parsed) ? parsed : [];
+    } else {
+      // First ever visit → seed with demo data
+      sitios = DEMO_SITIOS.map(s => ({ ...s }));
+      saveSitios();
+    }
+  } catch (e) {
+    // Corrupted localStorage → seed fresh
     sitios = DEMO_SITIOS.map(s => ({ ...s }));
-    saveSitios();
+    try { saveSitios(); } catch (_) {}
   }
 }
 
@@ -109,7 +129,16 @@ function renderPublicGrid(filter = '') {
     const matchText = !filter ||
       s.nome.toLowerCase().includes(filter.toLowerCase()) ||
       s.cidade.toLowerCase().includes(filter.toLowerCase());
-    const matchCap = !capFilter || parseInt(s.capacidade) <= parseInt(capFilter);
+    let matchCap = true;
+    if (capFilter) {
+      const cap = parseInt(s.capacidade) || 0;
+      if (capFilter.includes('+')) {
+        // "30+" means capacity > 30
+        matchCap = cap > parseInt(capFilter);
+      } else {
+        matchCap = cap <= parseInt(capFilter);
+      }
+    }
     return matchText && matchCap;
   });
 
@@ -311,11 +340,18 @@ function escHtml(str) {
 function updateHeroStats() {
   const total = sitios.length;
   const cidades = new Set(sitios.map(s => s.cidade.split('—')[0].trim())).size;
-  const dispAgora = sitios.filter(s => checkAvailability(s, today)).length;
+
+  // Count sítios with any overlap with the 2026 season (Jun 1 – Aug 31)
+  const dispTemporada = sitios.filter(s => {
+    if (!s.dataInicio && !s.dataFim) return true; // no dates = always available
+    const sStart = s.dataInicio ? new Date(s.dataInicio + 'T00:00:00') : new Date(2026, 0, 1);
+    const sEnd   = s.dataFim   ? new Date(s.dataFim   + 'T23:59:59') : new Date(2026, 11, 31);
+    return sStart <= SEASON_CLOSE && sEnd >= SEASON_BEGIN;
+  }).length;
 
   animateNum('statTotal', total);
   animateNum('statCidades', cidades);
-  animateNum('statDisp', dispAgora);
+  animateNum('statDisp', dispTemporada);
 }
 
 function animateNum(id, target) {
