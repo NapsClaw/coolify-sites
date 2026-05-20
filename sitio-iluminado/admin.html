@@ -185,6 +185,19 @@ tr:hover td{background:var(--light)}
 .price-table{width:100%;border-collapse:collapse;font-size:12px;margin-top:4px}
 .price-table th,.price-table td{border:1px solid var(--border);padding:6px 8px}
 .price-table th{background:var(--light);font-weight:700;color:var(--mid)}
+
+/* FOTO DE CAPA */
+.capa-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;padding:16px}
+.capa-foto-item{cursor:pointer;border-radius:10px;overflow:hidden;border:3px solid transparent;position:relative;transition:border-color .15s,transform .15s;background:#fff}
+.capa-foto-item:hover{transform:scale(1.02);border-color:var(--blue-l)}
+.capa-foto-item.capa-selected{border-color:var(--accent)!important}
+.capa-foto-item img{width:100%;height:120px;object-fit:cover;display:block}
+.capa-foto-label{padding:6px 8px;font-size:11px;font-weight:600;color:var(--mid);text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;background:#fff;border-top:1px solid var(--border)}
+.capa-check-icon{position:absolute;top:6px;right:6px;background:var(--accent);color:#fff;border-radius:50%;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;pointer-events:none;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+.capa-preview-box{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;padding:20px}
+.capa-preview-img{width:220px;height:140px;object-fit:cover;border-radius:10px;border:3px solid var(--accent);flex-shrink:0;background:var(--light)}
+.capa-preview-info{flex:1;min-width:180px}
+.capa-section-divider{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--mid);padding:14px 16px 8px;border-top:1px solid var(--border);margin-top:4px}
 </style>
 </head>
 <body>
@@ -221,6 +234,7 @@ tr:hover td{background:var(--light)}
       </div>
       <div class="nav-group">
         <div class="nav-label">Gestão</div>
+        <div class="nav-item" onclick="goPage('capa')"><span class="ni-icon">🖼️</span> Foto de capa</div>
         <div class="nav-item" onclick="goPage('sitios')"><span class="ni-icon">🏡</span> Gerenciar sítios</div>
         <div class="nav-item" onclick="goPage('leads')"><span class="ni-icon">👥</span> Leads</div>
       </div>
@@ -377,6 +391,33 @@ tr:hover td{background:var(--light)}
       <div id="sitios-list"></div>
     </div>
 
+    <!-- FOTO DE CAPA -->
+    <div class="page" id="page-capa">
+      <div class="sec-header">
+        <div class="sec-title">🖼️ Foto de capa — Sítio Iluminado</div>
+        <button class="btn-new" onclick="salvarFotoCapa()">💾 Salvar capa selecionada</button>
+      </div>
+
+      <!-- Preview atual -->
+      <div class="card" style="margin-bottom:16px">
+        <div class="card-head">📸 Capa atual do site</div>
+        <div class="capa-preview-box">
+          <img id="capa-atual-preview" src="fotos/piscina-principal.jpg" class="capa-preview-img" onerror="this.style.opacity='.3'" alt="Capa atual">
+          <div class="capa-preview-info">
+            <p style="font-weight:700;font-size:14px;margin-bottom:6px">Foto selecionada:</p>
+            <p id="capa-atual-label" style="font-size:13px;color:var(--mid);word-break:break-all">piscina-principal.jpg</p>
+            <p style="font-size:12px;color:var(--mid);margin-top:12px;line-height:1.6">💡 Clique em uma foto abaixo para selecioná-la como capa, depois clique em <strong>"Salvar capa selecionada"</strong>.<br><br>A foto escolhida aparecerá na página principal do Sítio Iluminado e na listagem pública automaticamente.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Grid de fotos selecionáveis -->
+      <div class="card">
+        <div class="card-head">Escolha a foto de capa — clique para selecionar</div>
+        <div id="capa-foto-grid" class="capa-grid"></div>
+      </div>
+    </div>
+
     <!-- LEADS -->
     <div class="page" id="page-leads">
       <div class="sec-header">
@@ -520,8 +561,9 @@ const SESSION_KEY = 'sitio_admin_session';
 // GitHub (para sincronizar reservas e sítios entre admin e site público)
 const GH_TOKEN  = ['ghp_BHec','dxAl3wGlcPm8','48gB8xACDuH9LF0DWYTv'].join('');
 const GH_REPO   = 'NapsClaw/coolify-sites';
-const GH_RES_FILE = 'sitio-iluminado/reservas.json';
-const GH_SIT_FILE = 'sitio-iluminado/sitios.json';
+const GH_RES_FILE  = 'sitio-iluminado/reservas.json';
+const GH_SIT_FILE  = 'sitio-iluminado/sitios.json';
+const GH_CONF_FILE = 'sitio-iluminado/config.json';
 const GH_API = 'https://api.github.com/repos/'+GH_REPO+'/contents/';
 
 const PIX = { nome:'ARISLAN CIARALLO', chave:'37451949850', tipo:'CPF' };
@@ -561,6 +603,13 @@ function getLeads(){
 }
 function salvarLeads(arr){
   localStorage.setItem('leads', JSON.stringify(arr));
+}
+function getSIConfig(){
+  try{ return JSON.parse(localStorage.getItem('sitio_iluminado_config'))||{}; }catch(e){ return {}; }
+}
+function setSIConfig(obj){
+  localStorage.setItem('sitio_iluminado_config', JSON.stringify(obj));
+  syncGitHub(GH_CONF_FILE, obj);
 }
 
 // =============================================
@@ -607,6 +656,17 @@ async function carregarDoGitHub(){
       if(d2.content){
         const arr = JSON.parse(atob(d2.content.replace(/\n/g,'')));
         localStorage.setItem('sitios', JSON.stringify(arr));
+      }
+    }
+  }catch(e){}
+  // Carrega config (fotoCapa etc.)
+  try{
+    const r3 = await fetch(GH_API+GH_CONF_FILE+'?t='+Date.now(), {headers:{'Authorization':'token '+GH_TOKEN}});
+    if(r3.ok){
+      const d3 = await r3.json();
+      if(d3.content){
+        const cfg = JSON.parse(atob(d3.content.replace(/\n/g,'')));
+        localStorage.setItem('sitio_iluminado_config', JSON.stringify(cfg));
       }
     }
   }catch(e){}
@@ -710,13 +770,14 @@ function goPage(p){
   document.querySelectorAll('.nav-item').forEach(el=>{
     if(el.getAttribute('onclick')&&el.getAttribute('onclick').includes("'"+p+"'")) el.classList.add('active');
   });
-  const titles={dashboard:'Dashboard',reservas:'Reservas',calendario:'Calendário',nova:'Nova reserva',sitios:'Gerenciar sítios',leads:'Leads'};
+  const titles={dashboard:'Dashboard',reservas:'Reservas',calendario:'Calendário',nova:'Nova reserva',capa:'Foto de Capa',sitios:'Gerenciar sítios',leads:'Leads'};
   document.getElementById('page-title').textContent = titles[p]||p;
   currentPage = p;
   if(p==='dashboard') renderDashboard();
   if(p==='reservas'){ popularSelects(); renderReservas(); }
   if(p==='calendario'){ popularSelects(); renderCalendario(); }
   if(p==='nova'){ popularSelects(); }
+  if(p==='capa') renderCapaPage();
   if(p==='sitios') renderSitios();
   if(p==='leads') renderLeads();
   document.getElementById('sidebar').classList.remove('open');
@@ -1336,6 +1397,138 @@ function cobrarCliente(id){
     `Após o pagamento, envie o comprovante para confirmarmos! ✅`
   );
   window.open(`https://wa.me/55${n}?text=${msg}`,'_blank');
+}
+
+// =============================================
+// FOTO DE CAPA — SÍTIO ILUMINADO
+// =============================================
+const CAPA_FOTOS = [
+  // Piscinas (candidatas ideais para capa)
+  {src:'fotos/piscina-principal.jpg', label:'🏊 Piscina principal', cat:'Piscina'},
+  {src:'fotos/piscina-cascata.jpg',   label:'💦 Piscina com cascata', cat:'Piscina'},
+  {src:'fotos/vista-piscina.jpg',     label:'🌅 Vista da piscina', cat:'Piscina'},
+  {src:'fotos/piscina-hidromassagem.jpg', label:'💦 Hidromassagem', cat:'Piscina'},
+  {src:'fotos/piscina-nova-01.jpg',   label:'🏊 Piscina nova 1', cat:'Piscina'},
+  {src:'fotos/piscina-nova-02.jpg',   label:'🏊 Piscina nova 2', cat:'Piscina'},
+  {src:'fotos/piscina-nova-03.jpg',   label:'🏊 Piscina nova 3', cat:'Piscina'},
+  // Área de lazer / exterior
+  {src:'fotos/sitio-externo.jpg',     label:'🌳 Sítio externo', cat:'Exterior'},
+  {src:'fotos/area-lazer.jpg',        label:'🏡 Área de lazer', cat:'Exterior'},
+  {src:'fotos/area-verde.jpg',        label:'🌿 Área verde', cat:'Exterior'},
+  {src:'fotos/bambu.jpg',             label:'🎋 Bambuzal', cat:'Exterior'},
+  {src:'fotos/palmeiras.jpg',         label:'🌴 Palmeiras', cat:'Exterior'},
+  {src:'fotos/trilha-palmeiras.jpg',  label:'🌿 Trilha palmeiras', cat:'Exterior'},
+  // Lazer / Entretenimento
+  {src:'fotos/churrasqueira.jpg',     label:'🥩 Churrasqueira', cat:'Lazer'},
+  {src:'fotos/salao-festas.jpg',      label:'🎊 Salão de festas', cat:'Lazer'},
+  {src:'fotos/salao-terraco.jpg',     label:'🌳 Salão terraço', cat:'Lazer'},
+  {src:'fotos/campo-futebol.jpg',     label:'⚽ Campo de futebol', cat:'Lazer'},
+  {src:'fotos/quadra-volei.jpg',      label:'🏐 Quadra de vôlei', cat:'Lazer'},
+  {src:'fotos/capela.jpg',            label:'💒 Capela', cat:'Lazer'},
+  // Interiores
+  {src:'fotos/sala-madeira.jpg',      label:'🪵 Sala de madeira', cat:'Interior'},
+  {src:'fotos/sala-vista-piscina.jpg',label:'💦 Sala vista piscina', cat:'Interior'},
+  {src:'fotos/quarto-2.jpg',          label:'🛏️ Quarto 2', cat:'Interior'},
+  {src:'fotos/quarto-3.jpg',          label:'🛏️ Quarto 3', cat:'Interior'},
+  {src:'fotos/quarto-4.jpg',          label:'🛏️ Quarto 4', cat:'Interior'},
+  // Novas fotos
+  {src:'fotos/nova-01.jpg',  label:'📷 Nova foto 1',  cat:'Novas'},
+  {src:'fotos/nova-02.jpg',  label:'📷 Nova foto 2',  cat:'Novas'},
+  {src:'fotos/nova-03.jpg',  label:'📷 Nova foto 3',  cat:'Novas'},
+  {src:'fotos/nova-04.jpg',  label:'📷 Nova foto 4',  cat:'Novas'},
+  {src:'fotos/nova-05.jpg',  label:'📷 Nova foto 5',  cat:'Novas'},
+  {src:'fotos/nova-06.jpg',  label:'📷 Nova foto 6',  cat:'Novas'},
+  {src:'fotos/nova-07.jpg',  label:'📷 Nova foto 7',  cat:'Novas'},
+  {src:'fotos/nova-08.jpg',  label:'📷 Nova foto 8',  cat:'Novas'},
+  {src:'fotos/nova-09.jpg',  label:'📷 Nova foto 9',  cat:'Novas'},
+  {src:'fotos/nova-10.jpg',  label:'📷 Nova foto 10', cat:'Novas'},
+  {src:'fotos/nova-11.jpg',  label:'📷 Nova foto 11', cat:'Novas'},
+  {src:'fotos/nova-12.jpg',  label:'📷 Nova foto 12', cat:'Novas'},
+  {src:'fotos/nova-13.jpg',  label:'📷 Nova foto 13', cat:'Novas'},
+  {src:'fotos/nova-14.jpg',  label:'📷 Nova foto 14', cat:'Novas'},
+  {src:'fotos/nova-15.jpg',  label:'📷 Nova foto 15', cat:'Novas'},
+  {src:'fotos/nova-16.jpg',  label:'📷 Nova foto 16', cat:'Novas'},
+  {src:'fotos/nova-17.jpg',  label:'📷 Nova foto 17', cat:'Novas'},
+  {src:'fotos/nova-18.jpg',  label:'📷 Nova foto 18', cat:'Novas'},
+  {src:'fotos/nova-19.jpg',  label:'📷 Nova foto 19', cat:'Novas'},
+  {src:'fotos/nova-20.jpg',  label:'📷 Nova foto 20', cat:'Novas'},
+];
+
+let _capaSelecionada = null;
+
+function renderCapaPage(){
+  const cfg = getSIConfig();
+  const currentCapa = cfg.fotoCapa || 'fotos/piscina-principal.jpg';
+  _capaSelecionada = currentCapa;
+
+  const preview = document.getElementById('capa-atual-preview');
+  const lbl = document.getElementById('capa-atual-label');
+  if(preview) preview.src = currentCapa;
+  if(lbl) lbl.textContent = currentCapa.replace('fotos/','');
+
+  const grid = document.getElementById('capa-foto-grid');
+  if(!grid) return;
+
+  // Agrupa por categoria
+  const cats = [...new Set(CAPA_FOTOS.map(f=>f.cat))];
+  let html = '';
+  cats.forEach(cat => {
+    const fotos = CAPA_FOTOS.filter(f => f.cat === cat);
+    html += `<div class="capa-section-divider">📁 ${cat}</div>`;
+    html += `<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;padding:0 16px 12px">`;
+    fotos.forEach(f => {
+      const isSel = f.src === currentCapa;
+      html += `
+        <div class="capa-foto-item${isSel?' capa-selected':''}"
+             onclick="escolherCapa('${f.src}')"
+             data-src="${f.src}"
+             style="border-color:${isSel?'var(--accent)':'transparent'}">
+          <img src="${f.src}" alt="${f.label}" loading="lazy"
+               onerror="this.closest('.capa-foto-item').style.display='none'">
+          <div class="capa-foto-label">${f.label}</div>
+          ${isSel?`<div class="capa-check-icon">✓</div>`:''}
+        </div>`;
+    });
+    html += `</div>`;
+  });
+  grid.innerHTML = html;
+}
+
+function escolherCapa(src){
+  _capaSelecionada = src;
+
+  const preview = document.getElementById('capa-atual-preview');
+  const lbl = document.getElementById('capa-atual-label');
+  if(preview){ preview.src = src; preview.style.opacity='1'; }
+  if(lbl) lbl.textContent = src.replace('fotos/','') + ' (ainda não salva)';
+
+  // Atualiza seleção visual no grid
+  document.querySelectorAll('.capa-foto-item').forEach(el => {
+    const elSrc = el.getAttribute('data-src');
+    const isSel = elSrc === src;
+    el.classList.toggle('capa-selected', isSel);
+    el.style.borderColor = isSel ? 'var(--accent)' : 'transparent';
+    const existing = el.querySelector('.capa-check-icon');
+    if(existing) existing.remove();
+    if(isSel){
+      const ch = document.createElement('div');
+      ch.className = 'capa-check-icon';
+      ch.textContent = '✓';
+      el.appendChild(ch);
+    }
+  });
+  showToast('📸 "'+src.replace('fotos/','')+'" selecionada — clique em Salvar para confirmar');
+}
+
+function salvarFotoCapa(){
+  if(!_capaSelecionada){ showToast('⚠️ Nenhuma foto selecionada'); return; }
+  const cfg = getSIConfig();
+  cfg.fotoCapa = _capaSelecionada;
+  setSIConfig(cfg);
+  // Atualiza label do preview
+  const lbl = document.getElementById('capa-atual-label');
+  if(lbl) lbl.textContent = _capaSelecionada.replace('fotos/','') + ' ✅ salva';
+  showToast('✅ Foto de capa salva! Site atualizado em instantes.');
 }
 
 // =============================================
