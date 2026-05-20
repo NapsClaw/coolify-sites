@@ -339,6 +339,13 @@ function initCountdown() {
 // ── Animated Stats ────────────────────────────────
 function animateStats() {
   const stats = document.querySelectorAll('.stat__num');
+
+  // Always render final values first (prevents "0" on screenshots/slow load)
+  stats.forEach(el => { el.textContent = el.dataset.target; });
+
+  // Animate from 0 on scroll-into-view (progressive enhancement)
+  if (!('IntersectionObserver' in window)) return;
+
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -354,7 +361,7 @@ function animateStats() {
         observer.unobserve(el);
       }
     });
-  }, { threshold: 0.5 });
+  }, { threshold: 0.3, rootMargin: '0px 0px -20px 0px' });
 
   stats.forEach(s => observer.observe(s));
 }
