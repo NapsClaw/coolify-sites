@@ -16,13 +16,16 @@ const SITIOS = [
     precoDetalhe: "Preço varia conforme data e número de pessoas",
     capacidade: "Consultar",
     fotos: [
-      "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200&q=80",
-      "https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=600&q=80",
-      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80",
-      "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=600&q=80",
-      "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=600&q=80"
+      "fotos/piscina-principal.jpg",
+      "fotos/churrasqueira.jpg",
+      "fotos/salao-festas.jpg",
+      "fotos/campo-futebol.jpg",
+      "fotos/area-verde.jpg",
+      "fotos/sitio-externo.jpg",
+      "fotos/piscina-cascata.jpg",
+      "fotos/vista-piscina.jpg"
     ],
-    fotoCapa: "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80",
+    fotoCapa: "fotos/piscina-principal.jpg",
     features: ["🛏️ Acomodações", "🏊 Piscina", "🎉 Área de festa", "🌿 Área verde", "🔥 Churrasqueira", "🚗 Estacionamento", "🎓 Formaturas"],
     diasIndisponiveis: [5, 6, 7, 12, 13, 18, 19, 20, 25, 26],
     ativo: true

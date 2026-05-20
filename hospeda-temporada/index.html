@@ -36,7 +36,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:500;background:rgba(255,255,255,
 
 /* ── HERO ── */
 .hero{margin-top:60px;background:#0f172a;min-height:92vh;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden}
-.hero-bg{position:absolute;inset:0;background:url('fotos/piscina-principal.jpg')center/cover;opacity:1}
+.hero-bg{position:absolute;inset:0;background-image:url('fotos/piscina-principal.jpg');background-size:cover;background-position:center;opacity:1}
 .hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(15,23,42,.75) 0%,rgba(15,23,42,.15) 60%,rgba(0,0,0,0) 100%)}
 .hero-content{position:relative;z-index:1;padding:40px 20px 48px}
 .hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(37,99,235,.25);border:1px solid rgba(37,99,235,.4);color:#93c5fd;font-size:13px;font-weight:600;letter-spacing:1px;padding:8px 18px;border-radius:100px;margin-bottom:24px;text-transform:uppercase}
@@ -265,7 +265,7 @@ footer{background:#0f172a;padding:40px 20px 24px;text-align:center}
 
 <!-- NAV -->
 <nav>
-  <a href="#" class="nav-logo"><img src="logo.jpg" alt="Sítio Iluminado"></a>
+  <a href="#" class="nav-logo" style="font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--dark);text-decoration:none;letter-spacing:-0.3px">🌿 Sítio <span style="color:var(--accent)">Iluminado</span></a>
   <div class="nav-links">
     <a href="#reservar">Reservar</a>
     <a href="#precos">Preços</a>
@@ -591,11 +591,32 @@ function saveOutro(){
 
 // renderOutros() chamado via fetch acima
 
+// ── FOTO DE CAPA — função global ──
+function aplicarFotoCapa(src){
+  if(!src) return;
+  const bg = document.querySelector('.hero-bg');
+  if(bg) bg.style.backgroundImage = "url('"+src+"')";
+  // atualiza 1ª imagem da mini-galeria
+  const mg = document.querySelector('#mini-gallery img:first-child');
+  if(mg){ mg.src = src; }
+}
+
+// ── CARREGAR CAPA PÚBLICA (GitHub raw — funciona para todos os visitantes) ──
+(function carregarCapaPublica(){
+  const GH_CONF_RAW = 'https://raw.githubusercontent.com/NapsClaw/coolify-sites/main/sitio-iluminado/config.json';
+  fetch(GH_CONF_RAW+'?v='+Date.now())
+    .then(r=>r.ok?r.json():Promise.reject())
+    .then(cfg=>{ if(cfg && cfg.fotoCapa) aplicarFotoCapa(cfg.fotoCapa); })
+    .catch(()=>{/* mantém foto padrão */});
+})();
+
 // ── APLICAR CONFIG DO SÍTIO ILUMINADO (editável via admin) ──
 (function applySIConfig(){
   const SI_KEY = 'sitio_iluminado_config';
   let si; try{si=JSON.parse(localStorage.getItem(SI_KEY));}catch(e){si=null;}
   if(!si) return;
+  // Foto de capa (prioridade: localStorage do admin > GitHub)
+  if(si.fotoCapa) aplicarFotoCapa(si.fotoCapa);
   const badge = document.querySelector('.hero-badge');
   if(badge && si.badge) badge.textContent = si.badge;
   const sub = document.querySelector('.hero-sub');
@@ -1200,18 +1221,23 @@ function saveOutro(){
     <span class="sec-label" style="color:#4ade80">Vídeo</span>
     <h2 class="sec-h2" style="color:#fff;margin-bottom:8px">Veja o sítio em vídeo</h2>
     <p style="color:rgba(255,255,255,.6);font-size:15px;margin-bottom:28px">Um passeio real pelo Sítio Iluminado 🌿</p>
-    <div style="position:relative;width:100%;max-width:340px;margin:0 auto;border-radius:16px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.5)">
-      <iframe
-        src="https://www.youtube.com/embed/ZM-ybTJY4qA"
-        title="Sítio Iluminado — vídeo"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
-        style="width:100%;aspect-ratio:9/16;display:block">
-      </iframe>
-    </div>
+    <!-- Thumbnail clicável — abre no YouTube -->
+    <a href="https://www.youtube.com/shorts/ZM-ybTJY4qA" target="_blank" rel="noopener"
+       style="display:block;position:relative;width:100%;max-width:320px;margin:0 auto;border-radius:16px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.55);text-decoration:none;background:#1e293b">
+      <img src="https://img.youtube.com/vi/ZM-ybTJY4qA/hqdefault.jpg"
+           alt="Assistir vídeo do Sítio Iluminado no YouTube"
+           loading="lazy"
+           style="width:100%;display:block;aspect-ratio:9/16;object-fit:cover"
+           onerror="this.style.minHeight='380px';this.style.background='#1e293b'">
+      <!-- Botão play sobreposto -->
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.18)">
+        <div style="width:72px;height:52px;background:#ff0000;border-radius:14px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,0,0,.5);transition:transform .2s">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+      </div>
+    </a>
     <p style="margin-top:20px">
-      <a href="https://www.youtube.com/shorts/ZM-ybTJY4qA" target="_blank" style="color:#4ade80;font-size:14px;text-decoration:none">▶ Assistir no YouTube</a>
+      <a href="https://www.youtube.com/shorts/ZM-ybTJY4qA" target="_blank" rel="noopener" style="color:#4ade80;font-size:14px;font-weight:600;text-decoration:none">▶ Assistir no YouTube →</a>
     </p>
   </div>
 </section>
@@ -1263,7 +1289,7 @@ function saveOutro(){
 </section>
 
 <footer>
-  <div class="foot-logo"><img src="logo.jpg" alt="Sítio Iluminado"></div>
+  <div class="foot-logo" style="font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:#fff;letter-spacing:-0.5px;margin-bottom:8px">🌿 Sítio <span style="color:#60a5fa">Iluminado</span></div>
   <p class="foot-sub">Mogi das Cruzes / Biritiba Mirim, SP · 1h de São Paulo</p>
   <div class="foot-links">
     <a href="#reservar">Reservar</a>
@@ -1315,58 +1341,32 @@ function getRes(){try{return JSON.parse(localStorage.getItem(SK))||[];}catch(e){
 function saveRes(arr){localStorage.setItem(SK,JSON.stringify(arr));}
 function genId(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
 
-// ===== GALLERY IMAGES (fotos reais do Sítio Iluminado) =====
+// ===== GALLERY IMAGES (somente fotos confirmadas no servidor) =====
 const GALLERY_IMGS = [
-  {src:'fotos/piscina-principal.jpg',label:'🏊 Piscina com hidromassagem e cascata',desc:'Piscina com hidromassagem, cascata e tratamento de água com ozônio. Perfeita para relaxar e curtir com a família e amigos.'},
-  {src:'fotos/piscina-hidromassagem.jpg',label:'💦 Piscina com hidromassagem',desc:'Área de hidromassagem integrada à piscina principal. Conforto e lazer em um único espaço.'},
-  {src:'fotos/piscina-cascata.jpg',label:'🏊 Piscina — Hidromassagem e Cascata',desc:'Vista completa da piscina com cascata d\'água e área de hidromassagem. Água tratada com sistema de ozônio.'},
-  {src:'fotos/vista-piscina.jpg',label:'🌅 Vista da piscina',desc:'Vista panorâmica da piscina a partir do salão. Integração perfeita entre área interna e área de lazer.'},
-  {src:'fotos/churrasqueira.jpg',label:'🥩 Churrasqueira e forno de pizza 🍕',desc:'Churrasqueira coberta de alvenaria com forno de pizza de lenha. Espaço gourmet completo para eventos e festas.'},
-  {src:'fotos/salao-festas.jpg',label:'🎊 Salão de festas e jogos 🎱🎯',desc:'Salão amplo com sinuca, ping-pong e outros jogos. Espaço ideal para festa com capacidade para grandes grupos.'},
-  {src:'fotos/salao-terraco.jpg',label:'🌳 Salão com terraço ✅',desc:'Frente do salão com terraço aberto. Vista privilegiada para a área verde e piscina.'},
-  {src:'fotos/sala-madeira.jpg',label:'🪵 Sala — Casa de madeira',desc:'Sala aconchegante na casa de madeira. Ambiente rústico e confortável com lareira para os dias mais frios.'},
-  {src:'fotos/sala-vista-piscina.jpg',label:'💦 Sala — Dois ambientes com vista piscina',desc:'Sala integrada com dois ambientes e vista direta para a piscina. Conforto e integração com a área de lazer.'},
-  {src:'fotos/quarto-2.jpg',label:'🛏️ Quarto 2',desc:'Quarto 2 confortável com camas de casal. Acomoda até 2 pessoas com conforto e privacidade.'},
-  {src:'fotos/quarto-3.jpg',label:'🛏️ Quarto 3',desc:'Quarto 3 com camas individuais. Ideal para grupos de amigos ou crianças.'},
-  {src:'fotos/quarto-4.jpg',label:'🛏️ Quarto 4',desc:'Quarto 4 — Sítio com 4 quartos no total, acomodando até 12 pessoas em camas + 10 em colchonetes.'},
-  {src:'fotos/banheiro-completo.jpg',label:'🛀 Banheiro completo 🚾',desc:'Banheiro completo com pia, vaso e chuveiro. O sítio conta com 4 banheiros no total para maior conforto dos hóspedes.'},
-  {src:'fotos/banheiro-box.jpg',label:'🛀 Banheiro com box',desc:'Banheiro com box de vidro. Estrutura completa e bem cuidada para garantir o conforto de todos.'},
-  {src:'fotos/quadra-volei.jpg',label:'🏐 Quadra de vôlei',desc:'Quadra de vôlei gramada para diversão garantida. Perfeita para grupos que querem se exercitar e se divertir.'},
-  {src:'fotos/campo-futebol.jpg',label:'⚽ Campo de futebol',desc:'Campo de futebol gramado com traves. Diversão certa para os amantes do futebol durante os finais de semana.'},
-  {src:'fotos/capela.jpg',label:'💒 Capela',desc:'Capela no terreno do sítio — ideal para casamentos, cerimônias religiosas e momentos especiais em família.'},
-  {src:'fotos/sitio-externo.jpg',label:'🌳 Sítio Iluminado',desc:'Vista externa do Sítio Iluminado em Biritiba Mirim / Mogi das Cruzes. Área verde exuberante, 100 vagas de estacionamento e asfalto até a porta.'},
-  {src:'fotos/bambu.jpg',label:'🎋 Bambuzal',desc:'Área de bambu do sítio. Paisagismo natural que traz charme, frescor e uma atmosfera tranquila e bucólica.'},
-  {src:'fotos/palmeiras.jpg',label:'🌴 Palmeiras',desc:'Área de palmeiras imperiais que emolduram o sítio. Paisagem tropical deslumbrante em pleno interior de São Paulo.'},
-  {src:'fotos/trilha-palmeiras.jpg',label:'🌿 Trilha entre palmeiras',desc:'Caminho arborizado entre as palmeiras do sítio. Um convite para caminhar, relaxar e se conectar com a natureza.'},
-  {src:'fotos/area-verde.jpg',label:'🌳 Área verde',desc:'Área verde exuberante do Sítio Iluminado. Natureza preservada com muito espaço para curtir ao ar livre.'},
-  {src:'fotos/area-lazer.jpg',label:'🏡 Área de lazer',desc:'Vista geral da área de lazer do Sítio Iluminado. Espaço amplo e aconchegante, perfeito para reunir família e amigos.'},
-  {src:'fotos/foto-extra-01.jpg',label:'📸 Sítio Iluminado',desc:'Mais um ângulo do Sítio Iluminado em Biritiba Mirim / Mogi das Cruzes.'},
-  {src:'fotos/foto-extra-02.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
-  {src:'fotos/foto-extra-03.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
-  {src:'fotos/foto-extra-04.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
-  {src:'fotos/foto-extra-05.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
-  {src:'fotos/foto-extra-06.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
-  {src:'fotos/foto-extra-07.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
-  {src:'fotos/foto-extra-08.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
-  {src:'fotos/foto-extra-09.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
-  {src:'fotos/foto-extra-10.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
-  {src:'fotos/foto-extra-11.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
-  {src:'fotos/foto-extra-12.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
-  {src:'fotos/foto-extra-13.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
-  {src:'fotos/foto-extra-14.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
-  {src:'fotos/foto-extra-15.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
-  {src:'fotos/foto-extra-16.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
-  {src:'fotos/foto-extra-17.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
-  {src:'fotos/foto-extra-18.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
-  {src:'fotos/foto-extra-19.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
-  {src:'fotos/foto-extra-20.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
+  {src:'fotos/piscina-principal.jpg',  label:'🏊 Piscina com hidromassagem e cascata', desc:'Piscina com hidromassagem, cascata e tratamento de água com ozônio. Perfeita para relaxar com a família e amigos.'},
+  {src:'fotos/piscina-hidromassagem.jpg', label:'💦 Hidromassagem',                    desc:'Área de hidromassagem integrada à piscina principal. Conforto e lazer em um único espaço.'},
+  {src:'fotos/piscina-cascata.jpg',    label:'🌊 Piscina — cascata',                   desc:'Vista da piscina com cascata d\'água. Água tratada com sistema de ozônio.'},
+  {src:'fotos/piscina.jpg',            label:'🏊 Piscina — vista ampla',               desc:'Vista completa da área de piscina. Espaço para festas e diversão com toda a família.'},
+  {src:'fotos/vista-piscina.jpg',      label:'🌅 Vista da piscina',                    desc:'Vista panorâmica da piscina a partir do salão. Integração perfeita entre área interna e área de lazer.'},
+  {src:'fotos/churrasqueira.jpg',      label:'🥩 Churrasqueira coberta',               desc:'Churrasqueira coberta de alvenaria. Espaço gourmet completo para eventos e festas.'},
+  {src:'fotos/churrasqueira-forno-pizza.jpg', label:'🍕 Forno de pizza a lenha',       desc:'Forno de pizza a lenha integrado à área gourmet. Ideal para festas e confraternizações.'},
+  {src:'fotos/salao-festas.jpg',       label:'🎊 Salão de festas e jogos',             desc:'Salão amplo com sinuca, ping-pong e outros jogos. Espaço ideal para festas com grandes grupos.'},
+  {src:'fotos/sala-madeira.jpg',       label:'🪵 Sala — casa de madeira',              desc:'Sala aconchegante na casa de madeira. Ambiente rústico e confortável com lareira para os dias mais frios.'},
+  {src:'fotos/quarto-2.jpg',           label:'🛏️ Quarto 2',                            desc:'Quarto confortável com camas de casal. O sítio tem 4 quartos no total, acomodando até 12 pessoas em camas.'},
+  {src:'fotos/quarto-3.jpg',           label:'🛏️ Quarto 3',                            desc:'Quarto com camas individuais. Ideal para grupos de amigos ou crianças.'},
+  {src:'fotos/quarto-4.jpg',           label:'🛏️ Quarto 4',                            desc:'Quarto 4 — sítio com 4 quartos e 4 banheiros, acomodando até 22 pessoas (12 em camas + 10 em colchonetes).'},
+  {src:'fotos/quadra-volei.jpg',       label:'🏐 Quadra de vôlei',                     desc:'Quadra de vôlei gramada para diversão garantida com grupos.'},
+  {src:'fotos/campo-futebol.jpg',      label:'⚽ Campo de futebol',                    desc:'Campo de futebol gramado com traves. Diversão para os amantes do futebol.'},
+  {src:'fotos/capela.jpg',             label:'💒 Capela',                              desc:'Capela no terreno — ideal para casamentos, cerimônias religiosas e momentos especiais em família.'},
+  {src:'fotos/sitio-externo.jpg',      label:'🌳 Sítio Iluminado',                    desc:'Vista externa do Sítio Iluminado em Biritiba Mirim / Mogi das Cruzes. Área verde, 100 vagas e asfalto até a porta.'},
 ];
 
 function renderGallery(){
   const g = document.getElementById('gallery-grid');
   g.innerHTML = GALLERY_IMGS.map((i,idx)=>`
     <div class="gallery-item" onclick="openLightbox(${idx})">
-      <img class="gallery-img" src="${i.src}" alt="${i.label}" loading="lazy">
+      <img class="gallery-img" src="${i.src}" alt="${i.label}" loading="lazy"
+           onerror="this.closest('.gallery-item').style.display='none'">
       <div class="gallery-overlay"><span>${i.label}</span></div>
     </div>`).join('');
 }
