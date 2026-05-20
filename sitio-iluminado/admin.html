@@ -413,7 +413,7 @@ tr:hover td{background:var(--light)}
 
       <!-- Grid de fotos selecionáveis -->
       <div class="card">
-        <div class="card-head">Escolha a foto de capa — clique para selecionar</div>
+        <div class="card-head">📸 Escolha qual foto aparece primeiro na capa do site — clique para selecionar</div>
         <div id="capa-foto-grid" class="capa-grid"></div>
       </div>
     </div>
@@ -1402,27 +1402,33 @@ function cobrarCliente(id){
 // =============================================
 // FOTO DE CAPA — SÍTIO ILUMINADO
 // =============================================
-// Somente fotos confirmadas no servidor — sem arquivos fictícios
+// Somente fotos confirmadas no servidor — organizadas por categoria
+// ⭐ Recomendação para capa: fotos horizontais claras da piscina/área principal
 const CAPA_FOTOS = [
-  // Piscinas (melhores candidatas para capa)
-  {src:'fotos/piscina-principal.jpg',        label:'🏊 Piscina principal',        cat:'Piscina'},
-  {src:'fotos/piscina-cascata.jpg',          label:'💦 Piscina com cascata',      cat:'Piscina'},
-  {src:'fotos/piscina-hidromassagem.jpg',    label:'💦 Hidromassagem',            cat:'Piscina'},
-  {src:'fotos/piscina.jpg',                  label:'🏊 Piscina — vista ampla',    cat:'Piscina'},
-  {src:'fotos/vista-piscina.jpg',            label:'🌅 Vista da piscina',         cat:'Piscina'},
+  // ⭐ Piscinas — melhores para capa (fotos horizontais, claras, área aberta)
+  {src:'fotos/piscina-principal.jpg',        label:'🏊 Piscina principal',             cat:'⭐ Piscina (capa ideal)'},
+  {src:'fotos/piscina-nova-01.jpg',          label:'🏊 Piscina — panorâmica',          cat:'⭐ Piscina (capa ideal)'},
+  {src:'fotos/piscina-nova-02.jpg',          label:'🏊 Piscina — nova vista',          cat:'⭐ Piscina (capa ideal)'},
+  {src:'fotos/piscina-nova-03.jpg',          label:'🏊 Piscina — wide',                cat:'⭐ Piscina (capa ideal)'},
+  {src:'fotos/piscina-cascata.jpg',          label:'💦 Piscina com cascata',           cat:'⭐ Piscina (capa ideal)'},
+  {src:'fotos/vista-piscina.jpg',            label:'🌅 Vista da piscina',              cat:'⭐ Piscina (capa ideal)'},
+  {src:'fotos/piscina-hidromassagem.jpg',    label:'💦 Hidromassagem',                 cat:'⭐ Piscina (capa ideal)'},
   // Exterior
-  {src:'fotos/sitio-externo.jpg',            label:'🌳 Sítio externo',            cat:'Exterior'},
+  {src:'fotos/sitio-externo.jpg',            label:'🌳 Sítio — fachada',               cat:'Exterior'},
   // Lazer / Entretenimento
-  {src:'fotos/churrasqueira.jpg',            label:'🥩 Churrasqueira',            cat:'Lazer'},
-  {src:'fotos/salao-festas.jpg',             label:'🎊 Salão de festas',          cat:'Lazer'},
-  {src:'fotos/campo-futebol.jpg',            label:'⚽ Campo de futebol',         cat:'Lazer'},
-  {src:'fotos/quadra-volei.jpg',             label:'🏐 Quadra de vôlei',          cat:'Lazer'},
-  {src:'fotos/capela.jpg',                   label:'💒 Capela',                   cat:'Lazer'},
+  {src:'fotos/churrasqueira.jpg',            label:'🥩 Churrasqueira',                  cat:'Lazer'},
+  {src:'fotos/salao-festas.jpg',             label:'🎊 Salão de festas',                cat:'Lazer'},
+  {src:'fotos/salao-terraco.jpg',            label:'🏡 Salão com terraço',              cat:'Lazer'},
+  {src:'fotos/campo-futebol.jpg',            label:'⚽ Campo de futebol',               cat:'Lazer'},
+  {src:'fotos/quadra-volei.jpg',             label:'🏐 Quadra de vôlei',                cat:'Lazer'},
+  {src:'fotos/capela.jpg',                   label:'💒 Capela',                         cat:'Lazer'},
   // Interiores
-  {src:'fotos/sala-madeira.jpg',             label:'🪵 Sala de madeira',          cat:'Interior'},
-  {src:'fotos/quarto-2.jpg',                 label:'🛏️ Quarto 2',                 cat:'Interior'},
-  {src:'fotos/quarto-3.jpg',                 label:'🛏️ Quarto 3',                 cat:'Interior'},
-  {src:'fotos/quarto-4.jpg',                 label:'🛏️ Quarto 4',                 cat:'Interior'},
+  {src:'fotos/sala-vista-piscina.jpg',       label:'🪟 Sala com vista piscina',         cat:'Interior'},
+  {src:'fotos/sala-madeira.jpg',             label:'🪵 Sala de madeira',                cat:'Interior'},
+  {src:'fotos/quarto-2.jpg',                 label:'🛏️ Quarto 2',                       cat:'Interior'},
+  {src:'fotos/quarto-3.jpg',                 label:'🛏️ Quarto 3',                       cat:'Interior'},
+  {src:'fotos/quarto-4.jpg',                 label:'🛏️ Quarto 4',                       cat:'Interior'},
+  {src:'fotos/banheiro-box.jpg',             label:'🚿 Banheiro',                       cat:'Interior'},
 ];
 
 let _capaSelecionada = null;

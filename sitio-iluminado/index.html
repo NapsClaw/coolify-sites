@@ -1341,22 +1341,33 @@ function saveRes(arr){localStorage.setItem(SK,JSON.stringify(arr));}
 function genId(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
 
 // ===== GALLERY IMAGES (somente fotos confirmadas no servidor) =====
+// Ordem: piscina → churrasqueira → salão → interior → quartos → banheiro → campo → exterior
 const GALLERY_IMGS = [
-  {src:'fotos/piscina-principal.jpg',  label:'🏊 Piscina com hidromassagem e cascata', desc:'Piscina com hidromassagem, cascata e tratamento de água com ozônio. Perfeita para relaxar com a família e amigos.'},
-  {src:'fotos/piscina-hidromassagem.jpg', label:'💦 Hidromassagem',                    desc:'Área de hidromassagem integrada à piscina principal. Conforto e lazer em um único espaço.'},
-  {src:'fotos/piscina-cascata.jpg',    label:'🌊 Piscina — cascata',                   desc:'Vista da piscina com cascata d\'água. Água tratada com sistema de ozônio.'},
-  {src:'fotos/piscina.jpg',            label:'🏊 Piscina — vista ampla',               desc:'Vista completa da área de piscina. Espaço para festas e diversão com toda a família.'},
-  {src:'fotos/vista-piscina.jpg',      label:'🌅 Vista da piscina',                    desc:'Vista panorâmica da piscina a partir do salão. Integração perfeita entre área interna e área de lazer.'},
-  {src:'fotos/churrasqueira.jpg',      label:'🥩 Churrasqueira coberta',               desc:'Churrasqueira coberta de alvenaria. Espaço gourmet completo para eventos e festas.'},
-  {src:'fotos/salao-festas.jpg',       label:'🎊 Salão de festas e jogos',             desc:'Salão amplo com sinuca, ping-pong e outros jogos. Espaço ideal para festas com grandes grupos.'},
-  {src:'fotos/sala-madeira.jpg',       label:'🪵 Sala — casa de madeira',              desc:'Sala aconchegante na casa de madeira. Ambiente rústico e confortável com lareira para os dias mais frios.'},
-  {src:'fotos/quarto-2.jpg',           label:'🛏️ Quarto 2',                            desc:'Quarto confortável com camas de casal. O sítio tem 4 quartos no total, acomodando até 12 pessoas em camas.'},
-  {src:'fotos/quarto-3.jpg',           label:'🛏️ Quarto 3',                            desc:'Quarto com camas individuais. Ideal para grupos de amigos ou crianças.'},
-  {src:'fotos/quarto-4.jpg',           label:'🛏️ Quarto 4',                            desc:'Quarto 4 — sítio com 4 quartos e 4 banheiros, acomodando até 22 pessoas (12 em camas + 10 em colchonetes).'},
-  {src:'fotos/quadra-volei.jpg',       label:'🏐 Quadra de vôlei',                     desc:'Quadra de vôlei gramada para diversão garantida com grupos.'},
-  {src:'fotos/campo-futebol.jpg',      label:'⚽ Campo de futebol',                    desc:'Campo de futebol gramado com traves. Diversão para os amantes do futebol.'},
-  {src:'fotos/capela.jpg',             label:'💒 Capela',                              desc:'Capela no terreno — ideal para casamentos, cerimônias religiosas e momentos especiais em família.'},
-  {src:'fotos/sitio-externo.jpg',      label:'🌳 Sítio Iluminado',                    desc:'Vista externa do Sítio Iluminado em Biritiba Mirim / Mogi das Cruzes. Área verde, 100 vagas e asfalto até a porta.'},
+  // — Piscina (4 vistas distintas, sem repetição) —
+  {src:'fotos/piscina-principal.jpg',    label:'🏊 Piscina com hidromassagem e cascata', desc:'Piscina com hidromassagem, cascata e tratamento de água com ozônio. Perfeita para relaxar com a família e amigos.'},
+  {src:'fotos/piscina-nova-01.jpg',      label:'🏊 Piscina — vista panorâmica',          desc:'Vista panorâmica da piscina com toda a área de lazer ao redor. Espaço amplo para festas e diversão em família.'},
+  {src:'fotos/piscina-hidromassagem.jpg',label:'💦 Hidromassagem',                       desc:'Área de hidromassagem integrada à piscina principal. Conforto e lazer em um único espaço.'},
+  {src:'fotos/piscina-cascata.jpg',      label:'🌊 Piscina com cascata',                 desc:'Vista da piscina com cascata d\'água. Água tratada com sistema de ozônio.'},
+  // — Churrasqueira / Área Gourmet —
+  {src:'fotos/churrasqueira.jpg',        label:'🥩 Churrasqueira coberta',               desc:'Churrasqueira coberta de alvenaria. Espaço gourmet completo para eventos e festas.'},
+  // — Salão / Lazer —
+  {src:'fotos/salao-festas.jpg',         label:'🎊 Salão de festas e jogos',             desc:'Salão amplo com sinuca, ping-pong e outros jogos. Espaço ideal para festas com grandes grupos.'},
+  {src:'fotos/salao-terraco.jpg',        label:'🏡 Salão com terraço',                   desc:'Salão amplo integrado ao terraço com vista para a área verde. Ideal para confraternizações e eventos.'},
+  // — Interiores —
+  {src:'fotos/sala-vista-piscina.jpg',   label:'🪟 Sala com vista para a piscina',       desc:'Sala de estar integrada com vista direta para a piscina e área de lazer. Ambiente confortável e aconchegante.'},
+  {src:'fotos/sala-madeira.jpg',         label:'🪵 Sala — casa de madeira',              desc:'Sala aconchegante na casa de madeira. Ambiente rústico e confortável com lareira para os dias mais frios.'},
+  // — Quartos —
+  {src:'fotos/quarto-2.jpg',             label:'🛏️ Quarto 2',                            desc:'Quarto confortável com camas de casal. O sítio tem 4 quartos no total, acomodando até 12 pessoas em camas.'},
+  {src:'fotos/quarto-3.jpg',             label:'🛏️ Quarto 3',                            desc:'Quarto com camas individuais. Ideal para grupos de amigos ou crianças.'},
+  {src:'fotos/quarto-4.jpg',             label:'🛏️ Quarto 4',                            desc:'Quarto 4 — sítio com 4 quartos e 4 banheiros, acomodando até 22 pessoas (12 em camas + 10 em colchonetes).'},
+  // — Banheiro —
+  {src:'fotos/banheiro-box.jpg',         label:'🚿 Banheiro',                            desc:'Banheiro completo com box. O sítio conta com 4 banheiros para maior conforto dos hóspedes.'},
+  // — Campo / Esportes —
+  {src:'fotos/campo-futebol.jpg',        label:'⚽ Campo de futebol',                    desc:'Campo de futebol gramado com traves. Diversão para os amantes do futebol.'},
+  {src:'fotos/quadra-volei.jpg',         label:'🏐 Quadra de vôlei',                     desc:'Quadra de vôlei gramada para diversão garantida com grupos.'},
+  // — Exterior —
+  {src:'fotos/sitio-externo.jpg',        label:'🌳 Sítio Iluminado',                     desc:'Vista externa do Sítio Iluminado em Biritiba Mirim / Mogi das Cruzes. Área verde, 100 vagas e asfalto até a porta.'},
+  {src:'fotos/capela.jpg',               label:'💒 Capela',                              desc:'Capela no terreno — ideal para casamentos, cerimônias religiosas e momentos especiais em família.'},
 ];
 
 function renderGallery(){
