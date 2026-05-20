@@ -25,7 +25,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:#f9fafb;color:var(--d
 /* ── NAV ── */
 nav{position:fixed;top:0;left:0;right:0;z-index:500;background:rgba(255,255,255,.97);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:0 20px;height:60px;display:flex;align-items:center;justify-content:space-between}
 .nav-logo{text-decoration:none;display:flex;align-items:center}
-.nav-logo img{height:80px;width:auto;object-fit:contain}
+.nav-logo img{height:52px;width:auto;object-fit:contain}
 .nav-links{display:none;gap:24px}
 .nav-links a{font-size:13px;font-weight:500;color:var(--mid);text-decoration:none}
 .nav-links a:hover{color:var(--dark)}
@@ -265,12 +265,13 @@ footer{background:#0f172a;padding:40px 20px 24px;text-align:center}
 
 <!-- NAV -->
 <nav>
-  <a href="#" class="nav-logo"><img src="logo.jpg" alt="Sítio Iluminado"></a>
+  <a href="#" class="nav-logo" style="font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:var(--dark);text-decoration:none;letter-spacing:-0.3px">🌿 Sítio <span style="color:var(--accent)">Iluminado</span></a>
   <div class="nav-links">
     <a href="#reservar">Reservar</a>
     <a href="#precos">Preços</a>
     <a href="#estrutura">Estrutura</a>
     <a href="#galeria">Galeria</a>
+    <a href="#outros-sitios">Outros sítios</a>
     <a href="#contato">Contato</a>
   </div>
   <div class="nav-actions">
@@ -278,7 +279,7 @@ footer{background:#0f172a;padding:40px 20px 24px;text-align:center}
       <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
       WhatsApp
     </a>
-    <button class="btn-reserve-nav" onclick="scrollTo('reservar')">Reservar</button>
+    <button class="btn-reserve-nav" onclick="goTo('reservar')">Reservar</button>
   </div>
 </nav>
 
@@ -298,7 +299,7 @@ footer{background:#0f172a;padding:40px 20px 24px;text-align:center}
       <span class="hero-pill">💒 Capela</span>
     </div>
     <div class="hero-cta-row">
-      <button class="btn-primary" onclick="scrollTo('reservar')">📅 Reservar agora</button>
+      <button class="btn-primary" onclick="goTo('reservar')">📅 Reservar agora</button>
       <a href="https://wa.me/5511941942210" target="_blank" class="btn-outline">Falar com Arlei</a>
     </div>
   </div>
@@ -309,6 +310,343 @@ footer{background:#0f172a;padding:40px 20px 24px;text-align:center}
     <div class="hstat"><span class="hstat-n">1h</span><span class="hstat-l">de SP</span></div>
   </div>
 </section>
+
+<!-- OUTROS SÍTIOS -->
+<style>
+/* Cards */
+.outro-card{background:#fff;border-radius:12px;border:1px solid var(--border);overflow:hidden;display:flex;flex-direction:column;box-shadow:0 1px 4px rgba(0,0,0,.06);transition:transform .2s,box-shadow .2s;flex-shrink:0}
+.outro-card:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,.1)}
+.outro-img{width:100%;height:200px;object-fit:cover;display:block}
+.outro-body{padding:20px;flex:1;display:flex;flex-direction:column}
+.outro-tag{display:inline-block;background:var(--blue-l);color:var(--accent);font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:4px 12px;border-radius:100px;margin-bottom:10px}
+.outro-name{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--dark);margin-bottom:6px}
+.outro-local{font-size:13px;color:var(--mid);margin-bottom:12px}
+.outro-feats{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.outro-feat{font-size:12px;color:var(--mid);background:var(--light);padding:5px 12px;border-radius:100px}
+.outro-price{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--accent);margin-bottom:14px;margin-top:auto}
+.outro-price span{font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;color:var(--mid);font-weight:400}
+.outro-btn{display:block;width:100%;text-align:center;background:var(--accent);color:#fff;padding:13px;border-radius:8px;font-weight:700;font-size:14px;text-decoration:none;border:none;cursor:pointer}
+/* Desktop grid */
+.outros-desktop{display:none;grid-template-columns:repeat(3,1fr);gap:20px}
+/* Mobile carousel */
+.outros-carousel-wrap{position:relative}
+.outros-carousel{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:4px}
+.outros-carousel::-webkit-scrollbar{display:none}
+.outros-carousel .outro-card{width:82vw;max-width:300px;scroll-snap-align:start}
+.carousel-dots{display:flex;justify-content:center;gap:7px;margin-top:16px}
+.cdot{width:8px;height:8px;border-radius:50%;background:var(--border);transition:background .2s,transform .2s;cursor:pointer}
+.cdot.active{background:var(--accent);transform:scale(1.2)}
+@media(min-width:700px){
+  .outros-carousel-wrap{display:none}
+  .outros-desktop{display:grid}
+}
+/* Admin panel - outros sítios */
+.outros-admin{margin-top:24px;border-top:1px solid var(--border);padding-top:20px;display:none}
+.outros-admin.open{display:block}
+.outros-admin-title{font-family:'Playfair Display',serif;font-size:17px;font-weight:700;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center}
+.outros-list-admin{}
+.outros-item-admin{border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:10px;display:flex;gap:12px;align-items:center}
+.outros-item-admin img{width:60px;height:50px;object-fit:cover;border-radius:6px;flex-shrink:0}
+.outros-item-admin-info{flex:1;min-width:0}
+.outros-item-admin-name{font-weight:700;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.outros-item-admin-local{font-size:12px;color:var(--mid)}
+.outros-item-admin-actions{display:flex;gap:6px;flex-shrink:0}
+.btn-edit-outro{background:var(--light);border:1px solid var(--border);color:var(--dark);padding:6px 12px;border-radius:6px;font-size:12px;cursor:pointer}
+.btn-del-outro{background:rgba(220,38,38,.08);border:1px solid rgba(220,38,38,.2);color:var(--red);padding:6px 12px;border-radius:6px;font-size:12px;cursor:pointer}
+.btn-add-outro{background:var(--accent);color:#fff;border:none;padding:10px 18px;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;width:100%;margin-top:8px}
+/* Outro edit modal */
+.outro-modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:600;align-items:flex-end;justify-content:center;padding:0}
+.outro-modal-bg.open{display:flex}
+.outro-modal{background:#fff;border-radius:16px 16px 0 0;padding:28px 20px 40px;width:100%;max-width:540px;max-height:90vh;overflow-y:auto}
+.outro-modal h3{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center}
+.outro-modal .form-row{margin-bottom:14px}
+.outro-modal .form-row label{display:block;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--dark);margin-bottom:6px}
+.outro-modal .form-row input,.outro-modal .form-row textarea{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:var(--dark);background:#fff}
+.outro-modal .form-row input:focus,.outro-modal .form-row textarea:focus{outline:none;border-color:var(--accent)}
+.outro-modal .form-hint{font-size:11px;color:var(--mid);margin-top:4px}
+.outro-modal-save{width:100%;background:var(--accent);color:#fff;border:none;padding:15px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;margin-top:6px}
+/* Admin FAB */
+.admin-fab{position:fixed;bottom:90px;left:16px;z-index:450;background:#fff;border:2px solid var(--accent);border-radius:50px;padding:10px 16px;font-size:13px;font-weight:700;color:var(--accent);cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.15);display:none;align-items:center;gap:6px}
+.admin-fab.show{display:flex}
+/* upload foto */
+.foto-upload-tabs{display:flex;gap:0;margin-bottom:10px;border:1.5px solid var(--border);border-radius:8px;overflow:hidden}
+.foto-tab{flex:1;padding:9px;font-size:12px;font-weight:700;text-align:center;cursor:pointer;background:#fff;color:var(--mid);border:none;transition:background .15s}
+.foto-tab.active{background:var(--accent);color:#fff}
+.foto-tab-panel{display:none}.foto-tab-panel.active{display:block}
+</style>
+
+<section id="outros-sitios" style="padding:48px 20px;background:#fff;border-top:1px solid var(--border)">
+  <div style="max-width:900px;margin:0 auto">
+    <span class="sec-label">Portfólio Hospeda Temporada</span>
+    <h2 class="sec-h2">Outros sítios disponíveis</h2>
+    <p class="sec-sub" style="margin-bottom:28px">Além do Sítio Iluminado, Arlei conta com outros espaços para temporada, eventos e festas.</p>
+
+    <!-- MOBILE: Carrossel -->
+    <div class="outros-carousel-wrap">
+      <div class="outros-carousel" id="outros-carousel"></div>
+      <div class="carousel-dots" id="carousel-dots"></div>
+    </div>
+
+    <!-- DESKTOP: Grid -->
+    <div class="outros-desktop" id="outros-desktop"></div>
+
+    <p style="font-size:13px;color:var(--mid);margin-top:24px;text-align:center">
+      Dúvidas ou quer conhecer? <a href="https://wa.me/5511941942210?text=Olá Arlei! Gostaria de conhecer os outros sítios disponíveis." target="_blank" style="color:var(--accent);font-weight:600">Fale no WhatsApp →</a>
+    </p>
+  </div>
+</section>
+
+<!-- ADMIN FAB -->
+<button class="admin-fab" id="admin-fab" onclick="openOutroModal(null)">
+  ⚙️ Gerenciar sítios
+</button>
+
+<!-- OUTRO EDIT MODAL -->
+<div class="outro-modal-bg" id="outro-modal-bg" onclick="if(event.target===this)closeOutroModal()">
+  <div class="outro-modal">
+    <h3><span id="outro-modal-title">Novo sítio</span><button onclick="closeOutroModal()" style="background:none;border:none;font-size:22px;cursor:pointer;color:var(--mid)">✕</button></h3>
+    <input type="hidden" id="outro-edit-idx" value="">
+    <div class="form-row"><label>Nome do sítio *</label><input type="text" id="oe-nome" placeholder="Ex: Sítio Bela Vista"></div>
+    <div class="form-row"><label>Localização *</label><input type="text" id="oe-local" placeholder="Ex: Guararema, SP"></div>
+    <div class="form-row"><label>Tipo / Rótulo</label><input type="text" id="oe-tipo" placeholder="Ex: 🌿 Natureza · Eventos"></div>
+    <div class="form-row"><label>Preço</label><input type="text" id="oe-preco" placeholder="Ex: R$1.500"></div>
+    <div class="form-row"><label>Detalhe do preço</label><input type="text" id="oe-detalhe" placeholder="Ex: / dia (até 20 pessoas)"></div>
+    <div class="form-row">
+      <label>Foto de capa *</label>
+      <div class="foto-upload-tabs">
+        <button class="foto-tab active" onclick="switchFotoTab('url')">🔗 URL</button>
+        <button class="foto-tab" onclick="switchFotoTab('file')">📁 Arquivo</button>
+      </div>
+      <div class="foto-tab-panel active" id="foto-panel-url">
+        <input type="url" id="oe-capa" placeholder="https://..." oninput="setPreview(this.value)">
+        <p class="form-hint">Cole a URL de uma imagem (Google Drive público, Dropbox, etc.)</p>
+      </div>
+      <div class="foto-tab-panel" id="foto-panel-file">
+        <input type="file" id="oe-capa-file" accept="image/*" onchange="loadFotoFile(this)" style="padding:8px 0">
+        <p class="form-hint">Selecione uma imagem do seu celular ou computador</p>
+      </div>
+      <img id="oe-preview" src="" alt="" style="width:100%;height:140px;object-fit:cover;border-radius:8px;margin-top:10px;display:block;background:var(--light)">
+    </div>
+    <div class="form-row">
+      <label>Características (uma por linha)</label>
+      <textarea id="oe-feats" rows="4" placeholder="🛏️ 4 quartos&#10;🔥 Churrasqueira&#10;🌿 Área verde&#10;🚗 Estacionamento"></textarea>
+      <p class="form-hint">Use emojis no início. Ex: 🛏️ 4 quartos</p>
+    </div>
+    <div class="form-row"><label>Mensagem WhatsApp</label><input type="text" id="oe-wa" placeholder="Olá Arlei! Tenho interesse no Sítio X..."></div>
+    <button class="outro-modal-save" onclick="saveOutro()">💾 Salvar sítio</button>
+  </div>
+</div>
+
+<script>
+function slugify(s){return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'');}
+
+// ── OUTROS SÍTIOS — carrega de sitios.json (fonte de verdade no servidor) ──
+const OS_DEFAULT = [
+  {nome:"Sítio das Pedras",local:"Guararema, SP",tipo:"🪨 Campo · Casamentos · Retiros",preco:"R$1.800",precoDetalhe:"/ dia (até 30 pessoas)",capa:"https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&q=80",features:["🛏️ 4 quartos","🔥 Churrasqueira","🌿 Área verde","💒 Casamentos"],wa:"Olá Arlei! Tenho interesse no Sítio das Pedras.",fotos:[]},
+  {nome:"Sítio Beira Rio",local:"Salesópolis, SP",tipo:"🌊 Rio · Pesca · Família",preco:"R$1.200",precoDetalhe:"/ dia (até 20 pessoas)",capa:"https://images.unsplash.com/photo-1501854140801-50d01698950b?w=800&q=80",features:["🛏️ 3 quartos","🎣 Deck para pesca","🌊 Beira do rio","🌲 Trilhas"],wa:"Olá Arlei! Tenho interesse no Sítio Beira Rio.",fotos:[]},
+  {nome:"Sítio Alto da Serra",local:"Paraibuna, SP",tipo:"⛰️ Serra · Vista panorâmica · Retiros",preco:"R$2.200",precoDetalhe:"/ dia (até 40 pessoas)",capa:"https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80",features:["🛏️ 6 quartos","⛰️ Vista panorâmica","🔥 Lareira","🧘 Retiros"],wa:"Olá Arlei! Tenho interesse no Sítio Alto da Serra.",fotos:[]}
+];
+
+// Carrega do arquivo JSON (salvo pelo admin) — fallback para default
+fetch('sitios.json?v='+Date.now())
+  .then(r=>r.ok?r.json():Promise.reject())
+  .then(data=>{
+    if(data&&data.length) renderOutros(data);
+    else renderOutros(OS_DEFAULT);
+  })
+  .catch(()=>renderOutros(OS_DEFAULT));
+
+// saveOutros agora só usado internamente pelo admin inline (não mais via localStorage)
+function saveOutros(arr){/* dados salvos via admin.html no GitHub */}
+
+function buildOutroCard(s){
+  const c=document.createElement('div');
+  c.className='outro-card';
+  c.innerHTML=`<img class="outro-img" src="${s.capa}" alt="${s.nome}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400&q=60'">
+  <div class="outro-body">
+    <span class="outro-tag">${s.tipo||'🏡 Sítio'}</span>
+    <div class="outro-name">${s.nome}</div>
+    <div class="outro-local">📍 ${s.local}</div>
+    <div class="outro-feats">${(s.features||[]).map(f=>`<span class="outro-feat">${f}</span>`).join('')}</div>
+    <div class="outro-price">${s.preco||'Consulte'}<span> ${s.precoDetalhe||''}</span></div>
+    <a href="sitio.html?id=${slugify(s.nome)}" class="outro-btn">Ver disponibilidade</a>
+  </div>`;
+  return c;
+}
+
+function renderOutros(data){
+  if(!data) return;
+  const car=document.getElementById('outros-carousel');
+  const desk=document.getElementById('outros-desktop');
+  const dots=document.getElementById('carousel-dots');
+  car.innerHTML=''; desk.innerHTML=''; dots.innerHTML='';
+  data.forEach((s,i)=>{
+    car.appendChild(buildOutroCard(s));
+    desk.appendChild(buildOutroCard(s));
+    const dot=document.createElement('div');
+    dot.className='cdot'+(i===0?' active':'');
+    dot.onclick=()=>scrollCarousel(i);
+    dots.appendChild(dot);
+  });
+  // Update dots on scroll
+  car.onscroll=()=>{
+    const idx=Math.round(car.scrollLeft/(car.offsetWidth*0.82+16));
+    document.querySelectorAll('.cdot').forEach((d,i)=>d.classList.toggle('active',i===idx));
+  };
+  renderOutrosAdmin();
+}
+
+function scrollCarousel(idx){
+  const car=document.getElementById('outros-carousel');
+  const cardW=car.offsetWidth*0.82+16;
+  car.scrollTo({left:idx*cardW,behavior:'smooth'});
+}
+
+// ── ADMIN PANEL ──
+function renderOutrosAdmin(){
+  const panel=document.getElementById('outros-admin-list');
+  if(!panel)return;
+  const data=getOutros();
+  panel.innerHTML='';
+  data.forEach((s,i)=>{
+    const el=document.createElement('div');
+    el.className='outros-item-admin';
+    el.innerHTML=`<img src="${s.capa}" alt="${s.nome}" onerror="this.style.display='none'">
+    <div class="outros-item-admin-info"><div class="outros-item-admin-name">${s.nome}</div><div class="outros-item-admin-local">📍 ${s.local}</div></div>
+    <div class="outros-item-admin-actions">
+      <button class="btn-edit-outro" onclick="editOutro(${i})">✏️</button>
+      <button class="btn-del-outro" onclick="delOutro(${i})">🗑️</button>
+    </div>`;
+    panel.appendChild(el);
+  });
+}
+
+// ── ADMIN FAB: aparece após login no painel de reservas ──
+function showAdminFab(){ document.getElementById('admin-fab').classList.add('show'); }
+
+function switchFotoTab(tab){
+  document.querySelectorAll('.foto-tab').forEach((t,i)=>t.classList.toggle('active',i===(tab==='url'?0:1)));
+  document.getElementById('foto-panel-url').classList.toggle('active', tab==='url');
+  document.getElementById('foto-panel-file').classList.toggle('active', tab==='file');
+}
+
+function setPreview(src){
+  const p=document.getElementById('oe-preview');
+  p.src=src; p.style.display=src?'block':'none';
+}
+
+function loadFotoFile(input){
+  const file=input.files[0]; if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    document.getElementById('oe-capa').value=e.target.result;
+    setPreview(e.target.result);
+  };
+  reader.readAsDataURL(file);
+}
+
+function openOutroModal(idx){
+  const data=getOutros();
+  const editing=idx!=null;
+  document.getElementById('outro-modal-title').textContent=editing?'Editar sítio':'Novo sítio';
+  document.getElementById('outro-edit-idx').value=editing?idx:'';
+  const s=editing?data[idx]:{};
+  document.getElementById('oe-nome').value=s.nome||'';
+  document.getElementById('oe-local').value=s.local||'';
+  document.getElementById('oe-tipo').value=s.tipo||'';
+  document.getElementById('oe-preco').value=s.preco||'';
+  document.getElementById('oe-detalhe').value=s.precoDetalhe||'';
+  document.getElementById('oe-capa').value=s.capa||'';
+  document.getElementById('oe-preview').src=s.capa||'';
+  document.getElementById('oe-feats').value=(s.features||[]).join('\n');
+  document.getElementById('oe-wa').value=s.wa||'';
+  document.getElementById('outro-modal-bg').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeOutroModal(){document.getElementById('outro-modal-bg').classList.remove('open');document.body.style.overflow='';}
+function editOutro(i){openOutroModal(i);}
+function delOutro(i){
+  if(!confirm('Excluir este sítio?'))return;
+  /* removido - gerenciado pelo admin.html */
+}
+function saveOutro(){
+  const nome=document.getElementById('oe-nome').value.trim();
+  const capa=document.getElementById('oe-capa').value.trim();
+  if(!nome||!capa){alert('Nome e foto são obrigatórios!');return;}
+  const s={
+    nome,
+    local:document.getElementById('oe-local').value.trim(),
+    tipo:document.getElementById('oe-tipo').value.trim()||'🏡 Temporada · Eventos',
+    preco:document.getElementById('oe-preco').value.trim()||'Consulte',
+    precoDetalhe:document.getElementById('oe-detalhe').value.trim(),
+    capa,
+    features:document.getElementById('oe-feats').value.split('\n').map(l=>l.trim()).filter(Boolean),
+    wa:document.getElementById('oe-wa').value.trim()||`Olá Arlei! Tenho interesse no ${nome}. Pode me passar informações?`
+  };
+  const data=getOutros();
+  const idx=document.getElementById('outro-edit-idx').value;
+  if(idx!=='')data[parseInt(idx)]=s; else data.push(s);
+  /* removido - gerenciado pelo admin.html */
+}
+
+// renderOutros() chamado via fetch acima
+
+// ── FOTO DE CAPA — função global ──
+function aplicarFotoCapa(src){
+  if(!src) return;
+  const bg = document.querySelector('.hero-bg');
+  if(bg) bg.style.backgroundImage = "url('"+src+"')";
+  // atualiza 1ª imagem da mini-galeria
+  const mg = document.querySelector('#mini-gallery img:first-child');
+  if(mg){ mg.src = src; }
+}
+
+// ── CARREGAR CAPA PÚBLICA (GitHub raw — funciona para todos os visitantes) ──
+(function carregarCapaPublica(){
+  const GH_CONF_RAW = 'https://raw.githubusercontent.com/NapsClaw/coolify-sites/main/sitio-iluminado/config.json';
+  fetch(GH_CONF_RAW+'?v='+Date.now())
+    .then(r=>r.ok?r.json():Promise.reject())
+    .then(cfg=>{ if(cfg && cfg.fotoCapa) aplicarFotoCapa(cfg.fotoCapa); })
+    .catch(()=>{/* mantém foto padrão */});
+})();
+
+// ── APLICAR CONFIG DO SÍTIO ILUMINADO (editável via admin) ──
+(function applySIConfig(){
+  const SI_KEY = 'sitio_iluminado_config';
+  let si; try{si=JSON.parse(localStorage.getItem(SI_KEY));}catch(e){si=null;}
+  if(!si) return;
+  // Foto de capa (prioridade: localStorage do admin > GitHub)
+  if(si.fotoCapa) aplicarFotoCapa(si.fotoCapa);
+  const badge = document.querySelector('.hero-badge');
+  if(badge && si.badge) badge.textContent = si.badge;
+  const sub = document.querySelector('.hero-sub');
+  if(sub && si.subtitulo) sub.innerHTML = si.subtitulo;
+  if(si.pills && si.pills.length){
+    const pillRow = document.querySelector('.hero-pill-row');
+    if(pillRow) pillRow.innerHTML = si.pills.map(p=>`<span class="hero-pill">${p}</span>`).join('');
+  }
+  if(si.stats && si.stats.length){
+    const statsEl = document.querySelector('.hero-stats');
+    if(statsEl) statsEl.innerHTML = si.stats.map(s=>`<div class="hstat"><span class="hstat-n">${s.n}</span><span class="hstat-l">${s.l}</span></div>`).join('');
+  }
+  if(si.descricao){
+    const aboutInner = document.querySelector('.about-inner');
+    if(aboutInner){
+      const paras = aboutInner.querySelectorAll('p.sec-sub');
+      const lines = si.descricao.split('\n\n').filter(Boolean);
+      paras.forEach((p,i)=>{ if(lines[i]) p.innerHTML = lines[i]; });
+    }
+  }
+  if(si.whatsapp){
+    document.querySelectorAll('a[href*="wa.me"]').forEach(a=>{
+      a.href = a.href.replace(/wa\.me\/\d+/, 'wa.me/'+si.whatsapp);
+    });
+  }
+  if(si.instagram){
+    document.querySelectorAll('a[href*="instagram"]').forEach(a=>{ a.href=si.instagram; });
+  }
+})();
+</script>
 
 <!-- RESERVE SECTION -->
 <section class="reserve-section" id="reservar">
@@ -340,18 +678,11 @@ footer{background:#0f172a;padding:40px 20px 24px;text-align:center}
           <button class="cal-nav-btn" onclick="calNext()" title="Próximo mês">›</button>
         </div>
       </div>
-      <!-- Instrução de seleção -->
-      <div id="cal-instruction" style="background:#eff6ff;border:1.5px solid #bfdbfe;border-radius:8px;padding:10px 14px;margin-bottom:10px;font-size:13px;color:#1d4ed8;text-align:center;line-height:1.5">
-        <span id="cal-step-1" style="font-weight:700">👆 1º clique = Check-in &nbsp;·&nbsp; 2º clique = Check-out</span>
-        <span id="cal-step-2" style="display:none;font-weight:700;color:#15803d">✅ Check-in selecionado! Agora clique no dia de check-out</span>
-        <span id="cal-step-3" style="display:none;font-weight:700;color:#7c3aed">🎉 Datas selecionadas! Preencha o formulário abaixo</span>
-      </div>
       <div class="cal-grid" id="cal-grid"></div>
       <div class="cal-legend">
         <div class="leg"><div class="leg-box" style="background:rgba(22,163,74,.08);border:1.5px solid var(--green)"></div>✅ Disponível</div>
-        <div class="leg"><div class="leg-box" style="background:#fecaca;border:1.5px solid #f87171"></div>🔴 Reservado</div>
+        <div class="leg"><div class="leg-box" style="background:#fecaca;border:1.5px solid #f87171"></div>🔴 Reservado / Indisponível</div>
         <div class="leg"><div class="leg-box" style="background:var(--accent)"></div>📅 Selecionado</div>
-        <div class="leg"><div class="leg-box" style="background:var(--blue-l);border:1.5px solid var(--blue)"></div>📆 Período</div>
       </div>
     </div>
       </div><!-- /col calendar -->
@@ -463,43 +794,7 @@ footer{background:#0f172a;padding:40px 20px 24px;text-align:center}
             <option>NATAL 2026 (4 DIAS) - 22/12 A 26/12/2026</option>
             <option>CARNAVAL 2027 (4 DIAS) - 05/02 A 09/02/2027</option>
             <option>DIÁRIA PARA EVENTOS</option>
-            <option>CASAMENTO</option>
-            <option>FORMATURA</option>
-            <option>BAILE DEBUTANTE</option>
-            <option>FESTA DE EMPRESA</option>
-            <option>EVENTOS DIVERSOS</option>
-            <option>RÉVEILLON</option>
           </select>
-        </div>
-        <div class="form-row form-full">
-          <label>🎉 Convidados externos (sem pernoite) <span style="font-size:12px;color:var(--mid)">+R$30 por pessoa</span></label>
-          <select id="f-externos">
-            <option value="">Nenhum</option>
-            <option value="10">10 convidados (+R$ 300)</option>
-            <option value="20">20 convidados (+R$ 600)</option>
-            <option value="30">30 convidados (+R$ 900)</option>
-            <option value="40">40 convidados (+R$ 1.200)</option>
-            <option value="50">50 convidados (+R$ 1.500)</option>
-            <option value="60">60 convidados (+R$ 1.800)</option>
-            <option value="70">70 convidados (+R$ 2.100)</option>
-            <option value="80">80 convidados (+R$ 2.400)</option>
-            <option value="90">90 convidados (+R$ 2.700)</option>
-            <option value="100">100 convidados (+R$ 3.000)</option>
-            <option value="120">120 convidados (+R$ 3.600)</option>
-            <option value="150">150 convidados (+R$ 4.500)</option>
-          </select>
-        </div>
-        <div class="form-row form-full">
-          <label>💰 Valor total da locação (R$)</label>
-          <input type="number" id="f-total" placeholder="Ex: 2200" min="0" step="0.01" oninput="calcRestante()">
-        </div>
-        <div class="form-row">
-          <label>✅ Sinal de pagamento (R$)</label>
-          <input type="number" id="f-sinal" placeholder="Ex: 1100" min="0" step="0.01">
-        </div>
-        <div class="form-row">
-          <label>⏳ Restante do pagamento (R$)</label>
-          <input type="number" id="f-restante" placeholder="Ex: 1100" min="0" step="0.01">
         </div>
         <div class="form-row form-full">
           <label>Observações (opcional)</label>
@@ -509,7 +804,24 @@ footer{background:#0f172a;padding:40px 20px 24px;text-align:center}
       <button class="btn-submit" onclick="submitReserve()">📲 Enviar solicitação via WhatsApp</button>
     </div>
 
-    <!-- RESERVATIONS LIST removido: dados pessoais ficam apenas no painel admin -->
+    <!-- RESERVATIONS LIST -->
+    <div class="reservations-panel">
+      <h3>
+        <span>Reservas registradas</span>
+        <button onclick="togglePanel()" style="background:none;border:none;font-size:13px;color:var(--mid);cursor:pointer" id="toggle-btn">▼ Ver</button>
+      </h3>
+      <div id="reservations-list" style="display:none"></div>
+
+      <!-- ADMIN: OUTROS SÍTIOS -->
+      <div class="outros-admin" id="outros-admin-panel">
+        <div class="outros-admin-title">
+          <span>🏡 Gerenciar outros sítios</span>
+          <button onclick="document.getElementById('outros-admin-panel').classList.remove('open')" style="background:none;border:none;font-size:18px;cursor:pointer;color:var(--mid)">✕</button>
+        </div>
+        <div class="outros-list-admin" id="outros-admin-list"></div>
+        <button class="btn-add-outro" onclick="openOutroModal(null)">+ Adicionar novo sítio</button>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -905,22 +1217,27 @@ footer{background:#0f172a;padding:40px 20px 24px;text-align:center}
 
 <!-- VIDEO -->
 <section style="padding:48px 20px;background:#0f172a;text-align:center" id="video">
-  <div style="max-width:800px;margin:0 auto">
+  <div style="max-width:480px;margin:0 auto">
     <span class="sec-label" style="color:#4ade80">Vídeo</span>
     <h2 class="sec-h2" style="color:#fff;margin-bottom:8px">Veja o sítio em vídeo</h2>
     <p style="color:rgba(255,255,255,.6);font-size:15px;margin-bottom:28px">Um passeio real pelo Sítio Iluminado 🌿</p>
-    <div style="position:relative;width:100%;border-radius:16px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.5)">
-      <iframe
-        src="https://www.youtube.com/embed/2T9NbCLjYIg"
-        title="Sítio Iluminado — vídeo completo"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
-        style="width:100%;aspect-ratio:16/9;display:block">
-      </iframe>
-    </div>
-    <p style="margin-top:16px">
-      <a href="https://www.youtube.com/watch?v=2T9NbCLjYIg" target="_blank" style="color:#4ade80;font-size:14px;text-decoration:none">▶ Assistir no YouTube</a>
+    <!-- Thumbnail clicável — abre no YouTube -->
+    <a href="https://www.youtube.com/shorts/ZM-ybTJY4qA" target="_blank" rel="noopener"
+       style="display:block;position:relative;width:100%;max-width:320px;margin:0 auto;border-radius:16px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,.55);text-decoration:none;background:#1e293b">
+      <img src="https://img.youtube.com/vi/ZM-ybTJY4qA/hqdefault.jpg"
+           alt="Assistir vídeo do Sítio Iluminado no YouTube"
+           loading="lazy"
+           style="width:100%;display:block;aspect-ratio:9/16;object-fit:cover"
+           onerror="this.style.minHeight='380px';this.style.background='#1e293b'">
+      <!-- Botão play sobreposto -->
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.18)">
+        <div style="width:72px;height:52px;background:#ff0000;border-radius:14px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(0,0,0,.5);transition:transform .2s">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+      </div>
+    </a>
+    <p style="margin-top:20px">
+      <a href="https://www.youtube.com/shorts/ZM-ybTJY4qA" target="_blank" rel="noopener" style="color:#4ade80;font-size:14px;font-weight:600;text-decoration:none">▶ Assistir no YouTube →</a>
     </p>
   </div>
 </section>
@@ -971,20 +1288,8 @@ footer{background:#0f172a;padding:40px 20px 24px;text-align:center}
   </div>
 </section>
 
-<!-- OUTROS SÍTIOS (carregado do GitHub) -->
-<section style="padding:64px 20px;background:#f9fafb" id="outros-sitios">
-  <div style="max-width:1100px;margin:0 auto">
-    <div style="text-align:center;margin-bottom:32px">
-      <div style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--green);margin-bottom:8px">Mais opções</div>
-      <h2 style="font-family:'Playfair Display',serif;font-size:clamp(24px,5vw,36px);font-weight:700;margin-bottom:8px">Outros sítios disponíveis</h2>
-      <p style="color:var(--mid);font-size:15px">Confira outras opções para o seu evento</p>
-    </div>
-    <div id="outros-sitios-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px"></div>
-  </div>
-</section>
-
 <footer>
-  <div class="foot-logo"><img src="logo.jpg" alt="Sítio Iluminado"></div>
+  <div class="foot-logo" style="font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:#fff;letter-spacing:-0.5px;margin-bottom:8px">🌿 Sítio <span style="color:#60a5fa">Iluminado</span></div>
   <p class="foot-sub">Mogi das Cruzes / Biritiba Mirim, SP · 1h de São Paulo</p>
   <div class="foot-links">
     <a href="#reservar">Reservar</a>
@@ -1030,122 +1335,30 @@ footer{background:#0f172a;padding:40px 20px 24px;text-align:center}
 </div>
 
 <script>
-// ===== GITHUB BACKEND (compartilhado com admin) =====
-const GH_TOKEN  = ['ghp_BHec','dxAl3wGlcPm8','48gB8xACDuH9LF0DWYTv'].join('');
-const GH_REPO   = 'NapsClaw/coolify-sites';
-const GH_RES_FILE = 'sitio-iluminado/reservas.json';
-const GH_SIT_FILE = 'sitio-iluminado/sitios.json';
-const GH_API_BASE = `https://api.github.com/repos/${GH_REPO}/contents/`;
-
-let _resCache = null;
-let _resSha   = null;
-let _sitiosCache = null;
-
+// ===== STORAGE =====
+const SK = 'sitio_reservations';
+function getRes(){try{return JSON.parse(localStorage.getItem(SK))||[];}catch(e){return[];}}
+function saveRes(arr){localStorage.setItem(SK,JSON.stringify(arr));}
 function genId(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
 
-async function getRes(){
-  if(_resCache) return _resCache;
-  try{
-    const r = await fetch(GH_API_BASE+GH_RES_FILE+'?t='+Date.now(),{headers:{Authorization:'token '+GH_TOKEN}});
-    const d = await r.json();
-    _resSha = d.sha;
-    _resCache = JSON.parse(atob(d.content.replace(/\n/g,'')));
-    return _resCache;
-  }catch(e){ _resCache = []; return []; }
-}
-
-async function saveRes(arr){
-  _resCache = arr;
-  const content = btoa(unescape(encodeURIComponent(JSON.stringify(arr,null,2))));
-  if(!_resSha){
-    try{ const r=await fetch(GH_API_BASE+GH_RES_FILE,{headers:{Authorization:'token '+GH_TOKEN}}); const d=await r.json(); _resSha=d.sha; }catch(e){}
-  }
-  const body = {message:'site: atualiza reservas.json', content, sha:_resSha};
-  const r = await fetch(GH_API_BASE+GH_RES_FILE,{method:'PUT',headers:{Authorization:'token '+GH_TOKEN,'Content-Type':'application/json'},body:JSON.stringify(body)});
-  const d = await r.json();
-  _resSha = d.content?.sha||_resSha;
-  return r.ok;
-}
-
-async function getSitiosPublic(){
-  if(_sitiosCache) return _sitiosCache;
-  try{
-    const r = await fetch(GH_API_BASE+GH_SIT_FILE+'?t='+Date.now(),{headers:{Authorization:'token '+GH_TOKEN}});
-    const d = await r.json();
-    _sitiosCache = JSON.parse(atob(d.content.replace(/\n/g,'')));
-    return _sitiosCache;
-  }catch(e){ return []; }
-}
-
-// ===== GALLERY IMAGES (fotos reais do Sítio Iluminado) =====
+// ===== GALLERY IMAGES (somente fotos confirmadas no servidor) =====
 const GALLERY_IMGS = [
-  {src:'fotos/piscina-principal.jpg',label:'🏊 Piscina com hidromassagem e cascata',desc:'Piscina com hidromassagem, cascata e tratamento de água com ozônio. Perfeita para relaxar e curtir com a família e amigos.'},
-  {src:'fotos/piscina-hidromassagem.jpg',label:'💦 Piscina com hidromassagem',desc:'Área de hidromassagem integrada à piscina principal. Conforto e lazer em um único espaço.'},
-  {src:'fotos/piscina-cascata.jpg',label:'🏊 Piscina — Hidromassagem e Cascata',desc:'Vista completa da piscina com cascata d\'água e área de hidromassagem. Água tratada com sistema de ozônio.'},
-  {src:'fotos/vista-piscina.jpg',label:'🌅 Vista da piscina',desc:'Vista panorâmica da piscina a partir do salão. Integração perfeita entre área interna e área de lazer.'},
-  {src:'fotos/churrasqueira.jpg',label:'🥩 Churrasqueira e forno de pizza 🍕',desc:'Churrasqueira coberta de alvenaria com forno de pizza de lenha. Espaço gourmet completo para eventos e festas.'},
-  {src:'fotos/salao-festas.jpg',label:'🎊 Salão de festas e jogos 🎱🎯',desc:'Salão amplo com sinuca, ping-pong e outros jogos. Espaço ideal para festa com capacidade para grandes grupos.'},
-  {src:'fotos/salao-terraco.jpg',label:'🌳 Salão com terraço ✅',desc:'Frente do salão com terraço aberto. Vista privilegiada para a área verde e piscina.'},
-  {src:'fotos/sala-madeira.jpg',label:'🪵 Sala — Casa de madeira',desc:'Sala aconchegante na casa de madeira. Ambiente rústico e confortável com lareira para os dias mais frios.'},
-  {src:'fotos/sala-vista-piscina.jpg',label:'💦 Sala — Dois ambientes com vista piscina',desc:'Sala integrada com dois ambientes e vista direta para a piscina. Conforto e integração com a área de lazer.'},
-  {src:'fotos/quarto-2.jpg',label:'🛏️ Quarto 2',desc:'Quarto 2 confortável com camas de casal. Acomoda até 2 pessoas com conforto e privacidade.'},
-  {src:'fotos/quarto-3.jpg',label:'🛏️ Quarto 3',desc:'Quarto 3 com camas individuais. Ideal para grupos de amigos ou crianças.'},
-  {src:'fotos/quarto-4.jpg',label:'🛏️ Quarto 4',desc:'Quarto 4 — Sítio com 4 quartos no total, acomodando até 12 pessoas em camas + 10 em colchonetes.'},
-  {src:'fotos/banheiro-completo.jpg',label:'🛀 Banheiro completo 🚾',desc:'Banheiro completo com pia, vaso e chuveiro. O sítio conta com 4 banheiros no total para maior conforto dos hóspedes.'},
-  {src:'fotos/banheiro-box.jpg',label:'🛀 Banheiro com box',desc:'Banheiro com box de vidro. Estrutura completa e bem cuidada para garantir o conforto de todos.'},
-  {src:'fotos/quadra-volei.jpg',label:'🏐 Quadra de vôlei',desc:'Quadra de vôlei gramada para diversão garantida. Perfeita para grupos que querem se exercitar e se divertir.'},
-  {src:'fotos/campo-futebol.jpg',label:'⚽ Campo de futebol',desc:'Campo de futebol gramado com traves. Diversão certa para os amantes do futebol durante os finais de semana.'},
-  {src:'fotos/capela.jpg',label:'💒 Capela',desc:'Capela no terreno do sítio — ideal para casamentos, cerimônias religiosas e momentos especiais em família.'},
-  {src:'fotos/sitio-externo.jpg',label:'🌳 Sítio Iluminado',desc:'Vista externa do Sítio Iluminado em Biritiba Mirim / Mogi das Cruzes. Área verde exuberante, 100 vagas de estacionamento e asfalto até a porta.'},
-  {src:'fotos/bambu.jpg',label:'🎋 Bambuzal',desc:'Área de bambu do sítio. Paisagismo natural que traz charme, frescor e uma atmosfera tranquila e bucólica.'},
-  {src:'fotos/palmeiras.jpg',label:'🌴 Palmeiras',desc:'Área de palmeiras imperiais que emolduram o sítio. Paisagem tropical deslumbrante em pleno interior de São Paulo.'},
-  {src:'fotos/trilha-palmeiras.jpg',label:'🌿 Trilha entre palmeiras',desc:'Caminho arborizado entre as palmeiras do sítio. Um convite para caminhar, relaxar e se conectar com a natureza.'},
-  {src:'fotos/area-verde.jpg',label:'🌳 Área verde',desc:'Área verde exuberante do Sítio Iluminado. Natureza preservada com muito espaço para curtir ao ar livre.'},
-  {src:'fotos/area-lazer.jpg',label:'🏡 Área de lazer',desc:'Vista geral da área de lazer do Sítio Iluminado. Espaço amplo e aconchegante, perfeito para reunir família e amigos.'},
-  {src:'fotos/foto-extra-01.jpg',label:'📸 Sítio Iluminado',desc:'Mais um ângulo do Sítio Iluminado em Biritiba Mirim / Mogi das Cruzes.'},
-  {src:'fotos/foto-extra-02.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
-  {src:'fotos/foto-extra-03.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
-  {src:'fotos/foto-extra-04.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
-  {src:'fotos/foto-extra-05.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
-  {src:'fotos/foto-extra-06.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
-  {src:'fotos/foto-extra-07.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
-  {src:'fotos/foto-extra-08.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
-  {src:'fotos/foto-extra-09.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
-  {src:'fotos/foto-extra-10.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
-  {src:'fotos/foto-extra-11.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
-  {src:'fotos/foto-extra-12.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
-  {src:'fotos/foto-extra-13.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
-  {src:'fotos/foto-extra-14.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
-  {src:'fotos/foto-extra-15.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
-  {src:'fotos/foto-extra-16.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
-  {src:'fotos/foto-extra-17.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
-  {src:'fotos/foto-extra-18.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
-  {src:'fotos/foto-extra-19.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
-  {src:'fotos/foto-extra-20.jpg',label:'📸 Sítio Iluminado',desc:'Espaços e ambientes do Sítio Iluminado.'},
-  // Novas fotos
-  {src:'fotos/piscina-nova-01.jpg',label:'🏊 Piscina — vista nova',desc:'Piscina com cascata e hidromassagem — nova perspectiva.'},
-  {src:'fotos/piscina-nova-02.jpg',label:'💦 Piscina — ângulo novo',desc:'Área de piscina com hidromassagem.'},
-  {src:'fotos/piscina-nova-03.jpg',label:'🌊 Piscina — área ampla',desc:'Vista ampla da área de piscina.'},
-  {src:'fotos/nova-01.jpg',  label:'📷 Novidades — 1',  desc:'Nova foto do Sítio Iluminado.'},
-  {src:'fotos/nova-02.jpg',  label:'📷 Novidades — 2',  desc:'Nova foto do Sítio Iluminado.'},
-  {src:'fotos/nova-03.jpg',  label:'📷 Novidades — 3',  desc:'Nova foto do Sítio Iluminado.'},
-  {src:'fotos/nova-04.jpg',  label:'📷 Novidades — 4',  desc:'Nova foto do Sítio Iluminado.'},
-  {src:'fotos/nova-05.jpg',  label:'📷 Novidades — 5',  desc:'Nova foto do Sítio Iluminado.'},
-  {src:'fotos/nova-06.jpg',  label:'📷 Novidades — 6',  desc:'Nova foto do Sítio Iluminado.'},
-  {src:'fotos/nova-07.jpg',  label:'📷 Novidades — 7',  desc:'Nova foto do Sítio Iluminado.'},
-  {src:'fotos/nova-08.jpg',  label:'📷 Novidades — 8',  desc:'Nova foto do Sítio Iluminado.'},
-  {src:'fotos/nova-09.jpg',  label:'📷 Novidades — 9',  desc:'Nova foto do Sítio Iluminado.'},
-  {src:'fotos/nova-10.jpg',  label:'📷 Novidades — 10', desc:'Nova foto do Sítio Iluminado.'},
-  {src:'fotos/nova-11.jpg',  label:'📷 Novidades — 11', desc:'Nova foto do Sítio Iluminado.'},
-  {src:'fotos/nova-12.jpg',  label:'📷 Novidades — 12', desc:'Nova foto do Sítio Iluminado.'},
-  {src:'fotos/nova-13.jpg',  label:'📷 Novidades — 13', desc:'Nova foto do Sítio Iluminado.'},
-  {src:'fotos/nova-14.jpg',  label:'📷 Novidades — 14', desc:'Nova foto do Sítio Iluminado.'},
-  {src:'fotos/nova-15.jpg',  label:'📷 Novidades — 15', desc:'Nova foto do Sítio Iluminado.'},
-  {src:'fotos/nova-16.jpg',  label:'📷 Novidades — 16', desc:'Nova foto do Sítio Iluminado.'},
-  {src:'fotos/nova-17.jpg',  label:'📷 Novidades — 17', desc:'Nova foto do Sítio Iluminado.'},
-  {src:'fotos/nova-18.jpg',  label:'📷 Novidades — 18', desc:'Nova foto do Sítio Iluminado.'},
-  {src:'fotos/nova-19.jpg',  label:'📷 Novidades — 19', desc:'Nova foto do Sítio Iluminado.'},
-  {src:'fotos/nova-20.jpg',  label:'📷 Novidades — 20', desc:'Nova foto do Sítio Iluminado.'},
+  {src:'fotos/piscina-principal.jpg',  label:'🏊 Piscina com hidromassagem e cascata', desc:'Piscina com hidromassagem, cascata e tratamento de água com ozônio. Perfeita para relaxar com a família e amigos.'},
+  {src:'fotos/piscina-hidromassagem.jpg', label:'💦 Hidromassagem',                    desc:'Área de hidromassagem integrada à piscina principal. Conforto e lazer em um único espaço.'},
+  {src:'fotos/piscina-cascata.jpg',    label:'🌊 Piscina — cascata',                   desc:'Vista da piscina com cascata d\'água. Água tratada com sistema de ozônio.'},
+  {src:'fotos/piscina.jpg',            label:'🏊 Piscina — vista ampla',               desc:'Vista completa da área de piscina. Espaço para festas e diversão com toda a família.'},
+  {src:'fotos/vista-piscina.jpg',      label:'🌅 Vista da piscina',                    desc:'Vista panorâmica da piscina a partir do salão. Integração perfeita entre área interna e área de lazer.'},
+  {src:'fotos/churrasqueira.jpg',      label:'🥩 Churrasqueira coberta',               desc:'Churrasqueira coberta de alvenaria. Espaço gourmet completo para eventos e festas.'},
+  {src:'fotos/churrasqueira-forno-pizza.jpg', label:'🍕 Forno de pizza a lenha',       desc:'Forno de pizza a lenha integrado à área gourmet. Ideal para festas e confraternizações.'},
+  {src:'fotos/salao-festas.jpg',       label:'🎊 Salão de festas e jogos',             desc:'Salão amplo com sinuca, ping-pong e outros jogos. Espaço ideal para festas com grandes grupos.'},
+  {src:'fotos/sala-madeira.jpg',       label:'🪵 Sala — casa de madeira',              desc:'Sala aconchegante na casa de madeira. Ambiente rústico e confortável com lareira para os dias mais frios.'},
+  {src:'fotos/quarto-2.jpg',           label:'🛏️ Quarto 2',                            desc:'Quarto confortável com camas de casal. O sítio tem 4 quartos no total, acomodando até 12 pessoas em camas.'},
+  {src:'fotos/quarto-3.jpg',           label:'🛏️ Quarto 3',                            desc:'Quarto com camas individuais. Ideal para grupos de amigos ou crianças.'},
+  {src:'fotos/quarto-4.jpg',           label:'🛏️ Quarto 4',                            desc:'Quarto 4 — sítio com 4 quartos e 4 banheiros, acomodando até 22 pessoas (12 em camas + 10 em colchonetes).'},
+  {src:'fotos/quadra-volei.jpg',       label:'🏐 Quadra de vôlei',                     desc:'Quadra de vôlei gramada para diversão garantida com grupos.'},
+  {src:'fotos/campo-futebol.jpg',      label:'⚽ Campo de futebol',                    desc:'Campo de futebol gramado com traves. Diversão para os amantes do futebol.'},
+  {src:'fotos/capela.jpg',             label:'💒 Capela',                              desc:'Capela no terreno — ideal para casamentos, cerimônias religiosas e momentos especiais em família.'},
+  {src:'fotos/sitio-externo.jpg',      label:'🌳 Sítio Iluminado',                    desc:'Vista externa do Sítio Iluminado em Biritiba Mirim / Mogi das Cruzes. Área verde, 100 vagas e asfalto até a porta.'},
 ];
 
 function renderGallery(){
@@ -1236,16 +1449,13 @@ const HOLIDAYS = {
   '2027-02-09': {label:'🎭 Carnaval',     color:'#7c3aed'},
 };
 
-function buildResMap(reservas){
-  const map = {};
-  reservas.forEach(r => {
-    // Suporta checkin/checkout (admin) e dataInicio/dataFim (site)
-    const inicio = r.checkin || r.dataInicio;
-    const fim = r.checkout || r.dataFim;
-    if(!inicio || !fim) return;
-    let cur = new Date(inicio+'T12:00:00');
-    const end = new Date(fim+'T12:00:00');
-    while(cur < end){
+function getReservedDates(){
+  const res = getRes();
+  const map = {}; // dateStr -> {id, status}
+  res.forEach(r => {
+    let cur = new Date(r.checkin);
+    const end = new Date(r.checkout);
+    while(cur <= end){
       const ds = cur.toISOString().split('T')[0];
       map[ds] = {id: r.id, status: r.status};
       cur.setDate(cur.getDate()+1);
@@ -1254,21 +1464,10 @@ function buildResMap(reservas){
   return map;
 }
 
-let _resMapCache = {};
-async function refreshResMap(){
-  const arr = await getRes();
-  // Site principal: sitioId='principal', 'si', ou sem sitioId (compatibilidade total)
-  const filtered = arr.filter(r =>
-    !r.sitioId || r.sitioId === 'si' || r.sitioId === 'principal'
-  );
-  _resMapCache = buildResMap(filtered);
-  return _resMapCache;
-}
-
 function renderCal(){
   const today = new Date(); today.setHours(0,0,0,0);
   document.getElementById('cal-label').textContent = MONTHS[calDate.getMonth()] + ' ' + calDate.getFullYear();
-  const resMap = _resMapCache;
+  const resMap = getReservedDates();
   const grid = document.getElementById('cal-grid');
   grid.innerHTML = DAYS_SH.map(d=>`<div class="cal-head">${d}</div>`).join('');
 
@@ -1289,8 +1488,7 @@ function renderCal(){
     else if(res){
       cls += 'reserved-paid';
       dot = `<div class="cal-day-dot" style="background:var(--red)"></div>`;
-      // Datas reservadas não clicáveis no site público (privacidade)
-      click = '';
+      click = `onclick="openDetailById('${res.id}')"`;
     } else {
       cls += 'free';
       if(selStart && ds === selStart) cls += ' sel-start';
@@ -1308,20 +1506,9 @@ function renderCal(){
   }
 }
 
-function setCalStep(step){
-  document.getElementById('cal-step-1').style.display = step===1 ? '' : 'none';
-  document.getElementById('cal-step-2').style.display = step===2 ? '' : 'none';
-  document.getElementById('cal-step-3').style.display = step===3 ? '' : 'none';
-}
-
 function selectDay(ds){
   if(!selStart || (selStart && selEnd)){
     selStart = ds; selEnd = null;
-    document.getElementById('disp-ci').textContent = fmtDate(ds);
-    document.getElementById('disp-ci').classList.remove('empty');
-    document.getElementById('disp-co').textContent = 'Selecione no calendário';
-    document.getElementById('disp-co').classList.add('empty');
-    setCalStep(2);
   } else if(ds > selStart){
     selEnd = ds;
     document.getElementById('disp-ci').textContent = fmtDate(selStart);
@@ -1329,16 +1516,12 @@ function selectDay(ds){
     document.getElementById('disp-co').textContent = fmtDate(selEnd);
     document.getElementById('disp-co').classList.remove('empty');
     updateCalcFromDates();
-    setCalStep(3);
-    // Scroll to form after selection
-    setTimeout(()=>{ document.getElementById('f-name') && document.getElementById('f-name').scrollIntoView({behavior:'smooth',block:'center'}); }, 300);
   } else {
     selStart = ds; selEnd = null;
-    document.getElementById('disp-ci').textContent = fmtDate(ds);
+    document.getElementById('disp-ci').textContent = fmtDate(selStart);
     document.getElementById('disp-ci').classList.remove('empty');
     document.getElementById('disp-co').textContent = 'Selecione no calendário';
     document.getElementById('disp-co').classList.add('empty');
-    setCalStep(2);
   }
   renderCal();
 }
@@ -1352,29 +1535,22 @@ function fmtDate(ds){
 function calPrev(){ calDate.setMonth(calDate.getMonth()-1); renderCal(); }
 function calNext(){ calDate.setMonth(calDate.getMonth()+1); renderCal(); }
 
-// ===== PAYMENT CALC (manual) =====
-function calcRestante(){ /* campos manuais — sem cálculo automático */ }
-
 // ===== SUBMIT =====
-async function submitReserve(){
+function submitReserve(){
   const name = document.getElementById('f-name').value.trim();
   const phone = document.getElementById('f-phone').value.trim();
   const email = document.getElementById('f-email').value.trim();
   const guests = document.getElementById('f-guests').value;
   const occasion = document.getElementById('f-occasion').value;
   const obs = document.getElementById('f-obs').value.trim();
-  const totalVal = parseFloat(document.getElementById('f-total').value) || 0;
-  const sinalVal = parseFloat(document.getElementById('f-sinal').value) || 0;
-  const restanteVal = Math.max(0, totalVal - sinalVal);
-  const externos = document.getElementById('f-externos').value || '';
 
   if(!name){ showToast('Por favor, informe o nome completo.'); return; }
   if(!phone){ showToast('Por favor, informe o WhatsApp.'); return; }
   if(!guests){ showToast('Por favor, selecione a quantidade de pessoas.'); return; }
   if(!selStart || !selEnd){ showToast('Selecione as datas de check-in e check-out no calendário.'); return; }
 
-  // Check conflict (usa cache atualizado)
-  const resMap = _resMapCache;
+  // Check conflict
+  const resMap = getReservedDates();
   let cur = new Date(selStart);
   const end = new Date(selEnd);
   while(cur <= end){
@@ -1383,8 +1559,7 @@ async function submitReserve(){
     cur.setDate(cur.getDate()+1);
   }
 
-  // Save no GitHub
-  showToast('⏳ Enviando reserva...');
+  // Save
   const newRes = {
     id: genId(),
     name, phone, email,
@@ -1392,16 +1567,13 @@ async function submitReserve(){
     checkin: selStart,
     checkout: selEnd,
     status: 'pending',
-    totalVal, sinalVal, restanteVal, externos,
     createdAt: new Date().toISOString()
   };
-  const arr = await getRes();
+  const arr = getRes();
   arr.push(newRes);
-  await saveRes(arr);
-  await refreshResMap();
+  saveRes(arr);
 
   // WhatsApp
-  const fmtMoney = v => v > 0 ? `R$ ${v.toLocaleString('pt-BR',{minimumFractionDigits:2})}` : '—';
   const msg = encodeURIComponent(
     `🏡 *Solicitação de Reserva — Sítio Iluminado*\n\n` +
     `*Nome:* ${name}\n` +
@@ -1411,10 +1583,6 @@ async function submitReserve(){
     `*Check-out:* ${fmtDate(selEnd)}\n` +
     `*Pessoas:* ${guests}\n` +
     `*Ocasião:* ${occasion}\n` +
-    (externos ? `*Convidados externos:* ${externos} pessoas (+ R$ ${(parseInt(externos)*30).toLocaleString('pt-BR')})\n` : '') +
-    (totalVal > 0 ? `*Valor total:* ${fmtMoney(totalVal)}\n` : '') +
-    (sinalVal > 0 ? `*Sinal (50%):* ${fmtMoney(sinalVal)}\n` : '') +
-    (restanteVal > 0 ? `*Restante (50%):* ${fmtMoney(restanteVal)}\n` : '') +
     `*Obs:* ${obs||'—'}\n\n` +
     `Aguardo confirmação! 😊`
   );
@@ -1427,11 +1595,6 @@ async function submitReserve(){
   document.getElementById('f-email').value = '';
   document.getElementById('f-guests').value = '';
   document.getElementById('f-obs').value = '';
-  document.getElementById('f-externos').value = '';
-  document.getElementById('f-total').value = '';
-  document.getElementById('f-sinal').value = '';
-  document.getElementById('f-restante').value = '';
-
   document.getElementById('disp-ci').textContent = 'Selecione no calendário';
   document.getElementById('disp-ci').classList.add('empty');
   document.getElementById('disp-co').textContent = 'Selecione no calendário';
@@ -1444,24 +1607,105 @@ async function submitReserve(){
 
 // ===== RESERVATIONS LIST =====
 let panelOpen = false;
+let adminAuth = false;
 function togglePanel(){
+  if(!panelOpen && !adminAuth){
+    const pw = prompt('🔐 Senha do painel admin:');
+    if(pw !== 'hospeda2026'){ if(pw!==null) alert('Senha incorreta!'); return; }
+    adminAuth = true;
+    showAdminFab();
+  }
   panelOpen = !panelOpen;
   document.getElementById('reservations-list').style.display = panelOpen ? 'block' : 'none';
   document.getElementById('toggle-btn').textContent = panelOpen ? '▲ Fechar' : '▼ Ver';
-  if(panelOpen) renderResList();
+  if(panelOpen){renderResList();showOutrosAdminBtn();}
+  else{document.getElementById('outros-admin-panel').classList.remove('open');};
 }
 
-// renderResList removida do site público — dados pessoais ficam apenas no admin.html
-async function renderResList(){ /* no-op no site público */ }
+function showOutrosAdminBtn(){
+  // Show a small button to manage outros sítios within the admin panel
+  const rl = document.getElementById('reservations-list');
+  if(!rl) return;
+  if(!document.getElementById('btn-manage-outros')){
+    const btn = document.createElement('button');
+    btn.id = 'btn-manage-outros';
+    btn.textContent = '🏡 Gerenciar outros sítios';
+    btn.style.cssText = 'display:block;width:100%;background:var(--blue-l);color:var(--accent);border:1px solid rgba(37,99,235,.2);border-radius:8px;padding:11px;font-size:13px;font-weight:700;cursor:pointer;margin-top:16px';
+    btn.onclick = () => document.getElementById('outros-admin-panel').classList.toggle('open');
+    rl.parentNode.appendChild(btn);
+  }
+}
 
-// toggleStatusPub / deleteResPub removidos do site público (apenas admin pode gerenciar reservas)
-async function toggleStatusPub(id){ /* no-op */ }
-async function deleteResPub(id){ /* no-op */ }
+function renderResList(){
+  const arr = getRes();
+  const el = document.getElementById('reservations-list');
+  if(!arr.length){
+    el.innerHTML = `<div class="no-reservations">Nenhuma reserva registrada ainda.<br><small>As reservas feitas pelo site aparecem aqui.</small></div>`;
+    return;
+  }
+  el.innerHTML = arr.slice().reverse().map(r => `
+    <div class="res-item" id="ri-${r.id}">
+      <div class="res-item-top">
+        <div>
+          <div class="res-name">${r.name}</div>
+          <div class="res-dates">📅 ${fmtDate(r.checkin)} → ${fmtDate(r.checkout)} · ${r.guests}</div>
+        </div>
+        <button class="res-badge ${r.status==='paid'?'badge-paid':'badge-pending'}" onclick="toggleStatus('${r.id}')">
+          ${r.status==='paid'?'✅ Pago':'⏳ Pendente'}
+        </button>
+      </div>
+      <div class="res-info">
+        <span class="res-info-item">📞 <strong>${r.phone}</strong></span>
+        ${r.email?`<span class="res-info-item">📧 <strong>${r.email}</strong></span>`:''}
+        <span class="res-info-item">🎉 <strong>${r.occasion}</strong></span>
+      </div>
+      ${r.obs?`<div style="margin-top:8px;font-size:12px;color:var(--mid)">💬 ${r.obs}</div>`:''}
+      <button class="res-delete" onclick="deleteRes('${r.id}')" title="Excluir reserva">🗑</button>
+    </div>
+  `).join('');
+}
+
+function toggleStatus(id){
+  const arr = getRes();
+  const r = arr.find(x=>x.id===id);
+  if(!r) return;
+  r.status = r.status === 'paid' ? 'pending' : 'paid';
+  saveRes(arr);
+  renderResList();
+  renderCal();
+  showToast(r.status==='paid'?'✅ Marcado como Pago':'⏳ Marcado como Pendente', r.status==='paid');
+}
+
+function deleteRes(id){
+  if(!confirm('Excluir esta reserva?')) return;
+  saveRes(getRes().filter(x=>x.id!==id));
+  renderResList();
+  renderCal();
+  showToast('Reserva excluída.');
+}
 
 // ===== DETAIL MODAL (click on reserved day) =====
 function openDetailById(id){
-  // Site público: não exibe dados pessoais de reservas
-  return;
+  const r = getRes().find(x=>x.id===id);
+  if(!r) return;
+  document.getElementById('detail-content').innerHTML = `
+    <div class="detail-row"><strong>Nome</strong><span>${r.name}</span></div>
+    <div class="detail-row"><strong>WhatsApp</strong><span>${r.phone}</span></div>
+    <div class="detail-row"><strong>E-mail</strong><span>${r.email||'—'}</span></div>
+    <div class="detail-row"><strong>Check-in</strong><span>${fmtDate(r.checkin)}</span></div>
+    <div class="detail-row"><strong>Check-out</strong><span>${fmtDate(r.checkout)}</span></div>
+    <div class="detail-row"><strong>Pessoas</strong><span>${r.guests}</span></div>
+    <div class="detail-row"><strong>Ocasião</strong><span>${r.occasion}</span></div>
+    <div class="detail-row"><strong>Status</strong><span style="color:${r.status==='paid'?'var(--green)':'var(--amber)'}"><strong>${r.status==='paid'?'✅ Pago':'⏳ Pendente'}</strong></span></div>
+    ${r.obs?`<div class="detail-row"><strong>Obs</strong><span>${r.obs}</span></div>`:''}
+    <div class="detail-actions">
+      <button class="btn-pay-toggle ${r.status==='paid'?'btn-mark-pending':'btn-mark-paid'}" onclick="toggleStatus('${r.id}');closeDetail();renderCal()">
+        ${r.status==='paid'?'⏳ Marcar como Pendente':'✅ Marcar como Pago'}
+      </button>
+      <button class="btn-del-res" onclick="deleteRes('${r.id}');closeDetail()">🗑 Excluir</button>
+    </div>
+  `;
+  document.getElementById('detail-modal').classList.add('open');
 }
 function closeDetail(){ document.getElementById('detail-modal').classList.remove('open'); }
 
@@ -1577,7 +1821,7 @@ function showTab(tab){
 }
 
 // ===== UTILS =====
-function scrollTo(id){ document.getElementById(id).scrollIntoView({behavior:'smooth'}); }
+function goTo(id){ document.getElementById(id)?.scrollIntoView({behavior:'smooth'}); }
 function showToast(msg, green=false){
   const t = document.getElementById('toast');
   t.textContent = msg;
@@ -1586,10 +1830,9 @@ function showToast(msg, green=false){
 }
 
 // ===== DEMO RESERVATIONS (remove after testing) =====
-/* loadDemoReservations removido — dados vêm do GitHub */
 function loadDemoReservations(){
-  // desativado — reservas agora no GitHub
-  return;
+  const existing = getRes();
+  if(existing.length > 0) return; // don't overwrite real data
   const demos = [
     {
       id: genId(),
@@ -1638,63 +1881,11 @@ function getNextDate(daysFromNow){
   d.setDate(d.getDate() + daysFromNow);
   return d.toISOString().split('T')[0];
 }
-// ===== INIT ASYNC =====
-async function initSite(){
-  // Carrega reservas do GitHub e atualiza mapa
-  await refreshResMap();
-  renderCal();
-  renderGallery();
-  // Carrega outros sítios do GitHub e renderiza
-  try{
-    const sitios = await getSitiosPublic();
-    renderOtherSitios(sitios);
-  }catch(e){}
-}
+loadDemoReservations();
 
-function renderOtherSitios(sitios){
-  const el = document.getElementById('outros-sitios-grid');
-  if(!el || !sitios.length) return;
-  el.innerHTML = sitios.map((s,i)=>{
-    return `<div class="sitio-card" onclick="window.location.href='sitio.html?idx=${i}'" style="cursor:pointer;transition:transform .2s,box-shadow .2s" onmouseover="this.style.transform='translateY(-4px)';this.style.boxShadow='0 8px 24px rgba(0,0,0,.12)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
-      <div class="sitio-card-img" style="background-image:url('${s.capa||''}');background-size:cover;background-position:center;height:200px;border-radius:12px 12px 0 0;position:relative">
-        ${s.tipo?`<div style="position:absolute;top:10px;left:10px;background:rgba(0,0,0,.6);color:#fff;font-size:11px;font-weight:600;padding:4px 10px;border-radius:100px">${s.tipo}</div>`:''}
-      </div>
-      <div class="sitio-card-body" style="padding:16px">
-        <div style="font-weight:700;font-size:16px;margin-bottom:2px">${s.nome}</div>
-        <div style="font-size:13px;color:var(--mid);margin-bottom:8px">📍 ${s.local||''}</div>
-        ${s.preco?`<div style="font-size:15px;font-weight:700;color:var(--green);margin-bottom:12px">${s.preco} <span style="font-weight:400;font-size:12px;color:var(--mid)">${s.precoDetalhe||''}</span></div>`:''}
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <button onclick="event.stopPropagation();window.location.href='sitio.html?idx=${i}'" style="display:inline-flex;align-items:center;gap:6px;background:var(--accent);color:#fff;padding:9px 18px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;border:none;cursor:pointer">
-            📋 Ver detalhes
-          </button>
-        </div>
-      </div>
-    </div>`;
-  }).join('');
-}
-
-initSite();
-
-// ── FOTO DE CAPA — aplica capa dinamicamente ──
-function aplicarFotoCapa(src){
-  if(!src) return;
-  const bg = document.querySelector('.hero-bg');
-  if(bg) bg.style.backgroundImage = "url('"+src+"')";
-  const mg = document.querySelector('#mini-gallery img:first-child');
-  if(mg) mg.src = src;
-}
-// Carrega config pública do GitHub
-(function carregarCapaPublica(){
-  fetch('https://raw.githubusercontent.com/NapsClaw/coolify-sites/main/sitio-iluminado/config.json?v='+Date.now())
-    .then(r=>r.ok?r.json():Promise.reject())
-    .then(cfg=>{ if(cfg&&cfg.fotoCapa) aplicarFotoCapa(cfg.fotoCapa); })
-    .catch(()=>{});
-  // Também tenta localStorage (se admin estiver logado na mesma máquina)
-  try{
-    const si = JSON.parse(localStorage.getItem('sitio_iluminado_config')||'{}');
-    if(si.fotoCapa) aplicarFotoCapa(si.fotoCapa);
-  }catch(e){}
-})();
+// ===== INIT =====
+renderCal();
+renderGallery();
 </script>
 </body>
 </html>

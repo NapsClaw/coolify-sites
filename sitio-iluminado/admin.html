@@ -406,7 +406,7 @@ tr:hover td{background:var(--light)}
           <div class="capa-preview-info">
             <p style="font-weight:700;font-size:14px;margin-bottom:6px">Foto selecionada:</p>
             <p id="capa-atual-label" style="font-size:13px;color:var(--mid);word-break:break-all">piscina-principal.jpg</p>
-            <p style="font-size:12px;color:var(--mid);margin-top:12px;line-height:1.6">💡 Clique em uma foto abaixo para selecioná-la como capa, depois clique em <strong>"Salvar capa selecionada"</strong>.<br><br>A foto escolhida aparecerá na página principal do Sítio Iluminado e na listagem pública automaticamente.</p>
+            <p style="font-size:12px;color:var(--mid);margin-top:12px;line-height:1.6">💡 Clique em uma foto abaixo para selecioná-la como capa, depois clique em <strong>"Salvar capa selecionada"</strong>.<br><br>A alteração é enviada ao servidor (GitHub). Todos os visitantes verão a nova capa em alguns segundos, sem precisar recarregar a página.</p>
           </div>
         </div>
       </div>
@@ -1402,56 +1402,28 @@ function cobrarCliente(id){
 // =============================================
 // FOTO DE CAPA — SÍTIO ILUMINADO
 // =============================================
+// Somente fotos confirmadas no servidor — sem arquivos fictícios
 const CAPA_FOTOS = [
-  // Piscinas (candidatas ideais para capa)
-  {src:'fotos/piscina-principal.jpg', label:'🏊 Piscina principal', cat:'Piscina'},
-  {src:'fotos/piscina-cascata.jpg',   label:'💦 Piscina com cascata', cat:'Piscina'},
-  {src:'fotos/vista-piscina.jpg',     label:'🌅 Vista da piscina', cat:'Piscina'},
-  {src:'fotos/piscina-hidromassagem.jpg', label:'💦 Hidromassagem', cat:'Piscina'},
-  {src:'fotos/piscina-nova-01.jpg',   label:'🏊 Piscina nova 1', cat:'Piscina'},
-  {src:'fotos/piscina-nova-02.jpg',   label:'🏊 Piscina nova 2', cat:'Piscina'},
-  {src:'fotos/piscina-nova-03.jpg',   label:'🏊 Piscina nova 3', cat:'Piscina'},
-  // Área de lazer / exterior
-  {src:'fotos/sitio-externo.jpg',     label:'🌳 Sítio externo', cat:'Exterior'},
-  {src:'fotos/area-lazer.jpg',        label:'🏡 Área de lazer', cat:'Exterior'},
-  {src:'fotos/area-verde.jpg',        label:'🌿 Área verde', cat:'Exterior'},
-  {src:'fotos/bambu.jpg',             label:'🎋 Bambuzal', cat:'Exterior'},
-  {src:'fotos/palmeiras.jpg',         label:'🌴 Palmeiras', cat:'Exterior'},
-  {src:'fotos/trilha-palmeiras.jpg',  label:'🌿 Trilha palmeiras', cat:'Exterior'},
+  // Piscinas (melhores candidatas para capa)
+  {src:'fotos/piscina-principal.jpg',        label:'🏊 Piscina principal',        cat:'Piscina'},
+  {src:'fotos/piscina-cascata.jpg',          label:'💦 Piscina com cascata',      cat:'Piscina'},
+  {src:'fotos/piscina-hidromassagem.jpg',    label:'💦 Hidromassagem',            cat:'Piscina'},
+  {src:'fotos/piscina.jpg',                  label:'🏊 Piscina — vista ampla',    cat:'Piscina'},
+  {src:'fotos/vista-piscina.jpg',            label:'🌅 Vista da piscina',         cat:'Piscina'},
+  // Exterior
+  {src:'fotos/sitio-externo.jpg',            label:'🌳 Sítio externo',            cat:'Exterior'},
   // Lazer / Entretenimento
-  {src:'fotos/churrasqueira.jpg',     label:'🥩 Churrasqueira', cat:'Lazer'},
-  {src:'fotos/salao-festas.jpg',      label:'🎊 Salão de festas', cat:'Lazer'},
-  {src:'fotos/salao-terraco.jpg',     label:'🌳 Salão terraço', cat:'Lazer'},
-  {src:'fotos/campo-futebol.jpg',     label:'⚽ Campo de futebol', cat:'Lazer'},
-  {src:'fotos/quadra-volei.jpg',      label:'🏐 Quadra de vôlei', cat:'Lazer'},
-  {src:'fotos/capela.jpg',            label:'💒 Capela', cat:'Lazer'},
+  {src:'fotos/churrasqueira.jpg',            label:'🥩 Churrasqueira',            cat:'Lazer'},
+  {src:'fotos/churrasqueira-forno-pizza.jpg',label:'🍕 Forno de pizza',           cat:'Lazer'},
+  {src:'fotos/salao-festas.jpg',             label:'🎊 Salão de festas',          cat:'Lazer'},
+  {src:'fotos/campo-futebol.jpg',            label:'⚽ Campo de futebol',         cat:'Lazer'},
+  {src:'fotos/quadra-volei.jpg',             label:'🏐 Quadra de vôlei',          cat:'Lazer'},
+  {src:'fotos/capela.jpg',                   label:'💒 Capela',                   cat:'Lazer'},
   // Interiores
-  {src:'fotos/sala-madeira.jpg',      label:'🪵 Sala de madeira', cat:'Interior'},
-  {src:'fotos/sala-vista-piscina.jpg',label:'💦 Sala vista piscina', cat:'Interior'},
-  {src:'fotos/quarto-2.jpg',          label:'🛏️ Quarto 2', cat:'Interior'},
-  {src:'fotos/quarto-3.jpg',          label:'🛏️ Quarto 3', cat:'Interior'},
-  {src:'fotos/quarto-4.jpg',          label:'🛏️ Quarto 4', cat:'Interior'},
-  // Novas fotos
-  {src:'fotos/nova-01.jpg',  label:'📷 Nova foto 1',  cat:'Novas'},
-  {src:'fotos/nova-02.jpg',  label:'📷 Nova foto 2',  cat:'Novas'},
-  {src:'fotos/nova-03.jpg',  label:'📷 Nova foto 3',  cat:'Novas'},
-  {src:'fotos/nova-04.jpg',  label:'📷 Nova foto 4',  cat:'Novas'},
-  {src:'fotos/nova-05.jpg',  label:'📷 Nova foto 5',  cat:'Novas'},
-  {src:'fotos/nova-06.jpg',  label:'📷 Nova foto 6',  cat:'Novas'},
-  {src:'fotos/nova-07.jpg',  label:'📷 Nova foto 7',  cat:'Novas'},
-  {src:'fotos/nova-08.jpg',  label:'📷 Nova foto 8',  cat:'Novas'},
-  {src:'fotos/nova-09.jpg',  label:'📷 Nova foto 9',  cat:'Novas'},
-  {src:'fotos/nova-10.jpg',  label:'📷 Nova foto 10', cat:'Novas'},
-  {src:'fotos/nova-11.jpg',  label:'📷 Nova foto 11', cat:'Novas'},
-  {src:'fotos/nova-12.jpg',  label:'📷 Nova foto 12', cat:'Novas'},
-  {src:'fotos/nova-13.jpg',  label:'📷 Nova foto 13', cat:'Novas'},
-  {src:'fotos/nova-14.jpg',  label:'📷 Nova foto 14', cat:'Novas'},
-  {src:'fotos/nova-15.jpg',  label:'📷 Nova foto 15', cat:'Novas'},
-  {src:'fotos/nova-16.jpg',  label:'📷 Nova foto 16', cat:'Novas'},
-  {src:'fotos/nova-17.jpg',  label:'📷 Nova foto 17', cat:'Novas'},
-  {src:'fotos/nova-18.jpg',  label:'📷 Nova foto 18', cat:'Novas'},
-  {src:'fotos/nova-19.jpg',  label:'📷 Nova foto 19', cat:'Novas'},
-  {src:'fotos/nova-20.jpg',  label:'📷 Nova foto 20', cat:'Novas'},
+  {src:'fotos/sala-madeira.jpg',             label:'🪵 Sala de madeira',          cat:'Interior'},
+  {src:'fotos/quarto-2.jpg',                 label:'🛏️ Quarto 2',                 cat:'Interior'},
+  {src:'fotos/quarto-3.jpg',                 label:'🛏️ Quarto 3',                 cat:'Interior'},
+  {src:'fotos/quarto-4.jpg',                 label:'🛏️ Quarto 4',                 cat:'Interior'},
 ];
 
 let _capaSelecionada = null;
