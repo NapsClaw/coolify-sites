@@ -36,7 +36,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:500;background:rgba(255,255,255,
 
 /* ── HERO ── */
 .hero{margin-top:60px;background:#0f172a;min-height:92vh;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden}
-.hero-bg{position:absolute;inset:0;background:url('fotos/piscina-principal.jpg')center/cover;opacity:1}
+.hero-bg{position:absolute;inset:0;background-image:url('fotos/piscina-principal.jpg');background-size:cover;background-position:center;opacity:1}
 .hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(15,23,42,.75) 0%,rgba(15,23,42,.15) 60%,rgba(0,0,0,0) 100%)}
 .hero-content{position:relative;z-index:1;padding:40px 20px 48px}
 .hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(37,99,235,.25);border:1px solid rgba(37,99,235,.4);color:#93c5fd;font-size:13px;font-weight:600;letter-spacing:1px;padding:8px 18px;border-radius:100px;margin-bottom:24px;text-transform:uppercase}
@@ -1649,6 +1649,27 @@ function renderOtherSitios(sitios){
 }
 
 initSite();
+
+// ── FOTO DE CAPA — aplica capa dinamicamente ──
+function aplicarFotoCapa(src){
+  if(!src) return;
+  const bg = document.querySelector('.hero-bg');
+  if(bg) bg.style.backgroundImage = "url('"+src+"')";
+  const mg = document.querySelector('#mini-gallery img:first-child');
+  if(mg) mg.src = src;
+}
+// Carrega config pública do GitHub
+(function carregarCapaPublica(){
+  fetch('https://raw.githubusercontent.com/NapsClaw/coolify-sites/main/sitio-iluminado/config.json?v='+Date.now())
+    .then(r=>r.ok?r.json():Promise.reject())
+    .then(cfg=>{ if(cfg&&cfg.fotoCapa) aplicarFotoCapa(cfg.fotoCapa); })
+    .catch(()=>{});
+  // Também tenta localStorage (se admin estiver logado na mesma máquina)
+  try{
+    const si = JSON.parse(localStorage.getItem('sitio_iluminado_config')||'{}');
+    if(si.fotoCapa) aplicarFotoCapa(si.fotoCapa);
+  }catch(e){}
+})();
 </script>
 </body>
 </html>
