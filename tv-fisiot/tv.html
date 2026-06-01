@@ -337,6 +337,45 @@ body{
 }
 #api-badge.ok{border-color:rgba(76,175,80,.4);color:rgba(76,175,80,.7);background:rgba(76,175,80,.07)}
 #api-badge.err{border-color:rgba(255,150,0,.4);color:rgba(255,150,0,.7);background:rgba(255,150,0,.07)}
+
+/* ── AGENDA AUTOMÁTICA STATUS (sidebar) ───────────────────────── */
+#auto-status-box{
+  background:#0e0e0e;
+  border:1px solid rgba(255,215,0,.22);
+  border-radius:10px;padding:11px 13px;
+  margin-bottom:14px;
+}
+.auto-badge{
+  display:inline-block;font-size:10px;font-weight:800;
+  padding:3px 10px;border-radius:20px;margin-bottom:6px;
+  text-transform:uppercase;letter-spacing:.6px;
+  transition:all .4s;
+}
+.auto-badge.on{
+  background:rgba(76,175,80,.18);border:1px solid rgba(76,175,80,.45);color:#6FE080;
+}
+.auto-badge.off{
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.38);
+}
+#prox-chamada-info{
+  font-size:11px;color:rgba(255,215,0,.8);line-height:1.5;
+  margin-bottom:7px;min-height:17px;
+}
+#btn-ativar-som-sb{
+  width:100%;
+  background:linear-gradient(135deg,#CC0000 0%,#880000 100%);
+  color:#fff;border:none;border-radius:8px;
+  padding:9px 6px;font-size:12px;font-weight:900;
+  cursor:pointer;font-family:inherit;letter-spacing:.4px;
+  animation:pulseAtivar 1.8s ease infinite alternate;
+  display:block;
+}
+#btn-ativar-som-sb:hover{background:linear-gradient(135deg,#e60000,#aa0000)}
+#som-ativo-sb{
+  font-size:11px;font-weight:800;color:#6FE080;
+  text-align:center;padding:4px 0;display:none;
+  letter-spacing:.4px;
+}
 </style>
 </head>
 <body>
@@ -401,6 +440,8 @@ body{
         <div class="ch-atencao">Atenção — Chamada de Pacientes</div>
         <div id="chamada-texto">Aguardando...</div>
         <div id="chamada-rep"></div>
+        <div id="chamada-aviso-som" style="display:none;margin-top:14px;font-size:14px;
+             font-weight:800;color:#FFD700;letter-spacing:.3px;"></div>
       </div>
     </div>
 
@@ -416,6 +457,15 @@ body{
 
   <!-- SIDEBAR -->
   <div id="sidebar">
+
+    <!-- STATUS AGENDA AUTOMÁTICA -->
+    <div id="auto-status-box">
+      <span id="auto-status-badge" class="auto-badge off">📅 AGENDA AUTO</span>
+      <div id="prox-chamada-info">Calculando próxima chamada...</div>
+      <div id="som-ativo-sb">🔊 SOM ATIVO</div>
+      <button id="btn-ativar-som-sb" onclick="ativarSomTV()">🔊 ATIVAR SOM DA TV</button>
+    </div>
+
     <div class="sb-title">📅 Agenda Hoje</div>
     <div id="gin-blocks"></div>
 
@@ -492,6 +542,14 @@ function ativarSomTV(){
   fecharTelaAtivar();
   mostrarStatusSom(true);
   console.log('[TV] audioEnabled=true imediato ao clique');
+
+  // Atualiza botão persistente e badge na sidebar
+  var btnSb  = document.getElementById('btn-ativar-som-sb');
+  var somSb  = document.getElementById('som-ativo-sb');
+  var badge  = document.getElementById('auto-status-badge');
+  if(btnSb)  btnSb.style.display  = 'none';
+  if(somSb)  somSb.style.display  = 'block';
+  if(badge){ badge.textContent = '📅 AGENDA AUTO'; badge.className = 'auto-badge on'; }
 
   // Tenta desbloquear o contexto de áudio do browser em background
   if('speechSynthesis' in window){
@@ -1054,6 +1112,17 @@ function mostrarChamadaOverlay(data){
 
   document.getElementById('chamada-texto').textContent = texto;
 
+  // Aviso de áudio bloqueado / já ativo
+  var avisoEl = document.getElementById('chamada-aviso-som');
+  if(avisoEl){
+    if(!audioEnabled){
+      avisoEl.textContent = '🔊 Clique em ATIVAR SOM DA TV para liberar a voz';
+      avisoEl.style.display = 'block';
+    } else {
+      avisoEl.style.display = 'none';
+    }
+  }
+
   // Fala em voz alta (5 repetições)
   falarTV(texto);
 
@@ -1119,6 +1188,176 @@ function updateChamada(){
 }
 
 // ============================================================
+// AGENDA AUTOMÁTICA — TV dispara chamadas no horário certo
+// Sem precisar do celular/painel.
+// Cada horário é disparado apenas 1× por dia.
+// Ao virar dia (ou recarregar a página), reset automático.
+// ============================================================
+var autoFiredToday = {};       // { "G1_13:40_2026-06-01": true }
+var AUTO_JANELA_MIN = 5;       // janela de disparo: até 5 min após o horário
+var autoTravado = false;       // evita disparo duplo simultâneo
+var autoUltimoDia = '';        // guarda o dia para detectar virada
+
+function getTodayDateKey(){
+  var n = new Date();
+  return n.getFullYear()+'-'+
+         String(n.getMonth()+1).padStart(2,'0')+'-'+
+         String(n.getDate()).padStart(2,'0');
+}
+
+function carregarAutoStorage(){
+  try{
+    var hoje = getTodayDateKey();
+    // Se virou o dia, zera tudo
+    if(autoUltimoDia && autoUltimoDia !== hoje){
+      autoFiredToday = {};
+      sessionStorage.removeItem('fisiot_auto_'+autoUltimoDia);
+      console.log('[TV AUTO] Virou o dia — chamadas automáticas resetadas');
+    }
+    autoUltimoDia = hoje;
+    var raw = sessionStorage.getItem('fisiot_auto_'+hoje);
+    if(raw) autoFiredToday = JSON.parse(raw);
+    else autoFiredToday = {};
+  }catch(e){ autoFiredToday = {}; }
+}
+
+function salvarAutoStorage(){
+  try{
+    var hoje = getTodayDateKey();
+    sessionStorage.setItem('fisiot_auto_'+hoje, JSON.stringify(autoFiredToday));
+  }catch(e){}
+}
+
+function getMinFromHHMM(hhmm){
+  var p = hhmm.split(':');
+  return parseInt(p[0])*60 + parseInt(p[1]);
+}
+
+function verificarChamadaAutomatica(){
+  // Não dispara em fins de semana (sábado=6, domingo=0)
+  var dow = new Date().getDay();
+  if(dow === 0 || dow === 6) return;
+  // Não dispara enquanto overlay manual ativo (respeita prioridade do painel)
+  if(overlayAtivo) return;
+  // Bloqueio anti-duplo durante animação anterior
+  if(autoTravado) return;
+
+  carregarAutoStorage();
+
+  var hAtual  = getHoraAtual();
+  var mAtual  = getMinFromHHMM(hAtual);
+  var periodo = getPeriodo(hAtual);
+  var hoje    = getTodayDateKey();
+  var gins    = ['G1','G2','G3'];
+
+  for(var g = 0; g < gins.length; g++){
+    var ginId = gins[g];
+    var prof  = getProfissional(ginId, periodo);
+    if(!prof) continue;
+    var slots = getSlots(ginId, periodo);
+    if(!slots.length) continue;
+
+    for(var s = 0; s < slots.length; s++){
+      var hora  = slots[s];
+      var mSlot = getMinFromHHMM(hora);
+      var diff  = mAtual - mSlot;  // positivo = passou do horário
+
+      // Janela: de 0 a AUTO_JANELA_MIN minutos após o horário
+      if(diff >= 0 && diff < AUTO_JANELA_MIN){
+        var key = ginId+'_'+hora+'_'+hoje;
+        if(!autoFiredToday[key]){
+          autoFiredToday[key] = true;
+          salvarAutoStorage();
+          autoTravado = true;
+
+          var dados = {
+            profissional : prof,
+            ginasio      : CFG[ginId].nome,
+            horario      : hora,
+            timestamp    : Date.now(),
+            auto         : true   // flag de origem automática (só informativo)
+          };
+          console.log('[TV AUTO] ⏰ Chamada automática:', ginId, hora, prof);
+          mostrarChamadaOverlay(dados);
+
+          // Destrava após 35s (duração do overlay)
+          setTimeout(function(){ autoTravado = false; }, 35000);
+          return; // só uma chamada por ciclo
+        }
+      }
+    }
+  }
+}
+
+function getProximaChamada(){
+  var dow = new Date().getDay();
+  if(dow === 0 || dow === 6) return null;
+
+  var hAtual  = getHoraAtual();
+  var mAtual  = getMinFromHHMM(hAtual);
+  var periodo = getPeriodo(hAtual);
+  var hoje    = getTodayDateKey();
+  var gins    = ['G1','G2','G3'];
+
+  var melhor    = null;
+  var melhorMin = Infinity;
+
+  for(var g = 0; g < gins.length; g++){
+    var ginId = gins[g];
+    var prof  = getProfissional(ginId, periodo);
+    if(!prof) continue;
+    var slots = getSlots(ginId, periodo);
+
+    for(var s = 0; s < slots.length; s++){
+      var hora  = slots[s];
+      var mSlot = getMinFromHHMM(hora);
+      var key   = ginId+'_'+hora+'_'+hoje;
+      // Próxima = futura E ainda não disparada
+      if(mSlot > mAtual && !autoFiredToday[key]){
+        if(mSlot < melhorMin){
+          melhorMin = mSlot;
+          melhor = { hora:hora, prof:prof, ginasio:CFG[ginId].nome };
+        }
+      }
+    }
+  }
+  return melhor;
+}
+
+function atualizarStatusAuto(){
+  carregarAutoStorage();
+  var prox   = getProximaChamada();
+  var proxEl = document.getElementById('prox-chamada-info');
+  var badgeEl= document.getElementById('auto-status-badge');
+  var btnSb  = document.getElementById('btn-ativar-som-sb');
+  var somSb  = document.getElementById('som-ativo-sb');
+
+  // Badge de agenda
+  if(badgeEl){
+    badgeEl.textContent = '📅 AGENDA AUTO';
+    badgeEl.className   = 'auto-badge on';
+  }
+
+  // Próxima chamada
+  if(proxEl){
+    if(prox){
+      proxEl.textContent = '⏭ '+prox.hora+' · '+prox.prof+' · '+prox.ginasio;
+      proxEl.style.color = 'rgba(255,215,0,.85)';
+    } else {
+      var dow = new Date().getDay();
+      proxEl.textContent = (dow===0||dow===6)
+        ? 'Sem agenda (fim de semana)'
+        : 'Todas as chamadas do dia realizadas ✓';
+      proxEl.style.color = 'rgba(255,255,255,.3)';
+    }
+  }
+
+  // Botão de som persistente
+  if(btnSb) btnSb.style.display  = audioEnabled ? 'none'  : 'block';
+  if(somSb) somSb.style.display  = audioEnabled ? 'block' : 'none';
+}
+
+// ============================================================
 // INIT
 // ============================================================
 showSlide(0);
@@ -1129,6 +1368,14 @@ setInterval(renderSidebar, 30000);
 updateClock();
 renderSidebar();
 initAPIPolling(); // cross-device sync via chamada-api.php
+
+// Agenda automática
+carregarAutoStorage();
+atualizarStatusAuto();
+setInterval(verificarChamadaAutomatica, 30000); // checa a cada 30 s
+setInterval(atualizarStatusAuto, 60000);         // atualiza próxima chamada a cada 1 min
+// Primeiro check rápido após 5s (quando a página acabou de abrir)
+setTimeout(function(){ verificarChamadaAutomatica(); atualizarStatusAuto(); }, 5000);
 </script>
 </body>
 </html>
