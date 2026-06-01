@@ -89,19 +89,21 @@ const server = http.createServer((req, res) => {
       return;
     }
 
-    // GET
+    // GET — inclui server_ts para que a TV evite clock-skew entre dispositivos
     try {
       const raw  = fs.readFileSync(DATA_FILE, 'utf8');
       const data = JSON.parse(raw);
       if (data && data.timestamp !== undefined) {
+        // Injeta timestamp do servidor na resposta (sem alterar o arquivo)
+        const withTs = Object.assign({}, data, { server_ts: Date.now() });
         res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8',
-                             'Cache-Control': 'no-cache' });
-        res.end(raw);
+                             'Cache-Control': 'no-cache, no-store, must-revalidate' });
+        res.end(JSON.stringify(withTs));
       } else {
-        sendJSON(res, 200, { timestamp: 0 });
+        sendJSON(res, 200, { timestamp: 0, server_ts: Date.now() });
       }
     } catch(e) {
-      sendJSON(res, 200, { timestamp: 0 });
+      sendJSON(res, 200, { timestamp: 0, server_ts: Date.now() });
     }
     return;
   }

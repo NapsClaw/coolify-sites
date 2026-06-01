@@ -315,6 +315,28 @@ body{
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
 }
 #chamada-txt.ativo{color:#FFD700;font-size:24px}
+
+/* ── SOM / POLLING STATUS BADGES ────────────────────────── */
+#som-badge{
+  font-size:11px;font-weight:800;padding:4px 12px;
+  border-radius:20px;border:1px solid rgba(204,0,0,.4);
+  background:rgba(204,0,0,.18);color:#ff7777;
+  white-space:nowrap;flex-shrink:0;
+  letter-spacing:.5px;text-transform:uppercase;
+  transition:all .4s;
+}
+#som-badge.ativo{
+  background:rgba(76,175,80,.2);border-color:#4CAF50;color:#6FE080;
+}
+#api-badge{
+  font-size:10px;font-weight:700;padding:3px 10px;
+  border-radius:20px;border:1px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.05);color:rgba(255,255,255,.35);
+  white-space:nowrap;flex-shrink:0;letter-spacing:.3px;
+  transition:all .4s;
+}
+#api-badge.ok{border-color:rgba(76,175,80,.4);color:rgba(76,175,80,.7);background:rgba(76,175,80,.07)}
+#api-badge.err{border-color:rgba(255,150,0,.4);color:rgba(255,150,0,.7);background:rgba(255,150,0,.07)}
 </style>
 </head>
 <body>
@@ -418,6 +440,8 @@ body{
 <div id="chamada-bar">
   <span class="cb-lbl">📢 Última chamada:</span>
   <span id="chamada-txt">Aguardando chamada de pacientes...</span>
+  <span id="som-badge">🔇 SOM INATIVO</span>
+  <span id="api-badge">📡 —</span>
 </div>
 
 <script>
@@ -436,35 +460,54 @@ if('speechSynthesis' in window){
   window.speechSynthesis.onvoiceschanged = carregarVozes;
 }
 
-function ativarSomTV(){
+function fecharTelaAtivar(){
   var tela = document.getElementById('tela-ativar');
-  if(!('speechSynthesis' in window)){
-    audioEnabled = true;
-    tela.classList.add('oculto');
-    setTimeout(function(){ tela.style.display='none'; }, 600);
-    console.log('[TV] speechSynthesis não disponível, audioEnabled=true');
-    return;
+  tela.classList.add('oculto');
+  setTimeout(function(){ tela.style.display='none'; }, 600);
+}
+
+function mostrarStatusSom(ativo){
+  var badge = document.getElementById('som-badge');
+  if(!badge) return;
+  if(ativo){
+    badge.textContent = '🔊 SOM ATIVO';
+    badge.classList.add('ativo');
+  } else {
+    badge.textContent = '🔇 SOM INATIVO';
+    badge.classList.remove('ativo');
   }
-  // Reproduz utterance silencioso para desbloquear audio context
-  var u = new SpeechSynthesisUtterance('​'); // zero-width space
-  u.volume = 0.01;
-  u.lang = 'pt-BR';
-  u.onend = function(){
-    audioEnabled = true;
-    tela.classList.add('oculto');
-    setTimeout(function(){ tela.style.display='none'; }, 600);
-    console.log('[TV] Som ativado com sucesso');
+}
+
+function mostrarStatusAPI(ok, texto){
+  var badge = document.getElementById('api-badge');
+  if(!badge) return;
+  badge.textContent = texto;
+  badge.className = ok ? 'ok' : 'err';
+}
+
+function ativarSomTV(){
+  // ─── FIX: ativa IMEDIATAMENTE ao clicar — não espera utterance ───
+  // Isso resolve: TVs/Android que não disparam onend/onerror no SpeechSynthesis
+  audioEnabled = true;
+  fecharTelaAtivar();
+  mostrarStatusSom(true);
+  console.log('[TV] audioEnabled=true imediato ao clique');
+
+  // Tenta desbloquear o contexto de áudio do browser em background
+  if('speechSynthesis' in window){
     carregarVozes();
-  };
-  u.onerror = function(){
-    // Ainda assim ativa — pode ter bloqueado mas ao menos tentou
-    audioEnabled = true;
-    tela.classList.add('oculto');
-    setTimeout(function(){ tela.style.display='none'; }, 600);
-    console.log('[TV] Som ativado (fallback via onerror)');
-  };
-  window.speechSynthesis.cancel();
-  window.speechSynthesis.speak(u);
+    window.speechSynthesis.cancel();
+    setTimeout(function(){
+      var u = new SpeechSynthesisUtterance('ativado');
+      u.volume = 0;   // completamente silencioso
+      u.lang   = 'pt-BR';
+      u.onend  = function(){ console.log('[TV] Contexto de áudio desbloqueado via utterance'); carregarVozes(); };
+      u.onerror= function(e){ console.log('[TV] Utterance de unlock erro (ignorado):', e.error); };
+      window.speechSynthesis.speak(u);
+    }, 100);
+  } else {
+    console.log('[TV] speechSynthesis não suportado — voz indisponível, overlay funciona');
+  }
 }
 
 function falarTV(texto){
@@ -529,31 +572,48 @@ try {
 // ============================================================
 var apiDisponivel = false;
 var API_URL = 'chamada-api.php';
+var pollErros = 0;
 
 function initAPIPolling(){
-  fetch(API_URL + '?check=' + Date.now())
+  // ─── FIX: SEMPRE inicia o polling — não depende do check inicial ───
+  // Bug anterior: se o check falhasse, setInterval nunca era criado
+  console.log('[TV] Iniciando polling cross-device a cada 3s...');
+  pollAPI();                        // poll imediato
+  setInterval(pollAPI, 3000);       // poll contínuo
+
+  // Verifica se API está acessível (apenas para status display)
+  fetch(API_URL + '?check=1&t=' + Date.now())
     .then(function(r){
       if(!r.ok) throw new Error('HTTP ' + r.status);
       return r.json();
     })
     .then(function(d){
       apiDisponivel = true;
-      console.log('[TV] ✅ API cross-device ativa (chamada-api.php) — polling a cada 3s');
-      pollAPI(); // primeiro poll imediato
-      setInterval(pollAPI, 3000);
+      mostrarStatusAPI(true, '📡 SYNC OK');
+      console.log('[TV] ✅ chamada-api.php acessível — polling cross-device ativo');
     })
     .catch(function(e){
       apiDisponivel = false;
-      console.warn('[TV] ⚠️ chamada-api.php não disponível — usando localStorage/BroadcastChannel (mesmo dispositivo apenas). Erro:', e.message);
+      mostrarStatusAPI(false, '📡 LOCAL');
+      console.warn('[TV] ⚠️ chamada-api.php check falhou (polling continua tentando). Erro:', e.message);
     });
 }
 
 function pollAPI(){
   fetch(API_URL + '?t=' + Date.now())
-    .then(function(r){ return r.json(); })
+    .then(function(r){
+      if(!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    })
     .then(function(data){
       if(!data || !data.timestamp) return;
-      var age = Date.now() - data.timestamp;
+      pollErros = 0; // reset error counter
+
+      // ─── FIX clock-skew: usa server_ts se disponível ───────────────
+      // Antes: age = TVclock - PainelTimestamp  → clock skew > 30s = chamada "velha"
+      // Agora: age = ServerClock - PainelTimestamp → ambos server-side, sem skew
+      var agora = (data.server_ts && data.server_ts > 0) ? data.server_ts : Date.now();
+      var age   = agora - data.timestamp;
 
       // Atualiza barra inferior se chamada recente (< 3 min)
       if(age < 180000 && data.timestamp > 0){
@@ -566,7 +626,8 @@ function pollAPI(){
         }
         if(txt){
           document.getElementById('chamada-txt').textContent = txt;
-          document.getElementById('chamada-txt').className = age < 30000 ? 'ativo' : '';
+          // ativo (amarelo brilhante) apenas nos primeiros 60s
+          document.getElementById('chamada-txt').className = age < 60000 ? 'ativo' : '';
         }
       } else if(age >= 180000){
         var el = document.getElementById('chamada-txt');
@@ -576,17 +637,22 @@ function pollAPI(){
         }
       }
 
-      // Dispara overlay + voz apenas se chamada nova (< 30s) e não vista ainda
-      if(age < 30000 && data.timestamp > lastChamadaTS){
+      // ─── FIX janela: ampliada 30s → 60s para tolerar delays de rede ─
+      // Dispara overlay + voz se chamada nova e ainda "fresca"
+      if(age < 60000 && data.timestamp > lastChamadaTS){
         lastChamadaTS = data.timestamp;
-        // Salva em localStorage para manter barra inferior consistente
         try{ localStorage.setItem('fisiot_chamada', JSON.stringify(data)); }catch(x){}
-        console.log('[TV] API: nova chamada recebida', data);
+        console.log('[TV] 🔔 NOVA CHAMADA via API! age='+age+'ms ts='+data.timestamp, data);
         mostrarChamadaOverlay(data);
       }
     })
     .catch(function(e){
-      // Silencia erros de rede no console (poluem demais)
+      pollErros++;
+      // Loga os primeiros erros (não polui depois de 3 erros consecutivos)
+      if(pollErros <= 3){
+        console.warn('[TV] pollAPI erro #'+pollErros+':', e.message);
+        if(pollErros === 1) mostrarStatusAPI(false, '📡 ERRO');
+      }
     });
 }
 

@@ -432,22 +432,27 @@ function falar(msg,reps=5){
 function enviarParaTV(texto,ginasio,profissional,horario){
   const data = { texto, ginasio, profissional, horario, timestamp: Date.now() };
 
-  // ── 1. API PHP — cross-device (TV em outro aparelho) ──────
+  // ── 1. API PHP/Node — cross-device (TV em outro aparelho) ──────
   fetch('chamada-api.php', {
     method: 'POST',
     headers: {'Content-Type':'application/json'},
     body: JSON.stringify(data)
   })
-  .then(r => r.json())
+  .then(r => {
+    if(!r.ok) throw new Error('HTTP ' + r.status);
+    return r.json();
+  })
   .then(d => {
-    console.log('[Painel] ✅ Chamada enviada via API cross-device:', d);
+    // ─── FIX: checa d.ok — antes aprovava mesmo com {ok:false,error:'write_failed'} ───
+    if(d && d.ok === false) throw new Error(d.error || 'api_error');
+    console.log('[Painel] ✅ Chamada gravada no servidor (cross-device):', d);
     document.getElementById('api-status').textContent = '✅ Sync cross-device ativo — TV recebe em até 3 s';
     document.getElementById('api-status').style.color = '#4CAF50';
   })
   .catch(e => {
-    console.warn('[Painel] ⚠️ API não disponível (funcionando apenas no mesmo dispositivo):', e.message);
-    document.getElementById('api-status').textContent = '⚠️ Sync apenas mesmo dispositivo (chamada-api.php indisponível)';
-    document.getElementById('api-status').style.color = '#ff9900';
+    console.warn('[Painel] ⚠️ API falhou — chamada enviada apenas no mesmo dispositivo. Erro:', e.message);
+    document.getElementById('api-status').textContent = '⚠️ Sync apenas mesmo dispositivo — API retornou erro: ' + e.message;
+    document.getElementById('api-status').style.color = '#ff4444';
   });
 
   // ── 2. localStorage — mesmo browser/dispositivo ───────────

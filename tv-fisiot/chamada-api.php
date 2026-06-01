@@ -64,15 +64,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
 }
 
-// ── GET: retornar última chamada ─────────────────────────────
+// ── GET: retornar última chamada + server_ts para evitar clock-skew ──
+$serverTs = (int)(microtime(true) * 1000); // milissegundos, igual ao Date.now() do JS
+
 if (file_exists($dataFile)) {
     $json = @file_get_contents($dataFile);
     $data = $json ? json_decode($json, true) : null;
     if ($data && isset($data['timestamp'])) {
-        echo $json;
+        // Injeta server_ts sem alterar o arquivo
+        $data['server_ts'] = $serverTs;
+        echo json_encode($data, JSON_UNESCAPED_UNICODE);
     } else {
-        echo json_encode(['timestamp' => 0]);
+        echo json_encode(['timestamp' => 0, 'server_ts' => $serverTs]);
     }
 } else {
-    echo json_encode(['timestamp' => 0]);
+    echo json_encode(['timestamp' => 0, 'server_ts' => $serverTs]);
 }
