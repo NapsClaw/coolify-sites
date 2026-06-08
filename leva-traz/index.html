@@ -90,6 +90,10 @@ body{font-family:'Inter',sans-serif;background:#0a0005;color:#fff;min-height:100
 .btn-confirm{flex:2;background:linear-gradient(135deg,#CC0000,#8B0000);border:none;color:#fff;padding:14px;border-radius:12px;font-size:14px;font-weight:800;cursor:pointer}
 .empty-state{text-align:center;padding:40px 20px;color:rgba(255,255,255,0.3)}
 .empty-state .emoji{font-size:48px;display:block;margin-bottom:12px}
+.repeat-days{background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.25);border-radius:12px;padding:12px 14px;margin-bottom:16px;display:flex;align-items:flex-start;gap:10px}
+.repeat-days input{margin-top:3px;accent-color:#CC0000}
+.repeat-days label{font-size:13px;color:rgba(255,255,255,0.86);line-height:1.45;cursor:pointer}
+.repeat-days small{display:block;color:rgba(255,255,255,0.52);margin-top:3px}
 </style>
 </head>
 <body>
@@ -104,8 +108,8 @@ body{font-family:'Inter',sans-serif;background:#0a0005;color:#fff;min-height:100
 <div class="hero">
   <div class="hero-cover">
     <picture>
-      <source id="hero-mobile-source" media="(max-width: 680px)" srcset="capa-fisiot-leva-traz-mobile.jpg?v=20260608m"/>
-      <img id="hero-cover-img" src="capa-fisiot-leva-traz-desktop.jpg?v=20260608m" alt="Capa Leva &amp; Traz FISIOT com fachada da clínica e Chevrolet Spin identificado"/>
+      <source id="hero-mobile-source" media="(max-width: 680px)" srcset="capa-fisiot-leva-traz-mobile.jpg?v=20260608n"/>
+      <img id="hero-cover-img" src="capa-fisiot-leva-traz-desktop.jpg?v=20260608n" alt="Capa Leva &amp; Traz FISIOT com fachada da clínica e Chevrolet Spin identificado"/>
     </picture>
   </div>
 </div>
@@ -340,6 +344,12 @@ body{font-family:'Inter',sans-serif;background:#0a0005;color:#fff;min-height:100
       <label class="form-label">Telefone (WhatsApp)</label>
       <input class="form-input" type="tel" id="input-phone" placeholder="(31) 9XXXX-XXXX"/>
     </div>
+    <div class="repeat-days" id="repeat-days-box">
+      <input type="checkbox" id="repeat-mwf"/>
+      <label for="repeat-mwf">Cadastrar essa mesma pessoa na Segunda, Quarta e Sexta
+        <small>Usa o mesmo horário, endereço e telefone nos 3 dias.</small>
+      </label>
+    </div>
     <div class="confirm-card">
       <div class="confirm-row">
         <span class="confirm-label">Motorista</span>
@@ -399,6 +409,11 @@ function selectSlot(el,time){
 
 function openBooking(){
   if(!selectedTime){alert('Selecione um horário primeiro!');return;}
+  var box=document.getElementById('repeat-days-box');
+  var repeat=document.getElementById('repeat-mwf');
+  var isAgenda1=document.getElementById('tab-agenda1').classList.contains('active');
+  if(box){box.style.display=isAgenda1?'flex':'none';}
+  if(repeat&&!isAgenda1){repeat.checked=false;}
   document.getElementById('booking-modal').classList.add('show');
 }
 
@@ -444,17 +459,23 @@ function confirmBooking(){
   var addr=document.getElementById('input-address').value.trim();
   var phone=document.getElementById('input-phone').value.trim();
   if(!name||!addr||!phone){alert('Preencha todos os campos!');return;}
-  var booking={name:name,address:addr,phone:phone,time:selectedTime,day:(selectedDay||'a confirmar'),createdAt:new Date().toISOString()};
-  saveBookingLocal(booking);
+  var repeatMWF=document.getElementById('repeat-mwf') && document.getElementById('repeat-mwf').checked;
+  var days=repeatMWF?['Segunda','Quarta','Sexta']:[(selectedDay||'a confirmar')];
+  var createdAt=new Date().toISOString();
+  days.forEach(function(day){
+    saveBookingLocal({name:name,address:addr,phone:phone,time:selectedTime,day:day,createdAt:createdAt});
+  });
+  var dayText=repeatMWF?'Segunda, Quarta e Sexta':(selectedDay||'a confirmar');
   var msg='Olá! Quero agendar o Leva & Traz Fisiot.%0A%0A'+
     '👤 Nome: '+name+'%0A'+
     '📍 Endereço: '+addr+'%0A'+
     '📞 Telefone: '+phone+'%0A'+
     '🕐 Horário: '+selectedTime+'%0A'+
-    '📅 Dia: '+(selectedDay||'a confirmar')+'%0A'+
+    '📅 Dia: '+dayText+'%0A'+
     '🏥 Destino: Clínica Fisiot — Lagoa Santa MG';
   closeModal();
-  alert('✅ Agendamento salvo neste aparelho. Agora vou abrir o WhatsApp para enviar a confirmação.');
+  if(document.getElementById('repeat-mwf')){document.getElementById('repeat-mwf').checked=false;}
+  alert(repeatMWF?'✅ Agendamento salvo nos 3 dias: Segunda, Quarta e Sexta. Agora vou abrir o WhatsApp para enviar a confirmação.':'✅ Agendamento salvo neste aparelho. Agora vou abrir o WhatsApp para enviar a confirmação.');
   window.open('https://wa.me/553192594953?text='+msg,'_blank');
 }
 
@@ -471,8 +492,8 @@ function playAudio(){
 
 var heroCoverIndex=0;
 var heroCovers=[
-  {desktop:'capa-fisiot-leva-traz-desktop.jpg?v=20260608m',mobile:'capa-fisiot-leva-traz-mobile.jpg?v=20260608m'},
-  {desktop:'capa-fisiot-leva-traz-2-desktop.jpg?v=20260608m',mobile:'capa-fisiot-leva-traz-2-mobile.jpg?v=20260608m'}
+  {desktop:'capa-fisiot-leva-traz-desktop.jpg?v=20260608n',mobile:'capa-fisiot-leva-traz-mobile.jpg?v=20260608n'},
+  {desktop:'capa-fisiot-leva-traz-2-desktop.jpg?v=20260608n',mobile:'capa-fisiot-leva-traz-2-mobile.jpg?v=20260608n'}
 ];
 function setHeroCover(index){
   var img=document.getElementById('hero-cover-img');
@@ -516,7 +537,7 @@ renderSavedBookings();
 <script>
 // Service Worker
 if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('/sw.js?v=20260608m').then(function(reg){ if(reg.update) reg.update(); }).catch(function(){});
+  navigator.serviceWorker.register('/sw.js?v=20260608n').then(function(reg){ if(reg.update) reg.update(); }).catch(function(){});
 }
 
 // PWA Install Prompt
