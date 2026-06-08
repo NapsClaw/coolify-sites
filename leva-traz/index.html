@@ -80,6 +80,11 @@ body{font-family:'Inter',sans-serif;background:#0a0005;color:#fff;min-height:100
 /* Notif */
 .notif{background:rgba(34,197,94,0.15);border:1px solid rgba(34,197,94,0.3);border-radius:12px;padding:14px;margin-bottom:16px;display:flex;align-items:center;gap:10px;display:none}
 .notif.show{display:flex}
+.schedule-notice{display:none;margin:14px 20px 0;background:linear-gradient(135deg,rgba(34,197,94,0.18),rgba(204,0,0,0.12));border:1px solid rgba(34,197,94,0.35);border-radius:16px;padding:14px;align-items:center;gap:12px;box-shadow:0 6px 22px rgba(0,0,0,0.28)}
+.schedule-notice.show{display:flex}
+.schedule-notice .notice-icon{font-size:28px;flex-shrink:0}
+.schedule-notice .notice-title{font-size:13px;font-weight:900;color:#22c55e;margin-bottom:3px;text-transform:uppercase;letter-spacing:.5px}
+.schedule-notice .notice-msg{font-size:13px;color:rgba(255,255,255,.9);line-height:1.45}
 .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:200;align-items:flex-end}
 .modal.show{display:flex}
 .modal-content{background:#1a0005;border-radius:20px 20px 0 0;padding:24px;width:100%;border-top:2px solid #CC0000}
@@ -108,8 +113,8 @@ body{font-family:'Inter',sans-serif;background:#0a0005;color:#fff;min-height:100
 <div class="hero">
   <div class="hero-cover">
     <picture>
-      <source id="hero-mobile-source" media="(max-width: 680px)" srcset="capa-fisiot-leva-traz-mobile.jpg?v=20260608p"/>
-      <img id="hero-cover-img" src="capa-fisiot-leva-traz-desktop.jpg?v=20260608p" alt="Capa Leva &amp; Traz FISIOT com fachada da clínica e Chevrolet Spin identificado"/>
+      <source id="hero-mobile-source" media="(max-width: 680px)" srcset="capa-fisiot-leva-traz-mobile.jpg?v=20260608q"/>
+      <img id="hero-cover-img" src="capa-fisiot-leva-traz-desktop.jpg?v=20260608q" alt="Capa Leva &amp; Traz FISIOT com fachada da clínica e Chevrolet Spin identificado"/>
     </picture>
   </div>
 </div>
@@ -120,6 +125,14 @@ body{font-family:'Inter',sans-serif;background:#0a0005;color:#fff;min-height:100
   <div class="tab" onclick="switchTab('agenda2')">📅 Ter/Qui</div>
   <div class="tab" onclick="switchTab('agenda3')">⭐ Extra</div>
   <div class="tab" onclick="switchTab('rastrear')">📍 GPS</div>
+</div>
+
+<div class="schedule-notice" id="fixed-booking-alert">
+  <div class="notice-icon">🚗</div>
+  <div>
+    <div class="notice-title">Comunicado automático</div>
+    <div class="notice-msg" id="fixed-booking-message">Dona Dirce, o Leva &amp; Traz já está a caminho da sua casa.</div>
+  </div>
 </div>
 
 <!-- Aba 1: Seg/Qua/Sex -->
@@ -499,10 +512,52 @@ function playAudio(){
   }
 }
 
+function speakMessage(text){
+  if('speechSynthesis' in window){
+    try{
+      var u=new SpeechSynthesisUtterance(text);
+      u.lang='pt-BR';u.rate=0.92;window.speechSynthesis.speak(u);
+    }catch(e){}
+  }
+}
+
+function showFixedBookingNotice(text, dateKey){
+  var alertBox=document.getElementById('fixed-booking-alert');
+  var msg=document.getElementById('fixed-booking-message');
+  if(msg){msg.textContent=text;}
+  if(alertBox){alertBox.classList.add('show');}
+  if(dateKey){try{localStorage.setItem('fixedBookingNotice-'+dateKey,'1')}catch(e){}}
+  speakMessage(text);
+}
+
+function checkFixedBookingNotices(now, force){
+  now=now||new Date();
+  var day=now.getDay();
+  var hour=now.getHours();
+  var minute=now.getMinutes();
+  var isDonaDirceDay=(day===1||day===3||day===5);
+  var isTimeWindow=(hour===8&&minute>=0&&minute<=10);
+  var yyyy=now.getFullYear();
+  var mm=String(now.getMonth()+1).padStart(2,'0');
+  var dd=String(now.getDate()).padStart(2,'0');
+  var key='dona-dirce-0800-'+yyyy+'-'+mm+'-'+dd;
+  var already=false;
+  try{already=localStorage.getItem('fixedBookingNotice-'+key)==='1';}catch(e){}
+  if((force||(isDonaDirceDay&&isTimeWindow))&&!already){
+    showFixedBookingNotice('Dona Dirce, o Leva & Traz já está a caminho da sua casa.', key);
+    return true;
+  }
+  return false;
+}
+window.checkFixedBookingNotices=checkFixedBookingNotices;
+window.showFixedBookingNotice=showFixedBookingNotice;
+setInterval(function(){checkFixedBookingNotices();},30000);
+setTimeout(function(){checkFixedBookingNotices();},1200);
+
 var heroCoverIndex=0;
 var heroCovers=[
-  {desktop:'capa-fisiot-leva-traz-desktop.jpg?v=20260608p',mobile:'capa-fisiot-leva-traz-mobile.jpg?v=20260608p'},
-  {desktop:'capa-fisiot-leva-traz-2-desktop.jpg?v=20260608p',mobile:'capa-fisiot-leva-traz-2-mobile.jpg?v=20260608p'}
+  {desktop:'capa-fisiot-leva-traz-desktop.jpg?v=20260608q',mobile:'capa-fisiot-leva-traz-mobile.jpg?v=20260608q'},
+  {desktop:'capa-fisiot-leva-traz-2-desktop.jpg?v=20260608q',mobile:'capa-fisiot-leva-traz-2-mobile.jpg?v=20260608q'}
 ];
 function setHeroCover(index){
   var img=document.getElementById('hero-cover-img');
@@ -546,7 +601,7 @@ renderSavedBookings();
 <script>
 // Service Worker
 if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('/sw.js?v=20260608p').then(function(reg){ if(reg.update) reg.update(); }).catch(function(){});
+  navigator.serviceWorker.register('/sw.js?v=20260608q').then(function(reg){ if(reg.update) reg.update(); }).catch(function(){});
 }
 
 // PWA Install Prompt
