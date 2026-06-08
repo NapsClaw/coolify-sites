@@ -363,6 +363,12 @@ function switchTab(tab){
   });
   document.querySelectorAll('.tab-content').forEach(function(c){c.classList.remove('active')});
   document.getElementById('tab-'+tab).classList.add('active');
+  if(tab==='agenda1' || tab==='agenda2'){
+    selectedTime=null;
+    document.getElementById('confirm-time').textContent='—';
+    document.querySelectorAll('.time-slots .slot').forEach(function(s){s.classList.remove('selected');var st=s.querySelector('.slot-status');if(st&&!s.classList.contains('taken'))st.textContent='Disponível'});
+    document.querySelectorAll('.book-btn').forEach(function(b){b.disabled=true;b.textContent='Selecione um horário'});
+  }
 }
 
 function selectDay(code,name){
@@ -377,7 +383,8 @@ function selectSlot(el,time){
   var st=el.querySelector('.slot-status');if(st)st.textContent='Selecionado ✓';
   selectedTime=time;
   document.getElementById('confirm-time').textContent=time;
-  var btn=document.getElementById('btn-book1');
+  var activeTab=el.closest('.tab-content');
+  var btn=activeTab ? activeTab.querySelector('.book-btn') : document.querySelector('.book-btn');
   if(btn){btn.disabled=false;btn.textContent='Agendar às '+time}
 }
 
@@ -438,7 +445,7 @@ setTimeout(function(){
 <script>
 // Service Worker
 if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('/sw.js?v=20260608f').then(function(reg){ if(reg.update) reg.update(); }).catch(function(){});
+  navigator.serviceWorker.register('/sw.js?v=20260608g').then(function(reg){ if(reg.update) reg.update(); }).catch(function(){});
 }
 
 // PWA Install Prompt
