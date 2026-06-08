@@ -40,8 +40,10 @@ body{font-family:'Inter',sans-serif;background:#0a0005;color:#fff;min-height:100
 .slot{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:10px 6px;text-align:center;cursor:pointer;transition:all 0.2s}
 .slot:hover,.slot.selected{background:rgba(204,0,0,0.3);border-color:#CC0000}
 .slot.taken{background:rgba(255,255,255,0.02);border-color:rgba(255,255,255,0.05);cursor:not-allowed;opacity:0.4}
+.slot.fixed-reserved{background:rgba(204,0,0,0.16);border-color:rgba(255,215,0,0.32);opacity:1}
 .slot-time{font-size:14px;font-weight:700;color:#fff}
 .slot-status{font-size:10px;color:rgba(255,255,255,0.5);margin-top:2px}
+.slot.fixed-reserved .slot-status{color:#FFD700;font-weight:800;font-size:10px;line-height:1.15;display:block;max-width:100%;white-space:normal;overflow:hidden;text-overflow:ellipsis}
 .slot.selected .slot-status{color:#CC0000}
 .book-btn{width:100%;background:linear-gradient(135deg,#CC0000,#8B0000);color:#fff;border:none;padding:16px;border-radius:14px;font-size:16px;font-weight:800;cursor:pointer;margin-top:20px;letter-spacing:0.5px}
 .book-btn:disabled{opacity:0.5;cursor:not-allowed}
@@ -120,8 +122,8 @@ body{font-family:'Inter',sans-serif;background:#0a0005;color:#fff;min-height:100
 <div class="hero">
   <div class="hero-cover">
     <picture>
-      <source id="hero-mobile-source" media="(max-width: 680px)" srcset="capa-fisiot-leva-traz-mobile.jpg?v=20260608s"/>
-      <img id="hero-cover-img" src="capa-fisiot-leva-traz-desktop.jpg?v=20260608s" alt="Capa Leva &amp; Traz FISIOT com fachada da clínica e Chevrolet Spin identificado"/>
+      <source id="hero-mobile-source" media="(max-width: 680px)" srcset="capa-fisiot-leva-traz-mobile.jpg?v=20260608t"/>
+      <img id="hero-cover-img" src="capa-fisiot-leva-traz-desktop.jpg?v=20260608t" alt="Capa Leva &amp; Traz FISIOT com fachada da clínica e Chevrolet Spin identificado"/>
     </picture>
   </div>
 </div>
@@ -164,7 +166,7 @@ body{font-family:'Inter',sans-serif;background:#0a0005;color:#fff;min-height:100
     <div class="time-slots" id="slots1">
       <div class="slot" onclick="selectSlot(this,'07:00')"><div class="slot-time">07:00</div><div class="slot-status">Disponível</div></div>
       <div class="slot" onclick="selectSlot(this,'07:30')"><div class="slot-time">07:30</div><div class="slot-status">Disponível</div></div>
-      <div class="slot taken" data-fixed-booking="dona-dirce-mwf" title="Dona Dirce"><div class="slot-time">08:00</div><div class="slot-status">Reservado</div></div>
+      <div class="slot taken fixed-reserved" data-fixed-booking="dona-dirce-mwf" title="Dona Dirce" aria-label="08:00 reservado para Dona Dirce"><div class="slot-time">08:00</div><div class="slot-status">Dona Dirce</div></div>
       <div class="slot" onclick="selectSlot(this,'08:30')"><div class="slot-time">08:30</div><div class="slot-status">Disponível</div></div>
       <div class="slot" onclick="selectSlot(this,'09:00')"><div class="slot-time">09:00</div><div class="slot-status">Disponível</div></div>
       <div class="slot" onclick="selectSlot(this,'09:30')"><div class="slot-time">09:30</div><div class="slot-status">Disponível</div></div>
@@ -523,6 +525,7 @@ function applyFixedReservations(){
     if(slot.getAttribute('data-fixed-booking')){return;}
     if(slot.getAttribute('data-base-taken')==='1'){return;}
     slot.classList.remove('taken');
+    slot.classList.remove('fixed-reserved');
     slot.removeAttribute('title');
     var st=slot.querySelector('.slot-status');
     if(st&&!slot.classList.contains('selected'))st.textContent='Disponível';
@@ -534,11 +537,12 @@ function applyFixedReservations(){
     var match=fixed.find(function(b){return b.time===time});
     if(match){
       slot.classList.add('taken');
+      slot.classList.add('fixed-reserved');
       slot.setAttribute('title', match.name);
       slot.setAttribute('aria-label', time + ' reservado para ' + match.name);
       slot.removeAttribute('onclick');
       var st=slot.querySelector('.slot-status');
-      if(st)st.textContent='Reservado';
+      if(st)st.textContent=match.name;
     }
   });
 }
@@ -659,8 +663,8 @@ setTimeout(function(){checkFixedBookingNotices();},1200);
 
 var heroCoverIndex=0;
 var heroCovers=[
-  {desktop:'capa-fisiot-leva-traz-desktop.jpg?v=20260608s',mobile:'capa-fisiot-leva-traz-mobile.jpg?v=20260608s'},
-  {desktop:'capa-fisiot-leva-traz-2-desktop.jpg?v=20260608s',mobile:'capa-fisiot-leva-traz-2-mobile.jpg?v=20260608s'}
+  {desktop:'capa-fisiot-leva-traz-desktop.jpg?v=20260608t',mobile:'capa-fisiot-leva-traz-mobile.jpg?v=20260608t'},
+  {desktop:'capa-fisiot-leva-traz-2-desktop.jpg?v=20260608t',mobile:'capa-fisiot-leva-traz-2-mobile.jpg?v=20260608t'}
 ];
 function setHeroCover(index){
   var img=document.getElementById('hero-cover-img');
@@ -705,7 +709,7 @@ applyFixedReservations();
 <script>
 // Service Worker
 if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('/sw.js?v=20260608s').then(function(reg){ if(reg.update) reg.update(); }).catch(function(){});
+  navigator.serviceWorker.register('/sw.js?v=20260608t').then(function(reg){ if(reg.update) reg.update(); }).catch(function(){});
 }
 
 // PWA Install Prompt
