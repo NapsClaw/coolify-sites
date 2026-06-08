@@ -22,7 +22,8 @@ body{font-family:'Inter',sans-serif;background:#0a0005;color:#fff;min-height:100
 .hero{background:#0a0005;padding:0;text-align:center;border-bottom:1px solid rgba(204,0,0,0.2);overflow:hidden}
 .hero-cover{width:100%;display:block;background:#120005}
 .hero-cover picture{display:block}
-.hero-cover img{width:100%;height:auto;display:block}
+.hero-cover img{width:100%;height:auto;display:block;transition:opacity .6s ease}
+.hero-cover img.hero-fading{opacity:.08}
 .tabs{display:flex;background:rgba(255,255,255,0.05);border-bottom:1px solid rgba(204,0,0,0.2);overflow-x:auto}
 .tab{flex:1;min-width:100px;padding:14px 8px;text-align:center;font-size:12px;font-weight:700;color:rgba(255,255,255,0.5);cursor:pointer;border-bottom:3px solid transparent;transition:all 0.2s;white-space:nowrap}
 .tab.active{color:#CC0000;border-bottom-color:#CC0000;background:rgba(204,0,0,0.08)}
@@ -103,8 +104,8 @@ body{font-family:'Inter',sans-serif;background:#0a0005;color:#fff;min-height:100
 <div class="hero">
   <div class="hero-cover">
     <picture>
-      <source media="(max-width: 680px)" srcset="capa-fisiot-leva-traz-mobile.jpg?v=20260608l"/>
-      <img src="capa-fisiot-leva-traz-desktop.jpg?v=20260608l" alt="Capa Leva &amp; Traz FISIOT com fachada da clínica e Chevrolet Spin identificado"/>
+      <source id="hero-mobile-source" media="(max-width: 680px)" srcset="capa-fisiot-leva-traz-mobile.jpg?v=20260608m"/>
+      <img id="hero-cover-img" src="capa-fisiot-leva-traz-desktop.jpg?v=20260608m" alt="Capa Leva &amp; Traz FISIOT com fachada da clínica e Chevrolet Spin identificado"/>
     </picture>
   </div>
 </div>
@@ -468,6 +469,29 @@ function playAudio(){
   }
 }
 
+var heroCoverIndex=0;
+var heroCovers=[
+  {desktop:'capa-fisiot-leva-traz-desktop.jpg?v=20260608m',mobile:'capa-fisiot-leva-traz-mobile.jpg?v=20260608m'},
+  {desktop:'capa-fisiot-leva-traz-2-desktop.jpg?v=20260608m',mobile:'capa-fisiot-leva-traz-2-mobile.jpg?v=20260608m'}
+];
+function setHeroCover(index){
+  var img=document.getElementById('hero-cover-img');
+  var source=document.getElementById('hero-mobile-source');
+  if(!img||!source)return;
+  heroCoverIndex=index%heroCovers.length;
+  var next=heroCovers[heroCoverIndex];
+  img.classList.add('hero-fading');
+  setTimeout(function(){
+    source.srcset=next.mobile;
+    img.src=next.desktop;
+    img.classList.remove('hero-fading');
+  },350);
+}
+function rotateHeroCover(){setHeroCover(heroCoverIndex+1)}
+window.rotateHeroCover=rotateHeroCover;
+setInterval(rotateHeroCover,5*60*1000);
+heroCovers.forEach(function(c){var d=new Image();d.src=c.desktop;var m=new Image();m.src=c.mobile;});
+
 // Simular notificação de chegada após 3s
 setTimeout(function(){
   var notif=document.getElementById('arrival-notif');
@@ -492,7 +516,7 @@ renderSavedBookings();
 <script>
 // Service Worker
 if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('/sw.js?v=20260608h').then(function(reg){ if(reg.update) reg.update(); }).catch(function(){});
+  navigator.serviceWorker.register('/sw.js?v=20260608m').then(function(reg){ if(reg.update) reg.update(); }).catch(function(){});
 }
 
 // PWA Install Prompt
