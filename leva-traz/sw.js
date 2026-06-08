@@ -1,5 +1,5 @@
-const CACHE_NAME = 'leva-traz-v1';
-const urlsToCache = ['/', '/index.html', '/manifest.json'];
+const CACHE_NAME = 'leva-traz-v20260608c';
+const urlsToCache = ['/manifest.json'];
 
 self.addEventListener('install', function(e) {
   e.waitUntil(caches.open(CACHE_NAME).then(function(c) { return c.addAll(urlsToCache); }));
@@ -7,8 +7,13 @@ self.addEventListener('install', function(e) {
 });
 
 self.addEventListener('fetch', function(e) {
-  e.respondWith(caches.match(e.request).then(function(r) {
-    return r || fetch(e.request).catch(function() { return caches.match('/index.html'); });
+  // Sempre tenta buscar a versão nova primeiro. Evita página/capa antiga presa no celular.
+  e.respondWith(fetch(e.request).then(function(response) {
+    return response;
+  }).catch(function() {
+    return caches.match(e.request).then(function(r) {
+      return r || caches.match('/manifest.json');
+    });
   }));
 });
 
