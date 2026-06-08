@@ -85,6 +85,13 @@ body{font-family:'Inter',sans-serif;background:#0a0005;color:#fff;min-height:100
 .schedule-notice .notice-icon{font-size:28px;flex-shrink:0}
 .schedule-notice .notice-title{font-size:13px;font-weight:900;color:#22c55e;margin-bottom:3px;text-transform:uppercase;letter-spacing:.5px}
 .schedule-notice .notice-msg{font-size:13px;color:rgba(255,255,255,.9);line-height:1.45}
+.fixed-manager{background:rgba(255,255,255,0.04);border:1px solid rgba(255,215,0,0.18);border-radius:14px;padding:14px;margin:0 20px 18px}
+.fixed-manager-title{font-size:12px;font-weight:900;color:#FFD700;margin-bottom:10px;text-transform:uppercase;letter-spacing:.6px}
+.fixed-grid{display:grid;grid-template-columns:1fr 120px;gap:8px;margin-bottom:8px}
+.fixed-days{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 12px}
+.fixed-days label{font-size:12px;color:rgba(255,255,255,.82);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:8px 10px}
+.fixed-save-btn{width:100%;background:linear-gradient(135deg,#FFD700,#cc9a00);color:#260000;border:none;padding:12px;border-radius:12px;font-size:13px;font-weight:900;cursor:pointer}
+.fixed-hint{font-size:11px;color:rgba(255,255,255,.5);line-height:1.45;margin-top:8px}
 .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:200;align-items:flex-end}
 .modal.show{display:flex}
 .modal-content{background:#1a0005;border-radius:20px 20px 0 0;padding:24px;width:100%;border-top:2px solid #CC0000}
@@ -113,8 +120,8 @@ body{font-family:'Inter',sans-serif;background:#0a0005;color:#fff;min-height:100
 <div class="hero">
   <div class="hero-cover">
     <picture>
-      <source id="hero-mobile-source" media="(max-width: 680px)" srcset="capa-fisiot-leva-traz-mobile.jpg?v=20260608q"/>
-      <img id="hero-cover-img" src="capa-fisiot-leva-traz-desktop.jpg?v=20260608q" alt="Capa Leva &amp; Traz FISIOT com fachada da clínica e Chevrolet Spin identificado"/>
+      <source id="hero-mobile-source" media="(max-width: 680px)" srcset="capa-fisiot-leva-traz-mobile.jpg?v=20260608s"/>
+      <img id="hero-cover-img" src="capa-fisiot-leva-traz-desktop.jpg?v=20260608s" alt="Capa Leva &amp; Traz FISIOT com fachada da clínica e Chevrolet Spin identificado"/>
     </picture>
   </div>
 </div>
@@ -164,7 +171,7 @@ body{font-family:'Inter',sans-serif;background:#0a0005;color:#fff;min-height:100
       <div class="slot" onclick="selectSlot(this,'10:00')"><div class="slot-time">10:00</div><div class="slot-status">Disponível</div></div>
       <div class="slot" onclick="selectSlot(this,'10:30')"><div class="slot-time">10:30</div><div class="slot-status">Disponível</div></div>
       <div class="slot" onclick="selectSlot(this,'11:00')"><div class="slot-time">11:00</div><div class="slot-status">Disponível</div></div>
-      <div class="slot taken"><div class="slot-time">11:30</div><div class="slot-status">Ocupado</div></div>
+      <div class="slot taken" data-base-taken="1"><div class="slot-time">11:30</div><div class="slot-status">Ocupado</div></div>
       <div class="slot" onclick="selectSlot(this,'13:00')"><div class="slot-time">13:00</div><div class="slot-status">Disponível</div></div>
       <div class="slot" onclick="selectSlot(this,'13:30')"><div class="slot-time">13:30</div><div class="slot-status">Disponível</div></div>
       <div class="slot" onclick="selectSlot(this,'14:00')"><div class="slot-time">14:00</div><div class="slot-status">Disponível</div></div>
@@ -216,6 +223,29 @@ body{font-family:'Inter',sans-serif;background:#0a0005;color:#fff;min-height:100
   <div style="font-size:12px;font-weight:800;color:#FFD700;margin-bottom:8px">📌 Agendamentos fixos e salvos</div>
   <div id="saved-bookings-list" style="display:flex;flex-direction:column;gap:8px"></div>
   <button onclick="clearSavedBookings()" style="margin-top:10px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.14);color:#fff;padding:10px 14px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer">Limpar lista salva</button>
+</div>
+
+<div class="fixed-manager" id="fixed-manager">
+  <div class="fixed-manager-title">➕ Salvar outro paciente fixo</div>
+  <div class="fixed-grid">
+    <input class="form-input" type="text" id="fixed-name" placeholder="Nome do paciente"/>
+    <select class="form-input" id="fixed-time">
+      <option value="07:00">07:00</option><option value="07:30">07:30</option><option value="08:00">08:00</option><option value="08:30">08:30</option>
+      <option value="09:00">09:00</option><option value="09:30">09:30</option><option value="10:00">10:00</option><option value="10:30">10:30</option>
+      <option value="11:00">11:00</option><option value="11:30">11:30</option><option value="13:00">13:00</option><option value="13:30">13:30</option>
+      <option value="14:00">14:00</option><option value="14:30">14:30</option><option value="15:00">15:00</option><option value="15:30">15:30</option>
+      <option value="16:00">16:00</option><option value="16:30">16:30</option>
+    </select>
+  </div>
+  <div class="fixed-days">
+    <label><input type="checkbox" class="fixed-day" value="Segunda"/> Seg</label>
+    <label><input type="checkbox" class="fixed-day" value="Quarta"/> Qua</label>
+    <label><input type="checkbox" class="fixed-day" value="Sexta"/> Sex</label>
+    <label><input type="checkbox" class="fixed-day" value="Terça"/> Ter</label>
+    <label><input type="checkbox" class="fixed-day" value="Quinta"/> Qui</label>
+  </div>
+  <button class="fixed-save-btn" onclick="saveFixedPatient()">Salvar paciente fixo e reservar horário</button>
+  <div class="fixed-hint">Ao salvar, o horário fica como Reservado nos dias escolhidos neste aparelho.</div>
 </div>
 
 <!-- Aba 3: Extra -->
@@ -400,13 +430,17 @@ function switchTab(tab){
     document.getElementById('confirm-time').textContent='—';
     document.querySelectorAll('.time-slots .slot').forEach(function(s){s.classList.remove('selected');var st=s.querySelector('.slot-status');if(st&&!s.classList.contains('taken'))st.textContent='Disponível'});
     document.querySelectorAll('.book-btn').forEach(function(b){b.disabled=true;b.textContent='Selecione um horário'});
+    applyFixedReservations();
   }
 }
+
 
 function selectDay(code,name){
   selectedDay=name;
   document.querySelectorAll('#tab-agenda1 .day-badge, #tab-agenda2 .day-badge').forEach(function(b){b.textContent=name+'-feira selecionada'});
+  applyFixedReservations();
 }
+
 
 function selectSlot(el,time){
   if(el.classList.contains('taken')) return;
@@ -432,12 +466,81 @@ function openBooking(){
 
 function closeModal(){document.getElementById('booking-modal').classList.remove('show');}
 
-function getFixedBookings(){
+function getDefaultFixedBookings(){
   return [
     {name:'Dona Dirce',address:'Paciente fixa',phone:'—',time:'08:00',day:'Segunda',fixed:true},
     {name:'Dona Dirce',address:'Paciente fixa',phone:'—',time:'08:00',day:'Quarta',fixed:true},
-    {name:'Dona Dirce',address:'Paciente fixa',phone:'—',time:'08:00',day:'Sexta',fixed:true}
+    {name:'Dona Dirce',address:'Paciente fixa',phone:'—',time:'08:00',day:'Sexta',fixed:true},
+    {name:'José Gomes da Silva',address:'Paciente fixo',phone:'—',time:'15:30',day:'Segunda',fixed:true},
+    {name:'José Gomes da Silva',address:'Paciente fixo',phone:'—',time:'15:30',day:'Quarta',fixed:true},
+    {name:'José Gomes da Silva',address:'Paciente fixo',phone:'—',time:'15:30',day:'Sexta',fixed:true}
   ];
+}
+
+function getCustomFixedBookings(){
+  try{return JSON.parse(localStorage.getItem('levaTrazFixedBookings')||'[]')}catch(e){return []}
+}
+
+function setCustomFixedBookings(items){
+  localStorage.setItem('levaTrazFixedBookings', JSON.stringify(items.slice(0,80)));
+}
+
+function getFixedBookings(){
+  return getDefaultFixedBookings().concat(getCustomFixedBookings());
+}
+
+function saveFixedPatient(){
+  var name=(document.getElementById('fixed-name')&&document.getElementById('fixed-name').value.trim())||'';
+  var time=(document.getElementById('fixed-time')&&document.getElementById('fixed-time').value)||'08:00';
+  var days=Array.from(document.querySelectorAll('.fixed-day:checked')).map(function(i){return i.value});
+  if(!name){alert('Digite o nome do paciente.');return;}
+  if(!days.length){alert('Escolha pelo menos um dia.');return;}
+  var current=getCustomFixedBookings();
+  days.forEach(function(day){
+    current=current.filter(function(b){return !(b.day===day&&b.time===time)});
+    current.push({name:name,address:'Paciente fixo',phone:'—',time:time,day:day,fixed:true,custom:true,createdAt:new Date().toISOString()});
+  });
+  setCustomFixedBookings(current);
+  document.getElementById('fixed-name').value='';
+  document.querySelectorAll('.fixed-day').forEach(function(i){i.checked=false});
+  renderSavedBookings();
+  applyFixedReservations();
+  alert('✅ Paciente salvo e horário reservado nos dias escolhidos.');
+}
+
+function fixedBookingsForVisibleSchedule(){
+  var active=document.querySelector('#tab-agenda1.active,#tab-agenda2.active');
+  if(!active)return [];
+  var days=[];
+  if(selectedDay){days=[selectedDay];}
+  else if(active.id==='tab-agenda1'){days=['Segunda','Quarta','Sexta'];}
+  else if(active.id==='tab-agenda2'){days=['Terça','Quinta'];}
+  return getFixedBookings().filter(function(b){return days.indexOf(b.day)>=0});
+}
+
+function applyFixedReservations(){
+  document.querySelectorAll('.time-slots .slot').forEach(function(slot){
+    if(slot.getAttribute('data-fixed-booking')){return;}
+    if(slot.getAttribute('data-base-taken')==='1'){return;}
+    slot.classList.remove('taken');
+    slot.removeAttribute('title');
+    var st=slot.querySelector('.slot-status');
+    if(st&&!slot.classList.contains('selected'))st.textContent='Disponível';
+    if(!slot.getAttribute('onclick')){slot.setAttribute('onclick',"selectSlot(this,'"+(slot.querySelector('.slot-time')?slot.querySelector('.slot-time').textContent:'')+"')");}
+  });
+  var fixed=fixedBookingsForVisibleSchedule();
+  document.querySelectorAll('.time-slots .slot').forEach(function(slot){
+    var time=slot.querySelector('.slot-time')?slot.querySelector('.slot-time').textContent.trim():'';
+    var match=fixed.find(function(b){return b.time===time});
+    if(match){
+      slot.classList.add('taken');
+      slot.setAttribute('title', match.name);
+      slot.setAttribute('aria-label', time + ' reservado para ' + match.name);
+      slot.removeAttribute('onclick');
+      var st=slot.querySelector('.slot-status');
+      if(st)st.textContent='Reservado';
+    }
+  });
 }
 
 function getSavedBookings(){
@@ -556,8 +659,8 @@ setTimeout(function(){checkFixedBookingNotices();},1200);
 
 var heroCoverIndex=0;
 var heroCovers=[
-  {desktop:'capa-fisiot-leva-traz-desktop.jpg?v=20260608q',mobile:'capa-fisiot-leva-traz-mobile.jpg?v=20260608q'},
-  {desktop:'capa-fisiot-leva-traz-2-desktop.jpg?v=20260608q',mobile:'capa-fisiot-leva-traz-2-mobile.jpg?v=20260608q'}
+  {desktop:'capa-fisiot-leva-traz-desktop.jpg?v=20260608s',mobile:'capa-fisiot-leva-traz-mobile.jpg?v=20260608s'},
+  {desktop:'capa-fisiot-leva-traz-2-desktop.jpg?v=20260608s',mobile:'capa-fisiot-leva-traz-2-mobile.jpg?v=20260608s'}
 ];
 function setHeroCover(index){
   var img=document.getElementById('hero-cover-img');
@@ -583,6 +686,7 @@ setTimeout(function(){
   if(notif){notif.classList.add('show')}
 },3000);
 renderSavedBookings();
+applyFixedReservations();
 </script>
 
 <!-- PWA Install Banner -->
@@ -601,7 +705,7 @@ renderSavedBookings();
 <script>
 // Service Worker
 if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('/sw.js?v=20260608q').then(function(reg){ if(reg.update) reg.update(); }).catch(function(){});
+  navigator.serviceWorker.register('/sw.js?v=20260608s').then(function(reg){ if(reg.update) reg.update(); }).catch(function(){});
 }
 
 // PWA Install Prompt
