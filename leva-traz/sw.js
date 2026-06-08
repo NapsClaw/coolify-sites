@@ -1,4 +1,4 @@
-const CACHE_NAME = 'leva-traz-v20260608i';
+const CACHE_NAME = 'leva-traz-v20260608j';
 const urlsToCache = ['/manifest.json'];
 
 self.addEventListener('install', function(e) {
