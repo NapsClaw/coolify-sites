@@ -193,6 +193,12 @@ body{font-family:'Inter',sans-serif;background:#0a0005;color:#fff;min-height:100
   <button class="book-btn" onclick="openBooking()">Selecione um horário</button>
 </div>
 
+<div id="saved-bookings-card" style="display:none;background:rgba(255,255,255,0.04);border:1px solid rgba(34,197,94,0.22);border-radius:14px;padding:14px;margin:0 20px 18px">
+  <div style="font-size:12px;font-weight:800;color:#FFD700;margin-bottom:8px">📌 Agendamentos salvos neste aparelho</div>
+  <div id="saved-bookings-list" style="display:flex;flex-direction:column;gap:8px"></div>
+  <button onclick="clearSavedBookings()" style="margin-top:10px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.14);color:#fff;padding:10px 14px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer">Limpar lista salva</button>
+</div>
+
 <!-- Aba 3: Extra -->
 <div class="tab-content" id="tab-agenda3">
   <div class="section-title">Agenda Extra</div>
@@ -363,6 +369,7 @@ function switchTab(tab){
   });
   document.querySelectorAll('.tab-content').forEach(function(c){c.classList.remove('active')});
   document.getElementById('tab-'+tab).classList.add('active');
+  renderSavedBookings();
   if(tab==='agenda1' || tab==='agenda2'){
     selectedTime=null;
     document.getElementById('confirm-time').textContent='—';
@@ -395,11 +402,48 @@ function openBooking(){
 
 function closeModal(){document.getElementById('booking-modal').classList.remove('show');}
 
+function getSavedBookings(){
+  try{return JSON.parse(localStorage.getItem('levaTrazBookings')||'[]')}catch(e){return []}
+}
+
+function saveBookingLocal(booking){
+  var bookings=getSavedBookings();
+  bookings.unshift(booking);
+  localStorage.setItem('levaTrazBookings', JSON.stringify(bookings.slice(0,20)));
+  renderSavedBookings();
+}
+
+function renderSavedBookings(){
+  var card=document.getElementById('saved-bookings-card');
+  var list=document.getElementById('saved-bookings-list');
+  if(!card||!list)return;
+  var bookings=getSavedBookings();
+  card.style.display=(document.querySelector('#tab-agenda1.active,#tab-agenda2.active')||bookings.length)?'block':'none';
+  if(!bookings.length){
+    list.innerHTML='<div style="font-size:12px;color:rgba(255,255,255,0.55);line-height:1.5">Nenhum agendamento salvo ainda. Ao confirmar, ele fica registrado aqui neste aparelho.</div>';
+    return;
+  }
+  list.innerHTML=bookings.map(function(b){return '<div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:10px;font-size:12px;line-height:1.5"><strong style="color:#fff">'+escapeHtml(b.name)+'</strong><br/><span style="color:rgba(255,255,255,0.75)">'+escapeHtml(b.day)+' • '+escapeHtml(b.time)+' • '+escapeHtml(b.phone)+'</span><br/><span style="color:rgba(255,255,255,0.5)">'+escapeHtml(b.address)+'</span></div>'}).join('');
+}
+
+function clearSavedBookings(){
+  if(confirm('Limpar os agendamentos salvos neste aparelho?')){
+    localStorage.removeItem('levaTrazBookings');
+    renderSavedBookings();
+  }
+}
+
+function escapeHtml(text){
+  return String(text||'').replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]});
+}
+
 function confirmBooking(){
   var name=document.getElementById('input-name').value.trim();
   var addr=document.getElementById('input-address').value.trim();
   var phone=document.getElementById('input-phone').value.trim();
   if(!name||!addr||!phone){alert('Preencha todos os campos!');return;}
+  var booking={name:name,address:addr,phone:phone,time:selectedTime,day:(selectedDay||'a confirmar'),createdAt:new Date().toISOString()};
+  saveBookingLocal(booking);
   var msg='Olá! Quero agendar o Leva & Traz Fisiot.%0A%0A'+
     '👤 Nome: '+name+'%0A'+
     '📍 Endereço: '+addr+'%0A'+
@@ -408,6 +452,7 @@ function confirmBooking(){
     '📅 Dia: '+(selectedDay||'a confirmar')+'%0A'+
     '🏥 Destino: Clínica Fisiot — Lagoa Santa MG';
   closeModal();
+  alert('✅ Agendamento salvo neste aparelho. Agora vou abrir o WhatsApp para enviar a confirmação.');
   window.open('https://wa.me/553192594953?text='+msg,'_blank');
 }
 
@@ -427,6 +472,7 @@ setTimeout(function(){
   var notif=document.getElementById('arrival-notif');
   if(notif){notif.classList.add('show')}
 },3000);
+renderSavedBookings();
 </script>
 
 <!-- PWA Install Banner -->
@@ -445,7 +491,7 @@ setTimeout(function(){
 <script>
 // Service Worker
 if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('/sw.js?v=20260608g').then(function(reg){ if(reg.update) reg.update(); }).catch(function(){});
+  navigator.serviceWorker.register('/sw.js?v=20260608h').then(function(reg){ if(reg.update) reg.update(); }).catch(function(){});
 }
 
 // PWA Install Prompt
