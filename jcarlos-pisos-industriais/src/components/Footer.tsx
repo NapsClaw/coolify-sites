@@ -4,7 +4,7 @@ const Footer = () => {
   return <footer id="contato" className="bg-background">
       {/* Map */}
       <div className="w-full h-[400px]">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3666.9197261236154!2d-46.8861942!3d-23.2095959!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94cf26b682333a49%3A0x14ebe3eb641fe6f2!2sR.%20Clodoaldo%20Francisco%20P%C3%B3li%2C%2084%20-%20Vianelo%2FBonfiglioli%2C%20Jundia%C3%AD%20-%20SP!5e0!3m2!1spt-BR!2sbr!4v1764867034952!5m2!1spt-BR!2sbr" width="100%" height="100%" style={{
+        <iframe src="https://maps.google.com/maps?q=R.+L%C3%ADbia%2C+13%2C+Vianelo+Bonfiglioli%2C+Jundia%C3%AD%2C+SP%2C+13207-370&hl=pt-BR&z=17&output=embed" width="100%" height="100%" style={{
         border: 0
       }} allowFullScreen loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="grayscale hover:grayscale-0 transition-all duration-500" />
       </div>
@@ -30,9 +30,9 @@ const Footer = () => {
                 <div className="flex items-start gap-3">
                   <MapPin className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
                   <p className="text-foreground/70 text-sm">
-                    Rua Clodoaldo Francisco Polli, n°84
+                    R. Líbia, 13 – Sala 4
                     <br />
-                    Parque União – CEP: 13206-651
+                    Vianelo/Bonfiglioli – CEP: 13207-370
                     <br />
                     Jundiaí – SP
                   </p>
@@ -54,8 +54,8 @@ const Footer = () => {
                 </div>
                 <div className="flex items-center gap-3">
                   <Mail className="w-5 h-5 text-primary" />
-                  <a href="mailto:contato@jcarlospisosindustriais.com.br" className="text-foreground/70 text-sm hover:text-primary transition-colors">
-                    contato@jcarlospisosindustriais.com.br
+                  <a href="mailto:comercial@jcarlos.com.br" className="text-foreground/70 text-sm hover:text-primary transition-colors">
+                    comercial@jcarlos.com.br
                   </a>
                 </div>
               </div>
@@ -71,7 +71,7 @@ const Footer = () => {
                 <p className="text-foreground/70 text-sm">
                   Segunda a Sexta
                   <br />
-                  8h às 12h – 13:30h às 18h
+                  a partir das 08h00
                 </p>
               </div>
               
