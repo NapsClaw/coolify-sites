@@ -1,5 +1,4 @@
-import { useState, useRef, useEffect } from "react";
-import { Zap, Target, Gauge, Award, Play, X } from "lucide-react";
+import { Zap, Target, Gauge, Award } from "lucide-react";
 import { useScrollReveal } from "@/hooks/useScrollReveal";
 import { cn } from "@/lib/utils";
 import laserScreed from "@/assets/laser-screed.jpeg";
@@ -12,39 +11,6 @@ const EquipmentSection = () => {
   const { ref: imageRef, isVisible: imageVisible } = useScrollReveal();
   const { ref: contentRef, isVisible: contentVisible } = useScrollReveal();
   const { ref: polishRef, isVisible: polishVisible } = useScrollReveal();
-
-  const [videoOpen, setVideoOpen] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  // Bloqueia scroll do body quando modal aberto
-  useEffect(() => {
-    if (videoOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => { document.body.style.overflow = ""; };
-  }, [videoOpen]);
-
-  // Fecha com Escape
-  useEffect(() => {
-    if (!videoOpen) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") closeVideo();
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [videoOpen]);
-
-  const openVideo = () => setVideoOpen(true);
-
-  const closeVideo = () => {
-    if (videoRef.current) {
-      videoRef.current.pause();
-      videoRef.current.currentTime = 0;
-    }
-    setVideoOpen(false);
-  };
 
   const benefits = [
     {
@@ -163,7 +129,7 @@ const EquipmentSection = () => {
           </div>
         </div>
 
-        {/* Máquina Dupla de Polir Piso */}
+        {/* Máquina Dupla de Polir Piso — player inline */}
         <div
           ref={polishRef}
           className={cn(
@@ -174,100 +140,48 @@ const EquipmentSection = () => {
           <h3 className="font-display text-3xl md:text-4xl font-bold text-foreground mb-8">
             Máquina Dupla de Polir Piso
           </h3>
-          
+
           <div className="max-w-3xl mx-auto">
-            {/* Thumbnail — button para tap correto no iOS */}
-            <button
-              type="button"
-              aria-label="Assistir vídeo da Máquina Dupla de Polir Piso"
-              onClick={openVideo}
-              className="relative w-full rounded-2xl overflow-hidden cursor-pointer group focus:outline-none focus-visible:ring-4 focus-visible:ring-primary"
-              style={{ touchAction: "manipulation" }}
-            >
-              <img
-                src={maquinaPolir}
-                alt="Máquina Dupla de Polir Piso"
-                className="w-full h-[300px] sm:h-[400px] md:h-[500px] object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-background/30 group-hover:bg-background/20 transition-colors" />
-
-              {/* Play Button */}
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-20 h-20 md:w-24 md:h-24 bg-primary rounded-full flex items-center justify-center group-hover:scale-110 active:scale-95 transition-transform shadow-xl">
-                  <Play className="w-10 h-10 md:w-12 md:h-12 text-white ml-1" fill="white" />
-                </div>
-              </div>
-            </button>
-
-            {/* Fallback direto — especialmente útil no mobile */}
-            <div className="mt-4 text-center">
-              <a
-                href={VIDEO_SRC}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-sm text-foreground/50 hover:text-primary underline underline-offset-4 transition-colors"
+            {/*
+              Player inline: controls nativos + playsInline para iOS não fullscreen.
+              SEM autoPlay — usuário inicia com toque/clique.
+              poster = thumbnail da máquina enquanto o vídeo não carrega.
+              preload="metadata" carrega apenas metadados (duração/dimensão),
+              evitando consumo de dados desnecessário antes do play.
+            */}
+            <div className="rounded-2xl overflow-hidden bg-black shadow-2xl border border-border/50 ring-1 ring-primary/20">
+              <video
+                controls
+                playsInline
+                preload="metadata"
+                poster={maquinaPolir}
+                className="w-full block"
+                style={{ aspectRatio: "16/9", maxHeight: "500px", objectFit: "contain" }}
+                aria-label="Vídeo da Máquina Dupla de Polir Piso"
               >
-                📱 Abrir vídeo diretamente
-              </a>
+                <source src={VIDEO_SRC} type="video/mp4" />
+                {/* Fallback para browsers muito antigos sem suporte a <video> */}
+                <a href={VIDEO_SRC} className="text-primary underline">
+                  Abrir vídeo
+                </a>
+              </video>
             </div>
-          </div>
-        </div>
-      </div>
 
-      {/* ── Modal de vídeo — custom, compatível mobile/iOS ── */}
-      {videoOpen && (
-        /* Overlay: clique fora fecha */
-        <div
-          role="dialog"
-          aria-modal="true"
-          aria-label="Vídeo: Máquina Dupla de Polir Piso"
-          className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/90 p-4"
-          onClick={closeVideo}
-        >
-          {/* Container: clique dentro NÃO fecha */}
-          <div
-            className="relative w-full max-w-4xl"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Botão fechar */}
-            <button
-              type="button"
-              onClick={closeVideo}
-              aria-label="Fechar vídeo"
-              className="absolute -top-12 right-0 z-10 w-11 h-11 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 active:bg-white/40 text-white transition-colors"
-              style={{ touchAction: "manipulation" }}
-            >
-              <X className="w-6 h-6" />
-            </button>
-
-            {/* Vídeo — playsInline: essencial iOS; sem autoPlay (mobile bloqueia) */}
-            <video
-              ref={videoRef}
-              className="w-full rounded-xl bg-black"
-              style={{ maxHeight: "75dvh" }}
-              controls
-              playsInline
-              preload="metadata"
-            >
-              <source src={VIDEO_SRC} type="video/mp4" />
-              Seu navegador não suporta vídeo HTML5.
-            </video>
-
-            {/* Fallback dentro do modal */}
-            <p className="mt-3 text-center text-sm text-white/60">
-              Vídeo não reproduziu?{" "}
+            {/* Fallback discreto — caminho secundário, não principal */}
+            <p className="mt-3 text-xs text-foreground/35">
+              Se o vídeo não carregar,{" "}
               <a
                 href={VIDEO_SRC}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-primary underline hover:text-primary/80"
+                className="underline underline-offset-4 hover:text-primary transition-colors"
               >
-                Abrir vídeo em nova aba
+                abrir diretamente →
               </a>
             </p>
           </div>
         </div>
-      )}
+      </div>
     </section>
   );
 };
