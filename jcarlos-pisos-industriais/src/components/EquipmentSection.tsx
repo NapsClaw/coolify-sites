@@ -4,7 +4,9 @@ import { cn } from "@/lib/utils";
 import laserScreed from "@/assets/laser-screed.jpeg";
 import maquinaPolir from "@/assets/maquina-polir.png";
 
-const VIDEO_SRC = "/videos/maquina-polir.mp4";
+// URL com sufixo iosfix para evitar cache Cloudflare antigo do arquivo original.
+// O Nginx serve este path com Cache-Control: no-store para garantir Range 206 no iOS/Safari.
+const VIDEO_SRC = "/videos/maquina-polir-iosfix.mp4";
 
 const EquipmentSection = () => {
   const { ref: titleRef, isVisible: titleVisible } = useScrollReveal();

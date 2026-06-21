@@ -17,10 +17,12 @@ server {\n\
     root /usr/share/nginx/html;\n\
     index index.html;\n\
 \n\
-    # Vídeos: range requests para streaming mobile/iOS\n\
+    # Vídeos: sem cache Cloudflare para Range requests funcionar no iOS/Safari\n\
     location ~* \\.(mp4|webm|ogg|mov)$ {\n\
-        add_header Accept-Ranges bytes;\n\
-        add_header Cache-Control "public, max-age=86400";\n\
+        add_header Accept-Ranges bytes always;\n\
+        add_header Cache-Control "no-store, no-cache, must-revalidate, max-age=0" always;\n\
+        add_header Pragma "no-cache" always;\n\
+        add_header Expires "0" always;\n\
         try_files $uri =404;\n\
     }\n\
 \n\
