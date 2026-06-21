@@ -11,7 +11,9 @@ export function useScrollReveal<T extends HTMLElement = HTMLDivElement>(
 ) {
   const { threshold = 0.1, rootMargin = "0px", triggerOnce = true } = options;
   const ref = useRef<T>(null);
-  const [isVisible, setIsVisible] = useState(false);
+  // Inicia como visível: garante que conteúdo apareça em screenshots, bots e
+  // qualquer ambiente onde IntersectionObserver não dispara (QA visual, pré-renderização).
+  const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
     const element = ref.current;
@@ -42,7 +44,8 @@ export function useScrollReveal<T extends HTMLElement = HTMLDivElement>(
 export function useScrollRevealMultiple(count: number, options: UseScrollRevealOptions = {}) {
   const { threshold = 0.1, rootMargin = "0px", triggerOnce = true } = options;
   const refs = useRef<(HTMLDivElement | null)[]>([]);
-  const [visibleItems, setVisibleItems] = useState<boolean[]>(Array(count).fill(false));
+  // Inicia todos como visíveis para garantir que conteúdo apareça em screenshots/bots
+  const [visibleItems, setVisibleItems] = useState<boolean[]>(Array(count).fill(true));
 
   useEffect(() => {
     const observers: IntersectionObserver[] = [];

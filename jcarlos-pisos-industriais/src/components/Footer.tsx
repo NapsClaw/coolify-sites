@@ -15,7 +15,7 @@ const Footer = () => {
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12">
             {/* Logo & Description */}
             <div className="lg:col-span-1">
-              <img alt="JCarlos Pisos Industriais" className="h-16 mb-6" src="/lovable-uploads/afe115cf-4abf-496f-b30c-79aadb15b2fe.webp" />
+              <img alt="JCarlos Pisos Industriais" className="h-14 w-auto mb-6" src="/logo-jcarlos.svg" />
               <p className="text-foreground/60 text-sm leading-relaxed">
                 JCarlos Pisos Industriais — especialistas em pisos industriais e revestimentos de alto desempenho há mais de 20 anos.
               </p>

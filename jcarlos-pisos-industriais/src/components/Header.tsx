@@ -28,7 +28,7 @@ const Header = () => {
   return <header className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-md border-b border-border">
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         <a href="#hero" className="flex items-center">
-          <img alt="JCarlos Pisos Industriais" className="h-18 md:h-20" src="/lovable-uploads/35ae52a1-9757-4fb8-8bed-e4b965ee656e.webp" />
+          <img alt="JCarlos Pisos Industriais" className="h-14 md:h-16 w-auto" src="/logo-jcarlos.svg" />
         </a>
 
         {/* Desktop Nav */}
