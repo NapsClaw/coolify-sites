@@ -595,12 +595,19 @@ function deleteBookingItem(idx){
   var target=_deleteTargets[idx];
   if(!target)return;
   var b=target.booking;
-  if(!confirm('Excluir "'+b.name+'" ('+b.day+' • '+b.time+') da agenda?'))return;
   if(target.isCustomFixed){
+    // Paciente fixo recorrente: conta quantos dias tem salvo
+    var allDays=getCustomFixedBookings().filter(function(x){return x.name===b.name;});
+    var msgDias=allDays.length>1
+      ? 'Excluir "'+b.name+'" da agenda?\nEste paciente está agendado em '+allDays.length+' dia(s). Todos serão removidos.'
+      : 'Excluir "'+b.name+'" ('+b.day+' • '+b.time+') da agenda?';
+    if(!confirm(msgDias))return;
     var items=getCustomFixedBookings();
-    items=items.filter(function(x){return !(x.name===b.name&&x.day===b.day&&x.time===b.time);});
+    // Remove todos os dias deste paciente
+    items=items.filter(function(x){return x.name!==b.name;});
     setCustomFixedBookings(items);
   } else if(target.isRegular){
+    if(!confirm('Excluir "'+b.name+'" ('+b.day+' • '+b.time+') da agenda?'))return;
     var reg=getSavedBookings();
     reg=reg.filter(function(x){return !(x.name===b.name&&x.day===b.day&&x.time===b.time&&x.createdAt===b.createdAt);});
     localStorage.setItem('levaTrazBookings',JSON.stringify(reg));
