@@ -1,4 +1,4 @@
-const CACHE_NAME = 'leva-traz-v20260624-excluir-fixos';
+const CACHE_NAME = 'leva-traz-v20260624-horarios-inteiros';
 const urlsToCache = ['/manifest.json'];
 
 self.addEventListener('install', function(e) {
