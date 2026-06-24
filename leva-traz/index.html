@@ -226,7 +226,10 @@ body{font-family:'Inter',sans-serif;background:#0a0005;color:#fff;min-height:100
 <div id="saved-bookings-card" style="display:none;background:rgba(255,255,255,0.04);border:1px solid rgba(34,197,94,0.22);border-radius:14px;padding:14px;margin:0 20px 18px">
   <div style="font-size:12px;font-weight:800;color:#FFD700;margin-bottom:8px">📌 Agendamentos fixos e salvos</div>
   <div id="saved-bookings-list" style="display:flex;flex-direction:column;gap:8px"></div>
-  <button onclick="clearSavedBookings()" style="margin-top:10px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.14);color:#fff;padding:10px 14px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer">Limpar lista salva</button>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+    <button onclick="clearSavedBookings()" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.14);color:#fff;padding:10px 14px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer">Limpar lista salva</button>
+    <button id="btn-restore-defaults" onclick="restoreDefaultPatients()" style="display:none;background:rgba(255,215,0,0.12);border:1px solid rgba(255,215,0,0.32);color:#FFD700;padding:10px 14px;border-radius:10px;font-size:12px;font-weight:700;cursor:pointer">↩ Restaurar padrões</button>
+  </div>
 </div>
 
 <div class="fixed-manager" id="fixed-manager">
@@ -470,7 +473,7 @@ function openBooking(){
 
 function closeModal(){document.getElementById('booking-modal').classList.remove('show');}
 
-function getDefaultFixedBookings(){
+function getDefaultFixedBookingsRaw(){
   return [
     {name:'Dona Dirce',address:'Paciente fixa',phone:'—',time:'08:00',day:'Segunda',fixed:true},
     {name:'Dona Dirce',address:'Paciente fixa',phone:'—',time:'08:00',day:'Quarta',fixed:true},
@@ -482,6 +485,17 @@ function getDefaultFixedBookings(){
     {name:'Lourival',address:'Paciente fixo',phone:'—',time:'15:00',day:'Quarta',fixed:true},
     {name:'Lourival',address:'Paciente fixo',phone:'—',time:'15:00',day:'Sexta',fixed:true}
   ];
+}
+function getDeletedDefaultNames(){
+  try{return JSON.parse(localStorage.getItem('levaTrazDeletedDefaults')||'[]')}catch(e){return []}
+}
+function setDeletedDefaultNames(arr){
+  localStorage.setItem('levaTrazDeletedDefaults', JSON.stringify(arr));
+}
+function getDefaultFixedBookings(){
+  var deleted=getDeletedDefaultNames();
+  if(!deleted.length) return getDefaultFixedBookingsRaw();
+  return getDefaultFixedBookingsRaw().filter(function(b){return deleted.indexOf(b.name)<0});
 }
 
 function getCustomFixedBookings(){
@@ -579,9 +593,8 @@ function renderSavedBookings(){
     return;
   }
   list.innerHTML=bookings.map(function(b,idx){
-    _deleteTargets[idx]={booking:b,isCustomFixed:!!b.custom,isRegular:!b.fixed};
-    var canDelete=b.custom||(!b.fixed);
-    var deleteBtn=canDelete?'<button onclick="deleteBookingItem('+idx+')" class="btn-excluir-paciente">🗑 Excluir</button>':'';
+    _deleteTargets[idx]={booking:b,isCustomFixed:!!b.custom,isDefault:(!!b.fixed&&!b.custom),isRegular:!b.fixed};
+    var deleteBtn='<button onclick="deleteBookingItem('+idx+')" class="btn-excluir-paciente">🗑 Excluir</button>';
     return '<div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:10px;font-size:12px;line-height:1.5">'+
       '<strong style="color:#fff">'+escapeHtml(b.name)+(b.fixed?' <span style="color:#FFD700;font-size:10px">FIXO</span>':'')+'</strong><br/>'+
       '<span style="color:rgba(255,255,255,0.75)">'+escapeHtml(b.day)+' • '+escapeHtml(b.time)+' • '+escapeHtml(b.phone)+'</span><br/>'+
@@ -589,13 +602,25 @@ function renderSavedBookings(){
       deleteBtn+
       '</div>';
   }).join('');
+  // Botão Restaurar padrões: visível somente quando há algum padrão excluído
+  var restoreBtn=document.getElementById('btn-restore-defaults');
+  if(restoreBtn){restoreBtn.style.display=getDeletedDefaultNames().length?'inline-block':'none';}
 }
 
 function deleteBookingItem(idx){
   var target=_deleteTargets[idx];
   if(!target)return;
   var b=target.booking;
-  if(target.isCustomFixed){
+  if(target.isDefault){
+    // Paciente padrão/hardcoded: exclusão local por notebook (localStorage)
+    var rawAll=getDefaultFixedBookingsRaw().filter(function(x){return x.name===b.name;});
+    var msg='Excluir este paciente desta agenda neste notebook?\n"'+b.name+'"';
+    if(rawAll.length>1){msg+='\n(Paciente está em '+rawAll.length+' dias — todos serão ocultados neste aparelho.)';}
+    if(!confirm(msg))return;
+    var deleted=getDeletedDefaultNames();
+    if(deleted.indexOf(b.name)<0){deleted.push(b.name);}
+    setDeletedDefaultNames(deleted);
+  } else if(target.isCustomFixed){
     // Paciente fixo recorrente: conta quantos dias tem salvo
     var allDays=getCustomFixedBookings().filter(function(x){return x.name===b.name;});
     var msgDias=allDays.length>1
@@ -620,6 +645,14 @@ function clearSavedBookings(){
   if(confirm('Limpar os agendamentos salvos neste aparelho?')){
     localStorage.removeItem('levaTrazBookings');
     renderSavedBookings();
+  }
+}
+function restoreDefaultPatients(){
+  if(confirm('Restaurar os pacientes padrão (Dona Dirce, José, Lourival) neste aparelho?')){
+    localStorage.removeItem('levaTrazDeletedDefaults');
+    renderSavedBookings();
+    applyFixedReservations();
+    alert('✅ Pacientes padrão restaurados!');
   }
 }
 
@@ -753,7 +786,7 @@ applyFixedReservations();
 <script>
 // Service Worker
 if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('/sw.js?v=20260624-excluir-paciente').then(function(reg){ if(reg.update) reg.update(); }).catch(function(){});
+  navigator.serviceWorker.register('/sw.js?v=20260624-excluir-fixos').then(function(reg){ if(reg.update) reg.update(); }).catch(function(){});
 }
 
 // PWA Install Prompt
