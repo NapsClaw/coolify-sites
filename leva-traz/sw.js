@@ -1,4 +1,4 @@
-const CACHE_NAME = 'leva-traz-v20260624-campos-endereco-celular';
+const CACHE_NAME = 'leva-traz-v20260624-grade-localstorage';
 const urlsToCache = ['/manifest.json'];
 
 self.addEventListener('install', function(e) {
