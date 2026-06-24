@@ -533,41 +533,75 @@ function saveFixedPatient(){
   alert('✅ Paciente salvo e horário reservado nos dias escolhidos.');
 }
 
-function fixedBookingsForVisibleSchedule(){
-  var active=document.querySelector('#tab-agenda1.active,#tab-agenda2.active');
-  if(!active)return [];
-  var days=[];
-  if(selectedDay){days=[selectedDay];}
-  else if(active.id==='tab-agenda1'){days=['Segunda','Quarta','Sexta'];}
-  else if(active.id==='tab-agenda2'){days=['Terça','Quinta'];}
-  return getFixedBookings().filter(function(b){return days.indexOf(b.day)>=0});
+/* ── buildFixedMapForDays ───────────────────────────────────────────────
+   Constrói um mapa { "HH:MM" → booking } para os dias recebidos.
+   Regra de prioridade: paciente CUSTOM sempre sobrepõe o padrão/default
+   no mesmo horário. Isso garante que Roberta (custom) apareça na grade
+   mesmo que José Gomes exista como padrão no mesmo slot 16:00.
+   ─────────────────────────────────────────────────────────────────── */
+function buildFixedMapForDays(days){
+  var map={};
+  // 1) Padrões (defaults não excluídos) — first-come first-served
+  getDefaultFixedBookings().forEach(function(b){
+    if(days.indexOf(b.day)>=0 && !map[b.time]) map[b.time]=b;
+  });
+  // 2) Pacientes salvos pelo usuário (custom) — sempre sobrepõem o default
+  getCustomFixedBookings().forEach(function(b){
+    if(days.indexOf(b.day)>=0) map[b.time]=b;
+  });
+  return map;
+}
+
+/* Aplica um mapa de horários reservados a um conjunto de slots do DOM */
+function applyMapToSlots(selector, map){
+  document.querySelectorAll(selector).forEach(function(slot){
+    if(slot.getAttribute('data-fixed-booking')) return; // slot hard-coded no HTML
+    if(slot.getAttribute('data-base-taken')==='1') return;
+    var timeEl=slot.querySelector('.slot-time');
+    if(!timeEl) return;
+    var time=timeEl.textContent.trim();
+    var match=map[time];
+    if(match){
+      slot.classList.add('taken','fixed-reserved');
+      slot.setAttribute('title',match.name);
+      slot.setAttribute('aria-label',time+' reservado para '+match.name);
+      slot.removeAttribute('onclick');
+      var st=slot.querySelector('.slot-status');
+      if(st) st.textContent=match.name;
+    }
+  });
 }
 
 function applyFixedReservations(){
+  // ── 1. Reset: limpa todos os slots não-hardcoded ──────────────────
   document.querySelectorAll('.time-slots .slot').forEach(function(slot){
-    if(slot.getAttribute('data-fixed-booking')){return;}
-    if(slot.getAttribute('data-base-taken')==='1'){return;}
-    slot.classList.remove('taken');
-    slot.classList.remove('fixed-reserved');
+    if(slot.getAttribute('data-fixed-booking')) return;
+    if(slot.getAttribute('data-base-taken')==='1') return;
+    slot.classList.remove('taken','fixed-reserved','selected');
     slot.removeAttribute('title');
+    slot.removeAttribute('aria-label');
     var st=slot.querySelector('.slot-status');
-    if(st&&!slot.classList.contains('selected'))st.textContent='Disponível';
-    if(!slot.getAttribute('onclick')){slot.setAttribute('onclick',"selectSlot(this,'"+(slot.querySelector('.slot-time')?slot.querySelector('.slot-time').textContent:'')+"')");}
-  });
-  var fixed=fixedBookingsForVisibleSchedule();
-  document.querySelectorAll('.time-slots .slot').forEach(function(slot){
-    var time=slot.querySelector('.slot-time')?slot.querySelector('.slot-time').textContent.trim():'';
-    var match=fixed.find(function(b){return b.time===time});
-    if(match){
-      slot.classList.add('taken');
-      slot.classList.add('fixed-reserved');
-      slot.setAttribute('title', match.name);
-      slot.setAttribute('aria-label', time + ' reservado para ' + match.name);
-      slot.removeAttribute('onclick');
-      var st=slot.querySelector('.slot-status');
-      if(st)st.textContent=match.name;
+    if(st) st.textContent='Disponível';
+    var timeEl=slot.querySelector('.slot-time');
+    if(timeEl && !slot.getAttribute('onclick')){
+      slot.setAttribute('onclick',"selectSlot(this,'"+timeEl.textContent+"')");
     }
   });
+
+  // ── 2. Monta mapas separados para aba1 (Seg/Qua/Sex) e aba2 (Ter/Qui)
+  //   Se o usuário selecionou um dia específico, filtra por ele;
+  //   caso contrário usa todos os dias do grupo da aba.
+  var tab1Days = (selectedDay && ['Segunda','Quarta','Sexta'].indexOf(selectedDay)>=0)
+    ? [selectedDay] : ['Segunda','Quarta','Sexta'];
+  var tab2Days = (selectedDay && ['Terça','Quinta'].indexOf(selectedDay)>=0)
+    ? [selectedDay] : ['Terça','Quinta'];
+
+  var map1=buildFixedMapForDays(tab1Days);
+  var map2=buildFixedMapForDays(tab2Days);
+
+  // ── 3. Aplica cada mapa apenas nos slots da sua aba ───────────────
+  applyMapToSlots('#tab-agenda1 .time-slots .slot', map1);
+  applyMapToSlots('#tab-agenda2 .time-slots .slot', map2);
 }
 
 function getSavedBookings(){
@@ -793,7 +827,7 @@ applyFixedReservations();
 <script>
 // Service Worker
 if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('/sw.js?v=20260624-campos-endereco-celular').then(function(reg){ if(reg.update) reg.update(); }).catch(function(){});
+  navigator.serviceWorker.register('/sw.js?v=20260624-grade-localstorage').then(function(reg){ if(reg.update) reg.update(); }).catch(function(){});
 }
 
 // PWA Install Prompt
