@@ -108,6 +108,8 @@ body{font-family:'Inter',sans-serif;background:#0a0005;color:#fff;min-height:100
 .repeat-days input{margin-top:3px;accent-color:#CC0000}
 .repeat-days label{font-size:13px;color:rgba(255,255,255,0.86);line-height:1.45;cursor:pointer}
 .repeat-days small{display:block;color:rgba(255,255,255,0.52);margin-top:3px}
+.btn-excluir-paciente{display:inline-block;margin-top:7px;background:rgba(204,0,0,0.14);border:1px solid rgba(204,0,0,0.38);color:#ff8888;padding:5px 13px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;transition:background .18s,color .18s;line-height:1.4}
+.btn-excluir-paciente:hover,.btn-excluir-paciente:active{background:rgba(204,0,0,0.38);color:#fff}
 </style>
 </head>
 <body>
@@ -561,18 +563,50 @@ function saveBookingLocal(booking){
   renderSavedBookings();
 }
 
+var _deleteTargets=[];
 function renderSavedBookings(){
+  _deleteTargets=[];
   var card=document.getElementById('saved-bookings-card');
   var list=document.getElementById('saved-bookings-list');
   if(!card||!list)return;
   var saved=getSavedBookings();
-  var bookings=getFixedBookings().concat(saved);
+  var fixedDefault=getDefaultFixedBookings();
+  var fixedCustom=getCustomFixedBookings();
+  var bookings=fixedDefault.concat(fixedCustom).concat(saved);
   card.style.display=(document.querySelector('#tab-agenda1.active,#tab-agenda2.active')||bookings.length)?'block':'none';
   if(!bookings.length){
     list.innerHTML='<div style="font-size:12px;color:rgba(255,255,255,0.55);line-height:1.5">Nenhum agendamento salvo ainda. Ao confirmar, ele fica registrado aqui neste aparelho.</div>';
     return;
   }
-  list.innerHTML=bookings.map(function(b){return '<div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:10px;font-size:12px;line-height:1.5"><strong style="color:#fff">'+escapeHtml(b.name)+(b.fixed?' <span style="color:#FFD700;font-size:10px">FIXO</span>':'')+'</strong><br/><span style="color:rgba(255,255,255,0.75)">'+escapeHtml(b.day)+' • '+escapeHtml(b.time)+' • '+escapeHtml(b.phone)+'</span><br/><span style="color:rgba(255,255,255,0.5)">'+escapeHtml(b.address)+'</span></div>'}).join('');
+  list.innerHTML=bookings.map(function(b,idx){
+    _deleteTargets[idx]={booking:b,isCustomFixed:!!b.custom,isRegular:!b.fixed};
+    var canDelete=b.custom||(!b.fixed);
+    var deleteBtn=canDelete?'<button onclick="deleteBookingItem('+idx+')" class="btn-excluir-paciente">🗑 Excluir</button>':'';
+    return '<div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:10px;font-size:12px;line-height:1.5">'+
+      '<strong style="color:#fff">'+escapeHtml(b.name)+(b.fixed?' <span style="color:#FFD700;font-size:10px">FIXO</span>':'')+'</strong><br/>'+
+      '<span style="color:rgba(255,255,255,0.75)">'+escapeHtml(b.day)+' • '+escapeHtml(b.time)+' • '+escapeHtml(b.phone)+'</span><br/>'+
+      '<span style="color:rgba(255,255,255,0.5)">'+escapeHtml(b.address)+'</span>'+
+      deleteBtn+
+      '</div>';
+  }).join('');
+}
+
+function deleteBookingItem(idx){
+  var target=_deleteTargets[idx];
+  if(!target)return;
+  var b=target.booking;
+  if(!confirm('Excluir "'+b.name+'" ('+b.day+' • '+b.time+') da agenda?'))return;
+  if(target.isCustomFixed){
+    var items=getCustomFixedBookings();
+    items=items.filter(function(x){return !(x.name===b.name&&x.day===b.day&&x.time===b.time);});
+    setCustomFixedBookings(items);
+  } else if(target.isRegular){
+    var reg=getSavedBookings();
+    reg=reg.filter(function(x){return !(x.name===b.name&&x.day===b.day&&x.time===b.time&&x.createdAt===b.createdAt);});
+    localStorage.setItem('levaTrazBookings',JSON.stringify(reg));
+  }
+  renderSavedBookings();
+  applyFixedReservations();
 }
 
 function clearSavedBookings(){
@@ -712,7 +746,7 @@ applyFixedReservations();
 <script>
 // Service Worker
 if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('/sw.js?v=20260608z').then(function(reg){ if(reg.update) reg.update(); }).catch(function(){});
+  navigator.serviceWorker.register('/sw.js?v=20260624-excluir-paciente').then(function(reg){ if(reg.update) reg.update(); }).catch(function(){});
 }
 
 // PWA Install Prompt
