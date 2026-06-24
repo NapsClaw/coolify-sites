@@ -223,7 +223,7 @@ body{font-family:'Inter',sans-serif;background:#0a0005;color:#fff;min-height:100
 </div>
 
 <div class="fixed-manager" id="fixed-manager">
-  <div class="fixed-manager-title">➕ Salvar outro paciente fixo</div>
+  <div class="fixed-manager-title">➕ Salvar paciente fixo e reservar horário</div>
   <div class="fixed-grid">
     <input class="form-input" type="text" id="fixed-name" placeholder="Nome do paciente"/>
     <select class="form-input" id="fixed-time">
@@ -239,6 +239,8 @@ body{font-family:'Inter',sans-serif;background:#0a0005;color:#fff;min-height:100
       <option value="17:00">17:00</option>
     </select>
   </div>
+  <input class="form-input" type="text" id="fixed-address" placeholder="Endereço (rua, número — bairro)" style="margin-bottom:8px"/>
+  <input class="form-input" type="tel" id="fixed-phone" placeholder="Celular / WhatsApp" style="margin-bottom:8px"/>
   <div class="fixed-days">
     <label><input type="checkbox" class="fixed-day" value="Segunda"/> Seg</label>
     <label><input type="checkbox" class="fixed-day" value="Quarta"/> Qua</label>
@@ -511,16 +513,20 @@ function getFixedBookings(){
 function saveFixedPatient(){
   var name=(document.getElementById('fixed-name')&&document.getElementById('fixed-name').value.trim())||'';
   var time=(document.getElementById('fixed-time')&&document.getElementById('fixed-time').value)||'08:00';
+  var address=(document.getElementById('fixed-address')&&document.getElementById('fixed-address').value.trim())||'';
+  var phone=(document.getElementById('fixed-phone')&&document.getElementById('fixed-phone').value.trim())||'';
   var days=Array.from(document.querySelectorAll('.fixed-day:checked')).map(function(i){return i.value});
   if(!name){alert('Digite o nome do paciente.');return;}
   if(!days.length){alert('Escolha pelo menos um dia.');return;}
   var current=getCustomFixedBookings();
   days.forEach(function(day){
     current=current.filter(function(b){return !(b.day===day&&b.time===time)});
-    current.push({name:name,address:'Paciente fixo',phone:'—',time:time,day:day,fixed:true,custom:true,createdAt:new Date().toISOString()});
+    current.push({name:name,address:address||'—',phone:phone||'—',time:time,day:day,fixed:true,custom:true,createdAt:new Date().toISOString()});
   });
   setCustomFixedBookings(current);
   document.getElementById('fixed-name').value='';
+  if(document.getElementById('fixed-address'))document.getElementById('fixed-address').value='';
+  if(document.getElementById('fixed-phone'))document.getElementById('fixed-phone').value='';
   document.querySelectorAll('.fixed-day').forEach(function(i){i.checked=false});
   renderSavedBookings();
   applyFixedReservations();
@@ -593,10 +599,13 @@ function renderSavedBookings(){
   list.innerHTML=bookings.map(function(b,idx){
     _deleteTargets[idx]={booking:b,isCustomFixed:!!b.custom,isDefault:(!!b.fixed&&!b.custom),isRegular:!b.fixed};
     var deleteBtn='<button onclick="deleteBookingItem('+idx+')" class="btn-excluir-paciente">🗑 Excluir</button>';
+    var hasPhone=b.phone&&b.phone!=='—'&&b.phone!=='';
+    var hasAddress=b.address&&b.address!=='—'&&b.address!==''&&b.address!=='Paciente fixa'&&b.address!=='Paciente fixo';
     return '<div style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:10px;font-size:12px;line-height:1.5">'+
       '<strong style="color:#fff">'+escapeHtml(b.name)+(b.fixed?' <span style="color:#FFD700;font-size:10px">FIXO</span>':'')+'</strong><br/>'+
-      '<span style="color:rgba(255,255,255,0.75)">'+escapeHtml(b.day)+' • '+escapeHtml(b.time)+' • '+escapeHtml(b.phone)+'</span><br/>'+
-      '<span style="color:rgba(255,255,255,0.5)">'+escapeHtml(b.address)+'</span>'+
+      '<span style="color:rgba(255,255,255,0.75)">'+escapeHtml(b.day)+' • '+escapeHtml(b.time)+'</span>'+
+      (hasPhone?'<br/><span style="color:rgba(255,255,255,0.65)">📱 '+escapeHtml(b.phone)+'</span>':'')+
+      (hasAddress?'<br/><span style="color:rgba(255,255,255,0.55)">📍 '+escapeHtml(b.address)+'</span>':'')+
       deleteBtn+
       '</div>';
   }).join('');
@@ -784,7 +793,7 @@ applyFixedReservations();
 <script>
 // Service Worker
 if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('/sw.js?v=20260624-horarios-inteiros').then(function(reg){ if(reg.update) reg.update(); }).catch(function(){});
+  navigator.serviceWorker.register('/sw.js?v=20260624-campos-endereco-celular').then(function(reg){ if(reg.update) reg.update(); }).catch(function(){});
 }
 
 // PWA Install Prompt
