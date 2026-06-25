@@ -1,4 +1,4 @@
-const CACHE_NAME = 'leva-traz-v20260624-grade-localstorage';
+const CACHE_NAME = 'leva-traz-v20260625-gps-paciente';
 const urlsToCache = ['/manifest.json'];
 
 self.addEventListener('install', function(e) {
@@ -7,7 +7,13 @@ self.addEventListener('install', function(e) {
 });
 
 self.addEventListener('fetch', function(e) {
-  // Sempre tenta buscar a versão nova primeiro. Evita página/capa antiga presa no celular.
+  // Páginas GPS e rastrear: sempre busca versão nova (não cacheia)
+  var url = e.request.url;
+  if(url.includes('/rastrear') || url.includes('/motorista') || url.includes('gps.json') || url.includes('api.github.com') || url.includes('raw.githubusercontent.com')){
+    e.respondWith(fetch(e.request).catch(function(){ return new Response('{}', {headers:{'Content-Type':'application/json'}}); }));
+    return;
+  }
+  // Para outros assets: tenta novo, fallback em cache
   e.respondWith(fetch(e.request).then(function(response) {
     return response;
   }).catch(function() {
