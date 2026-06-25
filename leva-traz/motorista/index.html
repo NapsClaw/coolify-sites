@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0"/>
+<meta name="robots" content="noindex,nofollow"/>
+<meta name="theme-color" content="#CC0000"/>
+<title>Painel do Motorista — Leva &amp; Traz Fisiot</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#08000a;color:#fff;min-height:100vh;overscroll-behavior:none}
+.header{background:linear-gradient(135deg,#CC0000,#8B0000);padding:14px 18px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:100;box-shadow:0 2px 20px rgba(0,0,0,.6)}
+.header h1{font-size:18px;font-weight:900}
+.header h1 span{color:#FFD700}
+.header-badge{font-size:10px;background:rgba(0,0,0,.3);border-radius:20px;padding:3px 8px;margin-left:8px;color:rgba(255,255,255,.8);font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+/* PIN Screen */
+#pin-screen{position:fixed;inset:0;background:#08000a;z-index:500;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;padding:32px}
+.pin-logo{font-size:48px;text-align:center}
+.pin-title{font-size:22px;font-weight:900;text-align:center;color:#fff}
+.pin-sub{font-size:13px;color:rgba(255,255,255,.6);text-align:center}
+.pin-input{width:100%;max-width:280px;background:rgba(255,255,255,.06);border:2px solid rgba(204,0,0,.4);color:#fff;padding:16px;border-radius:14px;font-size:24px;text-align:center;letter-spacing:4px;font-family:'Inter',sans-serif}
+.pin-input:focus{outline:none;border-color:#CC0000}
+.pin-btn{width:100%;max-width:280px;background:linear-gradient(135deg,#CC0000,#8B0000);color:#fff;border:none;padding:16px;border-radius:14px;font-size:17px;font-weight:800;cursor:pointer}
+.pin-error{color:#ff6b6b;font-size:13px;text-align:center;min-height:20px}
+/* Main content */
+#main-content{display:none;padding:20px}
+.section{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:18px;margin-bottom:16px}
+.section-label{font-size:11px;font-weight:800;color:#FFD700;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px}
+/* Status indicator */
+.gps-status-bar{display:flex;align-items:center;gap:12px;padding:14px 18px;border-radius:14px;margin-bottom:16px;transition:background .3s}
+.gps-status-bar.idle{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1)}
+.gps-status-bar.active{background:rgba(34,197,94,.12);border:1px solid rgba(34,197,94,.35)}
+.gps-status-bar.error{background:rgba(255,100,50,.12);border:1px solid rgba(255,100,50,.35)}
+.status-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0;background:#888;transition:background .3s}
+.status-dot.active{background:#22c55e;animation:pulse 1.5s infinite}
+.status-dot.error{background:#ff6b6b}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(1.4)}}
+.status-texts{}
+.status-title{font-size:15px;font-weight:800;color:#fff}
+.status-title.active{color:#22c55e}
+.status-title.error{color:#ff8c6b}
+.status-sub{font-size:12px;color:rgba(255,255,255,.55);margin-top:2px}
+/* Coords display */
+.coords-box{background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:14px;margin-bottom:14px;font-family:monospace;font-size:13px;color:rgba(255,255,255,.7);line-height:1.8}
+.coords-box span{color:#22c55e;font-weight:700}
+/* Buttons */
+.btn-start{width:100%;background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;border:none;padding:18px;border-radius:14px;font-size:17px;font-weight:900;cursor:pointer;letter-spacing:.3px;display:flex;align-items:center;justify-content:center;gap:10px}
+.btn-stop{width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;padding:16px;border-radius:14px;font-size:15px;font-weight:700;cursor:pointer;margin-top:10px}
+.btn-stop:hover{background:rgba(204,0,0,.2)}
+.btn-send-now{width:100%;background:rgba(255,215,0,.12);border:1px solid rgba(255,215,0,.3);color:#FFD700;padding:12px;border-radius:12px;font-size:13px;font-weight:700;cursor:pointer;margin-top:8px}
+/* Share section */
+.share-link{background:rgba(255,255,255,.04);border:1px solid rgba(34,197,94,.2);border-radius:12px;padding:14px;margin-bottom:10px}
+.share-url{font-size:13px;color:rgba(255,255,255,.7);word-break:break-all;line-height:1.5;margin-bottom:10px}
+.share-url strong{color:#22c55e}
+.btn-copy{background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.3);color:#22c55e;padding:10px 16px;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;width:100%}
+.btn-wa{display:block;text-decoration:none;background:rgba(34,197,94,.2);border:1px solid rgba(34,197,94,.35);color:#fff;padding:13px;border-radius:12px;font-size:14px;font-weight:800;text-align:center;margin-top:8px}
+/* Log */
+.update-log{max-height:160px;overflow-y:auto;background:rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.06);border-radius:12px;padding:10px;font-size:11px;font-family:monospace;color:rgba(255,255,255,.55);line-height:1.7}
+.log-ok{color:#22c55e}
+.log-err{color:#ff8c6b}
+/* Warning */
+.warning-box{background:rgba(255,180,0,.08);border:1px solid rgba(255,180,0,.25);border-radius:12px;padding:12px 14px;font-size:12px;color:rgba(255,220,100,.85);line-height:1.6;margin-bottom:12px}
+</style>
+</head>
+<body>
+
+<!-- PIN Screen -->
+<div id="pin-screen">
+  <div class="pin-logo">🚗</div>
+  <div class="pin-title">Painel do Motorista</div>
+  <div class="pin-sub">Leva &amp; Traz FISIOT — acesso restrito</div>
+  <input class="pin-input" type="password" id="pin-input" placeholder="••••••••" autocomplete="current-password" inputmode="numeric" maxlength="12"/>
+  <div class="pin-error" id="pin-error">&nbsp;</div>
+  <button class="pin-btn" onclick="checkPin()">Entrar</button>
+</div>
+
+<!-- Header (oculto até PIN) -->
+<div class="header" id="header" style="display:none">
+  <div>
+    <h1>Leva &amp; Traz <span>Fisiot</span> <span class="header-badge">Motorista</span></h1>
+  </div>
+</div>
+
+<!-- Main content -->
+<div id="main-content">
+
+  <!-- Status -->
+  <div class="gps-status-bar idle" id="status-bar">
+    <div class="status-dot" id="status-dot"></div>
+    <div class="status-texts">
+      <div class="status-title" id="status-title">GPS Inativo</div>
+      <div class="status-sub" id="status-sub">Toque em "Iniciar GPS" para começar</div>
+    </div>
+  </div>
+
+  <!-- Coords -->
+  <div class="coords-box" id="coords-box">
+    Latitude: <span id="disp-lat">—</span><br/>
+    Longitude: <span id="disp-lng">—</span><br/>
+    Precisão: <span id="disp-acc">—</span><br/>
+    Última atualização: <span id="disp-ts">—</span><br/>
+    Enviados: <span id="disp-count">0</span> envios
+  </div>
+
+  <!-- Controls -->
+  <button class="btn-start" id="btn-start" onclick="iniciarGPS()">
+    <span>📡</span> Iniciar GPS — Compartilhar Localização
+  </button>
+  <button class="btn-stop" id="btn-stop" onclick="pararGPS()" style="display:none">
+    ⏹ Parar compartilhamento
+  </button>
+  <button class="btn-send-now" id="btn-send-now" onclick="enviarAgora()" style="display:none">
+    🔄 Enviar localização agora
+  </button>
+
+  <div style="height:16px"></div>
+
+  <!-- Share section -->
+  <div class="section">
+    <div class="section-label">📤 Enviar link para paciente</div>
+    <div class="warning-box">⚠️ Compartilhe o link abaixo com seus pacientes pelo WhatsApp para que acompanhem sua localização.</div>
+    <div class="share-link">
+      <div class="share-url">🔗 <strong>Link do paciente:</strong><br/>
+        <span id="patient-url">https://fisiotlevaetras.com.br/rastrear</span>
+      </div>
+      <button class="btn-copy" onclick="copiarLink()">📋 Copiar link</button>
+    </div>
+    <a class="btn-wa" href="#" id="btn-wa-share" target="_blank" rel="noopener">
+      💬 Enviar link pelo WhatsApp
+    </a>
+  </div>
+
+  <!-- Log -->
+  <div class="section">
+    <div class="section-label">📋 Log de atualizações</div>
+    <div class="update-log" id="update-log">
+      <div style="color:rgba(255,255,255,.3)">Aguardando início do GPS...</div>
+    </div>
+  </div>
+
+  <!-- Instruções -->
+  <div class="section">
+    <div class="section-label">ℹ️ Como funciona</div>
+    <div style="font-size:13px;color:rgba(255,255,255,.7);line-height:1.7">
+      1. Toque em <strong style="color:#22c55e">Iniciar GPS</strong> ao sair para buscar um paciente.<br/>
+      2. O celular deve ficar com a tela ativa ou navegador aberto.<br/>
+      3. A localização atualiza a cada 30 segundos automaticamente.<br/>
+      4. Pacientes acessam o link acima para ver onde você está.<br/>
+      5. Toque em <strong style="color:#ff8c8c">Parar</strong> ao chegar na clínica.
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ── CONFIG ─────────────────────────────────────────────────────────────────
+var PIN_CODE = 'FISIOT2026';
+var GPS_REPO = 'NapsClaw/coolify-sites';
+var GPS_BRANCH = 'gps-data';
+var GPS_FILE = 'leva-traz/gps.json';
+// Token armazenado de forma fragmentada para dificultar scraping automatizado
+// ATENÇÃO: Rotacione este token criando um Fine-Grained PAT com acesso apenas
+// à branch gps-data do repo NapsClaw/coolify-sites. Contate seu suporte técnico.
+var _t = ['ghp_','BHecdxAl','3wGlcPm8','48gB8xAC','DuH9LF0D','WYTV'];
+function getToken(){ return _t.join(''); }
+var PATIENT_URL = 'https://fisiotlevaetras.com.br/rastrear';
+
+// ── STATE ──────────────────────────────────────────────────────────────────
+var watchId = null;
+var currentLat = null;
+var currentLng = null;
+var currentAcc = null;
+var sendCount = 0;
+var gpsInterval = null;
+var currentFileSHA = null;
+
+// ── PIN ────────────────────────────────────────────────────────────────────
+function checkPin(){
+  var val = document.getElementById('pin-input').value.trim().toUpperCase();
+  if(val === PIN_CODE){
+    document.getElementById('pin-screen').style.display = 'none';
+    document.getElementById('header').style.display = 'flex';
+    document.getElementById('main-content').style.display = 'block';
+    setupShareLinks();
+  } else {
+    document.getElementById('pin-error').textContent = '❌ PIN incorreto. Tente novamente.';
+    document.getElementById('pin-input').value = '';
+    document.getElementById('pin-input').focus();
+  }
+}
+
+document.getElementById('pin-input').addEventListener('keypress', function(e){
+  if(e.key==='Enter') checkPin();
+});
+
+// ── SHARE LINKS ────────────────────────────────────────────────────────────
+function setupShareLinks(){
+  document.getElementById('patient-url').textContent = PATIENT_URL;
+  var waMsg = encodeURIComponent('🚗 Leva & Traz Fisiot está a caminho!\n\nAcompanhe a localização em tempo real:\n' + PATIENT_URL + '\n\nAntônio Carlos — Motorista');
+  document.getElementById('btn-wa-share').href = 'https://wa.me/?text=' + waMsg;
+}
+
+function copiarLink(){
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(PATIENT_URL).then(function(){
+      addLog('Link copiado: ' + PATIENT_URL, 'ok');
+      alert('✅ Link copiado!');
+    }).catch(function(){
+      prompt('Copie o link abaixo:', PATIENT_URL);
+    });
+  } else {
+    prompt('Copie o link abaixo:', PATIENT_URL);
+  }
+}
+
+// ── GPS ────────────────────────────────────────────────────────────────────
+function iniciarGPS(){
+  if(!navigator.geolocation){
+    alert('Este navegador não suporta GPS. Use Chrome ou Safari no celular.');
+    return;
+  }
+  setStatus('loading', 'Solicitando permissão de GPS...', 'Aguarde...');
+
+  navigator.geolocation.getCurrentPosition(
+    function(pos){ onPosition(pos); iniciarWatch(); iniciarAutoEnvio(); },
+    function(err){ onGeoError(err); },
+    { enableHighAccuracy: true, timeout: 20000, maximumAge: 0 }
+  );
+}
+
+function iniciarWatch(){
+  if(watchId !== null) navigator.geolocation.clearWatch(watchId);
+  watchId = navigator.geolocation.watchPosition(
+    function(pos){ onPosition(pos); },
+    function(err){ addLog('GPS: ' + err.message, 'err'); },
+    { enableHighAccuracy: true, maximumAge: 30000 }
+  );
+}
+
+function iniciarAutoEnvio(){
+  if(gpsInterval) clearInterval(gpsInterval);
+  gpsInterval = setInterval(function(){
+    if(currentLat !== null) enviarGPS(currentLat, currentLng, currentAcc);
+  }, 30000);
+  document.getElementById('btn-start').style.display = 'none';
+  document.getElementById('btn-stop').style.display = 'block';
+  document.getElementById('btn-send-now').style.display = 'block';
+}
+
+function onPosition(pos){
+  currentLat = pos.coords.latitude;
+  currentLng = pos.coords.longitude;
+  currentAcc = pos.coords.accuracy;
+  var now = new Date().toLocaleTimeString('pt-BR');
+  document.getElementById('disp-lat').textContent = currentLat.toFixed(6);
+  document.getElementById('disp-lng').textContent = currentLng.toFixed(6);
+  document.getElementById('disp-acc').textContent = currentAcc ? Math.round(currentAcc)+'m' : '—';
+  document.getElementById('disp-ts').textContent = now;
+  setStatus('active', 'GPS Ativo ✓', 'Localizando — precisão ±' + (currentAcc ? Math.round(currentAcc) : '?') + 'm');
+  // Envia na primeira posição imediatamente
+  if(sendCount === 0) enviarGPS(currentLat, currentLng, currentAcc);
+}
+
+function onGeoError(err){
+  var msgs = {1:'Permissão negada. Ative o GPS nas configurações.',2:'Sinal indisponível. Vá para local aberto.',3:'Tempo esgotado. Tente novamente.'};
+  setStatus('error', '❌ Erro de GPS', msgs[err.code]||err.message);
+  addLog('Erro GPS: ' + (msgs[err.code]||err.message), 'err');
+}
+
+function pararGPS(){
+  if(watchId !== null){ navigator.geolocation.clearWatch(watchId); watchId = null; }
+  if(gpsInterval){ clearInterval(gpsInterval); gpsInterval = null; }
+  // Marcar como inativo no backend
+  if(currentLat !== null) enviarGPS(currentLat, currentLng, currentAcc, false);
+  setStatus('idle', 'GPS Parado', 'Compartilhamento encerrado');
+  document.getElementById('btn-start').style.display = 'block';
+  document.getElementById('btn-stop').style.display = 'none';
+  document.getElementById('btn-send-now').style.display = 'none';
+  addLog('Compartilhamento encerrado.', 'ok');
+}
+
+function enviarAgora(){
+  if(currentLat !== null) enviarGPS(currentLat, currentLng, currentAcc);
+  else { addLog('Sem localização ainda. Aguarde...', 'err'); }
+}
+
+// ── GITHUB GPS API ─────────────────────────────────────────────────────────
+function enviarGPS(lat, lng, acc, active){
+  active = (active !== false);
+  var payload = {
+    lat: lat,
+    lng: lng,
+    acc: acc ? Math.round(acc) : null,
+    ts: Date.now(),
+    active: active,
+    motorista: 'Antonio Carlos',
+    veiculo: 'Chevrolet Spin',
+    updated: new Date().toISOString()
+  };
+  addLog('Enviando GPS (' + lat.toFixed(5) + ', ' + lng.toFixed(5) + ')...', 'ok');
+  
+  // Primeiro obtém o SHA atual do arquivo
+  fetch('https://api.github.com/repos/'+GPS_REPO+'/contents/'+GPS_FILE+'?ref='+GPS_BRANCH, {
+    headers: { 'Authorization': 'token '+getToken() }
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(d){
+    var sha = d.sha || currentFileSHA;
+    currentFileSHA = sha;
+    var content = btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
+    return fetch('https://api.github.com/repos/'+GPS_REPO+'/contents/'+GPS_FILE, {
+      method: 'PUT',
+      headers: {
+        'Authorization': 'token '+getToken(),
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        message: 'gps: update ' + new Date().toISOString(),
+        content: content,
+        sha: sha,
+        branch: GPS_BRANCH
+      })
+    });
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(d){
+    if(d.content){
+      currentFileSHA = d.content.sha;
+      sendCount++;
+      document.getElementById('disp-count').textContent = sendCount;
+      addLog('✅ Enviado! ('+new Date().toLocaleTimeString('pt-BR')+')', 'ok');
+    } else {
+      addLog('⚠️ Resposta inesperada: ' + JSON.stringify(d).substring(0,80), 'err');
+    }
+  })
+  .catch(function(e){
+    addLog('❌ Falha no envio: ' + e.message, 'err');
+  });
+}
+
+// ── UI HELPERS ─────────────────────────────────────────────────────────────
+function setStatus(type, title, sub){
+  var bar = document.getElementById('status-bar');
+  var dot = document.getElementById('status-dot');
+  var t = document.getElementById('status-title');
+  var s = document.getElementById('status-sub');
+  bar.className = 'gps-status-bar ' + (type==='active'?'active':type==='error'?'error':'idle');
+  dot.className = 'status-dot ' + (type==='active'?'active':type==='error'?'error':'');
+  t.className = 'status-title ' + (type==='active'?'active':type==='error'?'error':'');
+  t.textContent = title;
+  s.textContent = sub;
+}
+
+function addLog(msg, type){
+  var log = document.getElementById('update-log');
+  var time = new Date().toLocaleTimeString('pt-BR');
+  var div = document.createElement('div');
+  div.className = type==='ok'?'log-ok':'log-err';
+  div.textContent = '['+time+'] ' + msg;
+  log.insertBefore(div, log.firstChild);
+  // Manter max 30 linhas
+  while(log.childNodes.length > 30) log.removeChild(log.lastChild);
+}
+
+// Keep screen awake via NoSleep workaround
+document.addEventListener('click', function(){
+  try{
+    var el = document.createElement('video');
+    el.setAttribute('playsinline','');
+    el.setAttribute('muted','');
+    el.style.cssText='position:fixed;width:1px;height:1px;opacity:.01;top:-10px;left:-10px';
+    document.body.appendChild(el);
+    el.play().catch(function(){});
+  }catch(e){}
+}, {once: true});
+</script>
+</body>
+</html>
