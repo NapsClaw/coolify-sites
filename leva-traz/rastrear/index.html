@@ -172,7 +172,8 @@ body{font-family:'Inter',sans-serif;background:#09000c;color:#fff;min-height:100
 
 <script>
 // ── CONFIG ─────────────────────────────────────────────────────────────────
-var GPS_API = 'https://api.github.com/repos/NapsClaw/coolify-sites/contents/leva-traz/gps.json?ref=gps-data';
+// Endpoint seguro server-side — sem acesso a serviços externos no cliente
+var GPS_ENDPOINT     = '/gps-api.php';
 var REFRESH_INTERVAL = 90; // segundos
 var CLINICA_LAT = -19.6311;
 var CLINICA_LNG = -43.8988;
@@ -217,11 +218,14 @@ function initMap(lat, lng){
 // ── GPS FETCH ──────────────────────────────────────────────────────────────
 function atualizarGPS(){
   document.getElementById('status-main').textContent = 'Verificando...';
-  fetch(GPS_API, { headers: { 'Cache-Control': 'no-cache' }, cache: 'no-store' })
-    .then(function(r){ return r.json(); })
-    .then(function(d){
-      if(!d || !d.content){ showError('Sem dados de localização'); return; }
-      var gps = JSON.parse(atob(d.content.replace(/\n/g,'')));
+  // Adiciona timestamp na query para evitar cache de CDN/proxy
+  fetch(GPS_ENDPOINT + '?t=' + Date.now(), { cache: 'no-store' })
+    .then(function(r){
+      if(!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    })
+    .then(function(gps){
+      if(!gps) { showError('Sem dados de localização'); return; }
       processGPS(gps);
     })
     .catch(function(e){

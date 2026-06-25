@@ -155,25 +155,19 @@ body{font-family:'Inter',sans-serif;background:#08000a;color:#fff;min-height:100
 
 <script>
 // ── CONFIG ─────────────────────────────────────────────────────────────────
-var PIN_CODE = 'FISIOT2026';
-var GPS_REPO = 'NapsClaw/coolify-sites';
-var GPS_BRANCH = 'gps-data';
-var GPS_FILE = 'leva-traz/gps.json';
-// Token armazenado de forma fragmentada para dificultar scraping automatizado
-// ATENÇÃO: Rotacione este token criando um Fine-Grained PAT com acesso apenas
-// à branch gps-data do repo NapsClaw/coolify-sites. Contate seu suporte técnico.
-var _t = ['ghp_','BHecdxAl','3wGlcPm8','48gB8xAC','DuH9LF0D','WYTV'];
-function getToken(){ return _t.join(''); }
-var PATIENT_URL = 'https://fisiotlevaetras.com.br/rastrear';
+var PIN_CODE    = 'FISIOT2026';
+// Endpoint seguro server-side — sem token externo no cliente
+var GPS_ENDPOINT  = '/gps-api.php';
+var GPS_WRITE_KEY = 'FISIOT2026';
+var PATIENT_URL   = 'https://fisiotlevaetras.com.br/rastrear';
 
 // ── STATE ──────────────────────────────────────────────────────────────────
-var watchId = null;
+var watchId    = null;
 var currentLat = null;
 var currentLng = null;
 var currentAcc = null;
-var sendCount = 0;
+var sendCount  = 0;
 var gpsInterval = null;
-var currentFileSHA = null;
 
 // ── PIN ────────────────────────────────────────────────────────────────────
 function checkPin(){
@@ -285,53 +279,32 @@ function enviarAgora(){
   else { addLog('Sem localização ainda. Aguarde...', 'err'); }
 }
 
-// ── GITHUB GPS API ─────────────────────────────────────────────────────────
+// ── GPS ENDPOINT (servidor próprio — sem token externo) ────────────────────
 function enviarGPS(lat, lng, acc, active){
   active = (active !== false);
   var payload = {
-    lat: lat,
-    lng: lng,
-    acc: acc ? Math.round(acc) : null,
-    ts: Date.now(),
-    active: active,
-    motorista: 'Antonio Carlos',
-    veiculo: 'Chevrolet Spin',
-    updated: new Date().toISOString()
+    key:    GPS_WRITE_KEY,
+    lat:    lat,
+    lng:    lng,
+    acc:    acc ? Math.round(acc) : null,
+    ts:     Date.now(),
+    active: active
   };
   addLog('Enviando GPS (' + lat.toFixed(5) + ', ' + lng.toFixed(5) + ')...', 'ok');
-  
-  // Primeiro obtém o SHA atual do arquivo
-  fetch('https://api.github.com/repos/'+GPS_REPO+'/contents/'+GPS_FILE+'?ref='+GPS_BRANCH, {
-    headers: { 'Authorization': 'token '+getToken() }
+
+  fetch(GPS_ENDPOINT, {
+    method:  'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body:    JSON.stringify(payload)
   })
   .then(function(r){ return r.json(); })
   .then(function(d){
-    var sha = d.sha || currentFileSHA;
-    currentFileSHA = sha;
-    var content = btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
-    return fetch('https://api.github.com/repos/'+GPS_REPO+'/contents/'+GPS_FILE, {
-      method: 'PUT',
-      headers: {
-        'Authorization': 'token '+getToken(),
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        message: 'gps: update ' + new Date().toISOString(),
-        content: content,
-        sha: sha,
-        branch: GPS_BRANCH
-      })
-    });
-  })
-  .then(function(r){ return r.json(); })
-  .then(function(d){
-    if(d.content){
-      currentFileSHA = d.content.sha;
+    if(d.ok){
       sendCount++;
       document.getElementById('disp-count').textContent = sendCount;
       addLog('✅ Enviado! ('+new Date().toLocaleTimeString('pt-BR')+')', 'ok');
     } else {
-      addLog('⚠️ Resposta inesperada: ' + JSON.stringify(d).substring(0,80), 'err');
+      addLog('⚠️ Resposta: ' + JSON.stringify(d).substring(0,80), 'err');
     }
   })
   .catch(function(e){

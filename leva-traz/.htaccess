@@ -1,0 +1,22 @@
+# Leva & Traz Fisiot — Apache config
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  # Garante que /rastrear e /motorista sirvam os diretórios index
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^rastrear/?$ /rastrear/index.html [L]
+  RewriteRule ^motorista/?$ /motorista/index.html [L]
+</IfModule>
+
+# Cache: PHP endpoint nunca cacheado
+<FilesMatch "gps-api\.php">
+  Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+  Header set Pragma "no-cache"
+</FilesMatch>
+
+# Cache: assets estáticos com versão longa
+<FilesMatch "\.(jpg|jpeg|png|gif|webp|svg|ico|woff2?|ttf)$">
+  Header set Cache-Control "public, max-age=31536000, immutable"
+</FilesMatch>
