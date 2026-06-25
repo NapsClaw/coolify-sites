@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<meta name="theme-color" content="#CC0000"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="Leva &amp; Traz GPS"/>
+<link rel="manifest" href="/manifest.json"/>
+<link rel="apple-touch-icon" href="/icon-192.png"/>
+<title>Acompanhar Leva &amp; Traz — Localização do Motorista</title>
+<!-- Leaflet.js map -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV/XN/WPgU=" crossorigin=""></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#09000c;color:#fff;min-height:100vh}
+.header{background:linear-gradient(135deg,#CC0000,#8B0000);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;box-shadow:0 2px 20px rgba(0,0,0,.6)}
+.header-left{}
+.header-title{font-size:19px;font-weight:900;font-family:'Inter',sans-serif}
+.header-title span{color:#FFD700}
+.header-sub{font-size:10px;color:rgba(255,255,255,.75);text-transform:uppercase;letter-spacing:1.5px;margin-top:2px}
+.refresh-btn{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);color:#fff;padding:8px 14px;border-radius:20px;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap}
+.refresh-btn:active{background:rgba(255,255,255,.25)}
+
+/* Status Card */
+.status-card{margin:16px;border-radius:16px;padding:16px 18px;transition:background .4s,border .4s}
+.status-card.waiting{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1)}
+.status-card.active{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.35)}
+.status-card.old{background:rgba(255,180,0,.08);border:1px solid rgba(255,180,0,.3)}
+.status-card.offline{background:rgba(255,100,50,.08);border:1px solid rgba(255,100,50,.25)}
+.status-row{display:flex;align-items:center;gap:12px}
+.status-icon-wrap{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;background:rgba(255,255,255,.07)}
+.status-texts{}
+.status-main{font-size:16px;font-weight:900;color:#fff}
+.status-main.active{color:#22c55e}
+.status-main.old{color:#FFD700}
+.status-detail{font-size:12px;color:rgba(255,255,255,.6);margin-top:3px;line-height:1.4}
+.dot-anim{display:inline-block;width:8px;height:8px;border-radius:50%;background:#22c55e;animation:pulse 1.5s infinite;margin-right:6px;vertical-align:middle}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.5)}}
+
+/* Map */
+#map-wrap{margin:0 16px 16px;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.1);position:relative}
+#map{height:260px;background:#1a2b3d}
+.map-overlay-msg{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(9,0,12,.85);z-index:50;text-align:center;padding:24px;gap:12px}
+.map-overlay-msg .emo{font-size:48px}
+.map-overlay-msg .msg-title{font-size:16px;font-weight:800;color:#fff}
+.map-overlay-msg .msg-sub{font-size:13px;color:rgba(255,255,255,.6);line-height:1.5}
+.map-note{font-size:11px;color:rgba(255,255,255,.45);text-align:center;padding:6px 16px 14px;line-height:1.5}
+
+/* Action Buttons */
+.action-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 16px 16px}
+.btn-maps{background:linear-gradient(135deg,#1a73e8,#0d47a1);border:none;color:#fff;padding:14px 10px;border-radius:14px;font-size:14px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;transition:transform .1s}
+.btn-waze{background:linear-gradient(135deg,#00d2ff,#007bcc);border:none;color:#fff;padding:14px 10px;border-radius:14px;font-size:14px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;text-decoration:none;transition:transform .1s}
+.btn-maps:active,.btn-waze:active{transform:scale(.97)}
+
+/* Driver Card */
+.driver-card{margin:0 16px 16px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:14px}
+.driver-inner{display:flex;align-items:center;gap:12px}
+.driver-ava{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#CC0000,#8B0000);border:2px solid #FFD700;overflow:hidden;flex-shrink:0}
+.driver-ava img{width:100%;height:100%;object-fit:cover;display:block}
+.driver-info{}
+.driver-name{font-size:15px;font-weight:800;color:#fff}
+.driver-car{font-size:12px;color:rgba(255,255,255,.55);margin-top:2px}
+.driver-status{font-size:11px;color:#22c55e;font-weight:700;margin-top:4px;display:flex;align-items:center;gap:4px}
+
+/* Contact */
+.contact-section{margin:0 16px 16px}
+.contact-title{font-size:11px;font-weight:800;color:#FFD700;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px}
+.contact-btns{display:flex;flex-direction:column;gap:8px}
+.btn-wa-contact{display:block;text-decoration:none;background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.3);color:#fff;padding:13px 16px;border-radius:12px;font-size:14px;font-weight:700;text-align:center}
+.btn-wa-contact.red{background:rgba(204,0,0,.15);border-color:rgba(204,0,0,.3)}
+
+/* Home screen hint */
+.home-hint{margin:0 16px 16px;background:rgba(255,215,0,.07);border:1px solid rgba(255,215,0,.2);border-radius:14px;padding:14px}
+.hint-title{font-size:12px;font-weight:800;color:#FFD700;margin-bottom:8px}
+.hint-steps{font-size:12px;color:rgba(255,255,255,.7);line-height:1.8}
+.hint-steps strong{color:#fff}
+
+/* Auto refresh countdown */
+.auto-refresh-bar{text-align:center;padding:8px 16px;font-size:11px;color:rgba(255,255,255,.35)}
+
+/* Disclaimer */
+.disclaimer{text-align:center;padding:8px 16px 24px;font-size:11px;color:rgba(255,255,255,.3);line-height:1.6}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <div class="header-title">Leva &amp; Traz <span>Fisiot</span></div>
+    <div class="header-sub">🚗 Localização do motorista</div>
+  </div>
+  <button class="refresh-btn" onclick="atualizarGPS()">🔄 Atualizar</button>
+</div>
+
+<!-- Status -->
+<div class="status-card waiting" id="status-card">
+  <div class="status-row">
+    <div class="status-icon-wrap" id="status-icon">⏳</div>
+    <div class="status-texts">
+      <div class="status-main" id="status-main">Verificando localização...</div>
+      <div class="status-detail" id="status-detail">Buscando posição do motorista</div>
+    </div>
+  </div>
+</div>
+
+<!-- Map -->
+<div id="map-wrap">
+  <div id="map"></div>
+  <div class="map-overlay-msg" id="map-overlay">
+    <div class="emo">🗺️</div>
+    <div class="msg-title">Aguardando localização</div>
+    <div class="msg-sub">Quando o motorista iniciar o GPS,<br/>o mapa aparecerá aqui.</div>
+  </div>
+</div>
+<div class="map-note" id="map-note">Localização aproximada do Leva &amp; Traz — pode ter pequenas variações</div>
+
+<!-- Action Buttons -->
+<div class="action-row">
+  <a href="#" class="btn-maps" id="btn-gmaps" onclick="return false">
+    <span>🗺️</span> Google Maps
+  </a>
+  <a href="#" class="btn-waze" id="btn-waze" onclick="return false">
+    <span>🚗</span> Waze
+  </a>
+</div>
+
+<!-- Driver info -->
+<div class="driver-card">
+  <div class="driver-inner">
+    <div class="driver-ava">
+      <img src="/antonio-carlos-motorista.jpg?v=20260608z" alt="Motorista Antônio Carlos" loading="lazy"/>
+    </div>
+    <div class="driver-info">
+      <div class="driver-name">Antônio Carlos</div>
+      <div class="driver-car">Chevrolet Spin — Envelopado Fisiot</div>
+      <div class="driver-status" id="driver-status-line">
+        <span>●</span> <span id="driver-active-text">Status desconhecido</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Contacts -->
+<div class="contact-section">
+  <div class="contact-title">📞 Falar com a equipe</div>
+  <div class="contact-btns">
+    <a href="https://wa.me/553195918498?text=Ol%C3%A1%20Ant%C3%B4nio%20Carlos%21%20Estou%20acompanhando%20o%20Leva%20%26%20Traz%20Fisiot." class="btn-wa-contact" target="_blank" rel="noopener">
+      💬 WhatsApp Antônio Carlos — Motorista
+    </a>
+    <a href="https://wa.me/553192594953?text=Ol%C3%A1%20Wilson%21%20Gostaria%20de%20falar%20sobre%20o%20Leva%20%26%20Traz%20Fisiot." class="btn-wa-contact red" target="_blank" rel="noopener">
+      💬 WhatsApp Wilson — Administrador
+    </a>
+  </div>
+</div>
+
+<!-- Home screen hint -->
+<div class="home-hint">
+  <div class="hint-title">📲 Salvar na tela inicial do celular</div>
+  <div class="hint-steps">
+    <strong>iPhone (Safari):</strong> Toque em <strong>Compartilhar ↑</strong> → <strong>"Adicionar à Tela de Início"</strong><br/>
+    <strong>Android (Chrome):</strong> Menu <strong>⋮</strong> → <strong>"Adicionar à tela inicial"</strong>
+  </div>
+</div>
+
+<!-- Auto refresh indicator -->
+<div class="auto-refresh-bar" id="auto-refresh-bar">Atualiza automaticamente em <span id="countdown">90</span>s</div>
+<div class="disclaimer">Localização aproximada do Leva &amp; Traz FISIOT.<br/>Não substitui comunicação direta com o motorista.</div>
+
+<script>
+// ── CONFIG ─────────────────────────────────────────────────────────────────
+var GPS_API = 'https://api.github.com/repos/NapsClaw/coolify-sites/contents/leva-traz/gps.json?ref=gps-data';
+var REFRESH_INTERVAL = 90; // segundos
+var CLINICA_LAT = -19.6311;
+var CLINICA_LNG = -43.8988;
+var STALE_THRESHOLD = 10 * 60 * 1000; // 10 minutos = dado velho
+
+// ── MAP ────────────────────────────────────────────────────────────────────
+var map = null;
+var driverMarker = null;
+var clinicMarker = null;
+
+function initMap(lat, lng){
+  if(!map){
+    map = L.map('map', { zoomControl: true, attributionControl: false }).setView([lat, lng], 15);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19, attribution: '© OpenStreetMap'
+    }).addTo(map);
+    // Ícone da clínica
+    var clinicIcon = L.divIcon({
+      html: '<div style="background:#CC0000;border:3px solid #fff;border-radius:50%;width:18px;height:18px;box-shadow:0 0 0 3px rgba(204,0,0,.4)"></div>',
+      iconAnchor:[9,9], iconSize:[18,18]
+    });
+    clinicMarker = L.marker([CLINICA_LAT, CLINICA_LNG], {icon: clinicIcon})
+      .addTo(map)
+      .bindPopup('<b>🏥 Clínica Fisiot</b><br/>Rua Dr. Benjamin Vieira, 27<br/>Joana D\'Arc, Lagoa Santa MG');
+  }
+  // Ícone do motorista
+  var driverIcon = L.divIcon({
+    html: '<div style="background:#22c55e;border:3px solid #fff;border-radius:50% 50% 50% 0;width:28px;height:28px;transform:rotate(-45deg);box-shadow:0 0 0 3px rgba(34,197,94,.4)"><span style="display:block;transform:rotate(45deg);text-align:center;line-height:22px;font-size:14px">🚗</span></div>',
+    iconAnchor:[14,28], iconSize:[28,28]
+  });
+  if(driverMarker){
+    driverMarker.setLatLng([lat, lng]);
+  } else {
+    driverMarker = L.marker([lat, lng], {icon: driverIcon})
+      .addTo(map)
+      .bindPopup('<b>🚗 Antônio Carlos</b><br/>Leva &amp; Traz Fisiot<br/><small>Localização aproximada</small>');
+  }
+  map.setView([lat, lng], 15);
+  document.getElementById('map-overlay').style.display = 'none';
+}
+
+// ── GPS FETCH ──────────────────────────────────────────────────────────────
+function atualizarGPS(){
+  document.getElementById('status-main').textContent = 'Verificando...';
+  fetch(GPS_API, { headers: { 'Cache-Control': 'no-cache' }, cache: 'no-store' })
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      if(!d || !d.content){ showError('Sem dados de localização'); return; }
+      var gps = JSON.parse(atob(d.content.replace(/\n/g,'')));
+      processGPS(gps);
+    })
+    .catch(function(e){
+      showError('Falha ao buscar localização: ' + e.message);
+    });
+}
+
+function processGPS(gps){
+  var now = Date.now();
+  var age = gps.ts ? (now - gps.ts) : null;
+  var isActive = gps.active === true;
+  var hasLocation = gps.lat !== null && gps.lng !== null;
+  var isStale = age !== null && age > STALE_THRESHOLD;
+
+  if(hasLocation){
+    initMap(gps.lat, gps.lng);
+    // Botões de navegação
+    var gmapsUrl = 'https://www.google.com/maps/dir/?api=1&destination='+gps.lat+','+gps.lng;
+    var wazeUrl = 'https://waze.com/ul?ll='+gps.lat+','+gps.lng+'&navigate=yes';
+    document.getElementById('btn-gmaps').href = gmapsUrl;
+    document.getElementById('btn-gmaps').onclick = null;
+    document.getElementById('btn-waze').href = wazeUrl;
+    document.getElementById('btn-waze').onclick = null;
+  }
+
+  var ageText = '';
+  if(age !== null){
+    if(age < 60000) ageText = 'há menos de 1 minuto';
+    else if(age < 3600000) ageText = 'há ' + Math.round(age/60000) + ' min';
+    else ageText = 'há mais de 1 hora';
+  }
+
+  var card = document.getElementById('status-card');
+  var icon = document.getElementById('status-icon');
+  var main = document.getElementById('status-main');
+  var detail = document.getElementById('status-detail');
+  var drLine = document.getElementById('driver-status-line');
+  var drText = document.getElementById('driver-active-text');
+
+  if(!hasLocation){
+    // Sem localização publicada ainda
+    card.className = 'status-card waiting';
+    icon.textContent = '⏳';
+    main.className = 'status-main';
+    main.textContent = 'Aguardando localização do motorista';
+    detail.textContent = 'O motorista ainda não iniciou o GPS hoje.';
+    drLine.style.color = 'rgba(255,255,255,.4)';
+    drText.textContent = 'GPS não iniciado';
+    document.getElementById('map-note').textContent = 'Quando o motorista iniciar o GPS, o mapa mostrará a posição.';
+  } else if(!isActive || isStale){
+    // Localização antiga / motorista parou
+    card.className = 'status-card old';
+    icon.textContent = '🅿️';
+    main.className = 'status-main old';
+    main.textContent = isStale ? 'Última localização conhecida' : 'Motorista parou o GPS';
+    detail.textContent = 'Posição de ' + ageText + (gps.lat ? (' — aprox. ' + gps.lat.toFixed(4) + ', ' + gps.lng.toFixed(4)) : '') + '. Contate diretamente pelo WhatsApp.';
+    drLine.style.color = '#FFD700';
+    drText.textContent = isStale ? 'Sinal perdido — ' + ageText : 'Encerrou o compartilhamento';
+    document.getElementById('map-note').textContent = 'Última localização registrada ' + ageText + '. Pode não refletir a posição atual.';
+  } else {
+    // Ativo e recente
+    card.className = 'status-card active';
+    icon.innerHTML = '<span class="dot-anim"></span>🚗';
+    main.className = 'status-main active';
+    main.innerHTML = '<span class="dot-anim"></span>Motorista a caminho!';
+    detail.textContent = 'Localização atualizada ' + ageText + '. Precisão: ±' + (gps.acc || '?') + 'm';
+    drLine.style.color = '#22c55e';
+    drText.textContent = 'Em movimento — atualizado ' + ageText;
+    document.getElementById('map-note').textContent = 'Localização aproximada do Leva & Traz FISIOT — atualizada ' + ageText;
+  }
+}
+
+function showError(msg){
+  var card = document.getElementById('status-card');
+  card.className = 'status-card offline';
+  document.getElementById('status-icon').textContent = '📡';
+  document.getElementById('status-main').className = 'status-main';
+  document.getElementById('status-main').textContent = 'Sem sinal no momento';
+  document.getElementById('status-detail').textContent = msg;
+}
+
+// ── COUNTDOWN & AUTO REFRESH ────────────────────────────────────────────────
+var countdown = REFRESH_INTERVAL;
+function tickCountdown(){
+  countdown--;
+  var el = document.getElementById('countdown');
+  if(el) el.textContent = countdown;
+  if(countdown <= 0){
+    countdown = REFRESH_INTERVAL;
+    atualizarGPS();
+  }
+}
+setInterval(tickCountdown, 1000);
+
+// Primeira carga
+atualizarGPS();
+
+// Mostrar página quando focada (volta do WhatsApp etc.)
+document.addEventListener('visibilitychange', function(){
+  if(document.visibilityState === 'visible'){ countdown = 5; }
+});
+</script>
+</body>
+</html>
