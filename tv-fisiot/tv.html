@@ -610,7 +610,7 @@ function falarTV(texto){
   console.log('[TV] Falando:', texto, '| voz:', voz ? voz.name : 'padrão');
   var n = 0;
   function proximo(){
-    if(n >= 5){ console.log('[TV] Chamada concluída (5 repetições)'); return; }
+    if(n >= 2){ console.log('[TV] Chamada concluída (2 repetições)'); return; }
     n++;
     var u = new SpeechSynthesisUtterance(texto);
     u.lang   = 'pt-BR';
@@ -1206,7 +1206,7 @@ var CFG = {
     },
     grupos:{
       manha:{
-        '135':['07:00','07:40','08:20','09:00','09:40','10:20'],
+        '135':['07:00','07:40','08:20','09:40','10:20'],
         '24':['08:20','09:00','09:40','10:20','11:00']
       },
       tarde:[]
@@ -1311,7 +1311,7 @@ function mostrarChamadaOverlay(data){
     }
   }
 
-  // Fala em voz alta (5 repetições)
+  // Fala em voz alta (2 repetições)
   falarTV(texto);
 
   // Contador de repetições
@@ -1320,9 +1320,9 @@ function mostrarChamadaOverlay(data){
   var repEl = document.getElementById('chamada-rep');
   function atualizarRep(){
     chamadaRepCount++;
-    if(chamadaRepCount<=5){
-      repEl.textContent = 'Repetição '+chamadaRepCount+' de 5';
-      if(chamadaRepCount<5) repTimer = setTimeout(atualizarRep, 4500);
+    if(chamadaRepCount<=2){
+      repEl.textContent = 'Repetição '+chamadaRepCount+' de 2';
+      if(chamadaRepCount<2) repTimer = setTimeout(atualizarRep, 4500);
       else repEl.textContent = 'Chamada concluída';
     }
   }
