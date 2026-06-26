@@ -108,7 +108,7 @@ body{
   object-position:center center;
   filter:blur(30px) brightness(0.28) saturate(1.4);
   opacity:0;
-  transition:opacity .55s ease;
+  /* SEM transition CSS — controlada via JS para evitar flash preto */
   pointer-events:none;
   display:block;
   z-index:0;
@@ -120,7 +120,7 @@ body{
   width:100%;height:100%;
   object-fit:cover;
   object-position:center 20%;
-  transition:opacity .7s ease;
+  /* SEM transition CSS — controlada via JS no momento exato do swap */
   display:block;
   z-index:1;
 }
@@ -925,6 +925,13 @@ var overlayTimer = null;
 var chamadaRepCount = 0;
 var repTimer = null;
 var lastChamadaTS = 0;
+// ── Controle de preload ──────────────────────────────────────
+// slideSeq previne que callbacks de preload de slides anteriores
+// sejam aplicados depois que o slide já mudou.
+// preloadCache guarda referências para o browser não descartar
+// a requisição de imagens em andamento.
+var slideSeq    = 0;
+var preloadCache = [];
 
 // Dots
 var dotsEl = document.getElementById('dots-area');
@@ -934,8 +941,20 @@ for(var i=0;i<N;i++){
   dotsEl.appendChild(d);
 }
 
+// ============================================================
+// showSlide — VERSÃO SEM TELA PRETA (2026-06-26)
+//
+// Estratégia:
+//   1. Atualiza texto/dots/progress IMEDIATAMENTE (sem esperar imagem).
+//   2. Pré-carrega a nova imagem com new Image() SEM esconder o slide atual.
+//   3. Só quando a imagem estiver em cache faz o swap:
+//      opacity→0 (instantâneo, sem transition) → muda src → opacity→1 (fade via rAF).
+//   4. slideSeq cancela callbacks obsoletos se o slide mudou antes do preload.
+//   5. Safety timeout 4 s: se a imagem não carregou, usa equipe-30anos.jpg.
+// ============================================================
 function showSlide(n){
   cur = n;
+  var mySeq = ++slideSeq;   // sello único desta chamada
   var s        = slides[n];
   var bg       = document.getElementById('slide-bg');
   var bgBlur   = document.getElementById('slide-bg-blur');
@@ -947,98 +966,177 @@ function showSlide(n){
   var isVitrine = (s.type === 'vitrine');
   var isPoster  = (s.type === 'poster');
 
-  // Mostra/oculta vitrine vs poster vs slide normal
+  // ── UI: mostra/oculta elementos de camada ─────────────────
   grid.style.display    = isVitrine ? 'block' : 'none';
   content.style.display = (isVitrine || isPoster) ? 'none' : 'block';
   gradient.style.display= (isVitrine || isPoster) ? 'none' : 'block';
 
-  // Fade out bg + blur bg
-  bg.style.opacity     = '0';
-  bgBlur.style.opacity = '0';
-
-  setTimeout(function(){
-    bg.style.objectPosition = s.pos || 'center center';
-
-    if(isPoster){
-      // ─── Modo Poster: detecta orientação da arte ──────────────
-      // ratio ≥ 1.44 → horizontal → cover (preenche área, como referência Wilson)
-      // ratio < 1.44 → vertical/quadrado → contain + blur de fundo (arte inteira legível)
-      var imgSrc = s.img;
-      bg.onload  = null;
-      bg.onerror = null;
-
-      function aplicarModoPoster(){
-        var ratio = (bg.naturalWidth && bg.naturalHeight)
-          ? (bg.naturalWidth / bg.naturalHeight) : 1;
-        if(ratio >= 1.44){
-          // Horizontal: fill com cover — sem barras pretas, preenche TV
-          bg.style.objectFit   = 'cover';
-          bgBlur.style.opacity = '0';
-          slideArea.className  = 'mode-poster-h';
-        } else {
-          // Vertical / quadrado: contain centrado + fundo blur da mesma arte
-          bg.style.objectFit   = 'contain';
-          bgBlur.src           = imgSrc;
-          bgBlur.style.opacity = '1';
-          slideArea.className  = 'mode-poster-v';
-        }
-        bg.style.opacity = '1';
-      }
-
-      bg.onload  = aplicarModoPoster;
-      bg.onerror = function(){
-        bg.src = 'equipe-30anos.jpg';
-        bg.style.objectFit   = 'cover';
-        bgBlur.style.opacity = '0';
-        slideArea.className  = 'mode-poster-h';
-        bg.style.opacity     = '1';
-      };
-      bg.src = imgSrc;
-      // Imagem já em cache: complete pode ser true antes do onload disparar
-      if(bg.complete && bg.naturalWidth > 0){
-        bg.onload = null;
-        aplicarModoPoster();
-      }
-
-    } else if(isVitrine){
-      slideArea.className  = 'mode-vitrine';
-      bg.style.objectFit   = 'cover';
-      bg.style.opacity     = '0'; // vitrine usa o grid, não a img bg
-      bgBlur.style.opacity = '0';
-
-    } else {
-      // ─── Slide normal: foto de fundo + texto overlay ──────────
-      slideArea.className  = 'mode-normal';
-      bg.onerror = function(){
-        bg.src = 'equipe-30anos.jpg';
-        bg.style.objectPosition = 'center 30%';
-        bg.style.objectFit = 'cover';
-      };
-      bg.src             = s.img;
-      bg.style.objectFit = s.fit || 'cover';
-      bg.style.opacity   = '1';
-      bgBlur.style.opacity = '0';
-    }
-  }, 300);
-
+  // ── Texto (atualizado imediatamente, antes do preload) ─────
   if(!isVitrine && !isPoster){
     document.getElementById('slide-title').innerHTML = s.t;
     document.getElementById('slide-sub').innerHTML   = s.s;
     var badge = document.getElementById('slide-badge');
-    if(s.b){ badge.textContent = s.b; badge.style.display='inline-block'; }
-    else { badge.style.display='none'; }
+    if(s.b){ badge.textContent=s.b; badge.style.display='inline-block'; }
+    else    { badge.style.display='none'; }
   }
 
-  // Dots
+  // ── Dots e barra de progresso ────────────────────────────
   for(var i=0;i<N;i++){
     var dot=document.getElementById('dot'+i);
-    if(dot) dot.className = (i===n)?'dot on':'dot';
+    if(dot) dot.className=(i===n)?'dot on':'dot';
+  }
+  if(!overlayAtivo){ startTime=Date.now(); updateProgress(); }
+
+  // ── VITRINE: grid (z-index:3) já cobre bg — não toca opacity ─
+  // Não esconder bg evita flash preto antes do grid ser pintado.
+  if(isVitrine){
+    slideArea.className  = 'mode-vitrine';
+    bgBlur.style.transition = 'none';
+    bgBlur.style.opacity = '0';
+    preloadAhead(n);   // pré-carrega os próximos slides enquanto vitrine exibe
+    return;
   }
 
-  if(!overlayAtivo){
-    startTime = Date.now();
-    updateProgress();
+  var imgSrc = s.img;
+
+  // ── Aplica o slide (chamado quando imagem já está em cache) ─
+  function aplicarSlide(natW, natH, finalSrc){
+    if(slideSeq !== mySeq) return;  // slide mudou — descarta
+
+    bg.onload  = null;
+    bg.onerror = null;
+
+    // Determina modo/fit baseado nas dimensões reais da imagem
+    var targetFit, targetClass, useBlur;
+    if(isPoster){
+      var ratio = (natW && natH) ? (natW / natH) : 1;
+      // ratio ≥ 1.44 → arte horizontal → cover preenche TV (sem barras)
+      // ratio < 1.44 → arte vertical/quadrada → contain + blur lateral
+      useBlur    = (ratio < 1.44);
+      targetFit  = useBlur ? 'contain' : 'cover';
+      targetClass= useBlur ? 'mode-poster-v' : 'mode-poster-h';
+    } else {
+      // Slide normal: foto de fundo + texto overlay
+      targetFit  = s.fit || 'cover';
+      targetClass= 'mode-normal';
+      useBlur    = false;
+    }
+
+    slideArea.className     = targetClass;
+    bg.style.objectFit      = targetFit;
+    bg.style.objectPosition = s.pos || 'center center';
+
+    // ── Swap atômico:
+    //   1. Desativa transition → seta opacity:0 instantâneo
+    //   2. Troca src (imagem já em cache → render imediato)
+    //   3. Dois rAF garantem que o browser aplica opacity:0 antes de animar
+    //   4. Anima opacity:1 com fade suave
+    // Resultado: ZERO tela preta — slide atual fica visível até aqui.
+    bg.style.transition  = 'none';
+    bg.style.opacity     = '0';
+    bg.src               = finalSrc;
+
+    bgBlur.style.transition = 'none';
+    if(useBlur){
+      bgBlur.src          = finalSrc;
+      bgBlur.style.opacity= '0';   // será animado no rAF abaixo
+    } else {
+      bgBlur.style.opacity= '0';
+    }
+
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){
+        if(slideSeq !== mySeq) return;   // cancelado por slide mais novo
+        bg.style.transition = 'opacity 0.5s ease';
+        bg.style.opacity    = '1';
+        if(useBlur){
+          bgBlur.style.transition = 'opacity 0.55s ease';
+          bgBlur.style.opacity    = '1';
+        }
+        // Pré-carrega os 2 próximos slides enquanto este exibe
+        preloadAhead(n);
+      });
+    });
   }
+
+  // ── Fallback: imagem não carregou → usa equipe-30anos.jpg ─
+  function usarFallback(motivo){
+    if(slideSeq !== mySeq) return;
+    console.warn('[TV] slide '+n+' ('+imgSrc+'): '+motivo+' → fallback');
+    var fb = new Image();
+    fb.onload  = function(){
+      aplicarSlide(fb.naturalWidth, fb.naturalHeight, 'equipe-30anos.jpg');
+    };
+    fb.onerror = function(){
+      if(slideSeq !== mySeq) return;
+      // Último recurso: ao menos mostra o bg (pode ser vazio, mas não fica preto eterno)
+      bg.style.transition = 'none';
+      bg.style.opacity    = '1';
+    };
+    fb.src = 'equipe-30anos.jpg';
+  }
+
+  // ── Verifica se a imagem já está no elemento bg (cache hit) ─
+  // Normaliza filename: remove path e query string para comparar só nome do arquivo
+  var bsrc = (bg.src||'').replace(/.*\//, '').split('?')[0];
+  var isrc = imgSrc.replace(/.*\//, '').split('?')[0];
+  if(bsrc && bsrc === isrc && bg.complete && bg.naturalWidth > 0){
+    // Cache hit: aplica direto sem preload
+    aplicarSlide(bg.naturalWidth, bg.naturalHeight, imgSrc);
+    return;
+  }
+
+  // ── Pré-carrega antes de esconder o slide atual ───────────
+  // O slide atual permanece VISÍVEL enquanto a nova imagem baixa.
+  // Só quando tmpImg.onload dispara (imagem em cache) fazemos o swap.
+  var tmpImg    = new Image();
+  var safetyTmr = setTimeout(function(){
+    // Safety: 4 s sem carregar → usa fallback sem deixar tela preta eterna
+    tmpImg.onload  = null;
+    tmpImg.onerror = null;
+    usarFallback('timeout 4s');
+  }, 4000);
+
+  tmpImg.onload = function(){
+    clearTimeout(safetyTmr);
+    aplicarSlide(tmpImg.naturalWidth, tmpImg.naturalHeight, imgSrc);
+  };
+  tmpImg.onerror = function(){
+    clearTimeout(safetyTmr);
+    usarFallback('onerror');
+  };
+  // Inicia download (guarda referência para evitar GC prematuro)
+  preloadCache.push(tmpImg);
+  if(preloadCache.length > 20) preloadCache.splice(0, 10);
+  tmpImg.src = imgSrc;
+}
+
+// ── Pré-carrega os próximos k slides para zero-espera futura ─
+function preloadAhead(fromN){
+  for(var k = 1; k <= 2; k++){
+    var sn = (fromN + k) % N;
+    var ns = slides[sn];
+    if(ns && ns.img){
+      var pi = new Image();
+      preloadCache.push(pi);
+      if(preloadCache.length > 30) preloadCache.splice(0, 10);
+      pi.src = ns.img;
+    }
+  }
+}
+
+// ── Pré-carrega TODAS as imagens no início (background) ──────
+// Na primeira abertura da TV, inicia download de todos os 45 slides.
+// Nas próximas transições, imagens já estarão em cache → zero espera.
+function preloadAllImagens(){
+  slides.forEach(function(s){
+    if(s.img){
+      var pi = new Image();
+      preloadCache.push(pi);
+      pi.src = s.img;
+    }
+  });
+  console.log('[TV] Pré-carregamento de '+slides.length+' imagens iniciado.');
 }
 
 function updateProgress(){
@@ -1466,6 +1564,10 @@ setInterval(verificarChamadaAutomatica, 30000); // checa a cada 30 s
 setInterval(atualizarStatusAuto, 60000);         // atualiza próxima chamada a cada 1 min
 // Primeiro check rápido após 5s (quando a página acabou de abrir)
 setTimeout(function(){ verificarChamadaAutomatica(); atualizarStatusAuto(); }, 5000);
+
+// Pré-carrega todas as imagens em background para eliminar telas pretas
+// nas transições (especialmente imagens novas de 400–900 KB que demorariam)
+setTimeout(preloadAllImagens, 1500);
 </script>
 </body>
 </html>
