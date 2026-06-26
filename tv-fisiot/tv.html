@@ -527,6 +527,37 @@ body{
 
 <script>
 // ============================================================
+// FORMATAÇÃO DE HORÁRIO PARA FALA NATURAL (SpeechSynthesis)
+// Converte "13:00" → "uma hora da tarde", "13:40" → "uma e quarenta da tarde"
+// Evita que o motor de voz leia "das 13:00" como "Zuma hora" etc.
+// ============================================================
+function formatarMinFalado(m){
+  var tab={5:'cinco',10:'dez',15:'quinze',20:'vinte',25:'vinte e cinco',
+           30:'trinta',35:'trinta e cinco',40:'quarenta',45:'quarenta e cinco',
+           50:'cinquenta',55:'cinquenta e cinco'};
+  return tab[m] || String(m);
+}
+function formatarHorarioFalado(hhmm){
+  var p=(hhmm||'').split(':');
+  var h=parseInt(p[0])||0;
+  var m=parseInt(p[1])||0;
+  var periodo = h>=12 ? 'da tarde' : 'da manhã';
+  var h12 = h>12 ? h-12 : (h===0 ? 12 : h);
+  // Nomes por extenso (índice = hora 12h)
+  var nomes=['','uma','duas','três','quatro','cinco','seis',
+             'sete','oito','nove','dez','onze','doze'];
+  var hora = nomes[h12] || String(h12);
+  if(h12===1){
+    // feminino: "uma hora" / "uma e quarenta"
+    if(m===0) return 'uma hora '+periodo;
+    return 'uma e '+formatarMinFalado(m)+' '+periodo;
+  } else {
+    if(m===0) return hora+' horas '+periodo;
+    return hora+' e '+formatarMinFalado(m)+' '+periodo;
+  }
+}
+
+// ============================================================
 // ÁUDIO — ATIVAR SOM / SPEECH SYNTHESIS
 // ============================================================
 var audioEnabled = false;
@@ -1324,7 +1355,7 @@ function renderSidebar(){
 // CHAMADA OVERLAY
 // ============================================================
 function mostrarChamadaOverlay(data){
-  // Montar texto no novo formato
+  // ── Texto VISUAL — mantém horário numérico (ex: "13:00") ─────────
   var texto;
   if(data.profissional && data.horario && data.ginasio){
     texto = 'Pacientes das '+data.horario+' da '+data.profissional+
@@ -1337,6 +1368,22 @@ function mostrarChamadaOverlay(data){
   } else {
     texto = 'Pacientes, comparecer à recepção.';
   }
+
+  // ── Texto FALADO — horário natural em português para SpeechSynthesis ─
+  // Ex: "13:00" → "uma hora da tarde" | "13:40" → "uma e quarenta da tarde"
+  // Evita leitura estranha como "Zuma hora" / "treze horas" pelo sintetizador.
+  var textoFalado;
+  if(data.profissional && data.horario && data.ginasio){
+    textoFalado = 'Pacientes das '+formatarHorarioFalado(data.horario)+' da '+
+                  data.profissional+', comparecer ao '+data.ginasio+'.';
+  } else if(data.profissional && data.ginasio){
+    textoFalado = 'Pacientes da '+data.profissional+
+                  ', comparecer ao '+data.ginasio+'.';
+  } else {
+    textoFalado = texto;   // sem horário: fala igual ao visual
+  }
+  console.log('[TV] texto visual:', texto);
+  console.log('[TV] texto falado:', textoFalado);
 
   document.getElementById('chamada-texto').textContent = texto;
 
@@ -1351,8 +1398,8 @@ function mostrarChamadaOverlay(data){
     }
   }
 
-  // Fala em voz alta (2 repetições)
-  falarTV(texto);
+  // Fala em voz alta (2 repetições) — usa texto falado natural
+  falarTV(textoFalado);
 
   // Contador de repetições
   chamadaRepCount = 0;
