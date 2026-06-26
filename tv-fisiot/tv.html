@@ -106,7 +106,8 @@ body{
   height:calc(100% + 120px);
   object-fit:cover;
   object-position:center center;
-  filter:blur(30px) brightness(0.28) saturate(1.4);
+  /* brightness 0.50 = fundo visível e colorido (menos "buraco preto") */
+  filter:blur(28px) brightness(0.50) saturate(1.8);
   opacity:0;
   /* SEM transition CSS — controlada via JS para evitar flash preto */
   pointer-events:none;
@@ -311,13 +312,19 @@ body{
 
 /* ── MODOS DO SLIDE ─────────────────────────────────────── */
 /* Poster horizontal: cover — preenche toda a área (referência Wilson) */
-#slide-area.mode-poster-h{ background:#0a0a0a }
-/* Poster vertical/quadrado: contain + blur de fundo — arte inteira legível */
-#slide-area.mode-poster-v{ background:#0a0a0a }
+#slide-area.mode-poster-h   { background:#0a0a0a }
+/* Poster vertical/quadrado: contain + escala JS + blur de fundo */
+#slide-area.mode-poster-v   { background:#0a0a0a }
+/* Quadrado (ratio 0.78-1.43): escala ~90% largura */
+#slide-area.mode-poster-sq  { background:#0a0a0a }
+/* Vertical alto (ratio <0.78): escala ~76% largura */
+#slide-area.mode-poster-tall{ background:#0a0a0a }
 /* Slide normal (texto overlay) */
-#slide-area.mode-normal  { background:#0d0505 }
+#slide-area.mode-normal     { background:#0d0505 }
 /* Vitrine de produtos */
-#slide-area.mode-vitrine { background:linear-gradient(160deg,#0d0505 0%,#1c0a0a 100%) }
+#slide-area.mode-vitrine    { background:linear-gradient(160deg,#0d0505 0%,#1c0a0a 100%) }
+/* #slide-bg com escala JS: overflow já é cortado pelo overflow:hidden do pai */
+#slide-area #slide-bg{ transform-origin:center center; will-change:transform,opacity; }
 
 /* ── CHAMADA BAR (rodapé) ─────────────────────────────── */
 #chamada-bar{
@@ -1006,35 +1013,68 @@ function showSlide(n){
     bg.onload  = null;
     bg.onerror = null;
 
-    // Determina modo/fit baseado nas dimensões reais da imagem
-    var targetFit, targetClass, useBlur;
+    // ── Determina modo/fit + escala baseada nas dimensões reais ──────────
+    // SOLUÇÃO POSTER PEQUENO (2026-06-26):
+    //   Para artes verticais/quadradas, calcula transform:scale() para que
+    //   a arte ocupe a maior área possível sem cobrir conteúdo crítico.
+    //   O overflow é cortado pelo overflow:hidden do #slide-area.
+    //   Fundo blur (brightness 0.50) preenche as barras laterais restantes.
+    var targetFit, targetClass, useBlur, posterScale;
     if(isPoster){
       var ratio = (natW && natH) ? (natW / natH) : 1;
-      // ratio ≥ 1.44 → arte horizontal → cover preenche TV (sem barras)
-      // ratio < 1.44 → arte vertical/quadrada → contain + blur lateral
-      useBlur    = (ratio < 1.44);
-      targetFit  = useBlur ? 'contain' : 'cover';
-      targetClass= useBlur ? 'mode-poster-v' : 'mode-poster-h';
+      // ≥ 1.44 → horizontal → cover (preenche TV sem barras)
+      // 0.78-1.43 → quadrado/aprox → contain + escala ~90% de largura
+      // < 0.78  → vertical alto  → contain + escala ~76% de largura
+      if(ratio >= 1.44){
+        useBlur     = false;
+        targetFit   = 'cover';
+        targetClass = 'mode-poster-h';
+        posterScale = 1;
+      } else {
+        useBlur   = true;
+        targetFit = 'contain';
+        // slW/slH = área real disponível para o slide (sem sidebar/header/footer)
+        var slW = slideArea.offsetWidth  || 1620;
+        var slH = slideArea.offsetHeight || 956;
+        // Largura da arte quando contida pela altura (portrait em tela landscape)
+        var containedW = slH * ratio;
+        if(ratio >= 0.78){
+          // Quadrado/quase-quadrado: preenche ~90% da largura — barras ~5%
+          targetClass = 'mode-poster-sq';
+          posterScale = Math.min(slW * 0.90 / containedW, 1.65);
+        } else {
+          // Vertical alto: preenche ~76% da largura — barras ~12%
+          targetClass = 'mode-poster-tall';
+          posterScale = Math.min(slW * 0.76 / containedW, 2.0);
+        }
+        posterScale = Math.max(posterScale, 1.0);  // nunca abaixo de 1×
+      }
     } else {
       // Slide normal: foto de fundo + texto overlay
-      targetFit  = s.fit || 'cover';
-      targetClass= 'mode-normal';
-      useBlur    = false;
+      targetFit   = s.fit || 'cover';
+      targetClass = 'mode-normal';
+      useBlur     = false;
+      posterScale = 1;
     }
 
-    slideArea.className     = targetClass;
-    bg.style.objectFit      = targetFit;
-    bg.style.objectPosition = s.pos || 'center center';
+    slideArea.className      = targetClass;
+    bg.style.objectFit       = targetFit;
+    bg.style.objectPosition  = s.pos || 'center center';
 
     // ── Swap atômico:
     //   1. Desativa transition → seta opacity:0 instantâneo
     //   2. Troca src (imagem já em cache → render imediato)
-    //   3. Dois rAF garantem que o browser aplica opacity:0 antes de animar
-    //   4. Anima opacity:1 com fade suave
+    //   3. Aplica escala APÓS opacity=0 para evitar salto visual na transição
+    //   4. Dois rAF garantem que o browser aplica opacity:0 antes de animar
+    //   5. Anima opacity:1 com fade suave
     // Resultado: ZERO tela preta — slide atual fica visível até aqui.
     bg.style.transition  = 'none';
     bg.style.opacity     = '0';
     bg.src               = finalSrc;
+    // Escala aplicada AQUI (após opacity=0): sem salto visual na transição
+    // overflow cortado pelo overflow:hidden do #slide-area
+    bg.style.transform       = (posterScale > 1.02) ? 'scale('+posterScale.toFixed(3)+')' : '';
+    bg.style.transformOrigin = 'center center';
 
     bgBlur.style.transition = 'none';
     if(useBlur){
