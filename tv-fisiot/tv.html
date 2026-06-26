@@ -98,6 +98,22 @@ body{
   background:#0d0505;
 }
 
+/* ── BLUR BG — fundo desfocado para artes verticais/quadradas ── */
+#slide-bg-blur{
+  position:absolute;
+  inset:-60px;                          /* sobra para cobrir bordas após blur */
+  width:calc(100% + 120px);
+  height:calc(100% + 120px);
+  object-fit:cover;
+  object-position:center center;
+  filter:blur(30px) brightness(0.28) saturate(1.4);
+  opacity:0;
+  transition:opacity .55s ease;
+  pointer-events:none;
+  display:block;
+  z-index:0;
+}
+
 /* Imagem de fundo */
 #slide-bg{
   position:absolute;inset:0;
@@ -106,6 +122,7 @@ body{
   object-position:center 20%;
   transition:opacity .7s ease;
   display:block;
+  z-index:1;
 }
 
 /* Gradiente sobre a imagem — suave no topo, denso na base */
@@ -119,6 +136,7 @@ body{
     rgba(0,0,0,.05) 100%
   );
   pointer-events:none;
+  z-index:2;
 }
 
 /* Conteúdo do slide */
@@ -291,11 +309,15 @@ body{
   margin-top:4px;text-align:center;
 }
 
-/* ── POSTER MODE ─────────────────────────────────────── */
-/* Slide tipo cartaz: imagem inteira sem corte, fundo preto  */
-#slide-area.poster-mode{
-  background:#000;
-}
+/* ── MODOS DO SLIDE ─────────────────────────────────────── */
+/* Poster horizontal: cover — preenche toda a área (referência Wilson) */
+#slide-area.mode-poster-h{ background:#0a0a0a }
+/* Poster vertical/quadrado: contain + blur de fundo — arte inteira legível */
+#slide-area.mode-poster-v{ background:#0a0a0a }
+/* Slide normal (texto overlay) */
+#slide-area.mode-normal  { background:#0d0505 }
+/* Vitrine de produtos */
+#slide-area.mode-vitrine { background:linear-gradient(160deg,#0d0505 0%,#1c0a0a 100%) }
 
 /* ── CHAMADA BAR (rodapé) ─────────────────────────────── */
 #chamada-bar{
@@ -412,6 +434,8 @@ body{
 
   <!-- SLIDE -->
   <div id="slide-area">
+    <!-- Blur background (artes verticais/quadradas) -->
+    <img id="slide-bg-blur" src="" alt="" aria-hidden="true"/>
     <img id="slide-bg" src="fisioterapia-hero.jpg" alt=""/>
     <div id="slide-gradient"></div>
 
@@ -912,12 +936,13 @@ for(var i=0;i<N;i++){
 
 function showSlide(n){
   cur = n;
-  var s = slides[n];
-  var bg = document.getElementById('slide-bg');
-  var grid = document.getElementById('product-grid');
-  var content = document.getElementById('slide-content');
+  var s        = slides[n];
+  var bg       = document.getElementById('slide-bg');
+  var bgBlur   = document.getElementById('slide-bg-blur');
+  var grid     = document.getElementById('product-grid');
+  var content  = document.getElementById('slide-content');
   var gradient = document.getElementById('slide-gradient');
-  var slideArea = document.getElementById('slide-area');
+  var slideArea= document.getElementById('slide-area');
 
   var isVitrine = (s.type === 'vitrine');
   var isPoster  = (s.type === 'poster');
@@ -927,22 +952,73 @@ function showSlide(n){
   content.style.display = (isVitrine || isPoster) ? 'none' : 'block';
   gradient.style.display= (isVitrine || isPoster) ? 'none' : 'block';
 
-  // Classe de fundo para poster (preto para não cortar)
-  slideArea.className = isPoster ? 'poster-mode' : '';
+  // Fade out bg + blur bg
+  bg.style.opacity     = '0';
+  bgBlur.style.opacity = '0';
 
-  // Fade out → trocar imagem → fade in
-  bg.style.opacity = '0';
   setTimeout(function(){
-    bg.src = s.img;
     bg.style.objectPosition = s.pos || 'center center';
-    bg.style.objectFit      = s.fit || 'cover';
-    bg.onerror = function(){
-      bg.src = 'equipe-30anos.jpg';
-      bg.style.objectPosition = 'center 30%';
-      bg.style.objectFit = 'cover';
-    };
-    // Na vitrine não mostra o bg por cima
-    bg.style.opacity = isVitrine ? '0' : '1';
+
+    if(isPoster){
+      // ─── Modo Poster: detecta orientação da arte ──────────────
+      // ratio ≥ 1.44 → horizontal → cover (preenche área, como referência Wilson)
+      // ratio < 1.44 → vertical/quadrado → contain + blur de fundo (arte inteira legível)
+      var imgSrc = s.img;
+      bg.onload  = null;
+      bg.onerror = null;
+
+      function aplicarModoPoster(){
+        var ratio = (bg.naturalWidth && bg.naturalHeight)
+          ? (bg.naturalWidth / bg.naturalHeight) : 1;
+        if(ratio >= 1.44){
+          // Horizontal: fill com cover — sem barras pretas, preenche TV
+          bg.style.objectFit   = 'cover';
+          bgBlur.style.opacity = '0';
+          slideArea.className  = 'mode-poster-h';
+        } else {
+          // Vertical / quadrado: contain centrado + fundo blur da mesma arte
+          bg.style.objectFit   = 'contain';
+          bgBlur.src           = imgSrc;
+          bgBlur.style.opacity = '1';
+          slideArea.className  = 'mode-poster-v';
+        }
+        bg.style.opacity = '1';
+      }
+
+      bg.onload  = aplicarModoPoster;
+      bg.onerror = function(){
+        bg.src = 'equipe-30anos.jpg';
+        bg.style.objectFit   = 'cover';
+        bgBlur.style.opacity = '0';
+        slideArea.className  = 'mode-poster-h';
+        bg.style.opacity     = '1';
+      };
+      bg.src = imgSrc;
+      // Imagem já em cache: complete pode ser true antes do onload disparar
+      if(bg.complete && bg.naturalWidth > 0){
+        bg.onload = null;
+        aplicarModoPoster();
+      }
+
+    } else if(isVitrine){
+      slideArea.className  = 'mode-vitrine';
+      bg.style.objectFit   = 'cover';
+      bg.style.opacity     = '0'; // vitrine usa o grid, não a img bg
+      bgBlur.style.opacity = '0';
+
+    } else {
+      // ─── Slide normal: foto de fundo + texto overlay ──────────
+      slideArea.className  = 'mode-normal';
+      bg.onerror = function(){
+        bg.src = 'equipe-30anos.jpg';
+        bg.style.objectPosition = 'center 30%';
+        bg.style.objectFit = 'cover';
+      };
+      bg.src             = s.img;
+      bg.style.objectFit = s.fit || 'cover';
+      bg.style.opacity   = '1';
+      bgBlur.style.opacity = '0';
+    }
   }, 300);
 
   if(!isVitrine && !isPoster){
