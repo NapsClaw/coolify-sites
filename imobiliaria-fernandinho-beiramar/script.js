@@ -4,7 +4,7 @@
 ═══════════════════════════════════════════════ */
 
 /* ── Constantes globais ── */
-const WA_NUM      = '5511976202155';
+const WA_NUM      = '5511988782345';
 const STORAGE_KEY = 'fbm_imoveis_v1';
 const IMG_FALLBACK = 'assets/imoveis/fallback.svg';
 
