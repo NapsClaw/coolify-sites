@@ -89,12 +89,16 @@ function finalizarKit() {
     `👕 Camiseta: ${tamanho}\n` +
     `🧢 Acessório: ${acessorioLabel}\n` +
     `🌿 Cosmético Bellamama: ${bellamamaLabels[bellamama] || bellamama}\n` +
-    `Pode me orientar sobre o pagamento?`;
+    `📍 Ciente da retirada presencial na Clínica FISIOT — Av. Júlio Clóvis Lacerda, 110, Lagoa Santa/MG.\n` +
+    `Pode me orientar sobre o pagamento e agendar a retirada?`;
 
   if (confirm(
     `✅ Dados registrados!\n\n` +
     `👤 ${nome} · 👕 ${tamanho} · 🧢 ${acessorioLabel}\n` +
     `🌿 ${bellamamaLabels[bellamama] || bellamama}\n\n` +
+    `📍 RETIRADA PRESENCIAL na Clínica FISIOT\n` +
+    `Av. Júlio Clóvis Lacerda, 110, Lagoa Santa/MG.\n` +
+    `(Não há entrega em domicílio.)\n\n` +
     `Clique OK para continuar pelo WhatsApp com Wilson Barbosa (31) 99259-4953.`
   )) {
     window.open(waLink(waMsg), '_blank', 'noopener,noreferrer');
@@ -199,7 +203,8 @@ function finalizarDoacao() {
   if (nome)  msg += `\n👤 Nome: ${nome}`;
   if (tel)   msg += `\n📞 WhatsApp: ${tel}`;
   if (bella) msg += `\n🌿 Produto preferido: ${bellaMapa[bella] || bella}`;
-  msg += '\nPode me orientar sobre o pagamento?';
+  msg += '\n📍 Ciente que a retirada do produto é presencial na Clínica FISIOT — Av. Júlio Clóvis Lacerda, 110, Lagoa Santa/MG.';
+  msg += '\nPode me orientar sobre o pagamento e agendar a retirada?';
 
   window.open(waLink(msg), '_blank', 'noopener,noreferrer');
 }
