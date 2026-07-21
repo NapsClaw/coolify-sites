@@ -532,6 +532,7 @@ footer .footer-preview-note {
 footer .footer-preview-note strong { color: var(--rosa-light); }
 
 /* === MODALS ================================================= */
+/* ── MODAL BASE ─────────────────────────────────────────── */
 .modal-overlay {
   display: none;
   position: fixed;
@@ -540,20 +541,33 @@ footer .footer-preview-note strong { color: var(--rosa-light); }
   z-index: 2000;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
+  /* padding vertical reduzido em telas baixas */
+  padding: clamp(.5rem, 2dvh, 1.5rem) 1rem;
+  box-sizing: border-box;
 }
 .modal-overlay.active { display: flex; }
+
+/*
+ * Flex-column: header fica fixo no topo, body rola sozinho.
+ * Isso garante que o botão ✕ e o título nunca saem de cena.
+ */
 .modal-box {
   background: var(--white);
   border-radius: 24px;
   max-width: 500px;
   width: 100%;
-  max-height: 90vh;
-  overflow-y: auto;
+  /* 90dvh usa a viewport real (desconta barra do browser móvel) */
+  max-height: min(90dvh, 90vh);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;          /* o box em si não rola */
   position: relative;
   box-shadow: 0 20px 60px rgba(0,0,0,.35);
 }
+
+/* Cabeçalho nunca encolhe — fica sempre visível */
 .modal-header {
+  flex-shrink: 0;
   background: linear-gradient(135deg, var(--rosa), var(--rosa-dark));
   color: var(--white);
   padding: 1.5rem;
@@ -562,6 +576,7 @@ footer .footer-preview-note strong { color: var(--rosa-light); }
 }
 .modal-header h3 { font-size: 1.2rem; margin-bottom: .2rem; }
 .modal-header p { font-size: .85rem; opacity: .85; }
+
 .modal-close {
   position: absolute;
   top: 1rem;
@@ -576,9 +591,24 @@ footer .footer-preview-note strong { color: var(--rosa-light); }
   cursor: pointer;
   display: flex; align-items: center; justify-content: center;
   transition: background var(--transition);
+  /* garante que fique acima de qualquer z-index filho */
+  z-index: 1;
 }
 .modal-close:hover { background: rgba(255,255,255,.4); }
-.modal-body { padding: 1.5rem; }
+
+/* Corpo rola de forma independente */
+.modal-body {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;  /* inércia iOS */
+  padding: 1.5rem;
+  /* barra de rolagem sempre visível para indicar que há mais conteúdo */
+  scrollbar-width: thin;
+  scrollbar-color: var(--rosa) #f0f0f0;
+}
+.modal-body::-webkit-scrollbar { width: 6px; }
+.modal-body::-webkit-scrollbar-track { background: #f0f0f0; border-radius: 3px; }
+.modal-body::-webkit-scrollbar-thumb { background: var(--rosa); border-radius: 3px; }
 
 /* Kit form inside modal */
 .form-group { margin-bottom: 1.2rem; }
@@ -874,6 +904,20 @@ footer .footer-preview-note strong { color: var(--rosa-light); }
 
 .modal-header-admin {
   background: linear-gradient(135deg, #2C3E50, #3D5166) !important;
+}
+
+/* Em viewports muito baixas, compacta o padding do body p/ caber mais conteúdo */
+@media (max-height: 620px) {
+  .modal-body {
+    padding: 1rem;
+  }
+  .modal-header {
+    padding: 1rem 1.2rem;
+  }
+  .modal-header h3 { font-size: 1.05rem; }
+  .modal-overlay {
+    padding: .3rem .75rem;
+  }
 }
 
 .admin-persist-notice {
