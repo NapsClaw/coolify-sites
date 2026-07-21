@@ -1,7 +1,12 @@
 /* ============================================================
    CAMINHADA FISIOT POR ELAS — Script Principal
-   Versão: 20260721e
+   Versão: 20260721h (revisão consolidada final)
    ============================================================ */
+
+/* --- WhatsApp helper (Wilson Barbosa — (31) 99259-4953) ---- */
+const WA_NUM  = '5531992594953';
+const WA_BASE = 'https://wa.me/' + WA_NUM + '?text=';
+function waLink(msg) { return WA_BASE + encodeURIComponent(msg); }
 
 /* --- Modal Controls --------------------------------------- */
 function openModal(id) {
@@ -77,16 +82,23 @@ function finalizarKit() {
     antioxidante: 'Antioxidante',
   };
 
-  alert(
-    `✅ Pedido registrado!\n\n` +
+  /* Monta mensagem pré-preenchida para WhatsApp */
+  const waMsg =
+    `Olá, Wilson! Quero comprar meu kit da 1ª Caminhada FISIOT por Elas (R$150,00).\n` +
     `👤 Nome: ${nome}\n` +
     `👕 Camiseta: ${tamanho}\n` +
     `🧢 Acessório: ${acessorioLabel}\n` +
-    `🌿 Cosmético Bellamama: ${bellamamaLabels[bellamama] || bellamama}\n\n` +
-    `💳 Integração de pagamento em configuração.\n` +
-    `A organização entrará em contato para finalizar seu kit.\n\n` +
-    `(Prévia demonstrativa — nenhuma cobrança foi gerada)`
-  );
+    `🌿 Cosmético Bellamama: ${bellamamaLabels[bellamama] || bellamama}\n` +
+    `Pode me orientar sobre o pagamento?`;
+
+  if (confirm(
+    `✅ Dados registrados!\n\n` +
+    `👤 ${nome} · 👕 ${tamanho} · 🧢 ${acessorioLabel}\n` +
+    `🌿 ${bellamamaLabels[bellamama] || bellamama}\n\n` +
+    `Clique OK para continuar pelo WhatsApp com Wilson Barbosa (31) 99259-4953.`
+  )) {
+    window.open(waLink(waMsg), '_blank', 'noopener,noreferrer');
+  }
 }
 
 /* --- Raspadinha: desbloquear ------------------------------ */
@@ -167,6 +179,106 @@ function initScratchCard() {
   canvas.addEventListener('touchstart', e => { e.preventDefault(); isDrawing = true; const p = getPos(e, canvas); scratch(p.x, p.y); }, { passive: false });
   canvas.addEventListener('touchmove',  e => { e.preventDefault(); if (isDrawing) { const p = getPos(e, canvas); scratch(p.x, p.y); } }, { passive: false });
   canvas.addEventListener('touchend',   () => { isDrawing = false; });
+}
+
+/* --- Doação: finalizar e abrir WhatsApp ------------------- */
+function finalizarDoacao() {
+  const nome  = document.getElementById('doacao-nome')?.value.trim();
+  const tel   = document.getElementById('doacao-tel')?.value.trim();
+  const bella = document.querySelector('input[name="doacao-bella"]:checked')?.value;
+
+  const bellaMapa = {
+    pes:          'Hidratante para os Pés',
+    maos:         'Hidratante para as Mãos',
+    facial:       'Hidratante Facial',
+    corporal:     'Hidratante Corporal',
+    antioxidante: 'Antioxidante',
+  };
+
+  let msg = 'Olá, Wilson! Quero fazer uma doação voluntária de R$25,00 da 1ª Caminhada FISIOT por Elas e receber 1 produto Bellamama.';
+  if (nome)  msg += `\n👤 Nome: ${nome}`;
+  if (tel)   msg += `\n📞 WhatsApp: ${tel}`;
+  if (bella) msg += `\n🌿 Produto preferido: ${bellaMapa[bella] || bella}`;
+  msg += '\nPode me orientar sobre o pagamento?';
+
+  window.open(waLink(msg), '_blank', 'noopener,noreferrer');
+}
+
+/* --- Parceiro: abrir WhatsApp com mensagem pré-preenchida - */
+function enviarParceiro() {
+  const empresa = document.querySelector('#modal-parceiro input[type="text"]')?.value.trim();
+  const tel     = document.querySelector('#modal-parceiro input[type="tel"]')?.value.trim();
+  const como    = document.querySelector('#modal-parceiro textarea')?.value.trim();
+
+  let msg = 'Olá, Wilson! Tenho interesse em ser parceiro(a) da 1ª Caminhada FISIOT por Elas.';
+  if (empresa) msg += `\n🏢 Empresa: ${empresa}`;
+  if (tel)     msg += `\n📞 Contato: ${tel}`;
+  if (como)    msg += `\n💬 Como posso ajudar: ${como}`;
+
+  window.open(waLink(msg), '_blank', 'noopener,noreferrer');
+}
+
+/* --- Participação: preview de foto ----------------------- */
+function previewFoto(input) {
+  const preview = document.getElementById('foto-preview');
+  const label   = document.getElementById('foto-upload-label');
+  if (!input.files || !input.files[0]) return;
+
+  const file   = input.files[0];
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    if (preview) {
+      preview.src          = e.target.result;
+      preview.style.display = 'block';
+    }
+    if (label) label.style.display = 'none';
+  };
+  reader.readAsDataURL(file);
+}
+
+/* --- Participação: enviar para moderação (demo) ----------- */
+const PART_KEY = 'fisiot_participacoes_demo_v1';
+
+function enviarParticipacao() {
+  const nome = document.getElementById('part-nome')?.value.trim();
+  const msg  = document.getElementById('part-msg')?.value.trim();
+  const auth = document.getElementById('part-auth')?.checked;
+
+  if (!nome) {
+    alert('Por favor, informe seu nome para continuar.');
+    document.getElementById('part-nome')?.focus();
+    return;
+  }
+  if (!msg) {
+    alert('Por favor, escreva uma mensagem de apoio.');
+    document.getElementById('part-msg')?.focus();
+    return;
+  }
+  if (!auth) {
+    alert('Para enviar, é necessário marcar a autorização de uso da foto e mensagem.');
+    document.getElementById('part-auth')?.focus();
+    return;
+  }
+
+  /* Salvar no localStorage (demonstração) */
+  try {
+    const participacoes = JSON.parse(localStorage.getItem(PART_KEY) || '[]');
+    const preview = document.getElementById('foto-preview');
+    participacoes.push({
+      nome,
+      msg,
+      foto:     preview && preview.src && preview.style.display !== 'none' ? preview.src : null,
+      enviado:  new Date().toISOString(),
+      status:   'aguardando_aprovacao',
+    });
+    localStorage.setItem(PART_KEY, JSON.stringify(participacoes));
+  } catch(e) { /* ignora erro de storage */ }
+
+  /* Mostra estado de sucesso */
+  const formState = document.getElementById('participacao-form-state');
+  const sucesso   = document.getElementById('participacao-sucesso');
+  if (formState) formState.style.display = 'none';
+  if (sucesso)   sucesso.style.display   = 'block';
 }
 
 /* --- Smooth scroll para âncoras -------------------------- */

@@ -14,7 +14,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Open+Sans:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="main-20260721f.css?v=g1" />
+  <link rel="stylesheet" href="main-20260721f.css?v=r7" />
+  <link rel="stylesheet" href="extras-20260721g.css?v=r7" />
 </head>
 <body>
 
@@ -28,7 +29,7 @@
       <div class="event-label">🎗️ Outubro Rosa · 24/10/2026</div>
       <div class="event-name">1ª Caminhada Contra o Câncer — FISIOT por Elas</div>
     </div>
-    <a href="#whatsapp-pendente" class="header-whatsapp" onclick="openModal('modal-wa'); return false;">
+    <a href="https://wa.me/5531992594953?text=Ol%C3%A1!%20Tenho%20uma%20d%C3%BAvida%20sobre%20a%201%C2%AA%20Caminhada%20FISIOT%20por%20Elas." class="header-whatsapp" target="_blank" rel="noopener" onclick="openModal('modal-wa'); return false;">
       <span style="font-size:1.1rem">💬</span>
       <span>WhatsApp</span>
     </a>
@@ -113,7 +114,7 @@
     <div class="date-strip-item date-confirmed" role="listitem">
       <span class="dsi-icon">🏁</span>
       <div>
-        <div class="dsi-label">Concentração / Referência</div>
+        <div class="dsi-label">Concentração e Saída</div>
         <div class="dsi-value">Clínica FISIOT</div>
         <div class="dsi-addr">Av. Júlio Clóvis Lacerda, 110<br>Em frente ao Complexo Esportivo Jalile Daher · Lagoa Santa/MG</div>
       </div>
@@ -122,24 +123,41 @@
     <div class="date-strip-sep" aria-hidden="true">•</div>
 
     <div class="date-strip-item date-confirmed" role="listitem">
-      <span class="dsi-icon">🚩</span>
+      <span class="dsi-icon">📏</span>
       <div>
-        <div class="dsi-label">Saída da caminhada</div>
-        <div class="dsi-value">Rua Dr. Benjamim Vieira, 27</div>
-        <div class="dsi-addr">Bairro Joana D'Arc · Lagoa Santa/MG</div>
+        <div class="dsi-label">Distância</div>
+        <div class="dsi-value">3,8 km</div>
       </div>
     </div>
 
     <div class="date-strip-sep" aria-hidden="true">•</div>
 
-    <div class="date-strip-item" role="listitem">
+    <div class="date-strip-item date-confirmed" role="listitem">
       <span class="dsi-icon">🕐</span>
       <div>
         <div class="dsi-label">Horário confirmado</div>
-        <div class="dsi-value" style="color:var(--verde);font-weight:800;">07h30</div>
+        <div class="dsi-value" style="color:#B5F7B0;font-weight:800;">07h30</div>
       </div>
     </div>
 
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════
+       CÍRCULO DOAÇÃO VOLUNTÁRIA — lado esquerdo (desktop)
+       Inline entre data-strip e CTA no mobile.
+       ══════════════════════════════════════════════════════ -->
+  <div class="hero-doacao-seal"
+       role="button"
+       tabindex="0"
+       aria-label="Doação Voluntária R$25,00 — Ganhe 1 produto Bellamama. Clique para saber mais."
+       onclick="openModal('modal-doacao')"
+       onkeydown="if(event.key==='Enter'||event.key===' ')openModal('modal-doacao')">
+    <div class="doacao-icon" aria-hidden="true">💖</div>
+    <span class="doacao-titulo">DOAÇÃO<br>VOLUNTÁRIA</span>
+    <span class="doacao-valor">R$&nbsp;25,00</span>
+    <span class="doacao-separador">· · ·</span>
+    <span class="doacao-brinde">🌿 GANHE 1 PRODUTO BELLAMAMA</span>
+    <button class="doacao-cta-btn" tabindex="-1" aria-hidden="true">Participar ▶</button>
   </div>
 
   <a href="#" class="hero-cta" onclick="openModal('modal-kit'); return false;">
@@ -321,6 +339,65 @@
     <p class="pre-evento-note">
       * Participar = comprar seu kit. Após o evento, esta área exibirá depoimentos e histórias reais dos participantes.
     </p>
+
+    <!-- ─── Formulário: enviar foto, nome e mensagem para moderação ─── -->
+    <div class="participacao-card">
+      <h3 class="participacao-card-title">📸 Mostre seu apoio à causa!</h3>
+      <p class="participacao-card-sub">
+        Envie seu nome, uma foto e uma mensagem de apoio.<br>
+        Após aprovação da equipe IREFIS, seu apoio aparecerá aqui.
+      </p>
+
+      <div class="demo-notice">
+        ⚠️ <span><strong>Prévia demonstrativa.</strong> O conteúdo enviado vai para moderação — não é publicado automaticamente. Na versão final, os envios serão revisados pela equipe IREFIS antes de qualquer publicação.</span>
+      </div>
+
+      <!-- Estado formulário -->
+      <div id="participacao-form-state">
+
+        <div class="form-group">
+          <label for="part-nome">👤 Seu nome</label>
+          <input type="text" id="part-nome" placeholder="Como você quer ser chamada/o" autocomplete="given-name" />
+        </div>
+
+        <div class="form-group">
+          <label>📷 Sua foto (opcional)</label>
+          <div class="foto-upload-area" id="foto-upload-area">
+            <input type="file" id="part-foto" accept="image/*" onchange="previewFoto(this)" aria-label="Selecionar foto" />
+            <div class="foto-upload-label" id="foto-upload-label">📷 Toque para selecionar uma foto</div>
+            <img id="foto-preview" class="foto-preview-img" style="display:none" alt="Preview da foto selecionada" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="part-msg">💬 Mensagem de apoio</label>
+          <textarea id="part-msg" placeholder="Ex: Eu apoio esta causa! A prevenção salva vidas. 🎗️" rows="3"></textarea>
+        </div>
+
+        <label class="auth-check-label">
+          <input type="checkbox" id="part-auth" />
+          <span>Autorizo o uso da minha foto e mensagem nesta campanha, após aprovação e moderação pela equipe IREFIS.</span>
+        </label>
+
+        <button class="btn-participacao-submit" onclick="enviarParticipacao()">
+          💌 Enviar para aprovação pela equipe IREFIS
+        </button>
+      </div>
+
+      <!-- Estado de sucesso -->
+      <div id="participacao-sucesso" style="display:none;">
+        <div class="participacao-ok">
+          ✅ <strong>Enviado para moderação!</strong><br>
+          Sua participação foi registrada e aguarda aprovação da equipe IREFIS antes de aparecer no site.<br>
+          <small style="opacity:.8;font-size:.78rem;">(Prévia demonstrativa — armazenamento local neste navegador)</small>
+        </div>
+        <a href="https://wa.me/5531992594953?text=Ol%C3%A1%2C%20Wilson!%20Quero%20enviar%20minha%20foto%20e%20mensagem%20de%20apoio%20para%20a%20Caminhada%20FISIOT%20por%20Elas.%20Pode%20me%20orientar%3F"
+           class="btn-participacao-wa" target="_blank" rel="noopener">
+          💬 Também enviar pelo WhatsApp
+        </a>
+      </div>
+    </div>
+
   </div>
 </section>
 
@@ -346,20 +423,20 @@
 
     <!-- Clínica FISIOT -->
     <div class="partner-item">
-      <div class="partner-logo-box partner-logo-placeholder">
-        <div style="font-size:1.4rem;font-weight:900;color:var(--rosa);text-align:center;line-height:1.2;font-family:'Montserrat',sans-serif;">FISIOT</div>
+      <div class="partner-logo-box">
+        <img src="assets/logo-fisiot.jpg" alt="Clínica FISIOT — Fisioterapia e Pilates" style="width:100%;height:100%;object-fit:contain;" />
       </div>
       <div class="partner-name">Clínica FISIOT</div>
-      <div class="partner-type">Fisioterapia e Pilates</div>
+      <div class="partner-type">Parceiro</div>
     </div>
 
     <!-- Bellamama -->
     <div class="partner-item">
-      <div class="partner-logo-box partner-logo-placeholder">
-        <div style="font-size:1rem;font-weight:900;color:var(--rosa);text-align:center;line-height:1.2;font-family:'Montserrat',sans-serif;">bella<br>mama</div>
+      <div class="partner-logo-box">
+        <img src="assets/logo-bellamama.jpg" alt="Bellamama Cosméticos" style="width:100%;height:100%;object-fit:contain;" />
       </div>
       <div class="partner-name">Bellamama Cosméticos</div>
-      <div class="partner-type">Parceiro Oficial</div>
+      <div class="partner-type">Parceiro</div>
     </div>
 
     <!-- Slot futuro -->
@@ -378,6 +455,28 @@
     <a href="#" class="btn-parceiro" onclick="openModal('modal-parceiro'); return false;">
       🤝 Quero ser parceiro desta caminhada
     </a>
+  </div>
+</section>
+
+<!-- ========================================================
+     MASCOTE — exibição discreta, imagem inteira, sem nome
+     ======================================================== -->
+<section class="mascote-section" aria-label="Mascote da caminhada">
+  <div class="mascote-inner">
+    <div class="mascote-img-wrap">
+      <img
+        src="assets/mascote-fisiot-01.jpg"
+        alt="Mascote oficial da Caminhada FISIOT por Elas"
+        class="mascote-img"
+        loading="lazy"
+      />
+    </div>
+    <div class="mascote-texto">
+      <p class="mascote-frase">🎗️ <em>"A Caminhada FISIOT por Elas — eu vou participar. E você?"</em></p>
+      <a href="#" class="btn-mascote-cta" onclick="openModal('modal-kit'); return false;">
+        🛍️ Quero participar
+      </a>
+    </div>
   </div>
 </section>
 
@@ -422,8 +521,8 @@
     <div class="footer-org">Realização: IREFIS — Instituto de Reabilitação Fisiot em Saúde · Lagoa Santa / MG</div>
     <div class="footer-org">Parceiros: Clínica FISIOT · Bellamama Cosméticos</div>
     <div class="footer-preview-note">
-      <strong>⚠️ PRÉVIA REVISADA 21/07/2026 — R5</strong> — Horário confirmado: <strong>07h30</strong>. Endereços: concentração/referência Clínica FISIOT (Av. Júlio Clóvis Lacerda, 110, em frente ao Complexo Esportivo Jalile Daher) e saída da caminhada (Rua Dr. Benjamim Vieira, 27, bairro Joana D'Arc).
-      Pendentes: chegada, percurso GPS, pagamento.
+      <strong>⚠️ PRÉVIA REVISADA 21/07/2026 — R7</strong> — Horário: <strong>07h30</strong> · Distância: <strong>3,8 km</strong> · Concentração, Saída e Chegada: Av. Júlio Clóvis Lacerda, 110, em frente ao Complexo Esportivo Jalile Daher, Lagoa Santa/MG · WhatsApp: Wilson Barbosa (31) 99259-4953.
+      Pendentes: percurso GPS detalhado, gateway de pagamento.
       Domínio: <strong>caminhadafisiotporelas.com.br</strong> (a ser registrado pelo cliente no Registro.br).
     </div>
   </div>
@@ -577,7 +676,7 @@
           <span style="font-size:.72rem;background:#e8f5e9;color:var(--verde);border-radius:4px;padding:.1rem .4rem;font-weight:700;margin-left:.3rem;">✔ Confirmado</span>
         </li>
         <li>
-          <span class="info-label" style="white-space:nowrap;">🏁 Concentração</span>
+          <span class="info-label" style="white-space:nowrap;">🏁 Concentração<br>e Saída</span>
           <div>
             <strong style="color:var(--verde);">Clínica FISIOT</strong>
             <span style="font-size:.72rem;background:#e8f5e9;color:var(--verde);border-radius:4px;padding:.1rem .4rem;font-weight:700;margin-left:.3rem;">✔ Confirmado</span>
@@ -585,20 +684,19 @@
           </div>
         </li>
         <li>
-          <span class="info-label" style="white-space:nowrap;">🚩 Saída</span>
+          <span class="info-label">📏 Distância</span>
           <div>
-            <strong style="color:var(--verde);">Rua Dr. Benjamim Vieira, 27</strong>
+            <strong style="color:var(--verde);">3,8 km</strong>
             <span style="font-size:.72rem;background:#e8f5e9;color:var(--verde);border-radius:4px;padding:.1rem .4rem;font-weight:700;margin-left:.3rem;">✔ Confirmado</span>
-            <div class="info-addr">Bairro Joana D'Arc, Lagoa Santa/MG</div>
           </div>
         </li>
         <li>
           <span class="info-label">🏁 Chegada</span>
-          <span class="pending-value">A confirmar</span>
-        </li>
-        <li>
-          <span class="info-label">📏 Distância</span>
-          <span class="pending-value">A confirmar</span>
+          <div>
+            <strong style="color:var(--verde);">Av. Júlio Clóvis Lacerda, 110</strong>
+            <span style="font-size:.72rem;background:#e8f5e9;color:var(--verde);border-radius:4px;padding:.1rem .4rem;font-weight:700;margin-left:.3rem;">✔ Confirmado</span>
+            <div style="font-size:.82rem;color:#555;margin-top:.2rem;">Em frente ao Complexo Esportivo Jalile Daher · Lagoa Santa/MG</div>
+          </div>
         </li>
         <li>
           <span class="info-label">🗺️ Município</span>
@@ -708,36 +806,161 @@
           ⚠️ <span><strong>Prévia demonstrativa.</strong> O formulário será integrado ao WhatsApp ou e-mail do evento. Por enquanto, entre em contato diretamente.</span>
         </div>
 
-        <button class="btn-full btn-full-verde" onclick="alert('✅ Interesse registrado! Em breve a organização entrará em contato. (Prévia — integração pendente)')">
-          ✅ Quero ser parceiro!
+        <button class="btn-full btn-full-verde" onclick="enviarParceiro()">
+          ✅ Quero ser parceiro — falar com a organização
         </button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- === MODAL: WHATSAPP ===================================== -->
-<div class="modal-overlay" id="modal-wa" role="dialog" aria-modal="true" aria-label="WhatsApp">
+<!-- === MODAL: WHATSAPP — Wilson Barbosa (31) 99259-4953 ==== -->
+<div class="modal-overlay" id="modal-wa" role="dialog" aria-modal="true" aria-label="WhatsApp do Evento">
   <div class="modal-box">
     <div class="modal-header" style="background:linear-gradient(135deg,#25D366,#128C7E);">
       <button class="modal-close" onclick="closeModal('modal-wa')" aria-label="Fechar">✕</button>
-      <h3>💬 Falar pelo WhatsApp</h3>
-      <p>Tire dúvidas sobre o kit, o evento e parcerias</p>
+      <h3>💬 WhatsApp do Evento</h3>
+      <p>Escolha o assunto e fale direto com a organização</p>
     </div>
-    <div class="modal-body" style="text-align:center;">
-      <div style="font-size:5rem;margin-bottom:1rem;">📱</div>
-      <h3 style="font-size:1.1rem;margin-bottom:.5rem;">WhatsApp Oficial do Evento</h3>
-      <p style="font-size:.9rem;color:var(--gray);margin-bottom:1.5rem;">
-        O número oficial do evento será divulgado em breve. Acompanhe as redes do IREFIS para receber o contato.
+    <div class="modal-body">
+
+      <!-- Número e responsável -->
+      <div class="wa-numero-card">
+        <div class="wa-numero-display">(31) 99259-4953</div>
+        <div class="wa-numero-nome">Wilson Barbosa — Organização IREFIS</div>
+      </div>
+
+      <!-- Ações rápidas com mensagem pré-preenchida -->
+      <p class="wa-actions-titulo">O que você precisa?</p>
+      <div class="wa-actions-grid">
+
+        <a href="https://wa.me/5531992594953?text=Ol%C3%A1%2C%20Wilson!%20Gostaria%20de%20comprar%20meu%20kit%20da%201%C2%AA%20Caminhada%20FISIOT%20por%20Elas%20(R%24150%2C00).%20Podem%20me%20ajudar%3F"
+           class="wa-action-btn" target="_blank" rel="noopener">
+          <span class="wa-btn-icon">🛍️</span>
+          Comprar kit<br>R$&nbsp;150,00
+        </a>
+
+        <a href="https://wa.me/5531992594953?text=Ol%C3%A1%2C%20Wilson!%20Quero%20fazer%20uma%20doa%C3%A7%C3%A3o%20volunt%C3%A1ria%20de%20R%2425%2C00%20da%20Caminhada%20FISIOT%20por%20Elas%20e%20receber%201%20produto%20Bellamama.%20Como%20proceder%3F"
+           class="wa-action-btn" target="_blank" rel="noopener">
+          <span class="wa-btn-icon">💖</span>
+          Doação<br>R$&nbsp;25,00
+        </a>
+
+        <a href="https://wa.me/5531992594953?text=Ol%C3%A1%2C%20Wilson!%20Quero%20confirmar%20minha%20participa%C3%A7%C3%A3o%20na%201%C2%AA%20Caminhada%20Contra%20o%20C%C3%A2ncer%20%E2%80%94%20FISIOT%20por%20Elas%20(24%2F10%2F2026).%20Podem%20me%20ajudar%3F"
+           class="wa-action-btn" target="_blank" rel="noopener">
+          <span class="wa-btn-icon">💪</span>
+          Confirmar<br>participação
+        </a>
+
+        <a href="https://wa.me/5531992594953?text=Ol%C3%A1%2C%20Wilson!%20Quero%20enviar%20minha%20foto%20e%20mensagem%20de%20apoio%20para%20a%20Caminhada%20FISIOT%20por%20Elas.%20Como%20fa%C3%A7o%3F"
+           class="wa-action-btn" target="_blank" rel="noopener">
+          <span class="wa-btn-icon">📸</span>
+          Foto &amp;<br>mensagem
+        </a>
+
+      </div>
+
+      <!-- Botão direto geral -->
+      <a href="https://wa.me/5531992594953?text=Ol%C3%A1%2C%20Wilson!%20Tenho%20uma%20d%C3%BAvida%20sobre%20a%201%C2%AA%20Caminhada%20Contra%20o%20C%C3%A2ncer%20%E2%80%94%20FISIOT%20por%20Elas."
+         class="wa-direct-link" target="_blank" rel="noopener">
+        💬 Abrir WhatsApp agora
+      </a>
+
+      <p style="text-align:center;font-size:.74rem;color:var(--gray);margin-top:.9rem;">
+        📍 IREFIS — Instituto de Reabilitação Fisiot em Saúde · Lagoa Santa / MG
       </p>
-      <div class="demo-notice" style="text-align:left;">
-        ⚠️ <span><strong>Número pendente.</strong> O WhatsApp oficial do evento será configurado assim que disponibilizado pela organização.</span>
+    </div>
+  </div>
+</div>
+
+<!-- === MODAL: DOAÇÃO VOLUNTÁRIA R$25,00 =================== -->
+<div class="modal-overlay" id="modal-doacao" role="dialog" aria-modal="true" aria-label="Doação Voluntária">
+  <div class="modal-box">
+    <div class="modal-header modal-header-doacao">
+      <button class="modal-close" onclick="closeModal('modal-doacao')" aria-label="Fechar">✕</button>
+      <h3>💖 Doação Voluntária</h3>
+      <p>Apoie a causa e ganhe um presente especial</p>
+    </div>
+    <div class="modal-body">
+
+      <div class="demo-notice">
+        ⚠️ <span><strong>Prévia demonstrativa.</strong> O meio de pagamento será definido pela organização. Nenhuma cobrança real é gerada aqui.</span>
       </div>
-      <div style="margin-top:1.2rem;padding:.9rem;background:#f0f4ff;border-radius:12px;font-size:.85rem;color:#555;">
-        📍 <strong>IREFIS</strong><br>
-        Instituto de Reabilitação Fisiot em Saúde<br>
-        Lagoa Santa / MG
+
+      <!-- Valor em destaque -->
+      <div class="doacao-modal-valor-badge">
+        <small>Doação Voluntária</small>
+        R$&nbsp;25,00
+        <span class="stock-note">Produto sujeito à disponibilidade de estoque</span>
       </div>
+
+      <!-- Produto Bellamama -->
+      <div class="doacao-product-row">
+        <img src="assets/bellamama-hidratante-pes-cacau.jpg" alt="Produto Bellamama — exemplo" loading="lazy" />
+        <div>
+          <strong>🌿 Ganhe 1 produto Bellamama Cosméticos</strong><br>
+          Ao fazer sua doação de R$25,00, você recebe um produto Bellamama à escolha (pés, mãos, facial, corporal ou antioxidante).<br>
+          <small style="color:var(--gray);">Sujeito à disponibilidade de estoque.</small>
+        </div>
+      </div>
+
+      <!-- Separação kit vs doação -->
+      <div style="background:var(--rosa-pale);border-radius:12px;padding:.9rem 1rem;margin-bottom:1.2rem;font-size:.83rem;color:var(--gray);">
+        💡 <strong style="color:var(--rosa)">Doação ≠ Kit:</strong> A doação de R$25,00 é opcional e independente do kit (R$150,00). São duas formas diferentes de apoiar a campanha!
+      </div>
+
+      <!-- Dados para contato -->
+      <div class="form-group">
+        <label for="doacao-nome">👤 Seu nome (para contato)</label>
+        <input type="text" id="doacao-nome" placeholder="Seu nome completo" autocomplete="given-name" />
+      </div>
+      <div class="form-group">
+        <label for="doacao-tel">📞 WhatsApp para contato</label>
+        <input type="tel" id="doacao-tel" placeholder="(00) 00000-0000" autocomplete="tel" />
+      </div>
+
+      <!-- Escolha do produto Bellamama -->
+      <div class="form-group">
+        <label>🌿 Produto Bellamama de sua preferência</label>
+        <div class="opcoes-grid bellamama-grid">
+          <label class="opcao-card" onclick="selectOpcao(this,'doacao-bella')">
+            <input type="radio" name="doacao-bella" value="pes">
+            <div class="opt-icon">🦶</div>
+            <div><strong>Pés</strong></div>
+          </label>
+          <label class="opcao-card" onclick="selectOpcao(this,'doacao-bella')">
+            <input type="radio" name="doacao-bella" value="maos">
+            <div class="opt-icon">🤲</div>
+            <div><strong>Mãos</strong></div>
+          </label>
+          <label class="opcao-card" onclick="selectOpcao(this,'doacao-bella')">
+            <input type="radio" name="doacao-bella" value="facial">
+            <div class="opt-icon">✨</div>
+            <div><strong>Facial</strong></div>
+          </label>
+          <label class="opcao-card" onclick="selectOpcao(this,'doacao-bella')">
+            <input type="radio" name="doacao-bella" value="corporal">
+            <div class="opt-icon">💆</div>
+            <div><strong>Corporal</strong></div>
+          </label>
+          <label class="opcao-card" onclick="selectOpcao(this,'doacao-bella')">
+            <input type="radio" name="doacao-bella" value="antioxidante">
+            <div class="opt-icon">🍃</div>
+            <div><strong>Antioxi&shy;dante</strong></div>
+          </label>
+        </div>
+      </div>
+
+      <!-- CTA principal: WhatsApp com mensagem pré-preenchida -->
+      <button class="btn-full btn-full-verde" onclick="finalizarDoacao()" style="margin-bottom:.6rem;">
+        💬 Continuar pelo WhatsApp com Wilson
+      </button>
+
+      <p style="text-align:center;font-size:.76rem;color:var(--gray);">
+        Você será direcionado para o WhatsApp com sua preferência já preenchida.<br>
+        A organização confirmará o pagamento e a entrega do produto.
+      </p>
+
     </div>
   </div>
 </div>
@@ -793,6 +1016,6 @@
 <!-- ========================================================
      SCRIPT
      ======================================================== -->
-<script src="script.js?v=20260721g"></script>
+<script src="script.js?v=20260721h"></script>
 </body>
 </html>
