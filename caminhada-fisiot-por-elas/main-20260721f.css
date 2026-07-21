@@ -938,10 +938,16 @@ img { max-width: 100%; display: block; }
 }
 
 /* === FLOAT WHATSAPP ========================================= */
+/*
+   Mobile (< 641px): canto inferior-direito (padrão).
+   Desktop (≥ 641px): canto inferior-ESQUERDO para não
+   sobrepor o card INCA/Rede posicionado no lado direito.
+*/
 .float-wa {
   position: fixed;
   bottom: 1.5rem;
   right: 1.5rem;
+  left: auto;
   z-index: 900;
   background: #25D366;
   color: var(--white);
@@ -957,7 +963,15 @@ img { max-width: 100%; display: block; }
 }
 .float-wa:hover { transform: scale(1.06); box-shadow: 0 10px 32px rgba(37,211,102,.5); }
 .float-wa-label { display: none; }
-@media (min-width: 640px) { .float-wa-label { display: inline; } }
+
+/* Desktop: move para a esquerda, longe do card INCA */
+@media (min-width: 641px) {
+  .float-wa {
+    left: 1.5rem;
+    right: auto;
+  }
+  .float-wa-label { display: inline; }
+}
 
 /* === FOOTER ================================================= */
 footer {

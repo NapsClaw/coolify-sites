@@ -489,7 +489,7 @@
 }
 
 /* ========================================================
-   MASCOTE SECTION
+   MASCOTE SECTION — dupla FISIOT + Bellamama
    ======================================================== */
 .mascote-section {
   background: linear-gradient(135deg, #fff0f5 0%, #f0fff4 100%);
@@ -497,30 +497,70 @@
   border-top: 2px solid rgba(232,0,101,.08);
   border-bottom: 2px solid rgba(39,171,96,.08);
 }
+
+/* Layout geral: par de mascotes + texto/CTA */
 .mascote-inner {
-  max-width: 700px;
+  max-width: 860px;
   margin: 0 auto;
   display: flex;
   align-items: center;
-  gap: 2rem;
+  gap: 2.4rem;
   flex-wrap: wrap;
   justify-content: center;
 }
+
+/* Linha com os dois mascotes lado a lado */
+.mascote-pair {
+  display: flex;
+  align-items: flex-end;   /* alinha bases */
+  gap: 1.4rem;
+  flex-shrink: 0;
+}
+
+/* Cada mascote individual */
+.mascote-figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .5rem;
+}
+
+/* Caixa de imagem — tamanho fixo, fundo branco para imagens com transparência */
 .mascote-img-wrap {
-  flex: 0 0 auto;
-  width: 160px;
-  height: 160px;
+  width: 180px;
+  height: 200px;
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(232,0,101,.18);
   background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+/* Imagem preenche o espaço sem distorcer, mostra inteira */
 .mascote-img {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  object-position: center bottom;
   display: block;
 }
+
+/* Rótulo "Bellamama" sob o segundo mascote */
+.mascote-name {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: .82rem;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--rosa, #e80065);
+  background: rgba(232,0,101,.08);
+  border: 1px solid rgba(232,0,101,.18);
+  border-radius: 20px;
+  padding: .18rem .7rem;
+}
+
 .mascote-texto {
   flex: 1 1 200px;
   text-align: center;
@@ -554,7 +594,17 @@
   display: block;
 }
 
-@media (max-width: 500px) {
-  .mascote-inner { flex-direction: column; gap: 1.2rem; }
-  .mascote-img-wrap { width: 130px; height: 130px; }
+/* ── Responsivo ────────────────────────────────────────── */
+
+/* Tablet estreito: imagens menores mas mantém lado a lado */
+@media (max-width: 640px) {
+  .mascote-img-wrap { width: 140px; height: 155px; }
+  .mascote-pair { gap: 1rem; }
+}
+
+/* Mobile muito pequeno: empilha o par sobre o texto */
+@media (max-width: 400px) {
+  .mascote-img-wrap { width: 120px; height: 132px; }
+  .mascote-pair { gap: .7rem; }
+  .mascote-inner { gap: 1.2rem; }
 }
