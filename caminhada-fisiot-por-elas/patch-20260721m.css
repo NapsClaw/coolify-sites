@@ -1,0 +1,95 @@
+/* ============================================================
+   PATCH 20260721m — R12: logo IREFIS novo + info-grid 4 colunas
+   ============================================================ */
+
+/* ─── LOGO IREFIS: object-fit contain em todos os pontos ─────
+   Impede corte/distorção da marca azul-marinho/turquesa/dourada.
+   ─────────────────────────────────────────────────────────── */
+.header-logo[src*="logo-oficial-instituto-irefis-r12"],
+.hero-logo[src*="logo-oficial-instituto-irefis-r12"],
+footer .footer-logo[src*="logo-oficial-instituto-irefis-r12"] {
+  object-fit: contain;
+  background: #fff;
+}
+
+/* Header: aumenta levemente para marca ser legível */
+.header-logo[src*="logo-oficial-instituto-irefis-r12"] {
+  height: 58px;
+  width: auto;
+  border-radius: 8px;
+  padding: 3px;
+}
+
+/* Hero: garante contain sem distorção */
+.hero-logo[src*="logo-oficial-instituto-irefis-r12"] {
+  object-fit: contain;
+  border-radius: 16px;
+  background: #fff;
+  padding: 6px;
+}
+
+/* Footer */
+footer .footer-logo[src*="logo-oficial-instituto-irefis-r12"] {
+  height: 56px;
+  width: auto;
+  object-fit: contain;
+  border-radius: 10px;
+  background: #fff;
+  padding: 5px 10px;
+}
+
+/* Partner card — Realização IREFIS */
+.partner-logo-box img[src*="logo-oficial-instituto-irefis-r12"] {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* ─── HERO INFO GRID — R12: 4 colunas desktop ───────────────
+   Col-1: card combinado (Data + Concentração + Horário)
+   Col-2: Saída  |  Col-3: Distância  |  Col-4: Chegada
+   Mobile: 1 por linha em ordem: Data/Conc/Hora | Saída | Distância | Chegada
+   ─────────────────────────────────────────────────────────── */
+
+/* Substitui a grade de 3 colunas por 4 colunas */
+.hero-info-grid {
+  grid-template-columns: 1.45fr 1.2fr 0.72fr 1.35fr;
+}
+
+/* Card combinado: empilha os 3 sub-rows verticalmente */
+.hig-card-combined {
+  flex-direction: column;
+  align-items: stretch;
+  gap: .42rem;
+}
+
+/* Cada linha dentro do card combinado */
+.hig-combined-row {
+  display: flex;
+  align-items: flex-start;
+  gap: .4rem;
+}
+
+/* Separador fino entre Data/Conc/Hora dentro do card */
+.hig-combined-row + .hig-combined-row {
+  border-top: 1px solid rgba(255,255,255,.18);
+  padding-top: .38rem;
+}
+
+/* ─── Tablet estreito (641–840px): 2 colunas ─────────────── */
+@media (min-width: 641px) and (max-width: 840px) {
+  .hero-info-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: .45rem;
+  }
+}
+
+/* ─── Mobile (≤ 640px): 1 por linha — mantém patch anterior ─ */
+@media (max-width: 640px) {
+  .hero-info-grid {
+    grid-template-columns: 1fr;
+  }
+  .hig-card-combined {
+    gap: .35rem;
+  }
+}
