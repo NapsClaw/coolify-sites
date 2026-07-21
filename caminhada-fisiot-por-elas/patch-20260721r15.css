@@ -1,0 +1,170 @@
+/* ============================================================
+   PATCH R15 — Selo INCA: "781 MIL" dominante
+   Badge retangular substituindo o círculo:
+     • "781 MIL"                  — tamanho dominante, alto contraste
+     • "NOVOS CASOS DE CÂNCER NO BRASIL" — claramente legível
+     • "POR ANO"                  — destaque dourado
+     • "FONTE: INCA"              — legível, fundo sutil
+   Desktop: card absoluto direita, não cobre arte/logo/cards/CTA
+   Mobile : inline no fluxo entre laço e Rede de Olho no Câncer
+   Preserva R14 de concentração e todos os patches anteriores.
+   ============================================================ */
+
+/* ─── Anel decorativo interno (era do círculo) ─────────────── */
+.inca-deco-ring {
+  display: none !important;
+}
+
+/* ─── Badge INCA: retangular, ocupa 100% do card pai ────────
+   Substitui border-radius:50% + dimensão quadrada por:
+   borda arredondada + altura automática (cresce com conteúdo).
+   ─────────────────────────────────────────────────────────── */
+.inca-circle-badge {
+  /* Remove o círculo */
+  width:  100%      !important;
+  height: auto      !important;
+  border-radius: 14px !important;
+
+  /* Fundo rosa vivo → contraste máximo com texto branco */
+  background: linear-gradient(
+    148deg,
+    #E91E8C 0%,
+    #B5125A 55%,
+    #1B5E20 100%
+  ) !important;
+
+  border: 2.5px solid rgba(255,255,255,.55) !important;
+  box-shadow:
+    0 0 0 3.5px rgba(233,30,140,.42),
+    0 8px 32px rgba(0,0,0,.48),
+    inset 0 1px 0 rgba(255,255,255,.22) !important;
+
+  padding: 11px 8px 10px !important;
+  display: flex         !important;
+  align-items: center   !important;
+  justify-content: center !important;
+
+  /* Mantém a animação de pulso do CSS base */
+  animation: seal-pulse 3.5s ease-in-out infinite !important;
+}
+
+/* ─── Conteúdo interno: empilhado verticalmente ────────────── */
+.inca-seal-content {
+  display:         flex         !important;
+  flex-direction:  column       !important;
+  align-items:     center       !important;
+  justify-content: center       !important;
+  text-align:      center       !important;
+  gap:             2px          !important;
+  padding:         0            !important;
+  width:           100%         !important;
+  height:          auto         !important;
+}
+
+/* ── "781 MIL" — DOMINANTE, alto contraste ──────────────────
+   Linha inferior separa visualmente o número das linhas de texto.
+   align-self:stretch + border-bottom = linha divide a largura toda.
+   ─────────────────────────────────────────────────────────── */
+.inca-number {
+  font-family:   'Montserrat', sans-serif !important;
+  font-weight:   900     !important;
+  font-size:     clamp(1.55rem, 2.8vw, 2.05rem) !important;
+  color:         #FFFFFF !important;
+  line-height:   1       !important;
+  letter-spacing: -.02em !important;
+  white-space:   nowrap  !important;
+  text-shadow:
+    0 0 18px rgba(255,255,255,.32),
+    0 2px 10px rgba(0,0,0,.55) !important;
+
+  /* Separador visual abaixo do número */
+  align-self:     stretch !important;
+  text-align:     center  !important;
+  padding-bottom: 6px     !important;
+  margin-bottom:  2px     !important;
+  border-bottom:  1.5px solid rgba(255,255,255,.30) !important;
+}
+
+/* ── "NOVOS CASOS DE CÂNCER NO BRASIL" ─────────────────────── */
+.inca-caption {
+  font-family:   'Montserrat', sans-serif !important;
+  font-size:     clamp(.6rem, 1.15vw, .75rem) !important;
+  font-weight:   800     !important;
+  color:         #FFFFFF !important;
+  text-transform: uppercase !important;
+  letter-spacing: .03em  !important;
+  line-height:   1.25    !important;
+  text-align:    center  !important;
+  text-shadow:   0 1px 6px rgba(0,0,0,.42) !important;
+}
+
+/* ── "POR ANO" — destaque dourado, diferenciado ────────────── */
+.inca-por-ano {
+  display:        block;
+  font-family:    'Montserrat', sans-serif;
+  font-weight:    700;
+  font-size:      clamp(.7rem, 1.25vw, .84rem);
+  color:          #FFE082;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  line-height:    1;
+  text-shadow:    0 1px 5px rgba(0,0,0,.42);
+  margin-top:     2px;
+}
+
+/* ── "FONTE: INCA" — caixa escura para legibilidade ─────────── */
+.inca-fonte {
+  display:        inline-block !important;
+  font-size:      clamp(.6rem, 1.05vw, .72rem) !important;
+  font-weight:    700    !important;
+  color:          #FFFFFF !important;
+  text-transform: uppercase !important;
+  letter-spacing: .08em  !important;
+  line-height:    1.2    !important;
+  text-shadow:    0 1px 4px rgba(0,0,0,.42) !important;
+  background:     rgba(0,0,0,.22) !important;
+  border-radius:  5px    !important;
+  padding:        .12rem .42rem !important;
+  margin-top:     4px    !important;
+}
+
+/* ─── Desktop (> 900px): card levemente mais largo ───────────
+   Garante espaço suficiente para "781 MIL" na linha do h1.
+   Não há risco de cobrir arte/logo/cards/CTA centralizados.
+   ─────────────────────────────────────────────────────────── */
+@media (min-width: 901px) {
+  .hero-inca-seal {
+    width: clamp(160px, 14.5vw, 200px) !important;
+  }
+}
+
+/* ─── Tablet (641–900px): badge retangular menor ────────────── */
+@media (min-width: 641px) and (max-width: 900px) {
+  .inca-circle-badge {
+    border-radius: 12px !important;
+    padding: 9px 7px   !important;
+  }
+  .inca-number  { font-size: 1.45rem !important; }
+  .inca-caption { font-size: .58rem  !important; }
+  .inca-por-ano { font-size: .64rem  !important; }
+  .inca-fonte   { font-size: .57rem  !important; }
+}
+
+/* ─── Mobile (≤ 640px) ───────────────────────────────────────
+   O card base já tem position:relative, flex-direction:row, flex-wrap.
+   Ajuste: badge flex-grow para preencher o espaço ao lado do laço.
+   ─────────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .inca-circle-badge {
+    width:         auto       !important;
+    flex:          1 1 128px  !important;
+    height:        auto       !important;
+    min-width:     118px      !important;
+    border-radius: 12px       !important;
+    padding:       9px 8px    !important;
+  }
+  .inca-number  { font-size: 1.72rem !important; }
+  .inca-caption { font-size: .63rem  !important; }
+  .inca-por-ano { font-size: .68rem  !important; }
+  .inca-fonte   { font-size: .60rem  !important; }
+}
