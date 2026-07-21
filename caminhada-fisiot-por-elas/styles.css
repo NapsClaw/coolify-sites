@@ -15,7 +15,7 @@
   --verde-pale:  #F1F8F1;
   --white:       #FFFFFF;
   --gray-soft:   #F7F7F7;
-  --gray:        #888;
+  --gray:        #575757;
   --dark:        #1A1A2E;
   --radius:      16px;
   --shadow:      0 4px 24px rgba(233,30,140,.18);
@@ -221,13 +221,13 @@ img { max-width: 100%; display: block; }
 
 /* === SECTION BASE =========================================== */
 .section {
-  padding: 4rem 1.5rem;
+  padding: 3rem 1.5rem;
   max-width: 1100px;
   margin: 0 auto;
 }
 .section-title {
   text-align: center;
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
 }
 .section-title h2 {
   font-size: clamp(1.5rem, 3.5vw, 2rem);
@@ -465,14 +465,14 @@ img { max-width: 100%; display: block; }
 .depoimentos-section { background: var(--white); }
 .depoimentos-empty {
   text-align: center;
-  padding: 3rem 1.5rem;
+  padding: 2rem 1.5rem;
   background: var(--rosa-pale);
   border: 2px dashed var(--rosa-light);
   border-radius: 24px;
   max-width: 540px;
   margin: 0 auto;
 }
-.depoimentos-empty .empty-icon { font-size: 4rem; margin-bottom: 1rem; }
+.depoimentos-empty .empty-icon { font-size: 3.5rem; margin-bottom: .8rem; }
 .depoimentos-empty h3 { font-size: 1.3rem; color: var(--rosa); margin-bottom: .6rem; }
 .depoimentos-empty p { font-size: .9rem; color: var(--gray); max-width: 360px; margin: 0 auto 1.4rem; }
 .btn-depoimento {
@@ -514,19 +514,19 @@ img { max-width: 100%; display: block; }
 /* === FOOTER ================================================= */
 footer {
   background: var(--dark);
-  color: rgba(255,255,255,.75);
+  color: rgba(255,255,255,.88);
   padding: 2.5rem 1.5rem;
   text-align: center;
 }
 footer .footer-inner { max-width: 1100px; margin: 0 auto; }
 footer .footer-logo { height: 50px; margin: 0 auto 1rem; border-radius: 8px; background: white; padding: 5px; }
 footer .footer-event { font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1rem; color: var(--white); margin-bottom: .3rem; }
-footer .footer-org { font-size: .82rem; margin-bottom: .5rem; }
+footer .footer-org { font-size: .82rem; color: rgba(255,255,255,.80); margin-bottom: .5rem; }
 footer .footer-preview-note {
   font-size: .75rem;
-  color: rgba(255,255,255,.4);
+  color: rgba(255,255,255,.65);
   margin-top: 1rem;
-  border-top: 1px solid rgba(255,255,255,.08);
+  border-top: 1px solid rgba(255,255,255,.14);
   padding-top: .8rem;
 }
 footer .footer-preview-note strong { color: var(--rosa-light); }
@@ -765,11 +765,12 @@ footer .footer-preview-note strong { color: var(--rosa-light); }
   .hero h1 { font-size: 1.5rem; }
   .hero-subtitle { font-size: .92rem; }
   .header-whatsapp span:not(.icon) { display: none; }
-  .section { padding: 2.5rem 1rem; }
+  .section { padding: 2rem 1rem; }
   .buttons-grid { gap: .75rem; }
   .btn-card { padding: 1rem .7rem; }
   .btn-card .btn-icon { font-size: 1.8rem; }
   .btn-card .btn-label { font-size: .8rem; }
+  .videos-grid { grid-template-columns: 1fr; }
 }
 
 /* Accessibility */
@@ -779,4 +780,234 @@ footer .footer-preview-note strong { color: var(--rosa-light); }
 }
 @media (prefers-reduced-motion: reduce) {
   * { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+
+/* === VÍDEOS SECTION (PÚBLICO) ============================== */
+.videos-section { background: var(--white); }
+
+.videos-empty-state {
+  text-align: center;
+  padding: 2rem 1.5rem;
+  background: linear-gradient(135deg, #f3e8ff, #ede0f8);
+  border: 2px dashed #c5a0e0;
+  border-radius: 24px;
+  max-width: 540px;
+  margin: 0 auto 1.2rem;
+}
+.videos-empty-state .videos-empty-icon { font-size: 3.5rem; margin-bottom: .8rem; }
+.videos-empty-state h3 { font-size: 1.15rem; color: #6A1B9A; margin-bottom: .5rem; }
+.videos-empty-state p  { font-size: .88rem; color: var(--gray); max-width: 380px; margin: 0 auto; line-height: 1.55; }
+
+.videos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 1.4rem;
+  margin-bottom: 1.2rem;
+}
+.video-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid #e8e8e8;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.video-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 32px rgba(0,0,0,.13);
+}
+.video-embed-wrapper {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  background: #111;
+}
+.video-embed-wrapper iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  border: none;
+}
+.video-card-info {
+  padding: .9rem 1rem;
+}
+.video-card-info h4 {
+  font-size: .93rem;
+  color: var(--dark);
+  margin-bottom: .25rem;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+}
+.video-card-info p {
+  font-size: .82rem;
+  color: var(--gray);
+  line-height: 1.5;
+}
+
+.videos-admin-area {
+  text-align: center;
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eaeaea;
+}
+.btn-admin-access {
+  background: transparent;
+  border: 1.5px solid #bbb;
+  color: var(--gray);
+  border-radius: 50px;
+  padding: .5rem 1.3rem;
+  font-size: .81rem;
+  cursor: pointer;
+  font-family: 'Open Sans', sans-serif;
+  letter-spacing: .01em;
+  transition: border-color var(--transition), color var(--transition), background var(--transition);
+}
+.btn-admin-access:hover {
+  border-color: var(--rosa);
+  color: var(--rosa);
+  background: var(--rosa-pale);
+}
+
+/* === ADMIN VÍDEOS MODAL ==================================== */
+.modal-box-wide { max-width: 560px; }
+
+.modal-header-admin {
+  background: linear-gradient(135deg, #2C3E50, #3D5166) !important;
+}
+
+.admin-persist-notice {
+  background: #E3F2FD;
+  border: 1.5px solid #90CAF9;
+  border-radius: 10px;
+  padding: 1rem 1.1rem;
+  font-size: .82rem;
+  color: #1A4C7A;
+  margin-bottom: 1.4rem;
+  line-height: 1.65;
+}
+.admin-persist-notice strong { color: #0D3B6E; display: block; margin-bottom: .2rem; }
+
+.admin-form-section {
+  background: #F7F8FA;
+  border: 1px solid #E8E9EC;
+  border-radius: 14px;
+  padding: 1.2rem;
+  margin-bottom: 1.2rem;
+}
+.admin-form-title {
+  font-size: .95rem;
+  color: var(--dark);
+  margin-bottom: .9rem;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+}
+.adm-url-hint {
+  display: block;
+  font-size: .76rem;
+  color: var(--gray);
+  margin-top: .3rem;
+  line-height: 1.4;
+}
+
+/* Admin video list */
+#admin-video-list h4 {
+  font-size: .9rem;
+  color: var(--dark);
+  font-family: 'Montserrat', sans-serif;
+  margin-bottom: .7rem;
+}
+.admin-no-videos {
+  text-align: center;
+  color: var(--gray);
+  font-size: .87rem;
+  padding: 1rem;
+  background: #F7F8FA;
+  border-radius: 10px;
+  border: 1px dashed #ddd;
+}
+.admin-video-item {
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+  padding: .75rem;
+  background: var(--white);
+  border: 1px solid #e8e8e8;
+  border-radius: 10px;
+  margin-bottom: .6rem;
+}
+.admin-video-thumb {
+  flex-shrink: 0;
+  width: 80px;
+  height: 56px;
+  border-radius: 7px;
+  overflow: hidden;
+  background: #ddd;
+}
+.admin-video-thumb img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.vimeo-thumb-ph {
+  width: 100%; height: 100%;
+  background: linear-gradient(135deg,#1AB7EA,#0E8DB8);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .02em;
+}
+.admin-video-meta {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: .18rem;
+  min-width: 0;
+  overflow: hidden;
+}
+.admin-video-meta strong {
+  font-size: .87rem;
+  color: var(--dark);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+.admin-video-meta span {
+  font-size: .77rem;
+  color: var(--gray);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+}
+.admin-video-meta a {
+  font-size: .74rem;
+  color: var(--rosa);
+  text-decoration: none;
+}
+.admin-video-meta a:hover { text-decoration: underline; }
+.admin-remove-btn {
+  flex-shrink: 0;
+  background: #FFF0F0;
+  border: 1.5px solid #FFCDD2;
+  color: #C62828;
+  border-radius: 8px;
+  padding: .45rem .7rem;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  transition: background var(--transition), border-color var(--transition);
+}
+.admin-remove-btn:hover {
+  background: #FFCDD2;
+  border-color: #EF9A9A;
+}
+
+@media (max-width: 480px) {
+  .admin-video-thumb { width: 64px; height: 46px; }
+  .admin-video-meta strong { font-size: .82rem; }
 }

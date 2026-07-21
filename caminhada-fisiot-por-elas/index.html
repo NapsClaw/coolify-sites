@@ -52,7 +52,7 @@
   </div>
   <a href="#" class="hero-cta" onclick="openModal('modal-kit'); return false;">
     🛍️ Comprar meu kit
-    <span class="price-pill">R$&nbsp;150</span>
+    <span class="price-pill">R$&nbsp;150,00</span>
   </a>
   <div class="hero-scroll-hint">
     <span>▼</span>
@@ -73,7 +73,7 @@
       <!-- 1. COMPRAR KIT (destaque) -->
       <a href="#" class="btn-card btn-primary" onclick="openModal('modal-kit'); return false;">
         <div class="btn-icon">🛍️</div>
-        <div class="btn-label">Comprar meu kit · R$&nbsp;150</div>
+        <div class="btn-label">Comprar meu kit · R$&nbsp;150,00</div>
       </a>
 
       <!-- 2. GPS -->
@@ -94,13 +94,19 @@
         <div class="btn-label">Ver depoimentos</div>
       </a>
 
-      <!-- 5. PARCEIROS -->
+      <!-- 5. VÍDEOS (novo) -->
+      <a href="#videos" class="btn-card">
+        <div class="btn-icon">🎬</div>
+        <div class="btn-label">Ver vídeos</div>
+      </a>
+
+      <!-- 6. PARCEIROS -->
       <a href="#" class="btn-card btn-verde" onclick="openModal('modal-parceiro'); return false;">
         <div class="btn-icon">🤝</div>
         <div class="btn-label">Seja parceiro</div>
       </a>
 
-      <!-- 6. WHATSAPP -->
+      <!-- 7. WHATSAPP -->
       <a href="#" class="btn-card" onclick="openModal('modal-wa'); return false;">
         <div class="btn-icon">💚</div>
         <div class="btn-label">WhatsApp</div>
@@ -238,6 +244,33 @@
     <a href="#" class="btn-parceiro" onclick="openModal('modal-parceiro'); return false;">
       🤝 Quero ser parceiro desta caminhada
     </a>
+  </div>
+</section>
+
+<!-- ========================================================
+     VÍDEOS
+     ======================================================== -->
+<section id="videos" class="section videos-section">
+  <div class="section-title">
+    <h2>Vídeos do <span>IREFIS</span></h2>
+    <p>Conteúdos sobre saúde, reabilitação e a caminhada FISIOT por Elas</p>
+  </div>
+
+  <!-- Estado vazio (exibido quando não há vídeos cadastrados) -->
+  <div class="videos-empty-state" id="videos-empty-state">
+    <div class="videos-empty-icon">🎬</div>
+    <h3>Vídeos em breve!</h3>
+    <p>A equipe do IREFIS publicará vídeos sobre o evento, depoimentos e os programas de saúde aqui. Use o painel abaixo para adicionar o primeiro vídeo.</p>
+  </div>
+
+  <!-- Grid público de vídeos (renderizado por JS) -->
+  <div class="videos-grid" id="videos-grid"></div>
+
+  <!-- Acesso ao painel da equipe -->
+  <div class="videos-admin-area">
+    <button class="btn-admin-access" onclick="openAdminVideos()">
+      ⚙️ Equipe IREFIS — Gerenciar vídeos
+    </button>
   </div>
 </section>
 
@@ -536,6 +569,59 @@
         Instituto de Reabilitação Fisiot em Saúde<br>
         Lagoa Santa / MG
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- === MODAL: ADMIN VÍDEOS ================================= -->
+<div class="modal-overlay" id="modal-admin-videos" role="dialog" aria-modal="true" aria-label="Painel de Vídeos — Equipe IREFIS">
+  <div class="modal-box modal-box-wide">
+    <div class="modal-header modal-header-admin">
+      <button class="modal-close" onclick="closeModal('modal-admin-videos')" aria-label="Fechar">✕</button>
+      <h3>⚙️ Painel de Vídeos</h3>
+      <p>Equipe IREFIS — Gerenciar área pública de vídeos</p>
+    </div>
+    <div class="modal-body">
+
+      <!-- Aviso de persistência demonstrativa -->
+      <div class="admin-persist-notice">
+        <strong>🔐 Painel demonstrativo — armazenamento local</strong><br>
+        Os vídeos cadastrados aqui ficam salvos <strong>apenas neste navegador</strong> (localStorage). Limpar o cache do browser apaga os dados.<br>
+        <strong>Na versão final:</strong> o painel terá login protegido para a equipe autorizada, e os vídeos ficarão visíveis para todos os visitantes automaticamente, com persistência compartilhada em servidor.
+      </div>
+
+      <!-- Formulário: adicionar vídeo -->
+      <div class="admin-form-section">
+        <h4 class="admin-form-title">➕ Adicionar novo vídeo</h4>
+
+        <div class="form-group">
+          <label for="adm-title">Título do vídeo *</label>
+          <input type="text" id="adm-title" placeholder="Ex: Apresentação da 1ª Caminhada FISIOT por Elas" maxlength="120" />
+        </div>
+
+        <div class="form-group">
+          <label for="adm-desc">Descrição (opcional)</label>
+          <input type="text" id="adm-desc" placeholder="Ex: Conheça o evento e saiba como participar" maxlength="200" />
+        </div>
+
+        <div class="form-group">
+          <label for="adm-url">Link do vídeo * — YouTube ou Vimeo</label>
+          <input type="url" id="adm-url" placeholder="https://www.youtube.com/watch?v=…" />
+          <small class="adm-url-hint">
+            Formatos aceitos: youtube.com/watch?v=… · youtu.be/… · vimeo.com/…
+          </small>
+        </div>
+
+        <button class="btn-full btn-full-verde" onclick="adminAddVideo()">
+          ✅ Adicionar vídeo à área pública
+        </button>
+      </div>
+
+      <!-- Lista de vídeos cadastrados -->
+      <div id="admin-video-list">
+        <!-- Renderizado por JS -->
+      </div>
+
     </div>
   </div>
 </div>

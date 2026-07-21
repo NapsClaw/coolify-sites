@@ -188,4 +188,223 @@ document.querySelectorAll('a[href="#whatsapp-pendente"]').forEach(el => {
 /* --- Init: ensure no modals visible on load --------------- */
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.modal-overlay').forEach(o => o.classList.remove('active'));
+  renderPublicVideos();
 });
+
+/* ============================================================
+   GESTÃO DE VÍDEOS — Equipe IREFIS
+   Armazenamento: localStorage (demonstração local)
+   Versão final: login protegido + persistência compartilhada
+   ============================================================ */
+
+const VIDEOS_STORAGE_KEY = 'fisiot_videos_demo_v1';
+
+/** Lê vídeos salvos no localStorage */
+function getVideos() {
+  try {
+    return JSON.parse(localStorage.getItem(VIDEOS_STORAGE_KEY) || '[]');
+  } catch (e) {
+    return [];
+  }
+}
+
+/** Salva vídeos no localStorage */
+function saveVideos(videos) {
+  localStorage.setItem(VIDEOS_STORAGE_KEY, JSON.stringify(videos));
+}
+
+/**
+ * Extrai embed URL de links YouTube / Vimeo.
+ * Retorna { type, id, embed } ou null se inválido.
+ */
+function parseVideoURL(url) {
+  const str = (url || '').trim();
+
+  // YouTube: youtube.com/watch?v=ID  ou  youtu.be/ID
+  let m = str.match(
+    /(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/
+  );
+  if (m) {
+    const id = m[1];
+    return {
+      type: 'youtube',
+      id,
+      embed: `https://www.youtube.com/embed/${id}?rel=0`,
+      thumb: `https://img.youtube.com/vi/${id}/mqdefault.jpg`,
+    };
+  }
+
+  // Vimeo: vimeo.com/ID  ou  vimeo.com/channels/…/ID  ou  vimeo.com/groups/…/videos/ID
+  m = str.match(/vimeo\.com\/(?:[a-zA-Z0-9_-]+\/)*(\d+)/);
+  if (m) {
+    const id = m[1];
+    return {
+      type: 'vimeo',
+      id,
+      embed: `https://player.vimeo.com/video/${id}`,
+      thumb: null,
+    };
+  }
+
+  return null;
+}
+
+/** Escapa HTML para evitar XSS em innerHTML dinâmico */
+function escapeHtml(str) {
+  return String(str || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+/** Renderiza vídeos na área pública */
+function renderPublicVideos() {
+  const emptyState = document.getElementById('videos-empty-state');
+  const grid       = document.getElementById('videos-grid');
+  if (!emptyState || !grid) return;
+
+  const videos = getVideos();
+
+  if (videos.length === 0) {
+    emptyState.style.display = 'block';
+    grid.style.display = 'none';
+    grid.innerHTML = '';
+    return;
+  }
+
+  emptyState.style.display = 'none';
+  grid.style.display = 'grid';
+  grid.innerHTML = videos.map(v => `
+    <div class="video-card">
+      <div class="video-embed-wrapper">
+        <iframe
+          src="${v.embed}"
+          title="${escapeHtml(v.title)}"
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+      </div>
+      <div class="video-card-info">
+        <h4>${escapeHtml(v.title)}</h4>
+        ${v.description ? `<p>${escapeHtml(v.description)}</p>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+/** Renderiza lista no painel admin */
+function renderAdminVideos() {
+  const list = document.getElementById('admin-video-list');
+  if (!list) return;
+
+  const videos = getVideos();
+
+  if (videos.length === 0) {
+    list.innerHTML = '<p class="admin-no-videos">Nenhum vídeo cadastrado ainda. Use o formulário acima para adicionar o primeiro.</p>';
+    return;
+  }
+
+  list.innerHTML = `
+    <h4 style="margin-bottom:.7rem;">Vídeos cadastrados (${videos.length})</h4>
+    ${videos.map((v, i) => `
+      <div class="admin-video-item">
+        <div class="admin-video-thumb">
+          ${v.type === 'youtube' && v.thumb
+            ? `<img src="${v.thumb}" alt="${escapeHtml(v.title)}" />`
+            : `<div class="vimeo-thumb-ph">▶ Vimeo</div>`
+          }
+        </div>
+        <div class="admin-video-meta">
+          <strong>${escapeHtml(v.title)}</strong>
+          ${v.description ? `<span>${escapeHtml(v.description)}</span>` : ''}
+          <a href="${escapeHtml(v.url)}" target="_blank" rel="noopener noreferrer">
+            🔗 Ver no ${v.type === 'youtube' ? 'YouTube' : 'Vimeo'}
+          </a>
+        </div>
+        <button class="admin-remove-btn" onclick="adminRemoveVideo(${i})" aria-label="Remover vídeo ${escapeHtml(v.title)}">🗑️</button>
+      </div>
+    `).join('')}
+  `;
+}
+
+/** Abre painel admin e carrega lista */
+function openAdminVideos() {
+  openModal('modal-admin-videos');
+  renderAdminVideos();
+}
+
+/** Adiciona vídeo via formulário admin */
+function adminAddVideo() {
+  const titleEl = document.getElementById('adm-title');
+  const descEl  = document.getElementById('adm-desc');
+  const urlEl   = document.getElementById('adm-url');
+
+  const title = titleEl?.value.trim();
+  const desc  = descEl?.value.trim();
+  const url   = urlEl?.value.trim();
+
+  if (!title) {
+    alert('Por favor, preencha o título do vídeo.');
+    titleEl?.focus();
+    return;
+  }
+  if (!url) {
+    alert('Por favor, insira o link do vídeo (YouTube ou Vimeo).');
+    urlEl?.focus();
+    return;
+  }
+
+  const parsed = parseVideoURL(url);
+  if (!parsed) {
+    alert(
+      '❌ Link não reconhecido.\n\n' +
+      'Use um dos formatos abaixo:\n' +
+      '• https://www.youtube.com/watch?v=CÓDIGO\n' +
+      '• https://youtu.be/CÓDIGO\n' +
+      '• https://vimeo.com/NÚMERO'
+    );
+    urlEl?.focus();
+    return;
+  }
+
+  const videos = getVideos();
+  videos.unshift({
+    title,
+    description: desc,
+    url,
+    type:    parsed.type,
+    id:      parsed.id,
+    embed:   parsed.embed,
+    thumb:   parsed.thumb,
+    addedAt: new Date().toISOString(),
+  });
+  saveVideos(videos);
+
+  // Limpa formulário
+  if (titleEl) titleEl.value = '';
+  if (descEl)  descEl.value  = '';
+  if (urlEl)   urlEl.value   = '';
+
+  renderAdminVideos();
+  renderPublicVideos();
+
+  alert(`✅ Vídeo "${title}" adicionado!\nEle já aparece na área pública de vídeos.`);
+}
+
+/** Remove vídeo por índice */
+function adminRemoveVideo(index) {
+  const videos = getVideos();
+  const v = videos[index];
+  if (!v) return;
+
+  if (!confirm(`Remover o vídeo "${v.title}"?\n\nEsta ação não pode ser desfeita.`)) return;
+
+  videos.splice(index, 1);
+  saveVideos(videos);
+
+  renderAdminVideos();
+  renderPublicVideos();
+}
