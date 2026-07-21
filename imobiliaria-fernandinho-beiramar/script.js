@@ -2,7 +2,9 @@
    Imobiliária Fernandinho Beiramar — script.js
 ═══════════════════════════════════════════════ */
 
-/* ── Data: Imóveis ── */
+/* ── Data: Imóveis — imagens locais (assets/imoveis/) ── */
+const IMG_FALLBACK = 'assets/imoveis/fallback.svg';
+
 const IMOVEIS = [
   // ── VENDA ──
   {
@@ -11,7 +13,7 @@ const IMOVEIS = [
     preco: 'R$ 850.000', precoNum: 850000,
     area: '120 m²', quartos: 3, banheiros: 2,
     tag: 'Destaque',
-    img: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=600&q=80',
+    img: 'assets/imoveis/apt-vista-mar-venda.jpg',
     imgAlt: 'Edifício residencial moderno com apartamentos beira-mar'
   },
   {
@@ -20,7 +22,7 @@ const IMOVEIS = [
     preco: 'R$ 1.850.000', precoNum: 1850000,
     area: '250 m²', quartos: 4, banheiros: 3,
     tag: null,
-    img: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=600&q=80',
+    img: 'assets/imoveis/casa-condominio-fechado.jpg',
     imgAlt: 'Casa de alto padrão com fachada moderna e jardim'
   },
   {
@@ -29,7 +31,7 @@ const IMOVEIS = [
     preco: 'R$ 420.000', precoNum: 420000,
     area: '45 m²', quartos: 1, banheiros: 1,
     tag: 'Novo',
-    img: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=600&q=80',
+    img: 'assets/imoveis/studio-moderno-praia.jpg',
     imgAlt: 'Studio moderno bem decorado próximo à praia'
   },
   {
@@ -38,7 +40,7 @@ const IMOVEIS = [
     preco: 'R$ 2.900.000', precoNum: 2900000,
     area: '350 m²', quartos: 4, banheiros: 4,
     tag: 'Exclusivo',
-    img: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=600&q=80',
+    img: 'assets/imoveis/cobertura-duplex.jpg',
     imgAlt: 'Cobertura de luxo com acabamento premium e entrada elegante'
   },
   {
@@ -47,7 +49,7 @@ const IMOVEIS = [
     preco: 'R$ 580.000', precoNum: 580000,
     area: '80 m²', quartos: 2, banheiros: 1,
     tag: null,
-    img: 'https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=600&q=80',
+    img: 'assets/imoveis/apt-2-quartos.jpg',
     imgAlt: 'Apartamento de 2 quartos com sala integrada e acabamento moderno'
   },
   {
@@ -56,7 +58,7 @@ const IMOVEIS = [
     preco: 'R$ 1.250.000', precoNum: 1250000,
     area: '200 m²', quartos: 3, banheiros: 3,
     tag: null,
-    img: 'https://images.unsplash.com/photo-1613977257365-aaae5a9817ff?auto=format&fit=crop&w=600&q=80',
+    img: 'assets/imoveis/casa-3-suites.jpg',
     imgAlt: 'Casa de condomínio com área gourmet e piscina'
   },
   // ── ALUGUEL — PERMANENTE ──
@@ -66,7 +68,7 @@ const IMOVEIS = [
     preco: 'R$ 4.500', precoNum: 4500, sufixo: '/mês',
     area: '75 m²', quartos: 2, banheiros: 1,
     tag: 'Disponível',
-    img: 'https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?auto=format&fit=crop&w=600&q=80',
+    img: 'assets/imoveis/apt-vista-mar-aluguel.jpg',
     imgAlt: 'Sala de estar ampla com janelão e iluminação natural'
   },
   {
@@ -75,7 +77,7 @@ const IMOVEIS = [
     preco: 'R$ 2.200', precoNum: 2200, sufixo: '/mês',
     area: '42 m²', quartos: 1, banheiros: 1,
     tag: null,
-    img: 'https://images.unsplash.com/photo-1556020685-ae41abfc9365?auto=format&fit=crop&w=600&q=80',
+    img: 'assets/imoveis/studio-mobiliado.jpg',
     imgAlt: 'Studio compacto e bem organizado para locação'
   },
   {
@@ -84,7 +86,7 @@ const IMOVEIS = [
     preco: 'R$ 6.200', precoNum: 6200, sufixo: '/mês',
     area: '110 m²', quartos: 3, banheiros: 2,
     tag: null,
-    img: 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=600&q=80',
+    img: 'assets/imoveis/apt-3-quartos-aluguel.jpg',
     imgAlt: 'Quarto elegante em apartamento espaçoso para locação'
   },
   {
@@ -93,7 +95,7 @@ const IMOVEIS = [
     preco: 'R$ 1.600', precoNum: 1600, sufixo: '/mês',
     area: '35 m²', quartos: 1, banheiros: 1,
     tag: 'Ótimo custo',
-    img: 'https://images.unsplash.com/photo-1536376072261-38c75010e6c9?auto=format&fit=crop&w=600&q=80',
+    img: 'assets/imoveis/kitnet-mobiliada.jpg',
     imgAlt: 'Kitnet moderna e bem localizada para aluguel'
   },
   // ── ALUGUEL — TEMPORADA ──
@@ -103,7 +105,7 @@ const IMOVEIS = [
     preco: 'R$ 7.800', precoNum: 7800, sufixo: '/semana',
     area: '160 m²', quartos: 3, banheiros: 2,
     tag: 'Temporada',
-    img: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=600&q=80',
+    img: 'assets/imoveis/casa-praia-temporada.jpg',
     imgAlt: 'Casa de praia para temporada com área externa e varanda'
   },
   {
@@ -112,7 +114,7 @@ const IMOVEIS = [
     preco: 'R$ 12.000', precoNum: 12000, sufixo: '/semana',
     area: '220 m²', quartos: 4, banheiros: 3,
     tag: 'Premium',
-    img: 'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=600&q=80',
+    img: 'assets/imoveis/casa-temporada-4q.jpg',
     imgAlt: 'Casa ampla de alto padrão para temporada na praia'
   }
 ];
@@ -130,7 +132,8 @@ function renderCard(imovel) {
       data-aluguel-tipo="${imovel.aluguelTipo || ''}"
     >
       <div class="prop-img-wrap">
-        <img src="${imovel.img}" alt="${imovel.imgAlt}" loading="lazy" width="600" height="375" />
+        <img src="${imovel.img}" alt="${imovel.imgAlt}" loading="lazy" width="600" height="375"
+             onerror="if(this.src!==IMG_FALLBACK){this.src=IMG_FALLBACK;}" />
         <span class="badge ${isAluguel ? 'badge-rent' : 'badge-sale'}">${isAluguel ? 'Para Alugar' : 'À Venda'}</span>
         ${imovel.tag ? `<span class="badge-top">${imovel.tag}</span>` : ''}
       </div>
@@ -356,8 +359,20 @@ function initSmoothAnchors() {
   });
 }
 
+/* ── Remove progress bars / loading strips ── */
+function removeProgressBars() {
+  const selectors = [
+    '#nprogress', '.nprogress-bar', '.progress-bar', '.page-progress',
+    '.scroll-progress', '.reading-progress', '.loading-bar'
+  ];
+  selectors.forEach(sel => {
+    document.querySelectorAll(sel).forEach(el => el.remove());
+  });
+}
+
 /* ── Init ── */
 document.addEventListener('DOMContentLoaded', () => {
+  removeProgressBars();
   renderAllGrids();
   initHeroSearch();
   initFilterTabs();
@@ -366,3 +381,5 @@ document.addEventListener('DOMContentLoaded', () => {
   initMobileMenu();
   initSmoothAnchors();
 });
+
+window.addEventListener('load', removeProgressBars);
