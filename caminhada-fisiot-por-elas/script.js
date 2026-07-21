@@ -1,6 +1,6 @@
 /* ============================================================
    CAMINHADA FISIOT POR ELAS — Script Principal
-   Versão: 20260721r16 (endereço retirada → Rua Dr. Benjamin Vieira, 27; Lacerda somente Chegada)
+   Versão: 20260721r16 (retirada/concentração → Rua Dr. Benjamin Vieira, 27; chegada → Complexo Jalile Daher)
    ============================================================ */
 
 /* --- WhatsApp helper (Wilson Barbosa — (31) 99259-4953) ---- */
