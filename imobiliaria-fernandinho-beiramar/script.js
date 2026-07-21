@@ -11,8 +11,8 @@ const IMOVEIS = [
     preco: 'R$ 850.000', precoNum: 850000,
     area: '120 m²', quartos: 3, banheiros: 2,
     tag: 'Destaque',
-    img: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=600&q=80',
-    imgAlt: 'Apartamento moderno com varanda e vista para o mar'
+    img: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=600&q=80',
+    imgAlt: 'Edifício residencial moderno com apartamentos beira-mar'
   },
   {
     id: 2, modal: 'venda', tipo: 'casa', aluguelTipo: null,
@@ -21,7 +21,7 @@ const IMOVEIS = [
     area: '250 m²', quartos: 4, banheiros: 3,
     tag: null,
     img: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=600&q=80',
-    imgAlt: 'Casa de alto padrão com jardim e piscina'
+    imgAlt: 'Casa de alto padrão com fachada moderna e jardim'
   },
   {
     id: 3, modal: 'venda', tipo: 'studio', aluguelTipo: null,
@@ -38,8 +38,8 @@ const IMOVEIS = [
     preco: 'R$ 2.900.000', precoNum: 2900000,
     area: '350 m²', quartos: 4, banheiros: 4,
     tag: 'Exclusivo',
-    img: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=600&q=80',
-    imgAlt: 'Cobertura duplex de luxo com terraço e vista panorâmica'
+    img: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=600&q=80',
+    imgAlt: 'Cobertura de luxo com acabamento premium e entrada elegante'
   },
   {
     id: 5, modal: 'venda', tipo: 'apartamento', aluguelTipo: null,
@@ -47,8 +47,8 @@ const IMOVEIS = [
     preco: 'R$ 580.000', precoNum: 580000,
     area: '80 m²', quartos: 2, banheiros: 1,
     tag: null,
-    img: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=600&q=80',
-    imgAlt: 'Apartamento de 2 quartos com acabamento moderno'
+    img: 'https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=600&q=80',
+    imgAlt: 'Apartamento de 2 quartos com sala integrada e acabamento moderno'
   },
   {
     id: 6, modal: 'venda', tipo: 'casa', aluguelTipo: null,
@@ -66,8 +66,8 @@ const IMOVEIS = [
     preco: 'R$ 4.500', precoNum: 4500, sufixo: '/mês',
     area: '75 m²', quartos: 2, banheiros: 1,
     tag: 'Disponível',
-    img: 'https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=600&q=80',
-    imgAlt: 'Apartamento com vista para o mar para locação'
+    img: 'https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?auto=format&fit=crop&w=600&q=80',
+    imgAlt: 'Sala de estar ampla com janelão e iluminação natural'
   },
   {
     id: 8, modal: 'aluguel', tipo: 'studio', aluguelTipo: 'permanente',
@@ -75,8 +75,8 @@ const IMOVEIS = [
     preco: 'R$ 2.200', precoNum: 2200, sufixo: '/mês',
     area: '42 m²', quartos: 1, banheiros: 1,
     tag: null,
-    img: 'https://images.unsplash.com/photo-1536376072261-38c75010e6c9?auto=format&fit=crop&w=600&q=80',
-    imgAlt: 'Studio moderno e mobiliado para aluguel'
+    img: 'https://images.unsplash.com/photo-1556020685-ae41abfc9365?auto=format&fit=crop&w=600&q=80',
+    imgAlt: 'Studio compacto e bem organizado para locação'
   },
   {
     id: 9, modal: 'aluguel', tipo: 'apartamento', aluguelTipo: 'permanente',
@@ -84,8 +84,8 @@ const IMOVEIS = [
     preco: 'R$ 6.200', precoNum: 6200, sufixo: '/mês',
     area: '110 m²', quartos: 3, banheiros: 2,
     tag: null,
-    img: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=600&q=80',
-    imgAlt: 'Apartamento espaçoso de 3 quartos para locação permanente'
+    img: 'https://images.unsplash.com/photo-1524758631624-e2822e304c36?auto=format&fit=crop&w=600&q=80',
+    imgAlt: 'Quarto elegante em apartamento espaçoso para locação'
   },
   {
     id: 10, modal: 'aluguel', tipo: 'studio', aluguelTipo: 'permanente',
@@ -93,27 +93,27 @@ const IMOVEIS = [
     preco: 'R$ 1.600', precoNum: 1600, sufixo: '/mês',
     area: '35 m²', quartos: 1, banheiros: 1,
     tag: 'Ótimo custo',
-    img: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=600&q=80',
-    imgAlt: 'Kitnet compacta e bem localizada para aluguel'
+    img: 'https://images.unsplash.com/photo-1536376072261-38c75010e6c9?auto=format&fit=crop&w=600&q=80',
+    imgAlt: 'Kitnet moderna e bem localizada para aluguel'
   },
   // ── ALUGUEL — TEMPORADA ──
   {
     id: 11, modal: 'aluguel', tipo: 'casa', aluguelTipo: 'temporada',
     titulo: 'Casa de Praia — Temporada',
-    preco: 'R$ 7.800', precoNum: 7800, sufixo: '/mês',
+    preco: 'R$ 7.800', precoNum: 7800, sufixo: '/semana',
     area: '160 m²', quartos: 3, banheiros: 2,
     tag: 'Temporada',
     img: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=600&q=80',
-    imgAlt: 'Casa de praia para temporada com varanda e área externa'
+    imgAlt: 'Casa de praia para temporada com área externa e varanda'
   },
   {
     id: 12, modal: 'aluguel', tipo: 'casa', aluguelTipo: 'temporada',
     titulo: 'Casa Temporada — 4 Quartos',
-    preco: 'R$ 12.000', precoNum: 12000, sufixo: '/mês',
+    preco: 'R$ 12.000', precoNum: 12000, sufixo: '/semana',
     area: '220 m²', quartos: 4, banheiros: 3,
     tag: 'Premium',
-    img: 'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?auto=format&fit=crop&w=600&q=80',
-    imgAlt: 'Casa espaçosa de alto padrão para temporada na praia'
+    img: 'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?auto=format&fit=crop&w=600&q=80',
+    imgAlt: 'Casa ampla de alto padrão para temporada na praia'
   }
 ];
 
@@ -144,7 +144,10 @@ function renderCard(imovel) {
           <span class="prop-detail">📐 ${imovel.area}</span>
         </div>
         <div class="prop-footer">
-          <a href="https://wa.me/5500000000000?text=${waMsg}" target="_blank" rel="noopener" class="prop-btn prop-btn-wa">📲 WhatsApp</a>
+          <a href="https://wa.me/5511976202155?text=${waMsg}" target="_blank" rel="noopener" class="prop-btn prop-btn-wa">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.136.564 4.14 1.544 5.868L0 24l6.29-1.518A11.953 11.953 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.056-1.407l-.36-.215-3.733.9.943-3.634-.235-.374A9.818 9.818 0 012.182 12c0-5.42 4.398-9.818 9.818-9.818 5.42 0 9.818 4.398 9.818 9.818 0 5.42-4.398 9.818-9.818 9.818z"/></svg>
+            WhatsApp
+          </a>
           <a href="#contato" class="prop-btn prop-btn-info">Saiba mais</a>
         </div>
       </div>
