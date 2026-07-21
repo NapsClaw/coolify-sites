@@ -1,0 +1,454 @@
+/* ============================================================
+   APOIOS — Mural público + Painel de Moderação
+   Versão: 20260721h — Dra. Keila Marques / Demo localStorage
+   ============================================================ */
+
+/* ─── BOTÃO "Equipe IREFIS — Gerenciar apoios" ──────────────
+   Posicionado abaixo do formulário de participação, dentro do
+   card escuro (pre-evento-section). Visual discreto mas claro.
+   ─────────────────────────────────────────────────────────── */
+.gerenciar-apoios-wrap {
+  text-align: center;
+  margin-top: 1.1rem;
+}
+.btn-gerenciar-apoios {
+  display: inline-flex;
+  align-items: center;
+  gap: .48rem;
+  background: rgba(255,255,255,.13);
+  border: 1.5px solid rgba(255,255,255,.38);
+  color: rgba(255,255,255,.85);
+  border-radius: 50px;
+  padding: .55rem 1.25rem;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: .76rem;
+  cursor: pointer;
+  transition: background .2s, border-color .2s, color .2s;
+  text-decoration: none;
+  letter-spacing: .02em;
+}
+.btn-gerenciar-apoios:hover {
+  background: rgba(255,255,255,.24);
+  border-color: rgba(255,255,255,.65);
+  color: #fff;
+}
+.btn-gerenciar-apoios .ga-icon { font-size: .95rem; }
+
+/* ─── SEÇÃO MURAL PÚBLICO "Quem já mostrou seu apoio" ───────
+   Entre pre-evento-section e a seção de parceiros.
+   Fundo rosa-pale claro, cartas em branco.
+   ─────────────────────────────────────────────────────────── */
+.mural-section {
+  background: linear-gradient(160deg, #fff5fb 0%, #f4fff6 100%);
+  padding: 2.6rem 1.5rem 2.8rem;
+  border-top:    2px solid rgba(233,30,140,.10);
+  border-bottom: 2px solid rgba(46,125,50,.08);
+}
+.mural-inner {
+  max-width: 940px;
+  margin: 0 auto;
+}
+.mural-title-row {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+.mural-title-row h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(1.1rem, 2.8vw, 1.4rem);
+  font-weight: 900;
+  color: var(--dark, #1a1a2e);
+  margin-bottom: .3rem;
+}
+.mural-title-row h3 span { color: var(--rosa, #E91E8C); }
+.mural-sub {
+  font-size: .86rem;
+  color: var(--gray, #575757);
+  line-height: 1.55;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+/* Estado vazio */
+.mural-empty-state {
+  text-align: center;
+  background: rgba(233,30,140,.04);
+  border: 1.5px dashed rgba(233,30,140,.22);
+  border-radius: 18px;
+  padding: 2rem 1.5rem;
+}
+.mural-empty-icon {
+  font-size: 2.8rem;
+  margin-bottom: .5rem;
+  display: block;
+  line-height: 1;
+}
+.mural-empty-state p {
+  font-size: .9rem;
+  color: var(--gray, #575757);
+  line-height: 1.6;
+  max-width: 400px;
+  margin: 0 auto;
+}
+.mural-empty-state strong { color: var(--rosa, #E91E8C); }
+
+/* Grid de cards */
+.mural-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.2rem;
+}
+
+/* Card de apoiador */
+.mural-card {
+  background: #fff;
+  border: 1.5px solid rgba(233,30,140,.14);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 3px 18px rgba(233,30,140,.08);
+  display: flex;
+  flex-direction: column;
+  transition: transform .2s, box-shadow .2s;
+}
+.mural-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 28px rgba(233,30,140,.16);
+}
+.mural-card-foto-wrap {
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: var(--rosa-pale, #FFF0F7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mural-card-foto-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.mural-card-foto-placeholder {
+  font-size: 4rem;
+  color: rgba(233,30,140,.28);
+  line-height: 1;
+}
+.mural-card-body {
+  padding: .85rem 1rem .9rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: .28rem;
+}
+.mural-card-nome {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: .88rem;
+  color: var(--dark, #1a1a2e);
+}
+.mural-card-msg {
+  font-size: .82rem;
+  color: var(--gray, #575757);
+  line-height: 1.5;
+  font-style: italic;
+  flex: 1;
+}
+.mural-card-moderado {
+  font-size: .67rem;
+  color: var(--verde, #2E7D32);
+  font-weight: 700;
+  margin-top: .45rem;
+  padding-top: .38rem;
+  border-top: 1px solid rgba(46,125,50,.14);
+  display: flex;
+  align-items: center;
+  gap: .25rem;
+}
+
+/* ─── HEADER MODAL ADMIN APOIOS ──────────────────────────── */
+.modal-header-admin-apoios {
+  background: linear-gradient(135deg, #880E4F, #4A148C) !important;
+}
+.moderador-label-panel {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  background: rgba(255,255,255,.16);
+  border: 1px solid rgba(255,255,255,.28);
+  border-radius: 50px;
+  padding: .28rem .85rem;
+  font-size: .72rem;
+  color: rgba(255,255,255,.95);
+  font-weight: 700;
+  margin-top: .45rem;
+  letter-spacing: .03em;
+}
+
+/* Notice demo */
+.admin-demo-apoios-notice {
+  background: #FFF9C4;
+  border: 1.5px solid #F9A825;
+  border-radius: 10px;
+  padding: .75rem 1rem;
+  font-size: .8rem;
+  color: #4E342E;
+  margin-bottom: 1.3rem;
+  line-height: 1.6;
+}
+.admin-demo-apoios-notice strong { color: #BF360C; }
+
+/* ─── ABAS DE MODERAÇÃO ─────────────────────────────────── */
+.apoios-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 2px solid #eee;
+  margin-bottom: 1.2rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.apoios-tab-btn {
+  flex-shrink: 0;
+  padding: .6rem 1.1rem;
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: .82rem;
+  cursor: pointer;
+  color: var(--gray, #575757);
+  white-space: nowrap;
+  transition: color .2s, border-color .2s;
+  display: flex;
+  align-items: center;
+  gap: .35rem;
+}
+.apoios-tab-btn.active {
+  color: var(--rosa, #E91E8C);
+  border-bottom-color: var(--rosa, #E91E8C);
+}
+.apoios-tab-btn:hover:not(.active) { color: var(--dark, #1a1a2e); }
+
+/* Badge de contagem nas abas */
+.tab-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 .35rem;
+  border-radius: 50px;
+  font-size: .65rem;
+  font-weight: 900;
+  line-height: 1;
+  background: #ddd;
+  color: #555;
+  transition: background .2s, color .2s;
+}
+.apoios-tab-btn.active .tab-count {
+  background: var(--rosa, #E91E8C);
+  color: #fff;
+}
+.tab-count.verde-count {
+  background: var(--verde, #2E7D32);
+  color: #fff;
+}
+.tab-count.gray-count {
+  background: #9e9e9e;
+  color: #fff;
+}
+
+/* Painel de cada aba */
+.apoios-tab-panel { display: none; }
+.apoios-tab-panel.active { display: block; }
+
+/* Estado vazio dentro do painel */
+.apoios-empty-panel {
+  text-align: center;
+  padding: 1.8rem;
+  color: var(--gray, #575757);
+  font-size: .88rem;
+  background: #f9f9f9;
+  border-radius: 12px;
+  line-height: 1.65;
+}
+.apoios-empty-panel strong { color: var(--verde, #2E7D32); }
+
+/* Botão utilitário: "Inserir envio de teste" */
+.btn-seed-demo {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  background: #F3E5F5;
+  border: 1.5px solid #CE93D8;
+  color: #4A148C;
+  border-radius: 8px;
+  padding: .38rem .85rem;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: .72rem;
+  cursor: pointer;
+  margin-top: .8rem;
+  transition: background .2s;
+}
+.btn-seed-demo:hover { background: #E1BEE7; }
+
+/* ─── CARD DE SUBMISSÃO NA MODERAÇÃO ────────────────────── */
+.apoio-card {
+  display: flex;
+  align-items: flex-start;
+  gap: .85rem;
+  padding: 1rem;
+  border: 1.5px solid #efefef;
+  border-radius: 14px;
+  margin-bottom: .85rem;
+  background: #fdfdfd;
+  transition: border-color .2s;
+}
+.apoio-card:last-child { margin-bottom: 0; }
+.apoio-card:hover { border-color: rgba(233,30,140,.2); }
+
+/* Avatar / foto */
+.apoio-foto-wrap {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--rosa-pale, #FFF0F7);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(233,30,140,.18);
+}
+.apoio-foto-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.apoio-foto-placeholder {
+  font-size: 1.9rem;
+  line-height: 1;
+  color: rgba(233,30,140,.32);
+}
+
+/* Corpo do card */
+.apoio-card-body {
+  flex: 1;
+  min-width: 0;
+}
+.apoio-nome {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: .88rem;
+  color: var(--dark, #1a1a2e);
+  margin-bottom: .18rem;
+}
+.apoio-msg {
+  font-size: .82rem;
+  color: #444;
+  line-height: 1.5;
+  font-style: italic;
+  margin-bottom: .32rem;
+  word-break: break-word;
+}
+.apoio-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .3rem .8rem;
+  font-size: .7rem;
+  color: var(--gray, #575757);
+}
+.apoio-auth-ok  { color: var(--verde, #2E7D32); font-weight: 700; }
+.apoio-moderado-by {
+  display: inline-flex;
+  align-items: center;
+  gap: .25rem;
+  font-size: .7rem;
+  color: var(--verde, #2E7D32);
+  font-weight: 700;
+  background: rgba(46,125,50,.08);
+  border-radius: 6px;
+  padding: .18rem .5rem;
+  margin-top: .4rem;
+}
+.apoio-retirado-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: .25rem;
+  font-size: .7rem;
+  color: #546E7A;
+  font-weight: 700;
+  background: #ECEFF1;
+  border-radius: 6px;
+  padding: .18rem .5rem;
+  margin-top: .35rem;
+}
+
+/* Área de ações */
+.apoio-actions {
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+  flex-shrink: 0;
+  align-items: stretch;
+  min-width: 110px;
+}
+
+/* Botões de ação */
+.btn-mod {
+  border: none;
+  border-radius: 8px;
+  padding: .38rem .75rem;
+  font-size: .72rem;
+  font-weight: 700;
+  font-family: 'Montserrat', sans-serif;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: filter .18s, transform .15s;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .25rem;
+}
+.btn-mod:hover { filter: brightness(1.08); transform: translateY(-1px); }
+.btn-aprovar      { background: #2E7D32; color: #fff; }
+.btn-recusar      { background: #E65100; color: #fff; }
+.btn-excluir      { background: #B71C1C; color: #fff; }
+.btn-retirar      { background: #546E7A; color: #fff; }
+.btn-ao-mural     { background: #1565C0; color: #fff; }
+
+/* Responsividade do card de moderação */
+@media (max-width: 520px) {
+  .apoio-card {
+    flex-direction: column;
+    gap: .7rem;
+  }
+  .apoio-foto-wrap {
+    width: 48px;
+    height: 48px;
+  }
+  .apoio-actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+    min-width: 0;
+    width: 100%;
+  }
+  .btn-mod {
+    flex: 1 1 auto;
+    min-width: 80px;
+  }
+}
+
+/* ─── MURAL RESPONSIVO ───────────────────────────────────── */
+@media (max-width: 480px) {
+  .mural-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: .85rem;
+  }
+  .mural-section { padding: 1.8rem 1rem 2rem; }
+}

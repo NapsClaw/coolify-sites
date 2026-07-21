@@ -14,8 +14,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Open+Sans:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="main-20260721f.css?v=r8" />
-  <link rel="stylesheet" href="extras-20260721g.css?v=r8" />
+  <link rel="stylesheet" href="main-20260721f.css?v=r9" />
+  <link rel="stylesheet" href="extras-20260721g.css?v=r9" />
+  <link rel="stylesheet" href="apoios-20260721h.css?v=r9" />
 </head>
 <body>
 
@@ -398,6 +399,45 @@
       </div>
     </div>
 
+    <!-- ─── Botão "Equipe IREFIS — Gerenciar apoios" ─── -->
+    <div class="gerenciar-apoios-wrap">
+      <button class="btn-gerenciar-apoios" onclick="openAdminApoios()" aria-label="Painel de moderação de apoios — Equipe IREFIS">
+        <span class="ga-icon">🛡️</span>
+        Equipe IREFIS — Gerenciar apoios
+      </button>
+    </div>
+
+  </div>
+</section>
+
+<!-- ========================================================
+     MURAL PÚBLICO — "Quem já mostrou seu apoio"
+     Exibe somente os envios aprovados pela Dra. Keila Marques.
+     ======================================================== -->
+<section class="mural-section" aria-label="Mural de apoio — quem já mostrou seu apoio">
+  <div class="mural-inner">
+
+    <div class="mural-title-row">
+      <h3>💗 Quem já mostrou <span>seu apoio</span></h3>
+      <p class="mural-sub">
+        Pessoas que enviaram foto e mensagem e tiveram o apoio aprovado pela equipe IREFIS.<br>
+        Quer aparecer aqui? Preencha o formulário acima.
+      </p>
+    </div>
+
+    <!-- Estado vazio (padrão enquanto não há aprovações) -->
+    <div class="mural-empty-state" id="mural-empty-state">
+      <span class="mural-empty-icon" aria-hidden="true">🎗️</span>
+      <p>
+        <strong>Seja o primeiro a mostrar seu apoio!</strong><br>
+        Preencha o formulário acima e, após aprovação da equipe IREFIS,<br>
+        sua mensagem aparecerá aqui.
+      </p>
+    </div>
+
+    <!-- Grid dinâmico de apoiadores aprovados -->
+    <div class="mural-grid" id="mural-grid" style="display:none;"></div>
+
   </div>
 </section>
 
@@ -550,7 +590,7 @@
     <div class="footer-org">Realização: IREFIS — Instituto de Reabilitação Fisiot em Saúde · Lagoa Santa / MG</div>
     <div class="footer-org">Parceiros: Clínica FISIOT · Bellamama Cosméticos</div>
     <div class="footer-preview-note">
-      <strong>⚠️ PRÉVIA REVISADA 21/07/2026 — R8</strong> — Horário: <strong>07h30</strong> · Distância: <strong>3,8 km</strong> · Concentração, Saída e Chegada: Av. Júlio Clóvis Lacerda, 110, em frente ao Complexo Esportivo Jalile Daher, Lagoa Santa/MG · WhatsApp: Wilson Barbosa (31) 99259-4953.
+      <strong>⚠️ PRÉVIA REVISADA 21/07/2026 — R9</strong> — Horário: <strong>07h30</strong> · Distância: <strong>3,8 km</strong> · Concentração, Saída e Chegada: Av. Júlio Clóvis Lacerda, 110, em frente ao Complexo Esportivo Jalile Daher, Lagoa Santa/MG · WhatsApp: Wilson Barbosa (31) 99259-4953.
       Pendentes: percurso GPS detalhado, gateway de pagamento.
       Domínio: <strong>caminhadafisiotporelas.com.br</strong> (a ser registrado pelo cliente no Registro.br).
     </div>
@@ -1042,9 +1082,67 @@
   </div>
 </div>
 
+<!-- === MODAL: PAINEL DE MODERAÇÃO DE APOIOS =============== -->
+<div class="modal-overlay" id="modal-admin-apoios" role="dialog" aria-modal="true" aria-label="Painel de Moderação de Apoios — Equipe IREFIS">
+  <div class="modal-box modal-box-wide">
+
+    <div class="modal-header modal-header-admin-apoios">
+      <button class="modal-close" onclick="closeModal('modal-admin-apoios')" aria-label="Fechar">✕</button>
+      <h3>🛡️ Painel de Moderação — Apoios</h3>
+      <p>Equipe IREFIS — Aprovar e gerenciar as mensagens do mural</p>
+      <span class="moderador-label-panel">👩‍⚕️ Moderadora: Dra. Keila Marques</span>
+    </div>
+
+    <div class="modal-body">
+
+      <div class="admin-demo-apoios-notice">
+        <strong>⚠️ Prévia demonstrativa — acesso e persistência locais</strong><br>
+        Este painel abre sem autenticação real, pois é uma demonstração.
+        Os dados ficam salvos apenas <strong>neste navegador</strong> (localStorage) e não são compartilhados com outros dispositivos.
+        <strong>Na versão final:</strong> login individual protegido para a equipe autorizada e banco compartilhado em servidor.
+        A única moderadora atualmente autorizada é <strong>Dra. Keila Marques</strong>;
+        nenhuma senha, e-mail ou telefone foi criado — deixar a credencial real pendente de definição com Wilson.
+      </div>
+
+      <!-- Abas -->
+      <div class="apoios-tabs" role="tablist">
+        <button class="apoios-tab-btn active" role="tab" aria-selected="true"
+                data-tab="pendentes" onclick="switchApoiosTab('pendentes')">
+          ⏳ Pendentes
+          <span class="tab-count" id="badge-pend">0</span>
+        </button>
+        <button class="apoios-tab-btn" role="tab" aria-selected="false"
+                data-tab="aprovados" onclick="switchApoiosTab('aprovados')">
+          ✅ Aprovados
+          <span class="tab-count verde-count" id="badge-aprov">0</span>
+        </button>
+        <button class="apoios-tab-btn" role="tab" aria-selected="false"
+                data-tab="recusados" onclick="switchApoiosTab('recusados')">
+          ❌ Recusados
+          <span class="tab-count gray-count" id="badge-recus">0</span>
+        </button>
+      </div>
+
+      <!-- Painéis das abas -->
+      <div class="apoios-tab-panel active" id="apoios-panel-pendentes" role="tabpanel"></div>
+      <div class="apoios-tab-panel"        id="apoios-panel-aprovados" role="tabpanel"></div>
+      <div class="apoios-tab-panel"        id="apoios-panel-recusados" role="tabpanel"></div>
+
+      <!-- Utilitário de teste -->
+      <div style="text-align:center;margin-top:1.2rem;border-top:1px solid #f0f0f0;padding-top:1rem;">
+        <button class="btn-seed-demo" onclick="inserirEnvioTeste()" title="Adiciona um envio fictício para testar o painel">
+          🧪 Inserir envio de teste (demo)
+        </button>
+        <p style="font-size:.68rem;color:#999;margin-top:.35rem;">Botão apenas para demonstração funcional do fluxo.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 <!-- ========================================================
      SCRIPT
      ======================================================== -->
-<script src="script.js?v=20260721i"></script>
+<script src="script.js?v=20260721j"></script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 /* ============================================================
    CAMINHADA FISIOT POR ELAS — Script Principal
-   Versão: 20260721h (revisão consolidada final)
+   Versão: 20260721j (painel moderação Dra. Keila Marques)
    ============================================================ */
 
 /* --- WhatsApp helper (Wilson Barbosa — (31) 99259-4953) ---- */
@@ -236,9 +236,35 @@ function previewFoto(input) {
   reader.readAsDataURL(file);
 }
 
-/* --- Participação: enviar para moderação (demo) ----------- */
-const PART_KEY = 'fisiot_participacoes_demo_v1';
+/* --- Participação: storage helpers ----------------------- */
+const PART_KEY   = 'fisiot_participacoes_demo_v1';
+const MODERADOR  = 'Dra. Keila Marques';  // única moderadora autorizada
 
+function getParticipacoes() {
+  try {
+    const arr = JSON.parse(localStorage.getItem(PART_KEY) || '[]');
+    /* garante ID em todos os itens (retrocompatibilidade) */
+    let changed = false;
+    arr.forEach(p => {
+      if (!p.id) {
+        p.id = Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+        changed = true;
+      }
+    });
+    if (changed) localStorage.setItem(PART_KEY, JSON.stringify(arr));
+    return arr;
+  } catch(e) { return []; }
+}
+
+function saveParticipacoes(arr) {
+  try { localStorage.setItem(PART_KEY, JSON.stringify(arr)); } catch(e) { /* ignore */ }
+}
+
+function gerarId() {
+  return Date.now().toString(36) + '-' + Math.random().toString(36).substr(2, 6);
+}
+
+/* --- Participação: enviar para moderação (demo) ----------- */
 function enviarParticipacao() {
   const nome = document.getElementById('part-nome')?.value.trim();
   const msg  = document.getElementById('part-msg')?.value.trim();
@@ -261,18 +287,18 @@ function enviarParticipacao() {
   }
 
   /* Salvar no localStorage (demonstração) */
-  try {
-    const participacoes = JSON.parse(localStorage.getItem(PART_KEY) || '[]');
-    const preview = document.getElementById('foto-preview');
-    participacoes.push({
-      nome,
-      msg,
-      foto:     preview && preview.src && preview.style.display !== 'none' ? preview.src : null,
-      enviado:  new Date().toISOString(),
-      status:   'aguardando_aprovacao',
-    });
-    localStorage.setItem(PART_KEY, JSON.stringify(participacoes));
-  } catch(e) { /* ignora erro de storage */ }
+  const participacoes = getParticipacoes();
+  const preview = document.getElementById('foto-preview');
+  participacoes.push({
+    id:      gerarId(),
+    nome,
+    msg,
+    foto:    preview && preview.src && preview.style.display !== 'none' ? preview.src : null,
+    enviado: new Date().toISOString(),
+    status:  'aguardando_aprovacao',
+    noMural: false,
+  });
+  saveParticipacoes(participacoes);
 
   /* Mostra estado de sucesso */
   const formState = document.getElementById('participacao-form-state');
@@ -298,6 +324,7 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.modal-overlay').forEach(o => o.classList.remove('active'));
   renderPublicVideos();
+  renderPublicMural();
 });
 
 /* ============================================================
@@ -474,4 +501,277 @@ function adminRemoveVideo(index) {
   saveVideos(videos);
   renderAdminVideos();
   renderPublicVideos();
+}
+
+/* ============================================================
+   MURAL PÚBLICO — "Quem já mostrou seu apoio"
+   Exibe apenas os itens aprovados com noMural !== false.
+   ============================================================ */
+
+function renderPublicMural() {
+  const grid  = document.getElementById('mural-grid');
+  const empty = document.getElementById('mural-empty-state');
+  if (!grid) return;
+
+  const aprovados = getParticipacoes().filter(p =>
+    p.status === 'aprovado' && p.noMural !== false
+  );
+
+  if (aprovados.length === 0) {
+    if (empty) empty.style.display = 'block';
+    grid.style.display = 'none';
+    grid.innerHTML     = '';
+    return;
+  }
+
+  if (empty) empty.style.display = 'none';
+  grid.style.display = 'grid';
+
+  grid.innerHTML = aprovados.map(p => `
+    <div class="mural-card">
+      <div class="mural-card-foto-wrap">
+        ${p.foto
+          ? `<img src="${p.foto}" alt="Foto de ${escapeHtml(p.nome)}" loading="lazy" />`
+          : `<div class="mural-card-foto-placeholder" aria-hidden="true">🎗️</div>`
+        }
+      </div>
+      <div class="mural-card-body">
+        <div class="mural-card-nome">${escapeHtml(p.nome)}</div>
+        ${p.msg ? `<div class="mural-card-msg">"${escapeHtml(p.msg)}"</div>` : ''}
+        ${p.moderadoPor
+          ? `<div class="mural-card-moderado">✅ Moderado por ${escapeHtml(p.moderadoPor)}</div>`
+          : ''
+        }
+      </div>
+    </div>
+  `).join('');
+}
+
+/* ============================================================
+   PAINEL DE MODERAÇÃO DE APOIOS — Equipe IREFIS
+   Moderadora identificada: Dra. Keila Marques
+   Persistência: localStorage (demonstração)
+   ============================================================ */
+
+let _currentApoiosTab = 'pendentes';
+
+function openAdminApoios() {
+  openModal('modal-admin-apoios');
+  _currentApoiosTab = 'pendentes';
+  _renderApoiosTab('pendentes');
+}
+
+function switchApoiosTab(tab) {
+  _currentApoiosTab = tab;
+  /* Atualiza visual dos botões de aba */
+  document.querySelectorAll('.apoios-tab-btn').forEach(btn => {
+    const active = btn.dataset.tab === tab;
+    btn.classList.toggle('active', active);
+    btn.setAttribute('aria-selected', active ? 'true' : 'false');
+  });
+  /* Exibe/oculta painéis */
+  document.querySelectorAll('.apoios-tab-panel').forEach(panel => {
+    panel.classList.toggle('active', panel.id === 'apoios-panel-' + tab);
+  });
+  /* Renderiza conteúdo da aba ativa */
+  _renderApoiosTab(tab);
+}
+
+function _renderApoiosTab(tab) {
+  const arr = getParticipacoes();
+
+  const pendentes = arr.filter(p => p.status === 'aguardando_aprovacao');
+  const aprovados = arr.filter(p => p.status === 'aprovado');
+  const recusados = arr.filter(p => p.status === 'recusado');
+
+  /* Atualiza badges */
+  _setBadge('badge-pend',  pendentes.length);
+  _setBadge('badge-aprov', aprovados.length);
+  _setBadge('badge-recus', recusados.length);
+
+  const panelEl = document.getElementById('apoios-panel-' + tab);
+  if (!panelEl) return;
+
+  const items = tab === 'pendentes' ? pendentes
+              : tab === 'aprovados' ? aprovados
+              : recusados;
+
+  if (items.length === 0) {
+    const msg = tab === 'pendentes'
+      ? '✅ Nenhuma solicitação pendente de aprovação.'
+      : tab === 'aprovados'
+      ? '📋 Nenhum apoio aprovado ainda.<br><small>Quando aprovar um envio, ele aparecerá aqui e no mural público.</small>'
+      : '📋 Nenhuma solicitação recusada.';
+    panelEl.innerHTML = `<div class="apoios-empty-panel">${msg}</div>`;
+    return;
+  }
+
+  panelEl.innerHTML = items.map(p => _apoioCardHtml(p, tab)).join('');
+}
+
+function _setBadge(id, count) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = count;
+}
+
+function _fmtDate(iso) {
+  if (!iso) return '—';
+  try {
+    const d = new Date(iso);
+    return d.toLocaleDateString('pt-BR') + ' às ' +
+           d.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+  } catch(e) { return iso; }
+}
+
+function _apoioCardHtml(p, tab) {
+  const fotoHtml = p.foto
+    ? `<img src="${p.foto}" alt="Foto de ${escapeHtml(p.nome)}" />`
+    : `<div class="apoio-foto-placeholder" aria-hidden="true">🎗️</div>`;
+
+  const moderadoHtml = p.moderadoPor
+    ? `<div class="apoio-moderado-by">✅ Moderado por ${escapeHtml(p.moderadoPor)} · ${_fmtDate(p.moderadoEm)}</div>`
+    : '';
+
+  const retiradoHtml = (p.status === 'aprovado' && p.noMural === false)
+    ? `<div class="apoio-retirado-badge">🚫 Retirado do mural</div>`
+    : '';
+
+  let actionsHtml = '';
+  if (tab === 'pendentes') {
+    actionsHtml = `
+      <button class="btn-mod btn-aprovar" onclick="apoioAprovar('${p.id}')">✅ Aprovar</button>
+      <button class="btn-mod btn-recusar" onclick="apoioRecusar('${p.id}')">❌ Recusar</button>
+      <button class="btn-mod btn-excluir" onclick="apoioExcluir('${p.id}')">🗑️ Excluir</button>
+    `;
+  } else if (tab === 'aprovados') {
+    const muralBtn = p.noMural !== false
+      ? `<button class="btn-mod btn-retirar"  onclick="apoioRetirarMural('${p.id}')">⬇️ Retirar do mural</button>`
+      : `<button class="btn-mod btn-ao-mural" onclick="apoioVoltarMural('${p.id}')">↩️ Colocar no mural</button>`;
+    actionsHtml = `
+      ${muralBtn}
+      <button class="btn-mod btn-excluir" onclick="apoioExcluir('${p.id}')">🗑️ Excluir</button>
+    `;
+  } else { /* recusados */
+    actionsHtml = `
+      <button class="btn-mod btn-aprovar" onclick="apoioAprovar('${p.id}')">✅ Aprovar</button>
+      <button class="btn-mod btn-excluir" onclick="apoioExcluir('${p.id}')">🗑️ Excluir</button>
+    `;
+  }
+
+  return `
+    <div class="apoio-card">
+      <div class="apoio-foto-wrap">${fotoHtml}</div>
+      <div class="apoio-card-body">
+        <div class="apoio-nome">${escapeHtml(p.nome)}</div>
+        ${p.msg ? `<div class="apoio-msg">"${escapeHtml(p.msg)}"</div>` : ''}
+        <div class="apoio-meta">
+          <span>📅 ${_fmtDate(p.enviado)}</span>
+          <span class="apoio-auth-ok">✅ Autorização de uso: Sim</span>
+        </div>
+        ${moderadoHtml}
+        ${retiradoHtml}
+      </div>
+      <div class="apoio-actions">${actionsHtml}</div>
+    </div>
+  `;
+}
+
+/* ─── Ações de moderação ───────────────────────────────── */
+
+function apoioAprovar(id) {
+  const arr = getParticipacoes();
+  const idx = arr.findIndex(p => p.id === id);
+  if (idx < 0) return;
+  const nome = arr[idx].nome;
+  arr[idx].status      = 'aprovado';
+  arr[idx].noMural     = true;
+  arr[idx].moderadoPor = MODERADOR;
+  arr[idx].moderadoEm  = new Date().toISOString();
+  saveParticipacoes(arr);
+  _renderApoiosTab(_currentApoiosTab);
+  renderPublicMural();
+  alert(`✅ Apoio de ${nome} aprovado e publicado no mural!\n\nModerado por ${MODERADOR}.`);
+}
+
+function apoioRecusar(id) {
+  const arr = getParticipacoes();
+  const idx = arr.findIndex(p => p.id === id);
+  if (idx < 0) return;
+  const nome = arr[idx].nome;
+  arr[idx].status      = 'recusado';
+  arr[idx].noMural     = false;
+  arr[idx].moderadoPor = MODERADOR;
+  arr[idx].moderadoEm  = new Date().toISOString();
+  saveParticipacoes(arr);
+  _renderApoiosTab(_currentApoiosTab);
+  alert(`❌ Apoio de ${nome} recusado. Não será publicado no mural.\n\nModerado por ${MODERADOR}.`);
+}
+
+function apoioExcluir(id) {
+  const arr = getParticipacoes();
+  const idx = arr.findIndex(p => p.id === id);
+  if (idx < 0) return;
+  const nome = arr[idx].nome;
+  if (!confirm(`Excluir definitivamente o registro de ${nome}?\n\nEsta ação não pode ser desfeita.`)) return;
+  arr.splice(idx, 1);
+  saveParticipacoes(arr);
+  _renderApoiosTab(_currentApoiosTab);
+  renderPublicMural();
+}
+
+function apoioRetirarMural(id) {
+  const arr = getParticipacoes();
+  const idx = arr.findIndex(p => p.id === id);
+  if (idx < 0) return;
+  const nome = arr[idx].nome;
+  arr[idx].noMural     = false;
+  arr[idx].moderadoPor = MODERADOR;
+  arr[idx].moderadoEm  = new Date().toISOString();
+  saveParticipacoes(arr);
+  _renderApoiosTab('aprovados');
+  renderPublicMural();
+  alert(`⬇️ Apoio de ${nome} retirado do mural.\nO registro permanece como "Aprovado" e pode ser recolocado.`);
+}
+
+function apoioVoltarMural(id) {
+  const arr = getParticipacoes();
+  const idx = arr.findIndex(p => p.id === id);
+  if (idx < 0) return;
+  const nome = arr[idx].nome;
+  arr[idx].noMural     = true;
+  arr[idx].moderadoPor = MODERADOR;
+  arr[idx].moderadoEm  = new Date().toISOString();
+  saveParticipacoes(arr);
+  _renderApoiosTab('aprovados');
+  renderPublicMural();
+  alert(`↩️ Apoio de ${nome} restaurado no mural!`);
+}
+
+/* ─── Utilitário: inserir envio de teste (demo) ──────────── */
+function inserirEnvioTeste() {
+  const nomes = ['Ana Paula', 'Juliana', 'Cláudia', 'Fernanda', 'Mariana'];
+  const msgs  = [
+    'Eu apoio esta causa com todo o meu coração! Saúde é vida. 🎗️',
+    'A prevenção salva vidas. Estarei na caminhada!',
+    'Parabéns ao IREFIS por esta iniciativa tão importante!',
+    'Juntas somos mais fortes. Outubro Rosa é para todas nós! 💗',
+    'Eu vou participar e convidar todas as minhas amigas!',
+  ];
+  const arr  = getParticipacoes();
+  const nome = nomes[arr.length % nomes.length];
+  const msg  = msgs[arr.length % msgs.length];
+
+  arr.push({
+    id:      gerarId(),
+    nome,
+    msg,
+    foto:    null,
+    enviado: new Date().toISOString(),
+    status:  'aguardando_aprovacao',
+    noMural: false,
+    _demo:   true,
+  });
+  saveParticipacoes(arr);
+  _renderApoiosTab(_currentApoiosTab);
+  alert(`✅ Envio de teste adicionado!\n\nNome: ${nome}\n\nAgora apareece na aba "Pendentes" para você testar Aprovar, Recusar ou Excluir.`);
 }
