@@ -1,11 +1,13 @@
 /* ═══════════════════════════════════════════════
-   Imobiliária Fernandinho Beiramar — script.js v4
-   Agora com localStorage + painel administrativo
+   Imobiliária Fernandinho Beiramar — script.js v5
+   Migração storage v1→v2 + garantia WA_NUM atual
 ═══════════════════════════════════════════════ */
 
 /* ── Constantes globais ── */
-const WA_NUM      = '5511988782345';
-const STORAGE_KEY = 'fbm_imoveis_v1';
+const WA_NUM             = '5511988782345';   // número ATUAL — sempre usar esta constante
+const OLD_WA_NUM         = '5511976202155';   // número ANTIGO — só para migração/sanitização
+const STORAGE_KEY        = 'fbm_imoveis_v2';  // chave v2 (pós-migração)
+const STORAGE_KEY_LEGACY = 'fbm_imoveis_v1';  // chave antiga — apenas leitura para migrar
 const IMG_FALLBACK = 'assets/imoveis/fallback.svg';
 
 /* ── Dados de demonstração ── */
@@ -135,13 +137,63 @@ const IMOVEIS_DEMO = [
   }
 ];
 
+/* ── Migração de storage v1 → v2 ── */
+function migrateStorageV1toV2() {
+  // Se v2 já existe, nada a fazer
+  if (localStorage.getItem(STORAGE_KEY)) return;
+
+  const rawV1 = localStorage.getItem(STORAGE_KEY_LEGACY);
+  if (!rawV1) return;
+
+  try {
+    // Substitui todas as ocorrências do número antigo no JSON serializado
+    // Isso cobre campos que possam ter sido salvos com o número embutido
+    const migrated = rawV1
+      .replace(new RegExp(OLD_WA_NUM, 'g'), WA_NUM)
+      .replace(/97620-2155/g, '98878-2345')
+      .replace(/97620\.2155/g, '98878.2345');
+
+    const arr = JSON.parse(migrated);
+    if (Array.isArray(arr) && arr.length > 0) {
+      localStorage.setItem(STORAGE_KEY, migrated);
+    }
+  } catch(e) {
+    // Se falhar, loadImoveis vai usar os dados demo — melhor do que corromper
+  }
+}
+
+/* ── Sanitizar imóvel (garante ausência do número antigo em campos de texto) ── */
+function sanitizeImovel(im) {
+  const clone = Object.assign({}, im);
+  // Campos de texto onde o número poderia ter sido embutido manualmente
+  ['titulo', 'descricao', 'localizacao', 'tag', 'imgAlt'].forEach(f => {
+    if (typeof clone[f] === 'string') {
+      clone[f] = clone[f]
+        .replace(new RegExp(OLD_WA_NUM, 'g'), WA_NUM)
+        .replace(/97620-2155/g, '98878-2345');
+    }
+  });
+  // Remove qualquer campo de href/link/telefone que possa ter sido salvo indevidamente
+  delete clone.waHref;
+  delete clone.waLink;
+  delete clone.telefone;
+  delete clone.phone;
+  return clone;
+}
+
 /* ── Storage ── */
 function loadImoveis() {
+  // Migra dados antigos se necessário (apenas na primeira execução após atualização)
+  migrateStorageV1toV2();
+
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (raw) {
       const arr = JSON.parse(raw);
-      if (Array.isArray(arr) && arr.length > 0) return arr;
+      if (Array.isArray(arr) && arr.length > 0) {
+        // Sanitiza cada registro ao carregar — garante número correto mesmo em dados legados
+        return arr.map(sanitizeImovel);
+      }
     }
   } catch(e) {}
   return IMOVEIS_DEMO.map(i => ({...i}));
