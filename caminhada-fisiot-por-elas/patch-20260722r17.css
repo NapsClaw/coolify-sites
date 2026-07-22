@@ -1,0 +1,62 @@
+/* ============================================================
+   PATCH R17 — SEO local Lagoa Santa/MG + Botões "Abrir no mapa"
+   • Meta tags geo.region, geo.placename, ICBM → no <head> (HTML)
+   • JSON-LD schema.org Event → no <head> (HTML)
+   • Estilos: botão .mapa-btn nos cards hero e modal GPS
+   Preserva R16 e todos os patches anteriores.
+   ============================================================ */
+
+/* ─── Botão "Abrir no mapa" — hero info cards ────────────── */
+.mapa-btn {
+  display:         inline-flex;
+  align-items:     center;
+  gap:             .3rem;
+  margin-top:      .55rem;
+  padding:         .32rem .75rem;
+  background:      #fff;
+  color:           #1B5E20;
+  border:          1.5px solid #2E7D32;
+  border-radius:   20px;
+  font-size:       .75rem;
+  font-weight:     700;
+  text-decoration: none;
+  letter-spacing:  .01em;
+  cursor:          pointer;
+  transition:      background .18s, color .18s, box-shadow .18s;
+  white-space:     nowrap;
+  box-shadow:      0 1px 4px rgba(0,0,0,.12);
+}
+
+.mapa-btn:hover,
+.mapa-btn:focus-visible {
+  background:  #2E7D32;
+  color:       #fff;
+  box-shadow:  0 2px 8px rgba(46,125,50,.35);
+  outline:     none;
+}
+
+/* Variante para uso dentro do modal GPS (um pouco maior) */
+.mapa-btn-modal {
+  padding:     .38rem .9rem;
+  font-size:   .8rem;
+  margin-top:  .6rem;
+}
+
+/* ─── Ajuste fino: garantir alinhamento nos cards combinados ─ */
+.hig-combined-row .mapa-btn {
+  margin-left: 0;
+}
+
+/* ─── Dark-mode seguro (não existe tema escuro neste projeto) ─ */
+@media (prefers-color-scheme: dark) {
+  .mapa-btn {
+    background: rgba(255,255,255,.08);
+    color:      #81C784;
+    border-color: #81C784;
+  }
+  .mapa-btn:hover,
+  .mapa-btn:focus-visible {
+    background: #2E7D32;
+    color:      #fff;
+  }
+}
