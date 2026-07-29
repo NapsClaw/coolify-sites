@@ -1,46 +1,45 @@
-document.addEventListener('DOMContentLoaded', () => {
-  // Year
-  const yearEl = document.getElementById('year');
-  if (yearEl) yearEl.textContent = new Date().getFullYear();
+document.getElementById('year').textContent = new Date().getFullYear();
 
-  // Mobile nav toggle
-  const navToggle = document.getElementById('navToggle');
-  const navLinks = document.getElementById('navLinks');
-  if (navToggle && navLinks) {
-    navToggle.addEventListener('click', () => {
-      const isOpen = navLinks.classList.toggle('open');
-      navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-      navToggle.classList.toggle('active', isOpen);
-    });
-    navLinks.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => {
-        navLinks.classList.remove('open');
-        navToggle.setAttribute('aria-expanded', 'false');
-      });
-    });
-  }
+/* sticky nav shrink */
+const navWrap = document.getElementById('navWrap');
+const onScroll = () => {
+  if (window.scrollY > 12) navWrap.classList.add('scrolled');
+  else navWrap.classList.remove('scrolled');
+};
+onScroll();
+window.addEventListener('scroll', onScroll, { passive: true });
 
-  // FAQ accordion
-  document.querySelectorAll('.faq-item').forEach(item => {
-    const btn = item.querySelector('.faq-question');
-    btn.addEventListener('click', () => {
-      const wasOpen = item.classList.contains('open');
-      document.querySelectorAll('.faq-item.open').forEach(openItem => {
-        openItem.classList.remove('open');
-        openItem.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
-      });
-      if (!wasOpen) {
-        item.classList.add('open');
-        btn.setAttribute('aria-expanded', 'true');
-      }
-    });
+/* mobile nav toggle */
+const navToggle = document.getElementById('navToggle');
+const navLinks = document.getElementById('navLinks');
+navToggle.addEventListener('click', () => {
+  const isOpen = navLinks.classList.toggle('open');
+  navToggle.classList.toggle('open', isOpen);
+  navToggle.setAttribute('aria-expanded', String(isOpen));
+});
+navLinks.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+    navToggle.classList.remove('open');
+    navToggle.setAttribute('aria-expanded', 'false');
   });
+});
 
-  // Cursor glow (desktop only, cheap)
-  const glow = document.getElementById('glowCursor');
-  if (glow && matchMedia('(hover:hover) and (pointer:fine)').matches) {
-    window.addEventListener('mousemove', (e) => {
-      glow.style.transform = `translate3d(${e.clientX}px, ${e.clientY}px, 0)`;
-    }, { passive: true });
-  }
+/* FAQ accordion */
+document.querySelectorAll('.faq-item').forEach(item => {
+  const btn = item.querySelector('.faq-q');
+  const answer = item.querySelector('.faq-a');
+  btn.addEventListener('click', () => {
+    const isOpen = item.getAttribute('data-open') === 'true';
+    document.querySelectorAll('.faq-item').forEach(other => {
+      other.setAttribute('data-open', 'false');
+      other.querySelector('.faq-q').setAttribute('aria-expanded', 'false');
+      other.querySelector('.faq-a').style.maxHeight = null;
+    });
+    if (!isOpen) {
+      item.setAttribute('data-open', 'true');
+      btn.setAttribute('aria-expanded', 'true');
+      answer.style.maxHeight = answer.scrollHeight + 'px';
+    }
+  });
 });
