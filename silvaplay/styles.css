@@ -479,16 +479,14 @@ p { margin: 0; }
 .chip-bottom { left: -26px; bottom: 6%; transform: rotate(3deg); }
 .chip-dot { width: 7px; height: 7px; border-radius: 50%; background: #34d3a3; box-shadow: 0 0 10px #34d3a3; }
 
-/* ===== FILM STRIP TICKER ===== */
+/* ===== FILM STRIP (faixa estática) ===== */
 .filmstrip {
   position: relative;
   overflow: hidden;
   background: var(--surface);
   border-top: 1px solid var(--surface-border-soft);
   border-bottom: 1px solid var(--surface-border-soft);
-  padding: 14px 0;
-  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 110px, #000 calc(100% - 110px), transparent 100%);
-  mask-image: linear-gradient(90deg, transparent 0, #000 110px, #000 calc(100% - 110px), transparent 100%);
+  padding: 16px 24px;
 }
 .filmstrip::before, .filmstrip::after {
   content: "";
@@ -502,27 +500,26 @@ p { margin: 0; }
 .filmstrip-track {
   display: flex;
   align-items: center;
-  width: max-content;
-  gap: 22px;
-  animation: scroll-left 32s linear infinite;
+  justify-content: center;
+  flex-wrap: wrap;
+  row-gap: 8px;
+  column-gap: 22px;
   font-family: var(--ff-mark);
   font-size: 14px;
   letter-spacing: .08em;
   text-transform: uppercase;
   color: var(--ink-dim);
+  text-align: center;
 }
 .filmstrip-track i { width: 5px; height: 5px; background: var(--violet); border-radius: 50%; display: inline-block; }
-.filmstrip:hover .filmstrip-track { animation-play-state: paused; }
-@keyframes scroll-left { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
 /* ===== BENTO (benefícios) ===== */
 .bento {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: minmax(180px, auto);
+  grid-template-columns: repeat(2, 1fr);
   gap: 16px;
 }
-.bento-lg { grid-column: span 2; grid-row: span 2; }
+.bento-lg { grid-column: span 2; }
 .bento-wide { grid-column: span 2; }
 
 .bento-card {
@@ -562,42 +559,54 @@ p { margin: 0; }
 .bento-lg p { font-size: 16px; max-width: 90%; }
 
 .quality-strip {
-  margin-top: auto;
-  padding-top: 22px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--surface-border-soft);
 }
-.quality-step {
+.quality-track {
+  position: relative;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 8px;
-  color: var(--ink-dim);
+  justify-content: space-between;
+}
+.quality-track::before {
+  content: "";
+  position: absolute;
+  left: 22px; right: 22px;
+  top: 50%;
+  height: 1px;
+  transform: translateY(-50%);
+  background: linear-gradient(90deg, var(--surface-border), rgba(157,92,255,.55));
+  z-index: 0;
 }
 .quality-icon {
+  position: relative;
+  z-index: 1;
   width: 44px; height: 44px;
   display: grid; place-items: center;
   border-radius: 12px;
   background: var(--surface-2);
   border: 1px solid var(--surface-border);
-  color: inherit;
+  color: var(--ink-dim);
 }
-.quality-tag { font-family: var(--ff-mark); font-size: 12px; letter-spacing: .05em; }
-.quality-step.is-peak { color: var(--ink); }
-.quality-step.is-peak .quality-icon {
+.quality-icon.is-peak {
   background: var(--grad-brand-soft);
   border-color: rgba(157,92,255,.45);
   color: var(--blue);
   box-shadow: 0 12px 24px -14px rgba(157,92,255,.6);
 }
-.quality-line {
-  flex: 1;
-  height: 1px;
-  min-width: 20px;
-  background: linear-gradient(90deg, var(--surface-border), rgba(157,92,255,.5));
-  margin-bottom: 24px;
+.quality-labels {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+  font-family: var(--ff-mark);
+  font-size: 12px;
+  letter-spacing: .05em;
+  color: var(--ink-dim);
 }
+.quality-labels span { width: 44px; text-align: center; }
+.quality-labels .is-peak { color: var(--ink); }
 
 /* ===== STEPS (como funciona) ===== */
 .steps {
@@ -827,10 +836,8 @@ p { margin: 0; }
   .nav-cta { margin-top: 8px; justify-content: center; }
 
   .section { padding: 52px 0; }
-  .filmstrip {
-    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 30px, #000 calc(100% - 30px), transparent 100%);
-    mask-image: linear-gradient(90deg, transparent 0, #000 30px, #000 calc(100% - 30px), transparent 100%);
-  }
+  .filmstrip { padding: 14px 16px; }
+  .filmstrip-track { column-gap: 16px; font-size: 12.5px; }
   .devices { flex-direction: column; }
   .device { border-right: none; }
   .faq-grid { grid-template-columns: 1fr; }
