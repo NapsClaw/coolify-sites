@@ -1,4 +1,4 @@
-// Raio Életric — interações da vitrine
+// Raio ⚡ Életric — interações da vitrine
 
 document.addEventListener('DOMContentLoaded', () => {
   const burger = document.getElementById('burger');
