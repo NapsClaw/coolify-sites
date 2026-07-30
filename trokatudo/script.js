@@ -24,24 +24,46 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // FAQ accordion
+  // FAQ accordion — accessible: aria-expanded is the single source of truth
   document.querySelectorAll('.faq__item').forEach(item => {
     const q = item.querySelector('.faq__q');
     q.addEventListener('click', () => {
       const wasOpen = item.classList.contains('is-open');
-      document.querySelectorAll('.faq__item').forEach(i => i.classList.remove('is-open'));
-      if (!wasOpen) item.classList.add('is-open');
+      document.querySelectorAll('.faq__item').forEach(i => {
+        i.classList.remove('is-open');
+        i.querySelector('.faq__q').setAttribute('aria-expanded', 'false');
+      });
+      if (!wasOpen) {
+        item.classList.add('is-open');
+        q.setAttribute('aria-expanded', 'true');
+      }
     });
   });
 
-  // Demo form (no backend — preview only)
+  // Demo form (no backend — this is a presentation preview only)
   const form = document.getElementById('demoForm');
   const note = document.getElementById('formNote');
+  const submitBtn = document.getElementById('formSubmitBtn');
   if (form) {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
-      note.textContent = 'Obrigado! Este é um preview de apresentação — em breve o envio será conectado ao atendimento da Trokatudo.';
+
+      note.textContent = '✓ Recebemos sua solicitação de demonstração (preview). Este formulário ainda não envia dados para uma central de atendimento real.';
+      note.classList.add('is-visible');
+
+      if (submitBtn) {
+        const originalLabel = submitBtn.textContent;
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Solicitação registrada ✓';
+        setTimeout(() => {
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalLabel;
+        }, 2600);
+      }
+
       form.reset();
+
+      setTimeout(() => note.classList.remove('is-visible'), 6000);
     });
   }
 });
