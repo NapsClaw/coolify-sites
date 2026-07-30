@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Admin — OGS Decor (Preview)</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="../assets/logo-ogs-decor.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="demo-banner">🧪 <b>AMBIENTE DE DEMONSTRAÇÃO</b> — dados fictícios, sem pagamento real e sem documentos reais. Salvo apenas neste navegador.</div>
+<div class="app-shell">
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <img src="../assets/logo-ogs-decor.jpg" alt="OGS Decor">
+      <div class="brand-text"><strong>OGS Decor</strong><span>Painel Admin · Preview</span></div>
+    </div>
+    <button class="hamburger">☰ Menu</button>
+    <nav class="nav-links">
+      <a href="dashboard.html" class="ativo">Dashboard</a>
+      <a href="obras.html">Obras</a>
+      <a href="instaladores.html">Instaladores</a>
+      <a href="ranking.html">Ranking</a>
+      <a href="pagamentos.html">Pagamentos</a>
+      <a href="regras.html">Regras &amp; Aviso</a>
+    </nav>
+    <a href="../index.html" class="link-trocar only-desktop">↩ Trocar perfil</a>
+  </div>
+</div>
+
+<main class="main-content">
+  <div class="container">
+    <div class="page-header">
+      <div>
+        <span class="kicker">Visão geral · atualizado agora</span>
+        <h1>Painel do administrador</h1>
+        <p>Acompanhe obras, fila de aprovação de instaladores e pagamentos pendentes sem precisar visitar o canteiro.</p>
+      </div>
+      <a href="obra-nova.html" class="btn btn-primario">+ Nova obra</a>
+    </div>
+
+    <div class="grid grid-5" id="kpis"></div>
+
+    <div class="grid grid-2" style="margin-top:24px;align-items:start;">
+      <div class="card card-lg">
+        <div class="flex-between" style="margin-bottom:14px;">
+          <h3 style="margin:0;">⚠️ Alertas ativos</h3>
+          <a href="obras.html" class="texto-mudo" style="font-size:12.5px;">ver obras →</a>
+        </div>
+        <div id="lista-alertas"></div>
+      </div>
+
+      <div class="card card-lg">
+        <div class="flex-between" style="margin-bottom:14px;">
+          <h3 style="margin:0;">🏆 Ranking (top 5)</h3>
+          <a href="ranking.html" class="texto-mudo" style="font-size:12.5px;">ver ranking completo →</a>
+        </div>
+        <div id="mini-ranking"></div>
+      </div>
+    </div>
+
+    <div class="grid grid-2" style="margin-top:24px;align-items:start;">
+      <div class="card card-lg">
+        <div class="flex-between" style="margin-bottom:14px;">
+          <h3 style="margin:0;">📝 Fila de aprovação de cadastros</h3>
+          <a href="instaladores.html" class="texto-mudo" style="font-size:12.5px;">gerenciar →</a>
+        </div>
+        <div id="fila-aprovacao"></div>
+      </div>
+
+      <div class="card card-lg">
+        <div class="flex-between" style="margin-bottom:14px;">
+          <h3 style="margin:0;">💸 Fila de pagamentos a liberar</h3>
+          <a href="pagamentos.html" class="texto-mudo" style="font-size:12.5px;">gerenciar →</a>
+        </div>
+        <div id="fila-pagamentos"></div>
+      </div>
+    </div>
+
+    <div class="aviso-legal" style="margin-top:24px;">
+      <span>⚖️</span>
+      <div><strong>Aviso interno</strong>Regras sobre autonomia do prestador, recusa de obras, formação de preço e vínculo devem ser validadas com advogado(a) trabalhista antes de operar o sistema real com prestadores.</div>
+    </div>
+  </div>
+</main>
+
+<footer class="rodape"><div class="container">Preview <b>Sparkz Agency</b> para OGS Decor · Ambiente demonstrativo, sem persistência multiusuário.</div></footer>
+</div>
+
+<script src="../js/data.js"></script>
+<script src="../js/app.js"></script>
+<script>
+const obras = getObras();
+const insts = getInstaladores();
+
+const abertas = obras.filter(o => o.status==='aberta' || o.status.startsWith('ofertada')).length;
+const andamento = obras.filter(o => ['aceita','em_execucao'].includes(o.status)).length;
+const concluidas = obras.filter(o => ['concluida','avaliada','paga'].includes(o.status)).length;
+const pagPendentes = obras.filter(o => ['pendente_liberacao','bloqueado_retrabalho'].includes(o.pagamento.status)).length;
+
+function obraTemAlerta(o){
+  const motivos = [];
+  if(o.status==='atrasada') motivos.push('Obra com prazo vencido e sem check-in');
+  if(['em_execucao'].includes(o.status) && !o.checkin) motivos.push('Check-in ausente');
+  if(['concluida','avaliada'].includes(o.status)){
+    const total = Object.values(o.checklist||{});
+    if(total.length===0 || total.some(v=>!v)) motivos.push('Checklist incompleto');
+  }
+  if(o.avaliacao && (o.avaliacao.qualidade + o.avaliacao.pontualidade + o.avaliacao.limpeza + o.avaliacao.atendimento)/4 < 3) motivos.push('Nota baixa do cliente');
+  if(o.status==='retrabalho') motivos.push('Retrabalho solicitado — pagamento bloqueado');
+  return motivos;
+}
+const alertas = [];
+obras.forEach(o => { const m = obraTemAlerta(o); if(m.length) alertas.push({obra:o, motivos:m}); });
+
+document.getElementById('kpis').innerHTML = `
+  <div class="kpi"><div class="num">${abertas}</div><div class="lbl">Obras abertas</div></div>
+  <div class="kpi aviso-kpi"><div class="num">${andamento}</div><div class="lbl">Em andamento</div></div>
+  <div class="kpi" style="border-left-color:var(--sucesso);"><div class="num">${concluidas}</div><div class="lbl">Concluídas</div></div>
+  <div class="kpi ouro-kpi"><div class="num">${pagPendentes}</div><div class="lbl">Pagamentos pendentes</div></div>
+  <div class="kpi alerta-kpi"><div class="num">${alertas.length}</div><div class="lbl">Alertas ativos</div></div>
+`;
+
+document.getElementById('lista-alertas').innerHTML = alertas.length ? alertas.map(a => `
+  <a href="obra-detalhe.html?id=${a.obra.id}" style="display:block;">
+    <div class="caixa-alerta" style="margin-bottom:10px;">
+      <strong style="display:block;font-size:13px;">${a.obra.id} — ${a.obra.titulo}</strong>
+      ${a.motivos.join(' · ')}
+    </div>
+  </a>
+`).join('') : `<div class="vazio"><div class="icone">✅</div>Nenhum alerta ativo no momento.</div>`;
+
+const rankOrdenado = [...insts].filter(i=>i.status==='aprovado').sort((a,b)=>b.score-a.score).slice(0,5);
+document.getElementById('mini-ranking').innerHTML = rankOrdenado.map((i,idx) => `
+  <a href="instalador-perfil.html?id=${i.id}" style="display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid var(--osso-200);">
+    <span class="mono texto-mudo" style="width:18px;">${idx+1}º</span>
+    <span class="avatar-ini" style="background:var(--verde-mata);">${iniciais(i.nome)}</span>
+    <span style="flex:1;font-size:13.5px;font-weight:600;">${i.nome}</span>
+    ${badgeFaixa(i.faixa)}
+    <span class="mono" style="font-size:12px;color:var(--grafite-claro);">${i.score} pts</span>
+  </a>
+`).join('');
+
+const pendentes = insts.filter(i=>i.status==='pendente');
+document.getElementById('fila-aprovacao').innerHTML = pendentes.length ? pendentes.map(i => `
+  <div class="flex-between" style="padding:10px 0;border-bottom:1px solid var(--osso-200);">
+    <div>
+      <strong style="font-size:13.5px;">${i.nome}</strong><br>
+      <span class="texto-mudo">${i.especialidades.map(e=>ESP_LABEL[e]).join(', ')} · cadastro em ${fmtData(i.dataCadastro)}</span>
+    </div>
+    <a href="instalador-perfil.html?id=${i.id}" class="btn btn-sm btn-secundario">Analisar</a>
+  </div>
+`).join('') : `<div class="vazio"><div class="icone">📭</div>Nenhum cadastro aguardando aprovação.</div>`;
+
+const filaPag = obras.filter(o => ['pendente_liberacao','bloqueado_retrabalho'].includes(o.pagamento.status));
+document.getElementById('fila-pagamentos').innerHTML = filaPag.length ? filaPag.map(o => `
+  <div class="flex-between" style="padding:10px 0;border-bottom:1px solid var(--osso-200);">
+    <div>
+      <strong style="font-size:13.5px;">${o.id} · ${fmtMoeda(o.valor)}</strong><br>
+      <span class="texto-mudo">${o.titulo}</span>
+    </div>
+    <a href="obra-detalhe.html?id=${o.id}" class="btn btn-sm ${o.pagamento.status==='bloqueado_retrabalho'?'btn-perigo':'btn-primario'}">${o.pagamento.status==='bloqueado_retrabalho'?'Bloqueado':'Liberar'}</a>
+  </div>
+`).join('') : `<div class="vazio"><div class="icone">💚</div>Nenhum pagamento pendente.</div>`;
+</script>
+</body>
+</html>

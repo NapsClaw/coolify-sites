@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel do Instalador — OGS Decor (Preview)</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="../assets/logo-ogs-decor.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  .seletor-demo{background:var(--osso-100);border:1px dashed var(--linha);border-radius:var(--radius);padding:14px 16px;margin-bottom:22px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;}
+  .seletor-demo select{width:auto;min-width:220px;}
+  .ganhos-row{display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--osso-200);font-size:13.5px;}
+  .obra-mini{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:13px 0;border-bottom:1px solid var(--osso-200);flex-wrap:wrap;}
+</style>
+</head>
+<body>
+<div class="demo-banner">🧪 <b>AMBIENTE DE DEMONSTRAÇÃO</b> — não há login real. Escolha um instalador fictício abaixo para simular a sessão.</div>
+<div class="app-shell">
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><img src="../assets/logo-ogs-decor.jpg" alt="OGS Decor"><div class="brand-text"><strong>OGS Decor</strong><span>Painel do Instalador · Preview</span></div></div>
+    <button class="hamburger">☰ Menu</button>
+    <nav class="nav-links">
+      <a href="painel.html" class="ativo">Painel</a>
+      <a href="obras-disponiveis.html">Obras disponíveis</a>
+      <a href="cadastro.html">Meu cadastro</a>
+    </nav>
+    <div class="topbar-user">
+      <span class="avatar-ini" id="topo-avatar">--</span>
+      <span class="only-desktop" id="topo-nome" style="font-weight:600;"></span>
+      <a href="../index.html" class="link-trocar">↩ Trocar perfil</a>
+    </div>
+  </div>
+</div>
+
+<main class="main-content">
+  <div class="container">
+    <div class="seletor-demo">
+      <strong style="font-size:13px;">🎭 Simular sessão como:</strong>
+      <select id="sel-instalador"></select>
+      <span class="texto-mudo">(sem senha — apenas para demonstrar o preview)</span>
+    </div>
+
+    <div id="conteudo"></div>
+  </div>
+</main>
+<footer class="rodape"><div class="container">Preview <b>Sparkz Agency</b> para OGS Decor · Ambiente demonstrativo.</div></footer>
+</div>
+
+<script src="../js/data.js"></script>
+<script src="../js/app.js"></script>
+<script>
+const sel = document.getElementById('sel-instalador');
+function popularSelect(){
+  const insts = getInstaladores();
+  sel.innerHTML = insts.map(i => `<option value="${i.id}">${i.nome} — ${i.faixa.toUpperCase()} ${i.status==='pendente'?'(pendente)':i.status==='suspenso'?'(suspenso)':''}</option>`).join('');
+  const atual = getSessaoInstaladorId();
+  if(atual && insts.find(i=>i.id===atual)) sel.value = atual;
+  else { setSessaoInstaladorId(insts[0].id); sel.value = insts[0].id; }
+}
+sel.addEventListener('change', () => { setSessaoInstaladorId(sel.value); render(); });
+
+function render(){
+  const inst = getInstalador(getSessaoInstaladorId());
+  document.getElementById('topo-avatar').textContent = iniciais(inst.nome);
+  document.getElementById('topo-avatar').style.background = 'var(--verde-vivo)';
+  document.getElementById('topo-nome').textContent = inst.nome;
+
+  const cont = document.getElementById('conteudo');
+
+  if(inst.status === 'pendente'){
+    cont.innerHTML = `<div class="card card-lg" style="text-align:center;padding:50px 24px;">
+      <div style="font-size:40px;">⏳</div>
+      <h2>Cadastro em análise</h2>
+      <p class="texto-mudo" style="max-width:46ch;margin:0 auto;">Seu cadastro foi enviado e está aguardando aprovação manual do admin da OGS Decor. Assim que aprovado, você começa na faixa Bronze e passa a ver obras disponíveis aqui.</p>
+    </div>`;
+    return;
+  }
+  if(inst.status === 'suspenso'){
+    cont.innerHTML = `<div class="card card-lg" style="text-align:center;padding:50px 24px;">
+      <div style="font-size:40px;">🚫</div>
+      <h2>Cadastro suspenso</h2>
+      <p class="texto-mudo" style="max-width:46ch;margin:0 auto;">Seu acesso a novas obras está temporariamente suspenso para revisão do admin. Fale com a OGS Decor para mais detalhes.</p>
+    </div>`;
+    return;
+  }
+
+  const obras = getObras().filter(o=>o.instaladorId===inst.id);
+  const emAndamento = obras.filter(o=>['aceita','em_execucao'].includes(o.status));
+  const aReceber = obras.filter(o=>['concluida','avaliada','retrabalho'].includes(o.status)).reduce((s,o)=>s+o.valor,0);
+  const recebido = obras.filter(o=>o.status==='paga').reduce((s,o)=>s+o.valor,0);
+  const disponiveisCount = getObras().filter(o => o.status.startsWith('ofertada') && o.tipo && inst.especialidades.includes(o.tipo) && faixaElegivelParaObra(o).includes(inst.faixa)).length;
+
+  cont.innerHTML = `
+    <div class="page-header">
+      <div>
+        <span class="kicker">Olá, ${inst.nome.split(' ')[0]}</span>
+        <h1>Seu painel</h1>
+        <div class="flex gap-8" style="margin-top:6px;">${badgeFaixa(inst.faixa)}<span class="mono texto-mudo">${inst.score} pts</span></div>
+      </div>
+      <a href="obras-disponiveis.html" class="btn btn-primario">Ver obras disponíveis (${disponiveisCount})</a>
+    </div>
+
+    <div class="grid grid-4" style="margin-bottom:24px;">
+      <div class="kpi"><div class="num">${obras.filter(o=>o.status==='paga').length}</div><div class="lbl">Concluídas</div></div>
+      <div class="kpi aviso-kpi"><div class="num">${fmtMoeda(aReceber)}</div><div class="lbl">A receber</div></div>
+      <div class="kpi" style="border-left-color:var(--sucesso);"><div class="num">${fmtMoeda(recebido)}</div><div class="lbl">Recebido (histórico)</div></div>
+      <div class="kpi ouro-kpi"><div class="num">${emAndamento.length}</div><div class="lbl">Em andamento</div></div>
+    </div>
+
+    <div class="grid grid-2" style="align-items:start;">
+      <div class="card card-lg">
+        <div class="sec-titulo" style="font-size:15px;margin-bottom:12px;">🚧 Obras em andamento</div>
+        ${emAndamento.length ? emAndamento.map(o=>`
+          <div class="obra-mini">
+            <div><strong>${o.id}</strong> · ${o.titulo}<br><span class="texto-mudo">${badgeStatusObra(o.status)}</span></div>
+            <a href="obra-execucao.html?id=${o.id}" class="btn btn-sm btn-primario">Continuar →</a>
+          </div>`).join('') : `<div class="vazio"><div class="icone">🧰</div>Nenhuma obra em andamento.<br><a href="obras-disponiveis.html">Ver obras disponíveis</a></div>`}
+      </div>
+
+      <div class="card card-lg">
+        <div class="sec-titulo" style="font-size:15px;margin-bottom:12px;">💵 Histórico e previsão</div>
+        ${obras.length ? obras.slice(0,8).map(o=>`
+          <div class="ganhos-row">
+            <span>${o.id} — ${o.titulo.slice(0,28)}${o.titulo.length>28?'…':''}</span>
+            <span class="mono" style="font-weight:700;">${fmtMoeda(o.valor)} ${o.status==='paga'?'✅':o.status==='retrabalho'?'⏸️':'⏳'}</span>
+          </div>`).join('') : `<p class="texto-mudo">Nenhuma obra no histórico ainda.</p>`}
+      </div>
+    </div>
+  `;
+}
+popularSelect();
+render();
+</script>
+</body>
+</html>

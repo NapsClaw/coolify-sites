@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Avalie a sua obra — OGS Decor (Preview)</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="../assets/logo-ogs-decor.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  .topo-cliente{background:var(--verde-profundo);padding:26px 0;text-align:center;}
+  .topo-cliente img{width:48px;height:48px;border-radius:10px;margin:0 auto 8px;}
+  .topo-cliente h1{color:#fff;font-size:24px;margin:0;}
+  .topo-cliente p{color:var(--verde-claro);font-size:12px;font-family:var(--font-mono);margin:4px 0 0;text-transform:uppercase;letter-spacing:.05em;}
+  .criterio{margin-bottom:20px;padding-bottom:18px;border-bottom:1px solid var(--osso-200);}
+  .criterio:last-of-type{border-bottom:none;}
+  .criterio-label{font-weight:700;font-size:14.5px;margin-bottom:8px;display:block;}
+  .criterio-desc{font-size:12px;color:var(--grafite-claro);margin-bottom:8px;}
+</style>
+</head>
+<body>
+<div class="demo-banner">🧪 <b>AMBIENTE DE DEMONSTRAÇÃO</b> — avaliação fictícia, não é enviada a nenhum sistema real.</div>
+<div class="topo-cliente">
+  <img src="../assets/logo-ogs-decor.jpg" alt="OGS Decor">
+  <h1>Como foi a sua obra?</h1>
+  <p>Avaliação pública do cliente · OGS Decor</p>
+</div>
+
+<main class="main-content">
+  <div class="container" style="max-width:600px;" id="conteudo">Carregando...</div>
+</main>
+<footer class="rodape"><div class="container">Preview <b>Sparkz Agency</b> para OGS Decor · Ambiente demonstrativo.</div></footer>
+
+<script src="../js/data.js"></script>
+<script src="../js/app.js"></script>
+<script>
+const id = new URLSearchParams(location.search).get('id') || 'OGS-1039';
+let obra = getObra(id);
+const cont = document.getElementById('conteudo');
+
+const criterios = [
+  { key:'qualidade', label:'Qualidade do acabamento', desc:'Alinhamento, emendas, corte e acabamento final ficaram bem executados?' },
+  { key:'pontualidade', label:'Pontualidade', desc:'O instalador chegou e concluiu dentro do combinado?' },
+  { key:'limpeza', label:'Limpeza do local', desc:'O ambiente ficou limpo e organizado ao final do serviço?' },
+  { key:'atendimento', label:'Postura e atendimento', desc:'Educação, comunicação e cuidado durante o serviço.' },
+];
+
+function render(){
+  obra = getObra(id);
+  if(!obra){ cont.innerHTML = `<div class="vazio"><div class="icone">🚫</div>Obra não encontrada.</div>`; return; }
+  const inst = getInstalador(obra.instaladorId);
+
+  if(!obra.checkout){
+    cont.innerHTML = `<div class="card card-lg" style="text-align:center;padding:44px 22px;">
+      <div style="font-size:38px;">⏳</div>
+      <h2>Obra ainda em execução</h2>
+      <p class="texto-mudo">A avaliação fica disponível assim que o instalador concluir o check-out da obra.</p>
+    </div>`;
+    return;
+  }
+
+  if(obra.avaliacao){
+    const media = ((obra.avaliacao.qualidade+obra.avaliacao.pontualidade+obra.avaliacao.limpeza+obra.avaliacao.atendimento)/4).toFixed(1);
+    cont.innerHTML = `<div class="card card-lg" style="text-align:center;padding:44px 22px;">
+      <div style="font-size:38px;">💚</div>
+      <h2>Obrigado pela avaliação!</h2>
+      <p class="texto-mudo">Nota média enviada: <strong>${media}/5</strong>.</p>
+      <div class="caixa-info" style="text-align:left;">Sua nota ajuda a definir a prioridade do instalador em obras futuras — ela não altera o valor já combinado para este serviço.</div>
+    </div>`;
+    return;
+  }
+
+  cont.innerHTML = `
+    <div class="card card-lg" style="margin-bottom:16px;">
+      <span class="mono texto-mudo">${obra.id}</span>
+      <h2 style="margin:2px 0 6px;">${obra.titulo}</h2>
+      <p style="margin:0;font-size:13.5px;">Instalador: <strong>${inst?inst.nome:'—'}</strong> · Concluída em ${fmtDataHora(obra.checkout.dataHora)}</p>
+    </div>
+    <form class="card card-lg" id="form-avaliacao">
+      ${criterios.map(c => `
+        <div class="criterio">
+          <span class="criterio-label">${c.label}</span>
+          <span class="criterio-desc">${c.desc}</span>
+          <div class="stars" id="stars-${c.key}"></div>
+        </div>`).join('')}
+      <div class="campo">
+        <label>Comentário (opcional)</label>
+        <textarea id="comentario" placeholder="Conte como foi a experiência com o instalador e o resultado da obra..."></textarea>
+      </div>
+      <div class="caixa-info" style="margin-bottom:16px;">Você tem até <strong>72 horas</strong> após a conclusão para avaliar. Sem resposta, o sistema aplica uma nota neutra automática — isso não atrasa o pagamento do instalador.</div>
+      <button type="submit" class="btn btn-primario btn-bloco">Enviar avaliação</button>
+    </form>
+  `;
+
+  const getters = {};
+  criterios.forEach(c => { getters[c.key] = renderStars(document.getElementById('stars-'+c.key), 0, null, false); });
+
+  document.getElementById('form-avaliacao').addEventListener('submit', (ev) => {
+    ev.preventDefault();
+    const notas = {};
+    let ok = true;
+    criterios.forEach(c => { notas[c.key] = getters[c.key](); if(!notas[c.key]) ok=false; });
+    if(!ok){ toast('Avalie todos os critérios antes de enviar.', 'erro'); return; }
+    obra.avaliacao = { ...notas, comentario: document.getElementById('comentario').value, dataHora: agoraISO(), contestada:false, automatica:false };
+    obra.status = 'avaliada';
+    if(obra.pagamento.status !== 'bloqueado_retrabalho') obra.pagamento.status = 'pendente_liberacao';
+    salvarObra(obra);
+    toast('Avaliação enviada! Obrigado.');
+    render();
+  });
+}
+render();
+</script>
+</body>
+</html>

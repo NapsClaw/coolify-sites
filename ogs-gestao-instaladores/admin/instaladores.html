@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instaladores — OGS Decor (Preview)</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="../assets/logo-ogs-decor.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  .filtros{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;}
+  .filtros select, .filtros input{width:auto;min-width:160px;}
+  .inst-card{display:flex;flex-direction:column;gap:10px;}
+  .inst-topo{display:flex;align-items:center;gap:12px;}
+  .inst-topo strong{font-size:15.5px;}
+  .pend-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0;border-bottom:1px solid var(--osso-200);flex-wrap:wrap;}
+</style>
+</head>
+<body>
+<div class="demo-banner">🧪 <b>AMBIENTE DE DEMONSTRAÇÃO</b> — cadastros e documentos fictícios.</div>
+<div class="app-shell">
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><img src="../assets/logo-ogs-decor.jpg" alt="OGS Decor"><div class="brand-text"><strong>OGS Decor</strong><span>Painel Admin · Preview</span></div></div>
+    <button class="hamburger">☰ Menu</button>
+    <nav class="nav-links">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="obras.html">Obras</a>
+      <a href="instaladores.html" class="ativo">Instaladores</a>
+      <a href="ranking.html">Ranking</a>
+      <a href="pagamentos.html">Pagamentos</a>
+      <a href="regras.html">Regras &amp; Aviso</a>
+    </nav>
+    <a href="../index.html" class="link-trocar only-desktop">↩ Trocar perfil</a>
+  </div>
+</div>
+
+<main class="main-content">
+  <div class="container">
+    <div class="page-header">
+      <div><span class="kicker">Equipe de instaladores</span><h1>Instaladores</h1><p>Aprove cadastros, acompanhe faixa e especialidade de cada prestador.</p></div>
+    </div>
+
+    <div id="bloco-pendentes" style="margin-bottom:28px;"></div>
+
+    <div class="filtros">
+      <input type="text" id="f-busca" placeholder="Buscar por nome...">
+      <select id="f-esp"><option value="">Todas especialidades</option></select>
+      <select id="f-faixa"><option value="">Todas as faixas</option><option value="ouro">Ouro</option><option value="prata">Prata</option><option value="bronze">Bronze</option></select>
+      <select id="f-status"><option value="">Todos os status</option><option value="aprovado">Aprovado</option><option value="pendente">Pendente</option><option value="suspenso">Suspenso</option></select>
+    </div>
+
+    <div class="grid grid-3" id="grid-insts"></div>
+    <div id="vazio" style="display:none;" class="vazio"><div class="icone">🔍</div>Nenhum instalador encontrado.</div>
+  </div>
+</main>
+<footer class="rodape"><div class="container">Preview <b>Sparkz Agency</b> para OGS Decor · Ambiente demonstrativo.</div></footer>
+</div>
+
+<script src="../js/data.js"></script>
+<script src="../js/app.js"></script>
+<script>
+const selEsp = document.getElementById('f-esp');
+ESPECIALIDADES.forEach(e => selEsp.innerHTML += `<option value="${e.id}">${e.label}</option>`);
+
+function renderPendentes(){
+  const pend = getInstaladores().filter(i=>i.status==='pendente');
+  const box = document.getElementById('bloco-pendentes');
+  if(!pend.length){ box.innerHTML=''; return; }
+  box.innerHTML = `<div class="card card-lg" style="border-left:4px solid var(--aviso);">
+    <div class="sec-titulo" style="margin-bottom:4px;">📝 Fila de aprovação (${pend.length})</div>
+    ${pend.map(i => `
+      <div class="pend-row">
+        <div class="flex gap-12" style="align-items:center;">
+          <span class="avatar-ini" style="background:var(--aviso);">${iniciais(i.nome)}</span>
+          <div>
+            <strong>${i.nome}</strong> <span class="texto-mudo">· ${i.telefone}</span><br>
+            <span class="texto-mudo">${i.especialidades.map(e=>ESP_LABEL[e]).join(', ')} · cadastro em ${fmtData(i.dataCadastro)}</span>
+          </div>
+        </div>
+        <div class="flex gap-8">
+          <a href="instalador-perfil.html?id=${i.id}" class="btn btn-sm btn-claro">Ver perfil</a>
+          <button class="btn btn-sm btn-primario" onclick="aprovar('${i.id}')">Aprovar</button>
+          <button class="btn btn-sm btn-perigo" onclick="recusar('${i.id}')">Recusar</button>
+        </div>
+      </div>`).join('')}
+  </div>`;
+}
+function aprovar(id){ const i=getInstalador(id); i.status='aprovado'; i.score = i.score || 55; i.faixa = faixaPorScore(i.score); salvarInstalador(i); toast(i.nome+' aprovado como instalador Bronze.'); renderPendentes(); render(); }
+function recusar(id){ const arr=getInstaladores().filter(i=>i.id!==id); setInstaladores(arr); toast('Cadastro recusado e removido da fila.'); renderPendentes(); render(); }
+
+function render(){
+  const busca = document.getElementById('f-busca').value.toLowerCase();
+  const esp = document.getElementById('f-esp').value;
+  const faixa = document.getElementById('f-faixa').value;
+  const status = document.getElementById('f-status').value;
+  let insts = getInstaladores().filter(i => {
+    if(busca && !i.nome.toLowerCase().includes(busca)) return false;
+    if(esp && !i.especialidades.includes(esp)) return false;
+    if(faixa && i.faixa!==faixa) return false;
+    if(status && i.status!==status) return false;
+    return true;
+  }).sort((a,b)=>b.score-a.score);
+  document.getElementById('vazio').style.display = insts.length ? 'none':'block';
+  document.getElementById('grid-insts').innerHTML = insts.map(i => `
+    <a href="instalador-perfil.html?id=${i.id}" class="card inst-card">
+      <div class="inst-topo">
+        <span class="faixa-ring ${i.faixa}"><span class="avatar-ini" style="background:var(--verde-mata);">${iniciais(i.nome)}</span></span>
+        <div><strong>${i.nome}</strong><br>${badgeFaixa(i.faixa)} ${i.status==='pendente'?'<span class="badge badge-aviso">pendente</span>':i.status==='suspenso'?'<span class="badge badge-alerta">suspenso</span>':''}</div>
+      </div>
+      <div class="chips">${i.especialidades.map(e=>`<span class="tag-especialidade">${ESP_LABEL[e]}</span>`).join('')}</div>
+      <div class="flex-between">
+        <span class="texto-mudo">Score</span><strong class="mono">${i.score} pts</strong>
+      </div>
+      <div class="score-bar"><span style="width:${i.score}%"></span></div>
+      <div class="flex-between texto-mudo" style="font-size:12px;">
+        <span>${i.obrasConcluidas} obras concluídas</span><span>★ ${i.avaliacaoMedia || '—'}</span>
+      </div>
+    </a>
+  `).join('');
+}
+['f-busca','f-esp','f-faixa','f-status'].forEach(id => document.getElementById(id).addEventListener('input', render));
+renderPendentes();
+render();
+</script>
+</body>
+</html>

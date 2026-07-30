@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Execução da obra — Instalador OGS Decor (Preview)</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="../assets/logo-ogs-decor.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  .passo{opacity:.45;pointer-events:none;filter:grayscale(.4);}
+  .passo.ativo{opacity:1;pointer-events:auto;filter:none;}
+  .passo-numero{width:30px;height:30px;border-radius:50%;background:var(--osso-200);color:var(--grafite);display:inline-flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:800;font-size:14px;flex:none;}
+  .passo.ativo .passo-numero, .passo.feito .passo-numero{background:var(--verde-vivo-forte);color:#fff;}
+  .passo-header{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+  input[type=file]{display:none;}
+</style>
+</head>
+<body>
+<div class="demo-banner">🧪 <b>AMBIENTE DE DEMONSTRAÇÃO</b> — geolocalização só é usada após seu clique; fotos ficam salvas apenas neste navegador.</div>
+<div class="app-shell">
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><img src="../assets/logo-ogs-decor.jpg" alt="OGS Decor"><div class="brand-text"><strong>OGS Decor</strong><span>Painel do Instalador · Preview</span></div></div>
+    <button class="hamburger">☰ Menu</button>
+    <nav class="nav-links">
+      <a href="painel.html">Painel</a>
+      <a href="obras-disponiveis.html">Obras disponíveis</a>
+      <a href="cadastro.html">Meu cadastro</a>
+    </nav>
+    <a href="../index.html" class="link-trocar only-desktop">↩ Trocar perfil</a>
+  </div>
+</div>
+
+<main class="main-content">
+  <div class="container" style="max-width:820px;" id="conteudo">Carregando obra...</div>
+</main>
+<footer class="rodape"><div class="container">Preview <b>Sparkz Agency</b> para OGS Decor · Ambiente demonstrativo.</div></footer>
+</div>
+
+<div class="modal-fundo" id="modal-abandono">
+  <div class="modal-caixa">
+    <h3>Abandonar esta obra?</h3>
+    <p class="texto-mudo">Aceitar e depois abandonar uma obra gera penalidade no seu score, conforme as regras de reputação. Esta ação é apenas demonstrativa.</p>
+    <div class="flex gap-8"><button class="btn btn-perigo" onclick="confirmarAbandono()">Sim, abandonar (com penalidade)</button><button class="btn btn-claro" onclick="document.getElementById('modal-abandono').classList.remove('aberto')">Cancelar</button></div>
+  </div>
+</div>
+
+<script src="../js/data.js"></script>
+<script src="../js/app.js"></script>
+<script>
+const obraId = new URLSearchParams(location.search).get('id');
+let obra = getObra(obraId);
+const inst = getInstalador(getSessaoInstaladorId()) || getInstaladores()[0];
+const cont = document.getElementById('conteudo');
+
+function checklistCompleto(){
+  const itens = CHECKLISTS[obra.tipo] || [];
+  return itens.every((_, i) => obra.checklist[i]);
+}
+function fotosCompletas(){
+  return ['antes','durante','depois'].every(f => (obra.fotos[f]||[]).length>0);
+}
+
+function render(){
+  obra = getObra(obraId);
+  if(!obra || obra.instaladorId !== inst.id){
+    cont.innerHTML = `<div class="vazio"><div class="icone">🚫</div>Obra não encontrada para este instalador. <a href="obras-disponiveis.html">Ver obras disponíveis</a></div>`;
+    return;
+  }
+  const passo1ok = !!obra.checkin;
+  const passo2ok = passo1ok && checklistCompleto();
+  const passo3ok = passo1ok && fotosCompletas();
+  const podeCheckout = passo1ok && passo2ok && passo3ok && !obra.checkout;
+
+  if(obra.status === 'concluida' || obra.checkout){
+    const linkAval = location.origin + location.pathname.replace('instalador/obra-execucao.html','cliente/avaliacao.html') + '?id=' + obra.id;
+    cont.innerHTML = `
+      <div class="card card-lg" style="text-align:center;padding:44px 26px;">
+        <div style="font-size:44px;">✅</div>
+        <h2>Obra concluída!</h2>
+        <p class="texto-mudo">Check-out registrado em ${fmtDataHora(obra.checkout.dataHora)}. Envie o link abaixo para o cliente avaliar a obra.</p>
+        <div class="geo-coords" style="text-align:left;word-break:break-all;">${linkAval}</div>
+        <div class="flex gap-8" style="justify-content:center;flex-wrap:wrap;">
+          <button class="btn btn-primario" onclick="copiarLink('${linkAval}')">Copiar link de avaliação</button>
+          <a href="${linkAval}" target="_blank" class="btn btn-claro">Abrir avaliação</a>
+          <a href="painel.html" class="btn btn-secundario">Voltar ao painel</a>
+        </div>
+      </div>`;
+    return;
+  }
+
+  cont.innerHTML = `
+    <div class="page-header">
+      <div><span class="kicker mono">${obra.id}</span><h1>${obra.titulo}</h1><p>${obra.endereco}</p></div>
+      <div class="flex gap-8">
+        <a href="${linkGoogleMaps(obra.lat,obra.lng,obra.endereco)}" target="_blank" class="link-mapa">🗺️ Rota</a>
+      </div>
+    </div>
+
+    <div class="grid" style="gap:18px;">
+
+      <!-- PASSO 1: CHECK-IN -->
+      <div class="card card-lg passo ativo" id="passo1">
+        <div class="passo-header"><span class="passo-numero">1</span><h3 style="margin:0;">Check-in geolocalizado</h3></div>
+        <div id="area-checkin"></div>
+      </div>
+
+      <!-- PASSO 2: CHECKLIST -->
+      <div class="card card-lg passo ${passo1ok?'ativo':''}" id="passo2">
+        <div class="passo-header"><span class="passo-numero">2</span><h3 style="margin:0;">Checklist técnico — ${ESP_LABEL[obra.tipo]}</h3></div>
+        <div id="area-checklist"></div>
+      </div>
+
+      <!-- PASSO 3: FOTOS -->
+      <div class="card card-lg passo ${passo1ok?'ativo':''}" id="passo3">
+        <div class="passo-header"><span class="passo-numero">3</span><h3 style="margin:0;">Evidências fotográficas</h3></div>
+        <div id="area-fotos"></div>
+      </div>
+
+      <!-- PASSO 4: CHECKOUT -->
+      <div class="card card-lg passo ${passo1ok?'ativo':''}" id="passo4">
+        <div class="passo-header"><span class="passo-numero">4</span><h3 style="margin:0;">Check-out</h3></div>
+        <p class="texto-mudo">Disponível quando o check-in, o checklist completo e ao menos 1 foto de cada etapa (antes/durante/depois) estiverem prontos.</p>
+        <button class="btn btn-primario btn-bloco" ${podeCheckout?'':'disabled'} onclick="fazerCheckout()">✅ Concluir obra (check-out)</button>
+      </div>
+
+      <div style="text-align:center;">
+        <button class="btn btn-perigo btn-sm" onclick="document.getElementById('modal-abandono').classList.add('aberto')">Abandonar obra</button>
+      </div>
+    </div>
+  `;
+
+  renderCheckin();
+  renderChecklist();
+  renderFotos();
+}
+
+/* ---------------- PASSO 1: CHECK-IN ---------------- */
+function renderCheckin(){
+  const area = document.getElementById('area-checkin');
+  if(obra.checkin){
+    const distKm = distanciaKm(obra.lat, obra.lng, obra.checkin.lat, obra.checkin.lng);
+    area.innerHTML = `
+      <div class="geo-box">
+        <span class="badge badge-sucesso">✔ check-in feito</span>
+        <div class="geo-coords">lat: ${obra.checkin.lat.toFixed(5)} · lng: ${obra.checkin.lng.toFixed(5)}${obra.checkin.enderecoManual ? ' (endereço informado manualmente)':''}</div>
+        <div class="geo-map-fake"><div class="pin"></div></div>
+        <div class="flex-between flex-wrap gap-8">
+          <span class="texto-mudo">Registrado em ${fmtDataHora(obra.checkin.dataHora)} · distância aprox. da obra: <strong>${distKm!==null?distKm.toFixed(2)+' km':'—'}</strong></span>
+          <div class="flex gap-8">
+            <a class="link-mapa" target="_blank" href="${linkGoogleMaps(obra.checkin.lat,obra.checkin.lng,obra.endereco)}">🗺️ Maps</a>
+            <a class="link-mapa" target="_blank" href="${linkWaze(obra.checkin.lat,obra.checkin.lng,obra.endereco)}">🧭 Waze</a>
+          </div>
+        </div>
+      </div>`;
+    return;
+  }
+  area.innerHTML = `
+    <p class="texto-mudo">Ao clicar, seu navegador pode pedir <strong>permissão de localização</strong>. Usamos sua posição apenas para registrar este check-in — sem rastreamento contínuo em segundo plano.</p>
+    <button class="btn btn-primario" id="btn-geo">📍 Fazer check-in com minha localização</button>
+    <div id="fallback-geo" style="margin-top:16px;display:none;">
+      <div class="caixa-alerta" style="margin-bottom:12px;">Não foi possível obter sua localização automaticamente. Preencha manualmente como alternativa:</div>
+      <div class="campo"><label>Endereço/observação do local (manual)</label><input type="text" id="endereco-manual" placeholder="Ex.: Cheguei na obra, em frente ao nº indicado"></div>
+      <button class="btn btn-secundario" id="btn-geo-manual">Confirmar check-in manual</button>
+    </div>`;
+  document.getElementById('btn-geo').addEventListener('click', () => {
+    const btn = document.getElementById('btn-geo');
+    btn.disabled = true; btn.textContent = 'Obtendo localização...';
+    if(!navigator.geolocation){
+      document.getElementById('fallback-geo').style.display = 'block';
+      btn.disabled=false; btn.textContent = '📍 Fazer check-in com minha localização';
+      return;
+    }
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        obra.checkin = { lat: pos.coords.latitude, lng: pos.coords.longitude, dataHora: agoraISO(), enderecoManual: null };
+        obra.status = 'em_execucao';
+        salvarObra(obra);
+        toast('Check-in registrado com sucesso!');
+        render();
+      },
+      () => {
+        document.getElementById('fallback-geo').style.display = 'block';
+        btn.disabled=false; btn.textContent = '📍 Fazer check-in com minha localização';
+      },
+      { enableHighAccuracy:true, timeout:8000 }
+    );
+  });
+  document.getElementById('btn-geo-manual').addEventListener('click', () => {
+    const txt = document.getElementById('endereco-manual').value || 'Endereço demonstrativo informado manualmente';
+    obra.checkin = { lat: obra.lat, lng: obra.lng, dataHora: agoraISO(), enderecoManual: txt };
+    obra.status = 'em_execucao';
+    salvarObra(obra);
+    toast('Check-in manual registrado.');
+    render();
+  });
+}
+
+/* ---------------- PASSO 2: CHECKLIST ---------------- */
+function renderChecklist(){
+  const area = document.getElementById('area-checklist');
+  const itens = CHECKLISTS[obra.tipo] || [];
+  area.innerHTML = itens.map((item,i) => `
+    <label class="checklist-item ${obra.checklist[i]?'marcado':''}">
+      <input type="checkbox" ${obra.checklist[i]?'checked':''} onchange="toggleChecklist(${i})">
+      <span class="txt"><strong>${item}</strong></span>
+    </label>`).join('');
+}
+function toggleChecklist(i){
+  obra.checklist[i] = !obra.checklist[i];
+  salvarObra(obra);
+  render();
+}
+
+/* ---------------- PASSO 3: FOTOS ---------------- */
+const FASE_LABEL = { antes:'📷 Antes', durante:'🔧 Durante', depois:'✨ Depois' };
+function renderFotos(){
+  const area = document.getElementById('area-fotos');
+  area.innerHTML = ['antes','durante','depois'].map(fase => `
+    <div class="foto-grupo">
+      <h4>${FASE_LABEL[fase]} ${obra.fotos[fase].length ? `<span class="badge badge-sucesso">${obra.fotos[fase].length} foto(s)</span>` : `<span class="badge badge-aviso">obrigatório</span>`}</h4>
+      <div class="foto-grid">
+        ${obra.fotos[fase].map((f,idx) => `
+          <div class="foto-thumb">
+            <img src="${f.url}">
+            <button class="rm" onclick="removerFoto('${fase}',${idx})">×</button>
+            <div class="carimbo">${fmtDataHora(f.dataHora)}</div>
+          </div>`).join('')}
+        <label class="foto-add">
+          <input type="file" accept="image/*" capture="environment" onchange="adicionarFoto(event,'${fase}')">
+          <span style="font-size:20px;">＋</span>Adicionar
+        </label>
+      </div>
+    </div>`).join('');
+}
+function adicionarFoto(ev, fase){
+  const file = ev.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    obra.fotos[fase].push({ url: reader.result, dataHora: agoraISO() });
+    salvarObra(obra);
+    toast('Foto adicionada (simulação de upload local).');
+    render();
+  };
+  reader.readAsDataURL(file);
+}
+function removerFoto(fase, idx){
+  obra.fotos[fase].splice(idx,1);
+  salvarObra(obra);
+  render();
+}
+
+/* ---------------- PASSO 4: CHECKOUT ---------------- */
+function fazerCheckout(){
+  obra.checkout = { dataHora: agoraISO() };
+  obra.status = 'concluida';
+  obra.pagamento.status = 'aguardando_avaliacao';
+  salvarObra(obra);
+  toast('Check-out realizado! Obra concluída.');
+  render();
+}
+
+function copiarLink(txt){
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(()=>toast('Link copiado!')).catch(()=>toast('Não foi possível copiar automaticamente. Copie manualmente.','erro'));
+  } else {
+    toast('Copie o link manualmente — clipboard indisponível neste navegador.','erro');
+  }
+}
+
+function confirmarAbandono(){
+  const i = getInstalador(inst.id);
+  i.penalidades = (i.penalidades||0) + 1;
+  i.score = Math.max(0, i.score - 12);
+  i.faixa = faixaPorScore(i.score);
+  salvarInstalador(i);
+  obra.status = 'aberta';
+  obra.instaladorId = null;
+  obra.checkin = null;
+  salvarObra(obra);
+  document.getElementById('modal-abandono').classList.remove('aberto');
+  toast('Obra abandonada. Penalidade aplicada ao seu score.', 'erro');
+  setTimeout(()=> location.href='painel.html', 900);
+}
+
+render();
+</script>
+</body>
+</html>

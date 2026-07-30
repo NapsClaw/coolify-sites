@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perfil do instalador — OGS Decor (Preview)</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="../assets/logo-ogs-decor.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  .layout-perfil{display:grid;grid-template-columns:320px 1fr;gap:22px;align-items:start;}
+  @media(max-width:900px){.layout-perfil{grid-template-columns:1fr;}}
+  .cabecalho-inst{text-align:center;}
+  .cabecalho-inst .faixa-ring{margin:0 auto 12px;display:flex;}
+  .cabecalho-inst .avatar-ini{width:76px;height:76px;font-size:28px;}
+  .componente-score{display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;}
+  .obra-hist{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-bottom:1px solid var(--osso-200);font-size:13.5px;}
+</style>
+</head>
+<body>
+<div class="demo-banner">🧪 <b>AMBIENTE DE DEMONSTRAÇÃO</b> — dados pessoais e documentos fictícios, não reais.</div>
+<div class="app-shell">
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><img src="../assets/logo-ogs-decor.jpg" alt="OGS Decor"><div class="brand-text"><strong>OGS Decor</strong><span>Painel Admin · Preview</span></div></div>
+    <button class="hamburger">☰ Menu</button>
+    <nav class="nav-links">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="obras.html">Obras</a>
+      <a href="instaladores.html" class="ativo">Instaladores</a>
+      <a href="ranking.html">Ranking</a>
+      <a href="pagamentos.html">Pagamentos</a>
+      <a href="regras.html">Regras &amp; Aviso</a>
+    </nav>
+    <a href="../index.html" class="link-trocar only-desktop">↩ Trocar perfil</a>
+  </div>
+</div>
+<main class="main-content"><div class="container" id="conteudo">Carregando...</div></main>
+<footer class="rodape"><div class="container">Preview <b>Sparkz Agency</b> para OGS Decor · Ambiente demonstrativo.</div></footer>
+</div>
+
+<script src="../js/data.js"></script>
+<script src="../js/app.js"></script>
+<script>
+const id = new URLSearchParams(location.search).get('id');
+let inst = getInstalador(id);
+const cont = document.getElementById('conteudo');
+
+function render(){
+  inst = getInstalador(id);
+  if(!inst){ cont.innerHTML = '<div class="vazio"><div class="icone">🚫</div>Instalador não encontrado. <a href="instaladores.html">Voltar</a></div>'; return; }
+  const obras = getObras().filter(o=>o.instaladorId===inst.id);
+  const notaBase = (inst.avaliacaoMedia||0)/5*100;
+  const checklistBase = Math.max(0,100-inst.retrabalhos*18);
+  const pontualBase = Math.max(0,100-inst.penalidades*12);
+  const aceiteBase = Math.max(0,100-inst.penalidades*15);
+
+  cont.innerHTML = `
+    <div class="page-header">
+      <div><span class="kicker mono">${inst.id}</span><h1>${inst.nome}</h1><p>Cadastro em ${fmtData(inst.dataCadastro)} · ${ESP_LABEL[inst.especialidades[0]]||''}</p></div>
+      <a href="instaladores.html" class="btn btn-claro">← Voltar</a>
+    </div>
+
+    <div class="layout-perfil">
+      <div>
+        <div class="card card-lg cabecalho-inst" style="margin-bottom:18px;">
+          <span class="faixa-ring ${inst.faixa}"><span class="avatar-ini">${iniciais(inst.nome)}</span></span>
+          <h3 style="margin-bottom:6px;">${inst.nome}</h3>
+          ${badgeFaixa(inst.faixa)}
+          ${inst.status==='pendente'?'<div style="margin-top:8px;"><span class="badge badge-aviso">cadastro pendente</span></div>':''}
+          ${inst.status==='suspenso'?'<div style="margin-top:8px;"><span class="badge badge-alerta">suspenso</span></div>':''}
+          <div class="score-bar" style="margin:16px 0 4px;"><span style="width:${inst.score}%"></span></div>
+          <span class="mono texto-mudo">${inst.score} / 100 pontos</span>
+
+          <hr class="divisor">
+          <div style="text-align:left;">
+            <span class="texto-mudo">Telefone</span><p class="mono" style="margin:2px 0 10px;">${inst.telefone}</p>
+            <span class="texto-mudo">Chave PIX (demonstrativa)</span><p class="mono" style="margin:2px 0 10px;">${inst.pix}</p>
+            <span class="texto-mudo">Documento</span><p style="margin:2px 0 10px;">${inst.documento} <span class="badge badge-neutro">não armazenado no preview</span></p>
+            <span class="texto-mudo">Especialidades</span>
+            <div class="chips" style="margin-top:6px;">${inst.especialidades.map(e=>`<span class="tag-especialidade">${ESP_LABEL[e]}</span>`).join('')}</div>
+          </div>
+        </div>
+
+        <div class="card card-lg" id="acoes-admin"></div>
+      </div>
+
+      <div>
+        <div class="card card-lg" style="margin-bottom:18px;">
+          <div class="sec-titulo">🧮 Composição do score (transparente)</div>
+          <p class="texto-mudo" style="margin-bottom:14px;">Veja <a href="regras.html">as regras completas de reputação</a>. Pesos aplicados neste cálculo:</p>
+          <div class="componente-score"><span>Nota do cliente (peso 50%)</span><strong>${notaBase.toFixed(0)}/100</strong></div>
+          <div class="mini-bar"><span style="width:${notaBase}%"></span></div>
+          <div class="componente-score" style="margin-top:12px;"><span>Checklist completo (peso 20%)</span><strong>${checklistBase}/100</strong></div>
+          <div class="mini-bar"><span style="width:${checklistBase}%"></span></div>
+          <div class="componente-score" style="margin-top:12px;"><span>Pontualidade (peso 15%)</span><strong>${pontualBase}/100</strong></div>
+          <div class="mini-bar"><span style="width:${pontualBase}%"></span></div>
+          <div class="componente-score" style="margin-top:12px;"><span>Aceite/abandono (peso 10%)</span><strong>${aceiteBase}/100</strong></div>
+          <div class="mini-bar"><span style="width:${aceiteBase}%"></span></div>
+          <hr class="divisor">
+          <div class="flex-between texto-mudo" style="font-size:13px;">
+            <span>Penalidades registradas: <strong>${inst.penalidades}</strong></span>
+            <span>Retrabalhos: <strong>${inst.retrabalhos}</strong></span>
+          </div>
+        </div>
+
+        <div class="card card-lg" style="margin-bottom:18px;">
+          <div class="sec-titulo">📜 Histórico</div>
+          <p style="font-size:13.5px;">${inst.historico}</p>
+        </div>
+
+        <div class="card card-lg">
+          <div class="sec-titulo">🏗️ Obras (${obras.length})</div>
+          ${obras.length ? obras.map(o=>`
+            <div class="obra-hist">
+              <div><a href="obra-detalhe.html?id=${o.id}"><strong>${o.id}</strong></a><br><span class="texto-mudo">${o.titulo}</span></div>
+              <div style="text-align:right;">${badgeStatusObra(o.status)}<br><span class="mono texto-mudo">${fmtMoeda(o.valor)}</span></div>
+            </div>`).join('') : '<p class="texto-mudo">Nenhuma obra vinculada ainda.</p>'}
+        </div>
+      </div>
+    </div>
+  `;
+
+  const acoes = document.getElementById('acoes-admin');
+  let html = `<div class="sec-titulo">⚙️ Ações do admin</div>`;
+  if(inst.status==='pendente'){
+    html += `<div class="flex gap-8 flex-wrap"><button class="btn btn-primario" onclick="aprovar()">Aprovar cadastro</button><button class="btn btn-perigo" onclick="recusar()">Recusar cadastro</button></div>`;
+  } else if(inst.status==='aprovado'){
+    html += `<div class="flex gap-8 flex-wrap"><button class="btn btn-perigo btn-sm" onclick="suspender()">Suspender instalador</button></div>`;
+    if(inst.score < getConfig().limiteSuspensao){
+      html += `<div class="caixa-alerta" style="margin-top:12px;">Score abaixo do mínimo (${getConfig().limiteSuspensao} pts) — recomenda-se revisão manual antes de novas ofertas.</div>`;
+    }
+  } else if(inst.status==='suspenso'){
+    html += `<div class="flex gap-8 flex-wrap"><button class="btn btn-primario btn-sm" onclick="reativar()">Reativar instalador</button></div>`;
+  }
+  acoes.innerHTML = html;
+}
+
+function aprovar(){ inst.status='aprovado'; inst.score=inst.score||55; inst.faixa=faixaPorScore(inst.score); salvarInstalador(inst); toast('Cadastro aprovado.'); render(); }
+function recusar(){ const arr=getInstaladores().filter(i=>i.id!==inst.id); setInstaladores(arr); location.href='instaladores.html'; }
+function suspender(){ inst.status='suspenso'; salvarInstalador(inst); toast('Instalador suspenso para revisão.'); render(); }
+function reativar(){ inst.status='aprovado'; salvarInstalador(inst); toast('Instalador reativado.'); render(); }
+
+render();
+</script>
+</body>
+</html>

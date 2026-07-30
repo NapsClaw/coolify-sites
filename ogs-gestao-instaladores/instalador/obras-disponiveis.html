@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Obras disponíveis — Instalador OGS Decor (Preview)</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="../assets/logo-ogs-decor.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  .oferta-card{border-left:5px solid var(--verde-vivo);}
+  .oferta-card.em-breve{border-left-color:var(--osso-200);opacity:.85;}
+  .oferta-topo{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:flex-start;}
+  .oferta-contador{font-family:var(--font-mono);font-size:13px;background:var(--carvao);color:var(--verde-claro);padding:6px 12px;border-radius:99px;}
+</style>
+</head>
+<body>
+<div class="demo-banner">🧪 <b>AMBIENTE DE DEMONSTRAÇÃO</b> — as janelas de oferta avançam em tempo real durante esta demonstração.</div>
+<div class="app-shell">
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><img src="../assets/logo-ogs-decor.jpg" alt="OGS Decor"><div class="brand-text"><strong>OGS Decor</strong><span>Painel do Instalador · Preview</span></div></div>
+    <button class="hamburger">☰ Menu</button>
+    <nav class="nav-links">
+      <a href="painel.html">Painel</a>
+      <a href="obras-disponiveis.html" class="ativo">Obras disponíveis</a>
+      <a href="cadastro.html">Meu cadastro</a>
+    </nav>
+    <div class="topbar-user">
+      <span class="avatar-ini" id="topo-avatar">--</span>
+      <a href="../index.html" class="link-trocar">↩ Trocar perfil</a>
+    </div>
+  </div>
+</div>
+
+<main class="main-content">
+  <div class="container">
+    <div class="page-header">
+      <div><span class="kicker" id="kicker-faixa">Sua faixa</span><h1>Obras disponíveis</h1><p>Oferta escalonada por mérito: Ouro vê primeiro, depois Prata, depois Bronze — sempre respeitando sua especialidade.</p></div>
+      <a href="painel.html" class="btn btn-claro">← Painel</a>
+    </div>
+
+    <div id="agora"></div>
+    <div id="embreve" style="margin-top:26px;"></div>
+  </div>
+</main>
+<footer class="rodape"><div class="container">Preview <b>Sparkz Agency</b> para OGS Decor · Ambiente demonstrativo.</div></footer>
+</div>
+
+<script src="../js/data.js"></script>
+<script src="../js/app.js"></script>
+<script>
+const inst = getInstalador(getSessaoInstaladorId()) || getInstaladores()[0];
+document.getElementById('topo-avatar').textContent = iniciais(inst.nome);
+document.getElementById('topo-avatar').style.background = 'var(--verde-vivo)';
+document.getElementById('kicker-faixa').innerHTML = `${inst.nome} · ${badgeFaixa(inst.faixa)}`;
+
+function formataContagem(min){
+  min = Math.max(0, min);
+  const m = Math.floor(min);
+  const s = Math.floor((min-m)*60);
+  return String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+}
+
+function cardObra(o, disponivelAgora){
+  const cfg = getConfig();
+  let contadorTxt = '';
+  if(o.ofertaFaixaAtual==='ouro'){
+    const restam = cfg.janelaOuroMin - minutosDesde(o.ofertaInicioISO);
+    if(restam>0) contadorTxt = (inst.faixa==='ouro') ? `Exclusivo Ouro por mais ${formataContagem(restam)}` : `Abre para sua faixa em ${formataContagem(restam)}`;
+  } else if(o.ofertaFaixaAtual==='prata'){
+    const restam = cfg.janelaPrataMin - minutosDesde(o.ofertaInicioISO);
+    if(restam>0 && inst.faixa==='bronze') contadorTxt = `Abre para Bronze em ${formataContagem(restam)}`;
+  }
+  return `<div class="card oferta-card ${disponivelAgora?'':'em-breve'}" style="margin-bottom:14px;">
+    <div class="oferta-topo">
+      <div>
+        <span class="mono texto-mudo">${o.id}</span>
+        <h3 style="margin:2px 0 4px;font-size:19px;">${o.titulo}</h3>
+        <p style="margin:0;font-size:13px;">${o.endereco}</p>
+      </div>
+      ${contadorTxt ? `<span class="oferta-contador">⏱ ${contadorTxt}</span>` : ''}
+    </div>
+    <div class="flex gap-8 flex-wrap" style="margin:12px 0;">
+      <span class="tag-especialidade">${ESP_LABEL[o.tipo]}</span>
+      <span class="badge badge-neutro">${o.metragem} m²</span>
+      <span class="badge badge-neutro">Prazo ${fmtData(o.prazo)}</span>
+      <span class="badge badge-sucesso mono">${fmtMoeda(o.valor)}</span>
+    </div>
+    ${o.observacoes ? `<p class="texto-mudo" style="font-size:12.5px;">Obs.: ${o.observacoes}</p>` : ''}
+    ${disponivelAgora ? `
+      <div class="flex gap-8" style="margin-top:10px;">
+        <button class="btn btn-primario" onclick="aceitar('${o.id}')">Aceitar obra</button>
+        <button class="btn btn-claro" onclick="recusar('${o.id}')">Recusar</button>
+      </div>` : ''}
+  </div>`;
+}
+
+function render(){
+  if(inst.status !== 'aprovado'){
+    document.getElementById('agora').innerHTML = `<div class="vazio"><div class="icone">🔒</div>Seu cadastro precisa estar aprovado para ver obras disponíveis.</div>`;
+    document.getElementById('embreve').innerHTML='';
+    return;
+  }
+  const todas = getObras().filter(o => o.status.startsWith('ofertada') && inst.especialidades.includes(o.tipo) && !(o.recusadoPor||[]).includes(inst.id));
+  const agora = todas.filter(o => faixaElegivelParaObra(o).includes(inst.faixa));
+  const embreve = todas.filter(o => !faixaElegivelParaObra(o).includes(inst.faixa));
+
+  document.getElementById('agora').innerHTML = `<h3 style="font-size:15px;margin-bottom:12px;">✅ Disponíveis para você agora (${agora.length})</h3>` +
+    (agora.length ? agora.map(o=>cardObra(o,true)).join('') : `<div class="vazio"><div class="icone">🧰</div>Nenhuma obra disponível para sua faixa e especialidade no momento.</div>`);
+
+  document.getElementById('embreve').innerHTML = embreve.length ? `<h3 style="font-size:15px;margin-bottom:12px;">🔜 Em breve para sua faixa (${embreve.length})</h3>` + embreve.map(o=>cardObra(o,false)).join('') : '';
+}
+
+function aceitar(id){
+  const o = getObra(id);
+  o.status = 'aceita';
+  o.instaladorId = inst.id;
+  o.ofertaFaixaAtual = null;
+  salvarObra(o);
+  toast('Obra aceita! Vá até o endereço e faça o check-in ao chegar.');
+  setTimeout(()=> location.href = 'obra-execucao.html?id='+id, 700);
+}
+function recusar(id){
+  const o = getObra(id);
+  o.recusadoPor = o.recusadoPor || [];
+  o.recusadoPor.push(inst.id);
+  salvarObra(o);
+  toast('Obra recusada — sem penalidade por recusar antes de aceitar.');
+  render();
+}
+
+render();
+setInterval(render, 1000);
+</script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Regras de reputação — OGS Decor (Preview)</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="../assets/logo-ogs-decor.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  .peso-row{display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid var(--osso-200);}
+  .peso-row:last-child{border-bottom:none;}
+  .peso-row .num{font-family:var(--font-display);font-size:26px;color:var(--verde-mata);width:64px;text-align:right;}
+  .faixas-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:20px 0 28px;}
+  @media(max-width:760px){.faixas-grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="demo-banner">🧪 <b>AMBIENTE DE DEMONSTRAÇÃO</b> — parâmetros abaixo são valores de referência para validação do fluxo.</div>
+<div class="app-shell">
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><img src="../assets/logo-ogs-decor.jpg" alt="OGS Decor"><div class="brand-text"><strong>OGS Decor</strong><span>Painel Admin · Preview</span></div></div>
+    <button class="hamburger">☰ Menu</button>
+    <nav class="nav-links">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="obras.html">Obras</a>
+      <a href="instaladores.html">Instaladores</a>
+      <a href="ranking.html">Ranking</a>
+      <a href="pagamentos.html">Pagamentos</a>
+      <a href="regras.html" class="ativo">Regras &amp; Aviso</a>
+    </nav>
+    <a href="../index.html" class="link-trocar only-desktop">↩ Trocar perfil</a>
+  </div>
+</div>
+
+<main class="main-content">
+  <div class="container" style="max-width:920px;">
+    <div class="page-header">
+      <div><span class="kicker">Transparência</span><h1>Regras de reputação e pagamento</h1><p>Como o score é formado, como as obras são distribuídas e como o pagamento é liberado — visível para admin e instalador.</p></div>
+    </div>
+
+    <div class="card card-lg" style="margin-bottom:24px;">
+      <h3>🧮 Como o score é calculado</h3>
+      <p class="texto-mudo">O score vai de 0 a 100 e é recalculado a cada obra concluída.</p>
+      <div class="peso-row"><span class="num">50%</span><div><strong>Nota do cliente</strong><br><span class="texto-mudo">Média dos 4 critérios de avaliação (qualidade, pontualidade, limpeza, atendimento).</span></div></div>
+      <div class="peso-row"><span class="num">20%</span><div><strong>Checklist completo</strong><br><span class="texto-mudo">Itens técnicos preenchidos corretamente, sem pendências ao final da obra.</span></div></div>
+      <div class="peso-row"><span class="num">15%</span><div><strong>Pontualidade</strong><br><span class="texto-mudo">Check-in dentro do prazo combinado e entrega dentro do prazo da obra.</span></div></div>
+      <div class="peso-row"><span class="num">10%</span><div><strong>Aceite/abandono</strong><br><span class="texto-mudo">Bônus por aceite dentro da janela; penalidade por aceitar e depois abandonar a obra.</span></div></div>
+      <div class="peso-row"><span class="num">−</span><div><strong>Retrabalho</strong><br><span class="texto-mudo">Cada retrabalho solicitado pelo admin reduz o score adicionalmente (penalidade direta).</span></div></div>
+    </div>
+
+    <h3 style="margin-bottom:4px;">🏅 Faixas e o que elas garantem</h3>
+    <p class="texto-mudo">A faixa determina a prioridade e o volume de obras oferecidas — não é um cargo fixo, é recalculada continuamente.</p>
+    <div class="faixas-grid">
+      <div class="faixa-card bronze"><h4 style="color:#fff;">🥉 Bronze</h4><p style="color:rgba(255,255,255,.9);font-size:13px;">0 a 59 pts. Faixa inicial de todo instalador aprovado. Recebe obras após Ouro e Prata recusarem ou a janela expirar.</p></div>
+      <div class="faixa-card prata"><h4 style="color:#fff;">🥈 Prata</h4><p style="color:rgba(255,255,255,.9);font-size:13px;">60 a 84 pts. Recebe ofertas na 2ª janela, antes de Bronze. Elegível a obras de maior valor.</p></div>
+      <div class="faixa-card ouro"><h4 style="color:#fff;">🏆 Ouro</h4><p style="color:rgba(255,255,255,.9);font-size:13px;">85 a 100 pts. Prioridade máxima: vê a oferta primeiro, por uma janela exclusiva configurável.</p></div>
+    </div>
+
+    <div class="card card-lg" style="margin-bottom:24px;">
+      <h3>⏱️ Oferta escalonada por mérito</h3>
+      <p>Ao publicar uma obra, o admin define uma janela exclusiva para Ouro (padrão 45 min) e depois para Prata (padrão 30 min). Encerradas as janelas, a obra fica visível para a próxima faixa, sempre respeitando a especialidade exigida.</p>
+      <p class="texto-mudo">Instalador que aceita e depois abandona a obra recebe penalidade — reduz o score e pode gerar suspensão. Recusar antes de aceitar não penaliza.</p>
+    </div>
+
+    <div class="card card-lg" style="margin-bottom:24px;">
+      <h3>💸 Regra de pagamento (Opção B — adotada no MVP)</h3>
+      <p>Obra entregue e aprovada recebe <strong>100% do valor de mão de obra combinado</strong>. A nota do cliente influencia prioridade e bônus de obras futuras — <strong>nunca reduz retroativamente</strong> o valor já fechado.</p>
+      <p>Serviço comprovadamente malfeito, identificado pelo checklist incompleto ou pelas fotos de evidência, exige retrabalho <strong>antes</strong> da liberação do pagamento. A liberação em si é sempre uma baixa manual do admin — PIX/gateway automático está fora deste MVP.</p>
+    </div>
+
+    <div class="card card-lg" style="margin-bottom:24px;">
+      <h3>🚨 Suspensão automática</h3>
+      <p>Score abaixo de <strong id="limite-susp">40 pontos</strong> sinaliza o instalador para revisão manual do admin — a suspensão em si é sempre confirmada por uma pessoa, nunca automática de fato, evitando decisões injustas por dados incompletos.</p>
+    </div>
+
+    <div class="aviso-legal">
+      <span>⚖️</span>
+      <div><strong>Aviso interno — não exibir ao instalador/cliente na versão real sem revisão jurídica</strong>Regras sobre autonomia do prestador, recusa de obras, formação de preço e vínculo empregatício devem ser validadas com advogado(a) trabalhista antes de operar o sistema real com prestadores terceirizados.</div>
+    </div>
+  </div>
+</main>
+<footer class="rodape"><div class="container">Preview <b>Sparkz Agency</b> para OGS Decor · Ambiente demonstrativo.</div></footer>
+</div>
+
+<script src="../js/data.js"></script>
+<script src="../js/app.js"></script>
+<script>
+const cfg = getConfig();
+document.getElementById('limite-susp').textContent = cfg.limiteSuspensao + ' pontos';
+</script>
+</body>
+</html>

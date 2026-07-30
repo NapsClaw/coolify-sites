@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Detalhes da obra — OGS Decor (Preview)</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="../assets/logo-ogs-decor.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  .layout-obra{display:grid;grid-template-columns:1fr 340px;gap:22px;align-items:start;}
+  @media(max-width:980px){.layout-obra{grid-template-columns:1fr;}}
+  .foto-galeria{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px;}
+  .foto-galeria img{border-radius:8px;border:1px solid var(--linha);aspect-ratio:1;object-fit:cover;width:100%;}
+  .check-ro{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--osso-200);font-size:13.5px;}
+  .check-ro:last-child{border-bottom:none;}
+  .check-ro .ok{color:var(--sucesso);font-weight:900;}
+  .check-ro .no{color:var(--alerta);font-weight:900;}
+  .sec-titulo{font-size:15px;display:flex;align-items:center;gap:8px;margin-bottom:12px;}
+</style>
+</head>
+<body>
+<div class="demo-banner">🧪 <b>AMBIENTE DE DEMONSTRAÇÃO</b> — evidências, avaliações e pagamentos fictícios.</div>
+<div class="app-shell">
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><img src="../assets/logo-ogs-decor.jpg" alt="OGS Decor"><div class="brand-text"><strong>OGS Decor</strong><span>Painel Admin · Preview</span></div></div>
+    <button class="hamburger">☰ Menu</button>
+    <nav class="nav-links">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="obras.html" class="ativo">Obras</a>
+      <a href="instaladores.html">Instaladores</a>
+      <a href="ranking.html">Ranking</a>
+      <a href="pagamentos.html">Pagamentos</a>
+      <a href="regras.html">Regras &amp; Aviso</a>
+    </nav>
+    <a href="../index.html" class="link-trocar only-desktop">↩ Trocar perfil</a>
+  </div>
+</div>
+
+<main class="main-content">
+  <div class="container" id="conteudo">Carregando obra...</div>
+</main>
+<footer class="rodape"><div class="container">Preview <b>Sparkz Agency</b> para OGS Decor · Ambiente demonstrativo.</div></footer>
+</div>
+
+<div class="modal-fundo" id="modal-contestar">
+  <div class="modal-caixa">
+    <h3>Contestar avaliação</h3>
+    <p class="texto-mudo">A contestação fica registrada para fins demonstrativos — a avaliação original não é apagada.</p>
+    <div class="campo"><label>Motivo da contestação</label><textarea id="motivo-contestacao" placeholder="Ex.: cliente avaliou item que não fazia parte do escopo combinado."></textarea></div>
+    <div class="flex gap-8"><button class="btn btn-perigo" id="confirmar-contestacao">Confirmar contestação</button><button class="btn btn-claro" onclick="fecharModal()">Cancelar</button></div>
+  </div>
+</div>
+
+<script src="../js/data.js"></script>
+<script src="../js/app.js"></script>
+<script>
+const params = new URLSearchParams(location.search);
+const obraId = params.get('id');
+let obra = getObra(obraId);
+const cont = document.getElementById('conteudo');
+
+function fecharModal(){ document.getElementById('modal-contestar').classList.remove('aberto'); }
+
+function statusTimeline(o){
+  const ordem = ['aberta','ofertada','aceita','em_execucao','concluida','avaliada','paga'];
+  let atualIdx;
+  if(o.status==='aberta') atualIdx=0;
+  else if(o.status.startsWith('ofertada')) atualIdx=1;
+  else if(o.status==='aceita') atualIdx=2;
+  else if(o.status==='em_execucao') atualIdx=3;
+  else if(o.status==='concluida') atualIdx=4;
+  else if(['avaliada','retrabalho'].includes(o.status)) atualIdx=5;
+  else if(o.status==='paga') atualIdx=6;
+  else atualIdx=3;
+  const labels = ['Obra criada','Oferta publicada','Aceita pelo instalador','Em execução (check-in)','Concluída (check-out)','Avaliada pelo cliente','Pagamento liberado'];
+  return labels.map((l,i)=>`<div class="tl-item ${i<atualIdx?'feito':i===atualIdx?'atual':''}"><h4>${l}</h4><span>${i<=atualIdx?'concluído':'pendente'}</span></div>`).join('');
+}
+
+function render(){
+  obra = getObra(obraId);
+  if(!obra){ cont.innerHTML = '<div class="vazio"><div class="icone">🚫</div>Obra não encontrada. <a href="obras.html">Voltar para obras</a></div>'; return; }
+  const insts = getInstaladores();
+  const inst = insts.find(i=>i.id===obra.instaladorId);
+  const checklistItens = CHECKLISTS[obra.tipo] || [];
+  const distKm = obra.checkin ? distanciaKm(obra.lat, obra.lng, obra.checkin.lat, obra.checkin.lng) : null;
+
+  let ofertaBox = '';
+  if(obra.status.startsWith('ofertada')){
+    const elegiveis = faixaElegivelParaObra(obra);
+    ofertaBox = `<div class="caixa-info" style="margin-bottom:16px;">
+      Oferta enviada primeiro para faixa <strong>${obra.ofertaFaixaAtual.toUpperCase()}</strong> às ${fmtDataHora(obra.ofertaInicioISO)}.
+      Elegíveis agora: ${elegiveis.map(f=>f.toUpperCase()).join(', ')}. Nenhum instalador aceitou ainda.
+    </div>`;
+  }
+
+  let avalBox = '<p class="texto-mudo">Ainda não avaliada pelo cliente.</p>';
+  if(obra.avaliacao){
+    const a = obra.avaliacao;
+    const media = ((a.qualidade+a.pontualidade+a.limpeza+a.atendimento)/4).toFixed(1);
+    avalBox = `
+      <div class="grid grid-2" style="margin-bottom:12px;">
+        <div><span class="texto-mudo">Qualidade do acabamento</span><div class="mini-bar"><span style="width:${a.qualidade/5*100}%"></span></div></div>
+        <div><span class="texto-mudo">Pontualidade</span><div class="mini-bar"><span style="width:${a.pontualidade/5*100}%"></span></div></div>
+        <div><span class="texto-mudo">Limpeza</span><div class="mini-bar"><span style="width:${a.limpeza/5*100}%"></span></div></div>
+        <div><span class="texto-mudo">Postura/atendimento</span><div class="mini-bar"><span style="width:${a.atendimento/5*100}%"></span></div></div>
+      </div>
+      <p style="font-size:13.5px;"><strong>Nota média: ${media}/5</strong> ${a.automatica?'<span class="badge badge-neutro">gerada automaticamente (sem resposta em 72h)</span>':''} ${a.contestada?'<span class="badge badge-alerta">contestada pelo admin</span>':''}</p>
+      ${a.comentario ? `<p style="font-size:13.5px;font-style:italic;">"${a.comentario}"</p>` : ''}
+      <span class="texto-mudo">Recebida em ${fmtDataHora(a.dataHora)}</span>
+      ${!a.contestada ? `<div style="margin-top:10px;"><button class="btn btn-sm btn-perigo" onclick="abrirContestacao()">Contestar avaliação</button></div>` : `<div class="caixa-alerta" style="margin-top:10px;">Motivo da contestação: ${a.motivoContestacao||'—'}</div>`}
+    `;
+  }
+
+  let pagBox = '';
+  const st = obra.pagamento.status;
+  if(st === 'nao_aplicavel'){
+    pagBox = `<p class="texto-mudo">Pagamento ainda não se aplica — obra não concluída.</p>`;
+  } else if(st === 'aguardando_avaliacao'){
+    pagBox = `<div class="caixa-info">Obra concluída. Aguardando avaliação do cliente (prazo demonstrativo de 72h) — sem resposta, gera nota neutra automática e <strong>não trava o pagamento</strong>.</div>`;
+  } else if(st === 'bloqueado_retrabalho'){
+    pagBox = `<div class="caixa-alerta">Retrabalho solicitado pelo checklist/fotos. Pagamento bloqueado até a correção ser validada.</div>
+      <button class="btn btn-sm btn-secundario" style="margin-top:10px;" onclick="marcarRetrabalhoConcluido()">Marcar retrabalho como corrigido</button>`;
+  } else if(st === 'pendente_liberacao'){
+    pagBox = `<div class="caixa-sucesso">Obra aprovada. Valor combinado: <strong>${fmtMoeda(obra.valor)}</strong> (100% — a nota do cliente não reduz o valor já combinado).</div>
+      <button class="btn btn-primario btn-bloco" style="margin-top:10px;" onclick="liberarPagamento()">💸 Liberar pagamento manualmente</button>
+      <span class="hint">PIX/gateway automático está fora do MVP — esta é uma baixa manual do admin.</span>`;
+  } else if(st === 'liberado'){
+    pagBox = `<div class="caixa-sucesso">✅ Pagamento de ${fmtMoeda(obra.valor)} liberado manualmente em ${fmtDataHora(obra.pagamento.dataLiberacaoISO)}.</div>`;
+  }
+
+  cont.innerHTML = `
+    <div class="page-header">
+      <div>
+        <span class="kicker mono">${obra.id}</span>
+        <h1>${obra.titulo}</h1>
+        <p>${obra.endereco}</p>
+        <div class="flex gap-8" style="margin-top:6px;">${badgeStatusObra(obra.status)}<span class="tag-especialidade">${ESP_LABEL[obra.tipo]}</span></div>
+      </div>
+      <a href="obras.html" class="btn btn-claro">← Voltar</a>
+    </div>
+
+    <div class="layout-obra">
+      <div>
+        ${ofertaBox}
+        <div class="card card-lg" style="margin-bottom:18px;">
+          <div class="sec-titulo">📋 Dados da obra</div>
+          <div class="grid grid-3">
+            <div><span class="texto-mudo">Metragem</span><br><strong>${obra.metragem} m²</strong></div>
+            <div><span class="texto-mudo">Valor da mão de obra</span><br><strong>${fmtMoeda(obra.valor)}</strong></div>
+            <div><span class="texto-mudo">Prazo</span><br><strong>${fmtData(obra.prazo)}</strong></div>
+          </div>
+          ${obra.observacoes ? `<hr class="divisor"><span class="texto-mudo">Observações</span><p style="margin:4px 0 0;">${obra.observacoes}</p>` : ''}
+        </div>
+
+        <div class="card card-lg" style="margin-bottom:18px;">
+          <div class="sec-titulo">🧭 Check-in / Check-out geolocalizado</div>
+          ${obra.checkin ? `
+            <div class="grid grid-2">
+              <div>
+                <span class="texto-mudo">Check-in registrado</span>
+                <p class="mono" style="font-size:13px;margin:4px 0;">${obra.checkin.lat.toFixed(5)}, ${obra.checkin.lng.toFixed(5)}</p>
+                <span class="texto-mudo">${fmtDataHora(obra.checkin.dataHora)}</span>
+              </div>
+              <div>
+                <span class="texto-mudo">Distância aproximada até a obra</span>
+                <p style="margin:4px 0;"><strong>${distKm!==null ? distKm.toFixed(2)+' km' : 'não calculável no preview'}</strong></p>
+                <div class="flex gap-8">
+                  <a class="link-mapa" target="_blank" href="${linkGoogleMaps(obra.checkin.lat,obra.checkin.lng,obra.endereco)}">🗺️ Google Maps</a>
+                  <a class="link-mapa" target="_blank" href="${linkWaze(obra.checkin.lat,obra.checkin.lng,obra.endereco)}">🧭 Waze</a>
+                </div>
+              </div>
+            </div>
+            ${obra.checkout ? `<hr class="divisor"><span class="texto-mudo">Check-out em</span> <strong>${fmtDataHora(obra.checkout.dataHora)}</strong>` : `<hr class="divisor"><span class="badge badge-info">check-out ainda não realizado</span>`}
+          ` : `<p class="texto-mudo">Nenhum check-in registrado até o momento.</p>`}
+        </div>
+
+        <div class="card card-lg" style="margin-bottom:18px;">
+          <div class="sec-titulo">✅ Checklist técnico (${ESP_LABEL[obra.tipo]})</div>
+          ${checklistItens.map((item,i) => `<div class="check-ro"><span class="${obra.checklist[i] ? 'ok':'no'}">${obra.checklist[i] ? '✔':'✘'}</span> ${item}</div>`).join('')}
+        </div>
+
+        <div class="card card-lg" style="margin-bottom:18px;">
+          <div class="sec-titulo">📸 Evidências fotográficas</div>
+          ${['antes','durante','depois'].map(fase => `
+            <div style="margin-bottom:14px;">
+              <span class="texto-mudo" style="text-transform:capitalize;font-weight:700;">${fase}</span>
+              ${obra.fotos[fase].length ? `<div class="foto-galeria" style="margin-top:8px;">${obra.fotos[fase].map(f=>`<img src="${f.url}" title="${fmtDataHora(f.dataHora)}">`).join('')}</div>` : `<p class="texto-mudo" style="margin:4px 0;">Nenhuma foto enviada.</p>`}
+            </div>`).join('')}
+        </div>
+
+        <div class="card card-lg">
+          <div class="sec-titulo">⭐ Avaliação do cliente</div>
+          ${avalBox}
+        </div>
+      </div>
+
+      <div>
+        <div class="card card-lg" style="margin-bottom:18px;">
+          <div class="sec-titulo">👷 Instalador responsável</div>
+          ${inst ? `
+            <a href="instalador-perfil.html?id=${inst.id}" class="flex gap-12" style="align-items:center;">
+              <span class="faixa-ring ${inst.faixa}"><span class="avatar-ini" style="background:var(--verde-mata);">${iniciais(inst.nome)}</span></span>
+              <div><strong>${inst.nome}</strong><br>${badgeFaixa(inst.faixa)}</div>
+            </a>
+            <hr class="divisor">
+            <span class="texto-mudo">Telefone</span><p class="mono" style="margin:2px 0 10px;">${inst.telefone}</p>
+            <span class="texto-mudo">Score atual</span><p style="margin:2px 0 0;"><strong>${inst.score} pts</strong></p>
+          ` : `<p class="texto-mudo">Nenhum instalador aceitou esta obra ainda.</p>`}
+        </div>
+
+        <div class="card card-lg" style="margin-bottom:18px;">
+          <div class="sec-titulo">🕒 Linha do tempo</div>
+          <div class="timeline">${statusTimeline(obra)}</div>
+        </div>
+
+        <div class="card card-lg">
+          <div class="sec-titulo">💸 Pagamento</div>
+          ${pagBox}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function abrirContestacao(){ document.getElementById('modal-contestar').classList.add('aberto'); }
+document.getElementById('confirmar-contestacao').addEventListener('click', () => {
+  const motivo = document.getElementById('motivo-contestacao').value || 'Motivo não informado.';
+  obra.avaliacao.contestada = true;
+  obra.avaliacao.motivoContestacao = motivo;
+  salvarObra(obra);
+  fecharModal();
+  toast('Avaliação contestada e registrada para revisão.');
+  render();
+});
+
+function marcarRetrabalhoConcluido(){
+  obra.status = 'avaliada';
+  obra.pagamento.status = 'pendente_liberacao';
+  salvarObra(obra);
+  toast('Retrabalho marcado como corrigido. Pagamento liberado para análise.');
+  render();
+}
+
+function liberarPagamento(){
+  obra.pagamento.status = 'liberado';
+  obra.pagamento.dataLiberacaoISO = agoraISO();
+  obra.status = 'paga';
+  salvarObra(obra);
+  // soma obra concluída ao histórico do instalador
+  const inst = getInstalador(obra.instaladorId);
+  if(inst){ inst.obrasConcluidas = (inst.obrasConcluidas||0) + 1; salvarInstalador(inst); }
+  toast('Pagamento liberado manualmente — 100% do valor combinado.');
+  render();
+}
+
+render();
+</script>
+</body>
+</html>

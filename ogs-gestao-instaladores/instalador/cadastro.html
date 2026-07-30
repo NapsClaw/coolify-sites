@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meu cadastro — Instalador OGS Decor (Preview)</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="../assets/logo-ogs-decor.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+<div class="demo-banner">🧪 <b>AMBIENTE DE DEMONSTRAÇÃO</b> — não envie CPF, PIX ou documentos reais. Use apenas dados fictícios.</div>
+<div class="app-shell">
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><img src="../assets/logo-ogs-decor.jpg" alt="OGS Decor"><div class="brand-text"><strong>OGS Decor</strong><span>Painel do Instalador · Preview</span></div></div>
+    <button class="hamburger">☰ Menu</button>
+    <nav class="nav-links">
+      <a href="painel.html">Painel</a>
+      <a href="obras-disponiveis.html">Obras disponíveis</a>
+      <a href="cadastro.html" class="ativo">Meu cadastro</a>
+    </nav>
+    <a href="../index.html" class="link-trocar only-desktop">↩ Trocar perfil</a>
+  </div>
+</div>
+
+<main class="main-content">
+  <div class="container" style="max-width:760px;">
+    <div class="page-header">
+      <div><span class="kicker">Onboarding</span><h1>Novo cadastro de instalador</h1><p>Preencha os dados para entrar na fila de aprovação manual do admin. Você inicia na faixa Bronze.</p></div>
+    </div>
+
+    <form class="card card-lg" id="form-cadastro">
+      <div class="form-row">
+        <div class="campo"><label>Nome completo</label><input type="text" id="nome" placeholder="Ex.: José da Silva (fictício)" required></div>
+        <div class="campo"><label>Telefone</label><input type="tel" id="telefone" placeholder="(31) 90000-0000" required></div>
+      </div>
+      <div class="form-row">
+        <div class="campo"><label>Documento (demonstrativo — não real)</label><input type="text" id="documento" placeholder="Ex.: CPF demonstrativo" required></div>
+        <div class="campo"><label>Chave PIX (demonstrativa — não real)</label><input type="text" id="pix" placeholder="chave-fake@pixdemo.com" required></div>
+      </div>
+      <div class="campo">
+        <label>Especialidades</label>
+        <div class="chips" id="chips-esp"></div>
+        <span class="hint">Selecione ao menos uma. Você só receberá obras compatíveis.</span>
+      </div>
+      <div class="caixa-info" style="margin-bottom:18px;">Após o envio, seu cadastro fica com status <strong>pendente</strong> até aprovação manual do admin — o preview não coleta ou armazena documentos reais.</div>
+      <button type="submit" class="btn btn-primario btn-bloco">Enviar cadastro para aprovação</button>
+    </form>
+  </div>
+</main>
+<footer class="rodape"><div class="container">Preview <b>Sparkz Agency</b> para OGS Decor · Ambiente demonstrativo.</div></footer>
+</div>
+
+<script src="../js/data.js"></script>
+<script src="../js/app.js"></script>
+<script>
+const chipsWrap = document.getElementById('chips-esp');
+const selecionadas = new Set();
+ESPECIALIDADES.forEach(e => {
+  const c = document.createElement('button');
+  c.type='button'; c.className='chip-toggle'; c.textContent = e.label;
+  c.addEventListener('click', () => {
+    if(selecionadas.has(e.id)){ selecionadas.delete(e.id); c.classList.remove('selecionado'); }
+    else { selecionadas.add(e.id); c.classList.add('selecionado'); }
+  });
+  chipsWrap.appendChild(c);
+});
+
+document.getElementById('form-cadastro').addEventListener('submit', (ev) => {
+  ev.preventDefault();
+  if(selecionadas.size===0){ toast('Selecione ao menos uma especialidade.', 'erro'); return; }
+  const novo = {
+    id: ogsUid('INS'), nome: document.getElementById('nome').value,
+    telefone: document.getElementById('telefone').value,
+    pix: document.getElementById('pix').value,
+    documento: document.getElementById('documento').value,
+    especialidades: [...selecionadas], faixa: 'bronze', score: 0, status: 'pendente',
+    obrasConcluidas: 0, avaliacaoMedia: 0, penalidades: 0, retrabalhos: 0,
+    dataCadastro: '2026-07-30', historico: 'Cadastro recebido pelo formulário de onboarding — aguardando aprovação manual do admin.',
+  };
+  salvarInstalador(novo);
+  setSessaoInstaladorId(novo.id);
+  toast('Cadastro enviado! Aguardando aprovação do admin.');
+  setTimeout(()=> location.href='painel.html', 800);
+});
+</script>
+</body>
+</html>

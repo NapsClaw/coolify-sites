@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Obras — OGS Decor (Preview)</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="../assets/logo-ogs-decor.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<style>
+  .filtros{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px;}
+  .filtros select, .filtros input{width:auto;min-width:160px;}
+  .obra-linha td{font-size:13.5px;}
+  .obra-titulo{font-weight:700;display:block;}
+  .obra-sub{font-size:11.5px;color:var(--grafite-claro);}
+</style>
+</head>
+<body>
+<div class="demo-banner">🧪 <b>AMBIENTE DE DEMONSTRAÇÃO</b> — dados fictícios, sem pagamento real e sem documentos reais.</div>
+<div class="app-shell">
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand"><img src="../assets/logo-ogs-decor.jpg" alt="OGS Decor"><div class="brand-text"><strong>OGS Decor</strong><span>Painel Admin · Preview</span></div></div>
+    <button class="hamburger">☰ Menu</button>
+    <nav class="nav-links">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="obras.html" class="ativo">Obras</a>
+      <a href="instaladores.html">Instaladores</a>
+      <a href="ranking.html">Ranking</a>
+      <a href="pagamentos.html">Pagamentos</a>
+      <a href="regras.html">Regras &amp; Aviso</a>
+    </nav>
+    <a href="../index.html" class="link-trocar only-desktop">↩ Trocar perfil</a>
+  </div>
+</div>
+
+<main class="main-content">
+  <div class="container">
+    <div class="page-header">
+      <div><span class="kicker">Todas as obras cadastradas</span><h1>Obras</h1><p>Acompanhe status, oferta escalonada por faixa e instalador responsável.</p></div>
+      <a href="obra-nova.html" class="btn btn-primario">+ Nova obra</a>
+    </div>
+
+    <div class="filtros">
+      <input type="text" id="f-busca" placeholder="Buscar por título, endereço ou código...">
+      <select id="f-tipo"><option value="">Todos os tipos</option></select>
+      <select id="f-status"><option value="">Todos os status</option></select>
+    </div>
+
+    <div class="tabela-wrap">
+      <table>
+        <thead><tr><th>Obra</th><th>Tipo</th><th>Status</th><th>Instalador</th><th>Valor</th><th>Prazo</th><th></th></tr></thead>
+        <tbody id="tbody-obras"></tbody>
+      </table>
+    </div>
+    <div id="vazio-obras" style="display:none;" class="vazio"><div class="icone">🔍</div>Nenhuma obra encontrada com esses filtros.</div>
+  </div>
+</main>
+<footer class="rodape"><div class="container">Preview <b>Sparkz Agency</b> para OGS Decor · Ambiente demonstrativo.</div></footer>
+</div>
+
+<script src="../js/data.js"></script>
+<script src="../js/app.js"></script>
+<script>
+const selTipo = document.getElementById('f-tipo');
+ESPECIALIDADES.forEach(e => selTipo.innerHTML += `<option value="${e.id}">${e.label}</option>`);
+const selStatus = document.getElementById('f-status');
+Object.keys(STATUS_LABEL).forEach(s => selStatus.innerHTML += `<option value="${s}">${STATUS_LABEL[s]}</option>`);
+
+function render(){
+  const busca = document.getElementById('f-busca').value.toLowerCase();
+  const tipo = selTipo.value;
+  const status = selStatus.value;
+  const insts = getInstaladores();
+  let obras = getObras().filter(o => {
+    if(tipo && o.tipo!==tipo) return false;
+    if(status && o.status!==status) return false;
+    if(busca && !(o.titulo.toLowerCase().includes(busca) || o.endereco.toLowerCase().includes(busca) || o.id.toLowerCase().includes(busca))) return false;
+    return true;
+  });
+  document.querySelector('.kicker').textContent = obras.length + ' obra(s) encontradas';
+  document.getElementById('vazio-obras').style.display = obras.length ? 'none' : 'block';
+  document.getElementById('tbody-obras').innerHTML = obras.map(o => {
+    const inst = insts.find(i=>i.id===o.instaladorId);
+    return `<tr class="obra-linha" style="cursor:pointer;" onclick="location.href='obra-detalhe.html?id=${o.id}'">
+      <td><span class="obra-titulo">${o.titulo}</span><span class="obra-sub mono">${o.id} · ${o.endereco.split('—').pop().trim()}</span></td>
+      <td><span class="tag-especialidade">${ESP_LABEL[o.tipo]}</span></td>
+      <td>${badgeStatusObra(o.status)}</td>
+      <td>${inst ? inst.nome : '<span class="texto-mudo">—</span>'}</td>
+      <td class="mono">${fmtMoeda(o.valor)}</td>
+      <td class="mono">${fmtData(o.prazo)}</td>
+      <td><a href="obra-detalhe.html?id=${o.id}" class="btn btn-sm btn-claro">Ver →</a></td>
+    </tr>`;
+  }).join('');
+}
+['f-busca','f-tipo','f-status'].forEach(id => document.getElementById(id).addEventListener('input', render));
+render();
+</script>
+</body>
+</html>
