@@ -10,6 +10,9 @@
   --strawberry: #FF4463;
   --strawberry-dark: #D62B49;
   --strawberry-light: #FF8FA3;
+  /* darker coral pair used specifically for CTA buttons (accessible contrast on white text) */
+  --strawberry-btn: #E6304C;
+  --strawberry-btn-dark: #B81F3B;
 
   --milk: #FFC94D;
   --milk-dark: #E8A317;
@@ -25,7 +28,7 @@
   --radius-lg: 28px;
   --radius-md: 18px;
   --shadow-soft: 0 12px 30px rgba(43,23,48,.12);
-  --shadow-btn: 0 10px 24px rgba(214,43,73,.35);
+  --shadow-btn: 0 10px 24px rgba(184,31,59,.38);
 
   --font-display: "Baloo 2", system-ui, sans-serif;
   --font-body: "Karla", system-ui, sans-serif;
@@ -79,11 +82,11 @@ button{ font-family: inherit; cursor:pointer; }
   white-space: nowrap;
 }
 .btn--primary{
-  background: linear-gradient(135deg, var(--strawberry), var(--strawberry-dark));
+  background: linear-gradient(135deg, var(--strawberry-btn), var(--strawberry-btn-dark));
   color:#fff;
   box-shadow: var(--shadow-btn);
 }
-.btn--primary:hover{ transform: translateY(-3px) scale(1.02); box-shadow: 0 16px 30px rgba(214,43,73,.42); }
+.btn--primary:hover{ transform: translateY(-3px) scale(1.02); box-shadow: 0 16px 30px rgba(184,31,59,.45); }
 .btn--ghost{
   background: rgba(43,23,48,.06);
   color: var(--plum);
@@ -161,10 +164,12 @@ button{ font-family: inherit; cursor:pointer; }
   min-height: 190px;
 }
 .sacole-wrap{ display:flex; flex-direction:column; align-items:center; gap:.5em; }
+.sacole-wrap--big{ transform: scale(1.14); transform-origin: bottom center; z-index:2; }
 .sacole-label{
   font-family: var(--font-display); font-weight:700; font-size:.72rem;
   color: var(--ink-soft); background:#fff; padding:.25em .7em; border-radius:999px;
   box-shadow: var(--shadow-soft); white-space:nowrap;
+  max-width: 7.5em; text-align:center; line-height:1.2;
 }
 .sacole--float1{ animation: float 5s ease-in-out infinite; }
 .sacole--float2{ animation: float 6s ease-in-out infinite .4s; }
@@ -173,58 +178,40 @@ button{ font-family: inherit; cursor:pointer; }
   0%,100%{ transform: translateY(0) rotate(var(--rot,0deg)); }
   50%{ transform: translateY(-12px) rotate(var(--rot,0deg)); }
 }
-.sacole--big{ transform: scale(1.14); z-index:2; }
 .sacole-wrap--grape .sacole{ --rot: -6deg; }
 .sacole-wrap--milk .sacole{ --rot: 6deg; }
+
+/* Desktop: nudge the trio slightly down/left and enlarge a touch without
+   growing the hero's height (transform doesn't affect layout box). */
+@media (min-width: 901px){
+  .hero__pops{ transform: translate(-16px, 14px) scale(1.06); }
+}
 
 .drip-divider{ line-height:0; margin-top:-2px; }
 .drip-divider svg{ width:100%; height:auto; display:block; }
 .drip-divider--flip{ transform: rotate(180deg); margin-top:0; }
 
-/* ============ SACOLÉ ILLUSTRATION (saquinho plástico) ============ */
+/* ============ SACOLÉ ILLUSTRATION (saquinho plástico amarrado) ============ */
 .sacole{
-  position:relative; width: 84px;
+  position:relative; display:block; width: 92px; height:auto; overflow:visible;
   filter: drop-shadow(0 12px 14px rgba(43,23,48,.28));
 }
-.sacole__knot{
-  position:relative; z-index:3;
-  display:block; width:22px; height:15px; margin:0 auto;
-  background: linear-gradient(160deg, rgba(255,255,255,.95), rgba(255,255,255,.55));
-  border-radius: 50% 50% 40% 40%;
-  box-shadow: inset 0 -2px 3px rgba(43,23,48,.18), 0 2px 3px rgba(43,23,48,.15);
-}
-.sacole__tail{
-  position:absolute; top:-6px; left:50%; width:9px; height:9px;
-  background: inherit; border-radius:50%;
-  transform: translateX(-50%) rotate(25deg) skew(-10deg);
-}
-.sacole__neck{
-  display:block; width:32px; height:16px; margin:-2px auto 0;
-  background: rgba(255,255,255,.4);
-  clip-path: polygon(32% 0, 68% 0, 100% 100%, 0% 100%);
-}
-.sacole__body{
-  position:relative; display:block; margin-top:-1px;
-  width:100%; height:142px;
-  border-radius: 42% 42% 24% 24% / 26% 26% 14% 14%;
-  border: 2px solid rgba(43,23,48,.16);
-  box-shadow: inset -8px -10px 0 rgba(0,0,0,.08), inset 6px 8px 14px rgba(255,255,255,.25);
-  overflow:hidden;
-}
-.sacole__shine{
-  position:absolute; top:10%; left:15%; width:12px; height:52%;
-  background: rgba(255,255,255,.45); border-radius:20px; transform: rotate(6deg);
-}
-.sacole__shine--2{
-  left:auto; right:18%; width:7px; height:26%; top:18%; opacity:.55;
-}
-.sacole__seam{
-  position:absolute; left:10%; right:10%; bottom:13px; height:2px;
-  background: rgba(43,23,48,.14); border-radius:2px;
-}
-.sacole--strawberry .sacole__body{ background: linear-gradient(165deg, var(--strawberry-light) 12%, var(--strawberry) 55%, var(--strawberry-dark)); }
-.sacole--milk .sacole__body{ background: linear-gradient(165deg, var(--milk-light) 12%, var(--milk) 55%, var(--milk-dark)); }
-.sacole--grape .sacole__body{ background: linear-gradient(165deg, var(--grape-light) 12%, var(--grape) 55%, var(--grape-dark)); }
+.sacole__fill{ stroke-width:1.1px; }
+.sacole__knot{ stroke-width:.9px; stroke-opacity:.28; }
+.sacole__seal{ fill:none; stroke: rgba(43,23,48,.32); stroke-width:1.6px; stroke-linecap:round; }
+.sacole__crease{ fill:none; stroke: rgba(43,23,48,.16); stroke-width:1.4px; stroke-linecap:round; }
+.sacole__shine{ fill:none; stroke:#fff; stroke-linecap:round; }
+.sacole__shine--lg{ stroke-width:7px; stroke-opacity:.4; }
+.sacole__shine--sm{ stroke-width:4px; stroke-opacity:.3; }
+
+.sacole--strawberry .sacole__fill{ fill:url(#fillStrawberry); stroke: var(--strawberry-dark); }
+.sacole--strawberry .sacole__knot{ fill:url(#knotStrawberry); stroke: var(--strawberry-dark); }
+
+.sacole--milk .sacole__fill{ fill:url(#fillMilk); stroke: var(--milk-dark); }
+.sacole--milk .sacole__knot{ fill:url(#knotMilk); stroke: var(--milk-dark); }
+
+.sacole--grape .sacole__fill{ fill:url(#fillGrape); stroke: var(--grape-dark); }
+.sacole--grape .sacole__knot{ fill:url(#knotGrape); stroke: var(--grape-dark); }
 
 /* ============ TRUST BAR ============ */
 .trust-bar{ background: var(--cream); padding: .5em 0 3em; }
@@ -265,8 +252,7 @@ button{ font-family: inherit; cursor:pointer; }
 .flavor-card--milk{ border-color: var(--milk-dark); }
 .flavor-card--grape{ border-color: var(--grape); }
 .flavor-card__visual{ display:flex; justify-content:center; margin-bottom: 1em; height:170px; align-items:flex-end; }
-.flavor-card__visual .sacole{ width:92px; }
-.flavor-card__visual .sacole__body{ height:150px; }
+.flavor-card__visual .sacole{ width:100px; }
 .flavor-card h3{ color: var(--plum); font-size:1.4rem; }
 .flavor-card p{ font-size:.95rem; }
 .flavor-card__link{ font-weight:700; color: var(--strawberry-dark); display:inline-block; margin-top:.4em; }
@@ -401,10 +387,8 @@ button{ font-family: inherit; cursor:pointer; }
   .hero__sub{ font-size:.95rem; margin-bottom:.9em; }
   .hero__cta{ margin-top:.9em; gap:.8em; }
   .btn--lg{ padding: .85em 1.6em; font-size:1rem; }
-  .sacole{ width:66px; }
-  .sacole__body{ height:104px; }
-  .sacole__knot{ width:17px; height:11px; }
-  .sacole-label{ font-size:.64rem; padding:.2em .55em; }
+  .sacole{ width:70px; }
+  .sacole-label{ font-size:.62rem; padding:.2em .5em; max-width:5.6em; }
   .hero__pops{ gap:.55em; }
   .final-cta{ border-radius: 20px; padding: 3em 0; }
 }
