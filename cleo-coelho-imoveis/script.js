@@ -1,4 +1,4 @@
-// Cléo Coelho — Corretora de Imóveis — interações leves
+// Cléo Coelho Negócios & Imóveis — Corretora de Imóveis — interações leves
 
 document.addEventListener('DOMContentLoaded', () => {
 
