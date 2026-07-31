@@ -2,11 +2,8 @@
   "use strict";
 
   // ---- CONFIG ----
-  // Número de WhatsApp do negócio ainda não informado no briefing.
-  // Quando o Sacolé do Mané enviar o número real, preencher abaixo (formato: 55DDDNUMERO, só dígitos).
-  // Com o campo vazio, os botões abrem o WhatsApp e deixam o cliente escolher/buscar o contato,
-  // já com a mensagem de pedido pronta para envio.
-  var WHATSAPP_NUMBER = ""; // ex: "5519999999999"
+  // WhatsApp oficial do Sacolé do Mané (Fernando).
+  var WHATSAPP_NUMBER = "5511936188206";
 
   function buildWhatsLink(message){
     var text = encodeURIComponent(message || "Oi! Vim pelo site do Sacolé do Mané e quero fazer um pedido 🍧");
