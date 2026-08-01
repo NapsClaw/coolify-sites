@@ -195,6 +195,10 @@ p:last-child{ margin-bottom:0; }
 /* =========== GENERIC SECTION =========== */
 .section{ padding:96px 0; position:relative; }
 .section.alt{ background:var(--paper-2); }
+/* Missão/Programas share the --paper-2 background back-to-back: trim the
+   combined padding so the seam doesn't read as a big empty gap. */
+#missao{ padding-bottom:44px; }
+#programas{ padding-top:44px; border-top:1px dashed var(--line); }
 .section-head{ max-width:680px; margin-bottom:52px; }
 .section-head.center{ margin-left:auto; margin-right:auto; text-align:center; }
 .section-head h2{ font-size:clamp(1.9rem, 3.6vw, 2.6rem); font-weight:600; margin:6px 0 16px; }
@@ -252,13 +256,14 @@ p:last-child{ margin-bottom:0; }
 .values-list li:first-child{ border-top:none; padding-top:0; }
 .values-list li::before{ content:"✦"; position:absolute; left:0; color:var(--gold-dark); font-size:.8rem; top:10px; }
 
-/* =========== PROGRAMAS (accordion, coluna única + painel de fotos) =========== */
-.programs-layout{ display:grid; grid-template-columns:300px 1fr; gap:40px; align-items:start; }
-.programs-photos{
-  position:sticky; top:104px; display:flex; flex-direction:column; gap:18px;
+/* =========== PROGRAMAS (faixa de fotos + acordeão em coluna única) =========== */
+.programs-media{
+  display:grid; grid-template-columns:repeat(2,1fr); gap:20px;
+  max-width:840px; margin:0 auto 48px;
 }
-.programs-photos .photo-frame{ aspect-ratio:4/3; }
-.programs-list{ display:flex; flex-direction:column; gap:14px; min-width:0; }
+.programs-media .photo-frame{ aspect-ratio:3/2; }
+.programs-layout{ display:block; }
+.programs-list{ display:flex; flex-direction:column; gap:14px; min-width:0; max-width:840px; margin:0 auto; }
 .program-card{
   background:var(--paper); border:2px solid var(--ink); border-radius:18px; overflow:hidden;
   box-shadow:0 4px 0 rgba(42,27,16,.10);
@@ -301,7 +306,8 @@ p:last-child{ margin-bottom:0; }
 
 /* =========== IMPACTO =========== */
 .impact-mosaic{ display:grid; grid-template-columns:repeat(2,1fr); gap:20px; max-width:920px; margin:0 auto; }
-.impact-photo{ aspect-ratio:4/3; }
+.impact-photo{ aspect-ratio:3/2; }
+.impact-photo img{ object-position:center 42%; }
 .impact-card{
   background:var(--paper); border-radius:18px; padding:26px 22px; border:1px solid var(--line-soft);
   box-shadow:0 2px 10px rgba(42,27,16,.06); display:flex; flex-direction:column; justify-content:center;
@@ -376,19 +382,19 @@ p:last-child{ margin-bottom:0; }
 
 /* =========== FOOTER =========== */
 .site-footer{ background:var(--ink); color:var(--paper-2); padding:60px 0 30px; }
-.footer-inner{ display:grid; grid-template-columns:1fr 1fr; gap:36px 24px; }
-.footer-brand{ display:flex; align-items:center; gap:12px; }
+.footer-inner{ display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; row-gap:20px; column-gap:32px; }
+.footer-brand{ display:flex; align-items:center; gap:12px; flex-shrink:0; }
 .footer-brand p{ font-family:var(--font-display); font-weight:600; font-size:1.05rem; color:var(--paper); }
 .footer-brand span{ font-family:var(--font-body); font-size:.8rem; font-weight:400; color:var(--paper-2); opacity:.7; }
-.footer-nav{ display:flex; flex-wrap:wrap; gap:18px; align-items:center; justify-content:flex-end; }
-.footer-nav a{ font-size:.9rem; font-weight:600; opacity:.85; }
+.footer-nav{ display:flex; flex-wrap:wrap; gap:10px 20px; align-items:center; justify-content:flex-end; flex:1 1 auto; min-width:0; }
+.footer-nav a{ font-size:.9rem; font-weight:600; opacity:.85; white-space:nowrap; }
 .footer-nav a:hover{ opacity:1; color:var(--gold); }
-.footer-legal{ grid-column:1/-1; font-size:.82rem; opacity:.65; border-top:1px solid rgba(251,243,227,.15); padding-top:24px; max-width:760px; }
-.footer-credits{ grid-column:1/-1; font-size:.8rem; opacity:.6; max-width:760px; }
+.footer-legal{ flex-basis:100%; font-size:.82rem; opacity:.65; border-top:1px solid rgba(251,243,227,.15); padding-top:24px; max-width:760px; }
+.footer-credits{ flex-basis:100%; font-size:.8rem; opacity:.6; max-width:760px; }
 .footer-credits summary{ cursor:pointer; font-weight:600; padding:4px 0; }
 .footer-credits ul{ margin:10px 0 0; padding-left:18px; list-style:disc; display:flex; flex-direction:column; gap:4px; }
 .footer-credits li{ line-height:1.5; }
-.footer-copy{ grid-column:1/-1; font-size:.8rem; opacity:.5; }
+.footer-copy{ flex-basis:100%; font-size:.8rem; opacity:.5; }
 
 /* =========== TO TOP =========== */
 .to-top{
@@ -418,9 +424,6 @@ p:last-child{ margin-bottom:0; }
   .transparencia-photo{ max-width:420px; margin:0 auto; }
   .docs-grid{ grid-template-columns:repeat(2,1fr); }
   .contact-grid{ grid-template-columns:repeat(2,1fr); }
-  .programs-layout{ grid-template-columns:1fr; }
-  .programs-photos{ position:static; flex-direction:row; }
-  .programs-photos .photo-frame{ flex:1; }
 }
 
 @media (max-width: 760px){
@@ -446,7 +449,7 @@ p:last-child{ margin-bottom:0; }
   .eco-strip{ margin-top:44px; padding-top:34px; }
   .eco-chips{ grid-template-columns:1fr 1fr; gap:12px; }
 
-  .programs-photos{ flex-direction:column; }
+  .programs-media{ grid-template-columns:1fr 1fr; gap:12px; margin-bottom:34px; }
 
   .impact-mosaic{ grid-template-columns:1fr; }
   .texture-band{ height:280px; }
@@ -455,13 +458,14 @@ p:last-child{ margin-bottom:0; }
 
   .program-card p{ padding-left:22px; }
 
-  .footer-inner{ grid-template-columns:1fr; }
-  .footer-nav{ justify-content:flex-start; }
+  .footer-inner{ flex-direction:column; align-items:flex-start; }
+  .footer-nav{ justify-content:flex-start; width:100%; }
 }
 
 @media (max-width: 420px){
   .hero-tags span{ font-size:.8rem; padding:6px 12px; }
   .eco-chips{ grid-template-columns:1fr; }
+  .programs-media{ grid-template-columns:1fr; }
 }
 
 @media (prefers-reduced-motion: reduce){
