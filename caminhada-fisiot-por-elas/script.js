@@ -1,10 +1,12 @@
 /* ============================================================
    CAMINHADA FISIOT POR ELAS — Script Principal
-   Versão: 20260721r16 (retirada/concentração → Rua Dr. Benjamin Vieira, 27; chegada → Complexo Jalile Daher)
+   Versão: 20260826r19 (oferta camiseta R$50 + Bellamama R$30,
+   PIX oficial do IREFIS com botão copiar chave, WhatsApp
+   de atendimento confirmado — Wilson Barbosa)
    ============================================================ */
 
 /* --- WhatsApp helper (Wilson Barbosa — (31) 99259-4953) ---- */
-const WA_NUM  = '5531992594953';
+const WA_NUM  = '553192594953';
 const WA_BASE = 'https://wa.me/' + WA_NUM + '?text=';
 function waLink(msg) { return WA_BASE + encodeURIComponent(msg); }
 
@@ -47,61 +49,162 @@ function selectOpcao(el, group) {
   el.classList.add('selected');
 }
 
-/* --- Kit: finalizar (inclui escolha Bellamama) ------------- */
-function finalizarKit() {
-  const nome      = document.getElementById('kit-nome')?.value.trim();
-  const tamanho   = document.getElementById('kit-tamanho')?.value;
-  const acessorio = document.querySelector('input[name="acessorio"]:checked')?.value;
-  const bellamama = document.querySelector('input[name="bellamama"]:checked')?.value;
+/* ============================================================
+   OFERTA — Camiseta (R$50) e Produtos Bellamama (R$30 cada)
+   Pagamento pelo PIX do IREFIS · comprovante via WhatsApp Wilson
+   ============================================================ */
 
+const BELLAMAMA_LABELS = {
+  pes:          'Hidratante para os Pés (Manteiga de Cacau)',
+  maos:         'Hidratante para as Mãos',
+  facial:       'Hidratante Facial',
+  corporal:     'Hidratante Corporal',
+  antioxidante: 'Antioxidante',
+};
+
+/* --- Abre o modal de produtos já com um tipo pré-selecionado - */
+function openProdutoModal(tipo) {
+  openModal('modal-produtos');
+  toggleProdutoTipo(tipo);
+}
+
+/* --- Alterna entre os campos de Camiseta e Bellamama --------- */
+function toggleProdutoTipo(tipo) {
+  const radio = document.querySelector(`input[name="produto-tipo"][value="${tipo}"]`);
+  if (radio) radio.checked = true;
+
+  document.querySelectorAll('#tipo-card-camiseta, #tipo-card-bellamama').forEach(card => {
+    card.classList.toggle('selected', card.id === `tipo-card-${tipo}`);
+  });
+
+  const campoCamiseta  = document.getElementById('campo-camiseta');
+  const campoBellamama = document.getElementById('campo-bellamama');
+  if (campoCamiseta)  campoCamiseta.style.display  = tipo === 'camiseta'  ? 'block' : 'none';
+  if (campoBellamama) campoBellamama.style.display = tipo === 'bellamama' ? 'block' : 'none';
+
+  atualizarTotalProduto();
+}
+
+/* --- Recalcula e exibe o total a pagar pelo PIX --------------- */
+function atualizarTotalProduto() {
+  const tipo = document.querySelector('input[name="produto-tipo"]:checked')?.value;
+  const box  = document.getElementById('produto-total-box');
+  const val  = document.getElementById('produto-total-valor');
+  if (!box || !val) return;
+
+  if (!tipo) { box.style.display = 'none'; return; }
+
+  let total = 0;
+  if (tipo === 'camiseta') {
+    total = 50;
+  } else if (tipo === 'bellamama') {
+    const qtd = parseInt(document.getElementById('prod-qtd')?.value || '1', 10);
+    total = 30 * qtd;
+  }
+
+  val.textContent = 'R$ ' + total.toFixed(2).replace('.', ',');
+  box.style.display = 'flex';
+}
+
+/* --- Finalizar compra: valida, monta mensagem e abre WhatsApp - */
+function finalizarProduto() {
+  const tipo = document.querySelector('input[name="produto-tipo"]:checked')?.value;
+  const nome = document.getElementById('prod-nome')?.value.trim();
+
+  if (!tipo) {
+    alert('Por favor, escolha o que você quer comprar: Camiseta ou Bellamama.');
+    return;
+  }
   if (!nome) {
     alert('Por favor, informe seu nome para continuar.');
-    document.getElementById('kit-nome').focus();
-    return;
-  }
-  if (!tamanho) {
-    alert('Por favor, selecione o tamanho da camiseta.');
-    document.getElementById('kit-tamanho').focus();
-    return;
-  }
-  if (!acessorio) {
-    alert('Por favor, escolha: Boné ou Viseira.');
-    return;
-  }
-  if (!bellamama) {
-    alert('Por favor, escolha seu cosmético Bellamama (pés, mãos, facial, corporal ou antioxidante).');
+    document.getElementById('prod-nome')?.focus();
     return;
   }
 
-  const acessorioLabel  = acessorio === 'bone' ? 'Boné' : 'Viseira';
-  const bellamamaLabels = {
-    pes:          'Hidratante para os Pés (Manteiga de Cacau)',
-    maos:         'Hidratante para as Mãos',
-    facial:       'Hidratante Facial',
-    corporal:     'Hidratante Corporal',
-    antioxidante: 'Antioxidante',
-  };
+  let resumo = '';
+  let waMsg  = '';
+  let total  = 0;
 
-  /* Monta mensagem pré-preenchida para WhatsApp */
-  const waMsg =
-    `Olá, Wilson! Quero comprar meu kit da 1ª Caminhada FISIOT por Elas (R$150,00).\n` +
-    `👤 Nome: ${nome}\n` +
-    `👕 Camiseta: ${tamanho}\n` +
-    `🧢 Acessório: ${acessorioLabel}\n` +
-    `🌿 Cosmético Bellamama: ${bellamamaLabels[bellamama] || bellamama}\n` +
-    `📍 Ciente da retirada presencial na Clínica FISIOT — Rua Dr. Benjamin Vieira, 27, bairro Joana D'Arc, Lagoa Santa/MG.\n` +
-    `Pode me orientar sobre o pagamento e agendar a retirada?`;
+  if (tipo === 'camiseta') {
+    const tamanho = document.getElementById('prod-tamanho')?.value;
+    if (!tamanho) {
+      alert('Por favor, selecione o tamanho da camiseta.');
+      document.getElementById('prod-tamanho')?.focus();
+      return;
+    }
+    total  = 50;
+    resumo = `👕 Camiseta · Tamanho ${tamanho}`;
+    waMsg =
+      `Olá, Wilson! Já paguei pelo PIX do IREFIS a minha camiseta oficial da 1ª Caminhada FISIOT por Elas (R$50,00) e estou enviando o comprovante.\n` +
+      `👤 Nome: ${nome}\n` +
+      `👕 Tamanho: ${tamanho}\n` +
+      `📍 Ciente da retirada presencial e mediante agendamento na Clínica FISIOT — Rua Dr. Benjamin Vieira, 27, bairro Joana D'Arc, Lagoa Santa/MG.\n` +
+      `Segue o comprovante em anexo. Pode confirmar e agendar a retirada?`;
+  } else {
+    const opcao = document.querySelector('input[name="prod-bellamama"]:checked')?.value;
+    const qtd   = parseInt(document.getElementById('prod-qtd')?.value || '1', 10);
+    if (!opcao) {
+      alert('Por favor, escolha o produto Bellamama (pés, mãos, facial, corporal ou antioxidante).');
+      return;
+    }
+    total  = 30 * qtd;
+    resumo = `🌿 Bellamama · ${BELLAMAMA_LABELS[opcao] || opcao} · Qtd: ${qtd}`;
+    waMsg =
+      `Olá, Wilson! Já paguei pelo PIX do IREFIS meu(s) produto(s) Bellamama (R$30,00 cada) e estou enviando o comprovante.\n` +
+      `👤 Nome: ${nome}\n` +
+      `🌿 Produto: ${BELLAMAMA_LABELS[opcao] || opcao}\n` +
+      `🔢 Quantidade: ${qtd}\n` +
+      `💰 Total pago: R$ ${total.toFixed(2).replace('.', ',')}\n` +
+      `📍 Ciente da retirada presencial e mediante agendamento na Clínica FISIOT — Rua Dr. Benjamin Vieira, 27, bairro Joana D'Arc, Lagoa Santa/MG. Sujeito à disponibilidade de estoque.\n` +
+      `Segue o comprovante em anexo. Pode confirmar e agendar a retirada?`;
+  }
 
   if (confirm(
     `✅ Dados registrados!\n\n` +
-    `👤 ${nome} · 👕 ${tamanho} · 🧢 ${acessorioLabel}\n` +
-    `🌿 ${bellamamaLabels[bellamama] || bellamama}\n\n` +
+    `👤 ${nome}\n${resumo}\n` +
+    `💰 Total pelo PIX do IREFIS: R$ ${total.toFixed(2).replace('.', ',')}\n\n` +
     `📍 RETIRADA PRESENCIAL na Clínica FISIOT\n` +
     `Rua Dr. Benjamin Vieira, 27, bairro Joana D'Arc, Lagoa Santa/MG.\n` +
     `(Não há entrega em domicílio.)\n\n` +
-    `Clique OK para continuar pelo WhatsApp com Wilson Barbosa (31) 99259-4953.`
+    `Clique OK para enviar o comprovante pelo WhatsApp de Wilson Barbosa (31) 99259-4953.`
   )) {
     window.open(waLink(waMsg), '_blank', 'noopener,noreferrer');
+  }
+}
+
+/* --- Copiar chave PIX do IREFIS ------------------------------- */
+function copyPixKey(btn) {
+  const key = btn?.getAttribute('data-pix-key') || '(31) 98055-0930';
+  const done = () => {
+    const original = btn.textContent;
+    btn.textContent = '✅ Chave copiada!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = original;
+      btn.classList.remove('copied');
+    }, 2200);
+  };
+  const fallbackCopy = () => {
+    try {
+      const ta = document.createElement('textarea');
+      ta.value = key;
+      ta.style.position = 'fixed';
+      ta.style.opacity  = '0';
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      done();
+    } catch (e) {
+      alert('Não foi possível copiar automaticamente. Chave PIX do IREFIS: ' + key);
+    }
+  };
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(key).then(done).catch(fallbackCopy);
+  } else {
+    fallbackCopy();
   }
 }
 

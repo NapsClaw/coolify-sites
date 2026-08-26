@@ -1,0 +1,308 @@
+/* ============================================================
+   PATCH R19 — 2026-08-26
+   Revisão final: oferta (Camiseta R$50 + Bellamama R$30,00 cada,
+   remoção do kit de R$150), PIX oficial do IREFIS com QR e botão
+   copiar chave, WhatsApp de atendimento (Wilson Barbosa) e
+   textos correlatos. Preserva R17/R18 e patches anteriores.
+   ============================================================ */
+
+/* ─── BENEFÍCIO PARA TODOS OS PARTICIPANTES ─────────────────
+   Faltava estilo nas versões anteriores (texto sem destaque).
+   ──────────────────────────────────────────────────────────── */
+.beneficio-todos-strip {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: .5rem .7rem;
+  background: linear-gradient(135deg, rgba(255,255,255,.94), rgba(255,240,247,.94));
+  border: 1.5px solid rgba(233,30,140,.28);
+  border-radius: 16px;
+  padding: .85rem 1.1rem;
+  margin: 1.1rem auto;
+  max-width: 720px;
+  box-shadow: 0 4px 18px rgba(0,0,0,.10);
+  font-size: .86rem;
+  line-height: 1.45;
+  color: var(--dark);
+}
+.beneficio-todos-strip .bts-icon {
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+.beneficio-todos-strip .bts-text { flex: 1 1 220px; }
+.beneficio-todos-strip .bts-text em {
+  color: var(--gray);
+  font-style: italic;
+  font-size: .82rem;
+}
+
+/* Variante usada dentro da seção pré-evento (fundo levemente diferente) */
+.beneficio-todos-strip--alt {
+  background: linear-gradient(135deg, #ffffff, var(--rosa-pale));
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* Variante usada como último item da seção de Oferta */
+.beneficio-todos-strip-oferta {
+  max-width: none;
+  margin-top: 1.6rem;
+  background: linear-gradient(135deg, var(--verde-pale), #ffffff);
+  border-color: rgba(46,125,50,.32);
+}
+
+@media (max-width: 640px) {
+  .beneficio-todos-strip { padding: .75rem .9rem; font-size: .82rem; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   OFERTA — grade de dois produtos (Camiseta + Bellamama)
+   ═══════════════════════════════════════════════════════════ */
+.produtos-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: stretch;
+}
+
+.produto-card {
+  background: linear-gradient(135deg, var(--rosa-pale), #fff8fc);
+  border: 2px solid var(--rosa-light);
+  border-radius: 24px;
+  padding: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 20px rgba(233,30,140,.10);
+}
+
+.produto-visual {
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 1.2rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,.12);
+}
+
+.produto-visual-camiseta {
+  background: linear-gradient(135deg, var(--rosa), var(--rosa-dark));
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  padding: 2.2rem 1rem;
+  text-align: center;
+}
+.produto-visual-emoji { font-size: 4rem; line-height: 1; filter: drop-shadow(0 4px 10px rgba(0,0,0,.25)); }
+.produto-visual-tag {
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: .82rem;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  opacity: .95;
+}
+
+.produto-visual-bellamama {
+  background: var(--verde-pale);
+  border: 2px solid rgba(46,125,50,.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 150px;
+}
+.produto-visual-img {
+  width: 130px;
+  height: 170px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0,0,0,.18);
+  margin: 1rem 0;
+}
+
+.produto-body { display: flex; flex-direction: column; flex: 1; }
+.produto-title {
+  font-size: 1.25rem;
+  margin-bottom: .7rem;
+  color: var(--dark);
+}
+
+.produto-price-badge {
+  display: inline-block;
+  align-self: flex-start;
+  background: var(--rosa);
+  color: var(--white);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.9rem;
+  font-weight: 900;
+  border-radius: 14px;
+  padding: .55rem 1.2rem;
+  margin-bottom: 1rem;
+  line-height: 1;
+  box-shadow: var(--shadow);
+}
+.produto-price-badge small { display: block; font-size: .72rem; font-weight: 600; opacity: .88; margin-bottom: .2rem; }
+.produto-price-badge-verde { background: linear-gradient(135deg, var(--verde-light), var(--verde)); box-shadow: 0 4px 18px rgba(46,125,50,.28); }
+
+.produto-lista { list-style: none; margin-bottom: 1rem; flex: 1; }
+.produto-lista li {
+  display: flex;
+  align-items: flex-start;
+  gap: .55rem;
+  padding: .4rem 0;
+  font-size: .9rem;
+  border-bottom: 1px solid rgba(233,30,140,.08);
+}
+.produto-lista li:last-child { border-bottom: none; }
+.produto-lista .check { color: var(--rosa); font-size: 1.05rem; flex-shrink: 0; margin-top: .1rem; }
+.produto-lista .produto-obs { font-size: .78rem; color: var(--gray); font-style: italic; }
+
+.produto-card .retirada-inline { margin: 0 0 1rem; }
+.produto-card .btn-full { margin-top: auto; }
+
+@media (max-width: 860px) {
+  .produtos-grid { grid-template-columns: 1fr; }
+}
+
+/* Total dinâmico no modal de compra */
+.produto-total-box {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--verde-pale);
+  border: 1.5px solid var(--verde-light);
+  border-radius: 12px;
+  padding: .8rem 1.1rem;
+  margin-bottom: 1.2rem;
+  font-weight: 700;
+  color: var(--verde);
+}
+.produto-total-box strong { font-family: 'Montserrat', sans-serif; font-size: 1.3rem; }
+
+/* Cards de seleção "O que você quer comprar" com preço embutido */
+.tipo-opcao-card { position: relative; }
+.tipo-opcao-preco {
+  font-size: .78rem;
+  font-weight: 800;
+  color: var(--rosa);
+  margin-top: .25rem;
+}
+.tipo-opcao-card:has(input:checked) .tipo-opcao-preco,
+.tipo-opcao-card.selected .tipo-opcao-preco { color: var(--rosa-dark); }
+
+/* ═══════════════════════════════════════════════════════════
+   PIX DO IREFIS — QR oficial, chave e botão copiar
+   ═══════════════════════════════════════════════════════════ */
+.pix-box {
+  margin-top: 2.2rem;
+  background: linear-gradient(135deg, #ffffff, var(--verde-pale));
+  border: 2px solid var(--verde-light);
+  border-radius: 22px;
+  padding: 1.6rem;
+  box-shadow: 0 6px 26px rgba(46,125,50,.14);
+}
+.pix-box-modal {
+  margin-top: 1.4rem;
+  padding: 1.1rem;
+  border-radius: 16px;
+}
+
+.pix-box-header {
+  display: flex;
+  align-items: flex-start;
+  gap: .7rem;
+  margin-bottom: 1.1rem;
+}
+.pix-box-icon { font-size: 1.8rem; flex-shrink: 0; line-height: 1; }
+.pix-box-header h4 { font-size: 1.05rem; color: var(--verde); margin-bottom: .15rem; }
+.pix-box-header p { font-size: .8rem; color: var(--gray); }
+
+.pix-box-body {
+  display: grid;
+  grid-template-columns: 132px 1fr;
+  gap: 1.2rem;
+  align-items: start;
+}
+.pix-box-modal .pix-box-body { grid-template-columns: 100px 1fr; gap: .9rem; }
+
+.pix-qr-wrap {
+  background: #fff;
+  border: 1.5px solid rgba(46,125,50,.25);
+  border-radius: 12px;
+  padding: .4rem;
+  box-shadow: 0 3px 12px rgba(0,0,0,.10);
+}
+.pix-qr-img { width: 100%; border-radius: 6px; }
+
+.pix-key-label {
+  display: block;
+  font-size: .74rem;
+  font-weight: 700;
+  color: var(--verde);
+  text-transform: uppercase;
+  letter-spacing: .03em;
+  margin-bottom: .35rem;
+}
+.pix-key-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .6rem;
+  margin-bottom: .6rem;
+}
+.pix-key-value {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: 1.15rem;
+  color: var(--dark);
+  background: #fff;
+  border: 1.5px dashed rgba(46,125,50,.4);
+  border-radius: 8px;
+  padding: .35rem .7rem;
+}
+.pix-copy-btn {
+  background: linear-gradient(135deg, var(--verde-light), var(--verde));
+  color: #fff;
+  border: none;
+  border-radius: 20px;
+  padding: .5rem 1rem;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 700;
+  font-size: .8rem;
+  cursor: pointer;
+  transition: transform .18s, box-shadow .18s, background .18s;
+  box-shadow: 0 3px 12px rgba(46,125,50,.28);
+}
+.pix-copy-btn:hover { transform: translateY(-1px); box-shadow: 0 5px 16px rgba(46,125,50,.35); }
+.pix-copy-btn.copied { background: linear-gradient(135deg, #43A047, #2E7D32); }
+
+.pix-instructions {
+  font-size: .84rem;
+  color: var(--gray);
+  line-height: 1.55;
+  margin-bottom: .5rem;
+}
+.pix-fine-print {
+  font-size: .74rem;
+  color: #B45309;
+  background: #FFF7E6;
+  border: 1px solid #FFCA28;
+  border-radius: 8px;
+  padding: .5rem .7rem;
+  line-height: 1.45;
+}
+
+@media (max-width: 560px) {
+  .pix-box-body,
+  .pix-box-modal .pix-box-body {
+    grid-template-columns: 1fr;
+  }
+  .pix-qr-wrap { max-width: 180px; margin: 0 auto 1rem; }
+  .pix-key-row { justify-content: center; }
+}
+
+/* ─── Institucional no rodapé (CNPJ / e-mail) ─────────────── */
+.footer-org-institucional {
+  font-size: .76rem;
+  opacity: .85;
+}
