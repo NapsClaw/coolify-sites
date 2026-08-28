@@ -485,23 +485,28 @@ function escapeHtml(str) {
  *  Sem vídeos: exibe estado vazio compacto (com botão admin dentro).
  *  Com vídeos:  exibe grid + botão admin abaixo. */
 function renderPublicVideos() {
-  const emptyState = document.getElementById('videos-empty-state');
+  const section    = document.getElementById('videos');
+  const navBtn     = document.getElementById('nav-videos-btn');
   const grid       = document.getElementById('videos-grid');
   const adminArea  = document.getElementById('videos-admin-area');
-  if (!emptyState || !grid) return;
+  if (!section || !grid) return;
 
   const videos = getVideos();
 
   if (videos.length === 0) {
-    emptyState.style.display = 'flex';   /* compacto, horizontal */
-    grid.style.display       = 'none';
-    grid.innerHTML           = '';
+    /* Sem vídeos publicados: a seção inteira e o atalho de navegação
+       ficam ocultos (em vez de mostrar "vídeos em breve"). */
+    section.style.display = 'none';
+    if (navBtn) navBtn.style.display = 'none';
+    grid.style.display = 'none';
+    grid.innerHTML      = '';
     if (adminArea) adminArea.style.display = 'none';
     return;
   }
 
-  emptyState.style.display = 'none';
-  grid.style.display       = 'grid';
+  section.style.display = '';
+  if (navBtn) navBtn.style.display = '';
+  grid.style.display = 'grid';
   if (adminArea) adminArea.style.display = 'block';
 
   grid.innerHTML = videos.map(v => `
