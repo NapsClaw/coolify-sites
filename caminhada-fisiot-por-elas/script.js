@@ -51,7 +51,7 @@ function selectOpcao(el, group) {
 
 /* ============================================================
    OFERTA — Camiseta (R$50) e Produtos Bellamama (R$30 cada)
-   Pagamento pelo PIX do IREFIS · comprovante via WhatsApp Wilson
+   PIX específico por item · comprovante via WhatsApp Wilson
    ============================================================ */
 
 const BELLAMAMA_LABELS = {
@@ -61,6 +61,40 @@ const BELLAMAMA_LABELS = {
   corporal:     'Hidratante Corporal',
   antioxidante: 'Antioxidante',
 };
+
+const PIX_INFO = {
+  camiseta: {
+    titulo: 'Pague pelo PIX do IREFIS',
+    descricao: 'Para camiseta oficial da caminhada',
+    label: 'Chave PIX (telefone) — IREFIS',
+    chave: '(31) 98055-0930',
+    qr: true,
+  },
+  bellamama: {
+    titulo: 'Pague pelo PIX da Bellamama',
+    descricao: 'Produtos Bellamama — chave CNPJ',
+    label: 'Chave PIX (CNPJ) — Bellamama',
+    chave: '36.407.338/0001-00',
+    qr: false,
+  },
+};
+
+function atualizarPixProduto(tipo) {
+  const info = PIX_INFO[tipo];
+  if (!info) return;
+  const titulo = document.getElementById('pix-modal-titulo');
+  const descricao = document.getElementById('pix-modal-descricao');
+  const label = document.getElementById('pix-modal-label');
+  const chave = document.getElementById('pix-modal-chave');
+  const copiar = document.getElementById('pix-modal-copiar');
+  const qr = document.getElementById('pix-modal-qr-wrap');
+  if (titulo) titulo.textContent = info.titulo;
+  if (descricao) descricao.textContent = info.descricao;
+  if (label) label.textContent = info.label;
+  if (chave) chave.textContent = info.chave;
+  if (copiar) copiar.setAttribute('data-pix-key', info.chave);
+  if (qr) qr.style.display = info.qr ? '' : 'none';
+}
 
 /* --- Abre o modal de produtos já com um tipo pré-selecionado - */
 function openProdutoModal(tipo) {
@@ -82,6 +116,7 @@ function toggleProdutoTipo(tipo) {
   if (campoCamiseta)  campoCamiseta.style.display  = tipo === 'camiseta'  ? 'block' : 'none';
   if (campoBellamama) campoBellamama.style.display = tipo === 'bellamama' ? 'block' : 'none';
 
+  atualizarPixProduto(tipo);
   atualizarTotalProduto();
 }
 
@@ -150,7 +185,7 @@ function finalizarProduto() {
     total  = 30 * qtd;
     resumo = `🌿 Bellamama · ${BELLAMAMA_LABELS[opcao] || opcao} · Qtd: ${qtd}`;
     waMsg =
-      `Olá, Wilson! Já paguei pelo PIX do IREFIS meu(s) produto(s) Bellamama (R$30,00 cada) e estou enviando o comprovante.\n` +
+      `Olá, Wilson! Já paguei pelo PIX da Bellamama meu(s) produto(s) Bellamama (R$30,00 cada) e estou enviando o comprovante.\n` +
       `👤 Nome: ${nome}\n` +
       `🌿 Produto: ${BELLAMAMA_LABELS[opcao] || opcao}\n` +
       `🔢 Quantidade: ${qtd}\n` +
@@ -159,10 +194,11 @@ function finalizarProduto() {
       `Segue o comprovante em anexo. Pode confirmar e agendar a retirada?`;
   }
 
+  const pixNome = tipo === 'bellamama' ? 'PIX da Bellamama' : 'PIX do IREFIS';
   if (confirm(
     `✅ Dados registrados!\n\n` +
     `👤 ${nome}\n${resumo}\n` +
-    `💰 Total pelo PIX do IREFIS: R$ ${total.toFixed(2).replace('.', ',')}\n\n` +
+    `💰 Total pelo ${pixNome}: R$ ${total.toFixed(2).replace('.', ',')}\n\n` +
     `📍 RETIRADA PRESENCIAL na Clínica FISIOT\n` +
     `Rua Dr. Benjamin Vieira, 27, bairro Joana D'Arc, Lagoa Santa/MG.\n` +
     `(Não há entrega em domicílio.)\n\n` +
@@ -172,7 +208,7 @@ function finalizarProduto() {
   }
 }
 
-/* --- Copiar chave PIX do IREFIS ------------------------------- */
+/* --- Copiar chave PIX exibida para o item --------------------- */
 function copyPixKey(btn) {
   const key = btn?.getAttribute('data-pix-key') || '(31) 98055-0930';
   const done = () => {
@@ -197,7 +233,7 @@ function copyPixKey(btn) {
       document.body.removeChild(ta);
       done();
     } catch (e) {
-      alert('Não foi possível copiar automaticamente. Chave PIX do IREFIS: ' + key);
+      alert('Não foi possível copiar automaticamente. Chave PIX: ' + key);
     }
   };
 
