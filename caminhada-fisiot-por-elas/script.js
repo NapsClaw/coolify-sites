@@ -5,8 +5,8 @@
    de atendimento confirmado — Wilson Barbosa)
    ============================================================ */
 
-/* --- WhatsApp helper (Wilson Barbosa — (31) 99259-4953) ---- */
-const WA_NUM  = '553192594953';
+/* --- WhatsApp helper (Wilson Barbosa — (31) 98055-0930) ---- */
+const WA_NUM  = '5531980550930';
 const WA_BASE = 'https://wa.me/' + WA_NUM + '?text=';
 function waLink(msg) { return WA_BASE + encodeURIComponent(msg); }
 
@@ -202,7 +202,7 @@ function finalizarProduto() {
     `📍 RETIRADA PRESENCIAL na Clínica FISIOT\n` +
     `Rua Dr. Benjamin Vieira, 27, bairro Joana D'Arc, Lagoa Santa/MG.\n` +
     `(Não há entrega em domicílio.)\n\n` +
-    `Clique OK para enviar o comprovante pelo WhatsApp de Wilson Barbosa (31) 99259-4953.`
+    `Clique OK para enviar o comprovante pelo WhatsApp de Wilson Barbosa (31) 98055-0930.`
   )) {
     window.open(waLink(waMsg), '_blank', 'noopener,noreferrer');
   }
@@ -338,7 +338,7 @@ function finalizarDoacao() {
     antioxidante: 'Antioxidante',
   };
 
-  let msg = 'Olá, Wilson! Quero fazer uma doação voluntária de R$25,00 da 1ª Caminhada FISIOT por Elas e receber 1 produto Bellamama.';
+  let msg = 'Olá, Wilson! Quero fazer uma doação voluntária de R$30,00 da 1ª Caminhada FISIOT por Elas e receber 1 produto Bellamama.';
   if (nome)  msg += `\n👤 Nome: ${nome}`;
   if (tel)   msg += `\n📞 WhatsApp: ${tel}`;
   if (bella) msg += `\n🌿 Produto preferido: ${bellaMapa[bella] || bella}`;
