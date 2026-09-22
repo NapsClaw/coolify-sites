@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Painel interno — Raspadinha FISIOT por Elas</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="assets/logo-fisiot.jpg">
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/admin.css">
+</head>
+<body class="admin-body">
+
+<div class="admin-topbar">
+  <div class="id"><span class="dot"></span> Painel interno — códigos da raspadinha</div>
+  <a href="index.html">← Ver página pública</a>
+</div>
+
+<div class="admin-wrap">
+
+  <div class="demo-warning">
+    <span class="icon">⚠️</span>
+    <div>
+      <h2>Isto é uma demonstração, não uma proteção real</h2>
+      <p>
+        Esta tela de entrada é apenas ilustrativa — <strong>não existe senha real configurada</strong> e
+        qualquer pessoa com o link consegue abrir. O login definitivo (protegido de verdade) será configurado
+        antes do uso em produção. Os dados gerados aqui ficam salvos <strong>somente neste navegador</strong>
+        (localStorage) — a versão final vai usar um banco de dados compartilhado com toda a equipe.
+        O código <code>FISIOT-DEMO</code> é só para testar a página pública e <strong>não pode ser usado em produção</strong>.
+      </p>
+    </div>
+  </div>
+
+  <!-- ===== GATE (entrada demonstrativa) ===== -->
+  <div class="gate-card" id="gate-card">
+    <div class="lock-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+    </div>
+    <h1>Entrar na demonstração</h1>
+    <p>Esta é a prévia do painel interno para Wilson/IREFIS avaliar o fluxo de geração de códigos.
+       Não há autenticação real nesta etapa.</p>
+    <label class="gate-check">
+      <input type="checkbox" id="gate-checkbox">
+      <span>Entendi que esta tela é apenas demonstrativa, sem senha real, e que o acesso definitivo
+      será configurado antes da produção.</span>
+    </label>
+    <button class="btn-enter" id="gate-enter-btn" disabled>Entrar no painel de demonstração</button>
+    <p class="gate-fine">Este painel não é divulgado publicamente e não deve ser compartilhado com participantes.</p>
+  </div>
+
+  <!-- ===== PAINEL ===== -->
+  <div class="admin-panel" id="admin-panel">
+    <div class="panel-grid">
+
+      <section class="gen-card">
+        <h2>Gerar novo código</h2>
+        <p class="sub">Nome e WhatsApp são opcionais — servem apenas para você organizar a lista.</p>
+
+        <div class="field">
+          <label for="in-nome">Nome (opcional)</label>
+          <input type="text" id="in-nome" placeholder="Ex.: Maria da Silva">
+        </div>
+        <div class="field">
+          <label for="in-whats">WhatsApp (opcional)</label>
+          <input type="text" id="in-whats" placeholder="Ex.: (31) 90000-0000">
+        </div>
+        <button class="btn-generate" id="gen-btn">Gerar código único</button>
+
+        <div class="result-box" id="result-box">
+          <p class="code-big" id="result-code">FISIOT-XXXXX</p>
+          <div class="result-actions">
+            <button class="btn-copy" id="copy-code-btn" type="button">Copiar código</button>
+            <button class="btn-copy" id="copy-msg-btn" type="button">Copiar mensagem WhatsApp</button>
+          </div>
+        </div>
+
+        <p class="local-note">
+          💾 Estes registros existem apenas neste navegador. Ao limpar o cache/local storage ou trocar de
+          dispositivo, a lista some — normal para uma prévia. A produção usará armazenamento compartilhado.
+        </p>
+      </section>
+
+      <section class="table-card">
+        <h2>Códigos gerados</h2>
+        <p class="sub">Marque como "enviado" depois de mandar a mensagem pelo WhatsApp. O status "utilizado" é preenchido automaticamente quando alguém desbloquear a raspadinha com esse código nesta mesma sessão de navegador.</p>
+        <div class="table-scroll">
+          <table class="codes-table">
+            <thead>
+              <tr><th>Código</th><th>Nome</th><th>WhatsApp</th><th>Status</th><th>Ações</th></tr>
+            </thead>
+            <tbody id="codes-tbody"></tbody>
+          </table>
+        </div>
+        <div id="empty-state" class="empty-state">Nenhum código gerado ainda. Use o formulário ao lado.</div>
+      </section>
+
+    </div>
+  </div>
+
+</div>
+
+<script src="assets/shared-storage.js"></script>
+<script src="assets/admin.js"></script>
+</body>
+</html>
