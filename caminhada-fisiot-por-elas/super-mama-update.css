@@ -29,12 +29,14 @@
   .super-mama-grid img { max-height: 390px; }
 }
 
-/* As três Super Mamas ficam FORA do quadro branco da arte oficial.
-   Desktop: uma acima e duas ao lado; mobile: faixa própria abaixo da arte. */
+/* CORREÇÃO 2026-09-23: apenas 2 Super Mamas (laterais), fora do quadro
+   branco da arte oficial. A Super Mama central foi removida por
+   sobrepor o logo IREFIS — o logo agora fica totalmente livre e
+   legível, sem nenhuma mascote acima, atrás ou próxima a ele. */
 .hero-super-mamas {
   position: absolute;
   inset: 0;
-  z-index: 3;
+  z-index: 1;
   pointer-events: none;
 }
 .hero-super-mamas img {
@@ -44,41 +46,32 @@
   object-fit: contain;
   filter: drop-shadow(0 7px 10px rgba(55, 9, 42, .30));
 }
-/* À esquerda, fora da borda do cartaz. */
-.hero-super-mamas img:nth-child(1) {
-  left: calc(50% - min(340px, 26vw));
-  top: clamp(190px, 28vh, 285px);
-  height: 126px;
-}
-/* Acima do cartaz, sem cobrir o logo ou a arte branca. */
-.hero-super-mamas img:nth-child(2) {
-  left: 50%;
-  top: clamp(106px, 15vh, 150px);
-  height: 82px;
-  transform: translateX(-50%);
-}
-/* À direita, fora da borda do cartaz. */
-.hero-super-mamas img:nth-child(3) {
-  right: calc(50% - min(340px, 26vw));
-  top: clamp(196px, 29vh, 290px);
+/* À esquerda, fora da borda do cartaz — abaixo da linha do logo. */
+.hero-super-mamas img.mama-left {
+  left: calc(50% - min(360px, 27vw));
+  top: clamp(230px, 33vh, 320px);
   height: 118px;
+}
+/* À direita, fora da borda do cartaz — abaixo da linha do logo. */
+.hero-super-mamas img.mama-right {
+  right: calc(50% - min(360px, 27vw));
+  top: clamp(236px, 34vh, 326px);
+  height: 112px;
 }
 @media (max-width: 900px) {
   .hero-super-mamas {
     position: relative;
     inset: auto;
     width: min(390px, 88vw);
-    height: 115px;
+    height: 100px;
     order: 1;
     margin: .15rem auto .35rem;
   }
-  .hero-super-mamas img:nth-child(1) { left: 0; top: auto; bottom: 0; height: 96px; }
-  .hero-super-mamas img:nth-child(2) { left: 50%; top: 0; height: 62px; }
-  .hero-super-mamas img:nth-child(3) { right: 0; top: auto; bottom: 0; height: 90px; }
+  .hero-super-mamas img.mama-left { left: 0; top: auto; bottom: 0; height: 90px; }
+  .hero-super-mamas img.mama-right { right: 0; top: auto; bottom: 0; height: 84px; }
 }
 @media (max-width: 640px) {
-  .hero-super-mamas { width: min(300px, 90vw); height: 90px; }
-  .hero-super-mamas img:nth-child(1) { height: 76px; }
-  .hero-super-mamas img:nth-child(2) { height: 49px; }
-  .hero-super-mamas img:nth-child(3) { height: 72px; }
+  .hero-super-mamas { width: min(300px, 90vw); height: 78px; }
+  .hero-super-mamas img.mama-left { height: 72px; }
+  .hero-super-mamas img.mama-right { height: 66px; }
 }
