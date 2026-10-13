@@ -85,8 +85,9 @@
     box-shadow:0 6px 16px -4px rgba(216,27,130,0.45);
   }
   .brand-mark svg{width:20px;height:20px;}
-  .brand-text{font-family:var(--serif);font-weight:600;font-size:15px;line-height:1.15;color:var(--azul-900);}
-  .brand-text span{display:block;font-family:var(--sans);font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--rosa-600);margin-top:2px;}
+  .brand-logo{height:46px;width:auto;object-fit:contain;flex-shrink:0;}
+  .brand-text{font-family:var(--sans);font-weight:700;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--azul-700);line-height:1.4;}
+  .brand-text span{display:block;font-size:10px;font-weight:600;letter-spacing:.06em;color:var(--ink-faint);margin-top:1px;text-transform:none;}
   .nav-links{display:flex;gap:26px;font-size:14px;font-weight:600;color:var(--ink-soft);}
   .nav-links a{text-decoration:none;position:relative;padding:4px 0;transition:color .2s;}
   .nav-links a:hover{color:var(--rosa-600);}
@@ -97,6 +98,11 @@
   }
   .nav-cta:hover{background:var(--rosa-600);transform:translateY(-1px);}
   @media (max-width:860px){ .nav-links{display:none;} }
+  @media (max-width:520px){
+    .brand-logo{height:38px;}
+    .brand-text{display:none;}
+    .nav-cta{padding:9px 16px;font-size:12.5px;}
+  }
 
   /* ───────── HERO ───────── */
   .hero{position:relative;overflow:hidden;padding:72px 0 64px;}
@@ -260,6 +266,16 @@
   .post p{font-size:13.6px;line-height:1.6;color:var(--ink-soft);}
   .post .meta-pill{display:inline-block;margin-top:9px;font-size:11.5px;font-weight:700;color:var(--rosa-600);}
 
+  .post-photo{align-items:stretch;}
+  .post-photo-img{
+    width:168px;height:126px;flex-shrink:0;object-fit:cover;object-position:center 42%;
+    border-radius:14px;box-shadow:0 8px 18px -8px rgba(11,60,93,0.35);
+  }
+  @media (max-width:560px){
+    .post-photo{flex-direction:column;}
+    .post-photo-img{width:100%;height:170px;}
+  }
+
   /* ESPACOS DE APOIO */
   .espacos-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
   @media (max-width:640px){ .espacos-grid{grid-template-columns:1fr;} }
@@ -343,6 +359,13 @@
     background:rgba(255,255,255,0.08);border-radius:50%;pointer-events:none;
   }
   .camiseta-cta-ic{font-size:36px;flex-shrink:0;position:relative;z-index:1;}
+  .camiseta-cta-logo{
+    flex-shrink:0;position:relative;z-index:1;
+    width:84px;height:84px;border-radius:20px;background:#fff;
+    display:flex;align-items:center;justify-content:center;padding:9px;
+    box-shadow:0 10px 24px -8px rgba(0,0,0,0.35);
+  }
+  .camiseta-cta-logo img{width:100%;height:100%;object-fit:contain;}
   .camiseta-cta-body{flex:1;min-width:230px;position:relative;z-index:1;}
   .camiseta-cta-tag{
     display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
@@ -362,6 +385,7 @@
   @media (max-width:640px){
     .camiseta-cta-banner{padding:22px 20px;flex-direction:column;align-items:flex-start;}
     .camiseta-cta-btn{width:100%;text-align:center;}
+    .camiseta-cta-logo{width:68px;height:68px;border-radius:16px;}
   }
 
   /* PARCEIRO */
@@ -474,8 +498,8 @@
 <header class="site-nav">
   <div class="wrap">
     <a href="#topo" class="brand">
-      <span class="brand-mark"><svg viewBox="0 0 24 24" fill="#fff"><path d="M12 21.593c-5.63-5.539-11-10.297-11-14.402C1 3.591 4.068 1 7.5 1c1.977 0 3.854.918 5 2.284C13.646 1.918 15.523 1 17.5 1 20.932 1 24 3.591 24 7.191c0 4.105-5.37 8.863-12 14.402z"/></svg></span>
-      <span class="brand-text">Rede de Olho<br/>no Câncer<span>Lagoa Santa · MG</span></span>
+      <img class="brand-logo" src="logo-rede-olho-cancer.png" alt="Rede de Olho no Câncer — logo oficial" width="560" height="500" />
+      <span class="brand-text">Rede de Olho no Câncer<span>Lagoa Santa · MG</span></span>
     </a>
     <nav class="nav-links">
       <a href="#sobre">Sobre</a>
@@ -614,12 +638,12 @@
           </div>
         </div>
 
-        <div class="post">
-          <div class="post-ic rosa">🚐</div>
+        <div class="post post-photo">
+          <img class="post-photo-img" src="leva-e-traz-fisiot.jpg" alt="Veículo do Leva e Traz FISIOT, usado no transporte gratuito de mulheres em tratamento" />
           <div>
             <span class="post-tag pink">Apoio</span>
             <h3>Leva e Traz FISIOT</h3>
-            <p>Transporte gratuito para mulheres com câncer realizarem seu tratamento na Clínica FISIOT, no Leva e Traz FISIOT.</p>
+            <p>Transporte gratuito para mulheres com câncer durante o tratamento na FISIOT.</p>
             <span class="meta-pill">✓ Gratuito</span>
           </div>
         </div>
@@ -706,7 +730,7 @@
             <h3>Clínica FISIOT</h3>
             <p>Base provisória de atendimento e acolhimento da Rede, em Lagoa Santa/MG — ponto de apoio para programas e campanhas.</p>
             <p>10% sobre cada paciente novo que chegar através do site ou dos programas da Rede são revertidos para as ações da Rede.</p>
-            <p>🚐 <strong>Leva e Traz FISIOT:</strong> Transporte gratuito para mulheres com câncer realizarem seu tratamento na Clínica FISIOT, no Leva e Traz FISIOT.</p>
+            <p>🚐 <strong>Leva e Traz FISIOT:</strong> Transporte gratuito para mulheres com câncer durante o tratamento na FISIOT.</p>
             <span class="parceiro-pill">Parceria oficial</span>
           </div>
         </div>
@@ -729,7 +753,7 @@
         <p class="h-sub">Leve a mensagem da prevenção e do acolhimento com você.</p>
       </div>
       <div class="camiseta-cta-banner">
-        <div class="camiseta-cta-ic">👕</div>
+        <div class="camiseta-cta-logo"><img src="logo-rede-olho-cancer.png" alt="Logo oficial Rede de Olho no Câncer" /></div>
         <div class="camiseta-cta-body">
           <span class="camiseta-cta-tag">Camiseta oficial</span>
           <p><strong>Compre sua camiseta da Rede de Olho no Câncer e ganhe uma raspadinha.</strong></p>
