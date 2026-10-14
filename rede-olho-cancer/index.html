@@ -187,17 +187,43 @@ svg.i{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:1.8;stroke
 .esp p{font-size:14.5px;line-height:1.65;opacity:.96}
 .esp .base{margin-top:14px;display:inline-flex;gap:6px;align-items:center;font-size:12.5px;font-weight:700;background:rgba(255,255,255,.2);padding:5px 12px;border-radius:50px}
 
-/* PARCEIROS */
-.parc{display:grid;gap:14px}
-@media(min-width:620px){.parc{grid-template-columns:1fr 1fr}}
-.pc{padding:22px}
+/* APOIOS — PATROCINADORES + PARCEIROS DA REDE (abaixo do feed, largura total) */
+.apoios{grid-column:1/-1;display:flex;flex-direction:column;gap:26px;margin-top:22px}
+.apoio-top{display:grid;gap:16px;align-items:end}
+.apoio-top .btn{width:100%}
+@media(min-width:760px){.apoio-top{grid-template-columns:1fr auto}.apoio-top .btn{width:auto}}
+
+/* Patrocinadores: faixa celeste->rosa, sem marcas listadas */
+.spons{position:relative;overflow:hidden;border-radius:30px;border:1px solid var(--c200);box-shadow:var(--sh);padding:30px 24px;
+  background:linear-gradient(125deg,#fff 0%,var(--c100) 58%,var(--r50) 130%);display:grid;gap:26px}
+.spons::before{content:'';position:absolute;width:300px;height:300px;right:-110px;top:-140px;border-radius:50%;border:34px solid rgba(233,30,140,.08);pointer-events:none}
+.spons>*{position:relative;z-index:1}
+.spons .h-sub{max-width:58ch}
+.spons .btns{margin:18px 0 0}
+.spons-note{font-size:12.8px;font-weight:600;color:var(--c700);margin-top:12px}
+.slots{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;align-content:center}
+.slot{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;min-height:104px;padding:12px 8px;border:2px dashed var(--c300);border-radius:18px;background:rgba(255,255,255,.7);color:var(--c700);font-size:12.5px;font-weight:700;line-height:1.3}
+.slot svg{font-size:22px;color:var(--r500)}
+@media(min-width:900px){.spons{grid-template-columns:1.1fr .9fr;align-items:center;padding:38px 40px;gap:40px}}
+
+/* Parceiros da Rede: painel branco com 3 cards confirmados */
+.parcs{padding:28px 24px 24px}
+.partners{display:grid;gap:16px;margin-top:22px}
+@media(min-width:820px){.parcs{padding:34px 34px 30px}.partners{grid-template-columns:1fr 1.15fr 1fr;align-items:stretch}}
+.pc{display:flex;flex-direction:column;overflow:hidden;padding:0;background:var(--c50);box-shadow:none;transition:transform .2s,border-color .2s}
+.pc:hover{transform:translateY(-3px);border-color:var(--c300)}
+.pc-body{display:flex;flex-direction:column;align-items:flex-start;flex:1;padding:22px}
 .pc .ico{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;font-size:24px;background:var(--c100);color:var(--c600);margin-bottom:12px}
 .pc .ico.p{background:var(--r100);color:var(--r600)}
-.pc h3{font-family:var(--disp);font-weight:700;font-size:19px;color:var(--navy);margin-bottom:8px}
+.pc h3{font-family:var(--disp);font-weight:700;font-size:19px;line-height:1.2;color:var(--navy);margin-bottom:8px}
 .pc p{font-size:14.2px;line-height:1.65;color:var(--soft)}
 .pc p+p{margin-top:9px}
 .pc strong{color:var(--navy)}
-.tagbig{display:inline-block;margin-top:12px;background:var(--c600);color:#fff;font-size:12px;font-weight:700;padding:5px 13px;border-radius:50px}
+.pc-img{background:#e9eef2;border-bottom:1px solid var(--line)}
+.pc-img img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover}
+.pc.mant{background:linear-gradient(180deg,#fff,var(--r50));border-color:var(--r200)}
+.tagbig{display:inline-block;margin-top:auto;background:var(--c600);color:#fff;font-size:12px;font-weight:700;padding:5px 13px;border-radius:50px}
+.pc p:last-of-type{margin-bottom:14px}
 .tagbig.p{background:var(--r600)}
 
 /* SIDEBAR */
@@ -372,6 +398,8 @@ footer .m{color:#fff;font-weight:700;margin-top:12px}
       <a href="#embaixadores"><svg class="i"><use href="#i-users"/></svg>Embaixadoras e Embaixadores</a>
       <a href="#camiseta"><svg class="i"><use href="#i-shirt"/></svg>Camiseta da Rede</a>
       <a href="#apoiar"><svg class="i"><use href="#i-gift"/></svg>Como apoiar</a>
+      <a href="#patrocinadores"><svg class="i"><use href="#i-award"/></svg>Patrocinadores</a>
+      <a href="#parceiros"><svg class="i"><use href="#i-users"/></svg>Parceiros da Rede</a>
     </nav>
     </div>
   </aside>
@@ -494,29 +522,6 @@ footer .m{color:#fff;font-weight:700;margin-top:12px}
       </article>
     </div>
 
-    <div class="sec-head" id="parceiros">
-      <p class="eyebrow">Quem sustenta a Rede</p>
-      <h2 class="h2">Parceiros e mantenedora</h2>
-      <p class="h-sub">Instituições e marcas que tornam possível a continuidade dos programas da Rede.</p>
-    </div>
-    <div class="parc">
-      <article class="card pc">
-        <div class="ico"><svg class="i"><use href="#i-clinic"/></svg></div>
-        <h3>Clínica FISIOT</h3>
-        <p>Base provisória de atendimento e acolhimento da Rede, em Lagoa Santa/MG — ponto de apoio para programas e campanhas.</p>
-        <p>10% sobre cada paciente novo que chegar através do site ou dos programas da Rede são revertidos para as ações da Rede.</p>
-        <p><svg class="i"><use href="#i-car"/></svg> <strong>Leva e Traz FISIOT:</strong> Transporte gratuito para mulheres com câncer durante o tratamento na FISIOT.</p>
-        <span class="tagbig">Parceria oficial</span>
-      </article>
-      <article class="card pc">
-        <div class="ico p"><svg class="i"><use href="#i-gift"/></svg></div>
-        <h3>Bellamama Cosméticos &amp; Vc</h3>
-        <p>Marca de cosméticos criada para ser a <strong>mantenedora da Rede de Olho no Câncer</strong>.</p>
-        <p>A sustentação financeira das ações da Rede acontece por meio das vendas dos cosméticos Bellamama.</p>
-        <span class="tagbig p">Mantenedora da Rede</span>
-      </article>
-    </div>
-
   </section>
 
   <!-- PARTICIPAÇÃO -->
@@ -575,6 +580,67 @@ footer .m{color:#fff;font-weight:700;margin-top:12px}
       </a>
     </section>
   </aside>
+
+  <!-- APOIOS: PATROCINADORES (1º) + PARCEIROS DA REDE (2º) — abaixo do feed -->
+  <div class="apoios" id="apoios">
+
+    <section class="spons" id="patrocinadores" aria-labelledby="patrocinadores-t">
+      <div>
+        <p class="eyebrow">Apoio institucional</p>
+        <h2 class="h2" id="patrocinadores-t">Patrocinadores</h2>
+        <p class="h-sub">Área reservada às empresas e marcas que decidirem apoiar formalmente as ações da Rede de Olho no Câncer. Patrocinadores são diferentes dos parceiros e da mantenedora da Rede.</p>
+        <div class="btns">
+          <a href="https://wa.me/5531992594953?text=Ol%C3%A1!%20Gostaria%20de%20saber%20como%20posso%20ser%20patrocinador%20da%20Rede%20de%20Olho%20no%20C%C3%A2ncer." class="btn btn-pink" target="_blank" rel="noopener">Quero ser patrocinador <svg class="i"><use href="#i-arrow"/></svg></a>
+        </div>
+        <p class="spons-note">A conversa acontece pelo WhatsApp institucional da Rede.</p>
+      </div>
+      <div class="slots" aria-hidden="true">
+        <div class="slot"><svg class="i"><use href="#i-heart"/></svg>Espaço reservado</div>
+        <div class="slot"><svg class="i"><use href="#i-heart"/></svg>Espaço reservado</div>
+        <div class="slot"><svg class="i"><use href="#i-heart"/></svg>Espaço reservado</div>
+      </div>
+    </section>
+
+    <section class="card parcs" id="parceiros" aria-labelledby="parceiros-t">
+      <div class="apoio-top">
+        <div>
+          <p class="eyebrow">Quem caminha com a Rede</p>
+          <h2 class="h2" id="parceiros-t">Parceiros da Rede</h2>
+          <p class="h-sub">Organizações confirmadas que tornam possível a continuidade dos programas da Rede.</p>
+        </div>
+        <a href="https://wa.me/5531992594953?text=Ol%C3%A1!%20Quero%20ser%20parceiro%20da%20Rede%20de%20Olho%20no%20C%C3%A2ncer." class="btn btn-line" target="_blank" rel="noopener">Quero ser parceiro da Rede <svg class="i"><use href="#i-arrow"/></svg></a>
+      </div>
+      <div class="partners">
+        <article class="card pc">
+          <div class="pc-body">
+            <div class="ico"><svg class="i"><use href="#i-clinic"/></svg></div>
+            <h3>Clínica FISIOT</h3>
+            <p>Base provisória de atendimento e acolhimento da Rede, em Lagoa Santa/MG — ponto de apoio para programas e campanhas.</p>
+            <p>10% sobre cada paciente novo que chegar através do site ou dos programas da Rede são revertidos para as ações da Rede.</p>
+            <span class="tagbig">Parceria oficial</span>
+          </div>
+        </article>
+        <article class="card pc" id="parceiro-leva-e-traz">
+          <div class="pc-img"><img src="leva-e-traz-fisiot.jpg" alt="Veículo do Leva e Traz FISIOT, com a identidade da Clínica FISIOT na lateral" width="1200" height="675" loading="lazy" decoding="async" /></div>
+          <div class="pc-body">
+            <h3>Leva e Traz FISIOT</h3>
+            <p>Transporte gratuito para mulheres com câncer durante o tratamento na FISIOT.</p>
+            <span class="tagbig">Parceiro da Rede</span>
+          </div>
+        </article>
+        <article class="card pc mant">
+          <div class="pc-body">
+            <div class="ico p"><svg class="i"><use href="#i-gift"/></svg></div>
+            <h3>Bellamama Cosméticos &amp; Vc</h3>
+            <p>Marca de cosméticos criada para ser a <strong>mantenedora da Rede de Olho no Câncer</strong>.</p>
+            <p>A sustentação financeira das ações da Rede acontece por meio das vendas dos cosméticos Bellamama.</p>
+            <span class="tagbig p">Mantenedora da Rede</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+  </div>
 </main>
 
 <footer>
